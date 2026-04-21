@@ -40,9 +40,7 @@ export function Ecosystem() {
               ].map((s) => (
                 <div key={s.l}>
                   <div className="font-display text-2xl font-bold">{s.v}</div>
-                  <div className="text-xs text-white/60 uppercase tracking-widest mt-1">
-                    {s.l}
-                  </div>
+                  <div className="text-xs text-white/60 uppercase tracking-widest mt-1">{s.l}</div>
                 </div>
               ))}
             </div>
@@ -68,9 +66,7 @@ export function Ecosystem() {
               <div className="grid h-10 w-10 place-items-center rounded-md bg-navy text-white">
                 <b.icon className="h-5 w-5" />
               </div>
-              <h4 className="mt-4 font-display text-base font-bold text-navy">
-                {b.title}
-              </h4>
+              <h4 className="mt-4 font-display text-base font-bold text-navy">{b.title}</h4>
               <p className="mt-1 text-sm text-muted-foreground">{b.desc}</p>
             </motion.div>
           ))}

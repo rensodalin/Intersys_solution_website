@@ -53,9 +53,8 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.25 }}
               className="mt-7 max-w-xl text-lg text-white/70 leading-relaxed"
             >
-              We design, integrate, and maintain advanced control systems —
-              from fire safety and HVAC to access control and IoT — for
-              forward-thinking infrastructure.
+              We design, integrate, and maintain advanced control systems — from fire safety and
+              HVAC to access control and IoT — for forward-thinking infrastructure.
             </motion.p>
 
             <motion.div
@@ -100,9 +99,7 @@ export function Hero() {
                   <div className="text-xs uppercase tracking-widest text-white/60">
                     Live Operations
                   </div>
-                  <div className="font-display text-2xl font-bold mt-1">
-                    24/7 Monitoring
-                  </div>
+                  <div className="font-display text-2xl font-bold mt-1">24/7 Monitoring</div>
                 </div>
                 <div className="rounded-md bg-brand-red px-3 py-1.5 text-xs font-semibold">
                   ONLINE

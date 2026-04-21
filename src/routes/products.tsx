@@ -8,21 +8,58 @@ export const Route = createFileRoute("/products")({
   head: () => ({
     meta: [
       { title: "Products — Intersys Solutions" },
-      { name: "description", content: "Edge controllers, sensors, gateways and unified dashboards engineered for industrial reliability." },
+      {
+        name: "description",
+        content:
+          "Edge controllers, sensors, gateways and unified dashboards engineered for industrial reliability.",
+      },
       { property: "og:title", content: "Products — Intersys Solutions" },
-      { property: "og:description", content: "Hardware and software products for smart building integration." },
+      {
+        property: "og:description",
+        content: "Hardware and software products for smart building integration.",
+      },
     ],
   }),
   component: Products,
 });
 
 const products = [
-  { icon: Cpu, name: "Intersys EdgeOne", tag: "Edge Controller", desc: "Ruggedized edge gateway with on-device AI for predictive maintenance." },
-  { icon: Radio, name: "MeshNet 2.4", tag: "Wireless Sensors", desc: "Low-power mesh sensor family for temperature, occupancy, and CO₂." },
-  { icon: Server, name: "OpsCloud", tag: "SaaS Platform", desc: "Multi-site operations console with realtime KPIs and incident management." },
-  { icon: Shield, name: "GuardLink", tag: "Access Control", desc: "Encrypted access controllers with mobile credentials and audit trails." },
-  { icon: Gauge, name: "PulseMeter", tag: "Energy Monitoring", desc: "Sub-metering with circuit-level analytics and tariff modeling." },
-  { icon: Zap, name: "FlexBus IO", tag: "I/O Modules", desc: "Modular DIN-rail IO with BACnet, Modbus, and MQTT support." },
+  {
+    icon: Cpu,
+    name: "Intersys EdgeOne",
+    tag: "Edge Controller",
+    desc: "Ruggedized edge gateway with on-device AI for predictive maintenance.",
+  },
+  {
+    icon: Radio,
+    name: "MeshNet 2.4",
+    tag: "Wireless Sensors",
+    desc: "Low-power mesh sensor family for temperature, occupancy, and CO₂.",
+  },
+  {
+    icon: Server,
+    name: "OpsCloud",
+    tag: "SaaS Platform",
+    desc: "Multi-site operations console with realtime KPIs and incident management.",
+  },
+  {
+    icon: Shield,
+    name: "GuardLink",
+    tag: "Access Control",
+    desc: "Encrypted access controllers with mobile credentials and audit trails.",
+  },
+  {
+    icon: Gauge,
+    name: "PulseMeter",
+    tag: "Energy Monitoring",
+    desc: "Sub-metering with circuit-level analytics and tariff modeling.",
+  },
+  {
+    icon: Zap,
+    name: "FlexBus IO",
+    tag: "I/O Modules",
+    desc: "Modular DIN-rail IO with BACnet, Modbus, and MQTT support.",
+  },
 ];
 
 function Products() {

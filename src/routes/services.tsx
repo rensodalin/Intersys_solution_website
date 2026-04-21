@@ -7,9 +7,17 @@ export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
       { title: "Services — Intersys Solutions" },
-      { name: "description", content: "Full-stack engineering services: BMS, fire safety, HVAC, security, lighting and IoT integration." },
+      {
+        name: "description",
+        content:
+          "Full-stack engineering services: BMS, fire safety, HVAC, security, lighting and IoT integration.",
+      },
       { property: "og:title", content: "Engineering Services — Intersys" },
-      { property: "og:description", content: "Full-stack engineering services for smart buildings and industrial infrastructure." },
+      {
+        property: "og:description",
+        content:
+          "Full-stack engineering services for smart buildings and industrial infrastructure.",
+      },
     ],
   }),
   component: Services,
@@ -29,9 +37,8 @@ function Services() {
               Six disciplines. <span className="text-brand-red">One</span> integrated stack.
             </h1>
             <p className="mt-6 text-lg text-white/70 max-w-2xl leading-relaxed">
-              From single-system upgrades to multi-site deployments, we deliver
-              engineering services that meet the highest standards of safety
-              and reliability.
+              From single-system upgrades to multi-site deployments, we deliver engineering services
+              that meet the highest standards of safety and reliability.
             </p>
           </div>
         </Container>

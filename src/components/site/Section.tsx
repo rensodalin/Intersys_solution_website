@@ -18,11 +18,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={cn(
-        "relative py-24 md:py-32",
-        dark && "bg-navy-deep text-white dark",
-        className,
-      )}
+      className={cn("relative py-24 md:py-32", dark && "bg-navy-deep text-white dark", className)}
     >
       <Container className={innerClassName}>{children}</Container>
     </section>
@@ -48,10 +44,7 @@ export function SectionHeading({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={cn(
-        "max-w-3xl mb-14",
-        align === "center" && "mx-auto text-center",
-      )}
+      className={cn("max-w-3xl mb-14", align === "center" && "mx-auto text-center")}
     >
       {eyebrow && (
         <div

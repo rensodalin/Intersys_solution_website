@@ -28,9 +28,7 @@ export function Navbar() {
     <header
       className={cn(
         "fixed top-0 inset-x-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-navy-deep/85 backdrop-blur-lg border-b border-white/10"
-          : "bg-transparent",
+        scrolled ? "bg-navy-deep/85 backdrop-blur-lg border-b border-white/10" : "bg-transparent",
       )}
     >
       <Container className="flex h-20 items-center justify-between">
@@ -38,9 +36,7 @@ export function Navbar() {
           <div className="grid h-9 w-9 place-items-center rounded-md bg-brand-red font-display font-bold">
             IS
           </div>
-          <span className="font-display text-lg font-bold tracking-tight">
-            INTERSYS
-          </span>
+          <span className="font-display text-lg font-bold tracking-tight">INTERSYS</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-8">

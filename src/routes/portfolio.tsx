@@ -9,9 +9,16 @@ export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
       { title: "Portfolio — Intersys Solutions" },
-      { name: "description", content: "Explore engineering case studies across smart buildings, healthcare, data centers and industrial sites." },
+      {
+        name: "description",
+        content:
+          "Explore engineering case studies across smart buildings, healthcare, data centers and industrial sites.",
+      },
       { property: "og:title", content: "Portfolio — Intersys Solutions" },
-      { property: "og:description", content: "Selected engineering work across critical infrastructure." },
+      {
+        property: "og:description",
+        content: "Selected engineering work across critical infrastructure.",
+      },
     ],
   }),
   component: Portfolio,
@@ -19,11 +26,31 @@ export const Route = createFileRoute("/portfolio")({
 
 const projects = [
   { title: "Helix Tower BMS", category: "Smart Building", year: "2024", location: "Singapore" },
-  { title: "Northgate Hospital Safety", category: "Fire & Life Safety", year: "2024", location: "Toronto" },
+  {
+    title: "Northgate Hospital Safety",
+    category: "Fire & Life Safety",
+    year: "2024",
+    location: "Toronto",
+  },
   { title: "Atlas Data Center", category: "HVAC + Power", year: "2023", location: "Frankfurt" },
-  { title: "Vertex Industrial Park", category: "IoT Integration", year: "2023", location: "Rotterdam" },
-  { title: "Meridian University", category: "Multi-Building BMS", year: "2023", location: "London" },
-  { title: "Coastal Logistics Hub", category: "Security + Access", year: "2022", location: "Dubai" },
+  {
+    title: "Vertex Industrial Park",
+    category: "IoT Integration",
+    year: "2023",
+    location: "Rotterdam",
+  },
+  {
+    title: "Meridian University",
+    category: "Multi-Building BMS",
+    year: "2023",
+    location: "London",
+  },
+  {
+    title: "Coastal Logistics Hub",
+    category: "Security + Access",
+    year: "2022",
+    location: "Dubai",
+  },
 ];
 
 function Portfolio() {

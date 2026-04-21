@@ -1,20 +1,41 @@
 import { motion } from "framer-motion";
-import {
-  Building2, Flame, ShieldCheck, Wind, Lightbulb, Cpu,
-  type LucideIcon,
-} from "lucide-react";
+import { Building2, Flame, ShieldCheck, Wind, Lightbulb, Cpu, type LucideIcon } from "lucide-react";
 import { SectionHeading } from "./Section";
 import { Container } from "./Container";
 
 type Svc = { icon: LucideIcon; title: string; desc: string };
 
 const services: Svc[] = [
-  { icon: Building2, title: "Building Management", desc: "Integrated BMS for energy, comfort, and operational efficiency." },
-  { icon: Flame, title: "Fire & Safety Systems", desc: "Code-compliant detection, suppression, and evacuation systems." },
-  { icon: ShieldCheck, title: "Security & Access", desc: "Access control, surveillance, intrusion, and visitor management." },
-  { icon: Wind, title: "HVAC Automation", desc: "Smart climate control with predictive maintenance and analytics." },
-  { icon: Lightbulb, title: "Lighting Control", desc: "DALI, KNX and IoT lighting for adaptive, low-energy operations." },
-  { icon: Cpu, title: "IoT & Edge Computing", desc: "Sensor networks, edge gateways, and unified data dashboards." },
+  {
+    icon: Building2,
+    title: "Building Management",
+    desc: "Integrated BMS for energy, comfort, and operational efficiency.",
+  },
+  {
+    icon: Flame,
+    title: "Fire & Safety Systems",
+    desc: "Code-compliant detection, suppression, and evacuation systems.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Security & Access",
+    desc: "Access control, surveillance, intrusion, and visitor management.",
+  },
+  {
+    icon: Wind,
+    title: "HVAC Automation",
+    desc: "Smart climate control with predictive maintenance and analytics.",
+  },
+  {
+    icon: Lightbulb,
+    title: "Lighting Control",
+    desc: "DALI, KNX and IoT lighting for adaptive, low-energy operations.",
+  },
+  {
+    icon: Cpu,
+    title: "IoT & Edge Computing",
+    desc: "Sensor networks, edge gateways, and unified data dashboards.",
+  },
 ];
 
 export function ServicesGrid({ compact = false }: { compact?: boolean }) {
@@ -40,12 +61,8 @@ export function ServicesGrid({ compact = false }: { compact?: boolean }) {
               <div className="grid h-14 w-14 place-items-center rounded-lg bg-navy text-white group-hover:bg-brand-red transition-colors">
                 <s.icon className="h-6 w-6" />
               </div>
-              <h3 className="mt-6 font-display text-xl font-bold text-navy">
-                {s.title}
-              </h3>
-              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                {s.desc}
-              </p>
+              <h3 className="mt-6 font-display text-xl font-bold text-navy">{s.title}</h3>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
               <div className="mt-6 h-px w-12 bg-border group-hover:w-full group-hover:bg-brand-red transition-all duration-500" />
               <div className="mt-4 text-xs font-semibold uppercase tracking-widest text-brand-red opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all">
                 Learn More →

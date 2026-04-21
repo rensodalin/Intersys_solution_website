@@ -35,12 +35,8 @@ export function IntegratedTech() {
               className="group p-8 border border-border rounded-xl hover:border-navy hover:shadow-lg transition-all"
             >
               <t.icon className="h-8 w-8 text-brand-red" />
-              <h3 className="mt-5 font-display text-xl font-bold text-navy">
-                {t.title}
-              </h3>
-              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                {t.desc}
-              </p>
+              <h3 className="mt-5 font-display text-xl font-bold text-navy">{t.title}</h3>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{t.desc}</p>
               <div className="mt-6 h-0.5 w-10 bg-brand-red group-hover:w-full transition-all duration-500" />
             </motion.div>
           ))}

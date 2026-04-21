@@ -8,7 +8,11 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — Intersys Solutions" },
-      { name: "description", content: "Talk to an engineer. Get a quote for your next smart building or industrial automation project." },
+      {
+        name: "description",
+        content:
+          "Talk to an engineer. Get a quote for your next smart building or industrial automation project.",
+      },
       { property: "og:title", content: "Contact — Intersys Solutions" },
       { property: "og:description", content: "Talk to an engineer about your next project." },
     ],
@@ -59,9 +63,7 @@ function Contact() {
                     <div className="text-xs uppercase tracking-widest text-muted-foreground">
                       {c.title}
                     </div>
-                    <div className="mt-1 font-display font-bold text-navy text-lg">
-                      {c.value}
-                    </div>
+                    <div className="mt-1 font-display font-bold text-navy text-lg">{c.value}</div>
                   </div>
                 </motion.div>
               ))}
@@ -81,9 +83,7 @@ function Contact() {
                 }}
                 className="bg-offwhite rounded-2xl p-8 md:p-10 border border-border"
               >
-                <h2 className="font-display text-2xl font-bold text-navy">
-                  Start a project
-                </h2>
+                <h2 className="font-display text-2xl font-bold text-navy">Start a project</h2>
                 <div className="mt-6 grid grid-cols-2 gap-5">
                   <Field label="Name" name="name" />
                   <Field label="Company" name="company" />
@@ -116,7 +116,17 @@ function Contact() {
   );
 }
 
-function Field({ label, name, type = "text", full }: { label: string; name: string; type?: string; full?: boolean }) {
+function Field({
+  label,
+  name,
+  type = "text",
+  full,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  full?: boolean;
+}) {
   return (
     <div className={full ? "col-span-2" : "col-span-2 sm:col-span-1"}>
       <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">

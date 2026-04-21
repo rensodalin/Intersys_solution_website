@@ -32,10 +32,20 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Intersys Solutions — Smart Building & Engineering Systems" },
-      { name: "description", content: "We engineer, integrate and maintain smart building, fire safety, security and IoT systems for forward-thinking infrastructure." },
+      {
+        name: "description",
+        content:
+          "We engineer, integrate and maintain smart building, fire safety, security and IoT systems for forward-thinking infrastructure.",
+      },
       { name: "author", content: "Intersys Solutions" },
-      { property: "og:title", content: "Intersys Solutions — Smart Building & Engineering Systems" },
-      { property: "og:description", content: "Smart building, fire safety, security and IoT engineering for a safer future." },
+      {
+        property: "og:title",
+        content: "Intersys Solutions — Smart Building & Engineering Systems",
+      },
+      {
+        property: "og:description",
+        content: "Smart building, fire safety, security and IoT engineering for a safer future.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

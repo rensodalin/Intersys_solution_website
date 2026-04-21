@@ -38,19 +38,14 @@ export function Testimonial() {
           >
             <Quote className="h-12 w-12 text-brand-red" />
             <blockquote className="mt-6 font-display text-2xl md:text-4xl font-bold leading-tight tracking-tight">
-              "Intersys didn't just integrate our systems — they transformed
-              how we operate. Their engineering rigor and obsession with
-              uptime set a new standard for our portfolio."
+              "Intersys didn't just integrate our systems — they transformed how we operate. Their
+              engineering rigor and obsession with uptime set a new standard for our portfolio."
             </blockquote>
             <div className="mt-10 flex items-center gap-4">
               <div className="h-px w-12 bg-brand-red" />
               <div>
-                <div className="font-display font-bold text-lg">
-                  Sarah Chen
-                </div>
-                <div className="text-sm text-white/60">
-                  VP of Operations, Atlas Properties
-                </div>
+                <div className="font-display font-bold text-lg">Sarah Chen</div>
+                <div className="text-sm text-white/60">VP of Operations, Atlas Properties</div>
               </div>
             </div>
           </motion.div>

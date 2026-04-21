@@ -26,9 +26,7 @@ export function MetricsStrip() {
               <div className="font-display text-5xl md:text-6xl font-bold tracking-tight">
                 <AnimatedCounter value={m.value} suffix={m.suffix} />
               </div>
-              <div className="mt-2 text-sm uppercase tracking-widest text-white/60">
-                {m.label}
-              </div>
+              <div className="mt-2 text-sm uppercase tracking-widest text-white/60">{m.label}</div>
             </motion.div>
           ))}
         </div>

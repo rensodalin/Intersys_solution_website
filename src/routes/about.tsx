@@ -9,18 +9,38 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About — Intersys Solutions" },
-      { name: "description", content: "Engineering excellence delivered by a team obsessed with reliability, safety and sustainable infrastructure." },
+      {
+        name: "description",
+        content:
+          "Engineering excellence delivered by a team obsessed with reliability, safety and sustainable infrastructure.",
+      },
       { property: "og:title", content: "About Intersys Solutions" },
-      { property: "og:description", content: "Engineering excellence delivered by a team obsessed with reliability, safety and sustainable infrastructure." },
+      {
+        property: "og:description",
+        content:
+          "Engineering excellence delivered by a team obsessed with reliability, safety and sustainable infrastructure.",
+      },
     ],
   }),
   component: About,
 });
 
 const values = [
-  { n: "01", t: "Engineering Rigor", d: "Every system we deploy is designed to outlast its specifications." },
-  { n: "02", t: "Operational Safety", d: "Safety is the first principle, not the last checklist item." },
-  { n: "03", t: "Long-Term Partnership", d: "We measure success in decades of uptime, not delivery dates." },
+  {
+    n: "01",
+    t: "Engineering Rigor",
+    d: "Every system we deploy is designed to outlast its specifications.",
+  },
+  {
+    n: "02",
+    t: "Operational Safety",
+    d: "Safety is the first principle, not the last checklist item.",
+  },
+  {
+    n: "03",
+    t: "Long-Term Partnership",
+    d: "We measure success in decades of uptime, not delivery dates.",
+  },
 ];
 
 const team = [
@@ -41,11 +61,12 @@ function About() {
               About Intersys
             </div>
             <h1 className="mt-5 font-display text-5xl md:text-7xl font-bold leading-[1.02]">
-              Building the <span className="text-brand-red">invisible</span> infrastructure of modern life.
+              Building the <span className="text-brand-red">invisible</span> infrastructure of
+              modern life.
             </h1>
             <p className="mt-6 text-lg text-white/70 max-w-2xl leading-relaxed">
-              For over 15 years we've engineered the control systems that keep
-              the world's most critical buildings safe, efficient, and alive.
+              For over 15 years we've engineered the control systems that keep the world's most
+              critical buildings safe, efficient, and alive.
             </p>
           </div>
         </Container>
@@ -94,9 +115,7 @@ function About() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="bg-white rounded-xl p-8 border border-border"
               >
-                <div className="font-display text-5xl font-bold text-brand-red">
-                  {v.n}
-                </div>
+                <div className="font-display text-5xl font-bold text-brand-red">{v.n}</div>
                 <h3 className="mt-6 font-display text-xl font-bold text-navy">{v.t}</h3>
                 <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{v.d}</p>
               </motion.div>

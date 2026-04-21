@@ -42,13 +42,11 @@ export function Footer() {
               <div className="grid h-9 w-9 place-items-center rounded-md bg-brand-red font-display font-bold">
                 IS
               </div>
-              <span className="font-display text-lg font-bold tracking-tight">
-                INTERSYS
-              </span>
+              <span className="font-display text-lg font-bold tracking-tight">INTERSYS</span>
             </Link>
             <p className="mt-5 text-sm text-white/60 max-w-sm leading-relaxed">
-              Engineering smart, safe, and sustainable buildings through
-              integrated control systems and automation.
+              Engineering smart, safe, and sustainable buildings through integrated control systems
+              and automation.
             </p>
             <div className="mt-6 flex gap-3">
               {[Linkedin, Twitter, Github, Mail].map((Icon, i) => (
@@ -84,9 +82,7 @@ export function Footer() {
           ))}
 
           <div className="col-span-12 md:col-span-12 lg:col-span-2">
-            <h4 className="font-display text-sm font-bold uppercase tracking-[0.15em]">
-              Contact
-            </h4>
+            <h4 className="font-display text-sm font-bold uppercase tracking-[0.15em]">Contact</h4>
             <p className="mt-5 text-sm text-white/60 leading-relaxed">
               25 Industrial Boulevard
               <br />
@@ -102,9 +98,15 @@ export function Footer() {
             © {new Date().getFullYear()} Intersys Solutions. All rights reserved.
           </p>
           <div className="flex gap-6 text-xs text-white/50">
-            <a href="#" className="hover:text-white">Privacy</a>
-            <a href="#" className="hover:text-white">Terms</a>
-            <a href="#" className="hover:text-white">Cookies</a>
+            <a href="#" className="hover:text-white">
+              Privacy
+            </a>
+            <a href="#" className="hover:text-white">
+              Terms
+            </a>
+            <a href="#" className="hover:text-white">
+              Cookies
+            </a>
           </div>
         </div>
       </Container>
