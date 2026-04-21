@@ -1,71 +1,124 @@
 import { motion } from "framer-motion";
-import { Building2, Flame, ShieldCheck, Wind, Lightbulb, Cpu, type LucideIcon } from "lucide-react";
-import { SectionHeading } from "./Section";
 import { Container } from "./Container";
+import solutionImg from "@/assets/solution.png";
 
-type Svc = { icon: LucideIcon; title: string; desc: string };
-
-const services: Svc[] = [
+const services = [
   {
-    icon: Building2,
-    title: "Building Management",
-    desc: "Integrated BMS for energy, comfort, and operational efficiency.",
+    title: "Building Management Systems",
+    desc: "Discover how our advanced Building Management Systems (BMS) can optimize the performance of your building's essential systems, ensuring seamless operation and energy efficiency.",
+    btn: "Discover BMS",
   },
   {
-    icon: Flame,
-    title: "Fire & Safety Systems",
-    desc: "Code-compliant detection, suppression, and evacuation systems.",
+    title: "Fire Alarm Systems",
+    desc: "Safeguard your property and occupants with our state-of-the-art Fire Alarm Systems, designed to provide early detection and rapid response to potential fire hazards.",
+    btn: "Explore Fire Safety",
   },
   {
-    icon: ShieldCheck,
-    title: "Security & Access",
-    desc: "Access control, surveillance, intrusion, and visitor management.",
+    title: "Access Control Systems",
+    desc: "Protect your building and assets with our Access Control Systems, offering advanced security features and flexible access management tailored to your requirements.",
+    btn: "Enhance Security",
   },
   {
-    icon: Wind,
-    title: "HVAC Automation",
-    desc: "Smart climate control with predictive maintenance and analytics.",
+    title: "Surveillance (CCTV)",
+    desc: "Ensure constant vigilance and monitoring with our Surveillance (CCTV) solutions, providing comprehensive coverage and real-time visual insights for enhanced security.",
+    btn: "View CCTV Solutions",
   },
   {
-    icon: Lightbulb,
-    title: "Lighting Control",
-    desc: "DALI, KNX and IoT lighting for adaptive, low-energy operations.",
+    title: "Audio Visual (AV) System",
+    desc: "Enhance communication and engagement with our AV solutions designed for meeting rooms, classrooms, auditoriums, and control centers, delivering seamless audio, visual, and collaboration experiences.",
+    btn: "Explore AV Solutions",
   },
   {
-    icon: Cpu,
-    title: "IoT & Edge Computing",
-    desc: "Sensor networks, edge gateways, and unified data dashboards.",
+    title: "Custom Solutions",
+    desc: "Unleash the full potential of your building with our expert support and consulting services, tailored to address your unique challenges and requirements.",
+    btn: "Explore Custom Solutions",
   },
 ];
 
 export function ServicesGrid({ compact = false }: { compact?: boolean }) {
-  return (
-    <section className="bg-offwhite py-24 md:py-32">
-      <Container>
-        <SectionHeading
-          eyebrow="What We Do"
-          title="Engineering services that power smart infrastructure."
-          description="From single-system upgrades to full-stack building intelligence — we deliver end-to-end."
-        />
+  const displayedServices = compact ? services.slice(0, 6) : services;
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {(compact ? services.slice(0, 6) : services).map((s, i) => (
+  return (
+    <section className="relative bg-white pb-24 md:pb-32 mt-[-1px]">
+      {/* Dark Split Background - Top Half */}
+      <div className="absolute top-0 left-0 right-0 h-[65%] md:h-[50%] bg-[#071321] z-0" />
+
+      <Container className="relative z-10 pt-24 md:pt-32">
+        {/* Header Content with Floating Image */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 mb-16 md:mb-24">
+          <div className="max-w-2xl z-10">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="font-display text-4xl md:text-[56px] font-bold text-white tracking-tight mb-6"
+            >
+              Our Solutions
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-[16px] text-white/80 leading-relaxed font-medium"
+            >
+              At Intersys Solutions Co., Ltd, we offer a comprehensive range of smart building solutions tailored to meet your specific needs. It's easy to get started - simply explore our key services below.
+            </motion.p>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: -3 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", duration: 1.5, bounce: 0.3 }}
+            className="w-full lg:w-[45%] max-w-lg relative"
+          >
+            {/* Glowing effect behind image */}
+            <div className="absolute inset-0 bg-[#ff3b3b]/30 blur-[60px] rounded-full scale-75" />
+
+            {/* Infinite floating animation layer */}
+            <motion.div
+              animate={{ y: [0, -15, 0] }}
+              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+              className="relative z-10"
+            >
+              <img
+                src={solutionImg}
+                alt="Intersys Smart Solutions"
+                className="w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] lg:scale-110 right-0 transform origin-right"
+              />
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* CSS Grid for Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 md:gap-y-16">
+          {displayedServices.map((s, i) => (
             <motion.div
               key={s.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: i * 0.07 }}
-              className="group relative bg-white border border-border rounded-xl p-8 hover:border-brand-red hover:-translate-y-1 transition-all duration-300 shadow-sm hover:shadow-xl hover:shadow-brand-red/10"
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="relative group h-full flex"
             >
-              <div className="grid h-14 w-14 place-items-center rounded-lg bg-navy text-white group-hover:bg-brand-red transition-colors">
-                <s.icon className="h-6 w-6" />
-              </div>
-              <h3 className="mt-6 font-display text-xl font-bold text-navy">{s.title}</h3>
-              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
-              <div className="mt-6 h-px w-12 bg-border group-hover:w-full group-hover:bg-brand-red transition-all duration-500" />
-              <div className="mt-4 text-xs font-semibold uppercase tracking-widest text-brand-red opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all">
-                Learn More →
+              {/* Outer stroke / offset box effect */}
+              <div className="absolute top-4 left-4 right-[-4px] bottom-[-4px] border border-[#071321]/15 rounded-[20px] pointer-events-none transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1" />
+
+              {/* Main Interactive Card */}
+              <div className="relative z-10 w-full bg-gradient-to-br from-[#ffffff] to-[#f8f9fc] border border-white shadow-sm rounded-[20px] p-8 md:p-10 flex flex-col items-start transition-transform duration-300 group-hover:-translate-y-1 group-hover:-translate-x-1 group-hover:shadow-[0_20px_40px_-15px_rgba(7,19,33,0.1)]">
+
+                <h3 className="font-display text-[26px] font-bold text-[#071321] mb-4 leading-[1.2]">
+                  {s.title}
+                </h3>
+
+                <p className="text-[15px] text-[#4a5568] leading-relaxed flex-grow mb-10">
+                  {s.desc}
+                </p>
+
+                <button className="mt-auto bg-white text-[#ff3b3b] shadow-[0_4px_14px_0_rgba(0,0,0,0.06)] border border-[#ff3b3b]/10 rounded-full px-6 py-2.5 text-sm font-bold transition-all duration-300 group-hover:bg-[#ff3b3b] group-hover:text-white group-hover:shadow-[0_4px_20px_0_rgba(255,59,59,0.4)]">
+                  {s.btn}
+                </button>
               </div>
             </motion.div>
           ))}

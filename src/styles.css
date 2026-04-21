@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-sans: "Manrope", system-ui, sans-serif;
+  --font-display: "Manrope", system-ui, sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -50,11 +50,14 @@
   --popover-foreground: oklch(0.18 0.03 265);
 
   /* Brand */
-  --navy: oklch(0.22 0.07 265); /* #0B1530 ish */
-  --navy-deep: oklch(0.16 0.06 268); /* #060B1F ish */
+  --navy: oklch(0.22 0.07 265);
+  /* #0B1530 ish */
+  --navy-deep: oklch(0.16 0.06 268);
+  /* #060B1F ish */
   --navy-soft: oklch(0.28 0.06 265);
   --offwhite: oklch(0.97 0.005 250);
-  --brand-red: oklch(0.62 0.22 27); /* #E63946 */
+  --brand-red: oklch(0.62 0.22 27);
+  /* #E63946 */
   --brand-red-glow: oklch(0.7 0.24 27);
 
   --primary: var(--navy);
@@ -109,15 +112,18 @@
   * {
     border-color: var(--color-border);
   }
+
   html {
     scroll-behavior: smooth;
   }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
+
   h1,
   h2,
   h3,
@@ -145,7 +151,22 @@
     linear-gradient(to bottom, oklch(1 0 0 / 0.06) 1px, transparent 1px);
   background-size: 56px 56px;
 }
+
 .bg-dots {
   background-image: radial-gradient(oklch(1 0 0 / 0.12) 1px, transparent 1px);
   background-size: 24px 24px;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
 }

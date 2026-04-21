@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Container } from "./Container";
+import logoImg from "@/assets/logo.avif";
 
 const links = [
-  { to: "/", label: "Home" },
-  { to: "/services", label: "Services" },
-  { to: "/portfolio", label: "Portfolio" },
-  { to: "/products", label: "Products" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
+  { to: "/", label: "HOME" },
+  { to: "/about", label: "ABOUT US" }, // using /about based on common sense mapping
+  { to: "/services", label: "SERVICES" },
+  { to: "/products", label: "PRODUCTS" },
+  { to: "/portfolio", label: "PROJECTS" },
+  { to: "/contact", label: "CONTACT" },
 ] as const;
 
 export function Navbar() {
@@ -27,41 +27,43 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 inset-x-0 z-50 transition-all duration-300",
-        scrolled ? "bg-navy-deep/85 backdrop-blur-lg border-b border-white/10" : "bg-transparent",
+        "fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-[#162332]", // Very dark solid blue to match screenshot precisely
       )}
     >
-      <Container className="flex h-20 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 text-white">
-          <div className="grid h-9 w-9 place-items-center rounded-md bg-brand-red font-display font-bold">
-            IS
-          </div>
-          <span className="font-display text-lg font-bold tracking-tight">INTERSYS</span>
+      <div className="w-full px-20 flex h-20 items-center justify-between">
+        {/* Left side (Logo) */}
+        <Link to="/" className="flex items-center gap-3">
+          <img src={logoImg} alt="Intersys Logo" className="h-14 w-auto object-contain" />
+
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-8">
+        {/* Center (Links) */}
+        <nav className="hidden lg:flex items-center justify-center gap-10 absolute left-1/2 -translate-x-1/2">
           {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
-              className="text-sm font-medium text-white/80 hover:text-white transition-colors relative group"
+              className="text-[11px] font-medium tracking-widest text-[#8194ad] hover:text-white transition-colors relative group py-2"
               activeProps={{ className: "text-white" }}
             >
               {l.label}
-              <span className="absolute -bottom-1.5 left-0 h-0.5 w-0 bg-brand-red transition-all duration-300 group-hover:w-full" />
+              {/* The active hover line */}
+              <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-brand-red transition-all duration-300 group-[.active]:w-full group-hover:w-full" />
             </Link>
           ))}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-3">
+        {/* Right (Button) */}
+        <div className="hidden lg:flex">
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 rounded-md bg-brand-red px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-red-glow transition-colors shadow-lg shadow-brand-red/20"
+            className="flex h-9 items-center justify-center rounded-sm bg-gradient-to-r from-[#ff3b3b] to-[#ff6b3b] px-6 text-[10px] uppercase font-bold tracking-wider text-white hover:from-[#e32424] hover:to-[#fa5c2e] transition-colors shadow-lg shadow-[#ff3b3b]/30"
           >
-            Get a Quote <ArrowRight className="h-4 w-4" />
+            Get In Touch
           </Link>
         </div>
 
+        {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
           className="lg:hidden text-white p-2"
@@ -69,17 +71,17 @@ export function Navbar() {
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
-      </Container>
+      </div>
 
       {open && (
         <div className="lg:hidden bg-navy-deep border-t border-white/10">
-          <Container className="py-6 flex flex-col gap-4">
+          <div className="px-6 py-6 flex flex-col gap-4">
             {links.map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className="text-white/80 hover:text-white py-2"
+                className="text-white/80 hover:text-white py-2 text-sm tracking-widest"
               >
                 {l.label}
               </Link>
@@ -87,11 +89,11 @@ export function Navbar() {
             <Link
               to="/contact"
               onClick={() => setOpen(false)}
-              className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-brand-red px-5 py-3 text-sm font-semibold text-white"
+              className="mt-2 flex h-10 items-center justify-center rounded-sm bg-gradient-to-r from-[#ff3b3b] to-[#ff6b3b] px-5 text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-[#ff3b3b]/20"
             >
-              Get a Quote <ArrowRight className="h-4 w-4" />
+              Request Quote
             </Link>
-          </Container>
+          </div>
         </div>
       )}
     </header>

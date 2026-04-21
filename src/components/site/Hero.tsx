@@ -1,111 +1,123 @@
-import { motion } from "framer-motion";
+import { useState, useCallback, useEffect } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import { MoveRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Play } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "./Container";
-import heroImg from "@/assets/hero.jpg";
+import heroImg2 from "@/assets/Hero.png";
+import heroImg3 from "@/assets/Hero1.png";
+
+
+// Using high-quality Unsplash fallbacks combined with the local hero image to create a rich swipe effect
+const backgrounds = [
+  heroImg2,
+  heroImg3,
+  "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2940&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2834&auto=format&fit=crop",
+  "https://plus.unsplash.com/premium_photo-1681412504848-bf25a7198829?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+];
 
 export function Hero() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 40 }, [
+    Autoplay({ delay: 5000, stopOnInteraction: false }),
+  ]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
   return (
-    <section className="relative min-h-screen flex items-center pt-24 overflow-hidden bg-navy-deep text-white">
-      {/* Background grid */}
-      <div className="absolute inset-0 bg-grid opacity-60" />
-      <div className="absolute inset-0 bg-gradient-to-br from-navy-deep via-navy-deep/90 to-navy" />
+    <section className="relative min-h-[90vh] bg-[#0c1827] flex items-center justify-start overflow-hidden pt-20">
+      {/* Background Carousel */}
+      <div className="absolute inset-0 z-0 h-full w-full" ref={emblaRef}>
+        <div className="flex h-full w-full touch-pan-y">
+          {backgrounds.map((bg, idx) => (
+            <div key={idx} className="relative h-full min-w-full overflow-hidden flex-[0_0_100%]">
+              <motion.img
+                initial={{ scale: 1.1 }}
+                animate={{ scale: selectedIndex === idx ? 1.0 : 1.1 }}
+                transition={{ duration: 6, ease: "easeOut" }}
+                src={bg}
+                alt={`Hero ${idx + 1}`}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
 
-      {/* Floating orbs */}
-      <motion.div
-        animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/4 -left-20 h-96 w-96 rounded-full bg-brand-red/20 blur-[120px]"
-      />
-      <motion.div
-        animate={{ x: [0, -30, 0], y: [0, 40, 0] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-[140px]"
-      />
+      {/* Navy gradient overlay over the swiping images */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#030e1c]/95 via-[#081525]/80 to-[#10233b]/40 mix-blend-multiply" />
+      <div className="absolute inset-0 z-10 bg-black/40" />
 
-      <Container className="relative z-10">
-        <div className="grid grid-cols-12 gap-6 items-center">
-          <div className="col-span-12 lg:col-span-7">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur px-4 py-1.5 text-xs font-medium uppercase tracking-wider"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-red animate-pulse" />
-              Smart Engineering Solutions
-            </motion.div>
 
+
+      {/* Main Text Content */}
+      <Container className="relative z-30 pt-16 pb-20">
+        <div className="max-w-3xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.25em] text-[#8aa1bf]"
+          >
+            <span className="h-[6px] w-[6px] rounded-full bg-[#ff3b3b]" />
+            Leading Smart Building Integrator
+          </motion.div>
+
+          <AnimatePresence mode="wait">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="mt-6 font-display text-5xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.95] tracking-tight"
+              className="mt-10 font-display text-[4rem] md:text-[5.5rem] lg:text-[4.5rem] font-bold leading-[1.05] tracking-[-0.03em] text-white"
             >
               Smart Building <br />
-              Solutions for a <br />
-              <span className="text-brand-red">Safer</span> Future.
+              Solutions for a <span className="text-[#ff3b3b]">Safer</span> <br />
+              <span className="text-[#ff3b3b]">Future.</span>
             </motion.h1>
+          </AnimatePresence>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="mt-7 max-w-xl text-lg text-white/70 leading-relaxed"
-            >
-              We design, integrate, and maintain advanced control systems — from fire safety and
-              HVAC to access control and IoT — for forward-thinking infrastructure.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
-              className="mt-10 flex flex-wrap gap-4"
-            >
-              <Link
-                to="/contact"
-                className="group inline-flex items-center gap-2 rounded-md bg-brand-red px-7 py-4 text-sm font-semibold shadow-xl shadow-brand-red/30 hover:bg-brand-red-glow transition-all"
-              >
-                Start Your Project
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              <Link
-                to="/portfolio"
-                className="inline-flex items-center gap-2 rounded-md border border-white/20 bg-white/5 backdrop-blur px-7 py-4 text-sm font-semibold hover:bg-white/10 transition-colors"
-              >
-                <Play className="h-4 w-4" /> View Our Work
-              </Link>
-            </motion.div>
-          </div>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="mt-10 max-w-xl text-lg font-light leading-relaxed text-[#8aa1bf]"
+          >
+            Pioneering the next generation of architectural intelligence through
+            integrated BMS, security, and fire safety systems.
+          </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="col-span-12 lg:col-span-5 relative"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="mt-12 flex flex-wrap items-center gap-5"
           >
-            <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-tr from-navy-deep/60 via-transparent to-brand-red/20 z-10" />
-              <img
-                src={heroImg}
-                alt="Smart engineering control room"
-                width={1920}
-                height={1080}
-                className="w-full h-[480px] object-cover"
-              />
-              <div className="absolute bottom-6 left-6 right-6 z-20 flex items-end justify-between">
-                <div>
-                  <div className="text-xs uppercase tracking-widest text-white/60">
-                    Live Operations
-                  </div>
-                  <div className="font-display text-2xl font-bold mt-1">24/7 Monitoring</div>
-                </div>
-                <div className="rounded-md bg-brand-red px-3 py-1.5 text-xs font-semibold">
-                  ONLINE
-                </div>
-              </div>
-            </div>
+            <Link
+              to="/contact"
+              className="group inline-flex h-12 md:h-[52px] items-center gap-2 rounded-sm bg-gradient-to-r from-[#ff3b3b] to-[#ff6b3b] px-8 text-sm font-semibold text-white shadow-lg shadow-[#ff3b3b]/30 transition-all hover:from-[#e32424] hover:to-[#fa5c2e]"
+            >
+              Contact Us <MoveRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+            <Link
+              to="/services"
+              className="inline-flex h-12 md:h-[52px] items-center justify-center rounded-sm border border-white/20 bg-transparent px-8 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/5"
+            >
+              Explore Solutions
+            </Link>
           </motion.div>
         </div>
       </Container>
