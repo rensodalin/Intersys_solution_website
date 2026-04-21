@@ -5,32 +5,32 @@ import solutionImg from "@/assets/solution.png";
 const services = [
   {
     title: "Building Management Systems",
-    desc: "Discover how our advanced Building Management Systems (BMS) can optimize the performance of your building's essential systems, ensuring seamless operation and energy efficiency.",
+    desc: "Optimize building performance and energy efficiency with our centralized, intelligent BMS platforms.",
     btn: "Discover BMS",
   },
   {
     title: "Fire Alarm Systems",
-    desc: "Safeguard your property and occupants with our state-of-the-art Fire Alarm Systems, designed to provide early detection and rapid response to potential fire hazards.",
+    desc: "Globally certified early detection and rapid response systems to protect occupants and high-value assets.",
     btn: "Explore Fire Safety",
   },
   {
     title: "Access Control Systems",
-    desc: "Protect your building and assets with our Access Control Systems, offering advanced security features and flexible access management tailored to your requirements.",
+    desc: "Advanced security protocols and flexible management tools tailored to your specific site requirements.",
     btn: "Enhance Security",
   },
   {
     title: "Surveillance (CCTV)",
-    desc: "Ensure constant vigilance and monitoring with our Surveillance (CCTV) solutions, providing comprehensive coverage and real-time visual insights for enhanced security.",
+    desc: "Constant vigilance with AI-driven visual insights and comprehensive site-wide monitoring.",
     btn: "View CCTV Solutions",
   },
   {
     title: "Audio Visual (AV) System",
-    desc: "Enhance communication and engagement with our AV solutions designed for meeting rooms, classrooms, auditoriums, and control centers, delivering seamless audio, visual, and collaboration experiences.",
+    desc: "Seamless communication and collaboration tools designed for high-performance meeting and control environments.",
     btn: "Explore AV Solutions",
   },
   {
     title: "Custom Solutions",
-    desc: "Unleash the full potential of your building with our expert support and consulting services, tailored to address your unique challenges and requirements.",
+    desc: "Bespoke engineering support and consulting to solve your most complex architectural and technical challenges.",
     btn: "Explore Custom Solutions",
   },
 ];
@@ -40,8 +40,8 @@ export function ServicesGrid({ compact = false }: { compact?: boolean }) {
 
   return (
     <section className="relative bg-white pb-24 md:pb-32 mt-[-1px]">
-      {/* Dark Split Background - Top Half */}
-      <div className="absolute top-0 left-0 right-0 h-[65%] md:h-[50%] bg-[#071321] z-0" />
+      {/* Blue Split Background - Top Half */}
+      <div className="absolute top-0 left-0 right-0 h-[65%] md:h-[50%] bg-[#121f3d] z-0" />
 
       <Container className="relative z-10 pt-24 md:pt-32">
         {/* Header Content with Floating Image */}
@@ -62,7 +62,7 @@ export function ServicesGrid({ compact = false }: { compact?: boolean }) {
               transition={{ delay: 0.1 }}
               className="text-[16px] text-white/80 leading-relaxed font-medium"
             >
-              At Intersys Solutions Co., Ltd, we offer a comprehensive range of smart building solutions tailored to meet your specific needs. It's easy to get started - simply explore our key services below.
+              Comprehensive range of smart building systems tailored to your specific needs.
             </motion.p>
           </div>
 

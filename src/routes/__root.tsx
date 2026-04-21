@@ -1,8 +1,9 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
-
-import appCss from "../styles.css?url";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
+import { ScrollControls } from "@/components/site/ScrollControls";
+
+import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
   return (
@@ -77,6 +78,7 @@ function RootComponent() {
       <main>
         <Outlet />
       </main>
+      <ScrollControls />
       <Footer />
     </>
   );

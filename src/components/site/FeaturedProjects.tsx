@@ -94,7 +94,7 @@ export function FeaturedProjects() {
   return (
     <section className="bg-white py-24 md:py-32 overflow-hidden border-t border-gray-100">
       <Container>
-        <div className="max-w-4xl mb-16 md:mb-20">
+        <div className="max-w-2xl mb-16 md:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -108,7 +108,7 @@ export function FeaturedProjects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="font-display text-4xl md:text-[52px] font-bold text-[#071321] tracking-tight leading-[1.1] mb-8"
+            className="font-display text-xl md:text-[52px] font-bold text-[#071321] tracking-tight leading-[1.1] mb-8"
           >
             Successful Delivery.
           </motion.h2>
@@ -117,7 +117,7 @@ export function FeaturedProjects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-base md:text-lg text-[#6b7c93] leading-relaxed max-w-3xl"
+            className="text-base md:text-lg text-[#6b7c93] leading-relaxed max-w-1xl"
           >
             We have successfully delivered Building Management System (BMS) solutions for diverse industries, covering HVAC, plumbing, electrical, lighting, access control, fire safety, metering, and specialized systems. Below is a summary of our completed projects:
           </motion.p>
