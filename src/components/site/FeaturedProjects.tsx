@@ -138,9 +138,7 @@ export function FeaturedProjects() {
                   {p.desc}
                 </p>
                 <div className="mt-8 flex items-center gap-2 group/btn">
-                  <span className="text-[10px] font-bold text-white uppercase tracking-[0.2em] group-hover/btn:text-[#9B0F06] transition-colors">
-                    Learn More
-                  </span>
+
                   <div className="w-5 h-[1px] bg-white group-hover/btn:bg-[#9B0F06] transition-colors" />
                 </div>
               </div>

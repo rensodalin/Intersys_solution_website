@@ -5,11 +5,10 @@ import { cn } from "@/lib/utils";
 import logoImg from "@/assets/logo.avif";
 
 const links = [
-  { to: "/about", label: "ABOUT US" },
-  { to: "/services", label: "SERVICES" },
-  { to: "/products", label: "PRODUCTS" },
-  { to: "/portfolio", label: "PROJECTS" },
-  { to: "/contact", label: "CONTACT" },
+  { to: "/about", label: "ABOUT US", hash: undefined },
+  { to: "/", hash: "solutions", label: "SERVICES" },
+  { to: "/products", label: "PRODUCTS", hash: undefined },
+  { to: "/contact", label: "CONTACT", hash: undefined },
 ] as const;
 
 export function Navbar() {
@@ -46,8 +45,9 @@ export function Navbar() {
         <nav className="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
           {links.map((l) => (
             <Link
-              key={l.to}
+              key={l.label}
               to={l.to}
+              hash={l.hash}
               className="text-[12px] font-bold tracking-widest text-white/70 hover:text-white transition-colors relative group py-2"
               activeProps={{ className: "text-white" }}
             >
@@ -88,8 +88,9 @@ export function Navbar() {
           <div className="px-6 py-6 flex flex-col gap-4">
             {links.map((l) => (
               <Link
-                key={l.to}
+                key={l.label}
                 to={l.to}
+                hash={l.hash}
                 onClick={() => setOpen(false)}
                 className="text-white/80 hover:text-white py-2 text-sm font-bold tracking-widest border-b border-white/10 last:border-0"
               >

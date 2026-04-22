@@ -72,17 +72,9 @@ export function PromotionOverlay({ isOpen, onClose }: PromotionOverlayProps) {
                                     className="relative"
                                 >
                                     <div className="bg-white p-2 rounded-2xl shadow-2xl border border-gray-100 rotate-12">
-                                        <img src="https://images.unsplash.com/photo-1503387762-592dea58ec41?q=80&w=2800&auto=format&fit=crop" className="rounded-xl w-full h-[300px] object-cover" alt="Project" />
+                                        <img src="https://plus.unsplash.com/premium_photo-1685148902867-0d917a4d2a67?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
                                     </div>
-                                    <div className="absolute -bottom-10 -left-10 bg-white p-2 rounded-xl shadow-2xl border border-gray-100 -rotate-12 w-48">
-                                        <div className="bg-gray-50 rounded-lg p-4">
-                                            <div className="w-8 h-8 rounded-full bg-[#9B0F06]/10 flex items-center justify-center mb-3">
-                                                <div className="w-2 h-2 rounded-full bg-[#9B0F06]" />
-                                            </div>
-                                            <div className="h-2 w-full bg-gray-200 rounded-full mb-2" />
-                                            <div className="h-2 w-2/3 bg-gray-200 rounded-full" />
-                                        </div>
-                                    </div>
+
                                 </motion.div>
                             </div>
                         </div>
@@ -112,11 +104,7 @@ export function PromotionOverlay({ isOpen, onClose }: PromotionOverlayProps) {
                                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                 </button>
 
-                                <div className="pt-12 border-t border-gray-100">
-                                    <p className="text-xs text-gray-400 font-medium uppercase tracking-widest">
-                                        Your Trusted Engineering Partner in Cambodia
-                                    </p>
-                                </div>
+
                             </div>
                         </div>
                     </motion.div>

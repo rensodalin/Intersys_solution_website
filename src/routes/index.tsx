@@ -3,7 +3,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/components/site/Hero";
 import { MetricsStrip } from "@/components/site/MetricsStrip";
 import { Certificates } from "@/components/site/Certificates";
-import { IntegratedTech } from "@/components/site/IntegratedTech";
 import { ServicesGrid } from "@/components/site/ServicesGrid";
 import { FeaturedProjects } from "@/components/site/FeaturedProjects";
 import { JourneySection } from "@/components/site/JourneySection";
@@ -37,19 +36,12 @@ function Index() {
       <JourneySection />
       <FeaturedProjects />
       <Certificates />
+      <ServicesGrid />
 
       <Clients />
 
       <Insights />
-      <ServicesGrid compact />
 
-      {/* <AnniversaryBanner /> */}
-
-
-
-      {/* 
-      <PosterCarousel /> */}
-      <IntegratedTech />
 
 
       <PromotionOverlay
