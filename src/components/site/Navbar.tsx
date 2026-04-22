@@ -5,8 +5,7 @@ import { cn } from "@/lib/utils";
 import logoImg from "@/assets/logo.avif";
 
 const links = [
-  { to: "/", label: "HOME" },
-  { to: "/about", label: "ABOUT US" }, // using /about based on common sense mapping
+  { to: "/about", label: "ABOUT US" },
   { to: "/services", label: "SERVICES" },
   { to: "/products", label: "PRODUCTS" },
   { to: "/portfolio", label: "PROJECTS" },
@@ -27,43 +26,53 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-[#162332]", // Very dark solid blue to match screenshot precisely
+        "fixed top-0 inset-x-0 z-50 transition-all duration-300 backdrop-blur-md",
+        scrolled
+          ? "bg-[#1A3263]/95 border-b border-white/10 shadow-lg"
+          : "bg-[#1A3263]/80"
       )}
     >
-      <div className="w-full px-20 flex h-20 items-center justify-between">
-        {/* Left side (Logo) */}
-        <Link to="/" className="flex items-center gap-3">
-          <img src={logoImg} alt="Intersys Logo" className="h-14 w-auto object-contain" />
-
+      <div className="w-full px-6 md:px-20 flex h-20 items-center justify-between">
+        {/* Logo */}
+        <Link to="/" className="flex items-center">
+          <img
+            src={logoImg}
+            alt="Intersys Logo"
+            className="h-14 w-auto object-contain"
+          />
         </Link>
 
-        {/* Center (Links) */}
-        <nav className="hidden lg:flex items-center justify-center gap-10 absolute left-1/2 -translate-x-1/2">
+        {/* Desktop Nav */}
+        <nav className="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
           {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
-              className="text-[11px] font-medium tracking-widest text-[#8194ad] hover:text-white transition-colors relative group py-2"
+              className="text-[12px] font-bold tracking-widest text-white/70 hover:text-white transition-colors relative group py-2"
               activeProps={{ className: "text-white" }}
             >
               {l.label}
-              {/* The active hover line */}
-              <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-brand-red transition-all duration-300 group-[.active]:w-full group-hover:w-full" />
+
+              {/* Red underline */}
+              <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C3110C] transition-all duration-300 group-hover:w-full" />
             </Link>
           ))}
         </nav>
 
-        {/* Right (Button) */}
+        {/* Desktop CTA */}
         <div className="hidden lg:flex">
           <Link
             to="/contact"
-            className="flex h-9 items-center justify-center rounded-sm bg-gradient-to-r from-[#ff3b3b] to-[#ff6b3b] px-6 text-[10px] uppercase font-bold tracking-wider text-white hover:from-[#e32424] hover:to-[#fa5c2e] transition-colors shadow-lg shadow-[#ff3b3b]/30"
+            className="flex h-10 items-center justify-center rounded-sm bg-[#C3110C] px-6 text-[11px] uppercase font-bold tracking-wider text-white 
+                       hover:bg-[#071321] transition-all duration-300 
+                       shadow-lg shadow-[#C3110C]/30 hover:shadow-[#071321]/30 
+                       hover:-translate-y-0.5"
           >
-            Get In Touch
+            Request Quote
           </Link>
         </div>
 
-        {/* Mobile toggle */}
+        {/* Mobile Toggle */}
         <button
           onClick={() => setOpen(!open)}
           className="lg:hidden text-white p-2"
@@ -73,23 +82,28 @@ export function Navbar() {
         </button>
       </div>
 
+      {/* Mobile Menu */}
       {open && (
-        <div className="lg:hidden bg-navy-deep border-t border-white/10">
+        <div className="lg:hidden bg-[#1A3263] border-t border-white/10 shadow-xl">
           <div className="px-6 py-6 flex flex-col gap-4">
             {links.map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className="text-white/80 hover:text-white py-2 text-sm tracking-widest"
+                className="text-white/80 hover:text-white py-2 text-sm font-bold tracking-widest border-b border-white/10 last:border-0"
               >
                 {l.label}
               </Link>
             ))}
+
+            {/* Mobile CTA */}
             <Link
               to="/contact"
               onClick={() => setOpen(false)}
-              className="mt-2 flex h-10 items-center justify-center rounded-sm bg-gradient-to-r from-[#ff3b3b] to-[#ff6b3b] px-5 text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-[#ff3b3b]/20"
+              className="mt-4 flex h-10 items-center justify-center rounded-sm bg-[#C3110C] px-5 text-xs font-bold uppercase tracking-wider text-white 
+                         shadow-lg shadow-[#C3110C]/30 
+                         hover:bg-[#071321] transition-all duration-300"
             >
               Request Quote
             </Link>

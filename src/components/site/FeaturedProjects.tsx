@@ -92,37 +92,7 @@ const projects = [
 
 export function FeaturedProjects() {
   return (
-    <section className="bg-white py-24 md:py-32 overflow-hidden border-t border-gray-100">
-      <Container>
-        <div className="max-w-2xl mb-16 md:mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-[11px] uppercase font-bold tracking-[0.2em] text-[#ff3b3b] mb-4"
-          >
-            Project Complete
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="font-display text-xl md:text-[52px] font-bold text-[#071321] tracking-tight leading-[1.1] mb-8"
-          >
-            Successful Delivery.
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-base md:text-lg text-[#6b7c93] leading-relaxed max-w-1xl"
-          >
-            We have successfully delivered Building Management System (BMS) solutions for diverse industries, covering HVAC, plumbing, electrical, lighting, access control, fire safety, metering, and specialized systems. Below is a summary of our completed projects:
-          </motion.p>
-        </div>
-      </Container>
+    <section className="bg-white pb-24 md:pb-32 overflow-hidden">
 
       {/* Seamless Tile Grid - No Gaps, Edge to Edge */}
       <div className="w-full">
@@ -134,7 +104,7 @@ export function FeaturedProjects() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: i * 0.05 }}
-              className="group relative aspect-square overflow-hidden bg-[#071321] cursor-pointer"
+              className="group relative aspect-square overflow-hidden bg-[#162E93] cursor-pointer"
             >
               {/* Background Image - High quality fill */}
               <img
@@ -144,7 +114,7 @@ export function FeaturedProjects() {
               />
 
               {/* Dark Overlay (Transitions in on hover) */}
-              <div className="absolute inset-0 bg-[#071321]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-[#162E93]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
               {/* Seamless Bottom Label (Initially Visible) */}
               <div className="absolute inset-x-0 bottom-0 p-6 z-20 group-hover:opacity-0 transition-opacity duration-300">
@@ -156,22 +126,22 @@ export function FeaturedProjects() {
               {/* Hover Detailed Content (Reveal interaction) */}
               <div className="absolute inset-0 flex flex-col justify-end p-8 z-30 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out">
                 <div className="mb-3">
-                  <span className="inline-block bg-[#ff3b3b] text-white uppercase text-[9px] font-bold px-3 py-1 rounded-full tracking-widest">
+                  <span className="inline-block bg-[#9B0F06] text-white uppercase text-[9px] font-bold px-3 py-1 rounded-full tracking-widest">
                     {p.category}
                   </span>
                 </div>
                 <h3 className="font-display text-xl md:text-2xl font-bold text-white mb-4 leading-tight">
                   {p.title}
                 </h3>
-                <div className="w-8 h-[2px] bg-[#ff3b3b] mb-4" />
+                <div className="w-8 h-[2px] bg-[#9B0F06] mb-4" />
                 <p className="text-white/80 text-[13px] leading-relaxed line-clamp-4">
                   {p.desc}
                 </p>
                 <div className="mt-8 flex items-center gap-2 group/btn">
-                  <span className="text-[10px] font-bold text-white uppercase tracking-[0.2em] group-hover/btn:text-[#ff3b3b] transition-colors">
+                  <span className="text-[10px] font-bold text-white uppercase tracking-[0.2em] group-hover/btn:text-[#9B0F06] transition-colors">
                     Learn More
                   </span>
-                  <div className="w-5 h-[1px] bg-white group-hover/btn:bg-[#ff3b3b] transition-colors" />
+                  <div className="w-5 h-[1px] bg-white group-hover/btn:bg-[#9B0F06] transition-colors" />
                 </div>
               </div>
             </motion.div>
@@ -181,4 +151,5 @@ export function FeaturedProjects() {
     </section>
   );
 }
+
 

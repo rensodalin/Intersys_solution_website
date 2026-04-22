@@ -78,3 +78,4 @@ export function SectionHeading({
     </motion.div>
   );
 }
+

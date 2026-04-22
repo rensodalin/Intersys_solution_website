@@ -27,7 +27,7 @@ export function Insights() {
         <section className="bg-[#f8f9fc] py-24">
             <Container>
                 <div className="mb-12 md:mb-16">
-                    <h2 className="font-display text-4xl md:text-[44px] font-bold text-[#071321] tracking-tight">
+                    <h2 className="font-display text-4xl md:text-[44px] font-bold text-[#162E93] tracking-tight">
                         Latest Insights.
                     </h2>
                 </div>
@@ -52,17 +52,17 @@ export function Insights() {
                             </div>
 
                             <div className="flex flex-col flex-grow">
-                                <div className="text-[10px] font-bold text-[#ff3b3b] uppercase tracking-widest mb-3">
+                                <div className="text-[10px] font-bold text-[#9B0F06] uppercase tracking-widest mb-3">
                                     {item.tag}
                                 </div>
-                                <h3 className="font-display text-[22px] font-bold text-[#071321] leading-snug mb-3 group-hover:text-[#ff3b3b] transition-colors">
+                                <h3 className="font-display text-[22px] font-bold text-[#162E93] leading-snug mb-3 group-hover:text-[#9B0F06] transition-colors">
                                     {item.title}
                                 </h3>
                                 <p className="text-[14px] text-[#6b7c93] leading-relaxed mb-6 flex-grow">
                                     {item.desc}
                                 </p>
                                 <div className="mt-auto">
-                                    <span className="text-[13px] font-bold text-[#071321] group-hover:text-[#ff3b3b] transition-colors">
+                                    <span className="text-[13px] font-bold text-[#162E93] group-hover:text-[#9B0F06] transition-colors">
                                         Read More
                                     </span>
                                 </div>
@@ -74,3 +74,4 @@ export function Insights() {
         </section>
     );
 }
+

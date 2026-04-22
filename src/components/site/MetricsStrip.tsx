@@ -53,7 +53,7 @@ export function MetricsStrip() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="relative group h-[200px] md:h-[240px] bg-[#0c1f36] overflow-hidden flex flex-col justify-between p-6 border-b-[6px] border-[#ff3b3b]"
+              className="relative group h-[200px] md:h-[240px] bg-[#1A3263] overflow-hidden flex flex-col justify-between p-6 border-b-[6px] border-[#9B0F06]"
             >
               {/* Background Image that fades in on hover */}
               <div
@@ -66,7 +66,7 @@ export function MetricsStrip() {
               />
 
               {/* Overlay gradient to ensure text readability with a subtle red wash */}
-              <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#4a0808] via-[#ad1818]/60 to-[#ff3b3b]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none mix-blend-multiply" />
+              <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#4a0808] via-[#ad1818]/60 to-[#9B0F06]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none mix-blend-multiply" />
               <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0c1f36] via-[#0c1f36]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none" />
 
               {/* Top content (Prefix text) */}
@@ -89,7 +89,7 @@ export function MetricsStrip() {
               </div>
 
               {/* Subtle hover line effect to draw the eye */}
-              <div className="absolute top-0 left-0 w-1 h-0 bg-[#ff3b3b] transition-all duration-500 group-hover:h-full z-20 opacity-0 group-hover:opacity-100" />
+              <div className="absolute top-0 left-0 w-1 h-0 bg-[#9B0F06] transition-all duration-500 group-hover:h-full z-20 opacity-0 group-hover:opacity-100" />
             </motion.div>
           ))}
         </div>
@@ -97,3 +97,4 @@ export function MetricsStrip() {
     </section>
   );
 }
+

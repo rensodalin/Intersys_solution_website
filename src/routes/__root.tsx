@@ -2,6 +2,7 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { ScrollControls } from "@/components/site/ScrollControls";
+import { FloatingChat } from "@/components/site/FloatingChat";
 
 import appCss from "../styles.css?url";
 
@@ -79,7 +80,9 @@ function RootComponent() {
         <Outlet />
       </main>
       <ScrollControls />
+      <FloatingChat />
       <Footer />
     </>
   );
 }
+

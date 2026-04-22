@@ -1,22 +1,45 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "./Container";
-import blueprintBg from "@/assets/project/image.png"; // Blueprint-style site image
-import siteBg from "@/assets/Intelligeinc.png"; // Site/Construction background
+import blueprintBg from "@/assets/project/image.png";
+import siteBg from "@/assets/Intelligeinc.png";
 
 export function Ecosystem() {
+  const [hovered, setHovered] = useState<"design" | "execution" | null>(null);
+
+  // Images swap when hovering the opposite section
+  const section1Img = hovered === "execution" ? siteBg : blueprintBg;
+  const section2Img = hovered === "design" ? blueprintBg : siteBg;
+
   return (
     <section className="bg-white overflow-hidden">
       {/* Section 1: Design & Engineering (Left Floating Box) */}
-      <div className="relative min-h-[500px] flex items-center">
-        {/* Background - Technical Overlay Filter */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src={blueprintBg}
-            className="w-full h-full object-cover opacity-30 grayscale brightness-110"
-            alt="Technical Background"
+      <div
+        className="relative min-h-[500px] flex items-center cursor-pointer"
+        onMouseEnter={() => setHovered("design")}
+        onMouseLeave={() => setHovered(null)}
+      >
+        {/* Background with crossfade */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <AnimatePresence initial={false}>
+            <motion.img
+              key={section1Img}
+              src={section1Img}
+              className="absolute inset-0 w-full h-full object-cover grayscale brightness-110"
+              alt="Technical Background"
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 0.3, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.05 }}
+              transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+            />
+          </AnimatePresence>
+          <div
+            className="absolute inset-0 opacity-[0.05]"
+            style={{
+              backgroundImage: "radial-gradient(circle, #162E93 1px, transparent 1px)",
+              backgroundSize: "20px 20px",
+            }}
           />
-          {/* Subtle blueprint grid overlay */}
-          <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle, #071321 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
         </div>
 
         <Container className="relative z-10 py-16">
@@ -26,9 +49,15 @@ export function Ecosystem() {
             viewport={{ once: true }}
             className="bg-white p-10 md:p-14 max-w-2xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] border border-gray-100"
           >
-            <h3 className="font-display text-2xl md:text-3xl font-bold text-[#071321] mb-6 tracking-tight">
+            <motion.h3
+              animate={{
+                color: hovered === "design" ? "#b91c1c" : "#162E93",
+              }}
+              transition={{ duration: 0.3 }}
+              className="font-display text-2xl md:text-3xl font-bold mb-6 tracking-tight"
+            >
               Design & Specialized Engineering
-            </h3>
+            </motion.h3>
             <p className="text-[#4a5568] text-[15px] md:text-base leading-relaxed">
               Comprehensive solutions based on the close and continuous cooperation between
               the client and our engineering team. From basic conceptual design to
@@ -40,16 +69,26 @@ export function Ecosystem() {
       </div>
 
       {/* Section 2: Execution & Quality (Right Floating Box) */}
-      <div className="relative min-h-[500px] flex items-center justify-end overflow-hidden">
-        {/* Background - Modern Architecture/Site */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src={siteBg}
-            className="w-full h-full object-cover"
-            alt="Execution Site"
-          />
-          {/* Navy tint overlay to match reference vibe */}
-          <div className="absolute inset-0 bg-[#071321]/40 mix-blend-multiply" />
+      <div
+        className="relative min-h-[500px] flex items-center justify-end overflow-hidden cursor-pointer"
+        onMouseEnter={() => setHovered("execution")}
+        onMouseLeave={() => setHovered(null)}
+      >
+        {/* Background with crossfade */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <AnimatePresence initial={false}>
+            <motion.img
+              key={section2Img}
+              src={section2Img}
+              className="absolute inset-0 w-full h-full object-cover"
+              alt="Execution Site"
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.05 }}
+              transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+            />
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-[#162E93]/40 mix-blend-multiply" />
         </div>
 
         <Container className="relative z-10 py-16 flex justify-end">
@@ -57,11 +96,17 @@ export function Ecosystem() {
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-[#071321] p-10 md:p-14 max-w-2xl shadow-2xl text-white border border-white/5"
+            className="bg-[#162E93] p-10 md:p-14 max-w-2xl shadow-2xl text-white border border-white/5"
           >
-            <h3 className="font-display text-2xl md:text-3xl font-bold mb-6 tracking-tight">
+            <motion.h3
+              animate={{
+                color: hovered === "execution" ? "#b91c1c" : "#ffffff",
+              }}
+              transition={{ duration: 0.3 }}
+              className="font-display text-2xl md:text-3xl font-bold mb-6 tracking-tight"
+            >
               Expert Execution & Build
-            </h3>
+            </motion.h3>
             <p className="text-white/80 text-[15px] md:text-base leading-relaxed">
               The heart of each project is its successful installation and integration.
               With our technical expertise and world-class technology partners like Honeywell,
@@ -75,4 +120,3 @@ export function Ecosystem() {
     </section>
   );
 }
-

@@ -59,7 +59,7 @@ export function Hero() {
       </div>
 
       {/* Navy gradient overlay over the swiping images */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#030e1c]/95 via-[#081525]/80 to-[#10233b]/40 mix-blend-multiply" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#162E93]/95 via-[#162E93]/80 to-[#162E93]/40 mix-blend-multiply" />
       <div className="absolute inset-0 z-10 bg-black/40" />
 
 
@@ -73,7 +73,7 @@ export function Hero() {
             transition={{ duration: 0.6 }}
             className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.25em] text-[#8aa1bf]"
           >
-            <span className="h-[6px] w-[6px] rounded-full bg-[#ff3b3b]" />
+            <span className="h-[6px] w-[6px] rounded-full bg-[#9B0F06]" />
             Leading Smart Building Integrator
           </motion.div>
 
@@ -85,8 +85,8 @@ export function Hero() {
               className="mt-10 font-display text-[4rem] md:text-[5.5rem] lg:text-[4.5rem] font-bold leading-[1.05] tracking-[-0.03em] text-white"
             >
               Smart Building <br />
-              Solutions for a <span className="text-[#ff3b3b]">Safer</span> <br />
-              <span className="text-[#ff3b3b]">Future.</span>
+              Solutions for a <span className="text-[#9B0F06]">Safer</span> <br />
+              <span className="text-[#9B0F06]">Future.</span>
             </motion.h1>
           </AnimatePresence>
 
@@ -108,7 +108,7 @@ export function Hero() {
           >
             <Link
               to="/contact"
-              className="group inline-flex h-12 md:h-[52px] items-center gap-2 rounded-sm bg-gradient-to-r from-[#ff3b3b] to-[#ff6b3b] px-8 text-sm font-semibold text-white shadow-lg shadow-[#ff3b3b]/30 transition-all hover:from-[#e32424] hover:to-[#fa5c2e]"
+              className="group inline-flex h-12 md:h-[52px] items-center gap-2 rounded-sm bg-gradient-to-r from-[#9B0F06] to-[#9B0F06] px-8 text-sm font-semibold text-white shadow-lg shadow-[#9B0F06]/30 transition-all hover:from-[#9B0F06] hover:to-[#fa5c2e]"
             >
               Contact Us <MoveRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
@@ -124,3 +124,4 @@ export function Hero() {
     </section>
   );
 }
+

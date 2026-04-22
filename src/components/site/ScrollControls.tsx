@@ -46,7 +46,7 @@ export function ScrollControls() {
                         {/* Scroll Up Button */}
                         <button
                             onClick={scrollToTop}
-                            className="w-12 h-12 bg-[#071321] hover:bg-[#ff3b3b] text-white flex items-center justify-center rounded shadow-2xl transition-all duration-300 group"
+                            className="w-12 h-12 bg-[#162E93] hover:bg-[#9B0F06] text-white flex items-center justify-center rounded shadow-2xl transition-all duration-300 group"
                             aria-label="Scroll to top"
                         >
                             <ChevronUp className="w-6 h-6 group-hover:-translate-y-1 transition-transform" />
@@ -55,7 +55,7 @@ export function ScrollControls() {
                         {/* Scroll Down Button (Only visible if not at bottom) */}
                         <button
                             onClick={scrollToBottom}
-                            className="w-12 h-12 bg-[#071321] hover:bg-[#ff3b3b] text-white flex items-center justify-center rounded shadow-2xl transition-all duration-300 group opacity-40 hover:opacity-100"
+                            className="w-12 h-12 bg-[#162E93] hover:bg-[#9B0F06] text-white flex items-center justify-center rounded shadow-2xl transition-all duration-300 group opacity-40 hover:opacity-100"
                             aria-label="Scroll to bottom"
                         >
                             <ChevronDown className="w-6 h-6 group-hover:translate-y-1 transition-transform" />
@@ -66,3 +66,4 @@ export function ScrollControls() {
         </div>
     );
 }
+

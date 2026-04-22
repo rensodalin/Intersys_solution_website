@@ -47,7 +47,7 @@ export function PosterCarousel() {
             <div className="absolute top-1/2 -translate-y-1/2 left-4 md:left-8 z-10 opacity-0 group-hover/section:opacity-100 transition-opacity duration-300">
                 <button
                     onClick={() => scroll("left")}
-                    className="bg-white/90 backdrop-blur-sm shadow-xl border border-black/10 text-[#071321] w-14 h-14 rounded-full flex items-center justify-center hover:bg-white hover:scale-110 active:scale-95 transition-all"
+                    className="bg-white/90 backdrop-blur-sm shadow-xl border border-black/10 text-[#162E93] w-14 h-14 rounded-full flex items-center justify-center hover:bg-white hover:scale-110 active:scale-95 transition-all"
                 >
                     <ChevronLeft strokeWidth={2.5} className="w-6 h-6 -ml-1" />
                 </button>
@@ -56,14 +56,14 @@ export function PosterCarousel() {
             <div className="absolute top-1/2 -translate-y-1/2 right-4 md:right-8 z-10 opacity-0 group-hover/section:opacity-100 transition-opacity duration-300">
                 <button
                     onClick={() => scroll("right")}
-                    className="bg-white/90 backdrop-blur-sm shadow-xl border border-black/10 text-[#071321] w-14 h-14 rounded-full flex items-center justify-center hover:bg-white hover:scale-110 active:scale-95 transition-all"
+                    className="bg-white/90 backdrop-blur-sm shadow-xl border border-black/10 text-[#162E93] w-14 h-14 rounded-full flex items-center justify-center hover:bg-white hover:scale-110 active:scale-95 transition-all"
                 >
                     <ChevronRight strokeWidth={2.5} className="w-6 h-6 -mr-1" />
                 </button>
             </div>
 
             <div className="text-center mb-12">
-                <h2 className="font-display text-4xl md:text-[44px] font-bold text-[#071321] tracking-tight">
+                <h2 className="font-display text-4xl md:text-[44px] font-bold text-[#162E93] tracking-tight">
                     Social Highlights.
                 </h2>
             </div>
@@ -114,3 +114,4 @@ export function PosterCarousel() {
         </section>
     );
 }
+

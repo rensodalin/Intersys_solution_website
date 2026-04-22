@@ -5,119 +5,112 @@ import solutionImg from "@/assets/solution.png";
 const services = [
   {
     title: "Building Management Systems",
-    desc: "Optimize building performance and energy efficiency with our centralized, intelligent BMS platforms.",
-    btn: "Discover BMS",
+    desc: "Optimize building performance with intelligent automation.",
+    btn: "Discover",
   },
   {
     title: "Fire Alarm Systems",
-    desc: "Globally certified early detection and rapid response systems to protect occupants and high-value assets.",
-    btn: "Explore Fire Safety",
+    desc: "Early detection systems to protect people and assets.",
+    btn: "Explore",
   },
   {
-    title: "Access Control Systems",
-    desc: "Advanced security protocols and flexible management tools tailored to your specific site requirements.",
-    btn: "Enhance Security",
+    title: "Access Control",
+    desc: "Secure, flexible access tailored to your site.",
+    btn: "Secure",
   },
   {
-    title: "Surveillance (CCTV)",
-    desc: "Constant vigilance with AI-driven visual insights and comprehensive site-wide monitoring.",
-    btn: "View CCTV Solutions",
+    title: "CCTV Surveillance",
+    desc: "AI-powered monitoring with real-time insights.",
+    btn: "View",
   },
   {
-    title: "Audio Visual (AV) System",
-    desc: "Seamless communication and collaboration tools designed for high-performance meeting and control environments.",
-    btn: "Explore AV Solutions",
+    title: "AV Systems",
+    desc: "High-performance communication environments.",
+    btn: "Explore",
   },
   {
     title: "Custom Solutions",
-    desc: "Bespoke engineering support and consulting to solve your most complex architectural and technical challenges.",
-    btn: "Explore Custom Solutions",
+    desc: "Tailored engineering for complex challenges.",
+    btn: "Custom",
   },
 ];
 
-export function ServicesGrid({ compact = false }: { compact?: boolean }) {
-  const displayedServices = compact ? services.slice(0, 6) : services;
-
+export function ServicesGrid() {
   return (
-    <section className="relative bg-white pb-24 md:pb-32 mt-[-1px]">
-      {/* Blue Split Background - Top Half */}
-      <div className="absolute top-0 left-0 right-0 h-[65%] md:h-[50%] bg-[#121f3d] z-0" />
+    <section className="relative bg-white py-20">
+      {/* Top background */}
+      <div className="absolute top-0 left-0 right-0 h-[45%] bg-[#1A3263]" />
 
-      <Container className="relative z-10 pt-24 md:pt-32">
-        {/* Header Content with Floating Image */}
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 mb-16 md:mb-24">
-          <div className="max-w-2xl z-10">
+      <Container className="relative z-10">
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-10 mb-16">
+          <div className="max-w-xl">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="font-display text-4xl md:text-[56px] font-bold text-white tracking-tight mb-6"
+              className="text-3xl md:text-5xl font-bold text-white mb-4"
             >
-              Our Solutions
+              Our Smart Solutions
             </motion.h2>
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-[16px] text-white/80 leading-relaxed font-medium"
+              className="text-white/70 text-sm"
             >
-              Comprehensive range of smart building systems tailored to your specific needs.
+              Intelligent building systems designed for performance and security.
             </motion.p>
           </div>
 
+          {/* Floating Image */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: -3 }}
-            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", duration: 1.5, bounce: 0.3 }}
-            className="w-full lg:w-[45%] max-w-lg relative"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1.5 }}
+            className="relative w-full max-w-md"
           >
-            {/* Glowing effect behind image */}
-            <div className="absolute inset-0 bg-[#ff3b3b]/30 blur-[60px] rounded-full scale-75" />
-
-            {/* Infinite floating animation layer */}
             <motion.div
-              animate={{ y: [0, -15, 0] }}
-              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-              className="relative z-10"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 4 }}
             >
               <img
                 src={solutionImg}
-                alt="Intersys Smart Solutions"
-                className="w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] lg:scale-110 right-0 transform origin-right"
+                className="w-full drop-shadow-2xl"
               />
             </motion.div>
           </motion.div>
         </div>
 
-        {/* CSS Grid for Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 md:gap-y-16">
-          {displayedServices.map((s, i) => (
+        {/* Cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((s, i) => (
             <motion.div
               key={s.title}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="relative group h-full flex"
+              transition={{ delay: i * 0.08 }}
+              className="group relative"
             >
-              {/* Outer stroke / offset box effect */}
-              <div className="absolute top-4 left-4 right-[-4px] bottom-[-4px] border border-[#071321]/15 rounded-[20px] pointer-events-none transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1" />
+              {/* Glow effect */}
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[#9B0F06]/0 to-[#9B0F06]/0 group-hover:from-[#9B0F06]/10 group-hover:to-transparent blur-xl transition duration-300" />
 
-              {/* Main Interactive Card */}
-              <div className="relative z-10 w-full bg-gradient-to-br from-[#ffffff] to-[#f8f9fc] border border-white shadow-sm rounded-[20px] p-8 md:p-10 flex flex-col items-start transition-transform duration-300 group-hover:-translate-y-1 group-hover:-translate-x-1 group-hover:shadow-[0_20px_40px_-15px_rgba(7,19,33,0.1)]">
+              {/* Card */}
+              <div className="relative bg-white border border-gray-100 rounded-xl p-6 flex flex-col h-full transition duration-300 group-hover:-translate-y-1 group-hover:shadow-xl">
 
-                <h3 className="font-display text-[26px] font-bold text-[#071321] mb-4 leading-[1.2]">
+                <h3 className="text-lg font-semibold text-[#162E93] mb-2">
                   {s.title}
                 </h3>
 
-                <p className="text-[15px] text-[#4a5568] leading-relaxed flex-grow mb-10">
+                <p className="text-sm text-gray-500 mb-6 flex-grow">
                   {s.desc}
                 </p>
 
-                <button className="mt-auto bg-white text-[#ff3b3b] shadow-[0_4px_14px_0_rgba(0,0,0,0.06)] border border-[#ff3b3b]/10 rounded-full px-6 py-2.5 text-sm font-bold transition-all duration-300 group-hover:bg-[#ff3b3b] group-hover:text-white group-hover:shadow-[0_4px_20px_0_rgba(255,59,59,0.4)]">
+                {/* Button */}
+                <button className="text-sm font-semibold text-[#9B0F06] flex items-center gap-2 transition group-hover:gap-3">
                   {s.btn}
+                  <span className="transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
                 </button>
               </div>
             </motion.div>

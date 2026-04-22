@@ -1,13 +1,11 @@
 import { motion } from "framer-motion";
-import { useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Container } from "./Container";
 
 // Expertise Images
-import img1 from "@/assets/project/Hatta_bank.png";
-import img2 from "@/assets/project/WingTower.png";
-import img3 from "@/assets/project/Novotel Holiday Palace.png";
-import img4 from "@/assets/project/Phnom_penh_international_aireport.png";
+import img1 from "@/assets/BMS/image.png";
+import img2 from "@/assets/BMS/pic2.png";
+import img3 from "@/assets/BMS/pic3.png";
+import img4 from "@/assets/BMS/pic1.png";
 
 // Partner Logos
 import p1 from "@/assets/Partner/p1.png";
@@ -51,84 +49,39 @@ const expertiseData = [
 const partnerLogos = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10];
 
 export function IntegratedTech() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollRef.current) {
-      const scrollAmount = 450;
-      scrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-  };
-
   return (
     <>
-      {/* Our Expertise Carousel Section (White) */}
-      <section className="bg-gray-100 py-24 md:py-32 overflow-hidden border-t border-gray-100">
-        <Container className="flex flex-col lg:flex-row gap-12 lg:gap-20">
+      {/* Our Expertise Marquee Section (Flowing Left to Right) */}
+      <section className="bg-gray-50 py-24 md:py-32 overflow-hidden border-t border-gray-100">
+        <Container className="mb-16">
+          <div className="max-w-2xl">
 
-          {/* Left Side: Info & Navigation */}
-          <div className="lg:w-1/4 flex flex-col justify-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="text-[12px] font-mono font-bold tracking-[0.2em] text-[#ff3b3b] mb-4 uppercase"
-            >
-              Engineering Solution
-            </motion.div>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="font-display text-4xl md:text-5xl font-bold text-[#071321] tracking-tight leading-tight mb-12"
+              className="font-display text-2xl md:text-5xl font-bold text-[#162E93] tracking-tight leading-tight"
             >
-              Our <br /> Expertise.
+              Advanced Expertise <br /> in Every System.
             </motion.h2>
-
-            {/* Navigation Buttons */}
-            <div className="flex flex-col gap-4 max-w-[160px]">
-              <button
-                onClick={() => scroll('right')}
-                className="group flex items-center justify-between bg-[#ff3b3b] text-white px-6 py-4 rounded font-bold text-sm transition-all hover:bg-[#071321] hover:text-white"
-              >
-                <span>Next</span>
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button
-                onClick={() => scroll('left')}
-                className="group flex items-center justify-between bg-[#f8f9fc] text-[#071321] px-6 py-4 rounded font-bold text-sm transition-all hover:bg-gray-200"
-              >
-                <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                <span>Prev</span>
-              </button>
-            </div>
           </div>
+        </Container>
 
-          {/* Right Side: Horizontal Carousel */}
-          <div className="lg:w-3/4 flex-grow relative">
-            <div
-              ref={scrollRef}
-              className="flex gap-8 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-8 pr-12"
-              style={{
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-                WebkitOverflowScrolling: 'touch'
-              }}
-            >
-              {expertiseData.map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex-shrink-0 w-[85%] md:w-[420px] snap-start group"
-                >
-                  {/* Large Image */}
-                  <div className="aspect-[16/10] overflow-hidden rounded-[8px] mb-6 bg-gray-100 border border-gray-100 shadow-xl">
+        <div className="w-full relative">
+          {/* Smooth edge fade gradients */}
+          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-gray-50 to-transparent z-10" />
+          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-gray-50 to-transparent z-10" />
+
+          {/* Left to Right Marquee for Expertise Cards */}
+          <div className="flex w-max animate-marquee-reverse hover:[animation-play-state:paused]">
+            {[...expertiseData, ...expertiseData].map((item, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 w-[75vw] md:w-[320px] px-3 group"
+              >
+                <div className="bg-white p-5 rounded-lg border border-gray-100 shadow-sm transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
+                  {/* Image */}
+                  <div className="aspect-[16/10] overflow-hidden rounded-md mb-4 bg-gray-50">
                     <img
                       src={item.image}
                       alt={item.title}
@@ -137,49 +90,53 @@ export function IntegratedTech() {
                   </div>
 
                   {/* Content */}
-                  <span className="text-[10px] font-mono font-bold text-[#6b7c93] uppercase tracking-[0.2em]">
+                  <span className="text-[9px] font-mono font-bold text-[#6b7c93] uppercase tracking-[0.15em]">
                     {item.tag}
                   </span>
-                  <h3 className="font-display text-2xl font-bold text-[#071321] mt-2 mb-4 group-hover:text-[#ff3b3b] transition-colors">
+                  <h3 className="font-display text-xl font-bold text-[#162E93] mt-1 mb-2 group-hover:text-[#9B0F06] transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-[#4a5568] text-[14px] leading-relaxed line-clamp-3">
+                  <p className="text-[#4a5568] text-[13px] leading-relaxed line-clamp-2">
                     {item.desc}
                   </p>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Fade on edge */}
-            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
+                </div>
+              </div>
+            ))}
           </div>
-        </Container>
+        </div>
       </section>
 
-      {/* Global Brand Partners Section (White) */}
-      <section className="bg-white pt-24 pb-0 overflow-hidden border-t border-gray-100">
-        <Container className="pb-16 text-center">
-          <h2 className="font-display text-3xl md:text-5xl font-bold text-[#071321] tracking-tight">
-            Global Brand <span className="text-[#ff3b3b]">Partners</span>
-          </h2>
+      {/* Global Brand Partners Section (Flowing Left to Right) */}
+      <section className="bg-white pt-16 pb-0 overflow-hidden border-t border-gray-100">
+        <Container className="pb-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="font-display text-2xl md:text-4xl font-bold text-[#162E93] tracking-tight">
+              Global Brand <span className="text-[#9B0F06]">Partners</span>
+            </h2>
+          </motion.div>
         </Container>
 
-        <div className="w-full bg-[#f8f9fc] py-16">
+        <div className="w-full bg-[#f8f9fc] py-10">
           <div className="overflow-hidden flex w-full relative">
             {/* Smooth edge fade gradients */}
             <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#f8f9fc] to-transparent z-10" />
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#f8f9fc] to-transparent z-10" />
 
-            <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
-              {[...partnerLogos, ...partnerLogos].map((logo, idx) => (
+            {/* Left to Right Marquee for Partners */}
+            <div className="flex w-max animate-marquee-reverse hover:[animation-play-state:paused]">
+              {[...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-center px-12 md:px-20 transition-transform duration-300 hover:scale-110"
+                  className="flex items-center justify-center px-8 md:px-14 transition-transform duration-300 hover:scale-110"
                 >
                   <img
                     src={logo}
                     alt="Partner"
-                    className="h-10 md:h-16 w-auto object-contain max-w-[140px] md:max-w-[200px]"
+                    className="h-8 md:h-10 w-auto object-contain max-w-[100px] md:max-w-[140px]"
                   />
                 </div>
               ))}

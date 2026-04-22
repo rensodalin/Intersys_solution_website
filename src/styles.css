@@ -49,32 +49,29 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.18 0.03 265);
 
-  /* Brand */
-  --navy: oklch(0.22 0.07 265);
-  /* #0B1530 ish */
-  --navy-deep: oklch(0.16 0.06 268);
-  /* #060B1F ish */
-  --navy-soft: oklch(0.28 0.06 265);
+  /* Brand Colors: #162E93 (Primary) and #9B0F06 (Secondary) */
+  --navy: #162E93;
+  --navy-deep: #0C1A57;
+  --navy-soft: #2E4ACE;
   --offwhite: oklch(0.97 0.005 250);
-  --brand-red: oklch(0.62 0.22 27);
-  /* #E63946 */
-  --brand-red-glow: oklch(0.7 0.24 27);
+  --brand-red: #9B0F06;
+  --brand-red-glow: #C4160D;
 
   --primary: var(--navy);
   --primary-foreground: oklch(0.98 0 0);
-  --secondary: var(--offwhite);
-  --secondary-foreground: var(--navy);
+  --secondary: var(--brand-red);
+  --secondary-foreground: oklch(0.98 0 0);
   --muted: oklch(0.96 0.005 250);
   --muted-foreground: oklch(0.5 0.02 260);
   --accent: var(--brand-red);
   --accent-foreground: oklch(0.98 0 0);
-  --destructive: oklch(0.6 0.22 27);
+  --destructive: var(--brand-red);
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.92 0.01 255);
   --input: oklch(0.92 0.01 255);
   --ring: var(--brand-red);
-  --chart-1: oklch(0.62 0.22 27);
-  --chart-2: oklch(0.5 0.12 260);
+  --chart-1: #162E93;
+  --chart-2: #9B0F06;
   --chart-3: oklch(0.7 0.15 200);
   --chart-4: oklch(0.65 0.18 50);
   --chart-5: oklch(0.4 0.1 280);
@@ -95,11 +92,11 @@
   --card-foreground: oklch(0.98 0 0);
   --popover: var(--navy);
   --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.98 0 0);
-  --primary-foreground: var(--navy);
-  --secondary: oklch(0.28 0.05 265);
+  --primary: #162E93;
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: #9B0F06;
   --secondary-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.28 0.05 265);
+  --muted: #0F1D5D;
   --muted-foreground: oklch(0.7 0.02 260);
   --accent: var(--brand-red);
   --accent-foreground: oklch(0.98 0 0);
@@ -167,6 +164,20 @@
   }
 }
 
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
 .animate-marquee {
   animation: marquee 25s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 25s linear infinite;
 }

@@ -14,7 +14,7 @@ export function AnniversaryBanner() {
                     className="w-full h-full object-cover opacity-40 grayscale contrast-125"
                 />
                 {/* The specific navy/steel tint from the image */}
-                <div className="absolute inset-0 bg-[#071321]/70 mix-blend-multiply" />
+                <div className="absolute inset-0 bg-[#162E93]/70 mix-blend-multiply" />
             </div>
 
             {/* Technical Blueprint Overlay Background (Visible but subtle) */}
@@ -81,7 +81,7 @@ export function AnniversaryBanner() {
                             viewport={{ once: true }}
                             transition={{ delay: 0.3 }}
                         >
-                            <button className="bg-[#ff3b3b] text-white px-8 py-3 rounded-sm font-bold text-[13px] tracking-widest uppercase hover:bg-white hover:text-[#071321] transition-all duration-300 shadow-xl">
+                            <button className="bg-[#9B0F06] text-white px-8 py-3 rounded-sm font-bold text-[13px] tracking-widest uppercase hover:bg-white hover:text-[#162E93] transition-all duration-300 shadow-xl">
                                 Read more
                             </button>
                         </motion.div>
@@ -99,13 +99,13 @@ export function AnniversaryBanner() {
                             {/* Big "10" with split color */}
                             <div className="flex items-baseline font-bold leading-none transform -translate-y-2">
                                 <span className="text-[120px] md:text-[200px] text-white tracking-tighter">1</span>
-                                <span className="text-[120px] md:text-[200px] text-[#ff3b3b] tracking-tighter -ml-2 md:-ml-4">0</span>
-                                <span className="text-[28px] md:text-[44px] text-[#ff3b3b] font-bold absolute top-0 -right-8 md:-right-16 translate-y-4 md:translate-y-8">TH</span>
+                                <span className="text-[120px] md:text-[200px] text-[#9B0F06] tracking-tighter -ml-2 md:-ml-4">0</span>
+                                <span className="text-[28px] md:text-[44px] text-[#9B0F06] font-bold absolute top-0 -right-8 md:-right-16 translate-y-4 md:translate-y-8">TH</span>
                             </div>
 
                             {/* Script Overlay "Anniversary" */}
                             <div className="absolute inset-0 flex items-center justify-center pt-[90px] md:pt-[130px]">
-                                <div className="font-serif italic text-5xl md:text-[90px] text-[#ff3b3b] opacity-100 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] whitespace-nowrap transform -rotate-6 filter drop-shadow-[#000000_2px_2px_10px]">
+                                <div className="font-serif italic text-5xl md:text-[90px] text-[#9B0F06] opacity-100 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] whitespace-nowrap transform -rotate-6 filter drop-shadow-[#000000_2px_2px_10px]">
                                     Anniversary
                                 </div>
                             </div>
@@ -117,3 +117,4 @@ export function AnniversaryBanner() {
         </section>
     );
 }
+

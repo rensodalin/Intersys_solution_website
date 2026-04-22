@@ -5,9 +5,9 @@ import certificate2 from "../../assets/certificate2.jpg";
 
 export function Certificates() {
     return (
-        <section className="relative bg-[#a81c1c] overflow-hidden">
-            <Container className="py-12 md:py-16">
-                <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
+        <section className="bg-[#9B0F06] border-b border-white/5 overflow-hidden relative">
+            <Container className="py-16 md:py-24">
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
 
                     {/* Left: Certificate Image */}
                     <div className="lg:w-5/12 relative flex justify-center">
@@ -16,15 +16,16 @@ export function Certificates() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
-                            className="relative z-10 w-full max-w-[320px] group"
+                            className="relative z-10 w-full max-w-[340px] group"
                         >
-                            <div className="absolute -inset-4 bg-white/10 blur-2xl rounded-full scale-90" />
+                            {/* Glowing halo behind certificate */}
+                            <div className="absolute -inset-10 bg-white/10 blur-[80px] rounded-full opacity-50" />
 
-                            <div className="relative bg-white p-2 rounded-lg shadow-xl transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
+                            <div className="relative bg-white p-2 rounded-sm shadow-2xl transform -rotate-1 group-hover:rotate-0 transition-transform duration-500">
                                 <img
                                     src={certificate1}
                                     alt="Intersys Official Certificate"
-                                    className="w-full h-auto rounded"
+                                    className="w-full h-auto rounded-sm"
                                 />
                             </div>
 
@@ -32,12 +33,12 @@ export function Certificates() {
                                 initial={{ opacity: 0, rotate: 8 }}
                                 whileInView={{ opacity: 1, rotate: 4 }}
                                 viewport={{ once: true }}
-                                className="absolute top-0 right-0 -z-10 bg-white/80 p-2 rounded-lg shadow-lg w-full translate-x-3 translate-y-3"
+                                className="absolute top-0 right-0 -z-10 bg-white/90 p-2 rounded-sm shadow-xl w-full translate-x-4 translate-y-4"
                             >
                                 <img
                                     src={certificate2}
                                     alt="Secondary License"
-                                    className="w-full h-auto rounded opacity-30 blur-[1px]"
+                                    className="w-full h-auto rounded-sm opacity-30 grayscale"
                                 />
                             </motion.div>
                         </motion.div>
@@ -49,7 +50,7 @@ export function Certificates() {
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
-                            className="text-[12px] font-mono font-bold tracking-[0.2em] opacity-80 mb-4 uppercase"
+                            className="text-[11px] font-mono font-bold tracking-[0.2em] text-white/70 mb-4 uppercase"
                         >
                             Accreditation
                         </motion.div>
@@ -57,20 +58,21 @@ export function Certificates() {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="font-display text-3xl md:text-5xl font-bold tracking-tight leading-tight mb-6"
+                            className="font-display text-xl md:text-3xl font-bold text-white tracking-tight leading-tight mb-6"
                         >
-                            A multiple rewarded <br /> Engineering Company
+                            A multiple rewarded <br />
+                            <span className="text-white/80">Engineering Company</span>
                         </motion.h2>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 }}
-                            className="text-[15px] md:text-[16px] text-white/90 leading-relaxed mb-8 max-w-lg"
+                            className="text-sm md:text-[15px] text-white/80 leading-relaxed mb-8 max-w-lg"
                         >
-                            During our history, Intersys Solutions has been recognized for technical excellence.
-                            Our licenses and Honeywell partnership reflect our commitment to world-class
-                            engineering standards.
+                            Throughout our history, Intersys Solutions has been recognized for its technical
+                            excellence and adherence to global standards. Our licenses and Honeywell partnership
+                            vouch for our commitment to world-class engineering quality.
                         </motion.p>
 
                         <motion.div
@@ -79,8 +81,8 @@ export function Certificates() {
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
                         >
-                            <button className="bg-white text-[#a81c1c] px-8 py-3 rounded-sm font-bold text-[13px] tracking-widest uppercase hover:bg-[#071321] hover:text-white transition-all duration-300 shadow-xl">
-                                Read More
+                            <button className="bg-[#162E93] text-white px-8 py-3.5 rounded-sm font-bold text-[12px] tracking-widest uppercase hover:bg-white hover:text-[#162E93] transition-all duration-300 shadow-xl shadow-black/20">
+                                View Credentials
                             </button>
                         </motion.div>
                     </div>
@@ -88,12 +90,9 @@ export function Certificates() {
                 </div>
             </Container>
 
-            {/* Decorative Technical Overlay */}
-            <div className="absolute right-0 top-0 w-1/4 h-full opacity-10 pointer-events-none">
-                <svg fill="currentColor" viewBox="0 0 100 100" className="w-full h-full text-white">
-                    <circle cx="100" cy="50" r="50" />
-                </svg>
-            </div>
+            {/* Subtle Pattern (White version for dark background) */}
+            <div className="absolute right-0 top-0 w-1/3 h-full opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
         </section>
     );
 }
+
