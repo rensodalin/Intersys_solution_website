@@ -4,7 +4,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { MoveRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
-import { Container } from "./Container";
+import { Container } from "@/components/Common/Container";
 import heroImg2 from "@/assets/Hero.png";
 import heroImg3 from "@/assets/Hero1.png";
 

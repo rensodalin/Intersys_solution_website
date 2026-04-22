@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
-import { Container } from "./Container";
+import { Container } from "@/components/Common/Container";
 
 export function Testimonial() {
   return (

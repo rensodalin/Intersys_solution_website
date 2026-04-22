@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Hero } from "@/components/site/Hero";
-import { MetricsStrip } from "@/components/site/MetricsStrip";
-import { Certificates } from "@/components/site/Certificates";
-import { ServicesGrid } from "@/components/site/ServicesGrid";
-import { FeaturedProjects } from "@/components/site/FeaturedProjects";
-import { JourneySection } from "@/components/site/JourneySection";
-import { Ecosystem } from "@/components/site/Ecosystem";
-import { Clients } from "@/components/site/Clients";
-import { Insights } from "@/components/site/Insights";
-import { PromotionOverlay } from "@/components/site/PromotionOverlay";
+import { Hero } from "@/components/Homepage/Hero";
+import { MetricsStrip } from "@/components/Homepage/MetricsStrip";
+import { Certificates } from "@/components/Homepage/Certificates";
+import { ServicesGrid } from "@/components/Homepage/ServicesGrid";
+import { FeaturedProjects } from "@/components/Homepage/FeaturedProjects";
+import { JourneySection } from "@/components/Homepage/JourneySection";
+import { Ecosystem } from "@/components/Homepage/Ecosystem";
+import { Clients } from "@/components/Homepage/Clients";
+import { Insights } from "@/components/Homepage/Insights";
+import { PromotionOverlay } from "@/components/Common/PromotionOverlay";
 
 
 export const Route = createFileRoute("/")({
@@ -51,3 +51,4 @@ function Index() {
     </>
   );
 }
+

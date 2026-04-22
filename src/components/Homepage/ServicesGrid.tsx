@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
-import { Container } from "./Container";
+import { Container } from "@/components/Common/Container";
 import {
   Cpu,
   Flame,

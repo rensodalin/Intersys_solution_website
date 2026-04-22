@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Container } from "./Container";
+import { Container } from "@/components/Common/Container";
 import certificate1 from "../../assets/certificate1.jpg";
 import certificate2 from "../../assets/certificate2.jpg";
 

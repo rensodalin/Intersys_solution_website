@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Container } from "./Container";
+import { Container } from "@/components/Common/Container";
+import { Section } from "@/components/Common/Section";
 
 const insights = [
     {

@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { Container } from "@/components/site/Container";
-import { CtaBand } from "@/components/site/CtaBand";
+import { Container } from "@/components/Common/Container";
+import { CtaBand } from "@/components/Common/CtaBand";
 import heroImg from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/portfolio")({
@@ -116,4 +116,5 @@ function Portfolio() {
     </>
   );
 }
+
 

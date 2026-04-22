@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Container } from "./Container";
+import { Container } from "@/components/Common/Container";
 
 export function Section({
   id,

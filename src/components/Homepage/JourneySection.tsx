@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
-import { Container } from "./Container";
+import { Container } from "@/components/Common/Container";
 import { ArrowRight } from "lucide-react";
 
 export const sectors = [

@@ -1,8 +1,8 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
-import { Navbar } from "@/components/site/Navbar";
-import { Footer } from "@/components/site/Footer";
-import { ScrollControls } from "@/components/site/ScrollControls";
-import { FloatingChat } from "@/components/site/FloatingChat";
+import { Navbar } from "@/components/Layout/Navbar";
+import { Footer } from "@/components/Layout/Footer";
+import { ScrollControls } from "@/components/Common/ScrollControls";
+import { FloatingChat } from "@/components/Common/FloatingChat";
 
 import appCss from "../styles.css?url";
 

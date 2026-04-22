@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Container } from "@/components/Common/Container";
+import { Section } from "@/components/Common/Section";
 
 import img1 from "@/assets/image.png";
 import img2 from "@/assets/image copy.png";

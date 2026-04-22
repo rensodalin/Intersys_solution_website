@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { Container } from "@/components/site/Container";
-import { CtaBand } from "@/components/site/CtaBand";
+import { Container } from "@/components/Common/Container";
+import { CtaBand } from "@/components/Common/CtaBand";
 import { Cpu, Radio, Server, Shield, Gauge, Zap } from "lucide-react";
 
 export const Route = createFileRoute("/products")({
@@ -110,4 +110,5 @@ function Products() {
     </>
   );
 }
+
 

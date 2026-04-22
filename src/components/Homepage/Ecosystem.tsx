@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Container } from "./Container";
+import { Container } from "@/components/Common/Container";
 import blueprintBg from "@/assets/project/image.png";
 import siteBg from "@/assets/Intelligeinc.png";
 

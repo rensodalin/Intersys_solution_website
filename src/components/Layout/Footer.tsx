@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Container } from "./Container";
+import { Container } from "@/components/Common/Container";
 import logoImg from "@/assets/logo.avif";
 import { Facebook, Mail, Phone, MapPin, Clock, Linkedin } from "lucide-react";
 

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { Container } from "./Container";
-import { AnimatedCounter } from "./AnimatedCounter";
+import { Container } from "@/components/Common/Container";
+import { AnimatedCounter } from "@/components/Common/AnimatedCounter";
 
 const metrics = [
   {

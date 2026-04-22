@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container } from "@/components/site/Container";
+import { Container } from "@/components/Common/Container";
 import { motion } from "framer-motion";
-import { ServicesGrid } from "@/components/site/ServicesGrid";
+import { ServicesGrid } from "@/components/Homepage/ServicesGrid";
 import heroImg from "@/assets/Hero1.png";
 
 export const Route = createFileRoute("/services")({
@@ -52,3 +52,4 @@ function ServicesPage() {
     </div>
   );
 }
+

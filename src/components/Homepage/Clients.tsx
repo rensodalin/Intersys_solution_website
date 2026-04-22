@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Container } from "./Container";
+import { Container } from "@/components/Common/Container";
 import pic1 from "../../assets/Client logo/pic1.png";
 import pic2 from "../../assets/Client logo/pic2.png";
 import pic3 from "../../assets/Client logo/pic3.png";

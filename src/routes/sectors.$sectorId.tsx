@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { Container } from "@/components/site/Container";
-import { sectors } from "@/components/site/JourneySection";
+import { Container } from "@/components/Common/Container";
+import { sectors } from "@/components/Homepage/JourneySection";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
@@ -134,4 +134,5 @@ function SectorDetail() {
     </div>
   );
 }
+
 

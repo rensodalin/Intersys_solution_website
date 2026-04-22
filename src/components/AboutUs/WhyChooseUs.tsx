@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Container } from './Container';
+import { Container } from "@/components/Common/Container";
 import {
     Building2,
     Music,

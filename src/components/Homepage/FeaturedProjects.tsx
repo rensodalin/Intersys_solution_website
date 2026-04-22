@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Container } from "./Container";
+import { Container } from "@/components/Common/Container";
 
 // Import all project images
 import pNovotelPP from "@/assets/project/Novo.png";
