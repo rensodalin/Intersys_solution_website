@@ -7,10 +7,10 @@ import { ServicesGrid } from "@/components/Homepage/ServicesGrid";
 import { FeaturedProjects } from "@/components/Homepage/FeaturedProjects";
 import { JourneySection } from "@/components/Homepage/JourneySection";
 import { Ecosystem } from "@/components/Homepage/Ecosystem";
+import { WhyChooseIntersys } from "@/components/Homepage/WhyChooseIntersys";
 import { Clients } from "@/components/Homepage/Clients";
 import { Insights } from "@/components/Homepage/Insights";
 import { PromotionOverlay } from "@/components/Common/PromotionOverlay";
-
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -33,22 +33,18 @@ function Index() {
       <Hero />
       <MetricsStrip />
       <Ecosystem />
+
       <JourneySection />
       <FeaturedProjects />
       <Certificates />
       <ServicesGrid />
 
       <Clients />
+      <WhyChooseIntersys />
 
       <Insights />
 
-
-
-      <PromotionOverlay
-        isOpen={showPopup}
-        onClose={() => setShowPopup(false)}
-      />
+      <PromotionOverlay isOpen={showPopup} onClose={() => setShowPopup(false)} />
     </>
   );
 }
-

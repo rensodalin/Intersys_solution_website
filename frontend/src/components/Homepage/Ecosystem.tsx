@@ -59,10 +59,10 @@ export function Ecosystem() {
               Design & Specialized Engineering
             </motion.h3>
             <p className="text-[#4a5568] text-[15px] md:text-base leading-relaxed">
-              Comprehensive solutions based on the close and continuous cooperation between
-              the client and our engineering team. From basic conceptual design to
-              fully detailed technical documentation, Intersys uses its extensive internal
-              resources to ensure a single, reliable point of contact for every integrated project.
+              Comprehensive solutions based on the close and continuous cooperation between the
+              client and our engineering team. From basic conceptual design to fully detailed
+              technical documentation, Intersys uses its extensive internal resources to ensure a
+              single, reliable point of contact for every integrated project.
             </p>
           </motion.div>
         </Container>
@@ -108,11 +108,10 @@ export function Ecosystem() {
               Expert Execution & Build
             </motion.h3>
             <p className="text-white/80 text-[15px] md:text-base leading-relaxed">
-              The heart of each project is its successful installation and integration.
-              With our technical expertise and world-class technology partners like Honeywell,
-              we conduct operations with dedicated professional teams, delivering creative
-              and cost-efficient solutions that are fully compliant with the specific
-              conditions of each project.
+              The heart of each project is its successful installation and integration. With our
+              technical expertise and world-class technology partners like Honeywell, we conduct
+              operations with dedicated professional teams, delivering creative and cost-efficient
+              solutions that are fully compliant with the specific conditions of each project.
             </p>
           </motion.div>
         </Container>

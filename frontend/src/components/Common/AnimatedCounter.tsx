@@ -41,4 +41,3 @@ export function AnimatedCounter({
     </motion.span>
   );
 }
-

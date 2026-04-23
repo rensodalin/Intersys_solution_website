@@ -7,27 +7,28 @@ import { AboutLeadership } from "@/components/AboutUs/AboutLeadership";
 import { AboutTeam } from "@/components/AboutUs/AboutTeam";
 
 export const Route = createFileRoute("/about/")({
-    head: () => ({
-        meta: [
-            { title: "About Us — Intersys Solutions" },
-            {
-                name: "description",
-                content: "Engineering the future of infrastructure. Learn about our mission, vision, and the team behind Cambodia's premier technology integrator.",
-            },
-        ],
-    }),
-    component: AboutPage,
+  head: () => ({
+    meta: [
+      { title: "About Us — Intersys Solutions" },
+      {
+        name: "description",
+        content:
+          "Engineering the future of infrastructure. Learn about our mission, vision, and the team behind Cambodia's premier technology integrator.",
+      },
+    ],
+  }),
+  component: AboutPage,
 });
 
 function AboutPage() {
-    return (
-        <div className="bg-white overflow-x-hidden text-sm">
-            <AboutHero />
-            <AboutMission />
-            <AboutEvolution />
-            <AboutLeadership />
-            <AboutTeam />
-            <WhyChooseUs />
-        </div>
-    );
+  return (
+    <div className="bg-white overflow-x-hidden text-sm">
+      <AboutHero />
+      <AboutMission />
+      <AboutEvolution />
+      <AboutLeadership />
+      <AboutTeam />
+      <WhyChooseUs />
+    </div>
+  );
 }

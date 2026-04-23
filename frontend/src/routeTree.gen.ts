@@ -9,15 +9,26 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WhyChooseRouteImport } from './routes/why-choose'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SectorsRouteImport } from './routes/sectors'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SectorsIndexRouteImport } from './routes/sectors.index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as SectorsSectorIdRouteImport } from './routes/sectors.$sectorId'
+import { Route as ProductsAccessControlRouteImport } from './routes/products_.access-control'
+import { Route as ProductsAccessControlHoneywellRouteImport } from './routes/products_.access-control_.honeywell'
+import { Route as ProductsAccessControlHoneywellCredentialsRouteImport } from './routes/products_.access-control_.honeywell_.credentials'
+import { Route as ProductsAccessControlHoneywellAccessoriesRouteImport } from './routes/products_.access-control_.honeywell_.accessories'
 
+const WhyChooseRoute = WhyChooseRouteImport.update({
+  id: '/why-choose',
+  path: '/why-choose',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
@@ -48,6 +59,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SectorsIndexRoute = SectorsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SectorsRoute,
+} as any)
 const AboutIndexRoute = AboutIndexRouteImport.update({
   id: '/about/',
   path: '/about/',
@@ -58,6 +74,29 @@ const SectorsSectorIdRoute = SectorsSectorIdRouteImport.update({
   path: '/$sectorId',
   getParentRoute: () => SectorsRoute,
 } as any)
+const ProductsAccessControlRoute = ProductsAccessControlRouteImport.update({
+  id: '/products_/access-control',
+  path: '/products/access-control',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsAccessControlHoneywellRoute =
+  ProductsAccessControlHoneywellRouteImport.update({
+    id: '/products_/access-control_/honeywell',
+    path: '/products/access-control/honeywell',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ProductsAccessControlHoneywellCredentialsRoute =
+  ProductsAccessControlHoneywellCredentialsRouteImport.update({
+    id: '/products_/access-control_/honeywell_/credentials',
+    path: '/products/access-control/honeywell/credentials',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ProductsAccessControlHoneywellAccessoriesRoute =
+  ProductsAccessControlHoneywellAccessoriesRouteImport.update({
+    id: '/products_/access-control_/honeywell_/accessories',
+    path: '/products/access-control/honeywell/accessories',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -66,18 +105,29 @@ export interface FileRoutesByFullPath {
   '/products': typeof ProductsRoute
   '/sectors': typeof SectorsRouteWithChildren
   '/services': typeof ServicesRoute
+  '/why-choose': typeof WhyChooseRoute
+  '/products/access-control': typeof ProductsAccessControlRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/about/': typeof AboutIndexRoute
+  '/sectors/': typeof SectorsIndexRoute
+  '/products/access-control/honeywell': typeof ProductsAccessControlHoneywellRoute
+  '/products/access-control/honeywell/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
+  '/products/access-control/honeywell/credentials': typeof ProductsAccessControlHoneywellCredentialsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/portfolio': typeof PortfolioRoute
   '/products': typeof ProductsRoute
-  '/sectors': typeof SectorsRouteWithChildren
   '/services': typeof ServicesRoute
+  '/why-choose': typeof WhyChooseRoute
+  '/products/access-control': typeof ProductsAccessControlRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/about': typeof AboutIndexRoute
+  '/sectors': typeof SectorsIndexRoute
+  '/products/access-control/honeywell': typeof ProductsAccessControlHoneywellRoute
+  '/products/access-control/honeywell/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
+  '/products/access-control/honeywell/credentials': typeof ProductsAccessControlHoneywellCredentialsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -87,8 +137,14 @@ export interface FileRoutesById {
   '/products': typeof ProductsRoute
   '/sectors': typeof SectorsRouteWithChildren
   '/services': typeof ServicesRoute
+  '/why-choose': typeof WhyChooseRoute
+  '/products_/access-control': typeof ProductsAccessControlRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/about/': typeof AboutIndexRoute
+  '/sectors/': typeof SectorsIndexRoute
+  '/products_/access-control_/honeywell': typeof ProductsAccessControlHoneywellRoute
+  '/products_/access-control_/honeywell_/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
+  '/products_/access-control_/honeywell_/credentials': typeof ProductsAccessControlHoneywellCredentialsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -99,18 +155,29 @@ export interface FileRouteTypes {
     | '/products'
     | '/sectors'
     | '/services'
+    | '/why-choose'
+    | '/products/access-control'
     | '/sectors/$sectorId'
     | '/about/'
+    | '/sectors/'
+    | '/products/access-control/honeywell'
+    | '/products/access-control/honeywell/accessories'
+    | '/products/access-control/honeywell/credentials'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/contact'
     | '/portfolio'
     | '/products'
-    | '/sectors'
     | '/services'
+    | '/why-choose'
+    | '/products/access-control'
     | '/sectors/$sectorId'
     | '/about'
+    | '/sectors'
+    | '/products/access-control/honeywell'
+    | '/products/access-control/honeywell/accessories'
+    | '/products/access-control/honeywell/credentials'
   id:
     | '__root__'
     | '/'
@@ -119,8 +186,14 @@ export interface FileRouteTypes {
     | '/products'
     | '/sectors'
     | '/services'
+    | '/why-choose'
+    | '/products_/access-control'
     | '/sectors/$sectorId'
     | '/about/'
+    | '/sectors/'
+    | '/products_/access-control_/honeywell'
+    | '/products_/access-control_/honeywell_/accessories'
+    | '/products_/access-control_/honeywell_/credentials'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -130,11 +203,23 @@ export interface RootRouteChildren {
   ProductsRoute: typeof ProductsRoute
   SectorsRoute: typeof SectorsRouteWithChildren
   ServicesRoute: typeof ServicesRoute
+  WhyChooseRoute: typeof WhyChooseRoute
+  ProductsAccessControlRoute: typeof ProductsAccessControlRoute
   AboutIndexRoute: typeof AboutIndexRoute
+  ProductsAccessControlHoneywellRoute: typeof ProductsAccessControlHoneywellRoute
+  ProductsAccessControlHoneywellAccessoriesRoute: typeof ProductsAccessControlHoneywellAccessoriesRoute
+  ProductsAccessControlHoneywellCredentialsRoute: typeof ProductsAccessControlHoneywellCredentialsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/why-choose': {
+      id: '/why-choose'
+      path: '/why-choose'
+      fullPath: '/why-choose'
+      preLoaderRoute: typeof WhyChooseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
@@ -177,6 +262,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sectors/': {
+      id: '/sectors/'
+      path: '/'
+      fullPath: '/sectors/'
+      preLoaderRoute: typeof SectorsIndexRouteImport
+      parentRoute: typeof SectorsRoute
+    }
     '/about/': {
       id: '/about/'
       path: '/about'
@@ -191,15 +283,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SectorsSectorIdRouteImport
       parentRoute: typeof SectorsRoute
     }
+    '/products_/access-control': {
+      id: '/products_/access-control'
+      path: '/products/access-control'
+      fullPath: '/products/access-control'
+      preLoaderRoute: typeof ProductsAccessControlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products_/access-control_/honeywell': {
+      id: '/products_/access-control_/honeywell'
+      path: '/products/access-control/honeywell'
+      fullPath: '/products/access-control/honeywell'
+      preLoaderRoute: typeof ProductsAccessControlHoneywellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products_/access-control_/honeywell_/credentials': {
+      id: '/products_/access-control_/honeywell_/credentials'
+      path: '/products/access-control/honeywell/credentials'
+      fullPath: '/products/access-control/honeywell/credentials'
+      preLoaderRoute: typeof ProductsAccessControlHoneywellCredentialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products_/access-control_/honeywell_/accessories': {
+      id: '/products_/access-control_/honeywell_/accessories'
+      path: '/products/access-control/honeywell/accessories'
+      fullPath: '/products/access-control/honeywell/accessories'
+      preLoaderRoute: typeof ProductsAccessControlHoneywellAccessoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface SectorsRouteChildren {
   SectorsSectorIdRoute: typeof SectorsSectorIdRoute
+  SectorsIndexRoute: typeof SectorsIndexRoute
 }
 
 const SectorsRouteChildren: SectorsRouteChildren = {
   SectorsSectorIdRoute: SectorsSectorIdRoute,
+  SectorsIndexRoute: SectorsIndexRoute,
 }
 
 const SectorsRouteWithChildren =
@@ -212,7 +334,14 @@ const rootRouteChildren: RootRouteChildren = {
   ProductsRoute: ProductsRoute,
   SectorsRoute: SectorsRouteWithChildren,
   ServicesRoute: ServicesRoute,
+  WhyChooseRoute: WhyChooseRoute,
+  ProductsAccessControlRoute: ProductsAccessControlRoute,
   AboutIndexRoute: AboutIndexRoute,
+  ProductsAccessControlHoneywellRoute: ProductsAccessControlHoneywellRoute,
+  ProductsAccessControlHoneywellAccessoriesRoute:
+    ProductsAccessControlHoneywellAccessoriesRoute,
+  ProductsAccessControlHoneywellCredentialsRoute:
+    ProductsAccessControlHoneywellCredentialsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

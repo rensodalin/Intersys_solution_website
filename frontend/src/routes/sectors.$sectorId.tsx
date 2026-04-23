@@ -18,7 +18,9 @@ function SectorDetail() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Sector not found</h1>
-          <Link to="/" className="text-[#9B0F06] font-bold">Return Home</Link>
+          <Link to="/" className="text-[#9B0F06] font-bold">
+            Return Home
+          </Link>
         </div>
       </div>
     );
@@ -68,7 +70,7 @@ function SectorDetail() {
                   "Scalable Architecture",
                   "Seamless Integration",
                   "Technical Excellence",
-                  "Future-Proof Systems"
+                  "Future-Proof Systems",
                 ].map((feature) => (
                   <div key={feature} className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-[#9B0F06]" />
@@ -85,8 +87,14 @@ function SectorDetail() {
               className="mt-12 p-8 bg-[#f8f9fc] rounded-2xl border border-gray-100"
             >
               <h4 className="font-bold text-[#162E93] mb-2">Ready to secure your project?</h4>
-              <p className="text-sm text-[#4a5568] mb-6">Contact our engineering team today for a tailored solution for your {sector.name.toLowerCase()} infrastructure.</p>
-              <Link to="/contact" className="bg-[#9B0F06] text-white px-8 py-3.5 rounded-sm font-bold text-[12px] tracking-widest uppercase hover:bg-[#162E93] transition-all duration-300">
+              <p className="text-sm text-[#4a5568] mb-6">
+                Contact our engineering team today for a tailored solution for your{" "}
+                {sector.name.toLowerCase()} infrastructure.
+              </p>
+              <Link
+                to="/contact"
+                className="bg-[#9B0F06] text-white px-8 py-3.5 rounded-sm font-bold text-[12px] tracking-widest uppercase hover:bg-[#162E93] transition-all duration-300"
+              >
                 Inquire Now
               </Link>
             </motion.div>
@@ -117,15 +125,23 @@ function SectorDetail() {
                       <span className="text-3xl font-bold">{sector.name.charAt(0)}</span>
                     </div>
                   </div>
-                  <h2 className="text-white text-3xl font-bold tracking-tight mb-2">{sector.name}</h2>
-                  <p className="text-white/60 text-sm tracking-widest uppercase font-mono">Integrated Solution</p>
+                  <h2 className="text-white text-3xl font-bold tracking-tight mb-2">
+                    {sector.name}
+                  </h2>
+                  <p className="text-white/60 text-sm tracking-widest uppercase font-mono">
+                    Integrated Solution
+                  </p>
                 </div>
               </div>
 
               {/* Technical Overlay */}
               <div className="absolute bottom-8 left-8 right-8 p-6 bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl">
-                <p className="text-white text-xs font-mono uppercase tracking-widest mb-1">Engineering excellence</p>
-                <p className="text-white/80 text-sm">Professional deployment of {sector.name} infrastructure since 2015.</p>
+                <p className="text-white text-xs font-mono uppercase tracking-widest mb-1">
+                  Engineering excellence
+                </p>
+                <p className="text-white/80 text-sm">
+                  Professional deployment of {sector.name} infrastructure since 2015.
+                </p>
               </div>
             </div>
           </motion.div>
@@ -134,5 +150,3 @@ function SectorDetail() {
     </div>
   );
 }
-
-

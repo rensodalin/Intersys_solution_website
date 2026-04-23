@@ -26,19 +26,13 @@ export function Navbar() {
     <header
       className={cn(
         "fixed top-0 inset-x-0 z-50 transition-all duration-300 backdrop-blur-md",
-        scrolled
-          ? "bg-[#1A3263]/95 border-b border-white/10 shadow-lg"
-          : "bg-[#1A3263]/80"
+        scrolled ? "bg-[#1A3263]/95 border-b border-white/10 shadow-lg" : "bg-[#1A3263]/80",
       )}
     >
       <div className="w-full px-6 md:px-20 flex h-20 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <img
-            src={logoImg}
-            alt="Intersys Logo"
-            className="h-14 w-auto object-contain"
-          />
+          <img src={logoImg} alt="Intersys Logo" className="h-14 w-auto object-contain" />
         </Link>
 
         {/* Desktop Nav */}

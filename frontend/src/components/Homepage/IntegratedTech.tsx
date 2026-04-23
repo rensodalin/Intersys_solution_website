@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Container } from "./Container";
+import { Container } from "@/components/Common/Container";
 
 // Expertise Images
 import img1 from "@/assets/BMS/image.png";
@@ -24,26 +24,26 @@ const expertiseData = [
     image: img1,
     tag: "TECHNICAL EXPERTISE",
     title: "Integrated BMS",
-    desc: "Centralized building management systems to monitor and control HVAC, lighting, and utilities for peak efficiency."
+    desc: "Centralized building management systems to monitor and control HVAC, lighting, and utilities for peak efficiency.",
   },
   {
     image: img2,
     tag: "SECURITY SYSTEMS",
     title: "AI Surveillance",
-    desc: "AI-driven access control and high-definition surveillance networks providing comprehensive site protection."
+    desc: "AI-driven access control and high-definition surveillance networks providing comprehensive site protection.",
   },
   {
     image: img3,
     tag: "FIRE SAFETY",
     title: "Life Safety Engineering",
-    desc: "Advanced detection and suppression technologies designed to protect lives and physical assets with 24/7 reliability."
+    desc: "Advanced detection and suppression technologies designed to protect lives and physical assets with 24/7 reliability.",
   },
   {
     image: img4,
     tag: "SPECIALIZED SYSTEMS",
     title: "Public Infrastructure",
-    desc: "High-tier integration for airports, commerce, and logistics centers requiring maximum stability."
-  }
+    desc: "High-tier integration for airports, commerce, and logistics centers requiring maximum stability.",
+  },
 ];
 
 const partnerLogos = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10];
@@ -55,7 +55,6 @@ export function IntegratedTech() {
       <section className="bg-gray-50 py-24 md:py-32 overflow-hidden border-t border-gray-100">
         <Container className="mb-16">
           <div className="max-w-2xl">
-
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -75,10 +74,7 @@ export function IntegratedTech() {
           {/* Left to Right Marquee for Expertise Cards */}
           <div className="flex w-max animate-marquee-reverse hover:[animation-play-state:paused]">
             {[...expertiseData, ...expertiseData].map((item, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-[75vw] md:w-[320px] px-3 group"
-              >
+              <div key={i} className="flex-shrink-0 w-[75vw] md:w-[320px] px-3 group">
                 <div className="bg-white p-5 rounded-lg border border-gray-100 shadow-sm transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
                   {/* Image */}
                   <div className="aspect-[16/10] overflow-hidden rounded-md mb-4 bg-gray-50">

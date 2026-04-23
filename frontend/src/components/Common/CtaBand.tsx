@@ -39,7 +39,8 @@ export function CtaBand() {
                 Ready to transform your building?
               </h2>
               <p className="text-[15px] text-white/60 leading-relaxed max-w-[480px]">
-                Join hundreds of businesses optimizing their operations with Intersys Solutions. Our engineers are ready to design your custom roadmap.
+                Join hundreds of businesses optimizing their operations with Intersys Solutions. Our
+                engineers are ready to design your custom roadmap.
               </p>
             </div>
 
@@ -57,10 +58,7 @@ export function CtaBand() {
         </motion.div>
       </Container>
 
-      <PromotionOverlay
-        isOpen={isOverlayOpen}
-        onClose={() => setIsOverlayOpen(false)}
-      />
+      <PromotionOverlay isOpen={isOverlayOpen} onClose={() => setIsOverlayOpen(false)} />
     </section>
   );
 }

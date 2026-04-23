@@ -10,7 +10,8 @@ export const Route = createFileRoute("/services")({
       { title: "Solutions — Intersys Solutions" },
       {
         name: "description",
-        content: "Discover our comprehensive range of smart building solutions, from BMS and fire safety to advanced security and integrated AV systems.",
+        content:
+          "Discover our comprehensive range of smart building solutions, from BMS and fire safety to advanced security and integrated AV systems.",
       },
     ],
   }),
@@ -23,7 +24,11 @@ function ServicesPage() {
       {/* Hero Section */}
       <section className="relative pt-24 pb-32 bg-[#0A0F1A] overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImg} alt="Solutions Background" className="w-full h-full object-cover opacity-20 grayscale brightness-50" />
+          <img
+            src={heroImg}
+            alt="Solutions Background"
+            className="w-full h-full object-cover opacity-20 grayscale brightness-50"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1A]/50 to-[#0A0F1A]" />
         </div>
 
@@ -39,7 +44,8 @@ function ServicesPage() {
               <span className="text-red-500">Solution</span>
             </h1>
             <p className="text-base text-white/40 max-w-xl leading-relaxed">
-              Integrated technology solutions for modern architectural marvels. We design, deploy, and manage the technical nervous system of your facility.
+              Integrated technology solutions for modern architectural marvels. We design, deploy,
+              and manage the technical nervous system of your facility.
             </p>
           </motion.div>
         </Container>
@@ -52,4 +58,3 @@ function ServicesPage() {
     </div>
   );
 }
-

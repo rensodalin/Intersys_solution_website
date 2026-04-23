@@ -5,7 +5,7 @@ import { sectors } from "@/components/Homepage/JourneySection";
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 
-export const Route = createFileRoute("/sectors")({
+export const Route = createFileRoute("/sectors/")({
   component: SectorsPage,
 });
 

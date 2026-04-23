@@ -83,9 +83,7 @@ export function MetricsStrip() {
                   <span className="text-white ml-0.5">{m.suffix}</span>
                 </div>
 
-                <div className="text-[13px] text-white/70 leading-snug font-medium">
-                  {m.label}
-                </div>
+                <div className="text-[13px] text-white/70 leading-snug font-medium">{m.label}</div>
               </div>
 
               {/* Subtle hover line effect to draw the eye */}
@@ -97,4 +95,3 @@ export function MetricsStrip() {
     </section>
   );
 }
-

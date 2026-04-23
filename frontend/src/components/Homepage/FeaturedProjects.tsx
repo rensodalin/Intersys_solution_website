@@ -20,80 +20,79 @@ const projects = [
     title: "Novotel Phnom Penh",
     desc: "BMS for HVAC, plumbing, electrical, lighting, ventilation, lift control, and power metering.",
     image: pNovotelPP,
-    category: "Hospitality"
+    category: "Hospitality",
   },
   {
     title: "Wing Tower",
     desc: "BMS for HVAC, plumbing, electrical, lighting, ventilation, lift control, and power metering.",
     image: pWingTower,
-    category: "Commercial"
+    category: "Commercial",
   },
   {
     title: "Department of Economy and Finance – Kampong Speu",
     desc: "BMS covering access control, VESDA, fire alarm, and fuel leak detection systems.",
     image: pGovKampongSpeu,
-    category: "Government"
+    category: "Government",
   },
   {
     title: "Sky Villa",
     desc: "BMS for plumbing, electrical, lighting, ventilation, lift control, and power metering.",
     image: pSkyVilla,
-    category: "Residential"
+    category: "Residential",
   },
   {
     title: "Laurelton Diamond Cambodia",
     desc: "BMS for HVAC, plumbing, electrical, lighting, ventilation, and power metering.",
     image: pLaurelton,
-    category: "Enterprise"
+    category: "Enterprise",
   },
   {
     title: "Data Center – Hatha Bank",
     desc: "Control chiller system for data center cooling.",
     image: pHathaBank,
-    category: "Banking"
+    category: "Banking",
   },
   {
     title: "Novotel Holiday Palace",
     desc: "BMS for HVAC, plumbing, electrical, lighting, ventilation, lift control, and power metering.",
     image: pNovotelHoliday,
-    category: "Hospitality"
+    category: "Hospitality",
   },
   {
     title: "The Gateway",
     desc: "BMS for water metering and power metering.",
     image: pGateway,
-    category: "Commercial"
+    category: "Commercial",
   },
   {
     title: "Hongkong Land",
     desc: "BMS for HVAC, plumbing, electrical, and lighting.",
     image: pHongkongLand,
-    category: "Commercial"
+    category: "Commercial",
   },
   {
     title: "Chip Mong 598 Mall",
     desc: "BMS covering access control, VESDA, fire alarm, and fuel leak detection systems.",
     image: pChipMongMall,
-    category: "Retail"
+    category: "Retail",
   },
   {
     title: "E-Sun Tower",
     desc: "BMS for HVAC, plumbing, electrical, lighting, ventilation, lift control, and power metering.",
     image: pESunTower,
-    category: "Commercial"
+    category: "Commercial",
   },
   {
     title: "Phnom Penh International Airport",
     desc: "Supply and integration of BMS covering HVAC, plumbing, electrical, lighting, ventilation, and power metering.",
     image: pAirport,
-    category: "Infrastructure"
-  }
+    category: "Infrastructure",
+  },
 ];
 
 export function FeaturedProjects() {
   return (
     <section className="bg-white pb-24 md:pb-32 overflow-hidden">
-
       {/* Seamless Tile Grid - No Gaps, Edge to Edge */}
       <div className="w-full">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
@@ -134,11 +133,8 @@ export function FeaturedProjects() {
                   {p.title}
                 </h3>
                 <div className="w-8 h-[2px] bg-[#9B0F06] mb-4" />
-                <p className="text-white/80 text-[13px] leading-relaxed line-clamp-4">
-                  {p.desc}
-                </p>
+                <p className="text-white/80 text-[13px] leading-relaxed line-clamp-4">{p.desc}</p>
                 <div className="mt-8 flex items-center gap-2 group/btn">
-
                   <div className="w-5 h-[1px] bg-white group-hover/btn:bg-[#9B0F06] transition-colors" />
                 </div>
               </div>
@@ -149,5 +145,3 @@ export function FeaturedProjects() {
     </section>
   );
 }
-
-

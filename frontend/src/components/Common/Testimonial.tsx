@@ -25,13 +25,16 @@ export function Testimonial() {
               <Quote size={64} fill="currentColor" strokeWidth={0} />
             </div>
             <p className="text-[16px] text-[#4a5568] italic leading-relaxed mb-10 relative z-10 max-w-[90%]">
-              "Intersys delivered a reliable BMS system with excellent support. Their team's technical knowledge and responsiveness were critical to our project's success."
+              "Intersys delivered a reliable BMS system with excellent support. Their team's
+              technical knowledge and responsiveness were critical to our project's success."
             </p>
             <div className="flex items-center gap-4 relative z-10">
               <div className="w-12 h-12 bg-[#162E93] shadow-md rounded-lg flex-shrink-0" />
               <div>
                 <div className="font-bold text-[#162E93] text-sm">Project Manager</div>
-                <div className="text-[10px] text-[#6b7c93] font-bold uppercase tracking-wider mt-0.5">Major Hospitality Group</div>
+                <div className="text-[10px] text-[#6b7c93] font-bold uppercase tracking-wider mt-0.5">
+                  Major Hospitality Group
+                </div>
               </div>
             </div>
           </motion.div>
@@ -48,13 +51,16 @@ export function Testimonial() {
               <Quote size={64} fill="currentColor" strokeWidth={0} />
             </div>
             <p className="text-[16px] text-[#4a5568] italic leading-relaxed mb-10 relative z-10 max-w-[90%]">
-              "Their fire safety integration was seamless. We feel confident in the safety of our assets thanks to Intersys' meticulous engineering and implementation."
+              "Their fire safety integration was seamless. We feel confident in the safety of our
+              assets thanks to Intersys' meticulous engineering and implementation."
             </p>
             <div className="flex items-center gap-4 relative z-10">
               <div className="w-12 h-12 bg-[#162E93] shadow-md rounded-lg flex-shrink-0" />
               <div>
                 <div className="font-bold text-[#162E93] text-sm">Head of Facilities</div>
-                <div className="text-[10px] text-[#6b7c93] font-bold uppercase tracking-wider mt-0.5">Banking Institution</div>
+                <div className="text-[10px] text-[#6b7c93] font-bold uppercase tracking-wider mt-0.5">
+                  Banking Institution
+                </div>
               </div>
             </div>
           </motion.div>
@@ -63,4 +69,3 @@ export function Testimonial() {
     </section>
   );
 }
-

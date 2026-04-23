@@ -13,4 +13,3 @@ export function Container({
 export function Grid({ className, children }: { className?: string; children: React.ReactNode }) {
   return <div className={cn("grid grid-cols-12 gap-6", className)}>{children}</div>;
 }
-

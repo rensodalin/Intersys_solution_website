@@ -8,23 +8,38 @@ export function Footer() {
     <footer className="bg-[#1A3263] text-white border-t border-white/5">
       <Container className="py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-
           {/* Logo & About */}
           <div>
             <Link to="/" className="inline-block mb-8">
               <img src={logoImg} alt="Intersys Logo" className="h-16 w-auto object-contain" />
             </Link>
             <p className="text-[15px] text-white/60 leading-relaxed pr-4 mb-8">
-              Engineering smart, safe, and sustainable buildings through integrated control systems and automation.
+              Engineering smart, safe, and sustainable buildings through integrated control systems
+              and automation.
             </p>
             <div className="flex gap-3">
-              <a href="https://www.facebook.com/IntersysSolutions" target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-md border border-white/10 text-white/70 hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white transition-all shadow-sm">
+              <a
+                href="https://www.facebook.com/IntersysSolutions"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="grid h-10 w-10 place-items-center rounded-md border border-white/10 text-white/70 hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white transition-all shadow-sm"
+              >
                 <Facebook className="h-4 w-4" />
               </a>
-              <a href="https://www.linkedin.com/company/intersys-solutions2015" target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-md border border-white/10 text-white/70 hover:bg-[#0077b5] hover:border-[#0077b5] hover:text-white transition-all shadow-sm">
+              <a
+                href="https://www.linkedin.com/company/intersys-solutions2015"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="grid h-10 w-10 place-items-center rounded-md border border-white/10 text-white/70 hover:bg-[#0077b5] hover:border-[#0077b5] hover:text-white transition-all shadow-sm"
+              >
                 <Linkedin className="h-4 w-4" />
               </a>
-              <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-md border border-white/10 text-white/70 hover:bg-[#229ED9] hover:border-[#229ED9] hover:text-white transition-all shadow-sm">
+              <a
+                href="https://t.me/chun_sochet"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="grid h-10 w-10 place-items-center rounded-md border border-white/10 text-white/70 hover:bg-[#229ED9] hover:border-[#229ED9] hover:text-white transition-all shadow-sm"
+              >
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.539.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.285-.346-.094L7.469 14.28l-2.76-.86c-.6-.184-.593-.6.126-.882l10.82-4.172c.504-.191.95.105.81.855z" />
                 </svg>
@@ -39,17 +54,26 @@ export function Footer() {
             </h4>
             <ul className="space-y-4">
               <li>
-                <Link to="/portfolio" className="text-[15px] text-white/60 hover:text-[#9B0F06] transition-colors flex items-center gap-3">
+                <Link
+                  to="/portfolio"
+                  className="text-[15px] text-white/60 hover:text-[#9B0F06] transition-colors flex items-center gap-3"
+                >
                   <span /> Projects
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-[15px] text-white/60 hover:text-[#9B0F06] transition-colors flex items-center gap-3">
+                <Link
+                  to="/about"
+                  className="text-[15px] text-white/60 hover:text-[#9B0F06] transition-colors flex items-center gap-3"
+                >
                   <span /> About Us
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-[15px] text-white/60 hover:text-[#9B0F06] transition-colors flex items-center gap-3">
+                <Link
+                  to="/contact"
+                  className="text-[15px] text-white/60 hover:text-[#9B0F06] transition-colors flex items-center gap-3"
+                >
                   <span /> Contact
                 </Link>
               </li>
@@ -111,12 +135,12 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="text-[14px] text-white/60 leading-relaxed hover:text-white transition-colors"
                 >
-                  No. 13, Borey Pipub Thmey Samrong Anthet (2), 2nd Floor, St 07, Krang Thmey Village, Sangkat Kok Khlang, Khan Sen Sok, Phnom Penh, Cambodia
+                  No. 13, Borey Pipub Thmey Samrong Anthet (2), 2nd Floor, St 07, Krang Thmey
+                  Village, Sangkat Kok Khlang, Khan Sen Sok, Phnom Penh, Cambodia
                 </a>
               </li>
             </ul>
           </div>
-
         </div>
 
         {/* Bottom Bar */}
@@ -129,4 +153,3 @@ export function Footer() {
     </footer>
   );
 }
-

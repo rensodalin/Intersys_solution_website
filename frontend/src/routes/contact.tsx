@@ -10,7 +10,8 @@ export const Route = createFileRoute("/contact")({
       { title: "Contact Us — Intersys Solutions" },
       {
         name: "description",
-        content: "Get in touch with Intersys Solutions. We are ready to help with your smart building, security, and fire safety systems.",
+        content:
+          "Get in touch with Intersys Solutions. We are ready to help with your smart building, security, and fire safety systems.",
       },
     ],
   }),
