@@ -48,7 +48,7 @@ export function CtaBand() {
             <div className="shrink-0">
               <button
                 onClick={() => setIsOverlayOpen(true)}
-                className="group inline-flex items-center gap-3 rounded-full bg-[#C3110C] text-white px-8 py-4 text-[14px] font-bold hover:bg-white hover:text-[#C3110C] transition-all whitespace-nowrap shadow-xl shadow-black/20"
+                className="group inline-flex items-center gap-3 rounded-md bg-[#C3110C] text-white px-8 py-4 text-[14px] font-bold hover:bg-white hover:text-[#C3110C] transition-all whitespace-nowrap shadow-xl shadow-black/20"
               >
                 Get a Free Consultation
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

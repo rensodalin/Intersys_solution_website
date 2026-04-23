@@ -1,11 +1,40 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import { Container } from "@/components/Common/Container";
+import { CtaBand } from "@/components/Common/CtaBand";
+import { HoneywellHero } from "@/components/Product/AccessControl/Honeywell/HoneywellHero";
+import { HoneywellGrid } from "@/components/Product/AccessControl/Honeywell/HoneywellGrid";
+import { honeywellCredentials } from "@/components/Product/AccessControl/Honeywell/data";
 
-export const Route = createFileRoute(
-  '/products_/access-control_/honeywell_/credentials',
-)({
-  component: RouteComponent,
-})
+export const Route = createFileRoute("/products_/access-control_/honeywell_/credentials")({
+    head: () => ({
+        meta: [
+            { title: "Honeywell Credentials — Intersys Solutions" },
+            {
+                name: "description",
+                content: "Explore Honeywell's advanced credentials: cards, fobs, and mobile IDs for secure entry.",
+            },
+        ],
+    }),
+    component: HoneywellCredentialsPage,
+});
 
-function RouteComponent() {
-  return <div>Hello "/products_/access-control_/honeywell_/credentials"!</div>
+function HoneywellCredentialsPage() {
+    return (
+        <div className="bg-white min-h-screen">
+            <HoneywellHero
+                title="Access Credentials"
+                subtitle="Secure identification solutions. From high-frequency smart cards to specialized modules for management."
+                backLink="/products/access-control/honeywell"
+                backText="Back to Honeywell Systems"
+            />
+
+            <section className="pb-24 -mt-12 relative z-20">
+                <Container>
+                    <HoneywellGrid products={honeywellCredentials} />
+                </Container>
+            </section>
+
+            <CtaBand />
+        </div>
+    );
 }

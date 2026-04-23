@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WhyChooseRouteImport } from './routes/why-choose'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SectorsRouteImport } from './routes/sectors'
+import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -37,6 +38,11 @@ const ServicesRoute = ServicesRouteImport.update({
 const SectorsRoute = SectorsRouteImport.update({
   id: '/sectors',
   path: '/sectors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsRoute = ProductsRouteImport.update({
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/portfolio': typeof PortfolioRoute
   '/products': typeof ProductsRoute
+  '/projects': typeof ProjectsRoute
   '/sectors': typeof SectorsRouteWithChildren
   '/services': typeof ServicesRoute
   '/why-choose': typeof WhyChooseRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/portfolio': typeof PortfolioRoute
   '/products': typeof ProductsRoute
+  '/projects': typeof ProjectsRoute
   '/services': typeof ServicesRoute
   '/why-choose': typeof WhyChooseRoute
   '/products/access-control': typeof ProductsAccessControlRoute
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/portfolio': typeof PortfolioRoute
   '/products': typeof ProductsRoute
+  '/projects': typeof ProjectsRoute
   '/sectors': typeof SectorsRouteWithChildren
   '/services': typeof ServicesRoute
   '/why-choose': typeof WhyChooseRoute
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/portfolio'
     | '/products'
+    | '/projects'
     | '/sectors'
     | '/services'
     | '/why-choose'
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/portfolio'
     | '/products'
+    | '/projects'
     | '/services'
     | '/why-choose'
     | '/products/access-control'
@@ -184,6 +195,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/portfolio'
     | '/products'
+    | '/projects'
     | '/sectors'
     | '/services'
     | '/why-choose'
@@ -201,6 +213,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   PortfolioRoute: typeof PortfolioRoute
   ProductsRoute: typeof ProductsRoute
+  ProjectsRoute: typeof ProjectsRoute
   SectorsRoute: typeof SectorsRouteWithChildren
   ServicesRoute: typeof ServicesRoute
   WhyChooseRoute: typeof WhyChooseRoute
@@ -232,6 +245,13 @@ declare module '@tanstack/react-router' {
       path: '/sectors'
       fullPath: '/sectors'
       preLoaderRoute: typeof SectorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products': {
@@ -332,6 +352,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   PortfolioRoute: PortfolioRoute,
   ProductsRoute: ProductsRoute,
+  ProjectsRoute: ProjectsRoute,
   SectorsRoute: SectorsRouteWithChildren,
   ServicesRoute: ServicesRoute,
   WhyChooseRoute: WhyChooseRoute,
