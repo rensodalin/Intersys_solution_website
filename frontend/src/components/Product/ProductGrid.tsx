@@ -21,7 +21,7 @@ export function ProductGrid({ categories }: ProductGridProps) {
                             transition={{ delay: i * 0.1 }}
                             className="group flex flex-col bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
                         >
-                            {/* Image Container */}
+                            {/* Image */}
                             <div className="relative h-48 overflow-hidden">
                                 <img
                                     src={cat.image}
@@ -37,18 +37,22 @@ export function ProductGrid({ categories }: ProductGridProps) {
                                     <div className="w-10 h-10 bg-gray-50 text-[#9B0F06] rounded-lg flex items-center justify-center shrink-0 group-hover:bg-[#1A3263] group-hover:text-white transition-all duration-300">
                                         <cat.icon className="w-5 h-5" />
                                     </div>
-                                    <h3 className="text-lg font-bold text-[#1A3263] group-hover:text-[#9B0F06] transition-colors leading-tight">
+
+                                    {/* Bigger title */}
+                                    <h3 className="text-xl font-bold text-[#1A3263] group-hover:text-[#9B0F06] transition-colors leading-tight">
                                         {cat.title}
                                     </h3>
                                 </div>
 
-                                <p className="text-gray-500 text-[13px] leading-relaxed mb-8 flex-grow">
+                                {/* Bigger description */}
+                                <p className="text-gray-600 text-sm leading-relaxed mb-8 flex-grow">
                                     {cat.desc}
                                 </p>
 
+                                {/* Cleaner button text */}
                                 <Link
                                     to={cat.link}
-                                    className="inline-flex items-center justify-center w-full py-3 bg-gray-50 text-[#1A3263] font-bold text-[10px] uppercase tracking-widest rounded-lg hover:bg-[#1A3263] hover:text-white transition-all shadow-sm"
+                                    className="inline-flex items-center justify-center w-full py-3 bg-gray-50 text-[#1A3263] font-semibold text-sm rounded-lg hover:bg-[#1A3263] hover:text-white transition-all shadow-sm"
                                 >
                                     {cat.buttonText}
                                 </Link>
