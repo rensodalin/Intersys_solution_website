@@ -116,3 +116,234 @@ export const honeywellCredentials = [
         image: "https://s7d1.scene7.com/is/image/Honeywell65/hbt-Security-P1901061-primaryimage"
     }
 ];
+
+export const honeywellReaders = [
+    {
+        title: "Signature Pads",
+        desc: "Electronic signature capture pads for secure identity verification and visitor logging.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/HBT-BP-Security-LWVMSSIG-PrimaryPhoto"
+    },
+    {
+        title: "Card Readers",
+        desc: "High-security proximity and smart card readers supporting multi-protocol authentication.",
+        image: "https://www.securityinformed.com/img/products/400/omniclass-2-400.jpg"
+    },
+    {
+        title: "Biometric Readers",
+        desc: "Advanced fingerprint and facial recognition units for high-security entry points.",
+        image: "https://www.yskelektronik.com/wp-content/uploads/2024/05/0127720.jpeg"
+    },
+    {
+        title: "Keypads",
+        desc: "Robust backlit keypads for dual-factor authentication and standalone access control.",
+        image: "https://cdn11.bigcommerce.com/s-9gh6w8fwxg/images/stencil/500x659/products/2989/20964/OS40KTOSDP__01226.1760375216.png?c=1"
+    }
+];
+
+export const honeywellSoftware = [
+    {
+        title: "Pro-Watch® Security Management Software",
+        desc: "Enterprise-grade platform for global security management, integrating access control, video and intrusion.",
+        image: "https://www.sourcesecurity.com/img/products/400/honeywell-access-systems-pro-watch-3-80-access-control-software.jpg"
+    },
+    {
+        title: "Pro-Watch Visitor Management 3.0",
+        desc: "Streamlined visitor check-in with specialized mobile app support for efficient arrivals.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/HBT-SEC-PWVM-Monitor-VisitorList1-wMobileApp"
+    },
+    {
+        title: "LobbyWorks® Visitor Management Suite",
+        desc: "Complete visitor management solution (Version 4.1) for professional lobby operations.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-Security-P1904914-primaryimage"
+    },
+    {
+        title: "WIN-PAK Integrated Security Software",
+        desc: "Cost-effective software for small-to-midsize businesses needing integrated access and video.",
+        image: "https://honeywelldynamic.hashtechorange.com/uploads/security/product/images/161529184916653.png"
+    },
+    {
+        title: "PRO-WATCH® 5.0",
+        desc: "The latest standard in enterprise security, providing 360-degree situational awareness.",
+        image: "https://s7d1.scene7.com/is/image/Honeywell65/hbt-security-pwhsdk256-pro-watch50-primaryimage"
+    },
+    {
+        title: "PWHSDK",
+        desc: "Software development kit for deep integration with Pro-Watch core ecosystems.",
+        image: "https://s7d1.scene7.com/is/image/Honeywell65/hbt-sec-prowatch-software-primaryimage"
+    },
+    {
+        title: "Pro-Watch System Software Option",
+        desc: "Graphical map interfaces and advanced control options for site monitoring.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/HBT-SEC-PW65-IC-MAPS"
+    },
+    {
+        title: "Premier Edition Kit",
+        desc: "All-in-one software bundle for mission-critical facility protection.",
+        image: "https://static.wixstatic.com/media/3d5958_17854c29bbcd46a98b4f5e990f6b549b~mv2.png/v1/fill/w_365,h_269,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/3d5958_17854c29bbcd46a98b4f5e990f6b549b~mv2.png"
+    },
+    {
+        title: "Neverfail Licenses",
+        desc: "High-availability license options ensuring 99.999% system uptime for critical sites.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-icon-licenses-and-agreements-2-primaryimage"
+    },
+    {
+        title: "Pro-Watch Exacq VMS Integration",
+        desc: "Dedicated licenses for seamless video management system coupling.",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOJmWdULy5OtrewFBBISIIgSKkkSuES-sF1w&s"
+    },
+    {
+        title: "Server Add-On Redundant Licenses",
+        desc: "Failover and redundancy licenses for centralized Pro-Watch servers.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/HBT-SEC-PW65-IC-MAPS"
+    },
+    {
+        title: "Pro-Watch Add-On (PE and CE)",
+        desc: "Expansion licenses for Professional and Corporate Edition environments.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/HBT-SEC-PW65-IC-MAPS"
+    },
+    {
+        title: "Pro-Watch Integrated Security Suite",
+        desc: "The ultimate unified security platform for large-scale enterprise deployments.",
+        image: "https://img.securityinfowatch.com/files/base/cygnus/siw/image/2024/02/65d7cd1633b2ea001edfa8d4-hbtsecprw65dsusen1.png?auto=format,compress&fit=fill&fill=blur&w=1200&h=630"
+    }
+];
+
+export const honeywellControlPanelKits = [
+    {
+        title: "PRO4000 Controllers Kit",
+        desc: "Professional-grade integrated controller kit designed for scalable facility security management.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-security-PRO4000KD4-KIT"
+    }
+];
+
+export const honeywellKiosks = [
+    {
+        title: "Call Station PC",
+        desc: "Touch-screen integrated call station for lobby management and visitor communication.",
+        image: "https://s7d1.scene7.com/is/image/Honeywell65/hbt-fire-583560-pc-touch-screen-call-station-primaryimage"
+    }
+];
+
+export const honeywellUpgrades = [
+    {
+        title: "Pro-Watch Enterprise Edition",
+        desc: "Scalable enterprise security management platform for global multi-site operations.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-icon-licenses-and-agreements-primaryimage"
+    },
+    {
+        title: "Pro-Watch® Software Support Agreement",
+        desc: "Comprehensive support and maintenance plan ensuring your system is always peak performance.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-icon-licenses-and-agreements-primaryimage"
+    },
+    {
+        title: "Pro-Watch Video Manager",
+        desc: "Advanced video management integration for unified security situational awareness.",
+        image: "https://s7d1.scene7.com/is/image/Honeywell65/hbt-sec-prowatch-software-primaryimage"
+    },
+    {
+        title: "WIN-PAK Integrated Security Software",
+        desc: "Upgrade or extension for WIN-PAK environments requiring additional license capacity.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-Security-P1904961-primaryimage"
+    },
+    {
+        title: "Upgrade Kit",
+        desc: "All-in-one upgrade package for legacy Honeywell systems transitioning to modern architecture.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-icon-licenses-and-agreements-2-primaryimage"
+    },
+    {
+        title: "IDEMIA VisionPass License upgrade",
+        desc: "Biometric identification expansion licenses for high-security checkpoints.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-icon-licenses-and-agreements-2-primaryimage"
+    },
+    {
+        title: "Pro-Watch System Software Option",
+        desc: "Additional software modules and feature options for Pro-Watch environments.",
+        image: "https://s7d1.scene7.com/is/image/Honeywell65/hbt-sec-prowatch-software-primaryimage"
+    },
+    {
+        title: "Premier Edition Kit",
+        desc: "Premium licensing kit for elite facility management and control.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-icon-licenses-and-agreements-2-primaryimage"
+    },
+    {
+        title: "SSAPWLT",
+        desc: "Specialized Software Support Agreement for long-term technical reliability.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-icon-licenses-and-agreements-primaryimage"
+    },
+    {
+        title: "Software Technical Support Contract",
+        desc: "Direct access to Honeywell certified engineers for critical system resolution.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-icon-licenses-and-agreements-primaryimage"
+    },
+    {
+        title: "SSAPWHSDK",
+        desc: "Developer-level support agreement for custom SDK integrations.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-icon-licenses-and-agreements-primaryimage"
+    }
+];
+
+export const honeywellDoorHardware = [
+    {
+        title: "Locking Devices",
+        desc: "High-security electronic locks and wireless locksets for versatile entry control.",
+        image: "https://s7d1.scene7.com/is/image/Honeywell65/hbt-security-assa-abloy-aperio-wireless-lockset-is-a-primaryimage"
+    },
+    {
+        title: "Release Switches",
+        desc: "Request-to-exit (REX) switches and emergency release devices for safe facility egress.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/no-image?wid=200&hei=200&dpr=off"
+    }
+];
+
+export const honeywellControlPanels = [
+    {
+        title: "PRO4000 Controllers",
+        desc: "Advanced logic controllers designed for modular facility expansion.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-security-PRO4000PD4"
+    },
+    {
+        title: "Pro-Watch 7101 Intelligent IP based Controller",
+        desc: "High-performance IP-native controller with enterprise-grade data handling.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/HBT-Security-PRO22ENC1-PW7KBoards1"
+    },
+    {
+        title: "Pro-Watch 7000 Intelligent Controller",
+        desc: "Centralized intelligence unit for global Pro-Watch security management.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/HBT-Security-PRO22ENC1-PW7KBoards1"
+    },
+    {
+        title: "PRO4200 Controllers",
+        desc: "Secondary controller array for localized entry and relay management.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/HBT-Security-PRO22ENC1-PW7KBoards1"
+    },
+    {
+        title: "Access controller",
+        desc: "Stand-alone access unit for smaller deployments or remote site integration.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hbt-sec-PRO3000"
+    },
+    {
+        title: "Mercury MP Series Controllers",
+        desc: "Premium Mercury-based controller cluster for ultra-secure enterprise sites.",
+        image: "https://www.keri-kb.com/help/Content/Mercury/Images/MP_Controllers/Mercury_MP_Controllers.png"
+    },
+    {
+        title: "MAXPRO Intrusion Enclosure and PSU",
+        desc: "Hardened enclosures with integrated 12VDC power for centralized hardware.",
+        image: "https://s7d1.scene7.com/is/image/Honeywell65/hbt-fire-fire-mpibxm35-maxpro-intrusion-enclosure-and-psu-primaryimage"
+    },
+    {
+        title: "Pro-Watch 7000 Module",
+        desc: "Expansion modules for the PW7000 series, adding relay and reader capacity.",
+        image: "https://s7d1.scene7.com/is/image/Honeywell65/HBT-Security-PW7K1R2"
+    },
+    {
+        title: "Mercury™ LP Series Intelligent Controller",
+        desc: "Low-power, high-security intelligent controllers with extensive encryption support.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/hon-ba-security-mercury-pwlp4502"
+    },
+    {
+        title: "MPA2 and MPA4 Access Solution",
+        desc: "Door access control solutions (2 and 4 door) for versatile site protection.",
+        image: "https://honeywell.scene7.com/is/image/Honeywell65/HBT-SEC-MPA2-MPA4-Enclosure-ControlPanel-Monitor"
+    }
+];

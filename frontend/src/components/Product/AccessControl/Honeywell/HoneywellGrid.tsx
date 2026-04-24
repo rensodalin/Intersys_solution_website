@@ -21,7 +21,21 @@ export function HoneywellGrid({ products }: HoneywellGridProps) {
                         ? "/products/access-control/honeywell/accessories"
                         : product.title === "Credentials"
                             ? "/products/access-control/honeywell/credentials"
-                            : "/contact";
+                            : product.title === "Readers & Keypads"
+                                ? "/products/access-control/honeywell/readers"
+                                : product.title === "Software"
+                                    ? "/products/access-control/honeywell/software"
+                                    : product.title === "Control Panel Kits"
+                                        ? "/products/access-control/honeywell/control-panel-kits"
+                                        : product.title === "Lobby Kiosks & Touch Screens"
+                                            ? "/products/access-control/honeywell/lobby-kiosks"
+                                            : product.title === "System Agreements & Upgrades"
+                                                ? "/products/access-control/honeywell/upgrades"
+                                                : product.title === "Door Hardware"
+                                                    ? "/products/access-control/honeywell/door-hardware"
+                                                    : product.title === "Control Panels"
+                                                        ? "/products/access-control/honeywell/control-panels"
+                                                        : "/contact";
 
                 return (
                     <motion.div
@@ -67,7 +81,14 @@ export function HoneywellGrid({ products }: HoneywellGridProps) {
                                 <div className="flex items-center justify-between w-full py-3 px-4 bg-gray-50 rounded-xl text-[#1A3263] font-semibold text-sm group-hover:bg-[#1A3263] group-hover:text-white transition-all duration-300">
                                     <span>
                                         {product.title === "Accessories" ||
-                                            product.title === "Credentials"
+                                            product.title === "Credentials" ||
+                                            product.title === "Readers & Keypads" ||
+                                            product.title === "Software" ||
+                                            product.title === "Control Panel Kits" ||
+                                            product.title === "Lobby Kiosks & Touch Screens" ||
+                                            product.title === "System Agreements & Upgrades" ||
+                                            product.title === "Door Hardware" ||
+                                            product.title === "Control Panels"
                                             ? "Explore"
                                             : "Request Info"}
                                     </span>

@@ -53,7 +53,7 @@ export function HoneywellHero({
                     <h1 className="text-3xl md:text-5xl font-bold text-white mb-5 tracking-tight">
                         {title.split(" ")[0]}{" "}
                         <span className="text-[#9B0F06]">
-                            {title.split(" ")[1] || "Systems"}
+                            {title.split(" ").slice(1).join(" ")}
                         </span>
                     </h1>
 
