@@ -24,10 +24,15 @@ function HoneywellSoftwarePage() {
   return (
     <div className="bg-white min-h-screen">
       <HoneywellHero
-        title="Security Software"
-        subtitle="Unify your security ecosystem. From enterprise-grade Pro-Watch management to scalable WIN-PAK solutions."
-        backLink="/products/access-control/honeywell"
-        backText="Back to Honeywell Systems"
+        title="Honeywell Systems"
+        subtitle="Industrial-grade security architecture designed for mission-critical infrastructure."
+        breadcrumbs={[
+          { name: "Home", href: "/" },
+          { name: "Products", href: "/products" },
+          { name: "Access Control", href: "/products/access-control" },
+          { name: "Honeywell", href: "/products/access-control/honeywell" },
+          { name: "Software", href: "/products/access-control/honeywell/software" },
+        ]}
       />
 
       {/* Product Grid */}

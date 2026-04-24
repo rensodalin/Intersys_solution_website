@@ -21,7 +21,9 @@ import { Route as SectorsIndexRouteImport } from './routes/sectors.index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as SectorsSectorIdRouteImport } from './routes/sectors.$sectorId'
 import { Route as ProductsAccessControlRouteImport } from './routes/products_.access-control'
+import { Route as ProductsAccessControlSaltoRouteImport } from './routes/products_.access-control_.salto'
 import { Route as ProductsAccessControlHoneywellRouteImport } from './routes/products_.access-control_.honeywell'
+import { Route as ProductsAccessControlSaltoProductIdRouteImport } from './routes/products_.access-control_.salto_.$productId'
 import { Route as ProductsAccessControlHoneywellUpgradesRouteImport } from './routes/products_.access-control_.honeywell_.upgrades'
 import { Route as ProductsAccessControlHoneywellSoftwareRouteImport } from './routes/products_.access-control_.honeywell_.software'
 import { Route as ProductsAccessControlHoneywellReadersRouteImport } from './routes/products_.access-control_.honeywell_.readers'
@@ -92,10 +94,22 @@ const ProductsAccessControlRoute = ProductsAccessControlRouteImport.update({
   path: '/products/access-control',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductsAccessControlSaltoRoute =
+  ProductsAccessControlSaltoRouteImport.update({
+    id: '/products_/access-control_/salto',
+    path: '/products/access-control/salto',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ProductsAccessControlHoneywellRoute =
   ProductsAccessControlHoneywellRouteImport.update({
     id: '/products_/access-control_/honeywell',
     path: '/products/access-control/honeywell',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ProductsAccessControlSaltoProductIdRoute =
+  ProductsAccessControlSaltoProductIdRouteImport.update({
+    id: '/products_/access-control_/salto_/$productId',
+    path: '/products/access-control/salto/$productId',
     getParentRoute: () => rootRouteImport,
   } as any)
 const ProductsAccessControlHoneywellUpgradesRoute =
@@ -167,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/about/': typeof AboutIndexRoute
   '/sectors/': typeof SectorsIndexRoute
   '/products/access-control/honeywell': typeof ProductsAccessControlHoneywellRoute
+  '/products/access-control/salto': typeof ProductsAccessControlSaltoRoute
   '/products/access-control/honeywell/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
   '/products/access-control/honeywell/control-panel-kits': typeof ProductsAccessControlHoneywellControlPanelKitsRoute
   '/products/access-control/honeywell/control-panels': typeof ProductsAccessControlHoneywellControlPanelsRoute
@@ -176,6 +191,7 @@ export interface FileRoutesByFullPath {
   '/products/access-control/honeywell/readers': typeof ProductsAccessControlHoneywellReadersRoute
   '/products/access-control/honeywell/software': typeof ProductsAccessControlHoneywellSoftwareRoute
   '/products/access-control/honeywell/upgrades': typeof ProductsAccessControlHoneywellUpgradesRoute
+  '/products/access-control/salto/$productId': typeof ProductsAccessControlSaltoProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -190,6 +206,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutIndexRoute
   '/sectors': typeof SectorsIndexRoute
   '/products/access-control/honeywell': typeof ProductsAccessControlHoneywellRoute
+  '/products/access-control/salto': typeof ProductsAccessControlSaltoRoute
   '/products/access-control/honeywell/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
   '/products/access-control/honeywell/control-panel-kits': typeof ProductsAccessControlHoneywellControlPanelKitsRoute
   '/products/access-control/honeywell/control-panels': typeof ProductsAccessControlHoneywellControlPanelsRoute
@@ -199,6 +216,7 @@ export interface FileRoutesByTo {
   '/products/access-control/honeywell/readers': typeof ProductsAccessControlHoneywellReadersRoute
   '/products/access-control/honeywell/software': typeof ProductsAccessControlHoneywellSoftwareRoute
   '/products/access-control/honeywell/upgrades': typeof ProductsAccessControlHoneywellUpgradesRoute
+  '/products/access-control/salto/$productId': typeof ProductsAccessControlSaltoProductIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -215,6 +233,7 @@ export interface FileRoutesById {
   '/about/': typeof AboutIndexRoute
   '/sectors/': typeof SectorsIndexRoute
   '/products_/access-control_/honeywell': typeof ProductsAccessControlHoneywellRoute
+  '/products_/access-control_/salto': typeof ProductsAccessControlSaltoRoute
   '/products_/access-control_/honeywell_/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
   '/products_/access-control_/honeywell_/control-panel-kits': typeof ProductsAccessControlHoneywellControlPanelKitsRoute
   '/products_/access-control_/honeywell_/control-panels': typeof ProductsAccessControlHoneywellControlPanelsRoute
@@ -224,6 +243,7 @@ export interface FileRoutesById {
   '/products_/access-control_/honeywell_/readers': typeof ProductsAccessControlHoneywellReadersRoute
   '/products_/access-control_/honeywell_/software': typeof ProductsAccessControlHoneywellSoftwareRoute
   '/products_/access-control_/honeywell_/upgrades': typeof ProductsAccessControlHoneywellUpgradesRoute
+  '/products_/access-control_/salto_/$productId': typeof ProductsAccessControlSaltoProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -241,6 +261,7 @@ export interface FileRouteTypes {
     | '/about/'
     | '/sectors/'
     | '/products/access-control/honeywell'
+    | '/products/access-control/salto'
     | '/products/access-control/honeywell/accessories'
     | '/products/access-control/honeywell/control-panel-kits'
     | '/products/access-control/honeywell/control-panels'
@@ -250,6 +271,7 @@ export interface FileRouteTypes {
     | '/products/access-control/honeywell/readers'
     | '/products/access-control/honeywell/software'
     | '/products/access-control/honeywell/upgrades'
+    | '/products/access-control/salto/$productId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -264,6 +286,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/sectors'
     | '/products/access-control/honeywell'
+    | '/products/access-control/salto'
     | '/products/access-control/honeywell/accessories'
     | '/products/access-control/honeywell/control-panel-kits'
     | '/products/access-control/honeywell/control-panels'
@@ -273,6 +296,7 @@ export interface FileRouteTypes {
     | '/products/access-control/honeywell/readers'
     | '/products/access-control/honeywell/software'
     | '/products/access-control/honeywell/upgrades'
+    | '/products/access-control/salto/$productId'
   id:
     | '__root__'
     | '/'
@@ -288,6 +312,7 @@ export interface FileRouteTypes {
     | '/about/'
     | '/sectors/'
     | '/products_/access-control_/honeywell'
+    | '/products_/access-control_/salto'
     | '/products_/access-control_/honeywell_/accessories'
     | '/products_/access-control_/honeywell_/control-panel-kits'
     | '/products_/access-control_/honeywell_/control-panels'
@@ -297,6 +322,7 @@ export interface FileRouteTypes {
     | '/products_/access-control_/honeywell_/readers'
     | '/products_/access-control_/honeywell_/software'
     | '/products_/access-control_/honeywell_/upgrades'
+    | '/products_/access-control_/salto_/$productId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -311,6 +337,7 @@ export interface RootRouteChildren {
   ProductsAccessControlRoute: typeof ProductsAccessControlRoute
   AboutIndexRoute: typeof AboutIndexRoute
   ProductsAccessControlHoneywellRoute: typeof ProductsAccessControlHoneywellRoute
+  ProductsAccessControlSaltoRoute: typeof ProductsAccessControlSaltoRoute
   ProductsAccessControlHoneywellAccessoriesRoute: typeof ProductsAccessControlHoneywellAccessoriesRoute
   ProductsAccessControlHoneywellControlPanelKitsRoute: typeof ProductsAccessControlHoneywellControlPanelKitsRoute
   ProductsAccessControlHoneywellControlPanelsRoute: typeof ProductsAccessControlHoneywellControlPanelsRoute
@@ -320,6 +347,7 @@ export interface RootRouteChildren {
   ProductsAccessControlHoneywellReadersRoute: typeof ProductsAccessControlHoneywellReadersRoute
   ProductsAccessControlHoneywellSoftwareRoute: typeof ProductsAccessControlHoneywellSoftwareRoute
   ProductsAccessControlHoneywellUpgradesRoute: typeof ProductsAccessControlHoneywellUpgradesRoute
+  ProductsAccessControlSaltoProductIdRoute: typeof ProductsAccessControlSaltoProductIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -408,11 +436,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsAccessControlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/products_/access-control_/salto': {
+      id: '/products_/access-control_/salto'
+      path: '/products/access-control/salto'
+      fullPath: '/products/access-control/salto'
+      preLoaderRoute: typeof ProductsAccessControlSaltoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products_/access-control_/honeywell': {
       id: '/products_/access-control_/honeywell'
       path: '/products/access-control/honeywell'
       fullPath: '/products/access-control/honeywell'
       preLoaderRoute: typeof ProductsAccessControlHoneywellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products_/access-control_/salto_/$productId': {
+      id: '/products_/access-control_/salto_/$productId'
+      path: '/products/access-control/salto/$productId'
+      fullPath: '/products/access-control/salto/$productId'
+      preLoaderRoute: typeof ProductsAccessControlSaltoProductIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products_/access-control_/honeywell_/upgrades': {
@@ -506,6 +548,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProductsAccessControlRoute: ProductsAccessControlRoute,
   AboutIndexRoute: AboutIndexRoute,
   ProductsAccessControlHoneywellRoute: ProductsAccessControlHoneywellRoute,
+  ProductsAccessControlSaltoRoute: ProductsAccessControlSaltoRoute,
   ProductsAccessControlHoneywellAccessoriesRoute:
     ProductsAccessControlHoneywellAccessoriesRoute,
   ProductsAccessControlHoneywellControlPanelKitsRoute:
@@ -524,6 +567,8 @@ const rootRouteChildren: RootRouteChildren = {
     ProductsAccessControlHoneywellSoftwareRoute,
   ProductsAccessControlHoneywellUpgradesRoute:
     ProductsAccessControlHoneywellUpgradesRoute,
+  ProductsAccessControlSaltoProductIdRoute:
+    ProductsAccessControlSaltoProductIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -22,10 +22,15 @@ function HoneywellAccessoriesPage() {
   return (
     <div className="bg-white min-h-screen">
       <HoneywellHero
-        title="System Accessories"
-        subtitle="Every detail matters. Explore our range of industrial-grade peripherals and support components."
-        backLink="/products/access-control/honeywell"
-        backText="Back to Honeywell Systems"
+        title="Honeywell Systems"
+        subtitle="Industrial-grade security architecture designed for mission-critical infrastructure."
+        breadcrumbs={[
+          { name: "Home", href: "/" },
+          { name: "Products", href: "/products" },
+          { name: "Access Control", href: "/products/access-control" },
+          { name: "Honeywell", href: "/products/access-control/honeywell" },
+          { name: "Accessories", href: "/products/access-control/honeywell/accessories" },
+        ]}
       />
 
       <section className="pb-24 -mt-12 relative z-20">

@@ -22,10 +22,15 @@ function HoneywellReadersPage() {
     return (
         <div className="bg-white min-h-screen">
             <HoneywellHero
-                title="Readers & Keypads"
-                subtitle="High-performance identification. From biometric fingerprint units to multi-protocol card readers."
-                backLink="/products/access-control/honeywell"
-                backText="Back to Honeywell Systems"
+                title="Honeywell Systems"
+                subtitle="Industrial-grade security architecture designed for mission-critical infrastructure."
+                breadcrumbs={[
+                    { name: "Home", href: "/" },
+                    { name: "Products", href: "/products" },
+                    { name: "Access Control", href: "/products/access-control" },
+                    { name: "Honeywell", href: "/products/access-control/honeywell" },
+                    { name: "Reader & Keypad", href: "/products/access-control/honeywell/readers" },
+                ]}
             />
 
             {/* Product Grid */}

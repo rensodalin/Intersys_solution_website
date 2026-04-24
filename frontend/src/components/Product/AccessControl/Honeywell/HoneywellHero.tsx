@@ -1,11 +1,19 @@
 import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { Container } from "@/components/Common/Container";
-import { ArrowLeft } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+
+interface BreadcrumbItem {
+    name: string;
+    href: string;
+}
 
 interface HoneywellHeroProps {
     title?: string;
     subtitle?: string;
+    breadcrumbs?: BreadcrumbItem[];
+    // Legacy props kept to avoid breaking existing routes - will be ignored in favor of breadcrumbs
     backLink?: string;
     backText?: string;
 }
@@ -13,12 +21,15 @@ interface HoneywellHeroProps {
 export function HoneywellHero({
     title = "Honeywell Systems",
     subtitle = "Industrial-grade security architecture designed for mission-critical infrastructure.",
-    backLink = "/products/access-control",
-    backText = "Back to Access Control",
+    breadcrumbs = [
+        { name: "Home", href: "/" },
+        { name: "Products", href: "/products" },
+        { name: "Access Control", href: "/products/access-control" },
+        { name: "Honeywell", href: "/products/access-control/honeywell" },
+    ],
 }: HoneywellHeroProps) {
     return (
-        <section className="relative pt-28 pb-16 ">
-
+        <section className="relative pt-28 pb-16">
             {/* Background */}
             <div className="absolute inset-0 z-0">
                 <img
@@ -30,26 +41,37 @@ export function HoneywellHero({
             </div>
 
             <Container className="relative z-10">
-
                 <motion.div
                     initial={{ opacity: 0, y: 25 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="flex flex-col items-center text-center"
                 >
-
-                    {/* Back Link */}
-                    <Link
-                        to={backLink}
-                        className="group inline-flex items-center gap-2 text-white/50 hover:text-[#9B0F06] transition text-[10px] font-semibold uppercase tracking-[0.25em] mb-10"
-                    >
-                        <ArrowLeft className="w-3 h-3 transition-transform group-hover:-translate-x-1" />
-                        {backText}
-                    </Link>
+                    {/* Breadcrumbs */}
+                    <nav className="flex items-center gap-1.5 mb-10 text-[10px] font-bold uppercase tracking-[0.25em]">
+                        {breadcrumbs.map((item, index) => (
+                            <div key={item.name} className="flex items-center gap-1.5">
+                                <Link
+                                    to={item.href}
+                                    className={cn(
+                                        "transition-colors",
+                                        index === breadcrumbs.length - 1
+                                            ? "text-[#9B0F06]"
+                                            : "text-white/40 hover:text-white"
+                                    )}
+                                >
+                                    {item.name}
+                                </Link>
+                                {index < breadcrumbs.length - 1 && (
+                                    <span className="text-white/20">/</span>
+                                )}
+                            </div>
+                        ))}
+                    </nav>
 
                     {/* Accent line */}
                     <div className="h-[1px] w-16 bg-[#9B0F06] mb-6" />
 
-                    {/* Title (smaller + cleaner) */}
+                    {/* Title */}
                     <h1 className="text-3xl md:text-5xl font-bold text-white mb-5 tracking-tight">
                         {title.split(" ")[0]}{" "}
                         <span className="text-[#9B0F06]">
@@ -57,11 +79,10 @@ export function HoneywellHero({
                         </span>
                     </h1>
 
-                    {/* Subtitle (smaller + softer) */}
+                    {/* Subtitle */}
                     <p className="text-white/60 text-sm md:text-base max-w-xl leading-relaxed">
                         {subtitle}
                     </p>
-
                 </motion.div>
             </Container>
         </section>

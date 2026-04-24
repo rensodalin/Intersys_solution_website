@@ -142,7 +142,7 @@ function AccessControlPage() {
                                     to={
                                         brand.name === "Honeywell"
                                             ? "/products/access-control/honeywell"
-                                            : "/contact"
+                                            : "/products/access-control/salto"
                                     }
                                     className="inline-flex items-center justify-center py-3 px-6 bg-[#1A3263] text-white font-bold text-xs uppercase tracking-widest rounded-lg hover:bg-[#9B0F06] transition-all self-start"
                                 >
