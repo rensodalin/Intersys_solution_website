@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ProductHero } from "@/components/Product/ProductHero";
 
 export const Route = createFileRoute("/products_/access-control")({
     head: () => ({
@@ -44,43 +45,15 @@ const brands = [
 function AccessControlPage() {
     return (
         <div className="bg-white">
-            {/* HERO */}
-            <section className="relative pt-40 pb-28 overflow-hidden text-white">
-                <div className="absolute inset-0 z-0">
-                    <img
-                        src="https://images.unsplash.com/photo-1748027869634-fc2e545cfb0c?q=80&w=1364&auto=format&fit=crop"
-                        alt="Access Control"
-                        className="w-full h-full object-cover opacity-30"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#1A3263] via-[#1A3263]/70 to-transparent" />
-                </div>
-
-                <Container className="relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 15 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="max-w-2xl"
-                    >
-                        <div className="flex items-center gap-3 mb-5">
-                            <div className="h-[2px] w-10 bg-[#9B0F06]" />
-                            <span className="text-[#9B0F06] font-bold uppercase tracking-widest text-xs">
-                                Security Solutions
-                            </span>
-                        </div>
-
-                        <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                            Access <span className="text-[#9B0F06]">Control</span>
-                        </h1>
-
-                        <p className="text-white/80 text-base md:text-lg leading-relaxed">
-                            Secure and manage who enters your facilities with our scalable
-                            access control solutions. We offer keycard systems, biometric
-                            authentication, and visitor management tools to protect your
-                            assets and people.
-                        </p>
-                    </motion.div>
-                </Container>
-            </section>
+            <ProductHero
+                title="Access Control"
+                subtitle="Secure and manage who enters your facilities with our scalable access control solutions including keycard systems, biometric authentication, and visitor management."
+                breadcrumbs={[
+                    { name: "Home", href: "/" },
+                    { name: "Products", href: "/products" },
+                    { name: "Access Control", href: "/products/access-control" },
+                ]}
+            />
 
             {/* BRANDS */}
             <section className="py-20 bg-gray-50">

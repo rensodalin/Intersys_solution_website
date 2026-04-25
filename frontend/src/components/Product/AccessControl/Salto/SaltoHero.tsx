@@ -1,57 +1,77 @@
-import { Container } from "@/components/Common/Container";
 import { motion } from "framer-motion";
+import { Link } from "@tanstack/react-router";
+import { Container } from "@/components/Common/Container";
+import { cn } from "@/lib/utils";
 
-export function SaltoHero() {
+interface BreadcrumbItem {
+    name: string;
+    href: string;
+}
+
+interface SaltoHeroProps {
+    title?: string;
+    subtitle?: string;
+    breadcrumbs?: BreadcrumbItem[];
+}
+
+/**
+ * Clean UI Header for Salto product pages.
+ */
+export function SaltoHero({
+    title = "Salto Systems",
+    subtitle = "Revolutionary keyless locking solutions. Experience the future of electronic access control.",
+    breadcrumbs = [
+        { name: "Home", href: "/" },
+        { name: "Products", href: "/products" },
+        { name: "Access Control", href: "/products/access-control" },
+        { name: "Salto", href: "/products/access-control/salto" },
+    ],
+}: SaltoHeroProps) {
     return (
-        <section className="relative pt-32 pb-24 overflow-hidden bg-[#1A3263]">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-10">
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
-            </div>
-
-            <Container className="relative z-10">
-                <div className="max-w-2xl">
+        <section className="bg-[#F8F9FA] pt-32 pb-16 border-b border-gray-200/50">
+            <Container>
+                <div className="max-w-4xl">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="flex items-center gap-2 mb-5"
+                        transition={{ duration: 0.5 }}
                     >
-                        <div className="h-[2px] w-10 bg-[#9B0F06]" />
-                        <span className="text-[#9B0F06] font-bold uppercase tracking-[0.15em] text-[10px]">
-                            Smart Access Solutions
-                        </span>
+                        {/* Page Title */}
+                        <h1 className="text-4xl md:text-5xl font-black text-[#1A3263] mb-4 tracking-tight">
+                            {title}
+                        </h1>
+
+                        {/* Breadcrumbs */}
+                        <nav className="flex items-center gap-2 mb-8 flex-wrap">
+                            {breadcrumbs.map((item, index) => (
+                                <div key={item.name} className="flex items-center gap-2">
+                                    <Link
+                                        to={item.href}
+                                        className={cn(
+                                            "text-[13px] font-medium transition-colors",
+                                            index === breadcrumbs.length - 1
+                                                ? "text-gray-900 cursor-default"
+                                                : "text-gray-400 hover:text-[#C3110C]"
+                                        )}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                    {index < breadcrumbs.length - 1 && (
+                                        <span className="text-gray-300 text-xs">/</span>
+                                    )}
+                                </div>
+                            ))}
+                        </nav>
+
+                        {/* Description */}
+                        {subtitle && (
+                            <p className="text-gray-500 text-base md:text-lg max-w-2xl leading-relaxed font-normal">
+                                {subtitle}
+                            </p>
+                        )}
                     </motion.div>
-
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="text-4xl md:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight"
-                    >
-                        SALTO <span className="text-[#9B0F06]">Systems</span>
-                    </motion.h1>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="text-white/70 text-base md:text-lg leading-relaxed max-w-xl"
-                    >
-                        Extensive range of electronic locks, cylinders, and smart access management solutions.
-                        From hotel rooms to corporate offices, Salto provides flexible, keyless, and wire-free security.
-                    </motion.p>
                 </div>
             </Container>
-
-            {/* Decorative Elements */}
-            <div className="absolute top-1/2 right-0 -translate-y-1/2 w-1/4 h-full pointer-events-none hidden lg:block">
-                <div className="absolute inset-0 bg-gradient-to-l from-[#1A3263] via-transparent to-transparent z-10" />
-                <img
-                    src="https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/neo-eu-list.jpg?itok=QQuuficY"
-                    alt="Salto Design"
-                    className="w-full h-full object-cover opacity-20 grayscale"
-                />
-            </div>
         </section>
     );
 }

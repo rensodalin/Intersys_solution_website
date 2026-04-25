@@ -64,26 +64,18 @@ export function Hero() {
       {/* Main Text Content */}
       <Container className="relative z-30 pt-16 pb-20">
         <div className="max-w-3xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.25em] text-[#8aa1bf]"
-          >
-            <span className="h-[6px] w-[6px] rounded-full bg-[#9B0F06]" />
-            Leading Smart Building Integrator
-          </motion.div>
 
           <AnimatePresence mode="wait">
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="mt-10 font-display text-[4rem] md:text-[5.5rem] lg:text-[4.5rem] font-bold leading-[1.05] tracking-[-0.03em] text-white"
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="mt-8 font-display text-[2.4rem] md:text-[3.8rem] lg:text-[4.2rem] font-semibold leading-[1.15] tracking-[-0.02em] text-white"
             >
               Smart Building <br />
-              Solutions for a <span className="text-[#9B0F06]">Safer</span> <br />
-              <span className="text-[#9B0F06]">Future.</span>
+              Solutions for a{" "}
+              <span className="text-[#9B0F06] font-semibold">Safer</span> <br />
+              <span className="text-[#9B0F06] font-semibold">Future.</span>
             </motion.h1>
           </AnimatePresence>
 

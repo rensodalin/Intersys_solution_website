@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { Container } from "@/components/Common/Container";
-
 import { cn } from "@/lib/utils";
 
 interface BreadcrumbItem {
@@ -13,11 +12,15 @@ interface HoneywellHeroProps {
     title?: string;
     subtitle?: string;
     breadcrumbs?: BreadcrumbItem[];
-    // Legacy props kept to avoid breaking existing routes - will be ignored in favor of breadcrumbs
+    // Legacy props
     backLink?: string;
     backText?: string;
 }
 
+/**
+ * Updated ProductHero/Header following a minimalist, clean design.
+ * Features a light background, left-aligned typography, and integrated breadcrumbs.
+ */
 export function HoneywellHero({
     title = "Honeywell Systems",
     subtitle = "Industrial-grade security architecture designed for mission-critical infrastructure.",
@@ -29,61 +32,49 @@ export function HoneywellHero({
     ],
 }: HoneywellHeroProps) {
     return (
-        <section className="relative pt-28 pb-16">
-            {/* Background */}
-            <div className="absolute inset-0 z-0">
-                <img
-                    src="https://www.full-protection.com/wp-content/uploads/2018/10/honeywell-electronic-security-products.jpg"
-                    className="w-full h-full object-cover opacity-25"
-                    alt="Honeywell Infrastructure"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-navy-deep/70 via-navy-deep/90 to-navy-deep" />
-            </div>
+        <section className="bg-[#F8F9FA] pt-32 pb-16 border-b border-gray-200/50">
+            <Container>
+                <div className="max-w-4xl">
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        {/* Page Title */}
+                        <h1 className="text-2xl md:text-3xl font-black text-[#1A3263] mb-4 tracking-tight">
+                            {title}
+                        </h1>
 
-            <Container className="relative z-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 25 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex flex-col items-center text-center"
-                >
-                    {/* Breadcrumbs */}
-                    <nav className="flex items-center gap-1.5 mb-10 text-[10px] font-bold uppercase tracking-[0.25em]">
-                        {breadcrumbs.map((item, index) => (
-                            <div key={item.name} className="flex items-center gap-1.5">
-                                <Link
-                                    to={item.href}
-                                    className={cn(
-                                        "transition-colors",
-                                        index === breadcrumbs.length - 1
-                                            ? "text-[#9B0F06]"
-                                            : "text-white/40 hover:text-white"
+                        {/* Breadcrumbs (aligned below title as in reference) */}
+                        <nav className="flex items-center gap-2 mb-8 flex-wrap">
+                            {breadcrumbs.map((item, index) => (
+                                <div key={item.name} className="flex items-center gap-2">
+                                    <Link
+                                        to={item.href}
+                                        className={cn(
+                                            "text-[13px] font-medium transition-colors",
+                                            index === breadcrumbs.length - 1
+                                                ? "text-gray-900 cursor-default"
+                                                : "text-gray-400 hover:text-[#C3110C]"
+                                        )}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                    {index < breadcrumbs.length - 1 && (
+                                        <span className="text-gray-300 text-xs">/</span>
                                     )}
-                                >
-                                    {item.name}
-                                </Link>
-                                {index < breadcrumbs.length - 1 && (
-                                    <span className="text-white/20">/</span>
-                                )}
-                            </div>
-                        ))}
-                    </nav>
+                                </div>
+                            ))}
+                        </nav>
 
-                    {/* Accent line */}
-                    <div className="h-[1px] w-16 bg-[#9B0F06] mb-6" />
-
-                    {/* Title */}
-                    <h1 className="text-3xl md:text-5xl font-bold text-white mb-5 tracking-tight">
-                        {title.split(" ")[0]}{" "}
-                        <span className="text-[#9B0F06]">
-                            {title.split(" ").slice(1).join(" ")}
-                        </span>
-                    </h1>
-
-                    {/* Subtitle */}
-                    <p className="text-white/60 text-sm md:text-base max-w-xl leading-relaxed">
-                        {subtitle}
-                    </p>
-                </motion.div>
+                        {/* Subtitle/Description (Left aligned, soft color) */}
+                        {subtitle && (
+                            <p className="text-gray-500 text-base md:text-md max-w-2xl leading-relaxed font-normal">
+                                {subtitle}
+                            </p>
+                        )}
+                    </motion.div>
+                </div>
             </Container>
         </section>
     );
