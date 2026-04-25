@@ -29,12 +29,7 @@ export function SaltoGrid({ products }: SaltoGridProps) {
                     </div>
 
                     <div className="p-6 flex flex-col flex-grow">
-                        <div className="flex items-center gap-2 mb-3">
-                            <div className="h-[2px] w-4 bg-[#9B0F06]" />
-                            <span className="text-[10px] font-bold text-[#9B0F06] uppercase tracking-widest">
-                                Salto System
-                            </span>
-                        </div>
+
                         <h3 className="text-xl font-bold text-[#1A3263] mb-3 group-hover:text-[#9B0F06] transition-colors">{product.title}</h3>
                         <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">
                             {product.description}
@@ -44,7 +39,7 @@ export function SaltoGrid({ products }: SaltoGridProps) {
                             to={`/products/access-control/salto/${product.id}`}
                             className="inline-flex items-center text-[#1A3263] font-bold text-xs uppercase tracking-widest group/btn hover:text-[#9B0F06] transition-colors"
                         >
-                            View Products <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                            View More <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                         </Link>
                     </div>
                 </motion.div>
