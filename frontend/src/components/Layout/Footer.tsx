@@ -56,7 +56,7 @@ export function Footer() {
               <li>
                 <Link
                   to="/portfolio"
-                  className="text-[15px] text-white/60 hover:text-[#9B0F06] transition-colors flex items-center gap-3"
+                  className="text-[15px] text-white/60 hover:text-[#D62828] transition-colors flex items-center gap-3"
                 >
                   <span /> Projects
                 </Link>
@@ -64,15 +64,23 @@ export function Footer() {
               <li>
                 <Link
                   to="/about"
-                  className="text-[15px] text-white/60 hover:text-[#9B0F06] transition-colors flex items-center gap-3"
+                  className="text-[15px] text-white/60 hover:text-[#D62828] transition-colors flex items-center gap-3"
                 >
                   <span /> About Us
                 </Link>
               </li>
               <li>
                 <Link
+                  to="/request-quote"
+                  className="text-[15px] text-white/60 hover:text-[#D62828] transition-colors flex items-center gap-3"
+                >
+                  <span /> Request a Quote
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/contact"
-                  className="text-[15px] text-white/60 hover:text-[#9B0F06] transition-colors flex items-center gap-3"
+                  className="text-[15px] text-white/60 hover:text-[#D62828] transition-colors flex items-center gap-3"
                 >
                   <span /> Contact
                 </Link>
@@ -95,7 +103,7 @@ export function Footer() {
               <li className="flex items-start gap-4">
                 <div>
                   <div className="text-[15px] text-white/90 font-semibold">Sunday</div>
-                  <div className="text-[14px] text-[#9B0F06] font-bold">Closed</div>
+                  <div className="text-[14px] text-[#D62828] font-bold">Closed</div>
                 </div>
               </li>
             </ul>
@@ -108,7 +116,7 @@ export function Footer() {
             </h4>
             <ul className="space-y-5">
               <li className="flex items-start gap-4">
-                <Phone className="w-[18px] h-[18px] text-[#9B0F06] shrink-0 mt-1" />
+                <Phone className="w-[18px] h-[18px] text-[#D62828] shrink-0 mt-1" />
                 <a
                   href="https://t.me/chun_sochet"
                   target="_blank"
@@ -119,7 +127,7 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex items-start gap-4 group/mail">
-                <Mail className="w-[18px] h-[18px] text-[#9B0F06] shrink-0 mt-1" />
+                <Mail className="w-[18px] h-[18px] text-[#D62828] shrink-0 mt-1" />
                 <a
                   href="mailto:sochet@intersys-solutions.com"
                   className="text-[15px] text-white/80 hover:text-white transition-colors break-all"
@@ -128,7 +136,7 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex items-start gap-4">
-                <MapPin className="w-[18px] h-[18px] text-[#9B0F06] shrink-0 mt-1.5" />
+                <MapPin className="w-[18px] h-[18px] text-[#D62828] shrink-0 mt-1.5" />
                 <a
                   href="https://maps.app.goo.gl/kE5C1xd5F58TcYJo8"
                   target="_blank"

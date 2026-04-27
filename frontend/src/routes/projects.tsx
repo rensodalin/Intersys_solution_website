@@ -73,7 +73,7 @@ function ProjectsPage() {
         viewMode={viewMode}
       />
 
-      <CtaBand />
+
     </div>
   );
 }

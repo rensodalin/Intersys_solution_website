@@ -11,7 +11,7 @@ export function ContactHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-5xl md:text-7xl font-semibold mb-6">
+          <h1 className="text-4xl md:text-6xl font-semibold mb-6">
             Contact <span className="text-red-500">Us</span>
           </h1>
           <p className="text-gray-300 max-w-2xl mx-auto">

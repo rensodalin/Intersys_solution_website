@@ -12,9 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WhyChooseRouteImport } from './routes/why-choose'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SectorsRouteImport } from './routes/sectors'
+import { Route as RequestQuoteRouteImport } from './routes/request-quote'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as DocumentCenterRouteImport } from './routes/document-center'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SectorsIndexRouteImport } from './routes/sectors.index'
@@ -49,6 +51,11 @@ const SectorsRoute = SectorsRouteImport.update({
   path: '/sectors',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RequestQuoteRoute = RequestQuoteRouteImport.update({
+  id: '/request-quote',
+  path: '/request-quote',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
@@ -62,6 +69,11 @@ const ProductsRoute = ProductsRouteImport.update({
 const PortfolioRoute = PortfolioRouteImport.update({
   id: '/portfolio',
   path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocumentCenterRoute = DocumentCenterRouteImport.update({
+  id: '/document-center',
+  path: '/document-center',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -170,9 +182,11 @@ const ProductsAccessControlHoneywellAccessoriesRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/document-center': typeof DocumentCenterRoute
   '/portfolio': typeof PortfolioRoute
   '/products': typeof ProductsRoute
   '/projects': typeof ProjectsRoute
+  '/request-quote': typeof RequestQuoteRoute
   '/sectors': typeof SectorsRouteWithChildren
   '/services': typeof ServicesRoute
   '/why-choose': typeof WhyChooseRoute
@@ -196,9 +210,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/document-center': typeof DocumentCenterRoute
   '/portfolio': typeof PortfolioRoute
   '/products': typeof ProductsRoute
   '/projects': typeof ProjectsRoute
+  '/request-quote': typeof RequestQuoteRoute
   '/services': typeof ServicesRoute
   '/why-choose': typeof WhyChooseRoute
   '/products/access-control': typeof ProductsAccessControlRoute
@@ -222,9 +238,11 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/document-center': typeof DocumentCenterRoute
   '/portfolio': typeof PortfolioRoute
   '/products': typeof ProductsRoute
   '/projects': typeof ProjectsRoute
+  '/request-quote': typeof RequestQuoteRoute
   '/sectors': typeof SectorsRouteWithChildren
   '/services': typeof ServicesRoute
   '/why-choose': typeof WhyChooseRoute
@@ -250,9 +268,11 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/contact'
+    | '/document-center'
     | '/portfolio'
     | '/products'
     | '/projects'
+    | '/request-quote'
     | '/sectors'
     | '/services'
     | '/why-choose'
@@ -276,9 +296,11 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/contact'
+    | '/document-center'
     | '/portfolio'
     | '/products'
     | '/projects'
+    | '/request-quote'
     | '/services'
     | '/why-choose'
     | '/products/access-control'
@@ -301,9 +323,11 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/contact'
+    | '/document-center'
     | '/portfolio'
     | '/products'
     | '/projects'
+    | '/request-quote'
     | '/sectors'
     | '/services'
     | '/why-choose'
@@ -328,9 +352,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
+  DocumentCenterRoute: typeof DocumentCenterRoute
   PortfolioRoute: typeof PortfolioRoute
   ProductsRoute: typeof ProductsRoute
   ProjectsRoute: typeof ProjectsRoute
+  RequestQuoteRoute: typeof RequestQuoteRoute
   SectorsRoute: typeof SectorsRouteWithChildren
   ServicesRoute: typeof ServicesRoute
   WhyChooseRoute: typeof WhyChooseRoute
@@ -373,6 +399,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SectorsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/request-quote': {
+      id: '/request-quote'
+      path: '/request-quote'
+      fullPath: '/request-quote'
+      preLoaderRoute: typeof RequestQuoteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects': {
       id: '/projects'
       path: '/projects'
@@ -392,6 +425,13 @@ declare module '@tanstack/react-router' {
       path: '/portfolio'
       fullPath: '/portfolio'
       preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/document-center': {
+      id: '/document-center'
+      path: '/document-center'
+      fullPath: '/document-center'
+      preLoaderRoute: typeof DocumentCenterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -539,9 +579,11 @@ const SectorsRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
+  DocumentCenterRoute: DocumentCenterRoute,
   PortfolioRoute: PortfolioRoute,
   ProductsRoute: ProductsRoute,
   ProjectsRoute: ProjectsRoute,
+  RequestQuoteRoute: RequestQuoteRoute,
   SectorsRoute: SectorsRouteWithChildren,
   ServicesRoute: ServicesRoute,
   WhyChooseRoute: WhyChooseRoute,

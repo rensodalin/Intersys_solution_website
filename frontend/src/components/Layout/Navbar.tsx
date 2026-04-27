@@ -61,7 +61,12 @@ const PRODUCTS_DATA: Record<string, { href: string; sub?: string[] | AccessContr
   },
 };
 
-const CLIENT_CENTER_DATA = ["Document Center", "Request a Quote", "Technical Tip", "Warranty"];
+const CLIENT_CENTER_DATA = [
+  { name: "Document Center", href: "/document-center" },
+  { name: "Request a Quote", href: "/request-quote" },
+  { name: "Technical Tip", href: "/portfolio" },
+  { name: "Warranty", href: "/portfolio" }
+];
 const CONTACT_DATA = [
   { name: "Technical Support / Customer Service", href: "/contact#support" },
   { name: "Contact Us", href: "/contact" }
@@ -167,8 +172,8 @@ export function Navbar() {
             {activeSupport === "client" && (
               <div className="absolute top-20 left-0 w-56 bg-[#1A3263] border border-white/10 shadow-2xl">
                 {CLIENT_CENTER_DATA.map(item => (
-                  <Link key={item} to="/portfolio" onClick={closeMenus} className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5">
-                    {item}
+                  <Link key={item.name} to={item.href} onClick={closeMenus} className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5">
+                    {item.name}
                   </Link>
                 ))}
               </div>
@@ -203,7 +208,7 @@ export function Navbar() {
             <span className="text-sm font-medium">Login</span>
           </Link>
           <Link
-            to="/contact"
+            to="/request-quote"
             className="flex h-10 items-center justify-center rounded-sm bg-[#C3110C] px-8 text-sm font-medium text-white hover:bg-white hover:text-[#C3110C] transition-all duration-300 shadow-xl shadow-[#C3110C]/20"
           >
             Request Quote

@@ -1,0 +1,274 @@
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, Download, ArrowUpRight, FileText } from "lucide-react";
+import { Container } from "@/components/Common/Container";
+
+const categories = [
+    "All",
+    "BMS Documentation",
+    "Corporate Profile",
+    "Project Case Studies",
+    "Technical Guides",
+];
+
+const documents = [
+    {
+        id: 1,
+        no: "01",
+        title: "Honeywell EBI (Enterprise Buildings Integrator) — System Overview",
+        description:
+            "Architecture overview and integration reference for Honeywell EBI platform, including controllers, configuration flow, and system connectivity.",
+        category: "BMS Documentation",
+        size: "12.8 MB",
+        updated: "Jan 2024",
+        url: "/documents/project-references-bms.pdf"
+    },
+    {
+        id: 2,
+        no: "02",
+        title: "Novotel Phnom Penh — Smart Building Case Study",
+        description:
+            "Real-world implementation of building automation systems, monitoring structure, and centralized control strategy used on-site.",
+        category: "Project Case Studies",
+        size: "3.5 MB",
+        updated: "Mar 2024",
+        url: "#"
+    },
+    {
+        id: 3,
+        no: "03",
+        title: "Smart Building Solutions — Product Catalog 2024",
+        description:
+            "Full catalog of engineering systems, devices, and integrated solutions designed for modern building infrastructure.",
+        category: "BMS Documentation",
+        size: "8.1 MB",
+        updated: "Feb 2024",
+        url: "#"
+    },
+    {
+        id: 4,
+        no: "04",
+        title: "Fire & Life Safety Compliance Manual",
+        description:
+            "Operational procedures, safety standards, and compliance requirements for fire protection and life safety systems.",
+        category: "Technical Guides",
+        size: "5.2 MB",
+        updated: "Dec 2023",
+        url: "#"
+    },
+];
+
+export function DocumentCenter() {
+    const [selectedCategory, setSelectedCategory] = useState("All");
+    const [query, setQuery] = useState("");
+
+    const filtered = documents.filter((d) => {
+        const matchCat =
+            selectedCategory === "All" || d.category === selectedCategory;
+
+        const matchQ =
+            d.title.toLowerCase().includes(query.toLowerCase()) ||
+            d.description.toLowerCase().includes(query.toLowerCase());
+
+        return matchCat && matchQ;
+    });
+
+    return (
+        <div className="min-h-screen bg-[#F5F3EF] font-sans">
+
+            {/* HEADER */}
+            <div className="border-b-2 border-[#0A0F1A] bg-[#F5F3EF]">
+                <Container>
+                    <div className="flex items-center justify-between py-4">
+                        <div className="flex items-center gap-3">
+                            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#D62828]">
+                                Intersys Systems
+                            </span>
+                            <span className="text-gray-300">/</span>
+                            <span className="text-[10px] tracking-[0.2em] uppercase text-gray-400">
+                                Resource Library
+                            </span>
+                        </div>
+
+                        <span className="text-[10px] tracking-widest text-gray-400 uppercase">
+                            {new Date()
+                                .toLocaleDateString("en-US", { month: "short", year: "numeric" })
+                                .toUpperCase()}
+                        </span>
+                    </div>
+                </Container>
+            </div>
+
+            <Container>
+
+                {/* TITLE */}
+                <div className="border-b-2 border-[#0A0F1A] py-16 grid grid-cols-12 gap-4">
+
+                    <div className="col-span-12 lg:col-span-8">
+                        <h1 className="text-3xl lg:text-[60px] font-extrabold text-[#111FA2] tracking-tight">
+                            Document
+                            <br />
+                            <span className="text-[#D62828]">Center</span>
+                        </h1>
+                    </div>
+
+                    <div className="col-span-12 lg:col-span-4 flex flex-col justify-end gap-6 pb-2">
+
+                        <p className="text-sm text-gray-500 leading-relaxed">
+                            A centralized library of technical references, engineering documentation, and project insights.
+                        </p>
+
+                        <div className="flex gap-8">
+                            <div>
+                                <p className="text-3xl font-bold text-[#0A0F1A]">05</p>
+                                <p className="text-[10px] tracking-widest uppercase text-gray-400">
+                                    Total Files
+                                </p>
+                            </div>
+                            <div className="w-px bg-gray-300" />
+                            <div>
+                                <p className="text-3xl font-bold text-[#0A0F1A]">04</p>
+                                <p className="text-[10px] tracking-widest uppercase text-gray-400">
+                                    Categories
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {/* PINNED */}
+                <div className="border-b border-gray-300 grid grid-cols-12">
+
+                    <div className="col-span-12 lg:col-span-2 border-r border-gray-300 py-8 pr-6 flex flex-col justify-between">
+                        <span className="text-[10px] tracking-[0.3em] uppercase text-[#D62828] font-bold">
+                            Featured
+                        </span>
+                    </div>
+
+                    <div className="col-span-12 lg:col-span-7 py-8 px-8 border-r border-gray-300">
+
+                        <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-4">
+                            Corporate Profile
+                        </p>
+
+                        <h2 className="text-2xl font-bold text-[#0A0F1A] leading-tight uppercase tracking-tight mb-3">
+                            Intersys Systems — Corporate Overview
+                        </h2>
+
+                        <p className="text-sm text-gray-500 leading-relaxed max-w-lg">
+                            Overview of engineering capabilities, system integration expertise, and global delivery standards.
+                        </p>
+
+                    </div>
+
+                    <div className="col-span-12 lg:col-span-3 py-8 pl-8 flex flex-col justify-between">
+
+                        <img
+                            src="/src/assets/company.png"
+                            alt="Corporate Profile"
+                            className="w-full h-32 lg:h-full object-cover"
+                        />
+
+                        <a
+                            href="/documents/project-references-bms.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-4 flex items-center justify-between bg-[#D62828] text-white text-[11px] font-bold uppercase px-5 py-3 hover:bg-[#111FA2] transition outline-none"
+                        >
+                            Download
+                            <Download size={13} />
+                        </a>
+
+                    </div>
+
+                </div>
+
+                {/* FILTER */}
+                <div className="border-b border-gray-300 py-5 flex flex-col md:flex-row justify-between gap-4">
+
+                    <div className="flex overflow-x-auto">
+                        {categories.map((cat) => (
+                            <button
+                                key={cat}
+                                onClick={() => setSelectedCategory(cat)}
+                                className={`text-[10px] font-bold uppercase px-5 py-2 border-r whitespace-nowrap transition ${selectedCategory === cat
+                                    ? "bg-[#0A0F1A] text-white"
+                                    : "text-gray-400 hover:text-black"
+                                    }`}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+                        <input
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder="Search..."
+                            className="pl-9 pr-4 py-2 border border-gray-300 text-xs w-56 focus:outline-none"
+                        />
+                    </div>
+
+                </div>
+
+                {/* LIST */}
+                <div className="divide-y divide-gray-200 mb-24">
+
+                    <AnimatePresence>
+                        {filtered.map((doc) => (
+                            <motion.div
+                                key={doc.id}
+                                layout
+                                className="grid grid-cols-12 gap-4 py-6 hover:bg-white transition"
+                            >
+
+                                <div className="col-span-1 text-xs font-semibold text-gray-300">
+                                    {doc.no}
+                                </div>
+
+                                <div className="col-span-11 md:col-span-5">
+                                    <h3 className="text-sm font-bold text-[#0A0F1A] mb-1">
+                                        {doc.title}
+                                    </h3>
+
+                                    <p className="text-sm text-gray-500 leading-relaxed">
+                                        {doc.description}
+                                    </p>
+                                </div>
+
+                                <div className="col-span-2 hidden md:block text-xs text-gray-400 uppercase">
+                                    {doc.category}
+                                </div>
+
+                                <div className="col-span-2 hidden md:block text-xs text-gray-400">
+                                    {doc.updated}
+                                </div>
+
+                                <div className="col-span-1 hidden md:block text-xs text-gray-400">
+                                    {doc.size}
+                                </div>
+
+                                <div className="col-span-1 flex justify-end">
+                                    <a
+                                        href={doc.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-8 h-8 border flex items-center justify-center hover:border-[#D62828] hover:text-[#D62828] transition-colors"
+                                    >
+                                        <Download size={13} />
+                                    </a>
+                                </div>
+
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
+
+                </div>
+
+            </Container>
+        </div>
+    );
+}

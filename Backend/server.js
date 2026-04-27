@@ -35,17 +35,17 @@ transporter.verify((error) => {
 app.post("/api/contact", async (req, res) => {
     try {
         const {
-            firstName,
-            lastName,
+            name,
             email,
             phone,
-            company,
-            position,
+            contactMethod,
+            city,
+            country,
             message,
         } = req.body;
 
         // ✅ validation
-        if (!firstName || !lastName || !email || !message) {
+        if (!name || (!email && !phone) || !message) {
             return res.status(400).json({
                 success: false,
                 error: "Missing required fields",
@@ -55,17 +55,20 @@ app.post("/api/contact", async (req, res) => {
         await transporter.sendMail({
             from: `"Contact Form" <${process.env.EMAIL_USER}>`,
             to: process.env.EMAIL_USER,
-            replyTo: email,
-            subject: `New Contact Request - ${firstName} ${lastName}`,
+            replyTo: email || undefined,
+            subject: `New Contact Request - ${name}`,
             html: `
-                <h2>New Contact Request</h2>
-                <p><b>Name:</b> ${firstName} ${lastName}</p>
-                <p><b>Email:</b> ${email}</p>
-                <p><b>Phone:</b> ${phone || "-"}</p>
-                <p><b>Company:</b> ${company || "-"}</p>
-                <p><b>Position:</b> ${position || "-"}</p>
-                <p><b>Message:</b></p>
-                <p>${message}</p>
+                <div style="font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px;">
+                    <h2 style="color: #dc2626; border-bottom: 2px solid #dc2626; padding-bottom: 10px;">New Contact Request</h2>
+                    <p><b>Name:</b> ${name}</p>
+                    <p><b>Preferred Contact:</b> ${contactMethod}</p>
+                    <p><b>Email:</b> ${email || "Not provided"}</p>
+                    <p><b>Phone:</b> ${phone || "Not provided"}</p>
+                    <p><b>Location:</b> ${city}, ${country}</p>
+                    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+                    <p><b>Message:</b></p>
+                    <p style="white-space: pre-wrap; background: #f9f9f9; padding: 15px; border-radius: 8px;">${message}</p>
+                </div>
             `,
         });
 

@@ -34,37 +34,68 @@ const team = [
 
 export function AboutTeam() {
   return (
-    <section className="py-16 bg-[#F1F3F5] overflow-hidden">
+    <section className="py-24 bg-gradient-to-b from-[#F1F3F5] to-white overflow-hidden">
       <Container>
-        <div className="mb-12 text-center lg:text-left">
-          <h3 className="text-3xl font-bold font-display text-[#0A0F1A]">The Architects</h3>
-          <div className="w-10 h-1 bg-red-600 mt-4 mx-auto lg:mx-0" />
+
+        {/* HEADER */}
+        <div className="mb-14 text-center lg:text-left">
+
+          <h3 className="text-4xl font-bold text-[#0A0F1A] mt-2">
+            The Architects Behind Innovation
+          </h3>
+
+          <div className="w-14 h-[3px] bg-[#D62828] mt-5 mx-auto lg:mx-0 rounded-full" />
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* GRID */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
           {team.map((member, i) => (
             <motion.div
               key={member.name}
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: i * 0.1, type: "spring", damping: 20 }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
               className="group"
             >
-              <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-lg transition-all duration-500">
-                <div className="relative overflow-hidden rounded-lg aspect-[3/4] mb-4">
+              <div className="relative bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-2xl transition-all duration-500">
+
+                {/* IMAGE */}
+                <div className="relative h-[320px] overflow-hidden">
                   <img
                     src={member.img}
                     alt={member.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
+
+                  {/* overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1A]/70 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition" />
                 </div>
-                <h4 className="text-base font-bold text-[#0A0F1A]">{member.name}</h4>
-                <p className="text-[11px] text-red-600 mt-0.5 mb-2 font-semibold">{member.role}</p>
-                <p className="text-xs text-gray-500 leading-relaxed">{member.bio}</p>
+
+                {/* CONTENT */}
+                <div className="p-5 space-y-2">
+
+                  <h4 className="text-lg font-bold text-[#0A0F1A] group-hover:text-[#D62828] transition">
+                    {member.name}
+                  </h4>
+
+                  <p className="text-sm font-semibold text-[#D62828]">
+                    {member.role}
+                  </p>
+
+                  <p className="text-sm text-gray-500 leading-relaxed">
+                    {member.bio}
+                  </p>
+
+                </div>
+
+                {/* ACCENT LINE */}
+                <div className="h-[3px] w-0 group-hover:w-full bg-[#D62828] transition-all duration-500" />
               </div>
             </motion.div>
           ))}
+
         </div>
       </Container>
     </section>

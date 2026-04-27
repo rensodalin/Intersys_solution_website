@@ -13,12 +13,6 @@ import {
   Wind,
   Bell,
   Cpu,
-  ChevronDown,
-  ChevronUp,
-  Settings,
-  ShieldCheck,
-  Clock,
-  Zap,
 } from "lucide-react";
 import teamWorking from "@/assets/team_working_intersys.png";
 
@@ -97,7 +91,7 @@ const solutions = [
     details: [
       "High intelligibility in noisy industrial areas.",
       "Easy touch-control zone selection.",
-      "Standardized Honeywell protocol compliance.",
+      "Standardized protocol compliance.",
     ],
   },
   {
@@ -119,138 +113,136 @@ const solutions = [
     details: [
       "Identifies exact distance to liquid leaks.",
       "Triggers automated valves for rapid shut-off.",
-      "Essential for industrial and data center safety.",
+      "Essential for industrial safety.",
     ],
   },
   {
     icon: Bell,
     title: "Intrusion Alarm",
-    desc: "Perimeter protection and dual-tech motion sensors.",
+    desc: "Perimeter protection and motion sensors.",
     sub: "Galaxy® Dimension",
     details: [
-      "Glass-break and vibration sensors for perimeters.",
-      "PIR + Microwave tech prevents false alarms.",
-      "Fully integrated with Access Control systems.",
+      "Glass-break and vibration sensors.",
+      "Dual-tech motion detection.",
+      "Integrated with access control.",
     ],
   },
   {
     icon: Cpu,
     title: "Room Control",
-    desc: "Hospitality focused smart presence and logic.",
-    sub: "INNCOM (Hospitality)",
+    desc: "Hospitality-focused smart automation.",
+    sub: "INNCOM",
     details: [
-      "Adjusts AC/Lights based on occupancy.",
-      "Auto-signals 'Do Not Disturb' to staff.",
-      "Energy usage reporting and remote management.",
+      "Adjusts AC/lights based on occupancy.",
+      "Auto 'Do Not Disturb' signaling.",
+      "Energy reporting system.",
     ],
   },
 ];
 
 export function WhyChooseUs() {
   const [showAll, setShowAll] = React.useState(false);
-  const [expandedItem, setExpandedItem] = React.useState<number | null>(null);
+  const [expanded, setExpanded] = React.useState<number | null>(null);
 
-  const visibleSolutions = showAll ? solutions : solutions.slice(0, 6);
+  const visible = showAll ? solutions : solutions.slice(0, 6);
 
   return (
-    <section className="py-16 bg-white overflow-hidden text-sm">
+    <section className="py-24 bg-white">
       <Container>
-        <div className="flex flex-col lg:flex-row gap-12 items-start">
-          {/* Left Side: Image */}
+        <div className="grid lg:grid-cols-12 gap-16 items-start">
+
+          {/* IMAGE */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, type: "spring" }}
-            className="lg:w-1/2 relative"
+            className="lg:col-span-5"
           >
-            <div className="absolute -top-4 -left-4 w-32 h-32 bg-gray-50 z-0" />
             <img
               src={teamWorking}
-              alt="Intersys Team Working"
-              className="relative z-10 w-full h-auto rounded-lg shadow-2xl border-4 border-white"
+              alt="Team"
+              className="w-full rounded-2xl shadow-2xl"
             />
-            <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-red-50 -z-10 rounded-full blur-3xl opacity-50" />
           </motion.div>
 
-          {/* Right Side: content */}
-          <div className="lg:w-1/2">
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl font-bold font-display text-[#0A0F1A] mb-4 tracking-tight">
+          {/* CONTENT */}
+          <div className="lg:col-span-7">
+
+            <div className="mb-12 max-w-xl">
+              <div className="w-12 h-[2px] bg-red-600 mb-4" />
+
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Why Choose Us
               </h2>
-              <p className="text-gray-500 mb-10 leading-relaxed max-w-xl text-[13px]">
-                With over a decade of experience as Cambodia's premier technology integrator, we
-                provide international-standard engineering solutions tailored to the specific needs
-                of modern infrastructure.
+
+              <p className="text-gray-500 leading-relaxed">
+                We provide integrated engineering systems designed for safety,
+                efficiency, and long-term performance.
               </p>
+            </div>
 
-              <div className="grid md:grid-cols-2 gap-x-8 gap-y-8">
-                {visibleSolutions.map((item, i) => (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.05 }}
-                    className="group"
-                  >
-                    <div className="flex gap-4">
-                      <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
-                        <item.icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
-                      </div>
-                      <div>
-                        <h4 className="text-[13px] font-bold text-[#0A0F1A]  tracking-wide mb-1 transition-colors group-hover:text-red-600">
-                          {item.title}
-                        </h4>
-                        <p className="text-[11px] text-gray-400 leading-normal mb-2">{item.desc}</p>
-                        <button
-                          onClick={() => setExpandedItem(expandedItem === i ? null : i)}
-                          className="text-[10px] font-bold text-red-600 hover:underline  tracking-widest"
-                        >
-                          {expandedItem === i ? "Hide Detail" : "View Detail"}
-                        </button>
-
-                        <AnimatePresence>
-                          {expandedItem === i && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              className="overflow-hidden"
-                            >
-                              <ul className="mt-3 space-y-1.5 border-l-2 border-red-100 pl-3">
-                                {item.details.map((detail, di) => (
-                                  <li
-                                    key={di}
-                                    className="text-[10px] text-gray-500 leading-tight italic"
-                                  >
-                                    • {detail}
-                                  </li>
-                                ))}
-                              </ul>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
+            {/* GRID */}
+            <div className="grid sm:grid-cols-2 gap-6">
+              {visible.map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  className="p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition"
+                >
+                  <div className="flex gap-4">
+                    <div className="w-11 h-11 bg-gray-100 rounded-xl flex items-center justify-center">
+                      <item.icon className="w-5 h-5 text-gray-500" />
                     </div>
-                  </motion.div>
-                ))}
-              </div>
 
-              <motion.button
+                    <div className="space-y-2">
+                      <h4 className="text-base font-semibold text-gray-900">
+                        {item.title}
+                      </h4>
+
+                      <p className="text-sm text-gray-500">
+                        {item.desc}
+                      </p>
+
+                      <p className="text-xs text-gray-400">
+                        {item.sub}
+                      </p>
+
+                      <button
+                        onClick={() => setExpanded(expanded === i ? null : i)}
+                        className="text-sm text-red-600 font-medium hover:underline"
+                      >
+                        {expanded === i ? "Hide details" : "View details"}
+                      </button>
+
+                      <AnimatePresence>
+                        {expanded === i && (
+                          <motion.ul
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="mt-2 space-y-2 border-l-2 border-red-100 pl-3"
+                          >
+                            {item.details.map((d, idx) => (
+                              <li key={idx} className="text-sm text-gray-500">
+                                {d}
+                              </li>
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* BUTTON */}
+            <div className="mt-12">
+              <button
                 onClick={() => setShowAll(!showAll)}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="mt-12 px-8 py-3 bg-[#0A0F1A] text-white text-[11px] font-bold tracking-[0.2em] rounded-full hover:bg-red-600 transition-colors shadow-lg"
+                className="px-8 py-3 bg-gray-900 text-white rounded-xl font-medium hover:bg-red-600 transition"
               >
-                {showAll ? "Show Less" : "View More Solutions"}
-              </motion.button>
-            </motion.div>
+                {showAll ? "Show less" : "View all solutions"}
+              </button>
+            </div>
           </div>
         </div>
       </Container>
@@ -258,7 +250,6 @@ export function WhyChooseUs() {
   );
 }
 
-// Keep export of old name to avoid breaking things, but inside we call WhyChooseUs
 export function SolutionsExpandableGrid() {
   return <WhyChooseUs />;
 }

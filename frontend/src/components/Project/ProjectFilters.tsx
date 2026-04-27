@@ -10,45 +10,81 @@ interface ProjectFiltersProps {
     setViewMode: (mode: "grid" | "full") => void;
 }
 
-export function ProjectFilters({ activeTab, setActiveTab, viewMode, setViewMode }: ProjectFiltersProps) {
+export function ProjectFilters({
+    activeTab,
+    setActiveTab,
+    viewMode,
+    setViewMode,
+}: ProjectFiltersProps) {
     return (
-        <section className="pb-12">
+        <section className="pb-14">
             <Container>
-                <div className="flex flex-col items-center gap-10">
-                    {/* Categories */}
-                    <div className="flex flex-wrap gap-x-8 gap-y-4 justify-center">
-                        {categories.map((cat) => (
-                            <button
-                                key={cat}
-                                onClick={() => setActiveTab(cat)}
-                                className={`text-[11px] font-bold uppercase tracking-[0.2em] transition-all relative py-2 ${activeTab === cat ? "text-[#9B0F06]" : "text-white/30 hover:text-white"
-                                    }`}
-                            >
-                                {cat}
-                                {activeTab === cat && (
-                                    <motion.div layoutId="projTab" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#9B0F06]" />
-                                )}
-                            </button>
-                        ))}
+                <div className="flex flex-col items-center gap-8">
+
+                    {/* CATEGORY FILTERS */}
+                    <div className="flex flex-wrap justify-center gap-2">
+                        {categories.map((cat) => {
+                            const active = activeTab === cat;
+
+                            return (
+                                <button
+                                    key={cat}
+                                    onClick={() => setActiveTab(cat)}
+                                    className={`
+                    relative px-4 py-2 rounded-full text-sm font-medium transition-all
+                    ${active
+                                            ? "text-[#D62828] bg-[#D62828]/10"
+                                            : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"
+                                        }
+                  `}
+                                >
+                                    {cat}
+
+                                    {/* underline animation */}
+                                    {active && (
+                                        <motion.div
+                                            layoutId="projTab"
+                                            className="absolute left-3 right-3 -bottom-[2px] h-[2px] bg-[#D62828] rounded-full"
+                                        />
+                                    )}
+                                </button>
+                            );
+                        })}
                     </div>
 
-                    {/* View Mode Toggle */}
-                    <div className="flex items-center gap-2 bg-white/5 p-1 rounded-xl">
+                    {/* VIEW TOGGLE */}
+                    <div className="flex items-center bg-gray-100 p-1 rounded-xl">
+
                         <button
                             onClick={() => setViewMode("grid")}
-                            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${viewMode === "grid" ? "bg-[#9B0F06] text-white" : "text-white/40 hover:text-white"
-                                }`}
+                            className={`
+                flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all
+                ${viewMode === "grid"
+                                    ? "bg-white text-[#D62828] shadow-sm"
+                                    : "text-gray-500 hover:text-gray-900"
+                                }
+              `}
                         >
-                            <LayoutGrid size={14} /> Grid View
+                            <LayoutGrid size={16} />
+                            Grid
                         </button>
+
                         <button
                             onClick={() => setViewMode("full")}
-                            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${viewMode === "full" ? "bg-[#9B0F06] text-white" : "text-white/40 hover:text-white"
-                                }`}
+                            className={`
+                flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all
+                ${viewMode === "full"
+                                    ? "bg-white text-[#D62828] shadow-sm"
+                                    : "text-gray-500 hover:text-gray-900"
+                                }
+              `}
                         >
-                            <Maximize2 size={14} /> Full Size
+                            <Maximize2 size={16} />
+                            Full
                         </button>
+
                     </div>
+
                 </div>
             </Container>
         </section>

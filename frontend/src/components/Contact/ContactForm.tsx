@@ -5,10 +5,12 @@ import {
   User,
   Mail,
   Smartphone,
-  Briefcase,
   Send,
   type LucideIcon,
   CheckCircle2,
+  MapPin,
+  Globe,
+  ChevronDown,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -18,22 +20,60 @@ interface InputFieldProps {
   type?: string;
   icon: LucideIcon;
   autoComplete?: string;
+  required?: boolean;
 }
 
-function InputField({ label, name, type = "text", icon: Icon, autoComplete }: InputFieldProps) {
+function InputField({ label, name, type = "text", icon: Icon, autoComplete, required = true }: InputFieldProps) {
   return (
-    <div>
-      <label className="text-xs text-gray-400 mb-1 block">{label}</label>
+    <div className="space-y-1">
+      <label className="text-sm text-gray-600 font-medium">{label}</label>
       <div className="relative">
-        <Icon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+        <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
         <input
           name={name}
           type={type}
           autoComplete={autoComplete}
-          required
-          className="w-full pl-10 p-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-red-500"
+          required={required}
           placeholder={label}
+          className="w-full pl-11 p-3.5 rounded-xl border border-gray-200 
+          bg-white shadow-sm
+          focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-500 focus:shadow-md
+          hover:border-gray-300 transition-all"
         />
+      </div>
+    </div>
+  );
+}
+
+interface SelectFieldProps {
+  label: string;
+  name: string;
+  icon: LucideIcon;
+  options: string[];
+}
+
+function SelectField({ label, name, icon: Icon, options }: SelectFieldProps) {
+  return (
+    <div className="space-y-1">
+      <label className="text-sm text-gray-600 font-medium">{label}</label>
+      <div className="relative">
+        <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+        <select
+          name={name}
+          required
+          defaultValue=""
+          className="w-full pl-11 pr-10 p-3.5 rounded-xl border border-gray-200 
+          bg-white cursor-pointer shadow-sm
+          hover:border-gray-300
+          focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500
+          transition-all appearance-none"
+        >
+          <option value="" disabled>Select {label}</option>
+          {options.map((opt) => (
+            <option key={opt} value={opt}>{opt}</option>
+          ))}
+        </select>
+        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
       </div>
     </div>
   );
@@ -78,68 +118,111 @@ export function ContactForm() {
       setLoading(false);
     }
   };
+
   return (
     <div className="lg:col-span-8">
-      <div className="bg-gray-50 p-10 rounded-3xl shadow-lg relative h-full">
-        <MessageSquare className="absolute top-6 right-6 opacity-10 w-20 h-20" />
+      <div className="bg-white p-6 md:p-10 rounded-[2rem] shadow-xl border border-gray-100 relative overflow-hidden">
 
-        <div className="mb-8">
-          <h3 className="text-2xl font-bold mb-2">Request a Quote</h3>
-          <p className="text-gray-500 text-sm">
-            Tell us about your project and we’ll get back to you shortly.
+        <div className="absolute -top-24 -right-24 w-64 h-64 bg-red-50 rounded-full opacity-50" />
+
+        <div className="relative mb-8">
+          <h3 className="text-3xl font-bold mb-2 text-gray-900">
+            How can we help you?
+          </h3>
+          <p className="text-gray-500">
+            Fill out the form and we’ll get back to you within 24 hours.
           </p>
         </div>
 
         {!submitted ? (
-          <form onSubmit={handleSubmit} className="space-y-6 animate-in fade-in duration-500">
-            <div className="grid md:grid-cols-2 gap-6">
-              <InputField label="First Name" name="firstName" icon={User} />
-              <InputField label="Last Name" name="lastName" icon={User} />
-              <InputField label="Email" name="email" type="email" icon={Mail} />
-              <InputField label="Phone" name="phone" type="tel" icon={Smartphone} />
-              <InputField label="Company" name="company" icon={Briefcase} />
-              <InputField label="Position" name="position" icon={Briefcase} />
+          <form onSubmit={handleSubmit} className="space-y-8">
+
+            {/* Personal Info */}
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold text-gray-500">Personal Information</h4>
+              <InputField label="Your name" name="name" icon={User} />
             </div>
 
-            <div>
-              <label className="text-xs text-gray-400">Message</label>
+            {/* Contact */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <SelectField
+                label="Preferred contact method"
+                name="contactMethod"
+                icon={Smartphone}
+                options={["By email", "By phone", "Other"]}
+              />
+
+              <InputField label="Phone number" name="phone" type="tel" icon={Smartphone} required={false} />
+              <InputField label="Email address" name="email" type="email" icon={Mail} required={false} />
+            </div>
+
+            {/* Location */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <SelectField
+                label="City / Province"
+                name="city"
+                icon={MapPin}
+                options={["Phnom Penh", "Siem Reap", "Sihanoukville", "Battambang", "Other"]}
+              />
+
+              <SelectField
+                label="Country"
+                name="country"
+                icon={Globe}
+                options={["Cambodia", "Thailand", "Vietnam", "Laos", "Singapore", "Other"]}
+              />
+            </div>
+
+            {/* Message */}
+            <div className="space-y-1">
+              <label className="text-sm text-gray-600 font-medium">Message</label>
               <textarea
                 name="message"
-                className="w-full p-4 rounded-xl border focus:outline-none focus:ring-2 focus:ring-red-500 min-h-[120px]"
-                placeholder="Your message..."
                 required
+                placeholder="How can we help you?"
+                className="w-full p-4 rounded-xl border border-gray-200 bg-white shadow-sm
+                focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 focus:shadow-md
+                hover:border-gray-300 transition-all min-h-[140px] resize-none"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full md:w-auto px-8 py-4 bg-red-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-black transition-all disabled:opacity-50"
+              className="w-full md:w-auto px-10 py-4 bg-red-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 
+              hover:bg-gray-900 hover:shadow-xl hover:shadow-red-500/20 transition-all disabled:opacity-50"
             >
-              {loading ? "Sending..." : "Send Message"}
-              {!loading && <Send size={16} />}
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Sending...
+                </span>
+              ) : (
+                <>
+                  Send message
+                  <Send size={18} />
+                </>
+              )}
             </button>
           </form>
         ) : (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center justify-center h-full min-h-[400px] text-center gap-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center justify-center py-12 text-center gap-4"
           >
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center animate-bounce">
-              <CheckCircle2 className="w-10 h-10 text-green-600" />
+            <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center">
+              <CheckCircle2 className="w-10 h-10 text-green-500" />
             </div>
-            <div>
-              <h4 className="text-3xl font-bold text-[#162E93] mb-2">Success!</h4>
-              <p className="text-gray-500 max-w-sm mx-auto">
-                Your message has been sent successfully. Our team will contact you shortly.
-              </p>
-            </div>
+            <h4 className="text-2xl font-bold text-gray-900">Thank you!</h4>
+            <p className="text-gray-500 max-w-sm">
+              Your message has been received. We’ll contact you soon.
+            </p>
             <button
               onClick={() => setSubmitted(false)}
-              className="mt-4 px-10 py-4 bg-[#162E93] text-white rounded-xl font-bold hover:bg-red-600 transition-all shadow-lg"
+              className="mt-4 px-8 py-3 bg-gray-900 text-white rounded-xl font-medium hover:bg-red-600 transition-all"
             >
-              Send Another Request
+              Send another message
             </button>
           </motion.div>
         )}

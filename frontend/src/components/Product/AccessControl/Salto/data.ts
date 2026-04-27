@@ -494,12 +494,106 @@ export const saltoProducts: SaltoProduct[] = [
         id: "peripherals",
         title: "Peripherals",
         image: "https://mtss.com.au/cdn/shop/files/1_e1a81315-df97-4ab3-aa8c-23b2ed01a49c.png?v=1721374901&width=1214",
-        description: "Essential accessories and add-ons to complete and enhance your SALTO access control system."
+        description: "Essential accessories and add-ons to complete and enhance your SALTO access control system.",
+        subProducts: [
+            {
+                id: "iq3",
+                title: "IQ3",
+                image: "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/IQ3_white.jpg?itok=WE1ACDRf",
+                description: "Advanced smart hub for real-time access control management and wireless connectivity."
+            },
+            {
+                id: "iq3-mini",
+                title: "IQ3 MINI",
+                image: "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/news/iq-mini-news-detail-image.jpg?itok=-8043Mc2",
+                description: "Compact and powerful smart gateway designed for seamless integration in smaller spaces."
+            },
+            {
+                id: "gateway",
+                title: "GATEWAY",
+                image: "https://www.vedi-express.com/3244814-thickbox_default/gateway-salto-bluenet-wireless-blanc-pce.webp",
+                description: "Robust communication bridge between SALTO electronic locks and the central management system."
+            },
+            {
+                id: "inroomnode",
+                title: "INROOMNODE",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYKh9wW0ktZIsneI5m6P_FBtjmy6ZEr_s3VA&s",
+                description: "Wall-mounted node providing wireless range expansion for in-room hospitality applications."
+            },
+            {
+                id: "node",
+                title: "NODE",
+                image: "https://www.beveridges.co.nz/wp-content/uploads/2022/11/SALTO-Wireless-Node-BLUEnet-RFNODE3W.jpg",
+                description: "High-performance wireless node extending the BLUEnet network to remote door points."
+            },
+            {
+                id: "repeater",
+                title: "REPEATER",
+                image: "https://lsc.com.au/Images/ProductImages/RFREPEATER2W.jpg",
+                description: "Reliable wireless signal booster to ensure stable communication across large installations."
+            },
+            {
+                id: "iq",
+                title: "IQ",
+                image: "https://lsc.com.au/Images/ProductImages/IQ22W4AUKS.jpg",
+                description: "The original cloud-native hub for SALTO KS (Keys as a Service) online access management."
+            },
+            {
+                id: "ncoder",
+                title: "NCODER",
+                image: "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/ncoder-finish.jpg?itok=GL_yaGH5",
+                description: "Fast and secure desktop encoder for easy management of SALTO credentials and smart cards."
+            },
+            {
+                id: "ppd",
+                title: "PPD - PORTABLE PROGRAMMER DEVICE",
+                image: "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/ppd.jpg?itok=NPSvtUlL",
+                description: "Handheld configuration tool for offline door programming and audit trail retrieval."
+            }
+        ]
     },
     {
         id: "credentials",
         title: "Credentials",
         image: "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/key-fob-list.jpg?itok=6tuBCUqC",
-        description: "A variety of user credentials including key cards, fobs, and mobile keys for secure access."
+        description: "A variety of user credentials including key cards, fobs, and mobile keys for secure access.",
+        subProducts: [
+            {
+                id: "metal-fobs",
+                title: "METAL FOBS",
+                image: "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/metal-fob-blue-finish.jpg?itok=T8t3Iezt",
+                description: "Durable and stylish metal key fobs designed for high-end residential and commercial use."
+            },
+            {
+                id: "key-fobs",
+                title: "KEY FOBS",
+                image: "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/tag_blue_finish.jpg?itok=nTEpw7m8",
+                description: "Lightweight and versatile RFID key fobs available in various colors for easy access management."
+            },
+            {
+                id: "key-cards",
+                title: "KEY CARDS",
+                image: "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/keycard-lists.jpg?itok=VFGh_jFz",
+                description: "Standard smart cards for secure and easy identity verification across all SALTO readers."
+            },
+            {
+                id: "bamboo-hotel-guest-key-cards",
+                title: "BAMBOO HOTEL GUEST KEY CARDS",
+                image: "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/bamboo_guest-key-card-finish.jpg?itok=Onv7G_FC",
+                description: "Eco-friendly bamboo key cards specifically designed for the sustainable hospitality industry."
+            },
+            {
+                id: "wearable-smart-wristbands",
+                title: "WEARABLE SMART WRISTBANDS",
+                image: "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/bracelet_blue_finish.jpg?itok=6Yg98dHa",
+                description: "Waterproof and comfortable RFID wristbands ideal for gyms, pools, and spa facilities."
+            },
+            {
+                id: "paper-hotel-guest-key-card",
+                title: "PAPER HOTEL GUEST KEY CARD",
+                image: "https://lsc.com.au/Images/ProductImages/PCMULCPG.jpg",
+                description: "Cost-effective and recyclable paper cards for short-term hospitality guest access."
+            }
+        ]
     }
 ];
