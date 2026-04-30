@@ -31,7 +31,7 @@ export function Insights() {
     <section className="bg-[#f8f9fc] py-24">
       <Container>
         <div className="mb-12 md:mb-16">
-          <h2 className="font-display text-4xl md:text-[44px] font-bold text-[#162E93] tracking-tight">
+          <h2 className="font-display text-3xl md:text-[39px] font-bold text-[#162E93] tracking-tight">
             Latest Insights.
           </h2>
         </div>
@@ -46,7 +46,7 @@ export function Insights() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="group cursor-pointer flex flex-col h-full"
             >
-              <div className="aspect-[3/2] rounded-xl overflow-hidden mb-6 relative border border-black/5 shadow-sm">
+              <div className="aspect-[3/2] rounded-lg overflow-hidden mb-6 relative border border-black/5 shadow-sm">
                 <img
                   src={item.image}
                   alt={item.title}
@@ -62,7 +62,7 @@ export function Insights() {
                 <h3 className="font-display text-[22px] font-bold text-[#162E93] leading-snug mb-3 group-hover:text-[#9B0F06] transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-[14px] text-[#6b7c93] leading-relaxed mb-6 flex-grow">
+                <p className="text-[13pxx] text-[#6b7c93] leading-relaxed mb-6 flex-grow">
                   {item.desc}
                 </p>
                 <div className="mt-auto">

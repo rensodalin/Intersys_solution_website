@@ -27,7 +27,7 @@ export function ProductHero({
     ],
 }: ProductHeroProps) {
     return (
-        <section className="bg-[#F8F9FA] pt-32 pb-16 border-b border-gray-200/50">
+        <section className="bg-[#F8F9FA] pt-50 pb-16 border-b border-gray-200/50">
             <Container>
                 <div className="max-w-4xl">
                     <motion.div

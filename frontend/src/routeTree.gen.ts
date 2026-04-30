@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WhyChooseRouteImport } from './routes/why-choose'
+import { Route as WarrantyRouteImport } from './routes/warranty'
+import { Route as TechnicalTipsRouteImport } from './routes/technical-tips'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SectorsRouteImport } from './routes/sectors'
 import { Route as RequestQuoteRouteImport } from './routes/request-quote'
@@ -39,6 +41,16 @@ import { Route as ProductsAccessControlHoneywellAccessoriesRouteImport } from '.
 const WhyChooseRoute = WhyChooseRouteImport.update({
   id: '/why-choose',
   path: '/why-choose',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WarrantyRoute = WarrantyRouteImport.update({
+  id: '/warranty',
+  path: '/warranty',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TechnicalTipsRoute = TechnicalTipsRouteImport.update({
+  id: '/technical-tips',
+  path: '/technical-tips',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -189,6 +201,8 @@ export interface FileRoutesByFullPath {
   '/request-quote': typeof RequestQuoteRoute
   '/sectors': typeof SectorsRouteWithChildren
   '/services': typeof ServicesRoute
+  '/technical-tips': typeof TechnicalTipsRoute
+  '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
   '/products/access-control': typeof ProductsAccessControlRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
@@ -216,6 +230,8 @@ export interface FileRoutesByTo {
   '/projects': typeof ProjectsRoute
   '/request-quote': typeof RequestQuoteRoute
   '/services': typeof ServicesRoute
+  '/technical-tips': typeof TechnicalTipsRoute
+  '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
   '/products/access-control': typeof ProductsAccessControlRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
@@ -245,6 +261,8 @@ export interface FileRoutesById {
   '/request-quote': typeof RequestQuoteRoute
   '/sectors': typeof SectorsRouteWithChildren
   '/services': typeof ServicesRoute
+  '/technical-tips': typeof TechnicalTipsRoute
+  '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
   '/products_/access-control': typeof ProductsAccessControlRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
@@ -275,6 +293,8 @@ export interface FileRouteTypes {
     | '/request-quote'
     | '/sectors'
     | '/services'
+    | '/technical-tips'
+    | '/warranty'
     | '/why-choose'
     | '/products/access-control'
     | '/sectors/$sectorId'
@@ -302,6 +322,8 @@ export interface FileRouteTypes {
     | '/projects'
     | '/request-quote'
     | '/services'
+    | '/technical-tips'
+    | '/warranty'
     | '/why-choose'
     | '/products/access-control'
     | '/sectors/$sectorId'
@@ -330,6 +352,8 @@ export interface FileRouteTypes {
     | '/request-quote'
     | '/sectors'
     | '/services'
+    | '/technical-tips'
+    | '/warranty'
     | '/why-choose'
     | '/products_/access-control'
     | '/sectors/$sectorId'
@@ -359,6 +383,8 @@ export interface RootRouteChildren {
   RequestQuoteRoute: typeof RequestQuoteRoute
   SectorsRoute: typeof SectorsRouteWithChildren
   ServicesRoute: typeof ServicesRoute
+  TechnicalTipsRoute: typeof TechnicalTipsRoute
+  WarrantyRoute: typeof WarrantyRoute
   WhyChooseRoute: typeof WhyChooseRoute
   ProductsAccessControlRoute: typeof ProductsAccessControlRoute
   AboutIndexRoute: typeof AboutIndexRoute
@@ -383,6 +409,20 @@ declare module '@tanstack/react-router' {
       path: '/why-choose'
       fullPath: '/why-choose'
       preLoaderRoute: typeof WhyChooseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/warranty': {
+      id: '/warranty'
+      path: '/warranty'
+      fullPath: '/warranty'
+      preLoaderRoute: typeof WarrantyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/technical-tips': {
+      id: '/technical-tips'
+      path: '/technical-tips'
+      fullPath: '/technical-tips'
+      preLoaderRoute: typeof TechnicalTipsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -586,6 +626,8 @@ const rootRouteChildren: RootRouteChildren = {
   RequestQuoteRoute: RequestQuoteRoute,
   SectorsRoute: SectorsRouteWithChildren,
   ServicesRoute: ServicesRoute,
+  TechnicalTipsRoute: TechnicalTipsRoute,
+  WarrantyRoute: WarrantyRoute,
   WhyChooseRoute: WhyChooseRoute,
   ProductsAccessControlRoute: ProductsAccessControlRoute,
   AboutIndexRoute: AboutIndexRoute,

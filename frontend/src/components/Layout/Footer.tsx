@@ -18,29 +18,38 @@ export function Footer() {
               and automation.
             </p>
             <div className="flex gap-3">
+              {/* Facebook */}
               <a
                 href="https://www.facebook.com/IntersysSolutions"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="grid h-10 w-10 place-items-center rounded-md border border-white/10 text-white/70 hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white transition-all shadow-sm"
+                className="grid h-10 w-10 place-items-center"
               >
-                <Facebook className="h-4 w-4" />
+                <Facebook className="h-5 w-5 text-[#1877F2]" />
               </a>
+
+              {/* LinkedIn */}
               <a
                 href="https://www.linkedin.com/company/intersys-solutions2015"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="grid h-10 w-10 place-items-center rounded-md border border-white/10 text-white/70 hover:bg-[#0077b5] hover:border-[#0077b5] hover:text-white transition-all shadow-sm"
+                className="grid h-10 w-10 place-items-center"
               >
-                <Linkedin className="h-4 w-4" />
+                <Linkedin className="h-5 w-5 text-[#0077b5]" />
               </a>
+
+              {/* Telegram */}
               <a
                 href="https://t.me/chun_sochet"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="grid h-10 w-10 place-items-center rounded-md border border-white/10 text-white/70 hover:bg-[#229ED9] hover:border-[#229ED9] hover:text-white transition-all shadow-sm"
+                className="grid h-10 w-10 place-items-center"
               >
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                <svg
+                  className="h-5 w-5 text-[#229ED9]"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
                   <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.539.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.285-.346-.094L7.469 14.28l-2.76-.86c-.6-.184-.593-.6.126-.882l10.82-4.172c.504-.191.95.105.81.855z" />
                 </svg>
               </a>

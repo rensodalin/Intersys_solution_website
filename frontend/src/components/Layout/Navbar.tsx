@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Menu, X, User, ChevronRight } from "lucide-react";
+import { Menu, X, User, ChevronRight, Phone, MapPin, Facebook, Send, Linkedin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoImg from "@/assets/logo.avif";
 
@@ -64,8 +64,8 @@ const PRODUCTS_DATA: Record<string, { href: string; sub?: string[] | AccessContr
 const CLIENT_CENTER_DATA = [
   { name: "Document Center", href: "/document-center" },
   { name: "Request a Quote", href: "/request-quote" },
-  { name: "Technical Tip", href: "/portfolio" },
-  { name: "Warranty", href: "/portfolio" }
+  { name: "Technical Tips", href: "/technical-tips" },
+  { name: "Warranty", href: "/warranty" }
 ];
 const CONTACT_DATA = [
   { name: "Technical Support / Customer Service", href: "/contact#support" },
@@ -97,13 +97,65 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 inset-x-0 z-50 transition-all duration-300 backdrop-blur-md",
-        scrolled ? "bg-[#1A3263]/95 border-b border-white/10 shadow-lg" : "bg-[#1A3263]/80",
+        "fixed top-0 inset-x-0 z-50 transition-all duration-500",
+        scrolled ? "translate-y-0" : "translate-y-0",
       )}
     >
-      <div className="w-full px-6 md:px-20 flex h-20 items-center justify-between">
-        <Link to="/" className="flex items-center" onClick={closeMenus}>
-          <img src={logoImg} alt="Intersys Logo" className="h-14 w-auto object-contain" />
+      <div className="bg-[#0A0F1A] text-white border-t-2 border-red-600 border-b border-white/5 px-6 md:px-20 hidden lg:block">
+        <div className="flex justify-between items-center h-12 text-sm">
+
+          {/* LEFT */}
+          <div className="flex items-center gap-6">
+
+            <div className="flex items-center gap-2 text-white/70 hover:text-white transition cursor-pointer">
+              <Phone size={14} className="text-red-500" />
+              <span>+855 23 901 028</span>
+            </div>
+
+            <div className="flex items-center gap-2 text-white/70 hover:text-white transition cursor-pointer">
+              <MapPin size={14} className="text-red-500" />
+              <span>St. 271, Phnom Penh</span>
+            </div>
+
+
+          </div>
+
+          {/* RIGHT */}
+          <div className="flex items-center gap-4">
+
+            <span className="text-white/40 text-xs mr-2">Follow</span>
+
+            <a href="#" className="text-white/50 hover:text-white transition">
+              <Facebook size={16} />
+            </a>
+
+            <a href="#" className="text-white/50 hover:text-white transition">
+              <Send size={16} />
+            </a>
+
+            <a href="#" className="text-white/50 hover:text-white transition">
+              <Linkedin size={16} />
+            </a>
+
+          </div>
+
+        </div>
+      </div>
+      <div className={cn(
+        "w-full px-6 md:px-20 flex items-center justify-between transition-all duration-500",
+        scrolled
+          ? "h-16 bg-[#0A0F1A]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.4)]"
+          : "h-24 bg-transparent",
+      )}>
+        <Link to="/" className="flex items-center transition-transform hover:scale-105 duration-300" onClick={closeMenus}>
+          <img
+            src={logoImg}
+            alt="Intersys Logo"
+            className={cn(
+              "transition-all duration-500 object-contain",
+              scrolled ? "h-10" : "h-14"
+            )}
+          />
         </Link>
 
         {/* Desktop Nav */}

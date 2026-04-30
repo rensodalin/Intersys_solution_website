@@ -70,7 +70,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="mt-8 font-display text-[2.4rem] md:text-[3.8rem] lg:text-[4.2rem] font-semibold leading-[1.15] tracking-[-0.02em] text-white"
+              className="mt-8 font-display text-[2rem] md:text-[3.3rem] lg:text-[4rem] font-semibold leading-[1.15] tracking-[-0.02em] text-white"
             >
               Smart Building <br />
               Solutions for a{" "}

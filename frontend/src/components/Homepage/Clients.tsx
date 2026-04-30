@@ -51,20 +51,13 @@ export function Clients() {
       <Container>
         {/* Section Header */}
         <div className="mb-16 md:mb-24 text-center">
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B0F06] mb-3"
-          >
-            Trusted Partnerships
-          </motion.p>
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-4xl font-serif font-bold text-[#1A3263] tracking-tight"
+            className="text-2xl md:text-3xl  font-bold text-[#1A3263] tracking-tight"
           >
             Our Valued Clients
           </motion.h2>
@@ -112,9 +105,8 @@ export function Clients() {
             <button
               key={i}
               onClick={() => setCurrentRow(i)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                currentRow === i ? "bg-[#9B0F06] w-6" : "bg-neutral-200"
-              }`}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${currentRow === i ? "bg-[#9B0F06] w-6" : "bg-neutral-200"
+                }`}
             />
           ))}
         </div>
