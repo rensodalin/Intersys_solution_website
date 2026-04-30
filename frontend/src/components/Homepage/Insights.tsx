@@ -56,7 +56,7 @@ export function Insights() {
               </div>
 
               <div className="flex flex-col flex-grow">
-                <div className="text-[10px] font-bold text-[#9B0F06] uppercase tracking-widest mb-3">
+                <div className="text-[10px] font-bold text-[#9B0F06]  tracking-widest mb-3">
                   {item.tag}
                 </div>
                 <h3 className="font-display text-[22px] font-bold text-[#162E93] leading-snug mb-3 group-hover:text-[#9B0F06] transition-colors">

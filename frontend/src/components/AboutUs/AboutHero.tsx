@@ -5,7 +5,7 @@ import honeywellLogo from "@/assets/honeywelllogo.png";
 
 export function AboutHero() {
   return (
-    <section className="relative pt-24 pb-16 lg:pt-32 lg:pb-24 bg-[#0A0F1A] overflow-hidden flex items-center justify-center min-h-[60vh]">
+    <section className="relative pt-25 pb-16 lg:pt-36 lg:pb-24 bg-[#0A0F1A] overflow-hidden flex items-center justify-center min-h-[60vh]">
       <div className="absolute inset-0">
         <img
           src={heroImg}

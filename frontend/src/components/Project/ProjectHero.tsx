@@ -3,12 +3,12 @@ import { Container } from "@/components/Common/Container";
 
 export function ProjectHero() {
     return (
-        <section className="pt-40 pb-16 text-center">
+        <section className="pt-50 pb-16 text-center">
             <Container>
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-4xl md:text-6xl font-bold mb-6"
+                    className="text-3xl md:text-5xl font-bold mb-6"
                 >
                     Our Projects
                 </motion.h1>

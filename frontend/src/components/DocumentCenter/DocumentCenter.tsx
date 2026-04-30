@@ -81,19 +81,17 @@ export function DocumentCenter() {
                 <Container>
                     <div className="flex items-center justify-between py-4">
                         <div className="flex items-center gap-3">
-                            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#D62828]">
+                            <span className="text-[11px] font-bold text-[#D62828]">
                                 Intersys Systems
                             </span>
                             <span className="text-gray-300">/</span>
-                            <span className="text-[10px] tracking-[0.2em] uppercase text-gray-400">
+                            <span className="text-[11px] text-gray-400">
                                 Resource Library
                             </span>
                         </div>
 
-                        <span className="text-[10px] tracking-widest text-gray-400 uppercase">
-                            {new Date()
-                                .toLocaleDateString("en-US", { month: "short", year: "numeric" })
-                                .toUpperCase()}
+                        <span className="text-[11px] text-gray-400">
+                            {new Date().toLocaleDateString("en-US", { month: "short", year: "numeric" })}
                         </span>
                     </div>
                 </Container>
@@ -102,10 +100,10 @@ export function DocumentCenter() {
             <Container>
 
                 {/* TITLE */}
-                <div className="border-b-2 border-[#0A0F1A] py-16 grid grid-cols-12 gap-4">
+                <div className="border-b-2 border-[#0A0F1A] py-16 pt-40 grid grid-cols-12 gap-4">
 
                     <div className="col-span-12 lg:col-span-8">
-                        <h1 className="text-3xl lg:text-[60px] font-extrabold text-[#111FA2] tracking-tight">
+                        <h1 className="text-3xl lg:text-[55px] font-extrabold text-[#111FA2] tracking-tight">
                             Document
                             <br />
                             <span className="text-[#D62828]">Center</span>
@@ -121,14 +119,14 @@ export function DocumentCenter() {
                         <div className="flex gap-8">
                             <div>
                                 <p className="text-3xl font-bold text-[#0A0F1A]">05</p>
-                                <p className="text-[10px] tracking-widest uppercase text-gray-400">
+                                <p className="text-[11px] text-gray-400">
                                     Total Files
                                 </p>
                             </div>
                             <div className="w-px bg-gray-300" />
                             <div>
                                 <p className="text-3xl font-bold text-[#0A0F1A]">04</p>
-                                <p className="text-[10px] tracking-widest uppercase text-gray-400">
+                                <p className="text-[11px] text-gray-400">
                                     Categories
                                 </p>
                             </div>
@@ -141,18 +139,18 @@ export function DocumentCenter() {
                 <div className="border-b border-gray-300 grid grid-cols-12">
 
                     <div className="col-span-12 lg:col-span-2 border-r border-gray-300 py-8 pr-6 flex flex-col justify-between">
-                        <span className="text-[10px] tracking-[0.3em] uppercase text-[#D62828] font-bold">
+                        <span className="text-[11px] text-[#D62828] font-bold">
                             Featured
                         </span>
                     </div>
 
                     <div className="col-span-12 lg:col-span-7 py-8 px-8 border-r border-gray-300">
 
-                        <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-4">
+                        <p className="text-[11px] text-gray-400 mb-4">
                             Corporate Profile
                         </p>
 
-                        <h2 className="text-2xl font-bold text-[#0A0F1A] leading-tight uppercase tracking-tight mb-3">
+                        <h2 className="text-2xl font-bold text-[#0A0F1A] leading-tight tracking-tight mb-3">
                             Intersys Systems — Corporate Overview
                         </h2>
 
@@ -174,7 +172,7 @@ export function DocumentCenter() {
                             href="/documents/project-references-bms.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mt-4 flex items-center justify-between bg-[#D62828] text-white text-[11px] font-bold uppercase px-5 py-3 hover:bg-[#111FA2] transition outline-none"
+                            className="mt-4 flex items-center justify-between bg-[#D62828] text-white text-[11px] font-bold px-5 py-3 hover:bg-[#111FA2] transition outline-none"
                         >
                             Download
                             <Download size={13} />
@@ -192,7 +190,7 @@ export function DocumentCenter() {
                             <button
                                 key={cat}
                                 onClick={() => setSelectedCategory(cat)}
-                                className={`text-[10px] font-bold uppercase px-5 py-2 border-r whitespace-nowrap transition ${selectedCategory === cat
+                                className={`text-[11px] font-medium px-5 py-2 border-r whitespace-nowrap transition ${selectedCategory === cat
                                     ? "bg-[#0A0F1A] text-white"
                                     : "text-gray-400 hover:text-black"
                                     }`}
@@ -225,7 +223,7 @@ export function DocumentCenter() {
                                 className="grid grid-cols-12 gap-4 py-6 hover:bg-white transition"
                             >
 
-                                <div className="col-span-1 text-xs font-semibold text-gray-300">
+                                <div className="col-span-1 text-[11px] font-medium text-gray-400">
                                     {doc.no}
                                 </div>
 
@@ -234,20 +232,20 @@ export function DocumentCenter() {
                                         {doc.title}
                                     </h3>
 
-                                    <p className="text-sm text-gray-500 leading-relaxed">
+                                    <p className="text-xs text-gray-500 leading-relaxed">
                                         {doc.description}
                                     </p>
                                 </div>
 
-                                <div className="col-span-2 hidden md:block text-xs text-gray-400 uppercase">
+                                <div className="col-span-2 hidden md:block text-[11px] text-gray-400">
                                     {doc.category}
                                 </div>
 
-                                <div className="col-span-2 hidden md:block text-xs text-gray-400">
+                                <div className="col-span-2 hidden md:block text-[11px] text-gray-400">
                                     {doc.updated}
                                 </div>
 
-                                <div className="col-span-1 hidden md:block text-xs text-gray-400">
+                                <div className="col-span-1 hidden md:block text-[11px] text-gray-400">
                                     {doc.size}
                                 </div>
 

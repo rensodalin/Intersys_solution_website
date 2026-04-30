@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
-import { Menu, X, User, ChevronRight, Phone, MapPin, Facebook, Send, Linkedin } from "lucide-react";
+import { Link, useLocation } from "@tanstack/react-router";
+import { Menu, X, User, ChevronRight, Phone, MapPin, Facebook, Linkedin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoImg from "@/assets/logo.avif";
 
@@ -73,6 +73,9 @@ const CONTACT_DATA = [
 ];
 
 export function Navbar() {
+  const location = useLocation();
+  const lightPages = ["/products", "/document-center", "/request-quote", "/technical-tips", "/warranty"];
+  const isLightPage = lightPages.some(path => location.pathname.startsWith(path));
   const [scrolled, setScrolled] = useState(false);
   const [showProducts, setShowProducts] = useState(false);
   const [hoveredL1, setHoveredL1] = useState<string | null>(null);
@@ -109,12 +112,12 @@ export function Navbar() {
 
             <div className="flex items-center gap-2 text-white/70 hover:text-white transition cursor-pointer">
               <Phone size={14} className="text-red-500" />
-              <span>+855 23 901 028</span>
+              <span className="text-xs">+855  077 602 334</span>
             </div>
 
             <div className="flex items-center gap-2 text-white/70 hover:text-white transition cursor-pointer">
               <MapPin size={14} className="text-red-500" />
-              <span>St. 271, Phnom Penh</span>
+              <span className="text-xs">St. 13, Khan Sen Sok, Phnom Penh, Cambodia</span>
             </div>
 
 
@@ -125,15 +128,17 @@ export function Navbar() {
 
             <span className="text-white/40 text-xs mr-2">Follow</span>
 
-            <a href="#" className="text-white/50 hover:text-white transition">
+            <a href="https://www.facebook.com/IntersysSolutions" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition">
               <Facebook size={16} />
             </a>
 
-            <a href="#" className="text-white/50 hover:text-white transition">
-              <Send size={16} />
+            <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition">
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.539.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.285-.346-.094L7.469 14.28l-2.76-.86c-.6-.184-.593-.6.126-.882l10.82-4.172c.504-.191.95.105.81.855z" />
+              </svg>
             </a>
 
-            <a href="#" className="text-white/50 hover:text-white transition">
+            <a href="https://www.linkedin.com/company/intersys-solutions2015" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition">
               <Linkedin size={16} />
             </a>
 
@@ -145,7 +150,7 @@ export function Navbar() {
         "w-full px-6 md:px-20 flex items-center justify-between transition-all duration-500",
         scrolled
           ? "h-16 bg-[#0A0F1A]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.4)]"
-          : "h-24 bg-transparent",
+          : isLightPage ? "h-24 bg-[#0A0F1A]" : "h-24 bg-transparent",
       )}>
         <Link to="/" className="flex items-center transition-transform hover:scale-105 duration-300" onClick={closeMenus}>
           <img
@@ -161,7 +166,7 @@ export function Navbar() {
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-10 h-full">
 
-          <Link to="/about" className="text-sm font-medium text-white/70 hover:text-white transition-colors">
+          <Link to="/about" className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500">
             About Us
           </Link>
 
@@ -173,7 +178,7 @@ export function Navbar() {
           >
             <Link
               to="/products"
-              className="text-sm font-medium text-white hover:text-white/80 transition-colors flex items-center py-8"
+              className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500"
             >
               Products
             </Link>
@@ -218,7 +223,7 @@ export function Navbar() {
 
           {/* CLIENT CENTER */}
           <div className="relative h-full flex items-center" onMouseEnter={() => setActiveSupport("client")} onMouseLeave={closeMenus}>
-            <button className="text-sm font-medium text-white/70 hover:text-white transition-colors py-8">
+            <button className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center">
               Client Center
             </button>
             {activeSupport === "client" && (
@@ -234,7 +239,7 @@ export function Navbar() {
 
           {/* CONTACT */}
           <div className="relative h-full flex items-center" onMouseEnter={() => setActiveSupport("contact")} onMouseLeave={closeMenus}>
-            <button className="text-sm font-medium text-white/70 hover:text-white transition-colors py-8">
+            <button className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center">
               Contact Us
             </button>
             {activeSupport === "contact" && (
@@ -248,7 +253,7 @@ export function Navbar() {
             )}
           </div>
 
-          <Link to="/projects" className="text-sm font-medium text-white/70 hover:text-white transition-colors">
+          <Link to="/projects" className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500">
             Projects
           </Link>
         </nav>

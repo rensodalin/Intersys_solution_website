@@ -83,9 +83,7 @@ export function PromotionOverlay({ isOpen, onClose }: PromotionOverlayProps) {
             <div className="w-full h-[60%] md:h-full md:w-[35%] bg-white p-12 flex flex-col justify-center relative">
               {/* "NEW" Tag */}
               <div className="absolute top-0 right-0 p-8">
-                <div className="bg-yellow-400 text-black font-black text-[10px] px-3 py-1 uppercase tracking-widest -rotate-2">
-                  EXPERT ADVICE
-                </div>
+
               </div>
 
               <div className="space-y-8">
