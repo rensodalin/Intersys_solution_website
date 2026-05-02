@@ -82,8 +82,21 @@ export function Navbar() {
   const [hoveredL2, setHoveredL2] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSupport, setActiveSupport] = useState<string | null>(null);
+  const [user, setUser] = useState<{ name: string, avatar: string } | null>(null);
 
   useEffect(() => {
+    // Check if user is logged in
+    fetch("http://localhost:1000/auth/user", {
+      credentials: "include" // Important to send cookies
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.user) {
+          setUser(data.user);
+        }
+      })
+      .catch(err => console.error("Not logged in", err));
+
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -260,10 +273,18 @@ export function Navbar() {
 
         {/* Actions */}
         <div className="hidden lg:flex items-center gap-8">
-          <Link to="/contact" className="flex items-center gap-2 text-white/70 hover:text-white transition-colors group">
-            <User size={16} className="text-red-500 group-hover:scale-110 transition-transform" />
-            <span className="text-sm font-medium">Login</span>
-          </Link>
+          {user ? (
+            <div className="flex items-center gap-3">
+              <img src={user.avatar || "https://ui-avatars.com/api/?name=" + user.name} alt={user.name} className="w-8 h-8 rounded-full border border-white/20 shadow-md" referrerPolicy="no-referrer" />
+              <span className="text-sm font-medium text-white/90">{user.name}</span>
+              <a href="http://localhost:1000/auth/logout" className="text-xs text-red-500 hover:text-red-400 ml-2 font-medium">Logout</a>
+            </div>
+          ) : (
+            <a href="http://localhost:1000/auth/google" className="flex items-center gap-2 text-white/70 hover:text-white transition-colors group">
+              <User size={16} className="text-red-500 group-hover:scale-110 transition-transform" />
+              <span className="text-sm font-medium">Login</span>
+            </a>
+          )}
           <Link
             to="/request-quote"
             className="flex h-10 items-center justify-center rounded-sm bg-[#C3110C] px-8 text-sm font-medium text-white hover:bg-white hover:text-[#C3110C] transition-all duration-300 shadow-xl shadow-[#C3110C]/20"

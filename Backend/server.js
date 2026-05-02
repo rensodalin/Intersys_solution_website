@@ -2,16 +2,44 @@ import express from "express";
 import nodemailer from "nodemailer";
 import cors from "cors";
 import dotenv from "dotenv";
+import session from "express-session";
+import passport from "./passportsetup/passportSetup.js";
+import connectDB from "./conn/conn.js";
+import authRoutes from "./auth/auth.js";
 
 dotenv.config();
 
 const app = express();
 
+// Connect to Database
+connectDB();
+
+
 app.use(cors({
     origin: "http://localhost:5173", // change if your frontend runs elsewhere
+    credentials: true, // Important to allow cookies for sessions
 }));
 
 app.use(express.json());
+
+// Session setup
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET || "intersys_super_secret",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24, // 1 day
+        },
+    })
+);
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// ✅ AUTH ROUTES
+app.use("/auth", authRoutes);
 
 // ✅ EMAIL TRANSPORT
 const transporter = nodemailer.createTransport({
@@ -83,6 +111,7 @@ app.post("/api/contact", async (req, res) => {
     }
 });
 
-app.listen(5000, () => {
-    console.log("Server running on http://localhost:5000");
+const PORT = process.env.PORT || 1000;
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });
