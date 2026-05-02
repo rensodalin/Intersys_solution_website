@@ -3,6 +3,9 @@ export interface Project {
     desc: string;
     image: string;
     category: string;
+    client?: string;
+    location?: string;
+    scope?: string[];
 }
 
 export const categories = [
@@ -14,4 +17,6 @@ export const categories = [
     "Office",
     "Industrial",
     "Banking",
+    "Healthcare",
+    "Logistics"
 ];

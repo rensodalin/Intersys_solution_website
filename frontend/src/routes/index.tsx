@@ -20,13 +20,23 @@ function Index() {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-    // Show the promotion popup 2 seconds after the site opens
-    const timer = setTimeout(() => {
-      setShowPopup(true);
-    }, 2000);
+    // Check if the user has already dismissed the promotion
+    const hasSeenPromotion = localStorage.getItem("hasSeenPromotion");
 
-    return () => clearTimeout(timer);
+    if (!hasSeenPromotion) {
+      // Show the promotion popup 2 seconds after the site opens
+      const timer = setTimeout(() => {
+        setShowPopup(true);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
   }, []);
+
+  const handleClose = () => {
+    setShowPopup(false);
+    localStorage.setItem("hasSeenPromotion", "true");
+  };
 
   return (
     <>
@@ -44,7 +54,7 @@ function Index() {
 
       <Insights />
 
-      <PromotionOverlay isOpen={showPopup} onClose={() => setShowPopup(false)} />
+      <PromotionOverlay isOpen={showPopup} onClose={handleClose} />
     </>
   );
 }

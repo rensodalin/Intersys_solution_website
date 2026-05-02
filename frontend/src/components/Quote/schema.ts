@@ -8,8 +8,7 @@ export const productRowSchema = z.object({
 });
 
 export const quoteSchema = z.object({
-    cataloguePrinted: z.boolean(),
-    catalogueElectronic: z.boolean(),
+    solutionCategories: z.array(z.string()).optional(),
     products: z.array(productRowSchema),
     sections: z.array(z.string()).optional(),
     name: z.string().min(2, "Name is required"),
@@ -30,10 +29,16 @@ export const quoteSchema = z.object({
 export type QuoteFormValues = z.infer<typeof quoteSchema>;
 
 export const productSections = [
-    "Temperature", "Humidity", "Pressure", "Flow", "Power",
-    "Pneumatic Transducers", "Air & Gas", "Power Supplies", "Miscellaneous"
+    "Controllers & Control Panels",
+    "Software & Platforms",
+    "Field Devices & Sensors",
+    "Cameras & Surveillance Devices",
+    "Fire Detection Devices",
+    "Access Control Devices",
+    "Audio Visual Equipment",
+    "Networking & Communication Devices",
+    "Power Supplies & Accessories"
 ];
-
 export const companyTypes = [
     "Manufacturer", "Distributor", "Contractor", "Engineering", "Building Management"
 ];

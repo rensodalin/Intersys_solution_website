@@ -177,10 +177,19 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-10 h-full">
+        <div className="hidden lg:flex flex-1 justify-center h-full">
+          <nav className="flex items-center gap-8 h-full">
 
           <Link to="/about" className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500">
             About Us
+          </Link>
+
+          <Link
+            to="/"
+            hash="solutions"
+            className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center"
+          >
+            Services
           </Link>
 
           {/* PRODUCTS CATEGORY */}
@@ -197,7 +206,7 @@ export function Navbar() {
             </Link>
 
             {showProducts && (
-              <div className="absolute top-20 left-0 flex items-start animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="absolute top-full left-0 pt-2 flex items-start animate-in fade-in slide-in-from-top-2 duration-200">
                 {/* L1 Panel */}
                 <div className="w-64 bg-[#1A3263] border border-white/10 shadow-2xl">
                   {Object.entries(PRODUCTS_DATA).map(([label, data]) => (
@@ -240,7 +249,7 @@ export function Navbar() {
               Client Center
             </button>
             {activeSupport === "client" && (
-              <div className="absolute top-20 left-0 w-56 bg-[#1A3263] border border-white/10 shadow-2xl">
+              <div className="absolute top-full left-0 pt-2 w-56 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
                 {CLIENT_CENTER_DATA.map(item => (
                   <Link key={item.name} to={item.href} onClick={closeMenus} className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5">
                     {item.name}
@@ -256,7 +265,7 @@ export function Navbar() {
               Contact Us
             </button>
             {activeSupport === "contact" && (
-              <div className="absolute top-20 left-0 w-64 bg-[#1A3263] border border-white/10 shadow-2xl">
+              <div className="absolute top-full left-0 pt-2 w-64 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
                 {CONTACT_DATA.map(item => (
                   <Link key={item.name} to={item.href} onClick={closeMenus} className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5">
                     {item.name}
@@ -268,8 +277,9 @@ export function Navbar() {
 
           <Link to="/projects" className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500">
             Projects
-          </Link>
-        </nav>
+            </Link>
+          </nav>
+        </div>
 
         {/* Actions */}
         <div className="hidden lg:flex items-center gap-8">
@@ -307,6 +317,7 @@ export function Navbar() {
               <p className="text-red-500 font-medium text-xs">Navigation</p>
               <div className="flex flex-col gap-4 text-white">
                 <Link to="/products" onClick={() => setMobileOpen(false)}>Products</Link>
+                <Link to="/" hash="solutions" onClick={() => setMobileOpen(false)}>Services</Link>
                 <Link to="/portfolio" onClick={() => setMobileOpen(false)}>Client Center</Link>
                 <Link to="/contact" onClick={() => setMobileOpen(false)}>Contact Us</Link>
                 <Link to="/about" onClick={() => setMobileOpen(false)}>About Us</Link>

@@ -126,26 +126,38 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
                                                 }`}
                                         />
 
-                                        {/* DESCRIPTION (ENHANCED) */}
-                                        <p className="text-gray-400 leading-relaxed text-[15px] max-w-md mb-6">
-                                            {p.desc} This solution was engineered with a focus on reliability,
-                                            scalability, and seamless system integration. It ensures long-term
-                                            operational efficiency across complex infrastructure environments.
-                                        </p>
-
-                                        {/* EXTRA DETAIL */}
-                                        <p className="text-gray-500 text-[13px] leading-relaxed max-w-md mb-8">
-                                            The project involved full system design, integration, and commissioning,
-                                            executed by our engineering team following international standards and
-                                            best practices for building automation systems.
-                                        </p>
-
-                                        {/* HIGHLIGHTS */}
-                                        <div className="space-y-2 text-[13px] text-gray-400 max-w-md">
-                                            <p>• Advanced system integration & monitoring</p>
-                                            <p>• Optimized energy efficiency & automation logic</p>
-                                            <p>• Fully tested deployment & commissioning workflow</p>
+                                        {/* client & location */}
+                                        <div className={`flex flex-col gap-1 mb-6 text-[13px] ${isReversed ? "md:items-end" : ""}`}>
+                                            {p.client && (
+                                                <p className="text-white/80">
+                                                    <span className="text-gray-500 font-medium">Client:</span> {p.client}
+                                                </p>
+                                            )}
+                                            {p.location && (
+                                                <p className="text-white/80">
+                                                    <span className="text-gray-500 font-medium">Location:</span> {p.location}
+                                                </p>
+                                            )}
                                         </div>
+
+                                        {/* DESCRIPTION */}
+                                        <p className="text-gray-400 leading-relaxed text-[15px] max-w-md mb-8">
+                                            {p.desc}
+                                        </p>
+
+                                        {/* SCOPE / HIGHLIGHTS */}
+                                        {p.scope && p.scope.length > 0 && (
+                                            <div className={`flex flex-col gap-2 ${isReversed ? "md:items-end" : ""}`}>
+                                                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Technical Scope</p>
+                                                <div className={`flex flex-wrap gap-2 ${isReversed ? "md:justify-end" : ""}`}>
+                                                    {p.scope.map((item) => (
+                                                        <span key={item} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[12px] text-gray-400">
+                                                            {item}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
 
                                 </motion.div>

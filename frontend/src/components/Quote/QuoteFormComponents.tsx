@@ -14,7 +14,6 @@ import {
     Smartphone,
     Mail,
     MapPin,
-    Globe,
     FileText,
     BadgeCheck,
     Package
@@ -22,7 +21,7 @@ import {
 import { QuoteFormValues, productSections, companyTypes } from "./schema";
 
 /* ─────────────────────────────────────────────
-   INPUT FIELD (cleaner UI text style)
+   INPUT FIELD
 ──────────────────────────────────────────── */
 const jobTitles = [
     "Engineer",
@@ -34,6 +33,7 @@ const jobTitles = [
     "Consultant",
     "Other",
 ];
+
 export const InputField = React.forwardRef(
     ({ label, icon: Icon, error, ...props }: any, ref) => (
         <div className="space-y-1.5">
@@ -49,24 +49,20 @@ export const InputField = React.forwardRef(
                 <input
                     ref={ref}
                     {...props}
-                    className={`w-full ${Icon ? "pl-11" : "px-4"
-                        } p-3.5 rounded-xl border ${error
-                            ? "border-red-400 ring-2 ring-red-100"
-                            : "border-gray-200"
+                    className={`w-full ${Icon ? "pl-11" : "px-4"} p-3.5 rounded-xl border ${error ? "border-red-400 ring-2 ring-red-100" : "border-gray-200"
                         } bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-500 transition`}
                 />
             </div>
 
-            {error && (
-                <p className="text-xs text-red-500 ml-1">{error}</p>
-            )}
+            {error && <p className="text-xs text-red-500 ml-1">{error}</p>}
         </div>
     )
 );
+
 InputField.displayName = "InputField";
 
 /* ─────────────────────────────────────────────
-   SECTION PROPS
+   INTEREST SECTION
 ──────────────────────────────────────────── */
 interface SectionProps {
     register: UseFormRegister<QuoteFormValues>;
@@ -74,14 +70,20 @@ interface SectionProps {
     control?: Control<QuoteFormValues>;
 }
 
-/* ─────────────────────────────────────────────
-   INTEREST SECTION (clean UX wording)
-──────────────────────────────────────────── */
 export function InterestedSection({ register, control }: SectionProps) {
     const { fields, append, remove } = useFieldArray({
         control: control!,
         name: "products",
     });
+
+    const categories = [
+        "Building Management Systems (BMS)",
+        "Access Control Systems",
+        "Surveillance (CCTV) Systems",
+        "Fire Alarm & Safety Systems",
+        "Audio Visual (AV) Solutions",
+        "Integrated Building Systems"
+    ];
 
     return (
         <section className="space-y-8">
@@ -94,41 +96,35 @@ export function InterestedSection({ register, control }: SectionProps) {
 
                 <div>
                     <h2 className="text-xl font-semibold text-gray-900">
-                        What you’re looking for
+                        Your requirements
                     </h2>
                     <p className="text-sm text-gray-500">
-                        Select catalogues, sections, or specific products
+                        Select product categories, sections, or specific items you need
                     </p>
                 </div>
             </div>
 
-            {/* CATALOGUES */}
+            {/* CATEGORIES */}
             <div className="grid md:grid-cols-2 gap-8">
 
                 <div className="space-y-3">
                     <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                        Products
+                        Product Categories
                     </h3>
 
-                    {[
-                        "Printed catalogue (PDF/Hardcopy)",
-                        "Digital catalogue access"
-                    ].map((text, i) => (
+                    {categories.map((text) => (
                         <label
-                            key={i}
-                            className="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-100 hover:border-red-100 hover:bg-red-50/20 transition"
+                            key={text}
+                            className="flex items-center justify-between p-3 bg-white rounded-xl border border-gray-100 hover:border-red-100 hover:bg-red-50/20 transition cursor-pointer"
                         >
-                            <span className="text-gray-700 text-sm">
+                            <span className="text-gray-700 text-xs font-medium">
                                 {text}
                             </span>
                             <input
                                 type="checkbox"
-                                {...register(
-                                    i === 0
-                                        ? "cataloguePrinted"
-                                        : "catalogueElectronic"
-                                )}
-                                className="w-5 h-5 text-red-600"
+                                value={text}
+                                {...register("solutionCategories")}
+                                className="w-4 h-4 text-red-600 rounded border-gray-300 focus:ring-red-500"
                             />
                         </label>
                     ))}
@@ -137,20 +133,20 @@ export function InterestedSection({ register, control }: SectionProps) {
                 {/* SECTIONS */}
                 <div className="space-y-3">
                     <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                        Individual Product Sections
+                        Product Sections
                     </h3>
 
                     <div className="grid grid-cols-2 gap-3">
                         {productSections.map((section) => (
                             <label
                                 key={section}
-                                className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+                                className="flex items-center gap-2 text-xs text-gray-600 hover:text-red-600 transition-colors cursor-pointer"
                             >
                                 <input
                                     type="checkbox"
                                     value={section}
                                     {...register("sections")}
-                                    className="w-4 h-4 text-red-600"
+                                    className="w-3.5 h-3.5 text-red-600 rounded border-gray-300 focus:ring-red-500"
                                 />
                                 {section}
                             </label>
@@ -163,22 +159,23 @@ export function InterestedSection({ register, control }: SectionProps) {
             <div className="space-y-4 pt-6">
 
                 <div>
-                    <h3 className="text-sm font-semibold text-gray-700">
+                    <h3 className="text-md font-semibold text-gray-700">
                         Product request details
                     </h3>
-                    <p className="text-xs text-gray-400">
-                        Add items you want pricing for
+                    <p className="text-sm text-gray-400">
+                        Add items you would like pricing or quotation for
                     </p>
                 </div>
 
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm">
+
                         <thead className="text-xs uppercase text-gray-400">
                             <tr>
-                                <th className="p-3">Qty</th>
-                                <th className="p-3">Product</th>
-                                <th className="p-3">Details</th>
-                                <th className="p-3">Use case</th>
+                                <th className="p-3 text-left">Qty</th>
+                                <th className="p-3 text-left">Product</th>
+                                <th className="p-3 text-left">Description</th>
+                                <th className="p-3 text-left">Application</th>
                                 <th />
                             </tr>
                         </thead>
@@ -186,6 +183,7 @@ export function InterestedSection({ register, control }: SectionProps) {
                         <tbody>
                             {fields.map((field, index) => (
                                 <tr key={field.id} className="border-t">
+
                                     <td className="p-2">
                                         <input
                                             {...register(`products.${index}.qty`)}
@@ -195,27 +193,21 @@ export function InterestedSection({ register, control }: SectionProps) {
 
                                     <td className="p-2">
                                         <input
-                                            {...register(
-                                                `products.${index}.productNo`
-                                            )}
+                                            {...register(`products.${index}.productNo`)}
                                             className="w-full p-2 border rounded-lg"
                                         />
                                     </td>
 
                                     <td className="p-2">
                                         <input
-                                            {...register(
-                                                `products.${index}.description`
-                                            )}
+                                            {...register(`products.${index}.description`)}
                                             className="w-full p-2 border rounded-lg"
                                         />
                                     </td>
 
                                     <td className="p-2">
                                         <input
-                                            {...register(
-                                                `products.${index}.application`
-                                            )}
+                                            {...register(`products.${index}.application`)}
                                             className="w-full p-2 border rounded-lg"
                                         />
                                     </td>
@@ -229,9 +221,11 @@ export function InterestedSection({ register, control }: SectionProps) {
                                             <Trash2 size={16} />
                                         </button>
                                     </td>
+
                                 </tr>
                             ))}
                         </tbody>
+
                     </table>
                 </div>
 
@@ -255,7 +249,7 @@ export function InterestedSection({ register, control }: SectionProps) {
 }
 
 /* ─────────────────────────────────────────────
-   USER SECTION (clean wording)
+   USER SECTION
 ──────────────────────────────────────────── */
 export function UserSection({ register, errors }: SectionProps) {
     return (
@@ -263,19 +257,20 @@ export function UserSection({ register, errors }: SectionProps) {
 
             <div>
                 <h2 className="text-xl font-semibold text-gray-900">
-                    Contact details
+                    Contact Information
                 </h2>
                 <p className="text-sm text-gray-500">
-                    So our team can reach you quickly
+                    So our team can get back to you quickly
                 </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-                <InputField label="Full name" {...register("name")} icon={User} error={errors.name?.message} />
-                <InputField label="Company" {...register("company")} icon={Building2} error={errors.company?.message} />
+                <InputField label="Full Name" {...register("name")} icon={User} error={errors.name?.message} />
+                <InputField label="Company Name" {...register("company")} icon={Building2} error={errors.company?.message} />
+
                 <div className="space-y-1.5">
                     <label className="text-sm font-medium text-gray-600 ml-1">
-                        Job title
+                        Job Title
                     </label>
 
                     <div className="relative">
@@ -283,11 +278,9 @@ export function UserSection({ register, errors }: SectionProps) {
 
                         <select
                             {...register("title")}
-                            className="w-full pl-11 p-3.5 rounded-xl border border-gray-200 bg-white shadow-sm 
-            focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-500 transition"
+                            className="w-full pl-11 p-3.5 rounded-xl border border-gray-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-500 transition"
                         >
                             <option value="">Select your role</option>
-
                             {jobTitles.map((job) => (
                                 <option key={job} value={job}>
                                     {job}
@@ -296,8 +289,9 @@ export function UserSection({ register, errors }: SectionProps) {
                         </select>
                     </div>
                 </div>
-                <InputField label="Phone number" {...register("phone")} icon={Smartphone} />
-                <InputField label="Email address" {...register("email")} icon={Mail} />
+
+                <InputField label="Phone Number" {...register("phone")} icon={Smartphone} />
+                <InputField label="Email Address" {...register("email")} icon={Mail} />
                 <InputField label="Location" {...register("address")} icon={MapPin} />
             </div>
         </section>
@@ -313,10 +307,10 @@ export function CompanySection({ register }: SectionProps) {
 
             <div>
                 <h2 className="text-xl font-semibold text-gray-900">
-                    Company information
+                    Company Information
                 </h2>
                 <p className="text-sm text-gray-500">
-                    Helps us recommend the right solution
+                    Helps us recommend the most suitable solution
                 </p>
             </div>
 
@@ -332,14 +326,14 @@ export function CompanySection({ register }: SectionProps) {
                 </div>
 
                 <InputField
-                    label="System or platform you currently use"
+                    label="Current System / Platform"
                     {...register("bmsSystem")}
                     icon={BadgeCheck}
                 />
 
                 <textarea
                     {...register("otherBms")}
-                    placeholder="Anything else we should know..."
+                    placeholder="Tell us anything else relevant to your project..."
                     className="w-full p-4 border rounded-xl min-h-[100px] text-sm"
                 />
             </div>

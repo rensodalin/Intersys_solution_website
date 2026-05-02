@@ -16,7 +16,7 @@ export function Warranty() {
     return (
         <div className="min-h-screen bg-[#FDFDFD]">
             {/* HERO / BACKGROUND SECTION */}
-            <section className="relative h-[500px] overflow-hidden flex items-center pt-20">
+            <section className="relative h-[500px] overflow-hidden flex items-center pt-60">
                 <img
                     src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop"
                     alt="Engineering Documentation"
