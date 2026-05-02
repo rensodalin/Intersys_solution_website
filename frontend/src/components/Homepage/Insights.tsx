@@ -59,7 +59,7 @@ export function Insights() {
                 <div className="text-[10px] font-bold text-[#9B0F06]  tracking-widest mb-3">
                   {item.tag}
                 </div>
-                <h3 className="font-display text-[22px] font-bold text-[#162E93] leading-snug mb-3 group-hover:text-[#9B0F06] transition-colors">
+                <h3 className="font-display text-[20px] font-bold text-[#162E93] leading-snug mb-3 group-hover:text-[#9B0F06] transition-colors">
                   {item.title}
                 </h3>
                 <p className="text-[13pxx] text-[#6b7c93] leading-relaxed mb-6 flex-grow">
