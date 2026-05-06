@@ -73,12 +73,12 @@ const CONTACT_DATA = [
 ];
 
 const SERVICES_DATA = [
-  { name: "Building Management", href: "/services#bms" },
-  { name: "Fire Alarm System", href: "/services#fire" },
-  { name: "Access Control System", href: "/products/access-control" },
-  { name: "Surveillance (CCTV)", href: "/products/surveillance" },
-  { name: "Audio Visual (AV) System", href: "/services#av" },
-  { name: "Custom Solution", href: "/services#custom" },
+  { name: "Building Management", href: "/services/building-management" },
+  { name: "Fire Alarm System", href: "/services/fire-alarm" },
+  { name: "Access Control System", href: "/services/access-control" },
+  { name: "Surveillance (CCTV)", href: "/services/surveillance" },
+  { name: "Audio Visual (AV) System", href: "/services/audio-visual" },
+  { name: "Custom Solution", href: "/services/custom-solution" },
 ];
 
 export function Navbar() {
@@ -201,12 +201,11 @@ export function Navbar() {
             onMouseEnter={() => setShowServices(true)}
             onMouseLeave={closeMenus}
           >
-            <Link
-              to="/services"
-              className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500"
+            <div
+              className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 cursor-pointer transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center"
             >
               Services
-            </Link>
+            </div>
 
             {showServices && (
               <div className="absolute top-full left-0 pt-2 w-64 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
@@ -230,12 +229,11 @@ export function Navbar() {
             onMouseEnter={() => setShowProducts(true)}
             onMouseLeave={closeMenus}
           >
-            <Link
-              to="/products"
-              className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500"
+            <div
+              className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 cursor-pointer transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center"
             >
               Products
-            </Link>
+            </div>
 
             {showProducts && (
               <div className="absolute top-full left-0 pt-2 flex items-start animate-in fade-in slide-in-from-top-2 duration-200">

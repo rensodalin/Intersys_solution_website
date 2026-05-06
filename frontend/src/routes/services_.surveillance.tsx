@@ -4,7 +4,7 @@ import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { Zap, Globe, Cpu, CheckCircle2 } from "lucide-react";
 
-export const Route = createFileRoute("/products_/surveillance")({
+export const Route = createFileRoute("/services_/surveillance")({
     head: () => ({
         meta: [
             { title: "Intelligent Surveillance Solutions — Intersys Solutions" },

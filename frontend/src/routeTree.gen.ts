@@ -24,8 +24,13 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SectorsIndexRouteImport } from './routes/sectors.index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
+import { Route as ServicesSurveillanceRouteImport } from './routes/services_.surveillance'
+import { Route as ServicesFireAlarmRouteImport } from './routes/services_.fire-alarm'
+import { Route as ServicesCustomSolutionRouteImport } from './routes/services_.custom-solution'
+import { Route as ServicesBuildingManagementRouteImport } from './routes/services_.building-management'
+import { Route as ServicesAudioVisualRouteImport } from './routes/services_.audio-visual'
+import { Route as ServicesAccessControlRouteImport } from './routes/services_.access-control'
 import { Route as SectorsSectorIdRouteImport } from './routes/sectors.$sectorId'
-import { Route as ProductsSurveillanceRouteImport } from './routes/products_.surveillance'
 import { Route as ProductsAccessControlRouteImport } from './routes/products_.access-control'
 import { Route as ProductsAccessControlSaltoRouteImport } from './routes/products_.access-control_.salto'
 import { Route as ProductsAccessControlHoneywellRouteImport } from './routes/products_.access-control_.honeywell'
@@ -115,15 +120,41 @@ const AboutIndexRoute = AboutIndexRouteImport.update({
   path: '/about/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesSurveillanceRoute = ServicesSurveillanceRouteImport.update({
+  id: '/services_/surveillance',
+  path: '/services/surveillance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesFireAlarmRoute = ServicesFireAlarmRouteImport.update({
+  id: '/services_/fire-alarm',
+  path: '/services/fire-alarm',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesCustomSolutionRoute = ServicesCustomSolutionRouteImport.update({
+  id: '/services_/custom-solution',
+  path: '/services/custom-solution',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesBuildingManagementRoute =
+  ServicesBuildingManagementRouteImport.update({
+    id: '/services_/building-management',
+    path: '/services/building-management',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ServicesAudioVisualRoute = ServicesAudioVisualRouteImport.update({
+  id: '/services_/audio-visual',
+  path: '/services/audio-visual',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesAccessControlRoute = ServicesAccessControlRouteImport.update({
+  id: '/services_/access-control',
+  path: '/services/access-control',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SectorsSectorIdRoute = SectorsSectorIdRouteImport.update({
   id: '/$sectorId',
   path: '/$sectorId',
   getParentRoute: () => SectorsRoute,
-} as any)
-const ProductsSurveillanceRoute = ProductsSurveillanceRouteImport.update({
-  id: '/products_/surveillance',
-  path: '/products/surveillance',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsAccessControlRoute = ProductsAccessControlRouteImport.update({
   id: '/products_/access-control',
@@ -218,8 +249,13 @@ export interface FileRoutesByFullPath {
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
   '/products/access-control': typeof ProductsAccessControlRoute
-  '/products/surveillance': typeof ProductsSurveillanceRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
+  '/services/access-control': typeof ServicesAccessControlRoute
+  '/services/audio-visual': typeof ServicesAudioVisualRoute
+  '/services/building-management': typeof ServicesBuildingManagementRoute
+  '/services/custom-solution': typeof ServicesCustomSolutionRoute
+  '/services/fire-alarm': typeof ServicesFireAlarmRoute
+  '/services/surveillance': typeof ServicesSurveillanceRoute
   '/about/': typeof AboutIndexRoute
   '/sectors/': typeof SectorsIndexRoute
   '/products/access-control/honeywell': typeof ProductsAccessControlHoneywellRoute
@@ -249,8 +285,13 @@ export interface FileRoutesByTo {
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
   '/products/access-control': typeof ProductsAccessControlRoute
-  '/products/surveillance': typeof ProductsSurveillanceRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
+  '/services/access-control': typeof ServicesAccessControlRoute
+  '/services/audio-visual': typeof ServicesAudioVisualRoute
+  '/services/building-management': typeof ServicesBuildingManagementRoute
+  '/services/custom-solution': typeof ServicesCustomSolutionRoute
+  '/services/fire-alarm': typeof ServicesFireAlarmRoute
+  '/services/surveillance': typeof ServicesSurveillanceRoute
   '/about': typeof AboutIndexRoute
   '/sectors': typeof SectorsIndexRoute
   '/products/access-control/honeywell': typeof ProductsAccessControlHoneywellRoute
@@ -282,8 +323,13 @@ export interface FileRoutesById {
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
   '/products_/access-control': typeof ProductsAccessControlRoute
-  '/products_/surveillance': typeof ProductsSurveillanceRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
+  '/services_/access-control': typeof ServicesAccessControlRoute
+  '/services_/audio-visual': typeof ServicesAudioVisualRoute
+  '/services_/building-management': typeof ServicesBuildingManagementRoute
+  '/services_/custom-solution': typeof ServicesCustomSolutionRoute
+  '/services_/fire-alarm': typeof ServicesFireAlarmRoute
+  '/services_/surveillance': typeof ServicesSurveillanceRoute
   '/about/': typeof AboutIndexRoute
   '/sectors/': typeof SectorsIndexRoute
   '/products_/access-control_/honeywell': typeof ProductsAccessControlHoneywellRoute
@@ -316,8 +362,13 @@ export interface FileRouteTypes {
     | '/warranty'
     | '/why-choose'
     | '/products/access-control'
-    | '/products/surveillance'
     | '/sectors/$sectorId'
+    | '/services/access-control'
+    | '/services/audio-visual'
+    | '/services/building-management'
+    | '/services/custom-solution'
+    | '/services/fire-alarm'
+    | '/services/surveillance'
     | '/about/'
     | '/sectors/'
     | '/products/access-control/honeywell'
@@ -347,8 +398,13 @@ export interface FileRouteTypes {
     | '/warranty'
     | '/why-choose'
     | '/products/access-control'
-    | '/products/surveillance'
     | '/sectors/$sectorId'
+    | '/services/access-control'
+    | '/services/audio-visual'
+    | '/services/building-management'
+    | '/services/custom-solution'
+    | '/services/fire-alarm'
+    | '/services/surveillance'
     | '/about'
     | '/sectors'
     | '/products/access-control/honeywell'
@@ -379,8 +435,13 @@ export interface FileRouteTypes {
     | '/warranty'
     | '/why-choose'
     | '/products_/access-control'
-    | '/products_/surveillance'
     | '/sectors/$sectorId'
+    | '/services_/access-control'
+    | '/services_/audio-visual'
+    | '/services_/building-management'
+    | '/services_/custom-solution'
+    | '/services_/fire-alarm'
+    | '/services_/surveillance'
     | '/about/'
     | '/sectors/'
     | '/products_/access-control_/honeywell'
@@ -412,7 +473,12 @@ export interface RootRouteChildren {
   WarrantyRoute: typeof WarrantyRoute
   WhyChooseRoute: typeof WhyChooseRoute
   ProductsAccessControlRoute: typeof ProductsAccessControlRoute
-  ProductsSurveillanceRoute: typeof ProductsSurveillanceRoute
+  ServicesAccessControlRoute: typeof ServicesAccessControlRoute
+  ServicesAudioVisualRoute: typeof ServicesAudioVisualRoute
+  ServicesBuildingManagementRoute: typeof ServicesBuildingManagementRoute
+  ServicesCustomSolutionRoute: typeof ServicesCustomSolutionRoute
+  ServicesFireAlarmRoute: typeof ServicesFireAlarmRoute
+  ServicesSurveillanceRoute: typeof ServicesSurveillanceRoute
   AboutIndexRoute: typeof AboutIndexRoute
   ProductsAccessControlHoneywellRoute: typeof ProductsAccessControlHoneywellRoute
   ProductsAccessControlSaltoRoute: typeof ProductsAccessControlSaltoRoute
@@ -535,19 +601,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services_/surveillance': {
+      id: '/services_/surveillance'
+      path: '/services/surveillance'
+      fullPath: '/services/surveillance'
+      preLoaderRoute: typeof ServicesSurveillanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services_/fire-alarm': {
+      id: '/services_/fire-alarm'
+      path: '/services/fire-alarm'
+      fullPath: '/services/fire-alarm'
+      preLoaderRoute: typeof ServicesFireAlarmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services_/custom-solution': {
+      id: '/services_/custom-solution'
+      path: '/services/custom-solution'
+      fullPath: '/services/custom-solution'
+      preLoaderRoute: typeof ServicesCustomSolutionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services_/building-management': {
+      id: '/services_/building-management'
+      path: '/services/building-management'
+      fullPath: '/services/building-management'
+      preLoaderRoute: typeof ServicesBuildingManagementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services_/audio-visual': {
+      id: '/services_/audio-visual'
+      path: '/services/audio-visual'
+      fullPath: '/services/audio-visual'
+      preLoaderRoute: typeof ServicesAudioVisualRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services_/access-control': {
+      id: '/services_/access-control'
+      path: '/services/access-control'
+      fullPath: '/services/access-control'
+      preLoaderRoute: typeof ServicesAccessControlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sectors/$sectorId': {
       id: '/sectors/$sectorId'
       path: '/$sectorId'
       fullPath: '/sectors/$sectorId'
       preLoaderRoute: typeof SectorsSectorIdRouteImport
       parentRoute: typeof SectorsRoute
-    }
-    '/products_/surveillance': {
-      id: '/products_/surveillance'
-      path: '/products/surveillance'
-      fullPath: '/products/surveillance'
-      preLoaderRoute: typeof ProductsSurveillanceRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/products_/access-control': {
       id: '/products_/access-control'
@@ -671,7 +772,12 @@ const rootRouteChildren: RootRouteChildren = {
   WarrantyRoute: WarrantyRoute,
   WhyChooseRoute: WhyChooseRoute,
   ProductsAccessControlRoute: ProductsAccessControlRoute,
-  ProductsSurveillanceRoute: ProductsSurveillanceRoute,
+  ServicesAccessControlRoute: ServicesAccessControlRoute,
+  ServicesAudioVisualRoute: ServicesAudioVisualRoute,
+  ServicesBuildingManagementRoute: ServicesBuildingManagementRoute,
+  ServicesCustomSolutionRoute: ServicesCustomSolutionRoute,
+  ServicesFireAlarmRoute: ServicesFireAlarmRoute,
+  ServicesSurveillanceRoute: ServicesSurveillanceRoute,
   AboutIndexRoute: AboutIndexRoute,
   ProductsAccessControlHoneywellRoute: ProductsAccessControlHoneywellRoute,
   ProductsAccessControlSaltoRoute: ProductsAccessControlSaltoRoute,

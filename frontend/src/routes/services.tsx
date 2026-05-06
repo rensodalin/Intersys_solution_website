@@ -22,7 +22,7 @@ function ServicesPage() {
   return (
     <div className="bg-[#F8F9FA] min-h-screen font-display pb-16 text-xs">
       {/* Hero Section */}
-      <section className="relative pt-24 pb-32 bg-[#0A0F1A] overflow-hidden">
+      <section className="relative pt-50 pb-32 bg-[#0A0F1A] overflow-hidden">
         <div className="absolute inset-0">
           <img
             src={heroImg}
