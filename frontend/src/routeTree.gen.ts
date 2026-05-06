@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WhyChooseRouteImport } from './routes/why-choose'
 import { Route as WarrantyRouteImport } from './routes/warranty'
 import { Route as TechnicalTipsRouteImport } from './routes/technical-tips'
+import { Route as SupportRouteImport } from './routes/support'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SectorsRouteImport } from './routes/sectors'
 import { Route as RequestQuoteRouteImport } from './routes/request-quote'
@@ -24,6 +25,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SectorsIndexRouteImport } from './routes/sectors.index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as SectorsSectorIdRouteImport } from './routes/sectors.$sectorId'
+import { Route as ProductsSurveillanceRouteImport } from './routes/products_.surveillance'
 import { Route as ProductsAccessControlRouteImport } from './routes/products_.access-control'
 import { Route as ProductsAccessControlSaltoRouteImport } from './routes/products_.access-control_.salto'
 import { Route as ProductsAccessControlHoneywellRouteImport } from './routes/products_.access-control_.honeywell'
@@ -51,6 +53,11 @@ const WarrantyRoute = WarrantyRouteImport.update({
 const TechnicalTipsRoute = TechnicalTipsRouteImport.update({
   id: '/technical-tips',
   path: '/technical-tips',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -112,6 +119,11 @@ const SectorsSectorIdRoute = SectorsSectorIdRouteImport.update({
   id: '/$sectorId',
   path: '/$sectorId',
   getParentRoute: () => SectorsRoute,
+} as any)
+const ProductsSurveillanceRoute = ProductsSurveillanceRouteImport.update({
+  id: '/products_/surveillance',
+  path: '/products/surveillance',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsAccessControlRoute = ProductsAccessControlRouteImport.update({
   id: '/products_/access-control',
@@ -201,10 +213,12 @@ export interface FileRoutesByFullPath {
   '/request-quote': typeof RequestQuoteRoute
   '/sectors': typeof SectorsRouteWithChildren
   '/services': typeof ServicesRoute
+  '/support': typeof SupportRoute
   '/technical-tips': typeof TechnicalTipsRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
   '/products/access-control': typeof ProductsAccessControlRoute
+  '/products/surveillance': typeof ProductsSurveillanceRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/about/': typeof AboutIndexRoute
   '/sectors/': typeof SectorsIndexRoute
@@ -230,10 +244,12 @@ export interface FileRoutesByTo {
   '/projects': typeof ProjectsRoute
   '/request-quote': typeof RequestQuoteRoute
   '/services': typeof ServicesRoute
+  '/support': typeof SupportRoute
   '/technical-tips': typeof TechnicalTipsRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
   '/products/access-control': typeof ProductsAccessControlRoute
+  '/products/surveillance': typeof ProductsSurveillanceRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/about': typeof AboutIndexRoute
   '/sectors': typeof SectorsIndexRoute
@@ -261,10 +277,12 @@ export interface FileRoutesById {
   '/request-quote': typeof RequestQuoteRoute
   '/sectors': typeof SectorsRouteWithChildren
   '/services': typeof ServicesRoute
+  '/support': typeof SupportRoute
   '/technical-tips': typeof TechnicalTipsRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
   '/products_/access-control': typeof ProductsAccessControlRoute
+  '/products_/surveillance': typeof ProductsSurveillanceRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/about/': typeof AboutIndexRoute
   '/sectors/': typeof SectorsIndexRoute
@@ -293,10 +311,12 @@ export interface FileRouteTypes {
     | '/request-quote'
     | '/sectors'
     | '/services'
+    | '/support'
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
     | '/products/access-control'
+    | '/products/surveillance'
     | '/sectors/$sectorId'
     | '/about/'
     | '/sectors/'
@@ -322,10 +342,12 @@ export interface FileRouteTypes {
     | '/projects'
     | '/request-quote'
     | '/services'
+    | '/support'
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
     | '/products/access-control'
+    | '/products/surveillance'
     | '/sectors/$sectorId'
     | '/about'
     | '/sectors'
@@ -352,10 +374,12 @@ export interface FileRouteTypes {
     | '/request-quote'
     | '/sectors'
     | '/services'
+    | '/support'
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
     | '/products_/access-control'
+    | '/products_/surveillance'
     | '/sectors/$sectorId'
     | '/about/'
     | '/sectors/'
@@ -383,10 +407,12 @@ export interface RootRouteChildren {
   RequestQuoteRoute: typeof RequestQuoteRoute
   SectorsRoute: typeof SectorsRouteWithChildren
   ServicesRoute: typeof ServicesRoute
+  SupportRoute: typeof SupportRoute
   TechnicalTipsRoute: typeof TechnicalTipsRoute
   WarrantyRoute: typeof WarrantyRoute
   WhyChooseRoute: typeof WhyChooseRoute
   ProductsAccessControlRoute: typeof ProductsAccessControlRoute
+  ProductsSurveillanceRoute: typeof ProductsSurveillanceRoute
   AboutIndexRoute: typeof AboutIndexRoute
   ProductsAccessControlHoneywellRoute: typeof ProductsAccessControlHoneywellRoute
   ProductsAccessControlSaltoRoute: typeof ProductsAccessControlSaltoRoute
@@ -423,6 +449,13 @@ declare module '@tanstack/react-router' {
       path: '/technical-tips'
       fullPath: '/technical-tips'
       preLoaderRoute: typeof TechnicalTipsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -508,6 +541,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/sectors/$sectorId'
       preLoaderRoute: typeof SectorsSectorIdRouteImport
       parentRoute: typeof SectorsRoute
+    }
+    '/products_/surveillance': {
+      id: '/products_/surveillance'
+      path: '/products/surveillance'
+      fullPath: '/products/surveillance'
+      preLoaderRoute: typeof ProductsSurveillanceRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/products_/access-control': {
       id: '/products_/access-control'
@@ -626,10 +666,12 @@ const rootRouteChildren: RootRouteChildren = {
   RequestQuoteRoute: RequestQuoteRoute,
   SectorsRoute: SectorsRouteWithChildren,
   ServicesRoute: ServicesRoute,
+  SupportRoute: SupportRoute,
   TechnicalTipsRoute: TechnicalTipsRoute,
   WarrantyRoute: WarrantyRoute,
   WhyChooseRoute: WhyChooseRoute,
   ProductsAccessControlRoute: ProductsAccessControlRoute,
+  ProductsSurveillanceRoute: ProductsSurveillanceRoute,
   AboutIndexRoute: AboutIndexRoute,
   ProductsAccessControlHoneywellRoute: ProductsAccessControlHoneywellRoute,
   ProductsAccessControlSaltoRoute: ProductsAccessControlSaltoRoute,

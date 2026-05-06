@@ -72,7 +72,7 @@ const productCategories: ProductCategory[] = [
   {
     title: "Fire Systems",
     desc: "Advanced fire detection and alarm integration ensuring compliance and maximum safety.",
-    image: "https://images.unsplash.com/photo-1712640379137-6d2532f887a7?q=80&w=1170&auto=format&fit=crop",
+    image: "https://upper-amber-dtzqcm8sjt.edgeone.app/ChatGPT%20Image%20May%202,%202026,%2005_19_59%20PM%20(2).png",
     icon: Flame,
     buttonText: "Explore Safety",
     link: "/services"

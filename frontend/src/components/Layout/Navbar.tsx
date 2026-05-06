@@ -44,7 +44,7 @@ const PRODUCTS_DATA: Record<string, { href: string; sub?: string[] | AccessContr
       ],
     }
   },
-  "Surveillance": { href: "/products" },
+  "Surveillance": { href: "/products/surveillance" },
   "Integrated System": {
     href: "/products",
     sub: [
@@ -68,8 +68,17 @@ const CLIENT_CENTER_DATA = [
   { name: "Warranty", href: "/warranty" }
 ];
 const CONTACT_DATA = [
-  { name: "Technical Support / Customer Service", href: "/contact#support" },
+  { name: "Technical Support / Customer Service", href: "/support" },
   { name: "Contact Us", href: "/contact" }
+];
+
+const SERVICES_DATA = [
+  { name: "Building Management", href: "/services#bms" },
+  { name: "Fire Alarm System", href: "/services#fire" },
+  { name: "Access Control System", href: "/products/access-control" },
+  { name: "Surveillance (CCTV)", href: "/products/surveillance" },
+  { name: "Audio Visual (AV) System", href: "/services#av" },
+  { name: "Custom Solution", href: "/services#custom" },
 ];
 
 export function Navbar() {
@@ -78,6 +87,7 @@ export function Navbar() {
   const isLightPage = lightPages.some(path => location.pathname.startsWith(path));
   const [scrolled, setScrolled] = useState(false);
   const [showProducts, setShowProducts] = useState(false);
+  const [showServices, setShowServices] = useState(false);
   const [hoveredL1, setHoveredL1] = useState<string | null>(null);
   const [hoveredL2, setHoveredL2] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -105,6 +115,7 @@ export function Navbar() {
 
   const closeMenus = () => {
     setShowProducts(false);
+    setShowServices(false);
     setHoveredL1(null);
     setHoveredL2(null);
     setActiveSupport(null);
@@ -184,13 +195,34 @@ export function Navbar() {
             About Us
           </Link>
 
-          <Link
-            to="/"
-            hash="solutions"
-            className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center"
+          {/* SERVICES CATEGORY */}
+          <div
+            className="relative h-full flex items-center"
+            onMouseEnter={() => setShowServices(true)}
+            onMouseLeave={closeMenus}
           >
-            Services
-          </Link>
+            <Link
+              to="/services"
+              className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500"
+            >
+              Services
+            </Link>
+
+            {showServices && (
+              <div className="absolute top-full left-0 pt-2 w-64 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
+                {SERVICES_DATA.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    onClick={closeMenus}
+                    className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
 
           {/* PRODUCTS CATEGORY */}
           <div
