@@ -7,7 +7,7 @@ import { honeywellUpgrades } from "@/components/Product/AccessControl/Honeywell/
 import { motion } from "framer-motion";
 import { LifeBuoy, ShieldCheck, RefreshCw } from "lucide-react";
 
-export const Route = createFileRoute("/products_/access-control_/honeywell_/upgrades")({
+export const Route = createFileRoute("/products/access-control/honeywell/upgrades")({
     head: () => ({
         meta: [
             { title: "Honeywell System Agreements & Upgrades — Intersys Solutions" },

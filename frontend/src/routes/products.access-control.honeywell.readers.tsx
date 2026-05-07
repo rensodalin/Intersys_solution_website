@@ -3,44 +3,43 @@ import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { HoneywellHero } from "@/components/Product/AccessControl/Honeywell/HoneywellHero";
 import { HoneywellGrid } from "@/components/Product/AccessControl/Honeywell/HoneywellGrid";
-import { honeywellControlPanels } from "@/components/Product/AccessControl/Honeywell/data";
-import { motion } from "framer-motion";
-import { Cpu, Network, ShieldCheck } from "lucide-react";
+import { honeywellReaders } from "@/components/Product/AccessControl/Honeywell/data";
 
-export const Route = createFileRoute("/products_/access-control_/honeywell_/control-panels")({
+export const Route = createFileRoute("/products/access-control/honeywell/readers")({
     head: () => ({
         meta: [
-            { title: "Honeywell Intelligent Control Panels — Intersys Solutions" },
+            { title: "Honeywell Readers & Keypads — Intersys Solutions" },
             {
                 name: "description",
-                content: "Enterprise-grade intelligent controllers and logic modules for global Pro-Watch and WIN-PAK deployments.",
+                content: "Explore Honeywell's advanced readers and keypads: Biometric, Card, and Keypad solutions.",
             },
         ],
     }),
-    component: HoneywellControlPanelsPage,
+    component: HoneywellReadersPage,
 });
 
-function HoneywellControlPanelsPage() {
+function HoneywellReadersPage() {
     return (
         <div className="bg-white min-h-screen">
             <HoneywellHero
-                title="Control Panels"
-                subtitle="The logic center of your facility. Intelligent IP-based controllers designed for mission-critical security decisions."
+                title="Readers & Keypads"
+                subtitle="High-performance identification. From biometric fingerprint units to multi-protocol card readers."
                 breadcrumbs={[
                     { name: "Home", href: "/" },
                     { name: "Products", href: "/products" },
                     { name: "Access Control", href: "/products/access-control" },
                     { name: "Honeywell", href: "/products/access-control/honeywell" },
-                    { name: "Control Panels", href: "/products/access-control/honeywell/control-panels" },
+                    { name: "Readers & Keypads", href: "/products/access-control/honeywell/readers" },
                 ]}
             />
 
             {/* Product Grid */}
             <section className="py-24 relative z-20">
                 <Container>
-                    <HoneywellGrid products={honeywellControlPanels} />
+                    <HoneywellGrid products={honeywellReaders} />
                 </Container>
             </section>
+
 
 
             <CtaBand />

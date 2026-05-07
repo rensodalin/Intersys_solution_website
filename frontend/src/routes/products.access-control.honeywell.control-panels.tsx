@@ -3,42 +3,42 @@ import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { HoneywellHero } from "@/components/Product/AccessControl/Honeywell/HoneywellHero";
 import { HoneywellGrid } from "@/components/Product/AccessControl/Honeywell/HoneywellGrid";
-import { honeywellControlPanelKits } from "@/components/Product/AccessControl/Honeywell/data";
+import { honeywellControlPanels } from "@/components/Product/AccessControl/Honeywell/data";
 import { motion } from "framer-motion";
-import { Cpu, Zap, ShieldAlert } from "lucide-react";
+import { Cpu, Network, ShieldCheck } from "lucide-react";
 
-export const Route = createFileRoute("/products_/access-control_/honeywell_/control-panel-kits")({
+export const Route = createFileRoute("/products/access-control/honeywell/control-panels")({
     head: () => ({
         meta: [
-            { title: "Honeywell Control Panel Kits — Intersys Solutions" },
+            { title: "Honeywell Intelligent Control Panels — Intersys Solutions" },
             {
                 name: "description",
-                content: "High-intelligence control panels and controller kits for mission-critical facility security.",
+                content: "Enterprise-grade intelligent controllers and logic modules for global Pro-Watch and WIN-PAK deployments.",
             },
         ],
     }),
-    component: HoneywellControlPanelKitsPage,
+    component: HoneywellControlPanelsPage,
 });
 
-function HoneywellControlPanelKitsPage() {
+function HoneywellControlPanelsPage() {
     return (
         <div className="bg-white min-h-screen">
             <HoneywellHero
-                title="Control Panel Kits"
-                subtitle="The brain of your security system. High-intelligence controllers designed for enterprise-scale integration."
+                title="Control Panels"
+                subtitle="The logic center of your facility. Intelligent IP-based controllers designed for mission-critical security decisions."
                 breadcrumbs={[
                     { name: "Home", href: "/" },
                     { name: "Products", href: "/products" },
                     { name: "Access Control", href: "/products/access-control" },
                     { name: "Honeywell", href: "/products/access-control/honeywell" },
-                    { name: "Control Panel Kits", href: "/products/access-control/honeywell/control-panel-kits" },
+                    { name: "Control Panels", href: "/products/access-control/honeywell/control-panels" },
                 ]}
             />
 
             {/* Product Grid */}
             <section className="py-24 relative z-20">
                 <Container>
-                    <HoneywellGrid products={honeywellControlPanelKits} />
+                    <HoneywellGrid products={honeywellControlPanels} />
                 </Container>
             </section>
 

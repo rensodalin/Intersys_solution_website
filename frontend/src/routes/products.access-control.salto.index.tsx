@@ -7,7 +7,7 @@ import { SaltoGrid } from "@/components/Product/AccessControl/Salto/SaltoGrid";
 import { saltoProducts } from "@/components/Product/AccessControl/Salto/data";
 import { ArrowLeft } from "lucide-react";
 
-export const Route = createFileRoute("/products_/access-control_/salto")({
+export const Route = createFileRoute("/products/access-control/salto/")({
     head: () => ({
         meta: [
             { title: "SALTO Access Control Systems — Intersys" },

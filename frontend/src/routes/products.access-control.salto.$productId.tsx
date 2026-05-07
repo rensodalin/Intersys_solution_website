@@ -6,7 +6,7 @@ import { SaltoSubGrid } from "@/components/Product/AccessControl/Salto/SaltoSubG
 import { saltoProducts } from "@/components/Product/AccessControl/Salto/data";
 import { ArrowLeft } from "lucide-react";
 
-export const Route = createFileRoute("/products_/access-control_/salto_/$productId")({
+export const Route = createFileRoute("/products/access-control/salto/$productId")({
   head: (params) => {
     const product = saltoProducts.find((p) => p.id === params.params.productId);
     return {

@@ -229,11 +229,13 @@ export function Navbar() {
             onMouseEnter={() => setShowProducts(true)}
             onMouseLeave={closeMenus}
           >
-            <div
-              className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 cursor-pointer transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center"
+            <Link
+              to="/products"
+              onClick={closeMenus}
+              className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 cursor-pointer transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500"
             >
               Products
-            </div>
+            </Link>
 
             {showProducts && (
               <div className="absolute top-full left-0 pt-2 flex items-start animate-in fade-in slide-in-from-top-2 duration-200">

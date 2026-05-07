@@ -7,7 +7,7 @@ import { honeywellSoftware } from "@/components/Product/AccessControl/Honeywell/
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 
-export const Route = createFileRoute("/products_/access-control_/honeywell_/software")({
+export const Route = createFileRoute("/products/access-control/honeywell/software")({
   head: () => ({
     meta: [
       { title: "Honeywell Security Software — Intersys Solutions" },

@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; 
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { ProductHero } from "@/components/Product/ProductHero";
 
-export const Route = createFileRoute("/products_/access-control")({
+export const Route = createFileRoute("/products/access-control/")({
     head: () => ({
         meta: [
             { title: "Access Control Systems — Intersys Solutions" },

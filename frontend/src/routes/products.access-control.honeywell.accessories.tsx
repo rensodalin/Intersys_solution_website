@@ -3,42 +3,39 @@ import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { HoneywellHero } from "@/components/Product/AccessControl/Honeywell/HoneywellHero";
 import { HoneywellGrid } from "@/components/Product/AccessControl/Honeywell/HoneywellGrid";
-import { honeywellKiosks } from "@/components/Product/AccessControl/Honeywell/data";
-import { motion } from "framer-motion";
-import { Monitor, MousePointer2, UserCheck } from "lucide-react";
+import { honeywellAccessories } from "@/components/Product/AccessControl/Honeywell/data";
 
-export const Route = createFileRoute("/products_/access-control_/honeywell_/lobby-kiosks")({
+export const Route = createFileRoute("/products/access-control/honeywell/accessories")({
   head: () => ({
     meta: [
-      { title: "Honeywell Lobby Kiosks & Touch Screens — Intersys Solutions" },
+      { title: "Honeywell Accessories — Intersys Solutions" },
       {
         name: "description",
-        content: "Professional lobby management hardware and touch-screen call stations for secure visitor processing.",
+        content: "Detailed Honeywell access control accessories: Programmers, Converters, Power Supplies, and more.",
       },
     ],
   }),
-  component: HoneywellLobbyKiosksPage,
+  component: HoneywellAccessoriesPage,
 });
 
-function HoneywellLobbyKiosksPage() {
+function HoneywellAccessoriesPage() {
   return (
     <div className="bg-white min-h-screen">
       <HoneywellHero
-        title="Lobby Kiosks"
-        subtitle="First impressions matter. Specialized touch-screen hardware designed for streamlined visitor management and facility communication."
+        title="Honeywell Accessories"
+        subtitle="Industrial-grade peripherals and support components designed for seamless system integration."
         breadcrumbs={[
           { name: "Home", href: "/" },
           { name: "Products", href: "/products" },
           { name: "Access Control", href: "/products/access-control" },
           { name: "Honeywell", href: "/products/access-control/honeywell" },
-          { name: "Lobby Kiosks", href: "/products/access-control/honeywell/lobby-kiosks" },
+          { name: "Accessories", href: "/products/access-control/honeywell/accessories" },
         ]}
       />
 
-      {/* Product Grid */}
       <section className="py-24 relative z-20">
         <Container>
-          <HoneywellGrid products={honeywellKiosks} />
+          <HoneywellGrid products={honeywellAccessories} />
         </Container>
       </section>
 

@@ -3,11 +3,11 @@ import { Container } from "@/components/Common/Container";
 import logoImg from "@/assets/logo.avif";
 import { Facebook, Mail, Phone, MapPin, Clock, Linkedin } from "lucide-react";
 
-export function Footer() {
+export function Footer({ isCompact }: { isCompact?: boolean }) {
   return (
     <footer className="bg-[#1A3263] text-white border-t border-white/5">
-      <Container className="py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+      <Container className={isCompact ? "py-6" : "py-20"}>
+        <div className={isCompact ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8"}>
           {/* Logo & About */}
           <div>
             <Link to="/" className="inline-block mb-8">

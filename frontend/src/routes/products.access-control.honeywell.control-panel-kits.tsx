@@ -3,39 +3,42 @@ import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { HoneywellHero } from "@/components/Product/AccessControl/Honeywell/HoneywellHero";
 import { HoneywellGrid } from "@/components/Product/AccessControl/Honeywell/HoneywellGrid";
-import { honeywellCredentials } from "@/components/Product/AccessControl/Honeywell/data";
+import { honeywellControlPanelKits } from "@/components/Product/AccessControl/Honeywell/data";
+import { motion } from "framer-motion";
+import { Cpu, Zap, ShieldAlert } from "lucide-react";
 
-export const Route = createFileRoute("/products_/access-control_/honeywell_/credentials")({
+export const Route = createFileRoute("/products/access-control/honeywell/control-panel-kits")({
     head: () => ({
         meta: [
-            { title: "Honeywell Credentials — Intersys Solutions" },
+            { title: "Honeywell Control Panel Kits — Intersys Solutions" },
             {
                 name: "description",
-                content: "Explore Honeywell's advanced credentials: cards, fobs, and mobile IDs for secure entry.",
+                content: "High-intelligence control panels and controller kits for mission-critical facility security.",
             },
         ],
     }),
-    component: HoneywellCredentialsPage,
+    component: HoneywellControlPanelKitsPage,
 });
 
-function HoneywellCredentialsPage() {
+function HoneywellControlPanelKitsPage() {
     return (
         <div className="bg-white min-h-screen">
             <HoneywellHero
-                title="Access Credentials"
-                subtitle="Secure identification solutions. From high-frequency smart cards to specialized modules for management."
+                title="Control Panel Kits"
+                subtitle="The brain of your security system. High-intelligence controllers designed for enterprise-scale integration."
                 breadcrumbs={[
                     { name: "Home", href: "/" },
                     { name: "Products", href: "/products" },
                     { name: "Access Control", href: "/products/access-control" },
                     { name: "Honeywell", href: "/products/access-control/honeywell" },
-                    { name: "Credentials", href: "/products/access-control/honeywell/credentials" },
+                    { name: "Control Panel Kits", href: "/products/access-control/honeywell/control-panel-kits" },
                 ]}
             />
 
+            {/* Product Grid */}
             <section className="py-24 relative z-20">
                 <Container>
-                    <HoneywellGrid products={honeywellCredentials} />
+                    <HoneywellGrid products={honeywellControlPanelKits} />
                 </Container>
             </section>
 

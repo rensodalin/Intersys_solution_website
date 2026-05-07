@@ -7,7 +7,7 @@ import { honeywellDoorHardware } from "@/components/Product/AccessControl/Honeyw
 import { motion } from "framer-motion";
 import { Lock, DoorOpen, ShieldCheck } from "lucide-react";
 
-export const Route = createFileRoute("/products_/access-control_/honeywell_/door-hardware")({
+export const Route = createFileRoute("/products/access-control/honeywell/door-hardware")({
     head: () => ({
         meta: [
             { title: "Honeywell Door Hardware & Locking — Intersys Solutions" },

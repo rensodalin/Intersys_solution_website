@@ -5,7 +5,7 @@ import { HoneywellHero } from "@/components/Product/AccessControl/Honeywell/Hone
 import { HoneywellGrid } from "@/components/Product/AccessControl/Honeywell/HoneywellGrid";
 import { honeywellMainProducts } from "@/components/Product/AccessControl/Honeywell/data";
 
-export const Route = createFileRoute("/products_/access-control_/honeywell")({
+export const Route = createFileRoute("/products/access-control/honeywell/")({
     head: () => ({
         meta: [
             { title: "Honeywell Access Control Systems — Intersys" },

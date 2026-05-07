@@ -27,27 +27,22 @@ export function ProductHero({
     ],
 }: ProductHeroProps) {
     return (
-        <section className="bg-[#F8F9FA] pt-50 pb-16 border-b border-gray-200/50">
+        <section className="bg-[#F8F9FA] pt-45 pb-8 border-b border-gray-200/50">
             <Container>
-                <div className="max-w-4xl">
+                <div className="max-w-3xl">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        {/* Page Title */}
-                        <h1 className="text-2xl md:text-3xl font-black text-[#1A3263] mb-4 tracking-tight">
-                            {title}
-                        </h1>
-
                         {/* Breadcrumbs */}
-                        <nav className="flex items-center gap-2 mb-8 flex-wrap">
+                        <nav className="flex items-center gap-1.5 mb-3 flex-wrap">
                             {breadcrumbs.map((item, index) => (
-                                <div key={item.name} className="flex items-center gap-2">
+                                <div key={item.name} className="flex items-center gap-1.5">
                                     <Link
                                         to={item.href}
                                         className={cn(
-                                            "text-[13px] font-medium transition-colors",
+                                            "text-[10px] font-bold uppercase tracking-wider transition-colors",
                                             index === breadcrumbs.length - 1
                                                 ? "text-gray-900 cursor-default"
                                                 : "text-gray-400 hover:text-[#C3110C]"
@@ -56,15 +51,20 @@ export function ProductHero({
                                         {item.name}
                                     </Link>
                                     {index < breadcrumbs.length - 1 && (
-                                        <span className="text-gray-300 text-xs">/</span>
+                                        <span className="text-gray-300 text-[10px]">/</span>
                                     )}
                                 </div>
                             ))}
                         </nav>
 
+                        {/* Page Title */}
+                        <h1 className="text-2xl md:text-3xl font-black text-[#1A3263] mb-2 tracking-tight">
+                            {title}
+                        </h1>
+
                         {/* Description */}
                         {subtitle && (
-                            <p className="text-gray-500 text-base md:text-md max-w-2xl leading-relaxed font-normal">
+                            <p className="text-gray-500 text-xs md:text-sm max-w-2xl leading-relaxed font-normal">
                                 {subtitle}
                             </p>
                         )}

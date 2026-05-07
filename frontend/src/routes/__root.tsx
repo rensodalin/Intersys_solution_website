@@ -1,4 +1,4 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { Outlet, Link, createRootRoute, HeadContent, Scripts, useLocation } from "@tanstack/react-router";
 import { Navbar } from "@/components/Layout/Navbar";
 import { Footer } from "@/components/Layout/Footer";
 import { ScrollControls } from "@/components/Common/ScrollControls";
@@ -76,6 +76,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const location = useLocation();
+  const isProductsPage = location.pathname.startsWith("/products");
+
   return (
     <>
       <Navbar />
@@ -83,8 +86,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <ScrollControls />
-      <FloatingChat />
-      <Footer />
+      {!isProductsPage && <Footer />}
     </>
   );
 }
