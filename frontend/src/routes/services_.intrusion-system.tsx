@@ -36,7 +36,7 @@ function IntrusionSystemPage() {
                 {/* ─── BACK BUTTON ─── */}
                 <button
                     onClick={() => router.history.back()}
-                    className="absolute top-50 left-23 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group"
+                    className="absolute top-50 left-23 z-20 flex items-center gap-2 text-black hover:text-black/60 transition-colors duration-200 group"
                 >
                     <ArrowLeft
                         size={18}

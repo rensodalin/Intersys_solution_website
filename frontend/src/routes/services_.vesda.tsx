@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
@@ -9,7 +9,8 @@ import {
     ShieldAlert,
     Activity,
     EyeOff,
-    ArrowRight
+    ArrowRight,
+    ArrowLeft
 } from "lucide-react";
 
 export const Route = createFileRoute("/services_/vesda")({
@@ -17,6 +18,7 @@ export const Route = createFileRoute("/services_/vesda")({
 });
 
 function VesdaPage() {
+    const router = useRouter();
     return (
         <div className="bg-white overflow-hidden scroll-smooth">
 
@@ -30,6 +32,18 @@ function VesdaPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
                 </div>
+
+                {/* ─── BACK BUTTON ─── */}
+                <button
+                    onClick={() => router.history.back()}
+                    className="absolute top-45 left-23 z-20 flex items-center gap-2 text-white hover:text-white/60 transition-colors duration-200 group"
+                >
+                    <ArrowLeft
+                        size={18}
+                        className="group-hover:-translate-x-1 transition-transform duration-200"
+                    />
+                    <span className="text-sm font-medium">Back</span>
+                </button>
 
                 <Container className="relative z-10 text-white">
                     <motion.div

@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
-import { Zap, Globe, Cpu, CheckCircle2 } from "lucide-react";
+import { Zap, Globe, Cpu, CheckCircle2, ArrowLeft } from "lucide-react";
 
 export const Route = createFileRoute("/services_/surveillance")({
     head: () => ({
@@ -19,6 +19,7 @@ export const Route = createFileRoute("/services_/surveillance")({
 });
 
 function SurveillancePage() {
+    const router = useRouter();
     return (
         <div className="bg-white overflow-hidden">
 
@@ -32,6 +33,18 @@ function SurveillancePage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
                 </div>
+
+                {/* ─── BACK BUTTON ─── */}
+                <button
+                    onClick={() => router.history.back()}
+                    className="absolute top-50 left-23 z-20 flex items-center gap-2 text-black hover:text-black/60 transition-colors duration-200 group"
+                >
+                    <ArrowLeft
+                        size={18}
+                        className="group-hover:-translate-x-1 transition-transform duration-200"
+                    />
+                    <span className="text-sm font-medium">Back</span>
+                </button>
 
                 <Container className="relative z-10">
                     <motion.div

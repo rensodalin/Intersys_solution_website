@@ -130,6 +130,22 @@ function PublicAddressPage() {
                     </div>
                 </Container>
             </section>
+            {/* Final CTA */}
+            <section className="py-32 bg-white text-center">
+                <Container>
+                    <div className="max-w-2xl mx-auto space-y-8">
+                        <div className="w-16 h-1 bg-red-600 mx-auto" />
+                        <h2 className="text-4xl font-bold text-[#1A3263]">Ready to secure your assets?</h2>
+                        <p className="text-gray-500">Contact our engineering team for a comprehensive site assessment and customized leak detection strategy.</p>
+                        <button
+                            onClick={() => router.navigate({ to: "/contact" })}
+                            className="px-12 py-4 bg-[#0A0F1A] text-white rounded-full font-bold hover:bg-red-600 transition-all duration-300 shadow-xl hover:shadow-red-500/20"
+                        >
+                            Consult an Expert
+                        </button>
+                    </div>
+                </Container>
+            </section>
 
         </div>
     );

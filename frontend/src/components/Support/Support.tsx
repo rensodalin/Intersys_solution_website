@@ -76,7 +76,7 @@ function SupportSection({
 
                     <a
                       href={`mailto:${member.email}`}
-                      className="text-sm text-gray-500 hover:text-blue-600 transition"
+                      className="text-sm text-blue-500 hover:text-red-600 transition"
                     >
                       {member.email}
                     </a>

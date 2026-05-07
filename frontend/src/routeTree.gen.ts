@@ -26,7 +26,9 @@ import { Route as SectorsIndexRouteImport } from './routes/sectors.index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as ServicesVesdaRouteImport } from './routes/services_.vesda'
 import { Route as ServicesSurveillanceRouteImport } from './routes/services_.surveillance'
+import { Route as ServicesRoomControlRouteImport } from './routes/services_.room-control'
 import { Route as ServicesPublicAddressRouteImport } from './routes/services_.public-address'
+import { Route as ServicesLeakDetectionRouteImport } from './routes/services_.leak-detection'
 import { Route as ServicesIntrusionSystemRouteImport } from './routes/services_.intrusion-system'
 import { Route as ServicesFireAlarmRouteImport } from './routes/services_.fire-alarm'
 import { Route as ServicesCustomSolutionRouteImport } from './routes/services_.custom-solution'
@@ -134,9 +136,19 @@ const ServicesSurveillanceRoute = ServicesSurveillanceRouteImport.update({
   path: '/services/surveillance',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesRoomControlRoute = ServicesRoomControlRouteImport.update({
+  id: '/services_/room-control',
+  path: '/services/room-control',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesPublicAddressRoute = ServicesPublicAddressRouteImport.update({
   id: '/services_/public-address',
   path: '/services/public-address',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesLeakDetectionRoute = ServicesLeakDetectionRouteImport.update({
+  id: '/services_/leak-detection',
+  path: '/services/leak-detection',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesIntrusionSystemRoute = ServicesIntrusionSystemRouteImport.update({
@@ -281,7 +293,9 @@ export interface FileRoutesByFullPath {
   '/services/custom-solution': typeof ServicesCustomSolutionRoute
   '/services/fire-alarm': typeof ServicesFireAlarmRoute
   '/services/intrusion-system': typeof ServicesIntrusionSystemRoute
+  '/services/leak-detection': typeof ServicesLeakDetectionRoute
   '/services/public-address': typeof ServicesPublicAddressRoute
+  '/services/room-control': typeof ServicesRoomControlRoute
   '/services/surveillance': typeof ServicesSurveillanceRoute
   '/services/vesda': typeof ServicesVesdaRoute
   '/about/': typeof AboutIndexRoute
@@ -321,7 +335,9 @@ export interface FileRoutesByTo {
   '/services/custom-solution': typeof ServicesCustomSolutionRoute
   '/services/fire-alarm': typeof ServicesFireAlarmRoute
   '/services/intrusion-system': typeof ServicesIntrusionSystemRoute
+  '/services/leak-detection': typeof ServicesLeakDetectionRoute
   '/services/public-address': typeof ServicesPublicAddressRoute
+  '/services/room-control': typeof ServicesRoomControlRoute
   '/services/surveillance': typeof ServicesSurveillanceRoute
   '/services/vesda': typeof ServicesVesdaRoute
   '/about': typeof AboutIndexRoute
@@ -363,7 +379,9 @@ export interface FileRoutesById {
   '/services_/custom-solution': typeof ServicesCustomSolutionRoute
   '/services_/fire-alarm': typeof ServicesFireAlarmRoute
   '/services_/intrusion-system': typeof ServicesIntrusionSystemRoute
+  '/services_/leak-detection': typeof ServicesLeakDetectionRoute
   '/services_/public-address': typeof ServicesPublicAddressRoute
+  '/services_/room-control': typeof ServicesRoomControlRoute
   '/services_/surveillance': typeof ServicesSurveillanceRoute
   '/services_/vesda': typeof ServicesVesdaRoute
   '/about/': typeof AboutIndexRoute
@@ -406,7 +424,9 @@ export interface FileRouteTypes {
     | '/services/custom-solution'
     | '/services/fire-alarm'
     | '/services/intrusion-system'
+    | '/services/leak-detection'
     | '/services/public-address'
+    | '/services/room-control'
     | '/services/surveillance'
     | '/services/vesda'
     | '/about/'
@@ -446,7 +466,9 @@ export interface FileRouteTypes {
     | '/services/custom-solution'
     | '/services/fire-alarm'
     | '/services/intrusion-system'
+    | '/services/leak-detection'
     | '/services/public-address'
+    | '/services/room-control'
     | '/services/surveillance'
     | '/services/vesda'
     | '/about'
@@ -487,7 +509,9 @@ export interface FileRouteTypes {
     | '/services_/custom-solution'
     | '/services_/fire-alarm'
     | '/services_/intrusion-system'
+    | '/services_/leak-detection'
     | '/services_/public-address'
+    | '/services_/room-control'
     | '/services_/surveillance'
     | '/services_/vesda'
     | '/about/'
@@ -528,7 +552,9 @@ export interface RootRouteChildren {
   ServicesCustomSolutionRoute: typeof ServicesCustomSolutionRoute
   ServicesFireAlarmRoute: typeof ServicesFireAlarmRoute
   ServicesIntrusionSystemRoute: typeof ServicesIntrusionSystemRoute
+  ServicesLeakDetectionRoute: typeof ServicesLeakDetectionRoute
   ServicesPublicAddressRoute: typeof ServicesPublicAddressRoute
+  ServicesRoomControlRoute: typeof ServicesRoomControlRoute
   ServicesSurveillanceRoute: typeof ServicesSurveillanceRoute
   ServicesVesdaRoute: typeof ServicesVesdaRoute
   AboutIndexRoute: typeof AboutIndexRoute
@@ -667,11 +693,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesSurveillanceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services_/room-control': {
+      id: '/services_/room-control'
+      path: '/services/room-control'
+      fullPath: '/services/room-control'
+      preLoaderRoute: typeof ServicesRoomControlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services_/public-address': {
       id: '/services_/public-address'
       path: '/services/public-address'
       fullPath: '/services/public-address'
       preLoaderRoute: typeof ServicesPublicAddressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services_/leak-detection': {
+      id: '/services_/leak-detection'
+      path: '/services/leak-detection'
+      fullPath: '/services/leak-detection'
+      preLoaderRoute: typeof ServicesLeakDetectionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services_/intrusion-system': {
@@ -859,7 +899,9 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesCustomSolutionRoute: ServicesCustomSolutionRoute,
   ServicesFireAlarmRoute: ServicesFireAlarmRoute,
   ServicesIntrusionSystemRoute: ServicesIntrusionSystemRoute,
+  ServicesLeakDetectionRoute: ServicesLeakDetectionRoute,
   ServicesPublicAddressRoute: ServicesPublicAddressRoute,
+  ServicesRoomControlRoute: ServicesRoomControlRoute,
   ServicesSurveillanceRoute: ServicesSurveillanceRoute,
   ServicesVesdaRoute: ServicesVesdaRoute,
   AboutIndexRoute: AboutIndexRoute,

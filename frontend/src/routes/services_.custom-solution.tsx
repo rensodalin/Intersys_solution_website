@@ -161,19 +161,21 @@ function CustomSolutionPage() {
                                 title: "Room Control Unit",
                                 desc: "Intelligent in-room control for lighting, HVAC, and access in hospitality and commercial environments.",
                                 icon: LayoutGrid,
-                                img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=800"
+                                img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=800",
+                                href: "/services/room-control"
                             },
                             {
                                 title: "Leak Detection System",
                                 desc: "Early detection and alert systems to prevent costly damage and operational downtime from unforeseen leaks.",
                                 icon: Droplets,
-                                img: "https://images.unsplash.com/photo-1581094288338-2314dddb7ec3?auto=format&fit=crop&q=80&w=800"
+                                img: "https://www.airbestpractices.com/sites/default/files/Figure%201_18_0.jpg",
+                                href: "/services/leak-detection"
                             },
                             {
                                 title: "VESDA Systems",
                                 desc: "Highly sensitive smoke detection technology for mission-critical environments where early warning is essential.",
                                 icon: Flame,
-                                img: "https://images.unsplash.com/photo-1585314062340-f1a5ad59b3f1?auto=format&fit=crop&q=80&w=800",
+                                img: "https://www.suppressionsystems.com/wp-content/uploads/sites/4/2021/04/VESDA-Family-1000x720-1.jpg",
                                 href: "/services/vesda"
                             }
                         ].map((eco, i) => (
