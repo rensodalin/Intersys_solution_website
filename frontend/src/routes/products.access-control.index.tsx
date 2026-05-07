@@ -76,50 +76,57 @@ function AccessControlPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 flex flex-col hover:shadow-xl transition-all duration-500"
                             >
-                                {/* Logo */}
-                                <div className="h-12 mb-6 flex items-center">
-                                    <img
-                                        src={brand.logo}
-                                        alt={brand.name}
-                                        className="h-full object-contain"
-                                    />
-                                </div>
-
-                                {/* Title */}
-                                <h3 className="text-xl md:text-2xl font-bold text-[#1A3263] mb-3">
-                                    {brand.name} Integration
-                                </h3>
-
-                                {/* Description */}
-                                <p className="text-gray-500 text-sm md:text-base leading-relaxed mb-6 flex-grow">
-                                    {brand.desc}
-                                </p>
-
-                                {/* Features */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                                    {brand.features.map((feat) => (
-                                        <div
-                                            key={feat}
-                                            className="flex items-center gap-2 text-sm text-[#1A3263] font-medium"
-                                        >
-                                            <CheckCircle2 className="w-4 h-4 text-[#9B0F06]" />
-                                            {feat}
-                                        </div>
-                                    ))}
-                                </div>
-
-                                {/* Button */}
                                 <Link
                                     to={
                                         brand.name === "Honeywell"
                                             ? "/products/access-control/honeywell"
                                             : "/products/access-control/salto"
                                     }
-                                    className="inline-flex items-center justify-center py-3 px-6 bg-[#1A3263] text-white font-bold text-xs uppercase tracking-widest rounded-lg hover:bg-[#9B0F06] transition-all self-start"
+                                    className="group relative bg-white rounded-2xl p-8 lg:p-10 shadow-sm border border-gray-100 flex flex-col hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:border-[#1A3263]/20 transition-all duration-500 h-full overflow-hidden"
                                 >
-                                    View More <ArrowRight className="ml-2 w-4 h-4" />
+                                    {/* Hover background gradient */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+
+                                    {/* Logo */}
+                                    <div className="h-14 mb-8 flex items-center justify-start opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                                        <img
+                                            src={brand.logo}
+                                            alt={brand.name}
+                                            className="h-full object-contain mix-blend-multiply"
+                                        />
+                                    </div>
+
+                                    {/* Title */}
+                                    <h3 className="text-2xl md:text-3xl font-bold text-[#1A3263] mb-4 tracking-tight group-hover:text-[#FC3B1F] transition-colors duration-300">
+                                        {brand.name} Integration
+                                    </h3>
+
+                                    {/* Description */}
+                                    <p className="text-gray-500 text-[15px] leading-relaxed mb-8 flex-grow pr-4">
+                                        {brand.desc}
+                                    </p>
+
+                                    {/* Features */}
+                                    <div className="grid grid-cols-1 gap-3 mb-10">
+                                        {brand.features.map((feat) => (
+                                            <div
+                                                key={feat}
+                                                className="flex items-center gap-3 text-[14px] text-gray-700 font-medium group-hover:text-[#1A3263] transition-colors duration-300"
+                                            >
+                                                <div className="w-5 h-5 rounded-full bg-[#FC3B1F]/10 flex items-center justify-center shrink-0 group-hover:bg-[#FC3B1F] group-hover:text-white transition-colors duration-300">
+                                                    <CheckCircle2 className="w-3.5 h-3.5 text-[#FC3B1F] group-hover:text-white transition-colors duration-300" />
+                                                </div>
+                                                {feat}
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Button */}
+                                    <div className="mt-auto flex items-center text-[#1A3263] font-bold text-sm tracking-wide uppercase group-hover:text-[#FC3B1F] transition-colors duration-300">
+                                        Explore Solutions 
+                                        <ArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300" />
+                                    </div>
                                 </Link>
                             </motion.div>
                         ))}
