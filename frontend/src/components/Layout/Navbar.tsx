@@ -83,7 +83,7 @@ const SERVICES_DATA = [
 
 export function Navbar() {
   const location = useLocation();
-  const lightPages = ["/products", "/document-center", "/request-quote", "/technical-tips", "/warranty"];
+  const lightPages = ["/products", "/document-center", "/request-quote", "/technical-tips", "/warranty", "/services/public-address"];
   const isLightPage = lightPages.some(path => location.pathname.startsWith(path));
   const [scrolled, setScrolled] = useState(false);
   const [showProducts, setShowProducts] = useState(false);

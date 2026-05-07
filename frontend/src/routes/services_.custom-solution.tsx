@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import {
@@ -140,19 +140,22 @@ function CustomSolutionPage() {
                                 title: "Intrusion Alarm Systems",
                                 desc: "Protect your property with advanced motion sensors, door/window contacts, and integrated alarm notifications.",
                                 icon: Bell,
-                                img: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=800"
+                                img: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=800",
+                                href: "/services/intrusion-system"
                             },
                             {
                                 title: "Car Parking Systems",
                                 desc: "Streamlined vehicle access control, automated payment solutions, and real-time occupancy monitoring for seamless management.",
                                 icon: Car,
-                                img: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&q=80&w=800"
+                                img: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&q=80&w=800",
+                                href: "/services/car-parking"
                             },
                             {
                                 title: "Public Address Systems",
                                 desc: "Reliable audio solutions for announcements, background music, and emergency broadcasts across large facilities.",
                                 icon: Volume2,
-                                img: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=800"
+                                img: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=800",
+                                href: "/services/public-address"
                             },
                             {
                                 title: "Room Control Unit",
@@ -170,7 +173,8 @@ function CustomSolutionPage() {
                                 title: "VESDA Systems",
                                 desc: "Highly sensitive smoke detection technology for mission-critical environments where early warning is essential.",
                                 icon: Flame,
-                                img: "https://images.unsplash.com/photo-1585314062340-f1a5ad59b3f1?auto=format&fit=crop&q=80&w=800"
+                                img: "https://images.unsplash.com/photo-1585314062340-f1a5ad59b3f1?auto=format&fit=crop&q=80&w=800",
+                                href: "/services/vesda"
                             }
                         ].map((eco, i) => (
                             <div
@@ -197,9 +201,9 @@ function CustomSolutionPage() {
                                         {eco.desc}
                                     </p>
 
-                                    <button className="mt-6 w-full py-3 bg-[#1A3263] text-white text-xs font-bold tracking-widest rounded-lg hover:bg-red-600 transition">
-                                        Start Now
-                                    </button>
+                                    <Link to={eco.href || "#"} className="mt-6 w-full py-3 bg-[#1A3263] text-white text-xs tracking-widest rounded-lg hover:bg-red-600 transition flex items-center justify-center">
+                                        Explore Now
+                                    </Link>
                                 </div>
                             </div>
                         ))}

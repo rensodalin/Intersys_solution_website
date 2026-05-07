@@ -24,9 +24,13 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SectorsIndexRouteImport } from './routes/sectors.index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
+import { Route as ServicesVesdaRouteImport } from './routes/services_.vesda'
 import { Route as ServicesSurveillanceRouteImport } from './routes/services_.surveillance'
+import { Route as ServicesPublicAddressRouteImport } from './routes/services_.public-address'
+import { Route as ServicesIntrusionSystemRouteImport } from './routes/services_.intrusion-system'
 import { Route as ServicesFireAlarmRouteImport } from './routes/services_.fire-alarm'
 import { Route as ServicesCustomSolutionRouteImport } from './routes/services_.custom-solution'
+import { Route as ServicesCarParkingRouteImport } from './routes/services_.car-parking'
 import { Route as ServicesBuildingManagementRouteImport } from './routes/services_.building-management'
 import { Route as ServicesAudioVisualRouteImport } from './routes/services_.audio-visual'
 import { Route as ServicesAccessControlRouteImport } from './routes/services_.access-control'
@@ -120,9 +124,24 @@ const AboutIndexRoute = AboutIndexRouteImport.update({
   path: '/about/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesVesdaRoute = ServicesVesdaRouteImport.update({
+  id: '/services_/vesda',
+  path: '/services/vesda',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesSurveillanceRoute = ServicesSurveillanceRouteImport.update({
   id: '/services_/surveillance',
   path: '/services/surveillance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesPublicAddressRoute = ServicesPublicAddressRouteImport.update({
+  id: '/services_/public-address',
+  path: '/services/public-address',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesIntrusionSystemRoute = ServicesIntrusionSystemRouteImport.update({
+  id: '/services_/intrusion-system',
+  path: '/services/intrusion-system',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesFireAlarmRoute = ServicesFireAlarmRouteImport.update({
@@ -133,6 +152,11 @@ const ServicesFireAlarmRoute = ServicesFireAlarmRouteImport.update({
 const ServicesCustomSolutionRoute = ServicesCustomSolutionRouteImport.update({
   id: '/services_/custom-solution',
   path: '/services/custom-solution',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesCarParkingRoute = ServicesCarParkingRouteImport.update({
+  id: '/services_/car-parking',
+  path: '/services/car-parking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesBuildingManagementRoute =
@@ -253,9 +277,13 @@ export interface FileRoutesByFullPath {
   '/services/access-control': typeof ServicesAccessControlRoute
   '/services/audio-visual': typeof ServicesAudioVisualRoute
   '/services/building-management': typeof ServicesBuildingManagementRoute
+  '/services/car-parking': typeof ServicesCarParkingRoute
   '/services/custom-solution': typeof ServicesCustomSolutionRoute
   '/services/fire-alarm': typeof ServicesFireAlarmRoute
+  '/services/intrusion-system': typeof ServicesIntrusionSystemRoute
+  '/services/public-address': typeof ServicesPublicAddressRoute
   '/services/surveillance': typeof ServicesSurveillanceRoute
+  '/services/vesda': typeof ServicesVesdaRoute
   '/about/': typeof AboutIndexRoute
   '/sectors/': typeof SectorsIndexRoute
   '/products/access-control/honeywell': typeof ProductsAccessControlHoneywellRoute
@@ -289,9 +317,13 @@ export interface FileRoutesByTo {
   '/services/access-control': typeof ServicesAccessControlRoute
   '/services/audio-visual': typeof ServicesAudioVisualRoute
   '/services/building-management': typeof ServicesBuildingManagementRoute
+  '/services/car-parking': typeof ServicesCarParkingRoute
   '/services/custom-solution': typeof ServicesCustomSolutionRoute
   '/services/fire-alarm': typeof ServicesFireAlarmRoute
+  '/services/intrusion-system': typeof ServicesIntrusionSystemRoute
+  '/services/public-address': typeof ServicesPublicAddressRoute
   '/services/surveillance': typeof ServicesSurveillanceRoute
+  '/services/vesda': typeof ServicesVesdaRoute
   '/about': typeof AboutIndexRoute
   '/sectors': typeof SectorsIndexRoute
   '/products/access-control/honeywell': typeof ProductsAccessControlHoneywellRoute
@@ -327,9 +359,13 @@ export interface FileRoutesById {
   '/services_/access-control': typeof ServicesAccessControlRoute
   '/services_/audio-visual': typeof ServicesAudioVisualRoute
   '/services_/building-management': typeof ServicesBuildingManagementRoute
+  '/services_/car-parking': typeof ServicesCarParkingRoute
   '/services_/custom-solution': typeof ServicesCustomSolutionRoute
   '/services_/fire-alarm': typeof ServicesFireAlarmRoute
+  '/services_/intrusion-system': typeof ServicesIntrusionSystemRoute
+  '/services_/public-address': typeof ServicesPublicAddressRoute
   '/services_/surveillance': typeof ServicesSurveillanceRoute
+  '/services_/vesda': typeof ServicesVesdaRoute
   '/about/': typeof AboutIndexRoute
   '/sectors/': typeof SectorsIndexRoute
   '/products_/access-control_/honeywell': typeof ProductsAccessControlHoneywellRoute
@@ -366,9 +402,13 @@ export interface FileRouteTypes {
     | '/services/access-control'
     | '/services/audio-visual'
     | '/services/building-management'
+    | '/services/car-parking'
     | '/services/custom-solution'
     | '/services/fire-alarm'
+    | '/services/intrusion-system'
+    | '/services/public-address'
     | '/services/surveillance'
+    | '/services/vesda'
     | '/about/'
     | '/sectors/'
     | '/products/access-control/honeywell'
@@ -402,9 +442,13 @@ export interface FileRouteTypes {
     | '/services/access-control'
     | '/services/audio-visual'
     | '/services/building-management'
+    | '/services/car-parking'
     | '/services/custom-solution'
     | '/services/fire-alarm'
+    | '/services/intrusion-system'
+    | '/services/public-address'
     | '/services/surveillance'
+    | '/services/vesda'
     | '/about'
     | '/sectors'
     | '/products/access-control/honeywell'
@@ -439,9 +483,13 @@ export interface FileRouteTypes {
     | '/services_/access-control'
     | '/services_/audio-visual'
     | '/services_/building-management'
+    | '/services_/car-parking'
     | '/services_/custom-solution'
     | '/services_/fire-alarm'
+    | '/services_/intrusion-system'
+    | '/services_/public-address'
     | '/services_/surveillance'
+    | '/services_/vesda'
     | '/about/'
     | '/sectors/'
     | '/products_/access-control_/honeywell'
@@ -476,9 +524,13 @@ export interface RootRouteChildren {
   ServicesAccessControlRoute: typeof ServicesAccessControlRoute
   ServicesAudioVisualRoute: typeof ServicesAudioVisualRoute
   ServicesBuildingManagementRoute: typeof ServicesBuildingManagementRoute
+  ServicesCarParkingRoute: typeof ServicesCarParkingRoute
   ServicesCustomSolutionRoute: typeof ServicesCustomSolutionRoute
   ServicesFireAlarmRoute: typeof ServicesFireAlarmRoute
+  ServicesIntrusionSystemRoute: typeof ServicesIntrusionSystemRoute
+  ServicesPublicAddressRoute: typeof ServicesPublicAddressRoute
   ServicesSurveillanceRoute: typeof ServicesSurveillanceRoute
+  ServicesVesdaRoute: typeof ServicesVesdaRoute
   AboutIndexRoute: typeof AboutIndexRoute
   ProductsAccessControlHoneywellRoute: typeof ProductsAccessControlHoneywellRoute
   ProductsAccessControlSaltoRoute: typeof ProductsAccessControlSaltoRoute
@@ -601,11 +653,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services_/vesda': {
+      id: '/services_/vesda'
+      path: '/services/vesda'
+      fullPath: '/services/vesda'
+      preLoaderRoute: typeof ServicesVesdaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services_/surveillance': {
       id: '/services_/surveillance'
       path: '/services/surveillance'
       fullPath: '/services/surveillance'
       preLoaderRoute: typeof ServicesSurveillanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services_/public-address': {
+      id: '/services_/public-address'
+      path: '/services/public-address'
+      fullPath: '/services/public-address'
+      preLoaderRoute: typeof ServicesPublicAddressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services_/intrusion-system': {
+      id: '/services_/intrusion-system'
+      path: '/services/intrusion-system'
+      fullPath: '/services/intrusion-system'
+      preLoaderRoute: typeof ServicesIntrusionSystemRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services_/fire-alarm': {
@@ -620,6 +693,13 @@ declare module '@tanstack/react-router' {
       path: '/services/custom-solution'
       fullPath: '/services/custom-solution'
       preLoaderRoute: typeof ServicesCustomSolutionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services_/car-parking': {
+      id: '/services_/car-parking'
+      path: '/services/car-parking'
+      fullPath: '/services/car-parking'
+      preLoaderRoute: typeof ServicesCarParkingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services_/building-management': {
@@ -775,9 +855,13 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesAccessControlRoute: ServicesAccessControlRoute,
   ServicesAudioVisualRoute: ServicesAudioVisualRoute,
   ServicesBuildingManagementRoute: ServicesBuildingManagementRoute,
+  ServicesCarParkingRoute: ServicesCarParkingRoute,
   ServicesCustomSolutionRoute: ServicesCustomSolutionRoute,
   ServicesFireAlarmRoute: ServicesFireAlarmRoute,
+  ServicesIntrusionSystemRoute: ServicesIntrusionSystemRoute,
+  ServicesPublicAddressRoute: ServicesPublicAddressRoute,
   ServicesSurveillanceRoute: ServicesSurveillanceRoute,
+  ServicesVesdaRoute: ServicesVesdaRoute,
   AboutIndexRoute: AboutIndexRoute,
   ProductsAccessControlHoneywellRoute: ProductsAccessControlHoneywellRoute,
   ProductsAccessControlSaltoRoute: ProductsAccessControlSaltoRoute,
