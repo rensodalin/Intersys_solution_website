@@ -16,7 +16,8 @@ import {
     Menu,
     X,
     PanelLeftClose,
-    PanelLeftOpen
+    PanelLeftOpen,
+    Search
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoImg from "@/assets/logo.avif";
@@ -61,12 +62,22 @@ const NAVIGATION_DATA = [
     { id: "fire-systems", label: "Fire Systems", icon: Flame, link: "/services" },
 ];
 
-// Navbar height — adjust to match your actual navbar
-const NAVBAR_HEIGHT = 72;
 
 export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSidebarProps) {
     const location = useLocation();
     const navigate = useNavigate();
+
+    // Track scroll to match Navbar's dynamic height
+    const [scrolled, setScrolled] = useState(false);
+
+    React.useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 20);
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+
+    const NAVBAR_HEIGHT = scrolled ? 112 : 144;
 
     // Auto-detect active category from URL
     const activeCategory = propActiveCategory || (
@@ -81,6 +92,7 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
     const [expandedSections, setExpandedSections] = useState<string[]>(activeCategory ? [activeCategory] : []);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const [isDesktopOpen, setIsDesktopOpen] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const toggleSection = (id: string) => {
         setExpandedSections(prev =>
@@ -88,18 +100,47 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
         );
     };
 
-    const SidebarContent = () => (
+    const activeNav = NAVIGATION_DATA.find(n => n.id === activeCategory);
+    const headerTitle = activeNav ? `Products / ${activeNav.label}` : "Products";
+
+    const filterNavData = (data: any[], query: string): any[] => {
+        if (!query) return data;
+        const lowerQuery = query.toLowerCase();
+
+        return data.reduce((acc, item) => {
+            const label = typeof item === 'string' ? item : item.label;
+            const matches = label.toLowerCase().includes(lowerQuery);
+            const sub = typeof item === 'string' ? undefined : item.sub;
+            const filteredSub = sub ? filterNavData(sub, query) : undefined;
+
+            if (matches || (filteredSub && filteredSub.length > 0)) {
+                if (typeof item === 'string') {
+                    acc.push(item);
+                } else {
+                    acc.push({
+                        ...item,
+                        sub: filteredSub
+                    });
+                }
+            }
+            return acc;
+        }, []);
+    };
+
+    const displayNavData = filterNavData(NAVIGATION_DATA, searchQuery);
+
+    const sidebarContentJsx = (
         <div className="flex flex-col h-full">
 
             {/* ── HEADER ── */}
-            <div className="px-5 py-4 pt-25 border-b border-gray-200 bg-white flex items-center justify-between shrink-0">
+            <div className="px-5 py-4 border-b border-gray-200 bg-white flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-3">
-                    <img src={logoImg} alt="Logo" className="h-7 w-auto" />
+
                     <span className="text-sm font-bold text-[#1A3263] tracking-tight">
-                        Catalog Navigator
+                        {headerTitle}
                     </span>
                 </div>
-                <button 
+                <button
                     onClick={() => {
                         setIsDesktopOpen(false);
                         setIsMobileOpen(false);
@@ -111,10 +152,25 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                 </button>
             </div>
 
+            {/* ── SEARCH ── */}
+            <div className="px-4 py-3 border-b border-gray-100 bg-gray-50/50 shrink-0">
+                <div className="relative group">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-[#1A3263] transition-colors" />
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Search categories..."
+                        className="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-4 py-2 text-[13px] text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1A3263]/20 focus:border-[#1A3263] transition-all"
+                    />
+                </div>
+            </div>
+
             {/* ── SCROLLABLE LIST ── */}
             <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar scroll-smooth min-h-0">
-                {NAVIGATION_DATA.map((item) => {
+                {displayNavData.map((item) => {
                     const isActive = activeCategory === item.id || (item.id === "access-control" && !activeCategory);
+                    const isExpanded = searchQuery ? true : expandedSections.includes(item.id);
                     return (
                         <div key={item.id} className="space-y-0.5">
                             <div className="relative">
@@ -149,7 +205,7 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                                     </span>
 
                                     {item.sub && (
-                                        <div 
+                                        <div
                                             onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(item.id); }}
                                             className="p-1 cursor-pointer relative z-10 flex items-center justify-center rounded-md hover:bg-black/10 transition-colors"
                                         >
@@ -157,7 +213,7 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                                                 size={14}
                                                 className={cn(
                                                     "transition-transform duration-300",
-                                                    expandedSections.includes(item.id) ? "rotate-180" : ""
+                                                    isExpanded ? "rotate-180" : ""
                                                 )}
                                             />
                                         </div>
@@ -165,113 +221,113 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                                 </div>
                             </div>
 
-                            {item.sub && expandedSections.includes(item.id) && (
+                            {item.sub && isExpanded && (
                                 <div className="overflow-hidden">
-                                        <div className="pl-6 space-y-1 pt-2 pb-3">
-                                            {item.sub.map((subItem: any, idx) => {
-                                                const SubIcon = subItem.icon || ShieldCheck;
-                                                return (
-                                                    <div key={idx} className="space-y-1">
-                                                        <div className="flex items-center justify-between group py-2 px-3 rounded-lg hover:bg-white/60 transition-all duration-200">
-                                                            <div className="flex items-center gap-2.5 flex-1">
-                                                                <SubIcon size={14} className="text-gray-400 group-hover:text-[#1A3263] transition-colors" />
-                                                                {subItem.link ? (
-                                                                    <Link 
-                                                                        to={subItem.link} 
-                                                                        activeProps={{ className: "!text-[#FC3B1F]" }}
-                                                                        className="text-[13px] font-semibold text-gray-500 group-hover:text-[#1A3263] transition-colors flex-1 hover:underline"
-                                                                    >
-                                                                        {subItem.label}
-                                                                    </Link>
-                                                                ) : (
-                                                                    <span className="text-[13px] font-semibold text-gray-500 group-hover:text-[#1A3263] transition-colors">
-                                                                        {subItem.label}
-                                                                    </span>
-                                                                )}
-                                                            </div>
-                                                            {Array.isArray(subItem.sub) && (
-                                                                <div 
-                                                                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(subItem.label); }}
-                                                                    className="p-1 cursor-pointer rounded-md hover:bg-gray-200 transition-colors"
+                                    <div className="pl-6 space-y-1 pt-2 pb-3">
+                                        {item.sub.map((subItem: any, idx: number) => {
+                                            const SubIcon = subItem.icon || ShieldCheck;
+                                            return (
+                                                <div key={idx} className="space-y-1">
+                                                    <div className="flex items-center justify-between group py-2 px-3 rounded-lg hover:bg-white/60 transition-all duration-200">
+                                                        <div className="flex items-center gap-2.5 flex-1">
+                                                            <SubIcon size={14} className="text-gray-400 group-hover:text-[#1A3263] transition-colors" />
+                                                            {subItem.link ? (
+                                                                <Link
+                                                                    to={subItem.link}
+                                                                    activeProps={{ className: "!text-[#FC3B1F]" }}
+                                                                    className="text-[13px] font-semibold text-gray-500 group-hover:text-[#1A3263] transition-colors flex-1 hover:underline"
                                                                 >
-                                                                    <ChevronDown size={13} className={cn("text-gray-400 transition-transform", expandedSections.includes(subItem.label) ? "rotate-180" : "")} />
-                                                                </div>
+                                                                    {subItem.label}
+                                                                </Link>
+                                                            ) : (
+                                                                <span className="text-[13px] font-semibold text-gray-500 group-hover:text-[#1A3263] transition-colors">
+                                                                    {subItem.label}
+                                                                </span>
                                                             )}
                                                         </div>
-
-                                                        {Array.isArray(subItem.sub) && expandedSections.includes(subItem.label) && (
-                                                            <div className="overflow-hidden">
-                                                                    <div className="pl-6 space-y-1 border-l border-gray-200/80 ml-4 pt-1 pb-1">
-                                                                        {subItem.sub.map((l3: any, l3idx: number) => {
-                                                                            const isL3String = typeof l3 === "string";
-                                                                            const l3Label = isL3String ? l3 : l3.label;
-                                                                            const l3Link = isL3String ? undefined : l3.link;
-                                                                            
-                                                                            return (
-                                                                                <div key={l3idx} className="space-y-1">
-                                                                                    <div className="flex items-center justify-between group py-1.5 px-3 rounded-md hover:bg-white/40 transition-all duration-200">
-                                                                                        {l3Link ? (
-                                                                                            <Link 
-                                                                                                to={l3Link} 
-                                                                                                activeProps={{ className: "!text-[#FC3B1F]" }}
-                                                                                                className="text-xs text-gray-500 font-semibold group-hover:text-[#1A3263] transition-colors flex-1 block"
-                                                                                            >
-                                                                                                {l3Label}
-                                                                                            </Link>
-                                                                                        ) : (
-                                                                                            <span className="text-xs text-gray-400 font-medium group-hover:text-[#1A3263] transition-colors cursor-pointer">
-                                                                                                {l3Label}
-                                                                                            </span>
-                                                                                        )}
-                                                                                        {!isL3String && Array.isArray(l3.sub) && (
-                                                                                            <div 
-                                                                                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(l3Label); }}
-                                                                                                className="p-1 cursor-pointer rounded-md hover:bg-gray-200 transition-colors"
-                                                                                            >
-                                                                                                <ChevronDown size={11} className={cn("text-gray-300 transition-transform", expandedSections.includes(l3Label) ? "rotate-180" : "")} />
-                                                                                            </div>
-                                                                                        )}
-                                                                                    </div>
-
-                                                                                    {!isL3String && Array.isArray(l3.sub) && expandedSections.includes(l3Label) && (
-                                                                                        <div className="overflow-hidden">
-                                                                                                <div className="pl-4 space-y-1 border-l-2 border-[#FC3B1F]/20 ml-4 pt-1 mb-2">
-                                                                                                    {l3.sub.map((l4: any, l4idx: number) => {
-                                                                                                        const isL4String = typeof l4 === "string";
-                                                                                                        const l4Label = isL4String ? l4 : l4.label;
-                                                                                                        const l4Link = isL4String ? undefined : l4.link;
-
-                                                                                                        return (
-                                                                                                            <div key={l4idx}>
-                                                                                                                {l4Link ? (
-                                                                                                                    <Link 
-                                                                                                                        to={l4Link} 
-                                                                                                                        activeProps={{ className: "!text-[#FC3B1F]" }}
-                                                                                                                        className="block text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#1A3263] hover:bg-white/50 rounded-md transition-all duration-200 font-medium"
-                                                                                                                    >
-                                                                                                                        {l4Label}
-                                                                                                                    </Link>
-                                                                                                                ) : (
-                                                                                                                    <div className="text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#1A3263] cursor-pointer hover:bg-white/50 rounded-md transition-all duration-200 font-medium">
-                                                                                                                        {l4Label}
-                                                                                                                    </div>
-                                                                                                                )}
-                                                                                                            </div>
-                                                                                                        );
-                                                                                                    })}
-                                                                                                </div>
-                                                                                        </div>
-                                                                                    )}
-                                                                                </div>
-                                                                            );
-                                                                        })}
-                                                                    </div>
+                                                        {Array.isArray(subItem.sub) && (
+                                                            <div
+                                                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(subItem.label); }}
+                                                                className="p-1 cursor-pointer rounded-md hover:bg-gray-200 transition-colors"
+                                                            >
+                                                                <ChevronDown size={13} className={cn("text-gray-400 transition-transform", (searchQuery ? true : expandedSections.includes(subItem.label)) ? "rotate-180" : "")} />
                                                             </div>
                                                         )}
                                                     </div>
-                                                );
-                                            })}
-                                        </div>
+
+                                                    {Array.isArray(subItem.sub) && (searchQuery ? true : expandedSections.includes(subItem.label)) && (
+                                                        <div className="overflow-hidden">
+                                                            <div className="pl-6 space-y-1 border-l border-gray-200/80 ml-4 pt-1 pb-1">
+                                                                {subItem.sub.map((l3: any, l3idx: number) => {
+                                                                    const isL3String = typeof l3 === "string";
+                                                                    const l3Label = isL3String ? l3 : l3.label;
+                                                                    const l3Link = isL3String ? undefined : l3.link;
+
+                                                                    return (
+                                                                        <div key={l3idx} className="space-y-1">
+                                                                            <div className="flex items-center justify-between group py-1.5 px-3 rounded-md hover:bg-white/40 transition-all duration-200">
+                                                                                {l3Link ? (
+                                                                                    <Link
+                                                                                        to={l3Link}
+                                                                                        activeProps={{ className: "!text-[#FC3B1F]" }}
+                                                                                        className="text-xs text-gray-500 font-semibold group-hover:text-[#1A3263] transition-colors flex-1 block"
+                                                                                    >
+                                                                                        {l3Label}
+                                                                                    </Link>
+                                                                                ) : (
+                                                                                    <span className="text-xs text-gray-400 font-medium group-hover:text-[#1A3263] transition-colors cursor-pointer">
+                                                                                        {l3Label}
+                                                                                    </span>
+                                                                                )}
+                                                                                {!isL3String && Array.isArray(l3.sub) && (
+                                                                                    <div
+                                                                                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(l3Label); }}
+                                                                                        className="p-1 cursor-pointer rounded-md hover:bg-gray-200 transition-colors"
+                                                                                    >
+                                                                                        <ChevronDown size={11} className={cn("text-gray-300 transition-transform", (searchQuery ? true : expandedSections.includes(l3Label)) ? "rotate-180" : "")} />
+                                                                                    </div>
+                                                                                )}
+                                                                            </div>
+
+                                                                            {!isL3String && Array.isArray(l3.sub) && (searchQuery ? true : expandedSections.includes(l3Label)) && (
+                                                                                <div className="overflow-hidden">
+                                                                                    <div className="pl-4 space-y-1 border-l-2 border-[#FC3B1F]/20 ml-4 pt-1 mb-2">
+                                                                                        {l3.sub.map((l4: any, l4idx: number) => {
+                                                                                            const isL4String = typeof l4 === "string";
+                                                                                            const l4Label = isL4String ? l4 : l4.label;
+                                                                                            const l4Link = isL4String ? undefined : l4.link;
+
+                                                                                            return (
+                                                                                                <div key={l4idx}>
+                                                                                                    {l4Link ? (
+                                                                                                        <Link
+                                                                                                            to={l4Link}
+                                                                                                            activeProps={{ className: "!text-[#FC3B1F]" }}
+                                                                                                            className="block text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#1A3263] hover:bg-white/50 rounded-md transition-all duration-200 font-medium"
+                                                                                                        >
+                                                                                                            {l4Label}
+                                                                                                        </Link>
+                                                                                                    ) : (
+                                                                                                        <div className="text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#1A3263] cursor-pointer hover:bg-white/50 rounded-md transition-all duration-200 font-medium">
+                                                                                                            {l4Label}
+                                                                                                        </div>
+                                                                                                    )}
+                                                                                                </div>
+                                                                                            );
+                                                                                        })}
+                                                                                    </div>
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    );
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -340,7 +396,7 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                             >
                                 <X size={16} className="text-gray-600" />
                             </button>
-                            <SidebarContent />
+                            {sidebarContentJsx}
                         </motion.aside>
                     </>
                 )}
@@ -349,8 +405,8 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
             {/* ── DESKTOP SIDEBAR ── */}
             <motion.aside
                 initial={false}
-                animate={{ 
-                    width: isDesktopOpen ? 288 : 0, 
+                animate={{
+                    width: isDesktopOpen ? 288 : 0,
                     opacity: isDesktopOpen ? 1 : 0,
                     borderRightWidth: isDesktopOpen ? 1 : 0
                 }}
@@ -363,7 +419,7 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                 }}
             >
                 <div className="w-72 h-full shrink-0">
-                    <SidebarContent />
+                    {sidebarContentJsx}
                 </div>
             </motion.aside>
 
