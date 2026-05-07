@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
@@ -9,7 +9,8 @@ import {
     Link as LinkIcon,
     Activity,
     Layers,
-    ArrowRight
+    ArrowRight,
+    ArrowLeft
 } from "lucide-react";
 
 export const Route = createFileRoute("/services_/public-address")({
@@ -17,11 +18,26 @@ export const Route = createFileRoute("/services_/public-address")({
 });
 
 function PublicAddressPage() {
+    const router = useRouter();
+
     return (
         <div className="bg-white overflow-hidden scroll-smooth">
 
             {/* ─── HERO SECTION ─── */}
             <section className="relative min-h-[60vh] flex items-center pt-50 pb-20 bg-gray-50">
+
+                {/* ─── BACK BUTTON ─── */}
+                <button
+                    onClick={() => router.history.back()}
+                    className="absolute top-50 left-23 z-20 flex items-center gap-2 text-black hover:text-black/60 transition-colors duration-200 group"
+                >
+                    <ArrowLeft
+                        size={18}
+                        className="group-hover:-translate-x-1 transition-transform duration-200"
+                    />
+                    <span className="text-sm font-medium">Back</span>
+                </button>
+
                 <Container>
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <motion.div
@@ -36,7 +52,6 @@ function PublicAddressPage() {
                             <p className="text-lg text-gray-500 leading-relaxed max-w-xl">
                                 Reliable audio solutions for announcements, background music, and emergency broadcasts across large or multi-zone facilities.
                             </p>
-
                         </motion.div>
 
                         <motion.div
@@ -115,8 +130,6 @@ function PublicAddressPage() {
                     </div>
                 </Container>
             </section>
-
-
 
         </div>
     );

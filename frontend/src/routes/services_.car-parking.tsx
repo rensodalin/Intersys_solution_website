@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
@@ -13,7 +13,8 @@ import {
     Search,
     CreditCard,
     LayoutDashboard,
-    ParkingCircle
+    ParkingCircle,
+    ArrowLeft
 } from "lucide-react";
 
 export const Route = createFileRoute("/services_/car-parking")({
@@ -21,6 +22,8 @@ export const Route = createFileRoute("/services_/car-parking")({
 });
 
 function CarParkingPage() {
+    const router = useRouter();
+
     return (
         <div className="bg-white overflow-hidden scroll-smooth">
 
@@ -35,6 +38,18 @@ function CarParkingPage() {
                     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
                 </div>
 
+                {/* ─── BACK BUTTON ─── */}
+                <button
+                    onClick={() => router.history.back()}
+                    className="absolute top-45 left-20 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group"
+                >
+                    <ArrowLeft
+                        size={18}
+                        className="group-hover:-translate-x-1 transition-transform duration-200"
+                    />
+                    <span className="text-sm font-medium">Back</span>
+                </button>
+
                 <Container className="relative z-10 text-white">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -43,7 +58,6 @@ function CarParkingPage() {
                         className="max-w-4xl space-y-8"
                     >
                         <div className="space-y-4">
-
                             <h1 className="text-3xl md:text-5xl font-bold leading-tight">
                                 Car Parking Systems
                             </h1>
@@ -51,7 +65,6 @@ function CarParkingPage() {
                         <p className="text-lg md:text-xl text-white/80 leading-relaxed font-light max-w-2xl">
                             Streamlined vehicle access control, automated payment solutions, and real-time occupancy monitoring for seamless parking management.
                         </p>
-
                     </motion.div>
                 </Container>
             </section>
@@ -238,8 +251,6 @@ function CarParkingPage() {
 
                 </Container>
             </section>
-
-
 
         </div>
     );

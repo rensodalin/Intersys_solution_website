@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import {
@@ -7,7 +7,8 @@ import {
     Smartphone,
     Layout,
     Globe,
-    Activity
+    Activity,
+    ArrowLeft
 } from "lucide-react";
 
 export const Route = createFileRoute("/services_/intrusion-system")({
@@ -15,6 +16,8 @@ export const Route = createFileRoute("/services_/intrusion-system")({
 });
 
 function IntrusionSystemPage() {
+    const router = useRouter();
+
     return (
         <div className="bg-white overflow-hidden scroll-smooth">
 
@@ -29,6 +32,18 @@ function IntrusionSystemPage() {
                     <div className="absolute inset-0 bg-gradient-to-r from-[#0A0F1A] via-[#0A0F1A]/80 to-transparent" />
                     <div className="absolute inset-0 bg-black/20" />
                 </div>
+
+                {/* ─── BACK BUTTON ─── */}
+                <button
+                    onClick={() => router.history.back()}
+                    className="absolute top-50 left-23 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group"
+                >
+                    <ArrowLeft
+                        size={18}
+                        className="group-hover:-translate-x-1 transition-transform duration-200"
+                    />
+                    <span className="text-sm font-medium">Back</span>
+                </button>
 
                 <Container className="relative z-10 text-white">
                     <motion.div
