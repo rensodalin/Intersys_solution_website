@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/Common/Container";
+import { useRouter } from "@tanstack/react-router";
 import {
   Cpu,
   Flame,
@@ -10,6 +11,7 @@ import {
   Settings,
   LayoutGrid,
   ChevronDown,
+  ArrowRight,
 } from "lucide-react";
 import bmsImg from "@/assets/bms_service.png";
 import fireImg from "@/assets/fire_safety.png";
@@ -25,54 +27,59 @@ export function ServicesGrid() {
   };
 
   return (
-    <section id="solutions" className="py-20 bg-[#F8F9FA] overflow-hidden">
+    <section id="solutions" className="py-24 bg-[#F9FAFB] overflow-hidden relative">
+      {/* Decorative background element */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-red-500/5 blur-[120px] rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none" />
+
       <Container>
-        <div className="mb-16">
+        <div className="mb-20">
           <motion.h2
-            initial={{ opacity: 0, x: -100 }}
+            initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl font-bold text-[#0A0F1A] mb-4"
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-4xl md:text-5xl font-bold text-[#0A0F1A] mb-6 tracking-tight"
           >
             Our <span className="text-red-500">Solution</span>
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0, x: -100 }}
+            initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-gray-500 max-w-2xl text-sm"
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+            className="text-gray-500 max-w-2xl text-base leading-relaxed"
           >
             Integrated technology solutions for modern architectural marvels. We design, deploy, and
-            manage the technical nervous system of your facility.
+            manage the technical nervous system of your facility with precision engineering.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-5 lg:auto-rows-min">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 lg:auto-rows-min">
           {/* BMS */}
           <ServiceCard
             id="bms"
             icon={Cpu}
             title="Building Management Systems (BMS)"
-            desc="Centralized control for lighting, HVAC, and power systems. Our BMS solutions optimize energy consumption by up to 30% while ensuring peak operational performance."
-            features={["REAL-TIME MONITORING", "ENERGY ANALYTICS", "REMOTE HVAC CONTROL"]}
+            desc="Discover how our advanced Building Management Systems (BMS) can optimize the performance of your building's essential systems, ensuring seamless operation and energy efficiency."
+            features={["Real-time monitoring", "Energy analytics", "Remote HVAC control"]}
             img={bmsImg}
             className="lg:col-span-4"
             isExpanded={expandedIds.includes("bms")}
             onToggle={() => toggleExpand("bms")}
             layout="horizontal"
+            href="/services/building-management"
           />
 
           {/* Fire */}
           <ServiceCard
             id="fire"
             icon={Flame}
-            title="Fire & Life Safety"
-            desc="UL-listed detection systems integrated with intelligent evacuation protocols. Every second counts in emergency management."
+            title="Fire Alarm System"
+            desc="Safeguard your property and occupants with our state-of-the-art Fire Alarm Systems, designed to provide early detection and rapid response to potential fire hazards."
             className="lg:col-span-2"
             isExpanded={expandedIds.includes("fire")}
             onToggle={() => toggleExpand("fire")}
+            href="/services/fire-alarm"
           />
 
           {/* CCTV */}
@@ -80,12 +87,13 @@ export function ServicesGrid() {
             id="cctv"
             icon={Video}
             title="CCTV Surveillance"
-            desc="Advanced IP-based video management with thermal imaging and facial recognition. Total visibility, 24/7."
+            desc="Ensure constant vigilance and monitoring with our Surveillance (CCTV) solutions, providing comprehensive coverage and real-time visual insights for enhanced security."
             img={cctvImg}
             className="lg:col-span-2"
             isExpanded={expandedIds.includes("cctv")}
             onToggle={() => toggleExpand("cctv")}
             theme="dark"
+            href="/services/surveillance"
           />
 
           {/* Security & Access */}
@@ -93,16 +101,17 @@ export function ServicesGrid() {
             id="security"
             icon={LayoutGrid}
             title="Security & Access Control"
-            desc="Beyond locks and keys. Our biometrically secured systems integrate seamlessly with HR databases to manage personnel flow."
+            desc="Protect your building and assets with our Access Control Systems, offering advanced security features and flexible access management tailored to your requirements."
             stats={[
-              { label: "AUTH SPEED", value: "0.3s" },
-              { label: "ENCRYPTION", value: "AES-256" },
+              { label: "Auth Speed", value: "0.3s" },
+              { label: "Encryption", value: "AES-256" },
             ]}
             img={securityImg}
             className="lg:col-span-4"
             isExpanded={expandedIds.includes("security")}
             onToggle={() => toggleExpand("security")}
             layout="horizontal-reverse"
+            href="/services/access-control"
           />
 
           {/* AV */}
@@ -110,11 +119,12 @@ export function ServicesGrid() {
             id="av"
             icon={Volume2}
             title="Audio Visual Systems"
-            desc="Immersive communication environments. From boardrooms to auditoriums, we provide high-fidelity audio and collaboration."
-            tags={["VIDEO WALLS", "SMART GLASS", "PA SYSTEMS"]}
+            desc="Enhance communication and engagement with our AV solutions designed for meeting rooms, classrooms, auditoriums, and control centers, delivering seamless audio, visual, and collaboration experiences."
+            tags={["Video walls", "Smart glass", "PA systems"]}
             className="lg:col-span-3"
             isExpanded={expandedIds.includes("av")}
             onToggle={() => toggleExpand("av")}
+            href="/services/audio-visual"
           />
 
           {/* Custom */}
@@ -122,12 +132,13 @@ export function ServicesGrid() {
             id="custom"
             icon={Settings}
             title="Custom Solutions"
-            desc="Your challenges are unique. We offer bespoke engineering for specialized environments and high-security installations."
+            desc="Unleash the full potential of your building with our expert support and consulting services, tailored to address your unique challenges and requirements."
             className="lg:col-span-3"
             isExpanded={expandedIds.includes("custom")}
             onToggle={() => toggleExpand("custom")}
             theme="red"
-            btnText="view More"
+            btnText="View More"
+            href="/services/custom-solution"
           />
         </div>
       </Container>
@@ -148,56 +159,58 @@ function ServiceCard({
   className,
   isExpanded,
   onToggle,
+  href,
   theme = "light",
   layout = "vertical",
-  btnText = "VIEW DETAIL",
+  btnText = "View details",
 }: any) {
+  const router = useRouter();
+
   return (
     <motion.div
-      initial={{ opacity: 0, x: -100 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
-      className={`${className} rounded-2xl p-8 flex flex-col shadow-lg border relative transition-all duration-500 hover:shadow-xl group
-                ${
-                  theme === "dark"
-                    ? "bg-[#0A0F1A] border-white/5 text-white"
-                    : theme === "red"
-                      ? "bg-[#FC3B1F] border-none text-white"
-                      : "bg-white border-gray-100 text-[#0A1F44]"
-                }
+      transition={{ duration: 0.6 }}
+      className={`${className} rounded-3xl p-8 flex flex-col shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] border relative transition-all duration-500 hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] group
+                ${theme === "dark"
+          ? "bg-[#0A0F1A] border-white/5 text-white"
+          : theme === "red"
+            ? "bg-[#FC3B1F] border-none text-white"
+            : "bg-white border-gray-100 text-[#0A1F44]"
+        }
             `}
     >
       <div
         className={
           layout === "horizontal" || layout === "horizontal-reverse"
-            ? "flex flex-col lg:flex-row gap-8"
+            ? "flex flex-col lg:flex-row gap-10"
             : ""
         }
       >
         {layout === "horizontal-reverse" && img && (
-          <div className="flex-1 relative overflow-hidden rounded-xl h-48 lg:h-auto">
+          <div className="flex-1 relative overflow-hidden rounded-2xl h-48 lg:min-h-[300px]">
             <img
               src={img}
               alt={title}
-              className="absolute inset-0 w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105 group-hover:grayscale-0"
+              className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0"
             />
           </div>
         )}
 
         <div className="flex-1 flex flex-col">
           <div
-            className={`w-10 h-10 rounded-lg flex items-center justify-center mb-6 
-                        ${theme === "dark" ? "bg-white/5" : theme === "red" ? "bg-white/10" : "bg-gray-50"}`}
+            className={`w-12 h-12 rounded-xl flex items-center justify-center mb-8 transition-colors duration-500
+                        ${theme === "dark" ? "bg-white/5" : theme === "red" ? "bg-white/10" : "bg-gray-50 group-hover:bg-red-50"}`}
           >
             <Icon
-              className={`w-5 h-5 ${theme === "dark" ? "text-red-500" : theme === "red" ? "text-white" : "text-[#0A1F44]"}`}
+              className={`w-6 h-6 transition-colors duration-500 ${theme === "dark" ? "text-red-500" : theme === "red" ? "text-white" : "text-[#0A1F44] group-hover:text-red-600"}`}
             />
           </div>
 
-          <h3 className="text-xl font-bold mb-3">{title}</h3>
+          <h3 className="text-2xl font-bold mb-4 tracking-tight leading-tight">{title}</h3>
           <p
-            className={`leading-relaxed text-[11px] mb-6 ${theme === "dark" ? "text-white/40" : theme === "red" ? "text-white/80" : "text-gray-500"}`}
+            className={`leading-relaxed text-sm mb-8 font-light ${theme === "dark" ? "text-white/40" : theme === "red" ? "text-white/80" : "text-gray-500"}`}
           >
             {desc}
           </p>
@@ -211,14 +224,14 @@ function ServiceCard({
                 className="overflow-hidden"
               >
                 {features && (
-                  <ul className="space-y-3 mb-6">
+                  <ul className="space-y-4 mb-8">
                     {features.map((f: string) => (
                       <li
                         key={f}
-                        className="flex items-center gap-2 text-[9px] font-bold tracking-widest"
+                        className="flex items-center gap-3 text-sm font-medium"
                       >
                         <div
-                          className={`w-1 h-1 rounded-sm ${theme === "red" ? "bg-white" : "bg-red-600"}`}
+                          className={`w-1.5 h-1.5 rounded-full ${theme === "red" ? "bg-white" : "bg-red-600"}`}
                         />
                         {f}
                       </li>
@@ -227,14 +240,14 @@ function ServiceCard({
                 )}
 
                 {stats && (
-                  <div className="grid grid-cols-2 gap-3 mb-6">
+                  <div className="grid grid-cols-2 gap-4 mb-8">
                     {stats.map((s: any) => (
                       <div
                         key={s.label}
-                        className={`${theme === "light" ? "bg-[#F8F9FA]" : "bg-white/5"} p-3 rounded-lg`}
+                        className={`${theme === "light" ? "bg-gray-50" : "bg-white/5"} p-4 rounded-xl border ${theme === "light" ? "border-gray-100" : "border-white/5"}`}
                       >
-                        <div className="text-lg font-bold">{s.value}</div>
-                        <div className="text-[8px] text-gray-400 font-bold tracking-widest uppercase mt-0.5">
+                        <div className="text-xl font-bold">{s.value}</div>
+                        <div className={`text-[10px] font-semibold tracking-wide mt-1 ${theme === "light" ? "text-gray-400" : "text-white/30"}`}>
                           {s.label}
                         </div>
                       </div>
@@ -243,12 +256,12 @@ function ServiceCard({
                 )}
 
                 {tags && (
-                  <div className="flex flex-wrap gap-2 mb-6">
+                  <div className="flex flex-wrap gap-2 mb-8">
                     {tags.map((t: string) => (
                       <span
                         key={t}
-                        className={`px-3 py-1.5 rounded-md text-[8px] font-bold tracking-widest
-                                                ${theme === "light" ? "bg-[#F1F3F5] text-gray-400" : "bg-white/10 text-white/60"}`}
+                        className={`px-4 py-2 rounded-lg text-[10px] font-semibold tracking-wide
+                                                ${theme === "light" ? "bg-gray-50 text-gray-500" : "bg-white/10 text-white/60"}`}
                       >
                         {t}
                       </span>
@@ -259,47 +272,68 @@ function ServiceCard({
             )}
           </AnimatePresence>
 
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              onToggle();
-            }}
-            className={`mt-auto flex items-center gap-2 text-[10px] font-bold tracking-widest transition-all w-fit
-                            ${theme === "red" ? "px-6 py-3 bg-white text-[#FC3B1F] rounded-lg" : "text-red-600 hover:text-red-700"}
+          <div className="mt-auto flex items-center gap-3">
+            <button
+              onClick={() => {
+                if (href) {
+                  router.navigate({ to: href });
+                }
+              }}
+              className={`flex items-center gap-2 text-[11px] font-bold tracking-widest transition-all duration-300 px-6 py-3 rounded-full group/btn
+                            ${theme === "red"
+                  ? "bg-white text-[#FC3B1F] hover:bg-[#0A0F1A] hover:text-white shadow-xl shadow-red-900/10"
+                  : theme === "dark"
+                    ? "bg-white/5 text-red-500 hover:bg-white/10 hover:text-red-400"
+                    : "bg-gray-50 text-red-600 hover:bg-red-600 hover:text-white shadow-sm hover:shadow-red-500/20"
+                }
                         `}
-          >
-            {theme === "red" ? btnText : isExpanded ? "VIEW LESS" : "VIEW MORE"}
-            {theme !== "red" && (
-              <motion.div animate={{ rotate: isExpanded ? 180 : 0 }}>
-                <ChevronDown className="w-3 h-3" />
-              </motion.div>
+            >
+              <span>{btnText}</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover/btn:translate-x-1" />
+            </button>
+
+            {/* Toggle Arrow for expansion */}
+            {(features || stats || tags) && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  onToggle();
+                }}
+                className={`p-3 rounded-full transition-all duration-300 
+                                ${theme === "red" ? "bg-white/10 text-white hover:bg-white/20" : "bg-gray-50 text-gray-400 hover:bg-gray-100"}
+                            `}
+              >
+                <motion.div animate={{ rotate: isExpanded ? 180 : 0 }}>
+                  <ChevronDown className="w-4 h-4" />
+                </motion.div>
+              </button>
             )}
-          </button>
+          </div>
 
           {tag && !isExpanded && (
-            <div className="mt-8 text-[9px] font-bold text-red-600 tracking-widest uppercase">
+            <div className="mt-8 text-[10px] font-bold text-red-600 tracking-wider">
               {tag}
             </div>
           )}
         </div>
 
         {layout === "horizontal" && img && (
-          <div className="flex-1 relative overflow-hidden rounded-xl h-48 lg:h-auto min-h-[240px]">
+          <div className="flex-1 relative overflow-hidden rounded-2xl h-48 lg:min-h-[300px]">
             <img
               src={img}
               alt={title}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
             />
           </div>
         )}
       </div>
 
       {layout === "vertical" && img && (
-        <div className="mt-8 -mx-8 -mb-8 relative h-48 overflow-hidden rounded-b-2xl">
+        <div className="mt-10 -mx-8 -mb-8 relative h-56 overflow-hidden rounded-b-3xl">
           <img
             src={img}
             alt={title}
-            className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
+            className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
           />
           {theme === "dark" && (
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1A] to-transparent" />

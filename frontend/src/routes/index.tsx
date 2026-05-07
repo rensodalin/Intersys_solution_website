@@ -9,6 +9,7 @@ import { JourneySection } from "@/components/Homepage/JourneySection";
 import { Ecosystem } from "@/components/Homepage/Ecosystem";
 import { WhyChooseIntersys } from "@/components/Homepage/WhyChooseIntersys";
 import { Clients } from "@/components/Homepage/Clients";
+import { Partnership } from "@/components/Homepage/Partnership";
 import { Insights } from "@/components/Homepage/Insights";
 import { PromotionOverlay } from "@/components/Common/PromotionOverlay";
 
@@ -50,7 +51,9 @@ function Index() {
       <ServicesGrid />
 
       <Clients />
+
       <WhyChooseIntersys />
+      <Partnership />
 
       <Insights />
 

@@ -20,6 +20,7 @@ import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as DocumentCenterRouteImport } from './routes/document-center'
+import { Route as CredentialsRouteImport } from './routes/credentials'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SectorsIndexRouteImport } from './routes/sectors.index'
@@ -104,6 +105,11 @@ const PortfolioRoute = PortfolioRouteImport.update({
 const DocumentCenterRoute = DocumentCenterRouteImport.update({
   id: '/document-center',
   path: '/document-center',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CredentialsRoute = CredentialsRouteImport.update({
+  id: '/credentials',
+  path: '/credentials',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -273,6 +279,7 @@ const ProductsAccessControlHoneywellAccessoriesRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/credentials': typeof CredentialsRoute
   '/document-center': typeof DocumentCenterRoute
   '/portfolio': typeof PortfolioRoute
   '/products': typeof ProductsRoute
@@ -316,6 +323,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/credentials': typeof CredentialsRoute
   '/document-center': typeof DocumentCenterRoute
   '/portfolio': typeof PortfolioRoute
   '/products': typeof ProductsRoute
@@ -359,6 +367,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/credentials': typeof CredentialsRoute
   '/document-center': typeof DocumentCenterRoute
   '/portfolio': typeof PortfolioRoute
   '/products': typeof ProductsRoute
@@ -404,6 +413,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/contact'
+    | '/credentials'
     | '/document-center'
     | '/portfolio'
     | '/products'
@@ -447,6 +457,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/contact'
+    | '/credentials'
     | '/document-center'
     | '/portfolio'
     | '/products'
@@ -489,6 +500,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/contact'
+    | '/credentials'
     | '/document-center'
     | '/portfolio'
     | '/products'
@@ -533,6 +545,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
+  CredentialsRoute: typeof CredentialsRoute
   DocumentCenterRoute: typeof DocumentCenterRoute
   PortfolioRoute: typeof PortfolioRoute
   ProductsRoute: typeof ProductsRoute
@@ -649,6 +662,13 @@ declare module '@tanstack/react-router' {
       path: '/document-center'
       fullPath: '/document-center'
       preLoaderRoute: typeof DocumentCenterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/credentials': {
+      id: '/credentials'
+      path: '/credentials'
+      fullPath: '/credentials'
+      preLoaderRoute: typeof CredentialsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -880,6 +900,7 @@ const SectorsRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
+  CredentialsRoute: CredentialsRoute,
   DocumentCenterRoute: DocumentCenterRoute,
   PortfolioRoute: PortfolioRoute,
   ProductsRoute: ProductsRoute,

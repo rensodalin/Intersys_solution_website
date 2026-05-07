@@ -68,11 +68,11 @@ function BMSPage() {
                     >
 
                         <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                            Preserving History. <br />
-                            <span className="text-red-500">Architecting the Future.</span>
+                            Intelligent <br />
+                            <span className="text-red-500">Building Management Solutions.</span>
                         </h1>
                         <p className="text-lg md:text-xl text-white/75 leading-relaxed font-light max-w-2xl">
-                            Preserving the soul of architectural history while architecting the intelligence of the future.
+                            Transform your facilities with advanced automation, safety, and efficiency
                         </p>
                         <div className="pt-2">
 

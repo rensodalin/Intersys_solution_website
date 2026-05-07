@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
+import { useRouter } from "@tanstack/react-router";
 import certificate1 from "../../assets/certificate1.jpg";
 import certificate2 from "../../assets/certificate2.jpg";
 
 export function Certificates() {
+  const router = useRouter();
   return (
     <section className="bg-[#9B0F06] border-b border-white/5 overflow-hidden relative">
       <Container className="py-16 md:py-24">
@@ -44,44 +46,92 @@ export function Certificates() {
           </div>
 
           {/* Right: Information Content */}
+          {/* Right: Information Content */}
           <div className="lg:w-7/12 text-white">
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-[11px] font-mono font-bold tracking-[0.2em] text-white/70 mb-4 uppercase"
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 mb-4"
             >
-              Accreditation
+              <div className="w-8 h-[2px] bg-white/60" />
+              <span className="text-xs text-white/70 font-medium tracking-wide">
+                Accreditation
+              </span>
             </motion.div>
+
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="font-display text-xl md:text-3xl font-bold text-white tracking-tight leading-tight mb-6"
+              transition={{ duration: 0.7 }}
+              className="font-display text-2xl md:text-4xl font-bold text-white leading-[1.15] tracking-tight mb-5"
             >
-              A multiple rewarded <br />
-              <span className="text-white/80">Engineering Company</span>
+              Recognized for excellence
+              <br />
+              <span className="text-white/70">
+                in engineering & innovation
+              </span>
             </motion.h2>
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-sm md:text-[15px] text-white/80 leading-relaxed mb-8 max-w-lg"
+              transition={{ delay: 0.1, duration: 0.7 }}
+              className="text-sm md:text-base text-white/75 leading-relaxed max-w-xl mb-8"
             >
-              Throughout our history, Intersys Solutions has been recognized for its technical
-              excellence and adherence to global standards. Our licenses and Honeywell partnership
-              vouch for our commitment to world-class engineering quality.
+              Intersys Solutions has earned recognition for delivering
+              high-quality engineering systems that meet international
+              standards. Our certifications and Honeywell partnership
+              reflect a commitment to reliability and innovation.
             </motion.p>
+
+            {/* Highlight Cards */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8"
+            >
+              {[
+                {
+                  title: "Certified Standards",
+                  desc: "International engineering and quality compliance.",
+                },
+                {
+                  title: "Trusted Partnership",
+                  desc: "Official Honeywell integration partner.",
+                },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  className="bg-white/5 border border-white/10 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-all duration-300"
+                >
+                  <h4 className="text-base font-semibold text-white mb-1">
+                    {item.title}
+                  </h4>
+
+                  <p className="text-xs text-white/65 leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.3 }}
             >
-              <button className="bg-[#162E93] text-white px-8 py-3.5 rounded-sm font-bold text-[12px] tracking-widest uppercase hover:bg-white hover:text-[#162E93] transition-all duration-300 shadow-xl shadow-black/20">
-                View Credentials
+              <button 
+                onClick={() => router.navigate({ to: '/credentials' })}
+                className="bg-white text-[#9B0F06] px-6 py-3 rounded-xl font-semibold text-xs hover:bg-[#162E93] hover:text-white transition-all duration-300 shadow-xl"
+              >
+                View credentials
               </button>
             </motion.div>
           </div>
