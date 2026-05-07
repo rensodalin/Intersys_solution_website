@@ -32,44 +32,50 @@ export function HoneywellHero({
     ],
 }: HoneywellHeroProps) {
     return (
-        <section className="bg-[#F8F9FA] pt-32 pb-16 border-b border-gray-200/50">
+        <section className="bg-[#F8F9FA] pt-50 pb-10 px-8 border-b border-gray-200/50">
             <Container>
-                <div className="max-w-4xl">
+                <div className="max-w-3xl">
                     <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5 }}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4 }}
                     >
-                        {/* Page Title */}
-                        <h1 className="text-2xl md:text-3xl font-black text-[#1A3263] mb-4 tracking-tight">
-                            {title}
-                        </h1>
-
-                        {/* Breadcrumbs (aligned below title as in reference) */}
-                        <nav className="flex items-center gap-2 mb-8 flex-wrap">
+                        {/* Breadcrumbs */}
+                        <nav className="flex items-center gap-2 mb-4 flex-wrap">
                             {breadcrumbs.map((item, index) => (
-                                <div key={item.name} className="flex items-center gap-2">
+                                <div
+                                    key={item.name}
+                                    className="flex items-center gap-2"
+                                >
                                     <Link
                                         to={item.href}
                                         className={cn(
-                                            "text-[13px] font-medium transition-colors",
+                                            "text-[11px] transition-colors",
                                             index === breadcrumbs.length - 1
-                                                ? "text-gray-900 cursor-default"
+                                                ? "text-gray-700"
                                                 : "text-gray-400 hover:text-[#C3110C]"
                                         )}
                                     >
                                         {item.name}
                                     </Link>
+
                                     {index < breadcrumbs.length - 1 && (
-                                        <span className="text-gray-300 text-xs">/</span>
+                                        <span className="text-gray-300 text-[10px]">
+                                            /
+                                        </span>
                                     )}
                                 </div>
                             ))}
                         </nav>
 
-                        {/* Subtitle/Description (Left aligned, soft color) */}
+                        {/* Title */}
+                        <h1 className="text-xl md:text-2xl font-bold text-[#1A3263] tracking-tight mb-3">
+                            {title}
+                        </h1>
+
+                        {/* Subtitle */}
                         {subtitle && (
-                            <p className="text-gray-500 text-base md:text-md max-w-2xl leading-relaxed font-normal">
+                            <p className="text-gray-500 text-sm md:text-[15px] leading-relaxed max-w-2xl">
                                 {subtitle}
                             </p>
                         )}

@@ -24,7 +24,7 @@ function HoneywellProductsPage() {
             <HoneywellHero />
 
             {/* Product Grid */}
-            <section className="pb-24 -mt-12 relative z-20">
+            <section className="pb-14 md:pb-16 -mt-12 relative z-20 px-8">
                 <Container>
                     <HoneywellGrid products={honeywellMainProducts} />
                 </Container>

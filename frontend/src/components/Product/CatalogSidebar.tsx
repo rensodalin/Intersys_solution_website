@@ -76,7 +76,7 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                             location.pathname.includes("/fire-systems") ? "fire-systems" : undefined
     );
 
-    const [expandedSections, setExpandedSections] = useState<string[]>(["access-control", "Honeywell Systems"]);
+    const [expandedSections, setExpandedSections] = useState<string[]>(activeCategory ? [activeCategory] : []);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
 
     const toggleSection = (id: string) => {
@@ -112,11 +112,11 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                                     className={cn(
                                         "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 group relative overflow-hidden",
                                         isActive
-                                            ? "text-[#FC3B1F] bg-[#FC3B1F]/5 group-hover:text-white group-hover:shadow-md group-hover:-translate-y-0.5"
-                                            : "text-gray-600 hover:text-white hover:shadow-md hover:-translate-y-0.5"
+                                            ? "text-[#FC3B1F] bg-[#FC3B1F]/5 hover:text-white hover:shadow-md"
+                                            : "text-gray-600 hover:text-white hover:shadow-md"
                                     )}
                                 >
-                                    <div className="absolute inset-0 bg-gradient-to-r from-[#FC3B1F] to-[#d62b14] opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+                                    <div className="absolute inset-0 bg-gradient-to-r from-[#1A3263] to-[#2A4B8D] opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
 
                                     {(() => {
                                         const Icon = item.icon;
@@ -155,14 +155,8 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                                 </div>
                             </div>
 
-                            <AnimatePresence>
-                                {item.sub && expandedSections.includes(item.id) && (
-                                    <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: "auto", opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        className="overflow-hidden"
-                                    >
+                            {item.sub && expandedSections.includes(item.id) && (
+                                <div className="overflow-hidden">
                                         <div className="pl-6 space-y-1 pt-2 pb-3">
                                             {item.sub.map((subItem: any, idx) => {
                                                 const SubIcon = subItem.icon || ShieldCheck;
@@ -170,13 +164,17 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                                                     <div key={idx} className="space-y-1">
                                                         <div className="flex items-center justify-between group py-2 px-3 rounded-lg hover:bg-white/60 transition-all duration-200">
                                                             <div className="flex items-center gap-2.5 flex-1">
-                                                                <SubIcon size={14} className="text-gray-400 group-hover:text-[#FC3B1F] transition-colors" />
+                                                                <SubIcon size={14} className="text-gray-400 group-hover:text-[#1A3263] transition-colors" />
                                                                 {subItem.link ? (
-                                                                    <Link to={subItem.link} className="text-[13px] font-semibold text-gray-500 group-hover:text-[#FC3B1F] transition-colors flex-1 hover:underline">
+                                                                    <Link 
+                                                                        to={subItem.link} 
+                                                                        activeProps={{ className: "!text-[#FC3B1F]" }}
+                                                                        className="text-[13px] font-semibold text-gray-500 group-hover:text-[#1A3263] transition-colors flex-1 hover:underline"
+                                                                    >
                                                                         {subItem.label}
                                                                     </Link>
                                                                 ) : (
-                                                                    <span className="text-[13px] font-semibold text-gray-500 group-hover:text-gray-900 transition-colors">
+                                                                    <span className="text-[13px] font-semibold text-gray-500 group-hover:text-[#1A3263] transition-colors">
                                                                         {subItem.label}
                                                                     </span>
                                                                 )}
@@ -191,14 +189,8 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                                                             )}
                                                         </div>
 
-                                                        <AnimatePresence>
-                                                            {Array.isArray(subItem.sub) && expandedSections.includes(subItem.label) && (
-                                                                <motion.div
-                                                                    initial={{ height: 0, opacity: 0 }}
-                                                                    animate={{ height: "auto", opacity: 1 }}
-                                                                    exit={{ height: 0, opacity: 0 }}
-                                                                    className="overflow-hidden"
-                                                                >
+                                                        {Array.isArray(subItem.sub) && expandedSections.includes(subItem.label) && (
+                                                            <div className="overflow-hidden">
                                                                     <div className="pl-6 space-y-1 border-l border-gray-200/80 ml-4 pt-1 pb-1">
                                                                         {subItem.sub.map((l3: any, l3idx: number) => {
                                                                             const isL3String = typeof l3 === "string";
@@ -209,11 +201,15 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                                                                                 <div key={l3idx} className="space-y-1">
                                                                                     <div className="flex items-center justify-between group py-1.5 px-3 rounded-md hover:bg-white/40 transition-all duration-200">
                                                                                         {l3Link ? (
-                                                                                            <Link to={l3Link} className="text-xs text-gray-500 font-semibold group-hover:text-[#FC3B1F] transition-colors flex-1 block">
+                                                                                            <Link 
+                                                                                                to={l3Link} 
+                                                                                                activeProps={{ className: "!text-[#FC3B1F]" }}
+                                                                                                className="text-xs text-gray-500 font-semibold group-hover:text-[#1A3263] transition-colors flex-1 block"
+                                                                                            >
                                                                                                 {l3Label}
                                                                                             </Link>
                                                                                         ) : (
-                                                                                            <span className="text-xs text-gray-400 font-medium group-hover:text-gray-800 transition-colors cursor-pointer">
+                                                                                            <span className="text-xs text-gray-400 font-medium group-hover:text-[#1A3263] transition-colors cursor-pointer">
                                                                                                 {l3Label}
                                                                                             </span>
                                                                                         )}
@@ -227,14 +223,8 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                                                                                         )}
                                                                                     </div>
 
-                                                                                    <AnimatePresence>
-                                                                                        {!isL3String && Array.isArray(l3.sub) && expandedSections.includes(l3Label) && (
-                                                                                            <motion.div
-                                                                                                initial={{ height: 0, opacity: 0 }}
-                                                                                                animate={{ height: "auto", opacity: 1 }}
-                                                                                                exit={{ height: 0, opacity: 0 }}
-                                                                                                className="overflow-hidden"
-                                                                                            >
+                                                                                    {!isL3String && Array.isArray(l3.sub) && expandedSections.includes(l3Label) && (
+                                                                                        <div className="overflow-hidden">
                                                                                                 <div className="pl-4 space-y-1 border-l-2 border-[#FC3B1F]/20 ml-4 pt-1 mb-2">
                                                                                                     {l3.sub.map((l4: any, l4idx: number) => {
                                                                                                         const isL4String = typeof l4 === "string";
@@ -244,11 +234,15 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                                                                                                         return (
                                                                                                             <div key={l4idx}>
                                                                                                                 {l4Link ? (
-                                                                                                                    <Link to={l4Link} className="block text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#FC3B1F] hover:bg-white/50 rounded-md transition-all duration-200 font-medium">
+                                                                                                                    <Link 
+                                                                                                                        to={l4Link} 
+                                                                                                                        activeProps={{ className: "!text-[#FC3B1F]" }}
+                                                                                                                        className="block text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#1A3263] hover:bg-white/50 rounded-md transition-all duration-200 font-medium"
+                                                                                                                    >
                                                                                                                         {l4Label}
                                                                                                                     </Link>
                                                                                                                 ) : (
-                                                                                                                    <div className="text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#FC3B1F] cursor-pointer hover:bg-white/50 rounded-md transition-all duration-200 font-medium">
+                                                                                                                    <div className="text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#1A3263] cursor-pointer hover:bg-white/50 rounded-md transition-all duration-200 font-medium">
                                                                                                                         {l4Label}
                                                                                                                     </div>
                                                                                                                 )}
@@ -256,23 +250,20 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                                                                                                         );
                                                                                                     })}
                                                                                                 </div>
-                                                                                            </motion.div>
-                                                                                        )}
-                                                                                    </AnimatePresence>
+                                                                                        </div>
+                                                                                    )}
                                                                                 </div>
                                                                             );
                                                                         })}
                                                                     </div>
-                                                                </motion.div>
-                                                            )}
-                                                        </AnimatePresence>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 );
                                             })}
                                         </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+                                </div>
+                            )}
                         </div>
                     );
                 })}

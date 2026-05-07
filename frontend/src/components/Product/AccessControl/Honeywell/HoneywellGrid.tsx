@@ -51,7 +51,7 @@ export function HoneywellGrid({ products }: HoneywellGridProps) {
                             className="block bg-white border border-gray-100 p-2 rounded-3xl hover:border-[#9B0F06]/20 transition-all duration-500 shadow-[0_5px_20px_rgba(0,0,0,0.03)] hover:shadow-xl"
                         >
                             {/* Image */}
-                            <div className="relative aspect-square overflow-hidden rounded-[1.4rem] bg-gray-50 flex items-center justify-center p-6">
+                            <div className="relative aspect-square overflow-hidden rounded-[1.4rem] bg-gray-50 flex items-center justify-center p-6 px-8">
                                 <motion.img
                                     whileHover={{ scale: 1.05 }}
                                     src={product.image}

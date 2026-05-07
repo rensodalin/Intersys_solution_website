@@ -34,7 +34,7 @@ function HoneywellReadersPage() {
             />
 
             {/* Product Grid */}
-            <section className="py-24 relative z-20">
+            <section className="py-14 md:py-16 relative z-20 px-8">
                 <Container>
                     <HoneywellGrid products={honeywellReaders} />
                 </Container>
