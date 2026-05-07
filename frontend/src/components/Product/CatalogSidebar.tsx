@@ -76,7 +76,7 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                             location.pathname.includes("/fire-systems") ? "fire-systems" : undefined
     );
 
-    const [expandedSections, setExpandedSections] = useState<string[]>(["access-control"]);
+    const [expandedSections, setExpandedSections] = useState<string[]>(["access-control", "Honeywell Systems"]);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
 
     const toggleSection = (id: string) => {
@@ -85,18 +85,11 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
         );
     };
 
-    const handleLevel1Click = (item: any) => {
-        toggleSection(item.id);
-        if (item.link) {
-            navigate({ to: item.link });
-        }
-    };
-
     const SidebarContent = () => (
         <div className="flex flex-col h-full">
 
             {/* ── HEADER ── */}
-            <div className="px-5 py-4  pt-25 border-b border-gray-200 bg-white flex items-center justify-between shrink-0">
+            <div className="px-5 py-4 pt-25 border-b border-gray-200 bg-white flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-3">
                     <img src={logoImg} alt="Logo" className="h-7 w-auto" />
                     <span className="text-sm font-bold text-[#1A3263] tracking-tight">
@@ -108,158 +101,185 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                 </div>
             </div>
 
-            {/* ── NAVIGATION (scrollable middle) ── */}
+            {/* ── SCROLLABLE LIST ── */}
             <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar scroll-smooth min-h-0">
-                {NAVIGATION_DATA.map((item) => (
-                    <div key={item.id} className="space-y-0.5">
-                        <div className="relative">
-                            <button
-                                onClick={() => handleLevel1Click(item)}
-                                className={cn(
-                                    "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 group relative overflow-hidden",
-                                    activeCategory === item.id || (item.id === "access-control" && !activeCategory)
-                                        ? "text-white shadow-md shadow-red-500/20 -translate-y-0.5"
-                                        : "text-gray-600 hover:bg-white hover:shadow-sm hover:-translate-y-0.5"
-                                )}
-                            >
-                                {/* Active Background Gradient */}
-                                {(activeCategory === item.id || (item.id === "access-control" && !activeCategory)) && (
-                                    <div className="absolute inset-0 bg-gradient-to-r from-[#FC3B1F] to-[#d62b14] -z-10" />
-                                )}
-
-                                {(() => {
-                                    const Icon = item.icon;
-                                    return <Icon
-                                        size={18}
-                                        className={cn(
-                                            "shrink-0 transition-colors duration-300",
-                                            activeCategory === item.id || (item.id === "access-control" && !activeCategory)
-                                                ? "text-white"
-                                                : "text-gray-400 group-hover:text-[#FC3B1F]"
-                                        )}
-                                    />;
-                                })()}
-
-                                <span className={cn(
-                                    "flex-1 text-left tracking-tight relative z-10",
-                                    item.link && "hover:underline"
-                                )}>
-                                    {item.label}
-                                </span>
-
-                                {item.sub && (
-                                    <ChevronDown
-                                        size={14}
-                                        className={cn(
-                                            "transition-transform duration-300 relative z-10",
-                                            expandedSections.includes(item.id) ? "rotate-180" : ""
-                                        )}
-                                    />
-                                )}
-                            </button>
-                        </div>
-
-                        {/* Submenu Level 1 */}
-                        <AnimatePresence>
-                            {item.sub && expandedSections.includes(item.id) && (
-                                <motion.div
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: "auto", opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    className="overflow-hidden"
+                {NAVIGATION_DATA.map((item) => {
+                    const isActive = activeCategory === item.id || (item.id === "access-control" && !activeCategory);
+                    return (
+                        <div key={item.id} className="space-y-0.5">
+                            <div className="relative">
+                                <div
+                                    className={cn(
+                                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 group relative overflow-hidden",
+                                        isActive
+                                            ? "text-[#FC3B1F] bg-[#FC3B1F]/5 group-hover:text-white group-hover:shadow-md group-hover:-translate-y-0.5"
+                                            : "text-gray-600 hover:text-white hover:shadow-md hover:-translate-y-0.5"
+                                    )}
                                 >
-                                    <div className="pl-6 space-y-1 pt-2 pb-3">
-                                        {item.sub.map((subItem: any, idx) => {
-                                            const SubIcon = subItem.icon || ShieldCheck;
-                                            return (
-                                                <div key={idx} className="space-y-1">
-                                                    <div className="flex items-center justify-between group cursor-pointer py-2 px-3 rounded-lg hover:bg-white/60 transition-all duration-200">
-                                                        <div className="flex items-center gap-2.5 flex-1">
-                                                            <SubIcon size={14} className="text-gray-400 group-hover:text-[#FC3B1F] transition-colors" />
-                                                            {subItem.link ? (
-                                                                <Link to={subItem.link} className="text-[13px] font-semibold text-gray-500 group-hover:text-gray-900 transition-colors flex-1 hover:underline">
-                                                                    {subItem.label}
-                                                                </Link>
-                                                            ) : (
-                                                                <span className="text-[13px] font-semibold text-gray-500 group-hover:text-gray-900 transition-colors">
-                                                                    {subItem.label}
-                                                                </span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-[#FC3B1F] to-[#d62b14] opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+
+                                    {(() => {
+                                        const Icon = item.icon;
+                                        return <Icon
+                                            size={18}
+                                            className={cn(
+                                                "shrink-0 transition-colors duration-300",
+                                                isActive ? "text-[#FC3B1F] group-hover:text-white" : "text-gray-400 group-hover:text-white"
+                                            )}
+                                        />;
+                                    })()}
+
+                                    <span className={cn(
+                                        "flex-1 text-left tracking-tight relative z-10",
+                                        item.link && "hover:underline"
+                                    )}>
+                                        {item.link ? (
+                                            <Link to={item.link} className="block w-full">{item.label}</Link>
+                                        ) : item.label}
+                                    </span>
+
+                                    {item.sub && (
+                                        <div 
+                                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(item.id); }}
+                                            className="p-1 cursor-pointer relative z-10 flex items-center justify-center rounded-md hover:bg-black/10 transition-colors"
+                                        >
+                                            <ChevronDown
+                                                size={14}
+                                                className={cn(
+                                                    "transition-transform duration-300",
+                                                    expandedSections.includes(item.id) ? "rotate-180" : ""
+                                                )}
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <AnimatePresence>
+                                {item.sub && expandedSections.includes(item.id) && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="pl-6 space-y-1 pt-2 pb-3">
+                                            {item.sub.map((subItem: any, idx) => {
+                                                const SubIcon = subItem.icon || ShieldCheck;
+                                                return (
+                                                    <div key={idx} className="space-y-1">
+                                                        <div className="flex items-center justify-between group py-2 px-3 rounded-lg hover:bg-white/60 transition-all duration-200">
+                                                            <div className="flex items-center gap-2.5 flex-1">
+                                                                <SubIcon size={14} className="text-gray-400 group-hover:text-[#FC3B1F] transition-colors" />
+                                                                {subItem.link ? (
+                                                                    <Link to={subItem.link} className="text-[13px] font-semibold text-gray-500 group-hover:text-[#FC3B1F] transition-colors flex-1 hover:underline">
+                                                                        {subItem.label}
+                                                                    </Link>
+                                                                ) : (
+                                                                    <span className="text-[13px] font-semibold text-gray-500 group-hover:text-gray-900 transition-colors">
+                                                                        {subItem.label}
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                            {Array.isArray(subItem.sub) && (
+                                                                <div 
+                                                                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(subItem.label); }}
+                                                                    className="p-1 cursor-pointer rounded-md hover:bg-gray-200 transition-colors"
+                                                                >
+                                                                    <ChevronDown size={13} className={cn("text-gray-400 transition-transform", expandedSections.includes(subItem.label) ? "rotate-180" : "")} />
+                                                                </div>
                                                             )}
                                                         </div>
-                                                        {Array.isArray(subItem.sub) && (
-                                                            <ChevronDown size={13} className="text-gray-300 group-hover:text-gray-600 transition-colors" />
-                                                        )}
-                                                    </div>
 
-                                                    {/* Submenu Level 2 */}
-                                                    {Array.isArray(subItem.sub) && (
-                                                        <div className="pl-6 space-y-1 border-l border-gray-200/80 ml-4 pt-1 pb-1">
-                                                            {subItem.sub.map((l3: any, l3idx: number) => {
-                                                                const isL3String = typeof l3 === "string";
-                                                                const l3Label = isL3String ? l3 : l3.label;
-                                                                const l3Link = isL3String ? undefined : l3.link;
+                                                        <AnimatePresence>
+                                                            {Array.isArray(subItem.sub) && expandedSections.includes(subItem.label) && (
+                                                                <motion.div
+                                                                    initial={{ height: 0, opacity: 0 }}
+                                                                    animate={{ height: "auto", opacity: 1 }}
+                                                                    exit={{ height: 0, opacity: 0 }}
+                                                                    className="overflow-hidden"
+                                                                >
+                                                                    <div className="pl-6 space-y-1 border-l border-gray-200/80 ml-4 pt-1 pb-1">
+                                                                        {subItem.sub.map((l3: any, l3idx: number) => {
+                                                                            const isL3String = typeof l3 === "string";
+                                                                            const l3Label = isL3String ? l3 : l3.label;
+                                                                            const l3Link = isL3String ? undefined : l3.link;
+                                                                            
+                                                                            return (
+                                                                                <div key={l3idx} className="space-y-1">
+                                                                                    <div className="flex items-center justify-between group py-1.5 px-3 rounded-md hover:bg-white/40 transition-all duration-200">
+                                                                                        {l3Link ? (
+                                                                                            <Link to={l3Link} className="text-xs text-gray-500 font-semibold group-hover:text-[#FC3B1F] transition-colors flex-1 block">
+                                                                                                {l3Label}
+                                                                                            </Link>
+                                                                                        ) : (
+                                                                                            <span className="text-xs text-gray-400 font-medium group-hover:text-gray-800 transition-colors cursor-pointer">
+                                                                                                {l3Label}
+                                                                                            </span>
+                                                                                        )}
+                                                                                        {!isL3String && Array.isArray(l3.sub) && (
+                                                                                            <div 
+                                                                                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(l3Label); }}
+                                                                                                className="p-1 cursor-pointer rounded-md hover:bg-gray-200 transition-colors"
+                                                                                            >
+                                                                                                <ChevronDown size={11} className={cn("text-gray-300 transition-transform", expandedSections.includes(l3Label) ? "rotate-180" : "")} />
+                                                                                            </div>
+                                                                                        )}
+                                                                                    </div>
 
-                                                                return (
-                                                                    <div key={l3idx} className="space-y-1">
-                                                                        <div className="flex items-center justify-between group py-1.5 px-3 rounded-md hover:bg-white/40 transition-all duration-200">
-                                                                            {l3Link ? (
-                                                                                <Link to={l3Link} className="text-xs text-gray-500 font-semibold group-hover:text-[#FC3B1F] transition-colors flex-1 block">
-                                                                                    {l3Label}
-                                                                                </Link>
-                                                                            ) : (
-                                                                                <span className="text-xs text-gray-400 font-medium group-hover:text-gray-800 transition-colors cursor-pointer">
-                                                                                    {l3Label}
-                                                                                </span>
-                                                                            )}
-                                                                            {!isL3String && Array.isArray(l3.sub) && (
-                                                                                <ChevronDown size={11} className="text-gray-300 group-hover:text-gray-500 cursor-pointer" />
-                                                                            )}
-                                                                        </div>
+                                                                                    <AnimatePresence>
+                                                                                        {!isL3String && Array.isArray(l3.sub) && expandedSections.includes(l3Label) && (
+                                                                                            <motion.div
+                                                                                                initial={{ height: 0, opacity: 0 }}
+                                                                                                animate={{ height: "auto", opacity: 1 }}
+                                                                                                exit={{ height: 0, opacity: 0 }}
+                                                                                                className="overflow-hidden"
+                                                                                            >
+                                                                                                <div className="pl-4 space-y-1 border-l-2 border-[#FC3B1F]/20 ml-4 pt-1 mb-2">
+                                                                                                    {l3.sub.map((l4: any, l4idx: number) => {
+                                                                                                        const isL4String = typeof l4 === "string";
+                                                                                                        const l4Label = isL4String ? l4 : l4.label;
+                                                                                                        const l4Link = isL4String ? undefined : l4.link;
 
-                                                                        {/* Submenu Level 3 */}
-                                                                        {!isL3String && Array.isArray(l3.sub) && (
-                                                                            <div className="pl-4 space-y-1 border-l-2 border-[#FC3B1F]/20 ml-4 pt-1 mb-2">
-                                                                                {l3.sub.map((l4: any, l4idx: number) => {
-                                                                                    const isL4String = typeof l4 === "string";
-                                                                                    const l4Label = isL4String ? l4 : l4.label;
-                                                                                    const l4Link = isL4String ? undefined : l4.link;
-
-                                                                                    return (
-                                                                                        <div key={l4idx}>
-                                                                                            {l4Link ? (
-                                                                                                <Link to={l4Link} className="block text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#FC3B1F] hover:bg-white/50 rounded-md transition-all duration-200 font-medium">
-                                                                                                    {l4Label}
-                                                                                                </Link>
-                                                                                            ) : (
-                                                                                                <div className="text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#FC3B1F] cursor-pointer hover:bg-white/50 rounded-md transition-all duration-200 font-medium">
-                                                                                                    {l4Label}
+                                                                                                        return (
+                                                                                                            <div key={l4idx}>
+                                                                                                                {l4Link ? (
+                                                                                                                    <Link to={l4Link} className="block text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#FC3B1F] hover:bg-white/50 rounded-md transition-all duration-200 font-medium">
+                                                                                                                        {l4Label}
+                                                                                                                    </Link>
+                                                                                                                ) : (
+                                                                                                                    <div className="text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#FC3B1F] cursor-pointer hover:bg-white/50 rounded-md transition-all duration-200 font-medium">
+                                                                                                                        {l4Label}
+                                                                                                                    </div>
+                                                                                                                )}
+                                                                                                            </div>
+                                                                                                        );
+                                                                                                    })}
                                                                                                 </div>
-                                                                                            )}
-                                                                                        </div>
-                                                                                    );
-                                                                                })}
-                                                                            </div>
-                                                                        )}
+                                                                                            </motion.div>
+                                                                                        )}
+                                                                                    </AnimatePresence>
+                                                                                </div>
+                                                                            );
+                                                                        })}
                                                                     </div>
-                                                                );
-                                                            })}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>
-                ))}
+                                                                </motion.div>
+                                                            )}
+                                                        </AnimatePresence>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    );
+                })}
             </div>
 
             {/* ── FOOTER (always visible, never scrolls away) ── */}
             <div className="shrink-0 border-t border-gray-200 bg-white">
-
-                {/* Quick links */}
                 <div className="px-4 py-3 flex gap-2">
                     <a
                         href="#"
