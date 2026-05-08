@@ -19,15 +19,15 @@ router.get(
                 return res.redirect("http://localhost:5173/?error=auth_failed");
             }
             if (!user) {
-                return res.redirect("http://localhost:5173/?error=user_not_found");
+                return res.redirect("http://localhost:5174/?error=user_not_found");
             }
             req.logIn(user, (err) => {
                 if (err) {
                     console.error("Session Login Error:", err);
-                    return res.redirect("http://localhost:5173/?error=session_error");
+                    return res.redirect("http://localhost:5174/?error=session_error");
                 }
                 // Successful login
-                return res.redirect("http://localhost:5173/");
+                return res.redirect("http://localhost:5174/");
             });
         })(req, res, next);
     }
@@ -37,7 +37,7 @@ router.get(
 router.get("/logout", (req, res, next) => {
     req.logout((err) => {
         if (err) return next(err);
-        res.redirect("http://localhost:5173/");
+        res.redirect("http://localhost:5174/");
     });
 });
 
