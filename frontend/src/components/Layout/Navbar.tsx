@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Menu, X, User, ChevronRight, Phone, MapPin, Facebook, Linkedin } from "lucide-react";
+import { Menu, X, User, ChevronRight, Phone, Mail, Facebook, Linkedin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoImg from "@/assets/logo.avif";
 
@@ -140,8 +140,14 @@ export function Navbar() {
             </div>
 
             <div className="flex items-center gap-2 text-white/70 hover:text-white transition cursor-pointer">
-              <MapPin size={14} className="text-red-500" />
-              <span className="text-xs">St. 13, Khan Sen Sok, Phnom Penh, Cambodia</span>
+              <Mail size={14} className="text-red-500" />
+
+              <a
+                href="mailto:sochet@intersys-solutions.com"
+                className="text-xs hover:underline"
+              >
+                sochet@intersys-solutions.com
+              </a>
             </div>
 
 
@@ -191,124 +197,124 @@ export function Navbar() {
         <div className="hidden lg:flex flex-1 justify-center h-full">
           <nav className="flex items-center gap-8 h-full">
 
-          <Link to="/about" className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500">
-            About Us
-          </Link>
-
-          {/* SERVICES CATEGORY */}
-          <div
-            className="relative h-full flex items-center"
-            onMouseEnter={() => setShowServices(true)}
-            onMouseLeave={closeMenus}
-          >
-            <div
-              className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 cursor-pointer transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center"
-            >
-              Services
-            </div>
-
-            {showServices && (
-              <div className="absolute top-full left-0 pt-2 w-64 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
-                {SERVICES_DATA.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    onClick={closeMenus}
-                    className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* PRODUCTS CATEGORY */}
-          <div
-            className="relative h-full flex items-center"
-            onMouseEnter={() => setShowProducts(true)}
-            onMouseLeave={closeMenus}
-          >
-            <Link
-              to="/products"
-              onClick={closeMenus}
-              className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 cursor-pointer transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500"
-            >
-              Products
+            <Link to="/about" className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500">
+              About Us
             </Link>
 
-            {showProducts && (
-              <div className="absolute top-full left-0 pt-2 flex items-start animate-in fade-in slide-in-from-top-2 duration-200">
-                {/* L1 Panel */}
-                <div className="w-64 bg-[#1A3263] border border-white/10 shadow-2xl">
-                  {Object.entries(PRODUCTS_DATA).map(([label, data]) => (
-                    <div
-                      key={label}
-                      onMouseEnter={() => { setHoveredL1(label); setHoveredL2(null); }}
-                      className={cn(
-                        "group relative flex items-center justify-between px-5 py-4 border-b border-white/5 last:border-0 transition-colors cursor-pointer",
-                        hoveredL1 === label ? "bg-red-600 text-white" : "text-white/70 hover:bg-white/5"
-                      )}
+            {/* SERVICES CATEGORY */}
+            <div
+              className="relative h-full flex items-center"
+              onMouseEnter={() => setShowServices(true)}
+              onMouseLeave={closeMenus}
+            >
+              <div
+                className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 cursor-pointer transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center"
+              >
+                Services
+              </div>
+
+              {showServices && (
+                <div className="absolute top-full left-0 pt-2 w-64 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
+                  {SERVICES_DATA.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      onClick={closeMenus}
+                      className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
                     >
-                      <Link to={data.href} className="flex-1 text-sm font-medium" onClick={closeMenus}>
-                        {label}
-                      </Link>
-                      {data.sub && <ChevronRight className="w-4 h-4 ml-2 opacity-50" />}
-                    </div>
+                      {item.name}
+                    </Link>
                   ))}
                 </div>
+              )}
+            </div>
 
-                {/* L2 Panel */}
-                {hoveredL1 && PRODUCTS_DATA[hoveredL1]?.sub && (
-                  <div className="w-64 bg-[#1A3263] border border-white/10 shadow-2xl ml-px">
-                    {activeL2Content(hoveredL1, setHoveredL2, hoveredL2, closeMenus)}
+            {/* PRODUCTS CATEGORY */}
+            <div
+              className="relative h-full flex items-center"
+              onMouseEnter={() => setShowProducts(true)}
+              onMouseLeave={closeMenus}
+            >
+              <Link
+                to="/products"
+                onClick={closeMenus}
+                className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 cursor-pointer transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500"
+              >
+                Products
+              </Link>
+
+              {showProducts && (
+                <div className="absolute top-full left-0 pt-2 flex items-start animate-in fade-in slide-in-from-top-2 duration-200">
+                  {/* L1 Panel */}
+                  <div className="w-64 bg-[#1A3263] border border-white/10 shadow-2xl">
+                    {Object.entries(PRODUCTS_DATA).map(([label, data]) => (
+                      <div
+                        key={label}
+                        onMouseEnter={() => { setHoveredL1(label); setHoveredL2(null); }}
+                        className={cn(
+                          "group relative flex items-center justify-between px-5 py-4 border-b border-white/5 last:border-0 transition-colors cursor-pointer",
+                          hoveredL1 === label ? "bg-red-600 text-white" : "text-white/70 hover:bg-white/5"
+                        )}
+                      >
+                        <Link to={data.href} className="flex-1 text-sm font-medium" onClick={closeMenus}>
+                          {label}
+                        </Link>
+                        {data.sub && <ChevronRight className="w-4 h-4 ml-2 opacity-50" />}
+                      </div>
+                    ))}
                   </div>
-                )}
 
-                {/* L3 Panel */}
-                {hoveredL2 && hoveredL1 === "Access Control" && (
-                  <div className="w-64 bg-[#1A3263] border border-white/10 shadow-2xl ml-px max-h-[500px] overflow-y-auto">
-                    {activeL3Content(hoveredL2, closeMenus)}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+                  {/* L2 Panel */}
+                  {hoveredL1 && PRODUCTS_DATA[hoveredL1]?.sub && (
+                    <div className="w-64 bg-[#1A3263] border border-white/10 shadow-2xl ml-px">
+                      {activeL2Content(hoveredL1, setHoveredL2, hoveredL2, closeMenus)}
+                    </div>
+                  )}
 
-          {/* CLIENT CENTER */}
-          <div className="relative h-full flex items-center" onMouseEnter={() => setActiveSupport("client")} onMouseLeave={closeMenus}>
-            <button className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center">
-              Client Center
-            </button>
-            {activeSupport === "client" && (
-              <div className="absolute top-full left-0 pt-2 w-56 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
-                {CLIENT_CENTER_DATA.map(item => (
-                  <Link key={item.name} to={item.href} onClick={closeMenus} className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5">
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
+                  {/* L3 Panel */}
+                  {hoveredL2 && hoveredL1 === "Access Control" && (
+                    <div className="w-64 bg-[#1A3263] border border-white/10 shadow-2xl ml-px max-h-[500px] overflow-y-auto">
+                      {activeL3Content(hoveredL2, closeMenus)}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
 
-          {/* CONTACT */}
-          <div className="relative h-full flex items-center" onMouseEnter={() => setActiveSupport("contact")} onMouseLeave={closeMenus}>
-            <button className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center">
-              Contact Us
-            </button>
-            {activeSupport === "contact" && (
-              <div className="absolute top-full left-0 pt-2 w-64 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
-                {CONTACT_DATA.map(item => (
-                  <Link key={item.name} to={item.href} onClick={closeMenus} className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5">
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
+            {/* CLIENT CENTER */}
+            <div className="relative h-full flex items-center" onMouseEnter={() => setActiveSupport("client")} onMouseLeave={closeMenus}>
+              <button className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center">
+                Client Center
+              </button>
+              {activeSupport === "client" && (
+                <div className="absolute top-full left-0 pt-2 w-56 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
+                  {CLIENT_CENTER_DATA.map(item => (
+                    <Link key={item.name} to={item.href} onClick={closeMenus} className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5">
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
 
-          <Link to="/projects" className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500">
-            Projects
+            {/* CONTACT */}
+            <div className="relative h-full flex items-center" onMouseEnter={() => setActiveSupport("contact")} onMouseLeave={closeMenus}>
+              <button className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center">
+                Contact Us
+              </button>
+              {activeSupport === "contact" && (
+                <div className="absolute top-full left-0 pt-2 w-64 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
+                  {CONTACT_DATA.map(item => (
+                    <Link key={item.name} to={item.href} onClick={closeMenus} className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5">
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Link to="/projects" className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500">
+              Projects
             </Link>
           </nav>
         </div>

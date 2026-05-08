@@ -49,95 +49,77 @@ export const sectors = [
 export function JourneySection() {
   return (
     <section className="bg-white">
-      {/* Top Brand Banner */}
-      <div className="bg-[#9B0F06] py-10 md:py-14 text-center">
+
+      {/* Header */}
+      <div className="bg-[#C3110C] py-10 md:py-14 text-center">
         <Container>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-display text-2xl md:text-3xl font-bold text-white mb-2"
+            className="text-2xl md:text-3xl font-bold text-white mb-2"
           >
-            A Journey of Engineering Excellence
+            A journey of engineering excellence
           </motion.h2>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-white/90 text-sm md:text-base font-medium"
+            className="text-white/80 text-sm md:text-base"
           >
-            Over the years we have successfully integrated more than 100+ projects across Cambodia
+            Over 100+ projects delivered across Cambodia
           </motion.p>
         </Container>
       </div>
 
-      {/* Content Section */}
+      {/* Content */}
       <Container className="py-14 md:py-20">
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-20">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
+
+          {/* Left */}
           <div className="lg:w-1/2">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="text-[11px] font-mono font-bold tracking-[0.2em] text-[#9B0F06] mb-4 uppercase"
-            >
-              Our Footprint
-            </motion.div>
-            <motion.h3
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="font-display text-2xl md:text-3xl font-bold text-[#162E93] leading-tight mb-5"
-            >
-              Success in all sectors of Integrated Technology
-            </motion.h3>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-[#4a5568] text-sm md:text-base leading-relaxed"
-            >
-              As a leading system integrator in Cambodia, Intersys Solutions meets the clients'
-              needs from concept to turnkey solutions across a wide-ranging array of building
-              requirements. These include large-scale projects such as:
-            </motion.p>
+
+            <div className="text-xs font-medium text-[#9B0F06] mb-3 tracking-wide">
+              Our footprint
+            </div>
+
+            <h3 className="text-2xl md:text-3xl font-semibold text-[#162E93] leading-snug mb-4">
+              Success across integrated technology sectors
+            </h3>
+
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+              As a system integrator in Cambodia, we deliver end-to-end solutions
+              across multiple industries — from design to full deployment.
+            </p>
           </div>
 
+          {/* Right */}
           <div className="lg:w-1/2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 mb-10">
-              {sectors.map((sector, i) => (
-                <motion.div
-                  key={sector.id}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.05 }}
-                  className="flex items-center gap-3 group"
-                >
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-10 mb-8">
+              {sectors.map((sector) => (
+                <div key={sector.id} className="flex items-center gap-3 group">
+
                   <div className="w-1.5 h-1.5 rounded-full bg-[#9B0F06] group-hover:scale-150 transition-transform" />
-                  <span className="text-[#162E93] font-semibold text-[13px] md:text-[14px] group-hover:text-[#9B0F06] transition-colors">
+
+                  <span className="text-sm text-[#162E93] font-medium group-hover:text-[#9B0F06] transition-colors">
                     {sector.name}
                   </span>
-                </motion.div>
+
+                </div>
               ))}
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+            <Link
+              to="/sectors"
+              className="inline-flex items-center gap-2 bg-[#1A3263] text-white px-6 py-3 rounded-md text-xs font-medium hover:bg-[#9B0F06] transition-all group"
             >
-              <Link
-                to="/sectors"
-                className="inline-flex items-center gap-3 bg-[#162E93] text-white px-8 py-4  font-bold text-[11px] tracking-widest uppercase hover:bg-[#9B0F06] hover:shadow-[0_10px_30px_-5px_rgba(255,59,59,0.3)] transition-all duration-300 transform hover:-translate-y-1 group"
-              >
-                View More Detail
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-            </motion.div>
+              View more details
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+
           </div>
         </div>
       </Container>

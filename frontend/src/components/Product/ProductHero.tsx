@@ -14,10 +14,6 @@ interface ProductHeroProps {
     breadcrumbs?: BreadcrumbItem[];
 }
 
-/**
- * Universal ProductHeader for a clean, minimalist category UI.
- * Replaces the previous dark navy 'ProductHero'.
- */
 export function ProductHero({
     title = "Our Products",
     subtitle = "Elevate your facility with our comprehensive range of safety, security, and building management technologies.",
@@ -27,49 +23,54 @@ export function ProductHero({
     ],
 }: ProductHeroProps) {
     return (
-        <section className="bg-[#F8F9FA] pt-45 pb-8 border-b border-gray-200/50">
+        <section className="bg-[#F8F9FA] pt-45 pb-8 border-b border-gray-200">
             <Container>
-                <div className="max-w-3xl">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        {/* Breadcrumbs */}
-                        <nav className="flex items-center gap-1.5 mb-3 flex-wrap">
-                            {breadcrumbs.map((item, index) => (
-                                <div key={item.name} className="flex items-center gap-1.5">
-                                    <Link
-                                        to={item.href}
-                                        className={cn(
-                                            "text-[10px] font-bold uppercase tracking-wider transition-colors",
-                                            index === breadcrumbs.length - 1
-                                                ? "text-gray-900 cursor-default"
-                                                : "text-gray-400 hover:text-[#C3110C]"
-                                        )}
-                                    >
-                                        {item.name}
-                                    </Link>
-                                    {index < breadcrumbs.length - 1 && (
-                                        <span className="text-gray-300 text-[10px]">/</span>
+                <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.35 }}
+                    className="max-w-xl"
+                >
+                    {/* Breadcrumbs */}
+                    <nav className="flex items-center gap-1.5 mb-3 flex-wrap">
+                        {breadcrumbs.map((item, index) => (
+                            <div
+                                key={item.name}
+                                className="flex items-center gap-1.5"
+                            >
+                                <Link
+                                    to={item.href}
+                                    className={cn(
+                                        "text-[11px] font-medium transition-colors",
+                                        index === breadcrumbs.length - 1
+                                            ? "text-gray-900 pointer-events-none"
+                                            : "text-gray-500 hover:text-[#C3110C]"
                                     )}
-                                </div>
-                            ))}
-                        </nav>
+                                >
+                                    {item.name}
+                                </Link>
 
-                        {/* Page Title */}
-                        <h1 className="text-2xl md:text-3xl font-black text-[#1A3263] mb-2 tracking-tight">
-                            {title}
-                        </h1>
+                                {index < breadcrumbs.length - 1 && (
+                                    <span className="text-gray-300 text-[11px]">
+                                        /
+                                    </span>
+                                )}
+                            </div>
+                        ))}
+                    </nav>
 
-                        {/* Description */}
-                        {subtitle && (
-                            <p className="text-gray-500 text-xs md:text-sm max-w-2xl leading-relaxed font-normal">
-                                {subtitle}
-                            </p>
-                        )}
-                    </motion.div>
-                </div>
+                    {/* Title */}
+                    <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#1A3263] leading-tight mb-2">
+                        {title}
+                    </h1>
+
+                    {/* Subtitle */}
+                    {subtitle && (
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                            {subtitle}
+                        </p>
+                    )}
+                </motion.div>
             </Container>
         </section>
     );

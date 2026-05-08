@@ -93,54 +93,53 @@ const projects = [
 export function FeaturedProjects() {
   return (
     <section className="bg-white pb-24 md:pb-32 overflow-hidden">
-      {/* Seamless Tile Grid - No Gaps, Edge to Edge */}
-      <div className="w-full">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
-          {projects.map((p, i) => (
-            <motion.div
-              key={p.title}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: i * 0.05 }}
-              className="group relative aspect-square overflow-hidden bg-[#162E93] cursor-pointer"
-            >
-              {/* Background Image - High quality fill */}
-              <img
-                src={p.image}
-                alt={p.title}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-100 group-hover:opacity-40"
-              />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
+        {projects.map((p, i) => (
+          <motion.div
+            key={p.title}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: i * 0.05 }}
+            className="group relative aspect-square overflow-hidden cursor-pointer bg-[#162E93]"
+          >
+            {/* Image */}
+            <img
+              src={p.image}
+              alt={p.title}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
 
-              {/* Dark Overlay (Transitions in on hover) */}
-              <div className="absolute inset-0 bg-[#162E93]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            {/* Soft overlay */}
+            <div className="absolute inset-0 bg-black/10 group-hover:bg-[#162E93]/70 transition-all duration-500" />
 
-              {/* Seamless Bottom Label (Initially Visible) */}
-              <div className="absolute inset-x-0 bottom-0 p-6 z-20 group-hover:opacity-0 transition-opacity duration-300">
-                <h3 className="font-display text-[15px] font-bold text-white leading-tight uppercase tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                  {p.title}
-                </h3>
-              </div>
+            {/* Bottom title (default state) */}
+            <div className="absolute bottom-0 inset-x-0 p-5 z-20 group-hover:opacity-0 transition-opacity duration-300">
+              <h3 className="text-sm font-semibold text-white leading-snug drop-shadow">
+                {p.title}
+              </h3>
+            </div>
 
-              {/* Hover Detailed Content (Reveal interaction) */}
-              <div className="absolute inset-0 flex flex-col justify-end p-8 z-30 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out">
-                <div className="mb-3">
-                  <span className="inline-block bg-[#9B0F06] text-white uppercase text-[9px] font-bold px-3 py-1 rounded-full tracking-widest">
-                    {p.category}
-                  </span>
-                </div>
-                <h3 className="font-display text-xl md:text-2xl font-bold text-white mb-4 leading-tight">
-                  {p.title}
-                </h3>
-                <div className="w-8 h-[2px] bg-[#9B0F06] mb-4" />
-                <p className="text-white/80 text-[13px] leading-relaxed line-clamp-4">{p.desc}</p>
-                <div className="mt-8 flex items-center gap-2 group/btn">
-                  <div className="w-5 h-[1px] bg-white group-hover/btn:bg-[#9B0F06] transition-colors" />
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+            {/* Hover content */}
+            <div className="absolute inset-0 flex flex-col justify-end p-6 z-30 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+
+              {/* category */}
+              <span className="inline-block w-fit bg-[#9B0F06] text-white text-[10px] font-medium px-3 py-1 rounded-full mb-3">
+                {p.category}
+              </span>
+
+              <h3 className="text-lg md:text-xl font-semibold text-white mb-3 leading-snug">
+                {p.title}
+              </h3>
+
+              <div className="w-8 h-[2px] bg-[#9B0F06] mb-3" />
+
+              <p className="text-white/80 text-xs md:text-sm leading-relaxed">
+                {p.desc}
+              </p>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </section>
   );

@@ -11,7 +11,7 @@ export function ProductGrid({ categories }: ProductGridProps) {
     return (
         <section className="py-8">
             <Container>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 pb-30">
                     {categories.map((cat, i) => (
                         <motion.div
                             key={cat.title}
@@ -20,7 +20,7 @@ export function ProductGrid({ categories }: ProductGridProps) {
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
                         >
-                            <Link 
+                            <Link
                                 to={cat.link || "#"}
                                 className="group flex flex-col h-full bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-[0_2px_10px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:border-[#1A3263]/20 transition-all duration-500 hover:-translate-y-1"
                             >
