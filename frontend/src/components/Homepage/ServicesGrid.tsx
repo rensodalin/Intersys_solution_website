@@ -12,6 +12,7 @@ import {
   LayoutGrid,
   ChevronDown,
   ArrowRight,
+  ArrowUpRight,
 } from "lucide-react";
 import bmsImg from "@/assets/bms_service.png";
 import fireImg from "@/assets/fire_safety.png";
@@ -23,44 +24,58 @@ export function ServicesGrid() {
   const [expandedIds, setExpandedIds] = useState<string[]>([]);
 
   const toggleExpand = (id: string) => {
-    setExpandedIds((prev) => (prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]));
+    setExpandedIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
   };
 
   return (
-    <section id="solutions" className="py-24 bg-[#F9FAFB] overflow-hidden relative">
-      {/* Decorative background element */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-red-500/5 blur-[120px] rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none" />
-
+    <section id="solutions" className="py-28 bg-[#F8F9FA] overflow-hidden relative">
       <Container>
-        <div className="mb-20">
-          <motion.h2
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-4xl md:text-5xl font-bold text-[#0A0F1A] mb-6 tracking-tight"
-          >
-            Our <span className="text-red-500">Solution</span>
-          </motion.h2>
+
+        {/* ── SECTION HEADER ── */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+          <div className="space-y-3">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-2"
+            >
+
+            </motion.div>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.05 }}
+              className="text-3xl md:text-4xl font-bold tracking-tight text-[#0A0F1A]"
+            >
+              Our <span className="text-[#DA3D20]">Solutions</span>
+            </motion.h2>
+          </div>
+
           <motion.p
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-            className="text-gray-500 max-w-2xl text-base leading-relaxed"
+            transition={{ delay: 0.1 }}
+            className="text-gray-400 max-w-sm text-sm leading-relaxed md:text-right"
           >
-            Integrated technology solutions for modern architectural marvels. We design, deploy, and
-            manage the technical nervous system of your facility with precision engineering.
+            Integrated technology solutions for modern infrastructure — designed, deployed, and managed with precision.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 lg:auto-rows-min">
-          {/* BMS */}
+        {/* ── GRID ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 lg:auto-rows-min">
+
+          {/* BMS — wide with image */}
           <ServiceCard
             id="bms"
             icon={Cpu}
-            title="Building Management Systems (BMS)"
-            desc="Discover how our advanced Building Management Systems (BMS) can optimize the performance of your building's essential systems, ensuring seamless operation and energy efficiency."
+            title="Building Management Systems"
+            desc="Optimize your building's essential systems with advanced BMS — ensuring seamless operation, energy efficiency, and real-time control."
             features={["Real-time monitoring", "Energy analytics", "Remote HVAC control"]}
             img={bmsImg}
             className="lg:col-span-4"
@@ -75,11 +90,12 @@ export function ServicesGrid() {
             id="fire"
             icon={Flame}
             title="Fire Alarm System"
-            desc="Safeguard your property and occupants with our state-of-the-art Fire Alarm Systems, designed to provide early detection and rapid response to potential fire hazards."
+            desc="Safeguard occupants with state-of-the-art fire detection and rapid response systems designed to international standards."
             className="lg:col-span-2"
             isExpanded={expandedIds.includes("fire")}
             onToggle={() => toggleExpand("fire")}
             href="/services/fire-alarm"
+            theme="dark"
           />
 
           {/* CCTV */}
@@ -87,13 +103,13 @@ export function ServicesGrid() {
             id="cctv"
             icon={Video}
             title="CCTV Surveillance"
-            desc="Ensure constant vigilance and monitoring with our Surveillance (CCTV) solutions, providing comprehensive coverage and real-time visual insights for enhanced security."
+            desc="Comprehensive coverage and real-time visual insights for enhanced security across your entire facility."
             img={cctvImg}
             className="lg:col-span-2"
             isExpanded={expandedIds.includes("cctv")}
             onToggle={() => toggleExpand("cctv")}
-            theme="dark"
             href="/services/surveillance"
+            theme="image"
           />
 
           {/* Security & Access */}
@@ -101,7 +117,7 @@ export function ServicesGrid() {
             id="security"
             icon={LayoutGrid}
             title="Security & Access Control"
-            desc="Protect your building and assets with our Access Control Systems, offering advanced security features and flexible access management tailored to your requirements."
+            desc="Advanced access management tailored to your building's security requirements with real-time authentication."
             stats={[
               { label: "Auth Speed", value: "0.3s" },
               { label: "Encryption", value: "AES-256" },
@@ -119,7 +135,7 @@ export function ServicesGrid() {
             id="av"
             icon={Volume2}
             title="Audio Visual Systems"
-            desc="Enhance communication and engagement with our AV solutions designed for meeting rooms, classrooms, auditoriums, and control centers, delivering seamless audio, visual, and collaboration experiences."
+            desc="Seamless audio, visual, and collaboration experiences for meeting rooms, auditoriums, and control centers."
             tags={["Video walls", "Smart glass", "PA systems"]}
             className="lg:col-span-3"
             isExpanded={expandedIds.includes("av")}
@@ -132,7 +148,7 @@ export function ServicesGrid() {
             id="custom"
             icon={Settings}
             title="Custom Solutions"
-            desc="Unleash the full potential of your building with our expert support and consulting services, tailored to address your unique challenges and requirements."
+            desc="Expert consulting and bespoke engineering support tailored to your unique infrastructure challenges."
             className="lg:col-span-3"
             isExpanded={expandedIds.includes("custom")}
             onToggle={() => toggleExpand("custom")}
@@ -140,6 +156,7 @@ export function ServicesGrid() {
             btnText="View More"
             href="/services/custom-solution"
           />
+
         </div>
       </Container>
     </section>
@@ -154,7 +171,6 @@ function ServiceCard({
   features,
   stats,
   tags,
-  tag,
   img,
   className,
   isExpanded,
@@ -166,180 +182,206 @@ function ServiceCard({
 }: any) {
   const router = useRouter();
 
+  const isDark = theme === "dark";
+  const isRed = theme === "red";
+  const isImage = theme === "image";
+  const isLight = theme === "light";
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className={`${className} rounded-3xl p-8 flex flex-col shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] border relative transition-all duration-500 hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] group
-                ${theme === "dark"
-          ? "bg-[#0A0F1A] border-white/5 text-white"
-          : theme === "red"
-            ? "bg-[#FC3B1F] border-none text-white"
-            : "bg-white border-gray-100 text-[#0A1F44]"
-        }
-            `}
+      transition={{ duration: 0.55, ease: "easeOut" }}
+      className={`
+        ${className} rounded-2xl flex flex-col overflow-hidden relative group
+        transition-all duration-500 hover:-translate-y-1
+        ${isDark ? "bg-[#0A0F1A] text-white" : ""}
+        ${isRed ? "bg-[#FC3B1F] text-white" : ""}
+        ${isImage ? "relative min-h-[280px]" : ""}
+        ${isLight ? "bg-white text-[#0A0F1A] border border-gray-100 shadow-sm hover:shadow-lg" : ""}
+      `}
     >
-      <div
-        className={
-          layout === "horizontal" || layout === "horizontal-reverse"
-            ? "flex flex-col lg:flex-row gap-10"
-            : ""
-        }
-      >
-        {layout === "horizontal-reverse" && img && (
-          <div className="flex-1 relative overflow-hidden rounded-2xl h-48 lg:min-h-[300px]">
-            <img
-              src={img}
-              alt={title}
-              className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0"
-            />
-          </div>
-        )}
 
-        <div className="flex-1 flex flex-col">
-          <div
-            className={`w-12 h-12 rounded-xl flex items-center justify-center mb-8 transition-colors duration-500
-                        ${theme === "dark" ? "bg-white/5" : theme === "red" ? "bg-white/10" : "bg-gray-50 group-hover:bg-red-50"}`}
-          >
-            <Icon
-              className={`w-6 h-6 transition-colors duration-500 ${theme === "dark" ? "text-red-500" : theme === "red" ? "text-white" : "text-[#0A1F44] group-hover:text-red-600"}`}
-            />
-          </div>
-
-          <h3 className="text-2xl font-bold mb-4 tracking-tight leading-tight">{title}</h3>
-          <p
-            className={`leading-relaxed text-sm mb-8 font-light ${theme === "dark" ? "text-white/40" : theme === "red" ? "text-white/80" : "text-gray-500"}`}
-          >
-            {desc}
-          </p>
-
-          <AnimatePresence>
-            {isExpanded && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                className="overflow-hidden"
-              >
-                {features && (
-                  <ul className="space-y-4 mb-8">
-                    {features.map((f: string) => (
-                      <li
-                        key={f}
-                        className="flex items-center gap-3 text-sm font-medium"
-                      >
-                        <div
-                          className={`w-1.5 h-1.5 rounded-full ${theme === "red" ? "bg-white" : "bg-red-600"}`}
-                        />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {stats && (
-                  <div className="grid grid-cols-2 gap-4 mb-8">
-                    {stats.map((s: any) => (
-                      <div
-                        key={s.label}
-                        className={`${theme === "light" ? "bg-gray-50" : "bg-white/5"} p-4 rounded-xl border ${theme === "light" ? "border-gray-100" : "border-white/5"}`}
-                      >
-                        <div className="text-xl font-bold">{s.value}</div>
-                        <div className={`text-[10px] font-semibold tracking-wide mt-1 ${theme === "light" ? "text-gray-400" : "text-white/30"}`}>
-                          {s.label}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {tags && (
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {tags.map((t: string) => (
-                      <span
-                        key={t}
-                        className={`px-4 py-2 rounded-lg text-[10px] font-semibold tracking-wide
-                                                ${theme === "light" ? "bg-gray-50 text-gray-500" : "bg-white/10 text-white/60"}`}
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <div className="mt-auto flex items-center gap-3">
-            <button
-              onClick={() => {
-                if (href) {
-                  router.navigate({ to: href });
-                }
-              }}
-              className={`flex items-center gap-2 text-[11px] font-bold tracking-widest transition-all duration-300 px-6 py-3 rounded-full group/btn
-                            ${theme === "red"
-                  ? "bg-white text-[#FC3B1F] hover:bg-[#0A0F1A] hover:text-white shadow-xl shadow-red-900/10"
-                  : theme === "dark"
-                    ? "bg-white/5 text-red-500 hover:bg-white/10 hover:text-red-400"
-                    : "bg-gray-50 text-red-600 hover:bg-red-600 hover:text-white shadow-sm hover:shadow-red-500/20"
-                }
-                        `}
-            >
-              <span>{btnText}</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover/btn:translate-x-1" />
-            </button>
-
-            {/* Toggle Arrow for expansion */}
-            {(features || stats || tags) && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  onToggle();
-                }}
-                className={`p-3 rounded-full transition-all duration-300 
-                                ${theme === "red" ? "bg-white/10 text-white hover:bg-white/20" : "bg-gray-50 text-gray-400 hover:bg-gray-100"}
-                            `}
-              >
-                <motion.div animate={{ rotate: isExpanded ? 180 : 0 }}>
-                  <ChevronDown className="w-4 h-4" />
-                </motion.div>
-              </button>
-            )}
-          </div>
-
-          {tag && !isExpanded && (
-            <div className="mt-8 text-[10px] font-bold text-red-600 tracking-wider">
-              {tag}
-            </div>
-          )}
-        </div>
-
-        {layout === "horizontal" && img && (
-          <div className="flex-1 relative overflow-hidden rounded-2xl h-48 lg:min-h-[300px]">
-            <img
-              src={img}
-              alt={title}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-            />
-          </div>
-        )}
-      </div>
-
-      {layout === "vertical" && img && (
-        <div className="mt-10 -mx-8 -mb-8 relative h-56 overflow-hidden rounded-b-3xl">
+      {/* IMAGE THEME — full background image card */}
+      {isImage && img && (
+        <>
           <img
             src={img}
             alt={title}
-            className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
+            className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
           />
-          {theme === "dark" && (
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1A]/90 via-[#0A0F1A]/40 to-transparent" />
+          <div className="relative z-10 p-8 mt-auto">
+            <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center mb-4">
+              <Icon className="w-4 h-4 text-white" />
+            </div>
+            <h3 className="text-xl font-bold text-white mb-2 tracking-tight">{title}</h3>
+            <p className="text-white/50 text-sm leading-relaxed mb-6">{desc}</p>
+            <button
+              onClick={() => href && router.navigate({ to: href })}
+              className="inline-flex items-center gap-2 text-xs font-bold text-white/70 hover:text-white transition-colors group/btn"
+            >
+              View details
+              <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+            </button>
+          </div>
+        </>
+      )}
+
+      {/* ALL OTHER THEMES */}
+      {!isImage && (
+        <div className={`flex flex-col h-full ${layout === "horizontal" || layout === "horizontal-reverse" ? "lg:flex-row" : ""}`}>
+
+          {/* Image side for horizontal-reverse */}
+          {layout === "horizontal-reverse" && img && (
+            <div className="lg:w-2/5 relative overflow-hidden min-h-[240px]">
+              <img
+                src={img}
+                alt={title}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/5" />
+            </div>
+          )}
+
+          {/* Content */}
+          <div className={`flex-1 flex flex-col p-8 ${layout === "horizontal" || layout === "horizontal-reverse" ? "lg:p-10" : ""}`}>
+
+            {/* Icon */}
+            <div className={`
+              w-10 h-10 rounded-xl flex items-center justify-center mb-6 
+              ${isDark ? "bg-white/5" : isRed ? "bg-white/15" : "bg-gray-50 group-hover:bg-red-50"}
+              transition-colors duration-300
+            `}>
+              <Icon className={`w-5 h-5 ${isDark ? "text-red-400" : isRed ? "text-white" : "text-gray-400 group-hover:text-red-500"} transition-colors duration-300`} />
+            </div>
+
+            {/* Title */}
+            <h3 className="text-xl font-bold mb-3 tracking-tight leading-snug">{title}</h3>
+
+            {/* Desc */}
+            <p className={`text-sm leading-relaxed mb-6 ${isDark ? "text-white/40" : isRed ? "text-white/75" : "text-gray-400"}`}>
+              {desc}
+            </p>
+
+            {/* Expandable content */}
+            <AnimatePresence>
+              {isExpanded && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  {features && (
+                    <ul className="space-y-2.5 mb-6">
+                      {features.map((f: string) => (
+                        <li key={f} className="flex items-center gap-2.5 text-sm font-medium">
+                          <div className={`w-1 h-1 rounded-full flex-shrink-0 ${isRed ? "bg-white" : "bg-red-500"}`} />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {stats && (
+                    <div className="grid grid-cols-2 gap-3 mb-6">
+                      {stats.map((s: any) => (
+                        <div
+                          key={s.label}
+                          className={`p-4 rounded-xl ${isDark ? "bg-white/5" : "bg-gray-50"} border ${isDark ? "border-white/5" : "border-gray-100"}`}
+                        >
+                          <div className="text-lg font-bold">{s.value}</div>
+                          <div className={`text-[10px] font-semibold tracking-wide mt-0.5 ${isDark ? "text-white/30" : "text-gray-400"}`}>
+                            {s.label}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {tags && (
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {tags.map((t: string) => (
+                        <span
+                          key={t}
+                          className={`px-3 py-1.5 rounded-lg text-[11px] font-semibold
+                            ${isDark ? "bg-white/10 text-white/50" : "bg-gray-50 text-gray-400 border border-gray-100"}`}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Actions */}
+            <div className="mt-auto flex items-center gap-2 pt-2">
+              <button
+                onClick={() => href && router.navigate({ to: href })}
+                className={`
+                  inline-flex items-center gap-2 text-xs font-bold px-5 py-2.5 rounded-xl
+                  transition-all duration-300 group/btn
+                  ${isRed ? "bg-white text-[#FC3B1F] hover:bg-[#0A0F1A] hover:text-white" : ""}
+                  ${isDark ? "bg-white/8 text-red-400 hover:bg-white/15" : ""}
+                  ${isLight ? "bg-gray-50 text-gray-700 hover:bg-[#0A0F1A] hover:text-white border border-gray-100" : ""}
+                `}
+              >
+                {btnText}
+                <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+              </button>
+
+              {(features || stats || tags) && (
+                <button
+                  onClick={onToggle}
+                  className={`
+                    p-2.5 rounded-xl transition-all duration-300
+                    ${isRed ? "bg-white/15 text-white hover:bg-white/25" : ""}
+                    ${isDark ? "bg-white/5 text-white/40 hover:bg-white/10" : ""}
+                    ${isLight ? "bg-gray-50 text-gray-400 hover:bg-gray-100 border border-gray-100" : ""}
+                  `}
+                >
+                  <motion.div animate={{ rotate: isExpanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                    <ChevronDown className="w-4 h-4" />
+                  </motion.div>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Image side for horizontal */}
+          {layout === "horizontal" && img && (
+            <div className="lg:w-2/5 relative overflow-hidden min-h-[240px] rounded-r-2xl">
+              <img
+                src={img}
+                alt={title}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white/5" />
+            </div>
+          )}
+
+        </div>
+      )}
+
+      {/* Vertical image at bottom */}
+      {layout === "vertical" && img && !isImage && (
+        <div className="h-52 relative overflow-hidden mt-auto">
+          <img
+            src={img}
+            alt={title}
+            className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+          />
+          {isDark && (
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1A] to-transparent" />
           )}
         </div>
       )}
+
     </motion.div>
   );
 }
