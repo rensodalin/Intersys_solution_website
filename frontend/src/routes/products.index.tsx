@@ -44,7 +44,7 @@ const productCategories: ProductCategory[] = [
     desc: "High-definition IP cameras with AI analytics for real-time monitoring and threat detection.",
     image: "https://images.unsplash.com/photo-1665848383782-1ea74efde68f?q=80&w=1190&auto=format&fit=crop",
     icon: Video,
-    link: "/services"
+    link: "/products/surveillance"
   },
   {
     title: "Integrated Systems",
@@ -59,7 +59,7 @@ const productCategories: ProductCategory[] = [
     image: "https://plus.unsplash.com/premium_photo-1663011633080-bc3b7ef0697e?q=80&w=1170&auto=format&fit=crop",
     icon: Cpu,
 
-    link: "/services"
+    link: "/products/building-management"
   },
   {
     title: "Audio Visual",

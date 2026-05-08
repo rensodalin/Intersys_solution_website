@@ -8,7 +8,7 @@ interface SaltoSubGridProps {
 
 export function SaltoSubGrid({ products }: SaltoSubGridProps) {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-8 md:gap-y-10">
             {products.map((product, i) => (
                 <motion.div
                     key={product.id}
@@ -16,39 +16,33 @@ export function SaltoSubGrid({ products }: SaltoSubGridProps) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: (i % 4) * 0.05 }}
-                    className="group relative"
+                    className="group"
                 >
-                    <div className="block bg-white border border-gray-100 p-2 rounded-3xl hover:border-[#9B0F06]/20 transition-all duration-500 shadow-[0_5px_20px_rgba(0,0,0,0.03)] hover:shadow-xl">
-                        {/* Image */}
-                        <div className="relative aspect-square overflow-hidden rounded-[1.4rem] bg-gray-50 flex items-center justify-center p-6">
-                            <motion.img
-                                whileHover={{ scale: 1.05 }}
-                                src={product.image}
-                                alt={product.title}
-                                className="w-full h-full object-contain relative z-10 transition-all duration-500"
-                            />
+                    {/* Image Container */}
+                    <div className="relative aspect-square overflow-hidden bg-[#F6F6F6] flex items-center justify-center p-8 md:p-10 mb-3 group-hover:bg-[#F0F0F0] transition-colors duration-500 rounded-lg">
+                        <motion.img
+                            whileHover={{ scale: 1.05 }}
+                            src={product.image}
+                            alt={product.title}
+                            className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700"
+                        />
 
-                            <div className="absolute top-4 right-4 w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center text-[10px] font-semibold text-gray-400">
-                                {String(i + 1).padStart(2, "0")}
+                        {/* Hover "View Details" Pill */}
+                        <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-400 ease-out pointer-events-none">
+                            <div className="bg-[#1A3263] text-white px-5 py-1.5 rounded-full text-[13px] font-medium shadow-[0_8px_20px_rgba(26,50,99,0.2)]">
+                                View details
                             </div>
                         </div>
+                    </div>
 
-                        {/* Content */}
-                        <div className="p-5">
-                            <div className="flex items-center gap-2 mb-3">
-                                <div className="h-3 w-[2px] bg-[#9B0F06] scale-y-0 group-hover:scale-y-100 transition-transform origin-top" />
-                                <h3 className="text-base font-semibold text-[#162E93] group-hover:text-[#9B0F06] transition-colors leading-tight">
-                                    {product.title}
-                                </h3>
-                            </div>
-
-
-                            {/* Button */}
-                            <button className="flex items-center justify-between w-full py-3 px-4 bg-gray-50 rounded-xl text-[#1A3263] font-semibold text-sm group-hover:bg-[#1A3263] group-hover:text-white transition-all duration-300">
-                                <span>View Product</span>
-                                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                            </button>
-                        </div>
+                    {/* Content */}
+                    <div className="flex flex-col px-1">
+                        <h3 className="text-[15px] md:text-base font-medium text-gray-900 group-hover:text-gray-500 transition-colors mb-1 leading-tight">
+                            {product.title}
+                        </h3>
+                        <p className="text-gray-500 text-[13px] md:text-sm leading-relaxed line-clamp-2 md:line-clamp-1">
+                            {product.description}
+                        </p>
                     </div>
                 </motion.div>
             ))}

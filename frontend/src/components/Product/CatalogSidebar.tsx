@@ -51,13 +51,30 @@ const NAVIGATION_DATA = [
             {
                 label: "SALTO Solutions",
                 icon: LayoutGrid,
-                link: "/products/access-control/salto"
+                link: "/products/access-control/salto",
+                sub: [
+                    { label: "Electronic Locks", link: "/products/access-control/salto/electronic-locks" },
+                    { label: "Electronic Cylinders", link: "/products/access-control/salto/electronic-cylinders" },
+                    { label: "Electronic Locker Locks", link: "/products/access-control/salto/electronic-locker-locks" },
+                    { label: "Electronic Padlocks", link: "/products/access-control/salto/electronic-padlocks" },
+                    { label: "Wall Readers", link: "/products/access-control/salto/wall-readers" },
+                    { label: "Face Recognition Terminals", link: "/products/access-control/salto/face-recognition-terminals" },
+                    { label: "Access Controllers", link: "/products/access-control/salto/access-controllers" },
+                    { label: "Door Intercom Systems", link: "/products/access-control/salto/door-intercom-systems" },
+                    { label: "Motorized Locks", link: "/products/access-control/salto/motorized-locks" },
+                    { label: "Panic Bars & Emergency Exit Devices", link: "/products/access-control/salto/panic-bars" },
+                    { label: "Mortise Locks", link: "/products/access-control/salto/mortise-locks" },
+                    { label: "Cylindrical Latch Locks", link: "/products/access-control/salto/cylindrical-latch-locks" },
+                    { label: "Energy-Saving Devices", link: "/products/access-control/salto/energy-saving-devices" },
+                    { label: "Peripherals", link: "/products/access-control/salto/peripherals" },
+                    { label: "Credentials", link: "/products/access-control/salto/credentials" },
+                ]
             }
         ]
     },
-    { id: "building-management", label: "Building Management", icon: Cpu, link: "/services" },
+    { id: "building-management", label: "Building Management", icon: Cpu, link: "/products/building-management" },
     { id: "integrated-systems", label: "Integrated Systems", icon: Settings, link: "/services" },
-    { id: "surveillance", label: "Surveillance (CCTV)", icon: Video, link: "/services" },
+    { id: "surveillance", label: "Surveillance (CCTV)", icon: Video, link: "/products/surveillance" },
     { id: "audio-visual", label: "Audio Visual", icon: Volume2, link: "/services" },
     { id: "fire-systems", label: "Fire Systems", icon: Flame, link: "/services" },
 ];
@@ -93,6 +110,31 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const [isDesktopOpen, setIsDesktopOpen] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
+
+    // Auto-expand sections based on URL
+    React.useEffect(() => {
+        const sections: string[] = [];
+        if (location.pathname.includes("/access-control")) {
+            sections.push("access-control");
+            if (location.pathname.includes("/honeywell")) sections.push("Honeywell Systems");
+            if (location.pathname.includes("/salto")) sections.push("SALTO Solutions");
+        }
+        if (location.pathname.includes("/building-management")) sections.push("building-management");
+        if (location.pathname.includes("/integrated-systems")) sections.push("integrated-systems");
+        if (location.pathname.includes("/surveillance")) sections.push("surveillance");
+        if (location.pathname.includes("/audio-visual")) sections.push("audio-visual");
+        if (location.pathname.includes("/fire-systems")) sections.push("fire-systems");
+
+        if (sections.length > 0) {
+            setExpandedSections(prev => {
+                const newSections = [...prev];
+                sections.forEach(s => {
+                    if (!newSections.includes(s)) newSections.push(s);
+                });
+                return newSections;
+            });
+        }
+    }, [location.pathname]);
 
     const toggleSection = (id: string) => {
         setExpandedSections(prev =>

@@ -1,13 +1,12 @@
 import { motion } from "framer-motion";
-import { SaltoProduct } from "./data";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { SurveillanceProduct } from "./data";
 
-interface SaltoGridProps {
-    products: SaltoProduct[];
+interface SurveillanceGridProps {
+    products: SurveillanceProduct[];
 }
 
-export function SaltoGrid({ products }: SaltoGridProps) {
+export function SurveillanceGrid({ products }: SurveillanceGridProps) {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-8 md:gap-y-10">
             {products.map((product, i) => (
@@ -18,10 +17,7 @@ export function SaltoGrid({ products }: SaltoGridProps) {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: (i % 4) * 0.05 }}
                 >
-                    <Link
-                        to={`/products/access-control/salto/${product.id}`}
-                        className="block group"
-                    >
+                    <div className="group cursor-pointer">
                         {/* Image Container */}
                         <div className="relative aspect-square overflow-hidden bg-[#F6F6F6] flex items-center justify-center p-8 md:p-10 mb-3 group-hover:bg-[#F0F0F0] transition-colors duration-500 rounded-lg">
                             <motion.img
@@ -48,7 +44,7 @@ export function SaltoGrid({ products }: SaltoGridProps) {
                                 {product.description}
                             </p>
                         </div>
-                    </Link>
+                    </div>
                 </motion.div>
             ))}
         </div>
