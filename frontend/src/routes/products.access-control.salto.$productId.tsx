@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useMemo } from "react";
+import { ProductSort, SortOption } from "@/components/Product/ProductSort";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { SaltoHero } from "@/components/Product/AccessControl/Salto/SaltoHero";
@@ -25,6 +27,27 @@ export const Route = createFileRoute("/products/access-control/salto/$productId"
 function SaltoSubProductPage() {
   const { productId } = Route.useParams();
   const product = saltoProducts.find((p) => p.id === productId);
+  const [currentSort, setCurrentSort] = useState<SortOption>("popular");
+
+  const sortedProducts = useMemo(() => {
+    if (!product?.subProducts) return [];
+    const products = [...product.subProducts];
+    
+    switch (currentSort) {
+      case "newest":
+        // Since we don't have dates, we'll reverse the default order as a proxy for 'newest'
+        return products.reverse();
+      case "popular":
+        // Sort by ID length or just some deterministic mock criteria
+        return products.sort((a, b) => b.title.length - a.title.length);
+      case "name-asc":
+        return products.sort((a, b) => a.title.localeCompare(b.title));
+      case "name-desc":
+        return products.sort((a, b) => b.title.localeCompare(a.title));
+      default:
+        return products;
+    }
+  }, [product, currentSort]);
 
   if (!product) {
     return (
@@ -60,10 +83,17 @@ function SaltoSubProductPage() {
       />
 
       {/* Product Grid */}
-      <section className="py-24 relative z-20">
+      <section className="py-16 md:py-24 relative z-20">
         <Container>
           {product.subProducts && product.subProducts.length > 0 ? (
-            <SaltoSubGrid products={product.subProducts} />
+            <>
+              <ProductSort 
+                currentSort={currentSort} 
+                onSortChange={setCurrentSort} 
+                totalProducts={product.subProducts.length} 
+              />
+              <SaltoSubGrid products={sortedProducts} />
+            </>
           ) : (
             <div className="text-center py-20 bg-gray-50 rounded-3xl border border-dashed border-gray-200">
               <p className="text-gray-500 font-medium">Detailed catalog for this category is coming soon.</p>

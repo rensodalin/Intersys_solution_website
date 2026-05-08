@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useMemo } from "react";
+import { ProductSort, SortOption } from "@/components/Product/ProductSort";
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
@@ -21,6 +23,24 @@ export const Route = createFileRoute("/products/access-control/salto/")({
 });
 
 function SaltoProductsPage() {
+    const [currentSort, setCurrentSort] = useState<SortOption>("popular");
+
+    const sortedProducts = useMemo(() => {
+        const products = [...saltoProducts];
+        switch (currentSort) {
+            case "newest":
+                return products.reverse();
+            case "popular":
+                return products.sort((a, b) => b.title.length - a.title.length);
+            case "name-asc":
+                return products.sort((a, b) => a.title.localeCompare(b.title));
+            case "name-desc":
+                return products.sort((a, b) => b.title.localeCompare(a.title));
+            default:
+                return products;
+        }
+    }, [currentSort]);
+
     return (
         <div className="bg-white min-h-screen">
             <SaltoHero />
@@ -28,8 +48,12 @@ function SaltoProductsPage() {
             {/* Product Grid */}
             <section className="py-14 md:py-16 relative z-20 px-8">
                 <Container>
-
-                    <SaltoGrid products={saltoProducts} />
+                    <ProductSort 
+                        currentSort={currentSort} 
+                        onSortChange={setCurrentSort} 
+                        totalProducts={saltoProducts.length} 
+                    />
+                    <SaltoGrid products={sortedProducts} />
                 </Container>
             </section>
 

@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState, useMemo } from "react";
+import { ProductSort, SortOption } from "@/components/Product/ProductSort";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { HoneywellHero } from "@/components/Product/AccessControl/Honeywell/HoneywellHero";
@@ -21,24 +23,47 @@ export const Route = createFileRoute("/products/access-control/honeywell/upgrade
 });
 
 function HoneywellUpgradesPage() {
+    const [currentSort, setCurrentSort] = useState<SortOption>("popular");
+
+    const sortedProducts = useMemo(() => {
+        const products = [...honeywellUpgrades];
+        switch (currentSort) {
+            case "newest":
+                return products.reverse();
+            case "popular":
+                return products.sort((a, b) => b.title.length - a.title.length);
+            case "name-asc":
+                return products.sort((a, b) => a.title.localeCompare(b.title));
+            case "name-desc":
+                return products.sort((a, b) => b.title.localeCompare(a.title));
+            default:
+                return products;
+        }
+    }, [currentSort]);
+
     return (
         <div className="bg-white min-h-screen">
             <HoneywellHero
-                title="System Upgrades & SSA"
-                subtitle="Future-proof your security infrastructure. SSA plans and official upgrade kits for enterprise-grade longevity."
+                title="System Upgrades"
+                subtitle="Future-proof your facility. Professional expansion kits and software support agreements."
                 breadcrumbs={[
                     { name: "Home", href: "/" },
                     { name: "Products", href: "/products" },
                     { name: "Access Control", href: "/products/access-control" },
                     { name: "Honeywell", href: "/products/access-control/honeywell" },
-                    { name: "System Upgrades", href: "/products/access-control/honeywell/upgrades" },
+                    { name: "Upgrades", href: "/products/access-control/honeywell/upgrades" },
                 ]}
             />
 
             {/* Product Grid */}
             <section className="py-14 md:py-16 relative z-20 px-8">
                 <Container>
-                    <HoneywellGrid products={honeywellUpgrades} />
+                    <ProductSort 
+                        currentSort={currentSort} 
+                        onSortChange={setCurrentSort} 
+                        totalProducts={honeywellUpgrades.length} 
+                    />
+                    <HoneywellGrid products={sortedProducts} />
                 </Container>
             </section>
 
