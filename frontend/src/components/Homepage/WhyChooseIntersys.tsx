@@ -112,7 +112,7 @@ export function WhyChooseIntersys() {
                             </div>
 
                             <Link
-                                to="/why-choose"
+                                to="/about"
                                 className="text-xs font-medium tracking-wide text-[#1A3263] hover:text-[#9B0F06] transition border-b border-transparent hover:border-[#9B0F06] pb-0.5"
                             >
                                 Explore story
