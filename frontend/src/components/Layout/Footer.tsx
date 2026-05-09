@@ -51,103 +51,140 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
         }}
       />
 
-      <Container className="relative z-10 pt-20 pb-16">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
-          {/* Column 1: Brand & Social */}
+      <Container className="relative z-10 pt-12 pb-10">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {/* Column 1: Brand */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -10 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
           >
-            <Link to="/" className="inline-block mb-8">
-              <img
-                src={logoImg}
-                alt="Intersys Logo"
-                className="h-14 w-auto object-contain"
-              />
-            </Link>
-
-            <p className="text-[15px] leading-relaxed text-white/50 mb-8 pr-4">
-              Smart building, automation, and integrated security solutions for modern businesses. Engineering smart, safe, and sustainable buildings.
+            <h4 className="mb-4 text-[16px] font-bold text-white relative uppercase tracking-wider">
+              Intersys Solutions
+            </h4>
+            <p className="text-[13px] leading-relaxed text-white/40 mb-6 pr-2">
+              Your trusted partner in smart building, automation, and integrated security solutions. Engineering smart, safe, and sustainable buildings.
             </p>
-
-            <div className="flex items-center gap-3">
-              <SocialIcon href="https://www.facebook.com/IntersysSolutions" color="#3B5998">
-                <Facebook className="h-4 w-4" />
-              </SocialIcon>
-
-              <SocialIcon href="https://www.linkedin.com/company/intersys-solutions2015" color="#0077B5">
-                <Linkedin className="h-4 w-4" />
-              </SocialIcon>
-
-              <SocialIcon href="https://t.me/chun_sochet" color="#0088CC">
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.539.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.285-.346-.094L7.469 14.28l-2.76-.86c-.6-.184-.593-.6.126-.882l10.82-4.172c.504-.191.95.105.81.855z" />
-                </svg>
-              </SocialIcon>
-            </div>
           </motion.div>
 
-          {/* Column 2: Useful Links */}
-          <FooterColumn title="Useful Link">
-            <FooterLink to="/">Home</FooterLink>
-            <FooterLink to="/about">About Us</FooterLink>
-            <FooterLink to="/services">Services</FooterLink>
-            <FooterLink to="/portfolio">News (Portfolio)</FooterLink>
-            <FooterLink to="/contact">Contact Us</FooterLink>
+          {/* Column 2: Our Services */}
+          <FooterColumn title="Our Services">
+            <FooterLink to="/products/building-management">Building Management</FooterLink>
+            <FooterLink to="/products/surveillance">Surveillance (CCTV)</FooterLink>
+            <FooterLink to="/products/access-control">Access Control</FooterLink>
+            <FooterLink to="/portfolio">Project Portfolio</FooterLink>
+            <FooterLink to="/contact">Contact Support</FooterLink>
           </FooterColumn>
 
           {/* Column 3: Working Hours */}
           <FooterColumn title="Working Hours">
-            <div className="space-y-4">
-              <p className="text-[14px] leading-relaxed text-white/50">
-                We work 6 days a week, every day including major holidays. Contact us for any info.
-              </p>
-
-              <div className="space-y-3 pt-2">
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-white font-medium">Monday - Friday:</span>
-                  <span className="text-white/60 tracking-wider">8:00 - 17:00</span>
+            <div className="space-y-3 pt-1">
+              <div className="flex items-center gap-3 group">
+                <div className="flex-shrink-0 w-7 h-7 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#FC3B1F] transition-colors duration-300">
+                  <Clock className="h-3.5 w-3.5 text-white" />
                 </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-white font-medium">Saturday:</span>
-                  <span className="text-white/60 tracking-wider">8:00 - 12:00</span>
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-white/30 uppercase font-bold tracking-widest leading-none">Mon - Fri</span>
+                  <span className="text-[13px] text-white/70 font-medium tracking-wide">8:00 AM - 5:00 PM</span>
                 </div>
-                <div className="flex justify-between items-center text-sm">
+              </div>
 
+              <div className="flex items-center gap-3 group">
+                <div className="flex-shrink-0 w-7 h-7 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#FC3B1F] transition-colors duration-300">
+                  <Clock className="h-3.5 w-3.5 text-white" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-white/30 uppercase font-bold tracking-widest leading-none">Saturday</span>
+                  <span className="text-[13px] text-white/70 font-medium tracking-wide">8:00 AM - 12:00 PM</span>
                 </div>
               </div>
             </div>
           </FooterColumn>
 
-          {/* Column 4: Newsletter */}
-          <FooterColumn title="News Letters">
-            <p className="text-[14px] leading-relaxed text-white/50 mb-4">
-              Your email address:
-            </p>
-            <div className="relative mb-6">
-              <input
-                type="email"
-                placeholder="email.info@intersys.com"
-                className="w-full bg-white/95 px-4 py-3.5 text-sm text-gray-900 rounded-sm focus:outline-none focus:ring-2 focus:ring-[#FC3B1F]/50 transition-all"
-              />
-              <button className="absolute right-0 top-0 h-full px-4 bg-[#FC3B1F] text-white rounded-sm hover:bg-red-600 transition-colors">
-                <Send className="h-4 w-4" />
-              </button>
-            </div>
+          {/* Column 4: Get In Touch */}
+          <FooterColumn title="Get In Touch">
+            <div className="space-y-4">
+              <a 
+                href="https://maps.app.goo.gl/kE5C1xd5F58TcYJo8" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex gap-3 group items-start"
+              >
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#FC3B1F] transition-colors duration-300">
+                  <MapPin className="h-4 w-4 text-white" />
+                </div>
+                <p className="text-[13px] leading-relaxed text-white/50 group-hover:text-white transition-colors">
+                  House No. 13, Borey Pipub Thmey Samrong Anthet (2), 2nd Floor, Street 07, Sangkat Kok Khlang, Phnom Penh.
+                </p>
+              </a>
 
+              <a 
+                href="https://t.me/chun_sochet" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex gap-3 group items-center"
+              >
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#FC3B1F] transition-colors duration-300">
+                  <Phone className="h-4 w-4 text-white" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[13px] text-white/50 group-hover:text-white transition-colors font-medium">
+                    @chun_sochet
+                  </span>
+                </div>
+              </a>
+
+              <a 
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=sochet@intersys-solutions.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex gap-3 group items-center"
+              >
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#FC3B1F] transition-colors duration-300">
+                  <Mail className="h-4 w-4 text-white" />
+                </div>
+                <span className="text-[13px] text-white/50 group-hover:text-white transition-colors underline underline-offset-4 font-medium">
+                  Gmail Inbox
+                </span>
+              </a>
+            </div>
           </FooterColumn>
         </div>
       </Container>
 
-      {/* Red Copyright Bar */}
-      <div className="bg-[#FC3B1F] py-5">
+      {/* Bottom Bar */}
+      <div className="border-t border-white/5 py-6 bg-[#081F3D]">
         <Container>
-          <div className="flex justify-center items-center">
-            <p className="text-[13px] font-semibold text-white tracking-wide text-center">
-              Copyright © {new Date().getFullYear()}. All Rights Reserved.
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            {/* Logo */}
+            <Link to="/" className="flex-shrink-0">
+              <img
+                src={logoImg}
+                alt="Intersys Logo"
+                className="h-12 w-auto opacity-80 hover:opacity-100 transition-opacity"
+              />
+            </Link>
+
+            {/* Copyright */}
+            <p className="text-[11px] text-white/30 tracking-wide order-3 md:order-2">
+              Copyright © {new Date().getFullYear()} All Rights Reserved | intersys-solutions.com
             </p>
+
+            {/* Social Icons */}
+            <div className="flex items-center gap-4 order-2 md:order-3">
+              <SocialIcon href="https://www.facebook.com/IntersysSolutions" color="#3B5998">
+                <Facebook className="h-3.5 w-3.5" />
+              </SocialIcon>
+              <SocialIcon href="https://www.linkedin.com/company/intersys-solutions2015" color="#0077B5">
+                <Linkedin className="h-3.5 w-3.5" />
+              </SocialIcon>
+              <SocialIcon href="https://t.me/chun_sochet" color="#0088CC">
+                <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.539.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.285-.346-.094L7.469 14.28l-2.76-.86c-.6-.184-.593-.6.126-.882l10.82-4.172c.504-.191.95.105.81.855z" />
+                </svg>
+              </SocialIcon>
+            </div>
           </div>
         </Container>
       </div>
@@ -166,16 +203,16 @@ function FooterColumn({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.4 }}
     >
-      <h4 className="mb-8 text-[20px] font-bold text-white relative after:absolute after:bottom-[-8px] after:left-0 after:h-[2px] after:w-8 after:bg-[#FC3B1F]">
+      <h4 className="mb-5 text-[14px] font-bold text-white relative uppercase tracking-wider after:absolute after:bottom-[-4px] after:left-0 after:h-[1px] after:w-6 after:bg-[#FC3B1F]">
         {title}
       </h4>
 
-      <div className="space-y-4">{children}</div>
+      <div className="space-y-2.5">{children}</div>
     </motion.div>
   );
 }
@@ -190,9 +227,8 @@ function FooterLink({
   return (
     <Link
       to={to}
-      className="flex items-center gap-2 text-[15px] text-white/50 transition-all hover:text-[#FC3B1F] group"
+      className="block text-[13px] text-white/40 transition-all hover:text-[#FC3B1F] group"
     >
-      <span className="text-[#FC3B1F] font-bold text-[10px] transform transition-transform group-hover:translate-x-1">›</span>
       {children}
     </Link>
   );

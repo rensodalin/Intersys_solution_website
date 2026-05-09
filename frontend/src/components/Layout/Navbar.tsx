@@ -128,7 +128,7 @@ export function Navbar() {
         scrolled ? "translate-y-0" : "translate-y-0",
       )}
     >
-      <div className="bg-[#0A0F1A] text-white border-t-2 border-red-600 border-b border-white/5 px-6 md:px-20 hidden lg:block">
+      <div className="bg-[#081F3D] text-white border-t-2 border-red-600 border-b border-white/5 px-6 md:px-20 hidden lg:block">
         <div className="flex justify-between items-center h-12 text-sm">
 
           {/* LEFT */}
@@ -179,7 +179,7 @@ export function Navbar() {
       <div className={cn(
         "w-full px-6 md:px-20 flex items-center justify-between transition-all duration-500",
         scrolled
-          ? "h-16 bg-[#0A0F1A]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.4)]"
+          ? "h-16 bg-[#081F3D]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.4)]"
           : isLightPage ? "h-24 bg-[#0A0F1A]" : "h-24 bg-transparent",
       )}>
         <Link to="/" className="flex items-center transition-transform hover:scale-105 duration-300" onClick={closeMenus}>

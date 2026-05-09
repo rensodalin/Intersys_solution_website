@@ -18,10 +18,19 @@ const backgrounds = [
 ];
 
 export function Hero() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 40 }, [
-    Autoplay({ delay: 5000, stopOnInteraction: false }),
-  ]);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, duration: 40 },
+    [Autoplay({ delay: 5000, stopOnInteraction: false })]
+  );
+
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // Typewriter text
+  const fullText = `Smart Building 
+Solutions for a Safer 
+Future.`;
+
+  const [typedText, setTypedText] = useState("");
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -30,12 +39,30 @@ export function Hero() {
 
   useEffect(() => {
     if (!emblaApi) return;
+
     onSelect();
     emblaApi.on("select", onSelect);
+
     return () => {
       emblaApi.off("select", onSelect);
     };
   }, [emblaApi, onSelect]);
+
+  // Typewriter effect
+  useEffect(() => {
+    let currentIndex = 0;
+
+    const interval = setInterval(() => {
+      setTypedText(fullText.slice(0, currentIndex + 1));
+      currentIndex++;
+
+      if (currentIndex >= fullText.length) {
+        clearInterval(interval);
+      }
+    }, 45);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section className="relative min-h-[90vh] bg-[#0c1827] flex items-center justify-start overflow-hidden pt-20">
@@ -43,7 +70,10 @@ export function Hero() {
       <div className="absolute inset-0 z-0 h-full w-full" ref={emblaRef}>
         <div className="flex h-full w-full touch-pan-y">
           {backgrounds.map((bg, idx) => (
-            <div key={idx} className="relative h-full min-w-full overflow-hidden flex-[0_0_100%]">
+            <div
+              key={idx}
+              className="relative h-full min-w-full overflow-hidden flex-[0_0_100%]"
+            >
               <motion.img
                 initial={{ scale: 1.1 }}
                 animate={{ scale: selectedIndex === idx ? 1.0 : 1.1 }}
@@ -64,18 +94,24 @@ export function Hero() {
       {/* Main Text Content */}
       <Container className="relative z-30 pt-16 pb-20">
         <div className="max-w-3xl">
-
           <AnimatePresence mode="wait">
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="mt-8 font-display text-[2rem] md:text-[3.3rem] lg:text-[3.5rem] font-semibold leading-[1.15] tracking-[-0.02em] text-white"
+              className="mt-8 whitespace-pre-line font-display text-[2rem] md:text-[3.3rem] lg:text-[3.5rem] font-semibold leading-[1.15] tracking-[-0.02em] text-white"
             >
-              Smart Building <br />
-              Solutions for a{" "}
-              <span className="text-[#9B0F06] font-semibold">Safer</span> <br />
-              <span className="text-[#9B0F06] font-semibold">Future.</span>
+              {typedText.includes("Safer") ? (
+                <>
+                  {typedText.split("Safer")[0]}
+                  <span className="text-[#9B0F06] font-semibold">
+                    Safer
+                  </span>
+                  {typedText.split("Safer")[1]}
+                </>
+              ) : (
+                <>{typedText}</>
+              )}
             </motion.h1>
           </AnimatePresence>
 
@@ -85,8 +121,8 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.25 }}
             className="mt-10 max-w-xl text-lg font-light leading-relaxed text-[#8aa1bf]"
           >
-            Pioneering the next generation of architectural intelligence through integrated BMS,
-            security, and fire safety systems.
+            Pioneering the next generation of architectural intelligence
+            through integrated BMS, security, and fire safety systems.
           </motion.p>
 
           <motion.div
@@ -97,14 +133,15 @@ export function Hero() {
           >
             <Link
               to="/contact"
-              className="group inline-flex h-12 md:h-[52px] items-center gap-2 rounded-sm bg-gradient-to-r from-[#9B0F06] to-[#9B0F06] px-8 text-sm font-semibold text-white shadow-lg shadow-[#9B0F06]/30 transition-all hover:from-[#9B0F06] hover:to-[#fa5c2e]"
+              className="group inline-flex h-12 md:h-[52px] items-center gap-2 rounded-sm bg-gradient-to-r from-[#9B0F06] to-[#9B0F06] px-8 text-sm font-semibold text-white shadow-lg shadow-[#9B0F06]/30 transition-all duration-300 hover:scale-[1.03] hover:from-[#9B0F06] hover:to-[#fa5c2e]"
             >
-              Contact Us{" "}
-              <MoveRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              Contact Us
+              <MoveRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
+
             <a
               href="#solutions"
-              className="inline-flex h-12 md:h-[52px] items-center justify-center rounded-sm border border-white/20 bg-transparent px-8 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/5"
+              className="group inline-flex h-12 md:h-[52px] items-center justify-center rounded-sm border border-white/20 bg-transparent px-8 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/5 hover:scale-[1.03]"
             >
               Explore Solutions
             </a>
