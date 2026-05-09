@@ -39,6 +39,7 @@ import { Route as ServicesBuildingManagementRouteImport } from './routes/service
 import { Route as ServicesAudioVisualRouteImport } from './routes/services_.audio-visual'
 import { Route as ServicesAccessControlRouteImport } from './routes/services_.access-control'
 import { Route as SectorsSectorIdRouteImport } from './routes/sectors.$sectorId'
+import { Route as InsightsRetrofittingHeritageRouteImport } from './routes/insights.retrofitting-heritage'
 import { Route as ProductsSurveillanceIndexRouteImport } from './routes/products.surveillance.index'
 import { Route as ProductsBuildingManagementIndexRouteImport } from './routes/products.building-management.index'
 import { Route as ProductsAccessControlIndexRouteImport } from './routes/products.access-control.index'
@@ -206,6 +207,12 @@ const SectorsSectorIdRoute = SectorsSectorIdRouteImport.update({
   path: '/$sectorId',
   getParentRoute: () => SectorsRoute,
 } as any)
+const InsightsRetrofittingHeritageRoute =
+  InsightsRetrofittingHeritageRouteImport.update({
+    id: '/insights/retrofitting-heritage',
+    path: '/insights/retrofitting-heritage',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ProductsSurveillanceIndexRoute =
   ProductsSurveillanceIndexRouteImport.update({
     id: '/surveillance/',
@@ -312,6 +319,7 @@ export interface FileRoutesByFullPath {
   '/technical-tips': typeof TechnicalTipsRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/insights/retrofitting-heritage': typeof InsightsRetrofittingHeritageRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/services/access-control': typeof ServicesAccessControlRoute
   '/services/audio-visual': typeof ServicesAudioVisualRoute
@@ -357,6 +365,7 @@ export interface FileRoutesByTo {
   '/technical-tips': typeof TechnicalTipsRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/insights/retrofitting-heritage': typeof InsightsRetrofittingHeritageRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/services/access-control': typeof ServicesAccessControlRoute
   '/services/audio-visual': typeof ServicesAudioVisualRoute
@@ -405,6 +414,7 @@ export interface FileRoutesById {
   '/technical-tips': typeof TechnicalTipsRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/insights/retrofitting-heritage': typeof InsightsRetrofittingHeritageRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/services_/access-control': typeof ServicesAccessControlRoute
   '/services_/audio-visual': typeof ServicesAudioVisualRoute
@@ -454,6 +464,7 @@ export interface FileRouteTypes {
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
+    | '/insights/retrofitting-heritage'
     | '/sectors/$sectorId'
     | '/services/access-control'
     | '/services/audio-visual'
@@ -499,6 +510,7 @@ export interface FileRouteTypes {
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
+    | '/insights/retrofitting-heritage'
     | '/sectors/$sectorId'
     | '/services/access-control'
     | '/services/audio-visual'
@@ -546,6 +558,7 @@ export interface FileRouteTypes {
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
+    | '/insights/retrofitting-heritage'
     | '/sectors/$sectorId'
     | '/services_/access-control'
     | '/services_/audio-visual'
@@ -594,6 +607,7 @@ export interface RootRouteChildren {
   TechnicalTipsRoute: typeof TechnicalTipsRoute
   WarrantyRoute: typeof WarrantyRoute
   WhyChooseRoute: typeof WhyChooseRoute
+  InsightsRetrofittingHeritageRoute: typeof InsightsRetrofittingHeritageRoute
   ServicesAccessControlRoute: typeof ServicesAccessControlRoute
   ServicesAudioVisualRoute: typeof ServicesAudioVisualRoute
   ServicesBuildingManagementRoute: typeof ServicesBuildingManagementRoute
@@ -821,6 +835,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SectorsSectorIdRouteImport
       parentRoute: typeof SectorsRoute
     }
+    '/insights/retrofitting-heritage': {
+      id: '/insights/retrofitting-heritage'
+      path: '/insights/retrofitting-heritage'
+      fullPath: '/insights/retrofitting-heritage'
+      preLoaderRoute: typeof InsightsRetrofittingHeritageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products/surveillance/': {
       id: '/products/surveillance/'
       path: '/surveillance'
@@ -1010,6 +1031,7 @@ const rootRouteChildren: RootRouteChildren = {
   TechnicalTipsRoute: TechnicalTipsRoute,
   WarrantyRoute: WarrantyRoute,
   WhyChooseRoute: WhyChooseRoute,
+  InsightsRetrofittingHeritageRoute: InsightsRetrofittingHeritageRoute,
   ServicesAccessControlRoute: ServicesAccessControlRoute,
   ServicesAudioVisualRoute: ServicesAudioVisualRoute,
   ServicesBuildingManagementRoute: ServicesBuildingManagementRoute,

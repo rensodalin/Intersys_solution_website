@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "@tanstack/react-router";
 import { Container } from "@/components/Common/Container";
 import { Section } from "@/components/Common/Section";
 
@@ -62,13 +63,16 @@ export function Insights() {
                 <h3 className="font-display text-[20px] font-bold text-[#162E93] leading-snug mb-3 group-hover:text-[#9B0F06] transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-[13pxx] text-[#6b7c93] leading-relaxed mb-6 flex-grow">
+                <p className="text-[13px] text-[#6b7c93] leading-relaxed mb-6 flex-grow">
                   {item.desc}
                 </p>
                 <div className="mt-auto">
-                  <span className="text-[13px] font-bold text-[#162E93] group-hover:text-[#9B0F06] transition-colors">
+                  <Link
+                    to={item.title.includes("Retrofitting") ? "/insights/retrofitting-heritage" : "#"}
+                    className="text-[13px] font-bold text-[#162E93] group-hover:text-[#9B0F06] transition-colors"
+                  >
                     Read More
-                  </span>
+                  </Link>
                 </div>
               </div>
             </motion.div>

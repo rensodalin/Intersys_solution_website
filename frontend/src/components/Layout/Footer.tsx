@@ -105,9 +105,9 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
           {/* Column 4: Get In Touch */}
           <FooterColumn title="Get In Touch">
             <div className="space-y-4">
-              <a 
-                href="https://maps.app.goo.gl/kE5C1xd5F58TcYJo8" 
-                target="_blank" 
+              <a
+                href="https://maps.app.goo.gl/kE5C1xd5F58TcYJo8"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex gap-3 group items-start"
               >
@@ -119,9 +119,9 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
                 </p>
               </a>
 
-              <a 
-                href="https://t.me/chun_sochet" 
-                target="_blank" 
+              <a
+                href="https://t.me/chun_sochet"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex gap-3 group items-center"
               >
@@ -135,9 +135,9 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
                 </div>
               </a>
 
-              <a 
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=sochet@intersys-solutions.com" 
-                target="_blank" 
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=sochet@intersys-solutions.com"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex gap-3 group items-center"
               >
@@ -154,7 +154,7 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
       </Container>
 
       {/* Bottom Bar */}
-      <div className="border-t border-white/5 py-6 bg-[#081F3D]">
+      <div className="border-t border-white/5 py-6 bg-[#1A3263]">
         <Container>
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             {/* Logo */}
