@@ -1,8 +1,10 @@
 import React from "react";
+import { useInquiry } from "@/context/InquiryContext";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { Send, Clock, Shield, ChevronRight } from "lucide-react";
+import { Send, Clock, Shield, ChevronRight, X, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { quoteSchema, QuoteFormValues } from "./schema";
 import {
@@ -35,10 +37,13 @@ const formSections = [
 ];
 
 export function QuoteForm() {
+    const navigate = useNavigate();
+    const { items, removeItem, updateQty } = useInquiry();
     const {
         register,
         control,
         handleSubmit,
+        setValue,
         formState: { errors, isSubmitting },
         reset,
     } = useForm<QuoteFormValues>({
@@ -51,6 +56,46 @@ export function QuoteForm() {
             sections: [],
         },
     });
+
+    // Auto-populate form when inquiry items change
+    React.useEffect(() => {
+        if (items.length > 0) {
+            // Map items to form products
+            const formProducts = items.map(item => ({
+                qty: item.qty.toString(),
+                productNo: item.partCode,
+                description: item.title,
+                application: item.specification,
+            }));
+            
+            // Set the products array
+            setValue("products", formProducts, { shouldDirty: true });
+
+            // Auto-tick categories and sections
+            const detectedCategories: string[] = [];
+            const detectedSections: string[] = [];
+
+            items.forEach(item => {
+                // Category Mapping
+                if (item.category === "Access Control") {
+                    if (!detectedCategories.includes("Access Control Systems")) {
+                        detectedCategories.push("Access Control Systems");
+                    }
+                    if (!detectedSections.includes("Access Control Devices")) {
+                        detectedSections.push("Access Control Devices");
+                    }
+                }
+                // Add more mappings as you expand your product catalog
+            });
+            
+            if (detectedCategories.length > 0) {
+                setValue("solutionCategories", detectedCategories, { shouldDirty: true });
+            }
+            if (detectedSections.length > 0) {
+                setValue("sections", detectedSections, { shouldDirty: true });
+            }
+        }
+    }, [items, setValue]);
 
     const onSubmit = async (data: QuoteFormValues) => {
         try {
@@ -107,83 +152,53 @@ export function QuoteForm() {
                     {/* ── STICKY SIDEBAR ── */}
                     <div className="lg:sticky lg:top-8 w-full lg:w-80 shrink-0 flex flex-col gap-4">
 
-                        {/* engineer image card */}
+                        {/* Selected Products List */}
                         <motion.div
                             initial={{ opacity: 0, x: -24 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="bg-[#0A0F1A] rounded-xl overflow-hidden relative h-64 lg:h-72 border border-white/5 shadow-xl"
+                            className="bg-white rounded-2xl border border-gray-100 shadow-xl p-6"
                         >
-                            <div className="absolute inset-0 bg-[#D62828]/10 blur-2xl" />
-                            <img
-                                src={engineerImg}
-                                alt="Engineer"
-                                className="w-full h-full object-cover object-top mix-blend-luminosity opacity-80"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1A]/90 via-transparent to-transparent" />
-                            <div className="absolute bottom-5 left-5 right-5">
-                                <p className="text-xs text-[#DA4848] font-medium mb-1">
-                                    Our Team
-                                </p>
-                                <p className="text-white text-sm font-medium leading-snug">Engineering experts ready to build your solution</p>
-                            </div>
-                        </motion.div>
-
-                        {/* people cards */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -24 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6, delay: 0.3 }}
-                            className="bg-white/80 backdrop-blur-xl rounded-2xl border border-gray-100 shadow-md p-5 space-y-4"
-                        >
-                            {/* header */}
-                            <div className="flex items-center justify-between mb-2">
-                                <p className="text-xs font-medium text-gray-500">
-                                    Meet the team
-                                </p>
-                                <span className="w-2 h-2 rounded-full bg-[#D62828] animate-pulse" />
+                            <div className="flex items-center justify-between mb-6">
+                                <h3 className="text-sm font-bold text-[#0A0F1A]">Selected Products</h3>
+                                <span className="bg-[#D62828] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    {items.length}
+                                </span>
                             </div>
 
-                            {/* people list */}
-                            <div className="space-y-2.5">
-                                {people.map((p, i) => (
-                                    <motion.div
-                                        key={p.name}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.4 + i * 0.08 }}
-                                        className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50/80 transition-all group"
-                                    >
-                                        {/* avatar */}
-                                        <div className="relative">
-                                            <div className="w-11 h-11 rounded-xl overflow-hidden ring-2 ring-white shadow-sm">
-                                                <img
-                                                    src={p.img}
-                                                    alt={p.name}
-                                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                                                />
+                            <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                                {items.length > 0 ? (
+                                    items.map((item: any) => (
+                                        <div key={item.partCode} className="flex gap-3 group">
+                                            <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center p-2 shrink-0 border border-gray-100">
+                                                <img src={item.image} className="w-full h-full object-contain mix-blend-multiply" />
                                             </div>
-
-                                            {/* online dot */}
-                                            <span className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400 border-2 border-white rounded-full" />
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-xs font-bold text-gray-800 truncate">{item.title}</p>
+                                                <p className="text-[10px] text-gray-400 truncate">{item.partCode}</p>
+                                                <p className="text-[10px] text-[#D62828] font-bold mt-1">Qty: {item.qty}</p>
+                                            </div>
+                                            <button 
+                                                onClick={() => removeItem(item.partCode)}
+                                                className="text-gray-300 hover:text-red-500 transition-colors"
+                                            >
+                                                <X size={14} />
+                                            </button>
                                         </div>
+                                    ))
+                                ) : (
+                                    <p className="text-xs text-gray-400 text-center py-4">No products selected yet.</p>
+                                )}
+                            </div>
 
-                                        {/* info */}
-                                        <div className="min-w-0 flex-1">
-                                            <p className="text-sm font-semibold text-[#0A0F1A] truncate group-hover:text-[#D62828] transition-colors">
-                                                {p.name}
-                                            </p>
-                                            <p className="text-xs text-gray-500 truncate">
-                                                {p.role}
-                                            </p>
-                                        </div>
-
-                                        {/* subtle arrow indicator */}
-                                        <div className="opacity-0 group-hover:opacity-100 transition-all text-gray-300 group-hover:text-[#D62828]">
-                                            →
-                                        </div>
-                                    </motion.div>
-                                ))}
+                            <div className="mt-6 pt-6 border-t border-gray-50">
+                                <button 
+                                    onClick={() => window.history.back()}
+                                    className="w-full py-3 bg-gray-50 hover:bg-gray-100 text-[#0A0F1A] text-xs font-bold rounded-xl transition-all border border-gray-100 flex items-center justify-center gap-2"
+                                >
+                                    <Plus size={14} className="text-[#D62828]" />
+                                    Add more product
+                                </button>
                             </div>
                         </motion.div>
 

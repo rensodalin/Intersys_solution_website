@@ -43,6 +43,7 @@ import { Route as InsightsRetrofittingHeritageRouteImport } from './routes/insig
 import { Route as ProductsSurveillanceIndexRouteImport } from './routes/products.surveillance.index'
 import { Route as ProductsBuildingManagementIndexRouteImport } from './routes/products.building-management.index'
 import { Route as ProductsAccessControlIndexRouteImport } from './routes/products.access-control.index'
+import { Route as ProductsDetailProductIdRouteImport } from './routes/products.detail.$productId'
 import { Route as ProductsAccessControlSaltoIndexRouteImport } from './routes/products.access-control.salto.index'
 import { Route as ProductsAccessControlHoneywellIndexRouteImport } from './routes/products.access-control.honeywell.index'
 import { Route as ProductsAccessControlSaltoProductIdRouteImport } from './routes/products.access-control.salto.$productId'
@@ -231,6 +232,11 @@ const ProductsAccessControlIndexRoute =
     path: '/access-control/',
     getParentRoute: () => ProductsRoute,
   } as any)
+const ProductsDetailProductIdRoute = ProductsDetailProductIdRouteImport.update({
+  id: '/detail/$productId',
+  path: '/detail/$productId',
+  getParentRoute: () => ProductsRoute,
+} as any)
 const ProductsAccessControlSaltoIndexRoute =
   ProductsAccessControlSaltoIndexRouteImport.update({
     id: '/access-control/salto/',
@@ -336,6 +342,7 @@ export interface FileRoutesByFullPath {
   '/about/': typeof AboutIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/sectors/': typeof SectorsIndexRoute
+  '/products/detail/$productId': typeof ProductsDetailProductIdRoute
   '/products/access-control/': typeof ProductsAccessControlIndexRoute
   '/products/building-management/': typeof ProductsBuildingManagementIndexRoute
   '/products/surveillance/': typeof ProductsSurveillanceIndexRoute
@@ -382,6 +389,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutIndexRoute
   '/products': typeof ProductsIndexRoute
   '/sectors': typeof SectorsIndexRoute
+  '/products/detail/$productId': typeof ProductsDetailProductIdRoute
   '/products/access-control': typeof ProductsAccessControlIndexRoute
   '/products/building-management': typeof ProductsBuildingManagementIndexRoute
   '/products/surveillance': typeof ProductsSurveillanceIndexRoute
@@ -431,6 +439,7 @@ export interface FileRoutesById {
   '/about/': typeof AboutIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/sectors/': typeof SectorsIndexRoute
+  '/products/detail/$productId': typeof ProductsDetailProductIdRoute
   '/products/access-control/': typeof ProductsAccessControlIndexRoute
   '/products/building-management/': typeof ProductsBuildingManagementIndexRoute
   '/products/surveillance/': typeof ProductsSurveillanceIndexRoute
@@ -481,6 +490,7 @@ export interface FileRouteTypes {
     | '/about/'
     | '/products/'
     | '/sectors/'
+    | '/products/detail/$productId'
     | '/products/access-control/'
     | '/products/building-management/'
     | '/products/surveillance/'
@@ -527,6 +537,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/products'
     | '/sectors'
+    | '/products/detail/$productId'
     | '/products/access-control'
     | '/products/building-management'
     | '/products/surveillance'
@@ -575,6 +586,7 @@ export interface FileRouteTypes {
     | '/about/'
     | '/products/'
     | '/sectors/'
+    | '/products/detail/$productId'
     | '/products/access-control/'
     | '/products/building-management/'
     | '/products/surveillance/'
@@ -863,6 +875,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsAccessControlIndexRouteImport
       parentRoute: typeof ProductsRoute
     }
+    '/products/detail/$productId': {
+      id: '/products/detail/$productId'
+      path: '/detail/$productId'
+      fullPath: '/products/detail/$productId'
+      preLoaderRoute: typeof ProductsDetailProductIdRouteImport
+      parentRoute: typeof ProductsRoute
+    }
     '/products/access-control/salto/': {
       id: '/products/access-control/salto/'
       path: '/access-control/salto'
@@ -952,6 +971,7 @@ declare module '@tanstack/react-router' {
 
 interface ProductsRouteChildren {
   ProductsIndexRoute: typeof ProductsIndexRoute
+  ProductsDetailProductIdRoute: typeof ProductsDetailProductIdRoute
   ProductsAccessControlIndexRoute: typeof ProductsAccessControlIndexRoute
   ProductsBuildingManagementIndexRoute: typeof ProductsBuildingManagementIndexRoute
   ProductsSurveillanceIndexRoute: typeof ProductsSurveillanceIndexRoute
@@ -971,6 +991,7 @@ interface ProductsRouteChildren {
 
 const ProductsRouteChildren: ProductsRouteChildren = {
   ProductsIndexRoute: ProductsIndexRoute,
+  ProductsDetailProductIdRoute: ProductsDetailProductIdRoute,
   ProductsAccessControlIndexRoute: ProductsAccessControlIndexRoute,
   ProductsBuildingManagementIndexRoute: ProductsBuildingManagementIndexRoute,
   ProductsSurveillanceIndexRoute: ProductsSurveillanceIndexRoute,
