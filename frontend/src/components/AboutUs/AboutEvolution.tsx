@@ -31,25 +31,44 @@ const evolution = [
 
 export function AboutEvolution() {
   return (
-    <section className="py-24 bg-[#05080F] text-white overflow-hidden">
-      <Container>
-        <div className="text-center mb-16">
-          <h3 className="text-3xl md:text-4xl font-bold font-display">Our Evolution</h3>
+    <section className="relative py-20 text-white overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div
+        className="absolute inset-0 bg-cover bg-fixed bg-center z-0"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1184&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
+        }}
+      >
+        <div className="absolute inset-0 bg-[#05080F]/60 backdrop-blur-[0.5px]" />
+      </div>
+
+      <Container className="relative z-10">
+        <div className="text-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h3 className="text-3xl md:text-4xl font-black font-display tracking-tight">
+              Our Evolution
+            </h3>
+          </motion.div>
         </div>
 
         <div className="relative max-w-5xl mx-auto">
           {/* Timeline Line */}
-          <div className="absolute top-1/2 left-0 w-full h-px bg-white/10 -translate-y-1/2 hidden md:block" />
+          <div className="absolute top-[16px] left-0 w-full h-px bg-white/10 hidden md:block" />
 
           <div className="grid md:grid-cols-4 gap-8 relative z-10">
             {evolution.map((item, i) => (
               <motion.div
                 key={item.year}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: i * 0.1, type: "spring", damping: 20 }}
-                className="text-center md:text-left"
+                transition={{ duration: 0.7, delay: i * 0.1 }}
+                className="text-center md:text-left group"
               >
                 <div className="flex flex-col items-center md:items-start">
                   <div
@@ -61,17 +80,19 @@ export function AboutEvolution() {
                           : "text-gray-600"
                     }
                   >
-                    <div className="w-10 h-10 rounded-full border-2 border-current flex items-center justify-center mb-4 mx-auto md:mx-0 bg-[#05080F]">
+                    <div className="w-8 h-8 rounded-full border-2 border-current flex items-center justify-center mb-4 mx-auto md:mx-0 bg-[#05080F] group-hover:scale-110 transition-transform duration-300">
                       {item.status === "completed" ? (
-                        <CheckCircle2 className="w-5 h-5" />
+                        <CheckCircle2 className="w-4 h-4" />
                       ) : (
-                        <div className="w-2 h-2 rounded-full bg-current" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
                       )}
                     </div>
                   </div>
-                  <span className="text-2xl font-display font-bold mb-1">{item.year}</span>
-                  <h4 className="text-lg font-bold mb-2">{item.title}</h4>
-                  <p className="text-gray-400 text-[13px] leading-relaxed max-w-[240px] mx-auto md:mx-0">
+                  <span className="text-2xl font-display font-black mb-1 text-white/90">{item.year}</span>
+                  <h4 className="text-lg font-bold mb-2 group-hover:text-red-500 transition-colors">
+                    {item.title}
+                  </h4>
+                  <p className="text-gray-400 text-[13px] leading-relaxed max-w-[220px] mx-auto md:mx-0 group-hover:text-gray-200 transition-colors">
                     {item.desc}
                   </p>
                 </div>
@@ -82,4 +103,8 @@ export function AboutEvolution() {
       </Container>
     </section>
   );
+}
+
+export function SolutionsExpandableGrid() {
+  return <AboutEvolution />;
 }

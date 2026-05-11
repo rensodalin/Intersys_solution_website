@@ -10,12 +10,14 @@ import heroImg3 from "@/assets/Hero1.png";
 
 // Using high-quality Unsplash fallbacks combined with the local hero image to create a rich swipe effect
 const backgrounds = [
-  heroImg2,
-  heroImg3,
-  "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2940&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2834&auto=format&fit=crop",
-  "https://plus.unsplash.com/premium_photo-1681412504848-bf25a7198829?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1615406020658-6c4b805f1f30?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+
+  "https://images.unsplash.com/photo-1581094017399-34c4fb48c65b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+
+  "https://images.unsplash.com/photo-1490096429152-340aafafc2d4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 ];
+
+import { ArrowUpRight } from "lucide-react";
 
 export function Hero() {
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -25,11 +27,8 @@ export function Hero() {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // Typewriter text
-  const fullText = `Smart Building 
-Solutions for a Safer 
-Future.`;
-
+  // Original text content
+  const fullText = "Pioneering the next generation of architectural intelligence through integrated BMS, security, and fire safety systems.";
   const [typedText, setTypedText] = useState("");
 
   const onSelect = useCallback(() => {
@@ -39,115 +38,90 @@ Future.`;
 
   useEffect(() => {
     if (!emblaApi) return;
-
     onSelect();
     emblaApi.on("select", onSelect);
-
     return () => {
       emblaApi.off("select", onSelect);
     };
   }, [emblaApi, onSelect]);
 
-  // Typewriter effect
   useEffect(() => {
     let currentIndex = 0;
-
     const interval = setInterval(() => {
       setTypedText(fullText.slice(0, currentIndex + 1));
       currentIndex++;
-
-      if (currentIndex >= fullText.length) {
-        clearInterval(interval);
-      }
-    }, 45);
-
+      if (currentIndex >= fullText.length) clearInterval(interval);
+    }, 25);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] bg-[#0c1827] flex items-center justify-start overflow-hidden pt-20">
+    <section className="relative min-h-[85vh] bg-[#05080F] flex items-center justify-start overflow-hidden pt-20 pb-16">
+
       {/* Background Carousel */}
       <div className="absolute inset-0 z-0 h-full w-full" ref={emblaRef}>
-        <div className="flex h-full w-full touch-pan-y">
+        <div className="flex h-full w-full">
           {backgrounds.map((bg, idx) => (
-            <div
-              key={idx}
-              className="relative h-full min-w-full overflow-hidden flex-[0_0_100%]"
-            >
+            <div key={idx} className="relative h-full min-w-full overflow-hidden flex-[0_0_100%]">
               <motion.img
                 initial={{ scale: 1.1 }}
                 animate={{ scale: selectedIndex === idx ? 1.0 : 1.1 }}
                 transition={{ duration: 6, ease: "easeOut" }}
                 src={bg}
-                alt={`Hero ${idx + 1}`}
                 className="absolute inset-0 h-full w-full object-cover"
+                alt="Infrastructure"
               />
             </div>
           ))}
         </div>
       </div>
 
-      {/* Navy gradient overlay over the swiping images */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#162E93]/95 via-[#162E93]/80 to-[#162E93]/40 mix-blend-multiply" />
+      {/* Overlay for readability */}
       <div className="absolute inset-0 z-10 bg-black/40" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
 
-      {/* Main Text Content */}
-      <Container className="relative z-30 pt-16 pb-20">
+      <Container className="relative z-20">
         <div className="max-w-3xl">
-          <AnimatePresence mode="wait">
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="mt-8 whitespace-pre-line font-display text-[2rem] md:text-[3.3rem] lg:text-[3.5rem] font-semibold leading-[1.15] tracking-[-0.02em] text-white"
-            >
-              {typedText.includes("Safer") ? (
-                <>
-                  {typedText.split("Safer")[0]}
-                  <span className="text-[#9B0F06] font-semibold">
-                    Safer
-                  </span>
-                  {typedText.split("Safer")[1]}
-                </>
-              ) : (
-                <>{typedText}</>
-              )}
-            </motion.h1>
-          </AnimatePresence>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="mt-10 max-w-xl text-lg font-light leading-relaxed text-[#8aa1bf]"
-          >
-            Pioneering the next generation of architectural intelligence
-            through integrated BMS, security, and fire safety systems.
-          </motion.p>
-
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="mt-12 flex flex-wrap items-center gap-5"
+            transition={{ duration: 0.8 }}
+            className="space-y-6"
           >
-            <Link
-              to="/contact"
-              className="group inline-flex h-12 md:h-[52px] items-center gap-2 rounded-sm bg-gradient-to-r from-[#9B0F06] to-[#9B0F06] px-8 text-sm font-semibold text-white shadow-lg shadow-[#9B0F06]/30 transition-all duration-300 hover:scale-[1.03] hover:from-[#9B0F06] hover:to-[#fa5c2e]"
-            >
-              Contact Us
-              <MoveRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
 
-            <a
-              href="#solutions"
-              className="group inline-flex h-12 md:h-[52px] items-center justify-center rounded-sm border border-white/20 bg-transparent px-8 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/5 hover:scale-[1.03]"
-            >
-              Explore Solutions
-            </a>
+
+            {/* Smaller, Clean Heading */}
+            <h1 className="text-3xl md:text-5xl lg:text-[3.5rem] font-bold text-white leading-[1.2] tracking-tight">
+              Smart Building Solutions <br />
+              with <span className="text-[#DB1A1A]">Safer Future.</span>
+            </h1>
+
+            {/* Smaller Subtitle Text */}
+            <p className="max-w-xl text-sm md:text-base text-white/70 leading-relaxed font-normal min-h-[3em]">
+              {typedText}
+            </p>
+
+            {/* Consistent Modern Buttons */}
+            <div className="flex flex-wrap items-center gap-4 pt-4">
+              <Link
+                to="/contact"
+                className="bg-brand-red text-white px-8 py-3.5 rounded-sm font-semibold text-[13px] hover:bg-white hover:text-navy transition-all duration-300 shadow-lg"
+              >
+                Get Started
+              </Link>
+
+              <Link
+                to="/projects"
+                className="border-[1.5px] border-white/20 text-white px-8 py-3.5 rounded-sm font-semibold text-[13px] hover:border-brand-red hover:bg-brand-red/5 transition-all duration-300"
+              >
+                View Projects
+              </Link>
+            </div>
           </motion.div>
         </div>
       </Container>
     </section>
   );
 }
+
+

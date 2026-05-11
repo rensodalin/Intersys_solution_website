@@ -26,9 +26,10 @@ function AboutPage() {
       <AboutHero />
       <AboutMission />
       <AboutEvolution />
+      <WhyChooseUs />
       <AboutLeadership />
       <AboutTeam />
-      <WhyChooseUs />
+
     </div>
   );
 }

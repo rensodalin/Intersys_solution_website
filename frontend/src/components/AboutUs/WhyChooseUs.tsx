@@ -13,6 +13,10 @@ import {
   Wind,
   Bell,
   Cpu,
+  Plus,
+  Minus,
+  CheckCircle2,
+  PhoneCall,
 } from "lucide-react";
 import teamWorking from "@/assets/team_working_intersys.png";
 
@@ -144,108 +148,157 @@ export function WhyChooseUs() {
   const [showAll, setShowAll] = React.useState(false);
   const [expanded, setExpanded] = React.useState<number | null>(null);
 
-  const visible = showAll ? solutions : solutions.slice(0, 6);
+  const visibleSolutions = showAll ? solutions : solutions.slice(0, 6);
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-[#FAFAFA] overflow-hidden">
       <Container>
-        <div className="grid lg:grid-cols-12 gap-16 items-start">
+        <div className="flex flex-col lg:flex-row items-start gap-16 lg:gap-24">
 
-          {/* IMAGE */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            className="lg:col-span-5"
-          >
-            <img
-              src={teamWorking}
-              alt="Team"
-              className="w-full rounded-2xl shadow-2xl"
-            />
-          </motion.div>
+          {/* Left Side: Overlapping Images */}
+          <div className="lg:w-5/12 relative sticky top-24">
+            {/* Red Splash Background Effect */}
+            <div className="absolute -top-10 -left-20 w-[120%] h-[120%] z-0 opacity-10 pointer-events-none">
+              <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" className="fill-[#C00707]">
+                <path d="M414,330.5Q373,411,289,425.5Q205,440,146,380.5Q87,321,79.5,236.5Q72,152,143.5,108.5Q215,65,296,87Q377,109,416,179.5Q455,250,414,330.5Z" />
+              </svg>
+            </div>
 
-          {/* CONTENT */}
-          <div className="lg:col-span-7">
+            <div className="relative z-10 flex items-end">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="w-2/3 shadow-2xl rounded-sm overflow-hidden"
+              >
+                <img src={teamWorking} alt="Intersys Team" className="w-full h-auto grayscale hover:grayscale-0 transition-all duration-700" />
+              </motion.div>
 
-            <div className="mb-12 max-w-xl">
-              <div className="w-12 h-[2px] bg-red-600 mb-4" />
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="w-1/2 -ml-24 mb-[-20px] shadow-2xl rounded-sm border-4 border-white overflow-hidden relative z-20"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1170&auto=format&fit=crop"
+                  alt="Technician"
+                  className="w-full h-auto"
+                />
+              </motion.div>
 
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="absolute left-10 bottom-10 z-30 bg-[#C00707] text-white p-6 shadow-2xl min-w-[180px]"
+              >
+                <h3 className="text-4xl font-black mb-1">10+</h3>
+                <p className="text-xs font-bold leading-tight">
+                  Years Work <br /> Experience
+                </p>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Right Side: Content */}
+          <div className="lg:w-7/12 space-y-12">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-[#C00707]">
+
+              </div>
+              <h2 className="text-4xl lg:text-4xl font-black text-[#1A3263] leading-[1.1]">
                 Why Choose Us
               </h2>
-
-              <p className="text-gray-500 leading-relaxed">
-                We provide integrated engineering systems designed for safety,
-                efficiency, and long-term performance.
+              <p className="text-gray-500 text-base leading-relaxed max-w-lg">
+                We provide integrated engineering systems designed for safety, efficiency, and long-term performance.
               </p>
             </div>
 
-            {/* GRID */}
-            <div className="grid sm:grid-cols-2 gap-6">
-              {visible.map((item, i) => (
-                <motion.div
-                  key={item.title}
-                  className="p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition"
-                >
-                  <div className="flex gap-4">
-                    <div className="w-11 h-11 bg-gray-100 rounded-xl flex items-center justify-center">
-                      <item.icon className="w-5 h-5 text-gray-500" />
-                    </div>
+            {/* Detailed Solutions (Expandable Grid - Original Information Only) */}
+            <div className="space-y-6 pt-4 border-t border-gray-100">
+              <h3 className="text-lg font-bold text-[#1A3263] flex items-center gap-3">
+                <div className="w-8 h-[2px] bg-[#C00707]" />
+                Explore Our Solutions
+              </h3>
 
-                    <div className="space-y-2">
-                      <h4 className="text-base font-semibold text-gray-900">
-                        {item.title}
-                      </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {visibleSolutions.map((item, i) => (
+                  <motion.div
+                    key={item.title}
+                    layout
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`p-5 rounded-sm border border-gray-100 bg-white shadow-sm transition-all duration-300 ${expanded === i ? "ring-2 ring-[#C00707] shadow-xl" : "hover:shadow-md"
+                      }`}
+                  >
+                    <div className="flex flex-col h-full">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className={`p-2 rounded-sm transition-colors ${expanded === i ? "bg-[#C00707] text-white" : "bg-gray-50 text-[#C00707]"}`}>
+                          <item.icon size={18} />
+                        </div>
+                        <button
+                          onClick={() => setExpanded(expanded === i ? null : i)}
+                          className="text-[#C00707] hover:scale-110 transition-transform"
+                        >
+                          {expanded === i ? <Minus size={16} /> : <Plus size={16} />}
+                        </button>
+                      </div>
 
-                      <p className="text-sm text-gray-500">
-                        {item.desc}
-                      </p>
-
-                      <p className="text-xs text-gray-400">
+                      <h4 className="text-[15px] font-bold text-[#1A3263] mb-1">{item.title}</h4>
+                      <p className="text-[13px] text-gray-400 line-clamp-1">
                         {item.sub}
                       </p>
 
-                      <button
-                        onClick={() => setExpanded(expanded === i ? null : i)}
-                        className="text-sm text-red-600 font-medium hover:underline"
-                      >
-                        {expanded === i ? "Hide details" : "View details"}
-                      </button>
-
                       <AnimatePresence>
                         {expanded === i && (
-                          <motion.ul
+                          <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="mt-2 space-y-2 border-l-2 border-red-100 pl-3"
+                            className="mt-4 pt-4 border-t border-gray-50"
                           >
-                            {item.details.map((d, idx) => (
-                              <li key={idx} className="text-sm text-gray-500">
-                                {d}
-                              </li>
-                            ))}
-                          </motion.ul>
+                            <p className="text-[12px] text-gray-500 mb-4 leading-relaxed">{item.desc}</p>
+                            <ul className="space-y-2">
+                              {item.details.map((d, idx) => (
+                                <li key={idx} className="flex items-start gap-2">
+                                  <div className="w-1 h-1 bg-[#C00707] rounded-full mt-1.5 shrink-0" />
+                                  <span className="text-[12px] text-gray-600 leading-snug">{d}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </motion.div>
                         )}
                       </AnimatePresence>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                  </motion.div>
+                ))}
+              </div>
 
-            {/* BUTTON */}
-            <div className="mt-12">
-              <button
-                onClick={() => setShowAll(!showAll)}
-                className="px-8 py-3 bg-gray-900 text-white rounded-xl font-medium hover:bg-red-600 transition"
-              >
-                {showAll ? "Show less" : "View all solutions"}
-              </button>
+              {/* View More Button */}
+              <div className="flex flex-wrap items-center gap-10 pt-6">
+                <button
+                  onClick={() => setShowAll(!showAll)}
+                  className="bg-[#C00707] text-white px-8 py-4 font-bold text-xs hover:bg-[#1A3263] transition-all shadow-xl shadow-[#C00707]/20"
+                >
+                  {showAll ? "Show Less" : "Discover More"}
+                </button>
+
+
+              </div>
             </div>
           </div>
         </div>
       </Container>
+
+      {/* Decorative Technical Element */}
+      <div className="absolute bottom-[-50px] right-[-50px] opacity-[0.03] pointer-events-none hidden lg:block">
+        <svg width="400" height="400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.5">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.77 3.77z" />
+        </svg>
+      </div>
     </section>
   );
 }

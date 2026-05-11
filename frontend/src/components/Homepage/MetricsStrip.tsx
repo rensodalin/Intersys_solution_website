@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
+import { Play, ArrowRight } from "lucide-react";
 import { AnimatedCounter } from "@/components/Common/AnimatedCounter";
 
 const metrics = [
@@ -8,6 +9,8 @@ const metrics = [
     value: 100,
     suffix: "+",
     label: "Projects Completed",
+    desc: "Successfully delivered high-tier ELV projects across Cambodia.",
+    icon: "https://static.thenounproject.com/png/1598382-200.png",
     bg: "https://i.pinimg.com/1200x/88/c0/cb/88c0cb9ddb8e6ee74ed64be01a4e1f7d.jpg",
   },
   {
@@ -15,106 +18,119 @@ const metrics = [
     value: 10,
     suffix: "+",
     label: "Years Experience",
+    desc: "A decade of engineering excellence and system integration.",
+    icon: "https://cdn-icons-png.flaticon.com/512/3442/3442327.png",
     bg: "https://i.pinimg.com/736x/7b/ae/43/7bae43c1c1e014819f7982115b36bea8.jpg",
   },
   {
     prefix: "Available",
     value: 24,
     suffix: "/7",
-    label: "Support",
+    label: "Expert Support",
+    desc: "Round-the-clock technical assistance for all systems.",
+    icon: "https://cdn-icons-png.flaticon.com/512/943/943941.png",
     bg: "https://i.pinimg.com/736x/75/d2/fd/75d2fd3aa464181a15b029eb241c6bcf.jpg",
-  },
-  {
-    prefix: "Up to",
-    value: 100,
-    suffix: "%",
-    label: "Client Satisfaction",
-    bg: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=800&auto=format&fit=crop",
   },
   {
     prefix: "Trusted by",
     value: 20,
     suffix: "+",
     label: "Global Clients",
+    desc: "Trusted by international brands for high-quality engineering.",
+    icon: "https://cdn-icons-png.flaticon.com/512/1322/1322246.png",
     bg: "https://i.pinimg.com/736x/d7/29/dd/d729dd5248143e120ca299cf3d448f9f.jpg",
   },
 ];
 
 export function MetricsStrip() {
   return (
-    <section className="relative bg-[#f8f9fc] py-16">
-      <Container className="px-4 md:px-8 max-w-[1400px]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-[2px]">
+    <div className="relative z-40 -mt-20 mb-14">
+      <Container className="px-4 md:px-8 max-w-[1350px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 shadow-2xl rounded-sm overflow-hidden bg-[#EEEEEE]">
+
+          {/* Box 1: Featured Blue Card */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="lg:col-span-1 bg-[#1A3263] p-7 flex flex-col justify-between min-h-[260px] relative overflow-hidden group"
+          >
+            <div className="relative z-20">
+              <div className="w-9 h-9 mb-5 text-white/40 group-hover:text-white transition-colors">
+                <Play fill="currentColor" size={28} />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3 leading-tight">Premium ELV Engineering</h3>
+              <p className="text-white/60 text-[12px] leading-relaxed mb-5">
+                Integrated solutions for safer building management and future-ready infrastructure.
+              </p>
+            </div>
+            <button className="relative z-20 flex items-center gap-2 text-[13px] font-semibold text-white/80 hover:text-white transition-colors group">
+              Learn more <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            {/* Brush Effect */}
+            <motion.div
+              initial={{ x: "-120%" }}
+              whileInView={{ x: "120%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="absolute inset-0 z-10 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-30"
+            />
+          </motion.div>
+
+          {/* Metric Boxes 2-5 */}
           {metrics.map((m, i) => (
             <motion.div
               key={m.label}
-              initial={{
-                opacity: 0,
-                clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)",
-              }}
-              whileInView={{
-                opacity: 1,
-                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-              }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{
-                duration: 0.9,
-                ease: [0.6, 0.01, 0.05, 0.95],
-                delay: i * 0.08,
-              }}
-              className="relative group h-[200px] md:h-[240px] bg-[#1A3263] overflow-hidden flex flex-col justify-between p-6 border-b-[6px] border-[#9B0F06]"
+              transition={{ delay: i * 0.1 }}
+              className="bg-[#EEEEEE] p-7 border-l border-gray-200 flex flex-col items-start min-h-[260px] group relative overflow-hidden transition-all duration-500"
             >
-              {/* Background image */}
+              {/* Background Image (Original Animation) */}
               <div
-                className="absolute inset-0 z-0 opacity-0 group-hover:opacity-40 transition-opacity duration-700 ease-out"
+                className="absolute inset-0 z-0 opacity-0 group-hover:opacity-40 transition-opacity duration-700 ease-out grayscale group-hover:grayscale-0"
                 style={{
                   backgroundImage: `url('${m.bg}')`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
               />
+              <div className="absolute inset-0 z-10 bg-[#162E93]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-              {/* Dark overlays */}
-              <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0c1f36] via-[#0c1f36]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+              {/* Content */}
+              <div className="relative z-20 w-full">
+                <div className="w-11 h-11 mb-6 transform group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500">
+                  <img src={m.icon} alt={m.label} className="w-full h-full object-contain grayscale group-hover:grayscale-0 group-hover:invert transition-all" />
+                </div>
+                <div className="space-y-3">
+                  <h4 className="text-[13px] font-semibold text-gray-900 group-hover:text-white transition-colors">{m.label}</h4>
+                  <div className="text-4xl font-black text-[#C00707] leading-none group-hover:text-white transition-colors">
+                    <AnimatedCounter value={m.value as number} />
+                    <span className="text-2xl ml-0.5">{m.suffix}</span>
+                  </div>
+                  <p className="text-gray-500 text-[11px] leading-relaxed group-hover:text-white/80 transition-colors pt-1">
+                    {m.desc}
+                  </p>
+                </div>
+              </div>
 
-              {/* 🔥 Brush sweep effect */}
+              {/* Brush Effect (Original Animation) */}
               <motion.div
                 initial={{ x: "-120%" }}
                 whileInView={{ x: "120%" }}
                 viewport={{ once: true }}
-                transition={{
-                  duration: 1.1,
-                  ease: "easeInOut",
-                  delay: i * 0.1,
-                }}
-                className="absolute inset-0 z-20 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-40"
+                transition={{ duration: 1.2, ease: "easeInOut", delay: i * 0.1 }}
+                className="absolute inset-0 z-30 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-20"
               />
 
-              {/* Prefix */}
-              <div className="relative z-30">
-                <div className="text-[12px] font-mono font-medium text-white/80 tracking-wide">
-                  {m.prefix}
-                </div>
-              </div>
-
-              {/* Number + label */}
-              <div className="relative z-30 flex flex-col items-start transform transition-transform duration-500 group-hover:-translate-y-2 group-hover:translate-x-1">
-                <div className="font-display text-[44px] md:text-[52px] font-bold tracking-tight text-white mb-1 leading-none">
-                  <AnimatedCounter value={m.value} />
-                  <span className="text-white ml-0.5">{m.suffix}</span>
-                </div>
-
-                <div className="text-[13px] text-white/70 font-medium">
-                  {m.label}
-                </div>
-              </div>
-
               {/* Left accent line */}
-              <div className="absolute top-0 left-0 w-1 h-0 bg-[#9B0F06] transition-all duration-500 group-hover:h-full z-30 opacity-0 group-hover:opacity-100" />
+              <div className="absolute top-0 left-0 w-1 h-0 bg-[#9B0F06] transition-all duration-500 group-hover:h-full z-40 opacity-0 group-hover:opacity-100" />
             </motion.div>
           ))}
         </div>
       </Container>
-    </section>
+    </div>
   );
 }
