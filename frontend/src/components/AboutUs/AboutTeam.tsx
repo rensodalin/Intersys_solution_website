@@ -1,101 +1,103 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
+
 import team1 from "@/assets/team/team1.png";
 import team2 from "@/assets/team/team2.png";
 import team3 from "@/assets/team/team3.png";
 import team4 from "@/assets/team/team4.png";
 
-const team = [
+const teamData = [
   {
-    name: "Elena Vance",
-    role: "Lead Systems Engineer",
-    img: team1,
-    bio: "Expert in high-density network architecture and automated systems integration.",
+    name: "Omar Mehri",
+    designation: "Founder & CEO",
+    image: team1,
   },
   {
-    name: "Marcus Sterling",
-    role: "Senior Project Manager",
-    img: team2,
-    bio: "Over 15 years of experience delivering multi-million dollar infrastructure projects.",
+    name: "Layla Samuel",
+    designation: "Managing Director",
+    image: team2,
   },
   {
-    name: "Sarah Chen",
-    role: "Head of Digital Strategy",
-    img: team3,
-    bio: "Specializes in digital transformation and cloud-native structural implementations.",
+    name: "Draper Timothy",
+    designation: "Technical Director",
+    image: team3,
   },
   {
-    name: "David Miller",
-    role: "Chief Technical Architect",
-    img: team4,
-    bio: "The visionary behind our core proprietary automation frameworks and security protocols.",
+    name: "Mariam Shah",
+    designation: "Operations Manager",
+    image: team4,
   },
 ];
 
 export function AboutTeam() {
   return (
-    <section className="py-24 bg-gradient-to-b from-[#F1F3F5] to-white overflow-hidden">
+    <section className="py-24 bg-white overflow-hidden">
       <Container>
-
         {/* HEADER */}
-        <div className="mb-14 text-center lg:text-left">
-
-          <h3 className="text-4xl font-bold text-[#0A0F1A] mt-2">
-            The Architects Behind Innovation
-          </h3>
-
-          <div className="w-14 h-[3px] bg-[#D62828] mt-5 mx-auto lg:mx-0 rounded-full" />
+        <div className="mb-20 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#0A0F1A] tracking-tight">
+            Board Of Directors
+          </h2>
+          <div className="w-16 h-1 bg-[#D62828] mt-6 mx-auto rounded-full" />
         </div>
 
-        {/* GRID */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-
-          {team.map((member, i) => (
+        {/* TEAM GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-20">
+          {teamData.map((member, i) => (
             <motion.div
               key={member.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="group"
+              transition={{ delay: i * 0.1, duration: 0.6 }}
+              className="relative group h-[520px]"
             >
-              <div className="relative bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-2xl transition-all duration-500">
+              {/* Background Red Shape */}
+              <div className="absolute inset-0 top-12 left-0 right-12 bottom-0 bg-[#D62828] rounded-tl-[80px] -z-10" />
 
-                {/* IMAGE */}
-                <div className="relative h-[320px] overflow-hidden">
-                  <img
-                    src={member.img}
-                    alt={member.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+              {/* Background Vertical Text */}
+              <div className="absolute left-6 top-24 bottom-10 overflow-hidden pointer-events-none select-none opacity-20">
+                <span
+                  className="text-white text-[50px] font-black tracking-widest uppercase leading-none whitespace-nowrap origin-top-left -rotate-90 block translate-y-full"
+                  style={{
+                    WebkitTextStroke: "1px rgba(255,255,255,0.4)",
+                    color: "transparent"
+                  }}
+                >
+                  INTERSYS
+                </span>
+              </div>
 
-                  {/* overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1A]/70 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition" />
-                </div>
+              {/* Portrait Image Container */}
+              <div className="absolute inset-0 flex items-end">
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-full h-[92%] object-contain object-bottom filter drop-shadow-2xl transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+              </div>
 
-                {/* CONTENT */}
-                <div className="p-5 space-y-2">
-
-                  <h4 className="text-lg font-bold text-[#0A0F1A] group-hover:text-[#D62828] transition">
-                    {member.name}
-                  </h4>
-
-                  <p className="text-sm font-semibold text-[#D62828]">
-                    {member.role}
-                  </p>
-
-                  <p className="text-sm text-gray-500 leading-relaxed">
-                    {member.bio}
-                  </p>
-
-                </div>
-
-                {/* ACCENT LINE */}
-                <div className="h-[3px] w-0 group-hover:w-full bg-[#D62828] transition-all duration-500" />
+              {/* Content Overlay */}
+              <div className="absolute inset-x-0 bottom-0 p-8 pt-24 bg-gradient-to-t from-[#D62828] via-[#D62828]/80 to-transparent">
+                <h3 className="text-xl font-bold text-white mb-1.5">
+                  {member.name}
+                </h3>
+                <p className="text-white/80 text-xs font-bold tracking-widest uppercase">
+                  {member.designation}
+                </p>
               </div>
             </motion.div>
           ))}
+        </div>
 
+        {/* BOTTOM DESCRIPTION */}
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-gray-500 leading-relaxed text-[15px]">
+            Our leadership team brings together decades of international expertise in security systems,
+            building automation, and engineering excellence. Committed to the vision of a safer, smarter
+            Cambodia, we architect resilient and intelligent digital ecosystems that empower businesses
+            to operate with unprecedented precision and efficiency.
+          </p>
         </div>
       </Container>
     </section>

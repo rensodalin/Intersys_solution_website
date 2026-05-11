@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { Typewriter } from "react-simple-typewriter";
+
 import { Container } from "@/components/Common/Container";
 import heroImg from "@/assets/hero.jpg";
 import honeywellLogo from "@/assets/honeywelllogo.png";
@@ -30,13 +32,25 @@ export function AboutHero() {
             alt="Honeywell Authorized Partner"
             className="h-8 md:h-10 mb-8 invert grayscale brightness-200"
           />
+
           <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
-            About <span className="text-red-600">Intersys</span> Solutions.
+            About{" "}
+            <span className="text-red-600">
+              <Typewriter
+                words={["Intersys"]}
+                loop={1}
+
+
+                typeSpeed={100}
+              />
+            </span>{" "}
+            Solutions.
           </h1>
           <p className="text-base text-gray-300 max-w-2xl leading-relaxed mx-auto">
-            As Cambodia's premier authorized Honeywell partner since 2015, Intersys Solutions
-            delivers international-standard building automation, security, and fire safety systems
-            to meet the surging demands of the local construction sector.
+            As Cambodia's premier authorized Honeywell partner since 2015,
+            Intersys Solutions delivers international-standard building
+            automation, security, and fire safety systems to meet the surging
+            demands of the local construction sector.
           </p>
         </motion.div>
       </Container>

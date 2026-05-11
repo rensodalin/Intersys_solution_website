@@ -31,7 +31,7 @@ const evolution = [
 
 export function AboutEvolution() {
   return (
-    <section className="py-16 bg-[#05080F] text-white overflow-hidden">
+    <section className="py-24 bg-[#05080F] text-white overflow-hidden">
       <Container>
         <div className="text-center mb-16">
           <h3 className="text-3xl md:text-4xl font-bold font-display">Our Evolution</h3>

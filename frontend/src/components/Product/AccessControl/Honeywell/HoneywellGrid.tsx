@@ -16,6 +16,9 @@ export function HoneywellGrid({ products }: HoneywellGridProps) {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-8 md:gap-y-10">
             {products.map((product, i) => {
+                // Slugify title for detail page if it's not a category link
+                const slug = product.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                
                 const cardLink =
                     product.title === "Accessories"
                         ? "/products/access-control/honeywell/accessories"
@@ -35,7 +38,7 @@ export function HoneywellGrid({ products }: HoneywellGridProps) {
                                                     ? "/products/access-control/honeywell/door-hardware"
                                                     : product.title === "Control Panels"
                                                         ? "/products/access-control/honeywell/control-panels"
-                                                        : "/contact";
+                                                        : `/products/detail/${slug}`;
 
                 return (
                     <motion.div
