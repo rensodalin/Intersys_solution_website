@@ -64,14 +64,14 @@ function BMSPage() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="max-w-4xl space-y-8"
+                        className="max-w-4xl"
                     >
 
-                        <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
                             Intelligent <br />
                             <span className="text-red-500">Building Management Solutions.</span>
                         </h1>
-                        <p className="text-lg md:text-xl text-white/75 leading-relaxed font-light max-w-2xl">
+                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
                             Transform your facilities with advanced automation, safety, and efficiency
                         </p>
                         <div className="pt-2">
@@ -114,7 +114,7 @@ function BMSPage() {
                                 ].map((item, i) => (
                                     <span
                                         key={i}
-                                        className="px-4 py-2 rounded-full bg-gray-50 border border-gray-100 text-sm font-medium text-[#1A3263] hover:border-red-200 hover:bg-red-50/40 transition"
+                                        className="px-4 py-2 rounded-sm bg-gray-50 border border-gray-100 text-sm font-medium text-[#1A3263] hover:border-red-200 hover:bg-red-50/40 transition"
                                     >
                                         {item}
                                     </span>
@@ -127,7 +127,7 @@ function BMSPage() {
                             <img
                                 src="https://uploads.onecompiler.io/42e6qwqtt/4463hvbwt/Screenshot%202025-11-29%20141610.png"
                                 alt="BMS Diagram"
-                                className="w-full h-auto rounded-3xl shadow-xl border border-gray-100"
+                                className="w-full h-auto rounded-xl shadow-xl border border-gray-100"
                             />
 
                             {/* soft glow */}
@@ -165,7 +165,7 @@ function BMSPage() {
             {/* ─── HONEYWELL DISTRIBUTOR ─── */}
             <section className="py-24 bg-white">
                 <Container>
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-12 bg-gray-50 p-12 rounded-[40px] border border-gray-100">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-12 bg-gray-50 p-12 rounded-2xl border border-gray-100">
                         <div className="space-y-6 max-w-2xl">
 
                             <h2 className="text-4xl font-bold text-[#1A3263]">Honeywell Engineering System Distributor</h2>
@@ -176,7 +176,7 @@ function BMSPage() {
                                 ensure the highest standards of automation, safety, and efficiency.
                             </p>
                         </div>
-                        <div className="bg-white p-10 rounded-2xl shadow-xl shrink-0">
+                        <div className="bg-white p-10 rounded-xl shadow-xl shrink-0">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Honeywell_logo.svg/1280px-Honeywell_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail" alt="Honeywell Logo" className="h-12 w-auto object-contain" />
                         </div>
                     </div>
@@ -189,8 +189,8 @@ function BMSPage() {
                 <Container>
                     <div className="text-center mb-20 space-y-5">
 
-                        <h2 className="text-4xl md:text-5xl font-bold">The Value of Niagara</h2>
-                        <p className="text-white/50 max-w-2xl mx-auto text-lg">
+                        <h2 className="text-3xl md:text-4xl font-bold">The Value of Niagara</h2>
+                        <p className="text-white/50 max-w-2xl mx-auto text-md">
                             Make device connectivity and application development simple and efficient.
                         </p>
                     </div>
@@ -199,22 +199,35 @@ function BMSPage() {
                     <div className="grid md:grid-cols-2 gap-8 mb-16">
                         {[
                             {
-                                icon: Link,
+                                image: "https://static.thenounproject.com/png/165980-200.png",
                                 title: "Device Connectivity",
                                 desc: "Seamlessly connect and manage devices across your network with Niagara's powerful connectivity framework."
                             },
                             {
-                                icon: Code2,
+                                image: "https://cdn-icons-png.flaticon.com/512/562/562626.png",
                                 title: "Efficient Development",
                                 desc: "Build powerful applications faster with Niagara's streamlined development tools and intuitive framework."
                             }
                         ].map((card, i) => (
-                            <div key={i} className="p-8 bg-white/5 border border-white/10 rounded-2xl space-y-4">
-                                <div className="w-10 h-10 bg-red-500/20 text-red-400 rounded-xl flex items-center justify-center">
-                                    <card.icon size={20} />
+                            <div
+                                key={i}
+                                className="p-8 bg-white/5 border border-white/10 rounded-xl space-y-4"
+                            >
+                                <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center p-2">
+                                    <img
+                                        src={card.image}
+                                        alt={card.title}
+                                        className="w-7 h-7 object-contain"
+                                    />
                                 </div>
-                                <h4 className="font-bold text-white text-lg">{card.title}</h4>
-                                <p className="text-white/50 text-sm leading-relaxed">{card.desc}</p>
+
+                                <h4 className="font-bold text-white text-lg">
+                                    {card.title}
+                                </h4>
+
+                                <p className="text-white/50 text-sm leading-relaxed">
+                                    {card.desc}
+                                </p>
                             </div>
                         ))}
                     </div>
@@ -222,15 +235,15 @@ function BMSPage() {
                     <div className="grid md:grid-cols-2 gap-8">
                         <motion.div
                             whileHover={{ scale: 1.02 }}
-                            className="bg-white/5 border border-white/10 p-4 rounded-3xl overflow-hidden shadow-2xl"
+                            className="bg-white/5 border border-white/10 p-4 rounded-xl overflow-hidden shadow-2xl"
                         >
-                            <img src="https://uploads.onecompiler.io/42e6qwqtt/4463hvbwt/2.png" alt="The Solution" className="w-full h-auto rounded-2xl" />
+                            <img src="https://uploads.onecompiler.io/42e6qwqtt/4463hvbwt/2.png" alt="The Solution" className="w-full h-auto rounded-xl" />
                         </motion.div>
                         <motion.div
                             whileHover={{ scale: 1.02 }}
-                            className="bg-white/5 border border-white/10 p-4 rounded-3xl overflow-hidden shadow-2xl"
+                            className="bg-white/5 border border-white/10 p-4 rounded-xl overflow-hidden shadow-2xl"
                         >
-                            <img src="https://uploads.onecompiler.io/42e6qwqtt/4463hvbwt/1.png" alt="The Problem" className="w-full h-auto rounded-2xl" />
+                            <img src="https://uploads.onecompiler.io/42e6qwqtt/4463hvbwt/1.png" alt="The Problem" className="w-full h-auto rounded-xl" />
                         </motion.div>
                     </div>
                 </Container>
@@ -304,7 +317,7 @@ function BMSPage() {
                         ].map((device, i) => (
                             <div
                                 key={i}
-                                className="group bg-gray-50 p-4 rounded-2xl border border-gray-100 hover:bg-[#1A3263] hover:border-[#1A3263] transition-all duration-300"
+                                className="group bg-gray-50 p-4 rounded-xl border border-gray-100 hover:bg-[#1A3263] hover:border-[#1A3263] transition-all duration-300"
                             >
 
                                 {/* TITLE */}
@@ -346,7 +359,7 @@ function BMSPage() {
 
                     {/* Top row — white | dark navy | white */}
                     <div className="grid md:grid-cols-3 gap-4 mb-4">
-                        <div className="bg-white p-8 rounded-2xl space-y-4 border border-gray-100">
+                        <div className="bg-white p-8 rounded-xl space-y-4 border border-gray-100">
                             <div className="w-10 h-10 bg-red-50 text-red-500 rounded-xl flex items-center justify-center">
                                 <SlidersHorizontal size={18} />
                             </div>
@@ -357,7 +370,7 @@ function BMSPage() {
                             </p>
                         </div>
 
-                        <div className="bg-[#1A3263] p-8 rounded-2xl space-y-4">
+                        <div className="bg-[#1A3263] p-8 rounded-xl space-y-4">
                             <div className="w-10 h-10 bg-white/10 text-white rounded-xl flex items-center justify-center">
                                 <Activity size={18} />
                             </div>
@@ -368,7 +381,7 @@ function BMSPage() {
                             </p>
                         </div>
 
-                        <div className="bg-white p-8 rounded-2xl space-y-4 border border-gray-100">
+                        <div className="bg-white p-8 rounded-xl space-y-4 border border-gray-100">
                             <div className="w-10 h-10 bg-red-50 text-red-500 rounded-xl flex items-center justify-center">
                                 <Settings size={18} />
                             </div>
@@ -383,7 +396,7 @@ function BMSPage() {
                     {/* Bottom row — Expert Support (1/3) | Real-Time Intelligence (2/3) */}
                     <div className="grid md:grid-cols-3 gap-6 items-stretch">
                         {/* LEFT (1 Col) */}
-                        <div className="group bg-white p-7 rounded-2xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 space-y-4 h-full">
+                        <div className="group bg-white p-7 rounded-xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 space-y-4 h-full">
                             <div className="w-11 h-11 bg-red-50 text-red-500 rounded-xl flex items-center justify-center">
                                 <Shield size={18} />
                             </div>
@@ -395,7 +408,7 @@ function BMSPage() {
                         </div>
 
                         {/* RIGHT (2 Cols - Takes remaining space) */}
-                        <div className="md:col-span-2 group bg-white p-7 rounded-2xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full">
+                        <div className="md:col-span-2 group bg-white p-7 rounded-xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full">
 
                             <div className="flex gap-8 h-full">
 
@@ -425,7 +438,7 @@ function BMSPage() {
                                 </div>
 
                                 {/* IMAGE (TAKES REMAINING SPACE) */}
-                                <div className="relative flex-1 rounded-2xl overflow-hidden min-h-[260px]">
+                                <div className="relative flex-1 rounded-xl overflow-hidden min-h-[260px]">
 
                                     <img
                                         src="https://static.wixstatic.com/media/3d5958_888336e6fc4e4b4eade3511d56bac693~mv2.png"
@@ -446,34 +459,91 @@ function BMSPage() {
             {/* ─── SEAMLESS BMS INTEGRATION ─── */}
             <section className="py-28 bg-white">
                 <Container>
-                    <div className="text-center max-w-3xl mx-auto mb-20 space-y-5">
 
-                        <h2 className="text-4xl font-bold text-[#1A3263]">Seamless BMS Integration</h2>
+                    {/* HEADER */}
+                    <div className="text-center max-w-3xl mx-auto mb-20 space-y-5">
+                        <h2 className="text-4xl font-bold text-[#1A3263]">
+                            Seamless BMS Integration
+                        </h2>
+
                         <p className="text-gray-500 text-lg leading-relaxed">
                             Create a comfortable and safe environment for your building by centrally controlling and
                             monitoring all vital systems.
                         </p>
                     </div>
 
+                    {/* GRID */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+
                         {[
-                            { icon: Globe, title: "CCTV Surveillance", desc: "Real-time monitoring and recording." },
-                            { icon: Zap, title: "Smart Lighting", desc: "Automated efficiency control." },
-                            { icon: Shield, title: "Security & Safety", desc: "24/7 asset protection systems." },
-                            { icon: Settings, title: "Access Control", desc: "Secure entry points management." },
-                            { icon: Activity, title: "Fire Alarms", desc: "Early detection safety systems." },
-                            { icon: BarChart3, title: "Energy Management", desc: "Consumption optimization." },
-                            { icon: Building2, title: "Elevator Control", desc: "Vertical transport logic." },
-                            { icon: Power, title: "Energy Meters", desc: "Precise utility tracking." },
+                            {
+                                icon: "https://cdn-icons-png.flaticon.com/512/2344/2344579.png",
+                                title: "CCTV Surveillance",
+                                desc: "Real-time monitoring and recording."
+                            },
+                            {
+                                icon: "https://cdn-icons-png.flaticon.com/512/702/702814.png",
+                                title: "Smart Lighting",
+                                desc: "Automated efficiency control."
+                            },
+                            {
+                                icon: "https://cdn-icons-png.flaticon.com/512/3064/3064197.png",
+                                title: "Security & Safety",
+                                desc: "24/7 asset protection systems."
+                            },
+                            {
+                                icon: "https://cdn-icons-png.flaticon.com/512/3524/3524636.png",
+                                title: "Access Control",
+                                desc: "Secure entry points management."
+                            },
+                            {
+                                icon: "https://png.pngtree.com/png-vector/20230419/ourmid/pngtree-fire-alarm-line-icon-vector-png-image_6714983.png",
+                                title: "Fire Alarms",
+                                desc: "Early detection safety systems."
+                            },
+                            {
+                                icon: "https://static.vecteezy.com/system/resources/thumbnails/021/013/590/small/icon-of-energy-thunder-lightning-bolt-symbol-or-electricity-power-electric-sign-symbol-free-png.png",
+                                title: "Energy Management",
+                                desc: "Consumption optimization."
+                            },
+                            {
+                                icon: "https://cdn-icons-png.flaticon.com/512/230/230531.png",
+                                title: "Elevator Control",
+                                desc: "Vertical transport logic."
+                            },
+                            {
+                                icon: "https://cdn-icons-png.flaticon.com/512/1129/1129846.png",
+                                title: "Energy Meters",
+                                desc: "Precise utility tracking."
+                            }
                         ].map((item, i) => (
-                            <div key={i} className="group bg-gray-50 p-7 rounded-3xl border border-gray-100 flex flex-col items-center text-center space-y-3 hover:border-red-500 hover:bg-red-50/30 transition-all duration-300">
-                                <div className="w-12 h-12 bg-white rounded-2xl border border-gray-100 flex items-center justify-center shadow-sm group-hover:bg-red-600 group-hover:border-red-600 transition-colors duration-300">
-                                    <item.icon className="text-[#1A3263] group-hover:text-white transition-colors duration-300" size={22} />
+                            <div
+                                key={i}
+                                className="group bg-gray-50 p-7 rounded-xl border border-gray-100 flex flex-col items-center text-center space-y-3 hover:border-red-500 hover:bg-red-50/30 transition-all duration-300"
+                            >
+
+                                {/* ICON */}
+                                <div className="w-14 h-14 bg-white rounded-xl border border-gray-100 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+                                    <img
+                                        src={item.icon}
+                                        alt={item.title}
+                                        className="w-8 h-8 object-contain"
+                                    />
                                 </div>
-                                <h4 className="font-bold text-[#1A3263] text-sm">{item.title}</h4>
-                                <p className="text-gray-400 text-xs leading-relaxed">{item.desc}</p>
+
+                                {/* TITLE */}
+                                <h4 className="font-bold text-[#1A3263] text-sm">
+                                    {item.title}
+                                </h4>
+
+                                {/* DESCRIPTION */}
+                                <p className="text-gray-400 text-xs leading-relaxed">
+                                    {item.desc}
+                                </p>
+
                             </div>
                         ))}
+
                     </div>
                 </Container>
             </section>
@@ -483,12 +553,10 @@ function BMSPage() {
                 <div className="grid md:grid-cols-4 gap-4">
 
                     {/* MAIN CARD */}
-                    <div className="md:col-span-2 bg-[#1A3263] p-8 rounded-3xl text-white flex flex-col justify-between min-h-[320px]">
+                    <div className="md:col-span-2 bg-[#1A3263] p-8 rounded-xl text-white flex flex-col justify-between min-h-[320px]">
 
                         <div className="space-y-3">
-                            <p className="text-red-400 font-bold text-[10px] uppercase tracking-widest">
-                                Our Platform
-                            </p>
+
 
                             <h3 className="text-2xl font-bold leading-snug">
                                 Basic development platform to connect, operate and manage different protocols, networks, devices.
@@ -500,16 +568,16 @@ function BMSPage() {
                                 Customizing intelligence for diverse operational environments.
                             </p>
 
-                            <button className="px-6 py-2.5 bg-red-600 rounded-full font-semibold text-xs hover:bg-red-700 transition">
+                            <button className="px-6 py-2.5 bg-red-600 rounded-sm font-semibold text-xs hover:bg-red-700 transition">
                                 Explore Projects
                             </button>
                         </div>
                     </div>
 
                     {/* CARD 1 */}
-                    <div className="h-[320px] rounded-3xl overflow-hidden relative group">
+                    <div className="h-[320px] rounded-xl overflow-hidden relative group">
                         <img
-                            src="https://images.unsplash.com/photo-1558444479-c86e4902f4a9?auto=format&fit=crop&q=80&w=800"
+                            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -519,7 +587,7 @@ function BMSPage() {
                     </div>
 
                     {/* CARD 2 */}
-                    <div className="h-[320px] rounded-3xl overflow-hidden relative group">
+                    <div className="h-[320px] rounded-xl overflow-hidden relative group">
                         <img
                             src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
@@ -531,7 +599,7 @@ function BMSPage() {
                     </div>
 
                     {/* CARD 3 */}
-                    <div className="md:col-span-2 h-[320px] rounded-3xl overflow-hidden relative group">
+                    <div className="md:col-span-2 h-[320px] rounded-xl overflow-hidden relative group">
                         <img
                             src="https://images.unsplash.com/photo-1577412647305-991150c7d163?auto=format&fit=crop&q=80&w=1200"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
@@ -543,7 +611,7 @@ function BMSPage() {
                     </div>
 
                     {/* CARD 4 */}
-                    <div className="md:col-span-2 h-[320px] rounded-3xl overflow-hidden relative group">
+                    <div className="md:col-span-2 h-[320px] rounded-xl overflow-hidden relative group">
                         <img
                             src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
@@ -598,9 +666,9 @@ function BMSPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className={`p-10 rounded-2xl space-y-6 ${card.dark ? "bg-[#1A3263] text-white" : "bg-gray-50 border border-gray-100"}`}
+                                className={`p-10 rounded-xl space-y-6 ${card.dark ? "bg-[#1A3263] text-white" : "bg-gray-50 border border-gray-100"}`}
                             >
-                                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${card.dark ? "bg-white/10" : "bg-white border border-gray-100 shadow-sm"}`}>
+                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${card.dark ? "bg-white/10" : "bg-white border border-gray-100 shadow-sm"}`}>
                                     <card.icon size={22} className="text-red-600" />
                                 </div>
                                 <h4 className={`text-2xl font-bold ${card.dark ? "text-white" : "text-[#1A3263]"}`}>{card.title}</h4>
@@ -633,7 +701,7 @@ function BMSPage() {
                             <img
                                 src="https://static.wixstatic.com/media/3d5958_1eb280653fcc43ceb2d5f13c048239ef~mv2.png"
                                 alt="BMS Remote Manager"
-                                className="w-full h-auto rounded-xl md:rounded-[32px] shadow-xl border border-gray-100"
+                                className="w-full h-auto rounded-xl md:rounded-2xl shadow-xl border border-gray-100"
                             />
                         </motion.div>
 
@@ -648,7 +716,7 @@ function BMSPage() {
                             <img
                                 src="https://static.wixstatic.com/media/3d5958_888336e6fc4e4b4eade3511d56bac693~mv2.png"
                                 alt="BMS Energy Overview"
-                                className="w-full h-auto rounded-xl md:rounded-[32px]"
+                                className="w-full h-auto rounded-xl md:rounded-2xl"
                             />
                         </motion.div>
 
@@ -659,7 +727,7 @@ function BMSPage() {
                 </Container>
             </section>
 
-            <CtaBand />
+
         </div>
     );
 }

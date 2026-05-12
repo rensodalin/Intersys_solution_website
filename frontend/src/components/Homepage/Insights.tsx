@@ -80,17 +80,15 @@ export function Insights() {
       {/* Header */}
       <div className="relative z-20 max-w-[1400px] mx-auto px-6 md:px-10 mb-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <div className="max-w-2xl">
-            <motion.h2
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-3xl md:text-5xl font-bold text-[#0F172A] leading-[0.95] tracking-tight"
-            >
-              Latest Insights
-            </motion.h2>
-          </div>
+          <motion.h2
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl md:text-4xl font-bold text-[#0F172A] leading-[0.95] tracking-tight"
+          >
+            Latest <span className="text-[#C3110C]">Insights</span>
+          </motion.h2>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -186,7 +184,7 @@ export function Insights() {
                             text-[11px]
                             font-bold
                             tracking-wider
-                            text-[#A3E635]
+                            text-[#FF4400]
                           "
                         >
                           {item.tag}
@@ -204,7 +202,7 @@ export function Insights() {
 
                         <Link
                           to={`/insights/${item.slug}`}
-                          className="inline-flex items-center gap-2 text-sm font-semibold text-[#A3E635] hover:text-white transition-colors"
+                          className="inline-flex items-center gap-2 text-sm font-semibold text-[#FF4400] hover:text-white transition-colors"
                         >
                           <span>Explore More</span>
                           <ArrowUpRight className="h-4 w-4" />

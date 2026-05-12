@@ -36,7 +36,7 @@ function SupportSection({
     <div className="space-y-10">
       {/* Header */}
       <div className="space-y-4">
-        <h2 className="text-3xl font-semibold text-gray-900">
+        <h2 className="text-3xl font-bold text-gray-900">
           {title}
         </h2>
 
@@ -101,39 +101,31 @@ function SupportSection({
 export function Support() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero */}
-      <section className="relative h-[650px] flex items-center justify-center overflow-hidden pt-20">
+      {/* HERO (Homepage Style) */}
+      <section className="relative h-[500px] flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
-            alt="Support"
+            src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Technical Support"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
 
-        <div className="relative z-10 text-center text-white px-6 max-w-5xl">
+        <div className="relative z-10 text-center text-white px-6 max-w-4xl">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-6"
           >
-            <h1 className="text-4xl md:text-6xl font-semibold leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-4xl font-bold leading-tight mb-6 pt-5">
               Technical Support & <br /> Customer Service
             </h1>
-
-            <p className="text-gray-200 text-lg max-w-2xl mx-auto">
-              We provide reliable technical support and responsive customer
-              service to ensure smooth and efficient operations.
+            <p className="text-gray-200 text-lg max-w-2xl mx-auto mb-8">
+              Reliable technical support and responsive customer service
+              to ensure smooth and efficient operations.
             </p>
 
-            <Link
-              to="/contact"
-              className="inline-block mt-6 px-10 py-4 bg-[#9B0F06]/80 rounded-md hover:bg-[#9B0F06] transition text-sm font-medium shadow-lg"
-            >
-              Contact Us
-            </Link>
           </motion.div>
         </div>
       </section>

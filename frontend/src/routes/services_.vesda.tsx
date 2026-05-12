@@ -50,12 +50,13 @@ function VesdaPage() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="max-w-3xl space-y-8 text-center md:text-left"
+                        className="max-w-3xl"
                     >
-                        <h1 className="text-4xl md:text-5xl font-bold tracking-tighter">
-                            VESDA (Very Early Smoke Detection Apparatus)
+                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                            <span className="text-red-600">VESDA</span> <br />
+                            (Very Early Smoke Detection Apparatus)
                         </h1>
-                        <p className="text-base md:text-lg text-white/80 leading-relaxed font-light max-w-2xl">
+                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
                             VESDA is a highly sensitive aspirating smoke detection system that draws air through pipes into a laser detection chamber, enabling it to identify smoke particles much earlier than conventional detectors often before smoke is visible allowing faster response and damage prevention.
                         </p>
 

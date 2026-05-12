@@ -42,13 +42,13 @@ function FireAlarmPage() {
                         initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="max-w-3xl space-y-8"
+                        className="max-w-3xl"
                     >
-                        <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
                             Intelligent <br />
                             <span className="text-red-500">Fire Safety</span> Solutions
                         </h1>
-                        <p className="text-md md:text-lg text-white/80 leading-relaxed font-light max-w-2xl">
+                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
                             At Intersys Solutions Co., Ltd, we specialize in delivering intelligent fire alarm systems
                             designed to protect lives, assets, and infrastructure. As an authorized Honeywell Engineering
                             System Distributor, we offer trusted global brands like NOTIFIER, ESSER, and System Sensor
@@ -106,7 +106,7 @@ function FireAlarmPage() {
                                 transition={{ delay: i * 0.1 }}
                                 className="group space-y-6"
                             >
-                                <div className="h-64 overflow-hidden rounded-2xl relative">
+                                <div className="h-64 overflow-hidden rounded-xl relative">
                                     <img src={sector.img} alt={sector.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
 
@@ -145,7 +145,7 @@ function FireAlarmPage() {
                                     { label: "Response", title: "Emergency Response", desc: "Coordinates with emergency response networks for rapid action during critical situations." },
                                     { label: "Control", title: "Intelligent Control", desc: "Programmable logic for multi-zone coordination and automated emergency response." },
                                 ].map((item, i) => (
-                                    <div key={i} className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                                    <div key={i} className="p-6 bg-white/5 rounded-xl border border-white/10">
                                         <h4 className="text-red-500 font-bold mb-2">{item.title}</h4>
                                         <p className="text-white/40 text-xs">{item.desc}</p>
                                     </div>
@@ -162,7 +162,7 @@ function FireAlarmPage() {
                             <img
                                 src="https://static.wixstatic.com/media/3d5958_fb21055f1af54a9d80929c991e66f329~mv2.png/v1/fill/w_634,h_316,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
                                 alt="Systems Integration"
-                                className="w-full h-auto rounded-3xl shadow-2xl"
+                                className="w-full h-auto rounded-2xl shadow-2xl"
                             />
                             <div className="absolute inset-0 bg-red-600/10 blur-[100px] -z-10 rounded-full" />
                         </motion.div>
@@ -207,7 +207,7 @@ function FireAlarmPage() {
                                     <strength.icon className="text-red-600" size={24} />
                                     <h3 className="text-xl font-bold text-[#1A3263]">{strength.title}</h3>
                                 </div>
-                                <div className="h-48 rounded-xl overflow-hidden shadow-lg">
+                                <div className="h-48 rounded-lg overflow-hidden shadow-lg">
                                     <img src={strength.img} alt={strength.title} className="w-full h-full object-cover" />
                                 </div>
                             </div>
@@ -219,41 +219,49 @@ function FireAlarmPage() {
             {/* ─── KEY CAPABILITIES GRID ─── */}
             <section className="py-20 bg-[#F8F9FA]">
                 <Container>
+
+                    {/* HEADER */}
                     <div className="text-center mb-14 space-y-4">
-                        <h2 className="text-4xl font-bold text-[#1A3263]">Advanced Fire Safety Systems</h2>
+                        <h2 className="text-4xl font-bold text-[#1A3263]">
+                            Advanced Fire Safety Systems
+                        </h2>
+
                         <p className="text-gray-500 max-w-2xl mx-auto">
                             Six pillars of protection engineered into every deployment.
                         </p>
                     </div>
+
+                    {/* GRID */}
                     <div className="grid md:grid-cols-3 gap-6">
+
                         {[
                             {
-                                icon: Flame,
+                                icon: "https://cdn-icons-png.flaticon.com/512/2431/2431670.png",
                                 title: "Early Detection & Rapid Response",
                                 desc: "Detects smoke, heat, and gases at the earliest stage of a fire using advanced sensors and intelligent algorithms — enabling quick alerts and minimizing damage or disruption."
                             },
                             {
-                                icon: Network,
+                                icon: "https://cdn-icons-png.flaticon.com/512/7655/7655614.png",
                                 title: "Systems Integration",
                                 desc: "Works seamlessly with your BMS, security, and emergency systems. Supports BACnet & Modbus protocols for holistic, unified building safety management."
                             },
                             {
-                                icon: Zap,
+                                icon: "https://cdn-icons-png.flaticon.com/512/2857/2857314.png",
                                 title: "Flexible Architecture",
                                 desc: "Scalable for all buildings — from small offices to industrial zones and high-rise towers — with support for conventional, addressable, and hybrid network architectures."
                             },
                             {
-                                icon: Shield,
+                                icon: "https://cdn-icons-png.flaticon.com/512/1600/1600232.png",
                                 title: "High Reliability",
                                 desc: "Meets NFPA, EN54, and local regulations. Certified components from trusted brands with redundancy and fail-safe features for consistent detection and response."
                             },
                             {
-                                icon: Wifi,
+                                icon: "https://cdn-icons-png.flaticon.com/512/2099/2099058.png",
                                 title: "Smart Monitoring",
                                 desc: "Remote monitoring, mobile alerts, and web/app control interfaces. 99.9% uptime with sub-1-second alert latency and 256-bit encrypted cloud access."
                             },
                             {
-                                icon: Cpu,
+                                icon: "https://cdn-icons-png.flaticon.com/512/2889/2889676.png",
                                 title: "Intelligent Control Panels",
                                 desc: "Programmable logic for multi-zone coordination. VESDA (Very Early Smoke Detection Apparatus) for high-risk environments with pinpoint addressable accuracy."
                             }
@@ -264,19 +272,34 @@ function FireAlarmPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.08 }}
-                                className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm space-y-4"
+                                className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm space-y-4 hover:shadow-md transition-all duration-300"
                             >
-                                <div className="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center">
-                                    <cap.icon size={22} />
+
+                                {/* ICON */}
+                                <div className="w-14 h-14 bg-red-50 rounded-xl flex items-center justify-center shadow-sm">
+                                    <img
+                                        src={cap.icon}
+                                        alt={cap.title}
+                                        className="w-8 h-8 object-contain"
+                                    />
                                 </div>
-                                <h4 className="text-[15px] font-bold text-[#1A3263]">{cap.title}</h4>
-                                <p className="text-gray-500 text-sm leading-relaxed">{cap.desc}</p>
+
+                                {/* TITLE */}
+                                <h4 className="text-[15px] font-bold text-[#1A3263]">
+                                    {cap.title}
+                                </h4>
+
+                                {/* DESCRIPTION */}
+                                <p className="text-gray-500 text-sm leading-relaxed">
+                                    {cap.desc}
+                                </p>
+
                             </motion.div>
                         ))}
+
                     </div>
                 </Container>
             </section>
-
             {/* ─── FLEXIBLE ARCHITECTURE ─── */}
             <section className="py-24 bg-white">
                 <Container>
@@ -308,7 +331,7 @@ function FireAlarmPage() {
                         ].map((item, i) => (
                             <div
                                 key={i}
-                                className="group p-8 rounded-2xl border border-gray-100 bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center"
+                                className="group p-8 rounded-xl border border-gray-100 bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center"
                             >
                                 {/* Number badge */}
                                 <div className="w-12 h-12 mx-auto mb-6 rounded-full bg-red-50 text-red-500 flex items-center justify-center font-bold text-lg group-hover:bg-red-600 group-hover:text-white transition">
@@ -386,9 +409,9 @@ function FireAlarmPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className="p-6 bg-white/5 border border-white/10 rounded-2xl space-y-5"
+                                className="p-6 bg-white/5 border border-white/10 rounded-xl space-y-5"
                             >
-                                <div className="w-10 h-10 bg-red-500/20 text-red-400 rounded-xl flex items-center justify-center">
+                                <div className="w-10 h-10 bg-red-500/20 text-red-400 rounded-lg flex items-center justify-center">
                                     <card.icon size={20} />
                                 </div>
                                 <div>
@@ -413,7 +436,7 @@ function FireAlarmPage() {
                             { abbr: "FM", role: "Facility Manager", desc: "Monitoring & reports" },
                             { abbr: "TC", role: "Technician", desc: "Maintenance access" }
                         ].map((r, i) => (
-                            <div key={i} className="flex items-center gap-4 px-6 py-4 bg-white/5 border border-white/10 rounded-2xl">
+                            <div key={i} className="flex items-center gap-4 px-6 py-4 bg-white/5 border border-white/10 rounded-xl">
                                 <div className="w-10 h-10 bg-red-600/30 text-red-400 font-bold rounded-full flex items-center justify-center text-sm">{r.abbr}</div>
                                 <div>
                                     <p className="font-semibold text-white text-sm">{r.role}</p>
@@ -442,8 +465,8 @@ function FireAlarmPage() {
                             { title: "Regulatory Compliance", icon: Shield, desc: "Meeting and exceeding NFPA, EN54, and local building codes. Certified components from trusted brands with proven performance in harsh environments." },
                             { title: "Intensive Testing", icon: CheckCircle2, desc: "Rigorous system validation before every deployment. Redundancy and fail-safe features ensure consistent detection and response with real-time monitoring." }
                         ].map((card, i) => (
-                            <div key={i} className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm space-y-4 text-center">
-                                <div className="w-12 h-12 bg-[#1A3263] text-white rounded-xl flex items-center justify-center mx-auto">
+                            <div key={i} className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm space-y-4 text-center">
+                                <div className="w-12 h-12 bg-[#1A3263] text-white rounded-lg flex items-center justify-center mx-auto">
                                     <card.icon size={24} />
                                 </div>
                                 <h4 className="text-lg font-bold text-[#1A3263]">{card.title}</h4>
@@ -462,7 +485,7 @@ function FireAlarmPage() {
                             "Redundancy & Fail-Safe Features",
                             "Advanced Security Protection"
                         ].map((item) => (
-                            <div key={item} className="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-100 shadow-sm">
+                            <div key={item} className="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-100 shadow-sm">
                                 <CheckCircle2 size={18} className="text-red-600 shrink-0" />
                                 <span className="text-[#1A3263] text-sm font-medium">{item}</span>
                             </div>
@@ -516,9 +539,9 @@ function FireAlarmPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className="p-8 bg-[#F8F9FA] rounded-2xl space-y-6"
+                                className="p-8 bg-[#F8F9FA] rounded-xl space-y-6"
                             >
-                                <div className="w-12 h-12 bg-[#1A3263] text-white rounded-xl flex items-center justify-center">
+                                <div className="w-12 h-12 bg-[#1A3263] text-white rounded-lg flex items-center justify-center">
                                     <card.icon size={22} />
                                 </div>
                                 <h3 className="text-xl font-bold text-[#1A3263]">{card.title}</h3>
@@ -569,7 +592,7 @@ function FireAlarmPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm space-y-6"
+                                className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm space-y-6"
                             >
                                 <img src={partner.img} alt={partner.name} className="h-10 w-auto object-contain" />
                                 <div>

@@ -115,18 +115,18 @@ function LeakDetectionPage() {
                         initial={{ opacity: 0, x: -50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 1, ease: "easeOut" }}
-                        className="max-w-4xl space-y-8"
+                        className="max-w-4xl"
                     >
                         <div className="space-y-4">
 
-                            <h1 className="text-4xl md:text-6xl font-bold text-white leading-[1.1]">
-                                Direct Liquid Cooling <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400">
-                                    Leak Detection
-                                </span>
-                            </h1>
+                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                            Direct Liquid Cooling <br />
+                            <span className="text-red-600">
+                                Leak Detection
+                            </span>
+                        </h1>
                         </div>
-                        <p className="text-lg md:text-lg text-white/50 leading-relaxed font-light max-w-2xl">
+                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
                             Mitigate risks with meter-precise sensing technologies for water, hydrocarbons, and chemicals. Engineered for mission-critical reliability in data centers and industrial hubs.
                         </p>
                     </motion.div>

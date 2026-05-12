@@ -134,10 +134,15 @@ export function Navbar() {
           {/* LEFT */}
           <div className="flex items-center gap-6">
 
-            <div className="flex items-center gap-2 text-white/70 hover:text-white transition cursor-pointer">
+            <a 
+              href="https://t.me/chun_sochet" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-white/70 hover:text-white transition cursor-pointer"
+            >
               <Phone size={14} className="text-red-500" />
-              <span className="text-xs">+855  077 602 334</span>
-            </div>
+              <span className="text-xs">+855 077 602 334</span>
+            </a>
 
             <div className="flex items-center gap-2 text-white/70 hover:text-white transition cursor-pointer">
               <Mail size={14} className="text-red-500" />
@@ -208,7 +213,10 @@ export function Navbar() {
               onMouseLeave={closeMenus}
             >
               <div
-                className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 cursor-pointer transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center"
+                className={cn(
+                  "relative h-full flex items-center text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center cursor-pointer",
+                  location.pathname.startsWith("/services") ? "text-red-500 after:scale-x-100" : "text-white/70 hover:text-red-500"
+                )}
               >
                 Services
               </div>
@@ -220,7 +228,7 @@ export function Navbar() {
                       key={item.name}
                       to={item.href}
                       onClick={closeMenus}
-                      className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+                      className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors [&.active]:text-red-500 [&.active]:bg-white/5"
                     >
                       {item.name}
                     </Link>
@@ -283,13 +291,23 @@ export function Navbar() {
 
             {/* CLIENT CENTER */}
             <div className="relative h-full flex items-center" onMouseEnter={() => setActiveSupport("client")} onMouseLeave={closeMenus}>
-              <button className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center">
+              <button
+                className={cn(
+                  "relative h-full flex items-center text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center",
+                  CLIENT_CENTER_DATA.some(item => location.pathname === item.href) ? "text-red-500 after:scale-x-100" : "text-white/70 hover:text-red-500"
+                )}
+              >
                 Client Center
               </button>
               {activeSupport === "client" && (
                 <div className="absolute top-full left-0 pt-2 w-56 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
                   {CLIENT_CENTER_DATA.map(item => (
-                    <Link key={item.name} to={item.href} onClick={closeMenus} className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5">
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      onClick={closeMenus}
+                      className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 [&.active]:text-red-500 [&.active]:bg-white/5"
+                    >
                       {item.name}
                     </Link>
                   ))}
@@ -299,13 +317,23 @@ export function Navbar() {
 
             {/* CONTACT */}
             <div className="relative h-full flex items-center" onMouseEnter={() => setActiveSupport("contact")} onMouseLeave={closeMenus}>
-              <button className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center">
+              <button
+                className={cn(
+                  "relative h-full flex items-center text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center",
+                  CONTACT_DATA.some(item => location.pathname === item.href) ? "text-red-500 after:scale-x-100" : "text-white/70 hover:text-red-500"
+                )}
+              >
                 Contact Us
               </button>
               {activeSupport === "contact" && (
                 <div className="absolute top-full left-0 pt-2 w-64 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
                   {CONTACT_DATA.map(item => (
-                    <Link key={item.name} to={item.href} onClick={closeMenus} className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5">
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      onClick={closeMenus}
+                      className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 [&.active]:text-red-500 [&.active]:bg-white/5"
+                    >
                       {item.name}
                     </Link>
                   ))}

@@ -8,13 +8,14 @@ export function ProjectHero() {
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-3xl md:text-5xl font-bold mb-6"
+                    className="text-4xl md:text-5xl font-bold mb-6 font-display tracking-tight"
                 >
-                    Our Projects
+                    Our <span className="text-[#D62828]">Projects</span>
                 </motion.h1>
 
-                <p className="text-white/40 max-w-2xl mx-auto">
-                    Explore our portfolio of smart engineering systems.
+                <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+                    Explore our complete portfolio of elite engineering installations and
+                    integrated smart building systems across Southeast Asia.
                 </p>
             </Container>
         </section>

@@ -59,15 +59,13 @@ function RoomControlPage() {
                         initial={{ opacity: 0, x: -50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 1, ease: "easeOut" }}
-                        className="max-w-4xl space-y-8"
+                        className="max-w-4xl"
                     >
-                        <h1 className="text-4xl md:text-5xl font-bold text-white leading-[1.1] top-30">
-                            Room Control Unit <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400">
-                                System
-                            </span>
+                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                            Intelligent <br />
+                            <span className="text-red-600">Room Control Units</span>
                         </h1>
-                        <p className="text-base md:text-lg text-white/50 leading-relaxed font-light max-w-2xl">
+                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
                             Intelligent in-room control for lighting, HVAC, and access in hospitality and commercial environments.
                         </p>
                     </motion.div>

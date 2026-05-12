@@ -51,13 +51,14 @@ function SurveillancePage() {
                         initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="max-w-2xl text-white space-y-6"
+                        className="max-w-2xl text-white"
                     >
-                        <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-                            Smarter Business.<br />Safer Environments.
+                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                            Smarter Business.<br />
+                            <span className="text-red-600">Safer Environments.</span>
                         </h1>
 
-                        <p className="text-md md:text-lg text-white/80 leading-relaxed font-light">
+                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
                             Intersys Solutions Co., Ltd delivers comprehensive cloud solutions and CCTV surveillance systems designed to meet the evolving needs of modern businesses.
                             <br /><br />
                             Our integrated approach combines virtual desktops with real-time intelligent monitoring to ensure round-the-clock security and peak productivity.
@@ -75,38 +76,54 @@ function SurveillancePage() {
             {/* STRENGTHS */}
             <section className="py-24 bg-[#F8F9FA]">
                 <Container>
-                    <div className="grid md:grid-cols-3 gap-12">
+
+                    <div className="grid md:grid-cols-3 gap-12 text-center">
+
                         {[
                             {
-                                icon: Zap,
+                                icon: "https://cdn-icons-png.flaticon.com/512/879/879757.png",
                                 title: "Integrated Solutions",
                                 desc: "Only manufacturer providing connected platforms for both SMB and Enterprise."
                             },
                             {
-                                icon: Cpu,
+                                icon: "https://png.pngtree.com/png-vector/20230408/ourmid/pngtree-knowledge-line-icon-vector-png-image_6694784.png",
                                 title: "Deep Knowledge",
                                 desc: "Expert capabilities in cloud infrastructure and IP surveillance."
                             },
                             {
-                                icon: Globe,
+                                icon: "https://cdn-icons-png.flaticon.com/512/2531/2531277.png",
                                 title: "Global Reach",
-                                desc: "Diverse customer base across 4 continents and 100+ countries."
+                                desc: "Diverse customer base across 4 continents and 100+ Project."
                             }
                         ].map((item, i) => (
-                            <div key={i} className="space-y-4">
-                                <item.icon className="text-[#9B0F06]" size={32} />
+                            <div key={i} className="space-y-5 flex flex-col items-center">
+
+                                {/* ICON */}
+                                <div className="w-16 h-16 rounded-2xl bg-white border border-gray-100 shadow-sm flex items-center justify-center">
+                                    <img
+                                        src={item.icon}
+                                        alt={item.title}
+                                        className="w-9 h-9 object-contain"
+                                    />
+                                </div>
+
+                                {/* TITLE */}
                                 <h3 className="text-xl font-bold text-[#1A3263]">
                                     {item.title}
                                 </h3>
-                                <p className="text-gray-500 text-sm leading-relaxed">
+
+                                {/* DESC */}
+                                <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
                                     {item.desc}
                                 </p>
+
                             </div>
                         ))}
+
                     </div>
+
                 </Container>
             </section>
-
             {/* FOCUS & WHY US */}
             <section className="py-24 bg-[#0A0F1A] text-white">
                 <Container>

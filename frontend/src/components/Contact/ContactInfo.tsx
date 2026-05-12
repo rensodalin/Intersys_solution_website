@@ -9,9 +9,9 @@ interface ContactItemProps {
 
 function ContactItem({ icon: Icon, title, value, link }: ContactItemProps) {
   const content = (
-    <div className="flex items-start gap-4 p-4 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-md hover:border-gray-200 transition-all">
-      <div className="w-11 h-11 shrink-0 bg-gray-100 rounded-xl flex items-center justify-center">
-        <Icon className="w-5 h-5 text-gray-500" />
+    <div className="flex items-start gap-4 p-4 rounded-lg border border-gray-100 bg-white shadow-sm hover:shadow-md hover:border-gray-200 transition-all">
+      <div className="w-11 h-11 shrink-0 bg-red-50 rounded-lg flex items-center justify-center">
+        <Icon className="w-5 h-5 text-red-600" />
       </div>
 
       <div className="space-y-1">
@@ -25,7 +25,12 @@ function ContactItem({ icon: Icon, title, value, link }: ContactItemProps) {
 
   if (link) {
     return (
-      <a href={link} className="block">
+      <a 
+        href={link} 
+        className="block"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {content}
       </a>
     );
@@ -37,7 +42,7 @@ function ContactItem({ icon: Icon, title, value, link }: ContactItemProps) {
 export function ContactInfo() {
   return (
     <div className="lg:col-span-4">
-      <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100 space-y-8">
+      <div className="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-gray-100 space-y-8">
 
         {/* Header */}
         <div>
@@ -51,9 +56,9 @@ export function ContactInfo() {
         <div className="space-y-4">
           <ContactItem
             icon={Phone}
-            title="Phone"
+            title="Phone / Telegram"
             value="077 602 334"
-            link="tel:+85577602334"
+            link="https://t.me/chun_sochet"
           />
 
           <ContactItem
@@ -67,11 +72,12 @@ export function ContactInfo() {
             icon={MapPin}
             title="Office address"
             value="No. 13, Borey Pipub Thmey Samrong Anthet (2), 2nd Floor, St 07, Krang Thmey Village, Sangkat Kok Khlang, Khan Sen Sok, Phnom Penh, Cambodia"
+            link="https://maps.app.goo.gl/kE5C1xd5F58TcYJo8"
           />
         </div>
 
         {/* Telegram */}
-        <div className="rounded-2xl border border-gray-100 bg-gradient-to-br from-blue-500 to-blue-600 p-6 text-white shadow-lg">
+        <div className="rounded-xl border border-gray-100 bg-gradient-to-br from-blue-500 to-blue-600 p-6 text-white shadow-lg">
           <div className="mb-4">
             <h3 className="text-lg font-semibold">Telegram</h3>
             <p className="text-sm opacity-90">Chat with us instantly</p>

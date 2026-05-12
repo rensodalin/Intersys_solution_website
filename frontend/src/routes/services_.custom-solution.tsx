@@ -54,13 +54,14 @@ function CustomSolutionPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="max-w-3xl mx-auto space-y-6"
+                        className="max-w-3xl mx-auto"
                     >
-                        <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                            Discover a New World
+                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                            Discover <br />
+                            <span className="text-red-600">Custom Solutions</span>
                         </h1>
 
-                        <p className="text-lg md:text-xl text-white/80 font-light">
+                        <p className="text-base text-white/70 max-w-2xl mx-auto leading-relaxed">
                             Empowering modern enterprises with resilient cloud solutions, airtight security protocols, and scalable infrastructure.
                         </p>
 

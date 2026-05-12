@@ -50,13 +50,14 @@ function IntrusionSystemPage() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="max-w-3xl mx-auto text-center space-y-6"
+                        className="max-w-3xl mx-auto"
                     >
-                        <h1 className="text-2xl md:text-4xl font-bold leading-tight">
-                            Intrusion Systems
+                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6 text-center">
+                            Intelligent <br />
+                            <span className="text-red-600">Intrusion Systems</span>
                         </h1>
 
-                        <p className="text-base md:text-lg text-white/80 leading-relaxed font-light">
+                        <p className="text-base text-white/70 max-w-2xl mx-auto leading-relaxed">
                             Protect your property with our fully integrated intrusion alarm solutions, designed to detect and deter unauthorized access before it becomes a threat. We combine advanced motion sensors, door and window contact detectors, and glass break sensors with intelligent control panels for instant, reliable response.
                         </p>
                     </motion.div>

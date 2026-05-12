@@ -7,13 +7,13 @@ import {
   Youtube,
   Mail,
   MapPin,
-  Phone
+  Phone,
+  Send,
 } from "lucide-react";
 
 import { Container } from "@/components/Common/Container";
-import logoImg from "@/assets/logo.avif";
-import qrCodeImg from "@/assets/apply_qr_code.png";
-import teamImg from "@/assets/Teamfooter.png";
+import logoImg from "../../assets/logo.avif";
+import teamImg from "../../assets/Teamfooter.png";
 
 export function Footer({ isCompact }: { isCompact?: boolean }) {
   if (isCompact) {
@@ -50,14 +50,27 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
             </div>
 
             <div className="space-y-6 text-white/90">
-              <p className="text-base font-medium leading-relaxed">
+              <a
+                href="https://maps.app.goo.gl/kE5C1xd5F58TcYJo8"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-base font-medium leading-relaxed hover:underline block"
+              >
                 House No. 13, Borey Pipub Thmey Samrong Anthet (2), 2nd Floor, Street 07, Krang Thmey Village, Sangkat Kok Khlang, Khan Sen Sok, Phnom Penh, Cambodia.
-              </p>
+              </a>
 
               <div className="space-y-3">
                 <div className="flex gap-2 text-sm">
                   <span className="font-bold">Tel:</span>
-                  <span>077 602 334 / 066 306 205</span>
+                  <div className="flex flex-col sm:flex-row sm:gap-3">
+                    <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer" className="hover:underline">
+                      077 602 334
+                    </a>
+                    <span className="hidden sm:inline text-white/30">/</span>
+                    <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer" className="hover:underline">
+                      066 306 205
+                    </a>
+                  </div>
                 </div>
 
                 <div className="flex gap-2 text-sm">
@@ -66,6 +79,8 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
                     sochet@intersys-solutions.com
                   </a>
                 </div>
+
+
 
                 <div className="pt-2 space-y-1 text-sm">
                   <div className="flex gap-2">
@@ -82,10 +97,15 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
               <div className="pt-6 space-y-4">
                 <h3 className="text-xl font-bold">Follow us on:</h3>
                 <div className="flex gap-6">
-                  <Facebook size={20} className="hover:scale-110 cursor-pointer transition-transform" />
-                  <Linkedin size={20} className="hover:scale-110 cursor-pointer transition-transform" />
-                  <Instagram size={20} className="hover:scale-110 cursor-pointer transition-transform" />
-                  <Youtube size={20} className="hover:scale-110 cursor-pointer transition-transform" />
+                  <a href="https://www.facebook.com/IntersysSolutions" target="_blank" rel="noopener noreferrer">
+                    <Facebook size={20} className="hover:scale-110 cursor-pointer transition-transform" />
+                  </a>
+                  <a href="https://www.linkedin.com/company/intersys-solutions2015/?viewAsMember=true" target="_blank" rel="noopener noreferrer">
+                    <Linkedin size={20} className="hover:scale-110 cursor-pointer transition-transform" />
+                  </a>
+                  <a href="https://t.me/+vOYvhFusrd0xYTFl" target="_blank" rel="noopener noreferrer">
+                    <Send size={20} className="hover:scale-110 cursor-pointer transition-transform" />
+                  </a>
                 </div>
               </div>
             </div>
@@ -114,19 +134,21 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
                 Scan the QR code below or
               </p>
               <Link
-                to="/careers"
-                className="text-2xl md:text-3xl font-bold text-white hover:text-[#FF6B00] transition-colors decoration-2 underline-offset-8 underline"
+                to="/request-quote"
+                className="text-xl md:text-2xl font-bold text-white hover:text-[#FF6B00] transition-colors decoration-2 underline-offset-8 underline"
               >
-                Click here to apply!
+                Click here to request a quote!
               </Link>
             </div>
 
-            <div className="bg-white p-6 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] inline-block">
-              <img
-                src={qrCodeImg}
-                alt="Application QR Code"
-                className="w-48 h-48 md:w-56 md:h-56 object-contain"
-              />
+            <div className="bg-white p-6 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] inline-block group">
+              <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer">
+                <img
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://t.me/chun_sochet"
+                  alt="Telegram QR Code"
+                  className="w-48 h-48 md:w-56 md:h-56 object-contain group-hover:scale-105 transition-transform"
+                />
+              </a>
             </div>
           </div>
         </div>
@@ -144,17 +166,16 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
 
             {/* Center: Copyright */}
             <div className="flex-1 flex justify-center">
-              <p className="text-[10px] text-white/60 tracking-wider font-medium">
+              <p className="text-[12px] text-white/60 tracking-wider font-medium">
                 © {new Date().getFullYear()} Intersys Solutions Co., Ltd. All Rights Reserved
               </p>
             </div>
 
             {/* Right: Social Icons */}
             <div className="flex-1 flex justify-end gap-6">
-              <SocialIconBottom icon={<Facebook size={14} />} href="#" />
-              <SocialIconBottom icon={<Linkedin size={14} />} href="#" />
-              <SocialIconBottom icon={<Instagram size={14} />} href="#" />
-              <SocialIconBottom icon={<Youtube size={14} />} href="#" />
+              <SocialIconBottom icon={<Facebook size={14} />} href="https://www.facebook.com/IntersysSolutions" />
+              <SocialIconBottom icon={<Linkedin size={14} />} href="https://www.linkedin.com/company/intersys-solutions2015/?viewAsMember=true" />
+              <SocialIconBottom icon={<Send size={14} />} href="https://t.me/+vOYvhFusrd0xYTFl" />
             </div>
           </div>
         </Container>

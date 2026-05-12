@@ -49,7 +49,7 @@ export const InputField = React.forwardRef(
                 <input
                     ref={ref}
                     {...props}
-                    className={`w-full ${Icon ? "pl-11" : "px-4"} p-3.5 rounded-xl border ${error ? "border-red-400 ring-2 ring-red-100" : "border-gray-200"
+                    className={`w-full ${Icon ? "pl-11" : "px-4"} p-3.5 rounded-lg border ${error ? "border-red-400 ring-2 ring-red-100" : "border-gray-200"
                         } bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-500 transition`}
                 />
             </div>
@@ -90,7 +90,7 @@ export function InterestedSection({ register, control }: SectionProps) {
 
             {/* HEADER */}
             <div className="flex items-center gap-4 border-b border-gray-100 pb-4">
-                <div className="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center text-red-600">
+                <div className="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center text-red-600">
                     <Package size={20} />
                 </div>
 
@@ -108,14 +108,14 @@ export function InterestedSection({ register, control }: SectionProps) {
             <div className="grid md:grid-cols-2 gap-8">
 
                 <div className="space-y-3">
-                    <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                        Product Categories
+                    <h3 className="text-xs font-semibold text-gray-400 tracking-wider">
+                        Product categories
                     </h3>
 
                     {categories.map((text) => (
                         <label
                             key={text}
-                            className="flex items-center justify-between p-3 bg-white rounded-xl border border-gray-100 hover:border-red-100 hover:bg-red-50/20 transition cursor-pointer"
+                            className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-100 hover:border-red-100 hover:bg-red-50/20 transition cursor-pointer"
                         >
                             <span className="text-gray-700 text-xs font-medium">
                                 {text}
@@ -132,8 +132,8 @@ export function InterestedSection({ register, control }: SectionProps) {
 
                 {/* SECTIONS */}
                 <div className="space-y-3">
-                    <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                        Product Sections
+                    <h3 className="text-xs font-semibold text-gray-400 tracking-wider">
+                        Product sections
                     </h3>
 
                     <div className="grid grid-cols-2 gap-3">
@@ -170,7 +170,7 @@ export function InterestedSection({ register, control }: SectionProps) {
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm">
 
-                        <thead className="text-xs uppercase text-gray-400">
+                        <thead className="text-xs text-gray-400">
                             <tr>
                                 <th className="p-3 text-left">Qty</th>
                                 <th className="p-3 text-left">Product</th>
@@ -278,7 +278,7 @@ export function UserSection({ register, errors }: SectionProps) {
 
                         <select
                             {...register("title")}
-                            className="w-full pl-11 p-3.5 rounded-xl border border-gray-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-500 transition"
+                            className="w-full pl-11 p-3.5 rounded-lg border border-gray-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-500 transition"
                         >
                             <option value="">Select your role</option>
                             {jobTitles.map((job) => (
@@ -334,7 +334,7 @@ export function CompanySection({ register }: SectionProps) {
                 <textarea
                     {...register("otherBms")}
                     placeholder="Tell us anything else relevant to your project..."
-                    className="w-full p-4 border rounded-xl min-h-[100px] text-sm"
+                    className="w-full p-4 border rounded-lg min-h-[100px] text-sm"
                 />
             </div>
         </section>

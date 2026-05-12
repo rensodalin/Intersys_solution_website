@@ -161,7 +161,7 @@ export function WhyChooseUs() {
 
           {/* Left Side: Overlapping Images */}
           <div className="lg:w-5/12 relative sticky top-24">
-            
+
             {/* Background Technical Grid */}
             <div className="absolute -top-10 -left-10 w-full h-full opacity-[0.03] pointer-events-none z-0">
               <div className="w-full h-full" style={{ backgroundImage: 'radial-gradient(#C00707 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
@@ -255,7 +255,7 @@ export function WhyChooseUs() {
             {/* Detailed Solutions (Expandable Grid - Original Information Only) */}
             <div className="space-y-6 pt-4 border-t border-gray-100">
               <h3 className="text-lg font-bold text-[#1A3263] flex items-center gap-3">
-                <div className="w-8 h-[2px] bg-[#C00707]" />
+
                 Explore Our Solutions
               </h3>
 

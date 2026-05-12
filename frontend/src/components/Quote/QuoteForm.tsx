@@ -67,7 +67,7 @@ export function QuoteForm() {
                 description: item.title,
                 application: item.specification,
             }));
-            
+
             // Set the products array
             setValue("products", formProducts, { shouldDirty: true });
 
@@ -87,7 +87,7 @@ export function QuoteForm() {
                 }
                 // Add more mappings as you expand your product catalog
             });
-            
+
             if (detectedCategories.length > 0) {
                 setValue("solutionCategories", detectedCategories, { shouldDirty: true });
             }
@@ -114,30 +114,26 @@ export function QuoteForm() {
             {/* ── HERO ── */}
             <div className="relative bg-[#0A0F1A] overflow-hidden pt-20">
                 <div className="absolute inset-0">
-                    <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#D62828]/10 blur-[140px] rounded-full" />
-                    <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-900/20 blur-[120px] rounded-full" />
-                    <div
-                        className="absolute inset-0 opacity-[0.03]"
-                        style={{
-                            backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-                            backgroundSize: "48px 48px",
-                        }}
+                    <img
+                        src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
+                        className="w-full h-full object-cover opacity-40 grayscale"
+                        alt="Background"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1A]/80 via-[#0A0F1A]/60 to-[#0A0F1A]" />
                 </div>
 
-                <div className="max-w-7xl mx-auto px-6 pt-35 pb-36 relative z-10">
+                <div className="max-w-7xl mx-auto px-6 pt-35 pb-48 relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 24 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="max-w-2xl text-center lg:text-left"
+                        className="max-w-3xl"
                     >
-
-                        <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-6">
+                        <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight mb-6 font-display">
                             Request a<br />
-                            <span className="text-[#D62828]">Custom Quote</span>
+                            <span className="text-red-600">Custom Quote</span>
                         </h1>
-                        <p className="text-gray-400 text-base leading-relaxed">
+                        <p className="text-gray-300 text-lg leading-relaxed max-w-xl">
                             Tell us your requirements and our engineering team will design a
                             tailored solution with accurate costing and technical expertise.
                         </p>
@@ -146,7 +142,7 @@ export function QuoteForm() {
             </div>
 
             {/* ── BODY: STICKY SIDEBAR + FORM ── */}
-            <div className="max-w-7xl mx-auto px-4 lg:px-8 -mt-20 relative z-20 pb-24">
+            <div className="max-w-7xl mx-auto px-4 lg:px-8 -mt-32 relative z-20 pb-24">
                 <div className="flex flex-col lg:flex-row gap-6 items-start">
 
                     {/* ── STICKY SIDEBAR ── */}
@@ -157,7 +153,7 @@ export function QuoteForm() {
                             initial={{ opacity: 0, x: -24 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="bg-white rounded-2xl border border-gray-100 shadow-xl p-6"
+                            className="bg-white rounded-xl border border-gray-100 shadow-xl p-6"
                         >
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-sm font-bold text-[#0A0F1A]">Selected Products</h3>
@@ -178,7 +174,7 @@ export function QuoteForm() {
                                                 <p className="text-[10px] text-gray-400 truncate">{item.partCode}</p>
                                                 <p className="text-[10px] text-[#D62828] font-bold mt-1">Qty: {item.qty}</p>
                                             </div>
-                                            <button 
+                                            <button
                                                 onClick={() => removeItem(item.partCode)}
                                                 className="text-gray-300 hover:text-red-500 transition-colors"
                                             >
@@ -192,9 +188,9 @@ export function QuoteForm() {
                             </div>
 
                             <div className="mt-6 pt-6 border-t border-gray-50">
-                                <button 
+                                <button
                                     onClick={() => window.history.back()}
-                                    className="w-full py-3 bg-gray-50 hover:bg-gray-100 text-[#0A0F1A] text-xs font-bold rounded-xl transition-all border border-gray-100 flex items-center justify-center gap-2"
+                                    className="w-full py-3 bg-gray-50 hover:bg-gray-100 text-[#0A0F1A] text-xs font-bold rounded-lg transition-all border border-gray-100 flex items-center justify-center gap-2"
                                 >
                                     <Plus size={14} className="text-[#D62828]" />
                                     Add more product
@@ -202,25 +198,6 @@ export function QuoteForm() {
                             </div>
                         </motion.div>
 
-                        {/* stats card */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -24 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6, delay: 0.4 }}
-                            className="bg-[#D62828] rounded-xl p-5 shadow-lg shadow-[#D62828]/20"
-                        >
-                            <p className="text-[11px] font-semibold text-white/60 uppercase tracking-widest mb-4">
-                                Why choose us
-                            </p>
-                            <div className="grid grid-cols-3 gap-2">
-                                {stats.map((s) => (
-                                    <div key={s.label} className="text-center">
-                                        <p className="text-xl font-bold text-white">{s.value}</p>
-                                        <p className="text-[10px] text-white/60 mt-0.5 leading-tight">{s.label}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </motion.div>
 
                     </div>
 
@@ -229,7 +206,7 @@ export function QuoteForm() {
                         initial={{ opacity: 0, y: 32 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3, duration: 0.6 }}
-                        className="flex-1 bg-white rounded-3xl shadow-2xl shadow-black/10 border border-gray-100 overflow-hidden"
+                        className="flex-1 bg-white rounded-2xl shadow-2xl shadow-black/10 border border-gray-100 overflow-hidden"
                     >
                         {/* form header */}
                         <div className="border-b border-gray-100 px-8 md:px-12 py-5 flex items-center justify-between">
@@ -252,8 +229,8 @@ export function QuoteForm() {
                         </div>
 
                         <form onSubmit={handleSubmit(onSubmit)} className="p-8 md:p-12 space-y-14">
-                            <InterestedSection register={register} control={control} errors={errors} />
                             <UserSection register={register} errors={errors} />
+                            <InterestedSection register={register} control={control} errors={errors} />
                             <CompanySection register={register} errors={errors} />
 
                             {/* submit */}
@@ -271,7 +248,7 @@ export function QuoteForm() {
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="group inline-flex items-center gap-3 px-10 py-4 rounded-xl bg-[#D62828] text-white text-sm font-semibold shadow-lg shadow-[#D62828]/25 hover:shadow-[#D62828]/40 hover:bg-[#b82020] hover:scale-[1.02] active:scale-[0.99] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                                    className="group inline-flex items-center gap-3 px-10 py-4 rounded-lg bg-[#D62828] text-white text-sm font-semibold shadow-lg shadow-[#D62828]/25 hover:shadow-[#D62828]/40 hover:bg-[#b82020] hover:scale-[1.02] active:scale-[0.99] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
                                 >
                                     {isSubmitting ? (
                                         <>
@@ -291,6 +268,30 @@ export function QuoteForm() {
 
                 </div>
             </div>
+
+            {/* Stats Overlay (Now under the form) */}
+            <section className="pb-24">
+                <div className="max-w-7xl mx-auto px-6">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="bg-white rounded-xl shadow-xl border border-gray-100 flex flex-wrap md:flex-nowrap divide-y md:divide-y-0 md:divide-x divide-gray-100 overflow-hidden"
+                    >
+                        <div className="flex-1 p-8 text-center bg-gray-50/50">
+                            <p className="text-xs font-bold text-red-600 tracking-widest mb-1">Expertise</p>
+                            <p className="text-sm text-gray-500 font-medium">Why choose Intersys?</p>
+                        </div>
+                        {stats.map((s) => (
+                            <div key={s.label} className="flex-1 p-8 text-center group hover:bg-gray-50 transition-colors">
+                                <p className="text-3xl font-bold text-[#0A0F1A] mb-1">{s.value}</p>
+                                <p className="text-xs font-medium text-gray-400 tracking-wider">{s.label}</p>
+                            </div>
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
 
         </div>
     );

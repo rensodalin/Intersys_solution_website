@@ -11,8 +11,8 @@ export function ContactHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-3xl md:text-5xl font-semibold mb-6">
-            Contact <span className="text-red-500">Us</span>
+          <h1 className="text-3xl md:text-5xl font-bold mb-6 font-display tracking-tight">
+            Contact <span className="text-red-600">Us</span>
           </h1>
           <p className="text-gray-300 max-w-2xl mx-auto">
             Have a project in mind or need expert advice? Reach out to our team and let’s build

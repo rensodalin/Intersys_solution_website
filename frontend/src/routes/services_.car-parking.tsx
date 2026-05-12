@@ -55,14 +55,13 @@ function CarParkingPage() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="max-w-4xl space-y-8"
+                        className="max-w-4xl"
                     >
-                        <div className="space-y-4">
-                            <h1 className="text-3xl md:text-5xl font-bold leading-tight">
-                                Car Parking Systems
-                            </h1>
-                        </div>
-                        <p className="text-lg md:text-xl text-white/80 leading-relaxed font-light max-w-2xl">
+                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                            Intelligent <br />
+                            <span className="text-red-600">Car Parking Systems</span>
+                        </h1>
+                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
                             Streamlined vehicle access control, automated payment solutions, and real-time occupancy monitoring for seamless parking management.
                         </p>
                     </motion.div>

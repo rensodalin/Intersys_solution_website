@@ -24,12 +24,12 @@ function PublicAddressPage() {
         <div className="bg-white overflow-hidden scroll-smooth">
 
             {/* ─── HERO SECTION ─── */}
-            <section className="relative min-h-[60vh] flex items-center pt-50 pb-20 bg-gray-50">
+            <section className="relative min-h-[60vh] flex items-center pt-50 pb-20 bg-[#0A0F1A]">
 
                 {/* ─── BACK BUTTON ─── */}
                 <button
                     onClick={() => router.history.back()}
-                    className="absolute top-50 left-23 z-20 flex items-center gap-2 text-black hover:text-black/60 transition-colors duration-200 group"
+                    className="absolute top-50 left-23 z-20 flex items-center gap-2 text-white hover:text-white/60 transition-colors duration-200 group"
                 >
                     <ArrowLeft
                         size={18}
@@ -44,12 +44,13 @@ function PublicAddressPage() {
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="space-y-8"
+                            className="max-w-xl"
                         >
-                            <h1 className="text-3xl md:text-5xl font-bold text-[#1A3263] leading-tight">
-                                Public Address Systems (PA)
+                             <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                                Public Address <br />
+                                <span className="text-red-600">Systems (PA)</span>
                             </h1>
-                            <p className="text-lg text-gray-500 leading-relaxed max-w-xl">
+                            <p className="text-base text-white/70 max-w-xl leading-relaxed">
                                 Reliable audio solutions for announcements, background music, and emergency broadcasts across large or multi-zone facilities.
                             </p>
                         </motion.div>

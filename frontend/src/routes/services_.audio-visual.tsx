@@ -44,12 +44,13 @@ function AudioVisualPage() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="max-w-3xl space-y-8"
+                        className="max-w-3xl"
                     >
-                        <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-                            Delivering Advanced Audio Visual Solutions for Modern Environments
+                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                            Delivering Advanced <br />
+                            <span className="text-red-600">Audio Visual</span> Solutions
                         </h1>
-                        <p className="text-lg md:text-xl text-white/80 leading-relaxed font-light max-w-2xl">
+                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
                             Transform your spaces with cutting-edge technology that enhances communication, collaboration, and engagement.
                         </p>
 
@@ -83,11 +84,11 @@ function AudioVisualPage() {
                             </div>
                         </div>
                         <div className="relative group">
-                            <div className="absolute -inset-4 bg-red-600/5 rounded-[40px] -z-10 group-hover:bg-red-600/10 transition-colors" />
+                            <div className="absolute -inset-4 bg-red-600/5 rounded-2xl -z-10 group-hover:bg-red-600/10 transition-colors" />
                             <img
                                 src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=2070&auto=format&fit=crop"
                                 alt="Monitoring Center"
-                                className="w-full h-auto rounded-[32px] shadow-2xl"
+                                className="w-full h-auto rounded-2xl shadow-2xl"
                             />
                         </div>
                     </div>
@@ -146,7 +147,7 @@ function AudioVisualPage() {
                         ].map((item, i) => (
                             <div
                                 key={i}
-                                className="group p-8 bg-white border border-gray-100 rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                                className="group p-8 bg-white border border-gray-100 rounded-xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                             >
 
                                 {/* subtle top line */}
@@ -239,7 +240,7 @@ function AudioVisualPage() {
                         ].map((item, i) => (
                             <div
                                 key={i}
-                                className="group p-7 rounded-3xl border border-gray-100 bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                                className="group p-7 rounded-xl border border-gray-100 bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                             >
 
                                 {/* TITLE */}
@@ -302,7 +303,7 @@ function AudioVisualPage() {
                         ].map((item, i) => (
                             <div
                                 key={i}
-                                className="bg-white rounded-[32px] overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500"
+                                className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500"
                             >
 
                                 {/* IMAGE */}
@@ -462,7 +463,7 @@ function AudioVisualPage() {
                     <div className="grid lg:grid-cols-3 gap-10">
 
                         {/* CARD 1 */}
-                        <div className="group rounded-[36px] bg-white/5 border border-white/10 overflow-hidden
+                        <div className="group rounded-2xl bg-white/5 border border-white/10 overflow-hidden
                             hover:bg-white/10 hover:-translate-y-1 hover:shadow-2xl transition-all duration-500">
 
                             <div className="overflow-hidden">
@@ -484,7 +485,7 @@ function AudioVisualPage() {
                         </div>
 
                         {/* CARD 2 */}
-                        <div className="group rounded-[36px] bg-white/5 border border-white/10 overflow-hidden
+                        <div className="group rounded-2xl bg-white/5 border border-white/10 overflow-hidden
                             hover:bg-white/10 hover:-translate-y-1 hover:shadow-2xl transition-all duration-500">
 
                             <div className="relative overflow-hidden bg-gradient-to-b from-white/5 to-transparent">
@@ -510,7 +511,7 @@ function AudioVisualPage() {
                         </div>
 
                         {/* CARD 3 */}
-                        <div className="group rounded-[36px] bg-white/5 border border-white/10 overflow-hidden
+                        <div className="group rounded-2xl bg-white/5 border border-white/10 overflow-hidden
                             hover:bg-white/10 hover:-translate-y-1 hover:shadow-2xl transition-all duration-500">
 
                             <div className="relative overflow-hidden bg-gradient-to-b from-white/5 to-transparent">
@@ -566,11 +567,11 @@ function AudioVisualPage() {
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-4">
-                                <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=800&auto=format&fit=crop" className="rounded-3xl shadow-xl" alt="Office 1" />
-                                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" className="rounded-3xl shadow-xl" alt="Office 2" />
+                                <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=800&auto=format&fit=crop" className="rounded-xl shadow-xl" alt="Office 1" />
+                                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" className="rounded-xl shadow-xl" alt="Office 2" />
                             </div>
                             <div className="">
-                                <img src="https://plus.unsplash.com/premium_photo-1724753995771-8ee6954e78da?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="rounded-3xl shadow-xl h-full object-cover" alt="Large Meeting Room" />
+                                <img src="https://plus.unsplash.com/premium_photo-1724753995771-8ee6954e78da?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="rounded-xl shadow-xl h-full object-cover" alt="Large Meeting Room" />
                             </div>
                         </div>
                     </div>
