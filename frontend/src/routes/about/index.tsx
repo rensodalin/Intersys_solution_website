@@ -6,6 +6,8 @@ import { AboutEvolution } from "@/components/AboutUs/AboutEvolution";
 import { AboutLeadership } from "@/components/AboutUs/AboutLeadership";
 import { AboutTeam } from "@/components/AboutUs/AboutTeam";
 
+import { AboutExpertise } from "@/components/AboutUs/AboutExpertise";
+
 export const Route = createFileRoute("/about/")({
   head: () => ({
     meta: [
@@ -26,6 +28,7 @@ function AboutPage() {
       <AboutHero />
       <AboutMission />
       <AboutEvolution />
+      <AboutExpertise />
       <WhyChooseUs />
       <AboutLeadership />
       <AboutTeam />

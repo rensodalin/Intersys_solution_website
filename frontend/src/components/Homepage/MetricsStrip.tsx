@@ -60,13 +60,11 @@ export function MetricsStrip() {
                 <Play fill="currentColor" size={28} />
               </div>
               <h3 className="text-xl font-bold text-white mb-3 leading-tight">Premium ELV Engineering</h3>
-              <p className="text-white/60 text-[12px] leading-relaxed mb-5">
+              <p className="text-white/60 text-[13px] leading-relaxed mb-5">
                 Integrated solutions for safer building management and future-ready infrastructure.
               </p>
             </div>
-            <button className="relative z-20 flex items-center gap-2 text-[13px] font-semibold text-white/80 hover:text-white transition-colors group">
-              Learn more <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </button>
+
 
             {/* Brush Effect */}
             <motion.div
@@ -110,7 +108,7 @@ export function MetricsStrip() {
                     <AnimatedCounter value={m.value as number} />
                     <span className="text-2xl ml-0.5">{m.suffix}</span>
                   </div>
-                  <p className="text-gray-500 text-[11px] leading-relaxed group-hover:text-white/80 transition-colors pt-1">
+                  <p className="text-gray-500 text-[13px] leading-relaxed group-hover:text-white/80 transition-colors pt-1">
                     {m.desc}
                   </p>
                 </div>

@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CheckCircle2 } from "lucide-react";
+import aboutImage from "@/assets/Certificates & Licenses/Certificates & Licenses/new/us.png"
+
 
 const evolution = [
   {
@@ -36,7 +38,7 @@ export function AboutEvolution() {
       <div
         className="absolute inset-0 bg-cover bg-fixed bg-center z-0"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1184&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
+          backgroundImage: `url(${aboutImage})`,
         }}
       >
         <div className="absolute inset-0 bg-[#05080F]/60 backdrop-blur-[0.5px]" />

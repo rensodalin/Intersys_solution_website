@@ -7,8 +7,8 @@ import certificate2 from "../../assets/certificate2.jpg";
 export function Certificates() {
   const router = useRouter();
   return (
-    <section className="bg-[#9B0F06] border-b border-white/5 overflow-hidden relative">
-      <Container className="py-16 md:py-24">
+    <section className="bg-[#C3110C] border-b border-white/5 overflow-hidden relative">
+      <Container className="pb-16 md:pb-24 pt-16">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
           {/* Left: Certificate Image */}
           <div className="lg:w-5/12 relative flex justify-center">
@@ -17,7 +17,7 @@ export function Certificates() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="relative z-10 w-full max-w-[340px] group"
+              className="relative z-10 w-full max-w-[300px] group"
             >
               {/* Glowing halo behind certificate */}
               <div className="absolute -inset-10 bg-white/10 blur-[80px] rounded-full opacity-50" />
@@ -66,7 +66,7 @@ export function Certificates() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="font-display text-2xl md:text-4xl font-bold text-white leading-[1.15] tracking-tight mb-5"
+              className="font-display text-xl md:text-3xl font-bold text-white leading-[1.15] tracking-tight mb-5"
             >
               Recognized for excellence
               <br />
@@ -80,7 +80,7 @@ export function Certificates() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1, duration: 0.7 }}
-              className="text-sm md:text-base text-white/75 leading-relaxed max-w-xl mb-8"
+              className="text-[13px] md:text-sm text-white/75 leading-relaxed max-w-xl mb-8"
             >
               Intersys Solutions has earned recognition for delivering
               high-quality engineering systems that meet international
@@ -108,13 +108,13 @@ export function Certificates() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="bg-white/5 border border-white/10 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-all duration-300"
+                  className="bg-white/5 border border-white/10 backdrop-blur-sm rounded-sm p-4 hover:bg-white/10 transition-all duration-300"
                 >
-                  <h4 className="text-base font-semibold text-white mb-1">
+                  <h4 className="text-sm font-semibold text-white mb-1">
                     {item.title}
                   </h4>
 
-                  <p className="text-xs text-white/65 leading-relaxed">
+                  <p className="text-[11px] text-white/65 leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
@@ -127,9 +127,9 @@ export function Certificates() {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
-              <button 
+              <button
                 onClick={() => router.navigate({ to: '/credentials' })}
-                className="bg-white text-[#9B0F06] px-6 py-3 rounded-xl font-semibold text-xs hover:bg-[#162E93] hover:text-white transition-all duration-300 shadow-xl"
+                className="bg-white text-[#9B0F06] px-6 py-3 rounded-sm font-semibold text-xs hover:bg-[#162E93] hover:text-white transition-all duration-300 shadow-xl"
               >
                 View credentials
               </button>

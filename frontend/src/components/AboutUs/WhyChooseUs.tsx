@@ -17,8 +17,12 @@ import {
   Minus,
   CheckCircle2,
   PhoneCall,
+  ShieldCheck,
+  ArrowRight,
 } from "lucide-react";
 import teamWorking from "@/assets/team_working_intersys.png";
+import aboutImage2 from "@/assets/Certificates & Licenses/Certificates & Licenses/new/new1.jpg"
+import aboutImage3 from "@/assets/Certificates & Licenses/Certificates & Licenses/new/new2.jpg"
 
 const solutions = [
   {
@@ -157,48 +161,79 @@ export function WhyChooseUs() {
 
           {/* Left Side: Overlapping Images */}
           <div className="lg:w-5/12 relative sticky top-24">
+            
+            {/* Background Technical Grid */}
+            <div className="absolute -top-10 -left-10 w-full h-full opacity-[0.03] pointer-events-none z-0">
+              <div className="w-full h-full" style={{ backgroundImage: 'radial-gradient(#C00707 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+            </div>
+
             {/* Red Splash Background Effect */}
-            <div className="absolute -top-10 -left-20 w-[120%] h-[120%] z-0 opacity-10 pointer-events-none">
+            <div className="absolute -top-20 -left-20 w-[140%] h-[140%] z-0 opacity-5 pointer-events-none">
               <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" className="fill-[#C00707]">
                 <path d="M414,330.5Q373,411,289,425.5Q205,440,146,380.5Q87,321,79.5,236.5Q72,152,143.5,108.5Q215,65,296,87Q377,109,416,179.5Q455,250,414,330.5Z" />
               </svg>
             </div>
 
-            <div className="relative z-10 flex items-end">
+            <div className="relative z-10 flex items-end pt-10">
+              {/* Main Image */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="w-2/3 shadow-2xl rounded-sm overflow-hidden"
+                className="w-4/5 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] rounded-sm overflow-hidden border border-white/20"
               >
-                <img src={teamWorking} alt="Intersys Team" className="w-full h-auto grayscale hover:grayscale-0 transition-all duration-700" />
+                <img
+                  src={aboutImage3}
+                  alt="Intersys Team"
+                  className="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-100 hover:scale-105"
+                />
               </motion.div>
 
+              {/* Overlapping Image */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="w-1/2 -ml-24 mb-[-20px] shadow-2xl rounded-sm border-4 border-white overflow-hidden relative z-20"
+                className="w-1/2 -ml-32 mb-[-30px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] rounded-sm border-[6px] border-white overflow-hidden relative z-20 group"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1170&auto=format&fit=crop"
+                  src={aboutImage2}
                   alt="Technician"
-                  className="w-full h-auto"
+                  className="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-1000"
                 />
               </motion.div>
 
+              {/* Floating Tech Detail */}
               <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-                className="absolute left-10 bottom-10 z-30 bg-[#C00707] text-white p-6 shadow-2xl min-w-[180px]"
+                transition={{ delay: 0.5 }}
+                className="absolute -top-4 -right-4 w-12 h-12 border-t-2 border-r-2 border-brand-red z-30"
+              />
+
+              {/* Compact Experience Badge */}
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0, x: -20 }}
+                whileInView={{ scale: 1, opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
+                className="absolute left-[-10px] bottom-8 z-30 bg-[#C00707] text-white p-5 shadow-[0_15px_30px_rgba(192,7,7,0.3)] min-w-[160px]"
               >
-                <h3 className="text-4xl font-black mb-1">10+</h3>
-                <p className="text-xs font-bold leading-tight">
-                  Years Work <br /> Experience
-                </p>
+                <div className="relative z-10">
+                  <h3 className="text-3xl font-black mb-1 flex items-baseline gap-1">
+                    10<span className="text-sm">+</span>
+                  </h3>
+                  <div className="w-8 h-[2px] bg-white/30 mb-2" />
+                  <p className="text-[10px] font-bold uppercase tracking-wider leading-tight">
+                    Years of <br /> Engineering <br /> Excellence
+                  </p>
+                </div>
+                {/* Badge accent */}
+                <div className="absolute top-0 right-0 p-1.5 opacity-20">
+                  <ShieldCheck size={28} strokeWidth={1} />
+                </div>
               </motion.div>
             </div>
           </div>

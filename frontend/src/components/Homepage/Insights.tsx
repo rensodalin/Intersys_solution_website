@@ -12,7 +12,7 @@ const insights = [
     slug: "krohom-bookstore",
     desc: "A bold architectural statement blending traditional Khmer elements with modern structural engineering.",
     image:
-      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1470075801209-17f9ec0cada6?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     tag: "Institutional",
@@ -20,7 +20,7 @@ const insights = [
     slug: "raffle-bookstore",
     desc: "Redefining the educational landscape with open-concept learning spaces and sustainable building materials.",
     image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1471039497385-b6d6ba609f9c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     tag: "Residential",

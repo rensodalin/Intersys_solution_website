@@ -104,17 +104,18 @@ export function Hero() {
             {/* Consistent Modern Buttons */}
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <Link
-                to="/contact"
+                to="/"
+                hash="solutions"
                 className="bg-brand-red text-white px-8 py-3.5 rounded-sm font-semibold text-[13px] hover:bg-white hover:text-navy transition-all duration-300 shadow-lg"
               >
-                Get Started
+                Explore Us
               </Link>
 
               <Link
-                to="/projects"
+                to="/contact"
                 className="border-[1.5px] border-white/20 text-white px-8 py-3.5 rounded-sm font-semibold text-[13px] hover:border-brand-red hover:bg-brand-red/5 transition-all duration-300"
               >
-                View Projects
+                Contact Us
               </Link>
             </div>
           </motion.div>

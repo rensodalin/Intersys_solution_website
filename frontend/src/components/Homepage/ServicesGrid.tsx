@@ -194,7 +194,7 @@ function ServiceCard({
       viewport={{ once: true }}
       transition={{ duration: 0.55, ease: "easeOut" }}
       className={`
-        ${className} rounded-2xl flex flex-col overflow-hidden relative group
+        ${className} rounded-md flex flex-col overflow-hidden relative group
         transition-all duration-500 hover:-translate-y-1
         ${isDark ? "bg-[#0A0F1A] text-white" : ""}
         ${isRed ? "bg-[#FC3B1F] text-white" : ""}
@@ -213,7 +213,7 @@ function ServiceCard({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1A]/90 via-[#0A0F1A]/40 to-transparent" />
           <div className="relative z-10 p-8 mt-auto">
-            <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center mb-4">
+            <div className="w-9 h-9 rounded-sm bg-white/10 flex items-center justify-center mb-4">
               <Icon className="w-4 h-4 text-white" />
             </div>
             <h3 className="text-xl font-bold text-white mb-2 tracking-tight">{title}</h3>
@@ -250,7 +250,7 @@ function ServiceCard({
 
             {/* Icon */}
             <div className={`
-              w-10 h-10 rounded-xl flex items-center justify-center mb-6 
+              w-10 h-10 rounded-sm flex items-center justify-center mb-6 
               ${isDark ? "bg-white/5" : isRed ? "bg-white/15" : "bg-gray-50 group-hover:bg-red-50"}
               transition-colors duration-300
             `}>
@@ -291,7 +291,7 @@ function ServiceCard({
                       {stats.map((s: any) => (
                         <div
                           key={s.label}
-                          className={`p-4 rounded-xl ${isDark ? "bg-white/5" : "bg-gray-50"} border ${isDark ? "border-white/5" : "border-gray-100"}`}
+                          className={`p-4 rounded-sm ${isDark ? "bg-white/5" : "bg-gray-50"} border ${isDark ? "border-white/5" : "border-gray-100"}`}
                         >
                           <div className="text-lg font-bold">{s.value}</div>
                           <div className={`text-[10px] font-semibold tracking-wide mt-0.5 ${isDark ? "text-white/30" : "text-gray-400"}`}>
@@ -307,7 +307,7 @@ function ServiceCard({
                       {tags.map((t: string) => (
                         <span
                           key={t}
-                          className={`px-3 py-1.5 rounded-lg text-[11px] font-semibold
+                          className={`px-3 py-1.5 rounded-sm text-[11px] font-semibold
                             ${isDark ? "bg-white/10 text-white/50" : "bg-gray-50 text-gray-400 border border-gray-100"}`}
                         >
                           {t}
@@ -324,7 +324,7 @@ function ServiceCard({
               <button
                 onClick={() => href && router.navigate({ to: href })}
                 className={`
-                  inline-flex items-center gap-2 text-xs font-bold px-5 py-2.5 rounded-xl
+                  inline-flex items-center gap-2 text-xs font-bold px-5 py-2.5 rounded-sm
                   transition-all duration-300 group/btn
                   ${isRed ? "bg-white text-[#FC3B1F] hover:bg-[#0A0F1A] hover:text-white" : ""}
                   ${isDark ? "bg-white/8 text-red-400 hover:bg-white/15" : ""}
@@ -339,7 +339,7 @@ function ServiceCard({
                 <button
                   onClick={onToggle}
                   className={`
-                    p-2.5 rounded-xl transition-all duration-300
+                    p-2.5 rounded-sm transition-all duration-300
                     ${isRed ? "bg-white/15 text-white hover:bg-white/25" : ""}
                     ${isDark ? "bg-white/5 text-white/40 hover:bg-white/10" : ""}
                     ${isLight ? "bg-gray-50 text-gray-400 hover:bg-gray-100 border border-gray-100" : ""}
@@ -355,7 +355,7 @@ function ServiceCard({
 
           {/* Image side for horizontal */}
           {layout === "horizontal" && img && (
-            <div className="lg:w-2/5 relative overflow-hidden min-h-[240px] rounded-r-2xl">
+            <div className="lg:w-2/5 relative overflow-hidden min-h-[240px] rounded-r-sm">
               <img
                 src={img}
                 alt={title}

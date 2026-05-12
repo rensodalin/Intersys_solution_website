@@ -92,7 +92,7 @@ const projects = [
 
 export function FeaturedProjects() {
   return (
-    <section className="bg-white pb-24 md:pb-32 overflow-hidden">
+    <section className="bg-white overflow-hidden">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
         {projects.map((p, i) => (
           <motion.div
