@@ -412,20 +412,17 @@ export function CatalogSidebar({
                         >
                             <Link
                                 to="/request-quote"
-                                className="flex items-center justify-between w-full p-4 rounded-sm bg-[#1A3263] hover:bg-[#FC3B1F] text-white transition-all shadow-lg shadow-blue-900/20 group"
+                                className="flex items-center justify-center w-full p-4 rounded-sm bg-[#1A3263] hover:bg-[#FC3B1F] text-white transition-all shadow-lg shadow-blue-900/20 group"
                             >
-                                <div className="flex items-center gap-3">
-
-                                    <div className="flex flex-col">
-
-                                        <span className="text-sm font-bold">Return to Quote</span>
-                                    </div>
-                                </div>
                                 <div className="flex items-center gap-2">
-                                    <span className="w-6 h-6 bg-[#FC3B1F] text-[11px] flex items-center justify-center rounded-full font-bold border border-white/20">
-                                        {items.length}
+                                    <span className="text-sm font-bold">
+                                        Return to Quote
                                     </span>
-                                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+
+                                    <ArrowRight
+                                        size={16}
+                                        className="group-hover:translate-x-1 transition-transform"
+                                    />
                                 </div>
                             </Link>
                         </motion.div>

@@ -64,15 +64,17 @@ const MOCK_PRODUCT: ProductData = {
 
 export function ProductDetailView({ product }: { product: ProductData }) {
   const navigate = useNavigate();
-  const { addItem } = useInquiry();
+  // Initialize quantities from global inquiry context if items already exist
+  const { addItem, items } = useInquiry();
   const [activeTab, setActiveTab] = useState<"description" | "documents">("description");
   const [selectedImage, setSelectedImage] = useState(0);
 
-  // Initialize quantities from product options
   const [quantities, setQuantities] = useState<Record<string, number>>(() => {
     const initial: Record<string, number> = {};
     product.options.forEach(opt => {
-      initial[opt.partCode] = 0; // Initialize all to 0 as per previous fix
+      // Check if this specific partCode is already in the inquiry
+      const existingItem = items.find(item => item.partCode === opt.partCode);
+      initial[opt.partCode] = existingItem ? existingItem.qty : 0;
     });
     return initial;
   });
@@ -197,24 +199,24 @@ export function ProductDetailView({ product }: { product: ProductData }) {
                 onClick={() => setActiveTab("description")}
                 className={cn(
                   "pb-4 text-[15px] font-bold transition-all relative",
-                  activeTab === "description" ? "text-[#162E93]" : "text-gray-400 hover:text-gray-600"
+                  activeTab === "description" ? "text-[#C00707]" : "text-gray-400 hover:text-gray-600"
                 )}
               >
                 Description
                 {activeTab === "description" && (
-                  <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#162E93]" />
+                  <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C00707]" />
                 )}
               </button>
               <button
                 onClick={() => setActiveTab("documents")}
                 className={cn(
                   "pb-4 text-[15px] font-bold transition-all relative",
-                  activeTab === "documents" ? "text-[#162E93]" : "text-gray-400 hover:text-gray-600"
+                  activeTab === "documents" ? "text-[#C00707]" : "text-gray-400 hover:text-gray-600"
                 )}
               >
                 Documents
                 {activeTab === "documents" && (
-                  <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#162E93]" />
+                  <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C00707]" />
                 )}
               </button>
             </div>
