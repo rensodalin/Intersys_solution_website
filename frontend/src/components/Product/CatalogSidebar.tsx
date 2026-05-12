@@ -24,6 +24,8 @@ import logoImg from "@/assets/logo.avif";
 
 interface CatalogSidebarProps {
     activeCategory?: string;
+    isDesktopOpen?: boolean;
+    setIsDesktopOpen?: (open: boolean) => void;
 }
 
 const NAVIGATION_DATA = [
@@ -80,7 +82,11 @@ const NAVIGATION_DATA = [
 ];
 
 
-export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSidebarProps) {
+export function CatalogSidebar({ 
+    activeCategory: propActiveCategory,
+    isDesktopOpen = true,
+    setIsDesktopOpen = () => {}
+}: CatalogSidebarProps) {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -108,7 +114,6 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
 
     const [expandedSections, setExpandedSections] = useState<string[]>(activeCategory ? [activeCategory] : []);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
-    const [isDesktopOpen, setIsDesktopOpen] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
 
     // Auto-expand sections based on URL
@@ -135,6 +140,18 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
             });
         }
     }, [location.pathname]);
+
+    const searchParams = new URLSearchParams(location.search);
+    const activeFrom = searchParams.get("from");
+
+    const isPathActive = (link?: string) => {
+        if (!link || link === "/") return false;
+        // 1. Direct match or subpath match
+        if (location.pathname.startsWith(link)) return true;
+        // 2. Match via search param (for product detail pages)
+        if (activeFrom && activeFrom.startsWith(link)) return true;
+        return false;
+    };
 
     const toggleSection = (id: string) => {
         setExpandedSections(prev =>
@@ -211,7 +228,7 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
             {/* ── SCROLLABLE LIST ── */}
             <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar scroll-smooth min-h-0">
                 {displayNavData.map((item) => {
-                    const isActive = activeCategory === item.id || (item.id === "access-control" && !activeCategory);
+                    const isActive = isPathActive(item.link) || activeCategory === item.id || (item.id === "access-control" && !activeCategory);
                     const isExpanded = searchQuery ? true : expandedSections.includes(item.id);
                     return (
                         <div key={item.id} className="space-y-0.5">
@@ -276,8 +293,10 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                                                             {subItem.link ? (
                                                                 <Link
                                                                     to={subItem.link}
-                                                                    activeProps={{ className: "!text-[#FC3B1F]" }}
-                                                                    className="text-[13px] font-semibold text-gray-500 group-hover:text-[#1A3263] transition-colors flex-1 hover:underline"
+                                                                    className={cn(
+                                                                        "text-[13px] font-semibold transition-colors flex-1 hover:underline",
+                                                                        isPathActive(subItem.link) ? "text-[#FC3B1F]" : "text-gray-500 group-hover:text-[#1A3263]"
+                                                                    )}
                                                                 >
                                                                     {subItem.label}
                                                                 </Link>
@@ -311,8 +330,10 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                                                                                 {l3Link ? (
                                                                                     <Link
                                                                                         to={l3Link}
-                                                                                        activeProps={{ className: "!text-[#FC3B1F]" }}
-                                                                                        className="text-xs text-gray-500 font-semibold group-hover:text-[#1A3263] transition-colors flex-1 block"
+                                                                                        className={cn(
+                                                                                            "text-xs font-semibold transition-colors flex-1 block",
+                                                                                            isPathActive(l3Link) ? "text-[#FC3B1F]" : "text-gray-500 group-hover:text-[#1A3263]"
+                                                                                        )}
                                                                                     >
                                                                                         {l3Label}
                                                                                     </Link>
@@ -453,11 +474,12 @@ export function CatalogSidebar({ activeCategory: propActiveCategory }: CatalogSi
                     borderRightWidth: isDesktopOpen ? 1 : 0
                 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="hidden lg:flex flex-col bg-[#F1F3F5] border-gray-200 overflow-hidden shrink-0"
+                className="hidden lg:flex flex-col bg-[#F1F3F5] border-gray-200 overflow-hidden shrink-0 z-40"
                 style={{
                     height: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
-                    position: "sticky",
+                    position: "fixed",
                     top: NAVBAR_HEIGHT,
+                    width: isDesktopOpen ? 288 : 0,
                 }}
             >
                 <div className="w-72 h-full shrink-0">

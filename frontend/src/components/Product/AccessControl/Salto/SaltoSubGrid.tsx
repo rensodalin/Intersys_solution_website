@@ -15,6 +15,7 @@ export function SaltoSubGrid({ products }: SaltoSubGridProps) {
                     key={product.id}
                     to="/products/detail/$productId"
                     params={{ productId: product.id }}
+                    search={{ from: window.location.pathname }}
                     className="group block"
                 >
                     <motion.div
@@ -32,10 +33,10 @@ export function SaltoSubGrid({ products }: SaltoSubGridProps) {
                                 className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700"
                             />
 
-                            {/* Hover "View Details" Pill */}
+                            {/* Hover "View product" Pill */}
                             <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-400 ease-out">
                                 <div className="bg-[#1A3263] text-white px-5 py-1.5 rounded-full text-[13px] font-medium shadow-[0_8px_20px_rgba(26,50,99,0.2)]">
-                                    View details
+                                    View product
                                 </div>
                             </div>
                         </div>

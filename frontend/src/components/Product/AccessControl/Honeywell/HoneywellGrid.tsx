@@ -18,7 +18,7 @@ export function HoneywellGrid({ products }: HoneywellGridProps) {
             {products.map((product, i) => {
                 // Slugify title for detail page if it's not a category link
                 const slug = product.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-                
+
                 const cardLink =
                     product.title === "Accessories"
                         ? "/products/access-control/honeywell/accessories"
@@ -50,6 +50,7 @@ export function HoneywellGrid({ products }: HoneywellGridProps) {
                     >
                         <Link
                             to={cardLink}
+                            search={{ from: window.location.pathname }}
                             className="block group"
                         >
                             {/* Image */}

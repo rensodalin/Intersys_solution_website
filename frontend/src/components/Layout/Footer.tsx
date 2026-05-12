@@ -18,16 +18,32 @@ import teamImg from "../../assets/Teamfooter.png";
 export function Footer({ isCompact }: { isCompact?: boolean }) {
   if (isCompact) {
     return (
-      <footer className="border-t border-white/5 bg-[#020617] py-6 text-white">
+      <footer className="border-t border-red-600/70 bg-[#081F3D] py-5 text-white">
         <Container>
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-[11px] text-white/30 tracking-wide">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+
+            <p className="text-[12px] text-white/70 tracking-wide">
               Copyright © {new Date().getFullYear()} Intersys Solutions Co., Ltd.
             </p>
-            <div className="flex gap-6 text-[11px] font-medium text-white/40">
-              <Link to="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link>
-              <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+
+            <div className="flex items-center gap-5 text-[12px] font-medium text-white/75">
+              <Link
+                to="/terms"
+                className="hover:text-white transition-colors duration-200"
+              >
+                Terms & Conditions
+              </Link>
+
+              <span className="w-1 h-1 rounded-full bg-white/30" />
+
+              <Link
+                to="/privacy"
+                className="hover:text-white transition-colors duration-200"
+              >
+                Privacy Policy
+              </Link>
             </div>
+
           </div>
         </Container>
       </footer>

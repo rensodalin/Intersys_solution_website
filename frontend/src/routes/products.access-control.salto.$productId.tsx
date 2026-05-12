@@ -83,7 +83,7 @@ function SaltoSubProductPage() {
       />
 
       {/* Product Grid */}
-      <section className="py-16 md:py-24 relative z-20">
+      <section className="py-14 md:py-16 relative z-20 px-8">
         <Container>
           {product.subProducts && product.subProducts.length > 0 ? (
             <>

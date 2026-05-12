@@ -13,16 +13,18 @@ import {
   FileText
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "@tanstack/react-router";
+import { useInquiry } from "@/context/InquiryContext";
 
 // ─── TYPES ───
-interface ProductOption {
+export interface ProductOption {
   partCode: string;
   specification: string;
   price: number;
   qty: number;
 }
 
-interface ProductData {
+export interface ProductData {
   id: string;
   category: string;
   brand: string;
@@ -60,18 +62,19 @@ const MOCK_PRODUCT: ProductData = {
   ]
 };
 
-import { useNavigate } from "@tanstack/react-router";
-import { useInquiry, InquiryItem } from "@/context/InquiryContext";
-
-export function ProductDetailView() {
+export function ProductDetailView({ product }: { product: ProductData }) {
   const navigate = useNavigate();
   const { addItem } = useInquiry();
   const [activeTab, setActiveTab] = useState<"description" | "documents">("description");
   const [selectedImage, setSelectedImage] = useState(0);
-  const [quantities, setQuantities] = useState<Record<string, number>>({
-    "TNAPA20AB": 1,
-    "TNAPA20AM": 0,
-    "TNAPA2AV": 1,
+
+  // Initialize quantities from product options
+  const [quantities, setQuantities] = useState<Record<string, number>>(() => {
+    const initial: Record<string, number> = {};
+    product.options.forEach(opt => {
+      initial[opt.partCode] = 0; // Initialize all to 0 as per previous fix
+    });
+    return initial;
   });
 
   const inquiryCount = Object.values(quantities).reduce((acc, val) => acc + val, 0);
@@ -85,14 +88,14 @@ export function ProductDetailView() {
 
   const handleAddToInquiry = () => {
     // Add each product with qty > 0 to the global inquiry
-    MOCK_PRODUCT.options.forEach(opt => {
+    product.options.forEach(opt => {
       const qty = quantities[opt.partCode];
       if (qty > 0) {
         addItem({
-          id: MOCK_PRODUCT.id,
-          category: MOCK_PRODUCT.category,
-          title: MOCK_PRODUCT.title,
-          image: MOCK_PRODUCT.mainImage,
+          id: product.id,
+          category: product.category,
+          title: product.title,
+          image: product.mainImage,
           partCode: opt.partCode,
           specification: opt.specification,
           price: opt.price,
@@ -108,9 +111,9 @@ export function ProductDetailView() {
   const breadcrumbs = [
     { name: "Home", href: "/" },
     { name: "Products", href: "/products" },
-    { name: MOCK_PRODUCT.category, href: "/products/access-control" },
-    { name: MOCK_PRODUCT.brand, href: "/products/access-control/honeywell" },
-    { name: MOCK_PRODUCT.title, href: "#" },
+    { name: product.category, href: "#" },
+    { name: product.brand, href: "#" },
+    { name: product.title, href: "#" },
   ];
 
   return (
@@ -146,12 +149,12 @@ export function ProductDetailView() {
                 ))}
               </nav>
 
-              <h1 className="text-xl md:text-2xl font-bold text-[#1A3263] tracking-tight mb-3">
-                {MOCK_PRODUCT.title}
+              <h1 className="text-2xl md:text-2xl font-bold text-[#1A3263] tracking-tight mb-4 font-display">
+                {product.title}
               </h1>
 
-              <p className="text-gray-500 text-sm md:text-[15px] leading-relaxed max-w-2xl">
-                {MOCK_PRODUCT.description}
+              <p className="text-gray-500 text-sm md:text-base leading-relaxed max-w-2xl font-light">
+                {product.description}
               </p>
             </motion.div>
           </div>
@@ -160,23 +163,23 @@ export function ProductDetailView() {
 
       <Container>
         {/* ─── MAIN PRODUCT SECTION ─── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-24">
           {/* Gallery */}
           <div>
-            <div className="aspect-square bg-gray-50 rounded-lg border border-gray-100 flex items-center justify-center p-12 mb-6">
+            <div className="aspect-square bg-[#FBFBFC] rounded-sm border border-gray-100 flex items-center justify-center p-12 mb-6">
               <img
-                src={MOCK_PRODUCT.thumbnails[selectedImage] || MOCK_PRODUCT.mainImage}
+                src={product.thumbnails[selectedImage] || product.mainImage}
                 alt="Product"
                 className="max-w-full max-h-full object-contain mix-blend-multiply"
               />
             </div>
-            <div className="flex gap-4">
-              {MOCK_PRODUCT.thumbnails.map((img, idx) => (
+            <div className="flex gap-3">
+              {product.thumbnails.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedImage(idx)}
                   className={cn(
-                    "w-20 h-20 rounded-lg border-2 transition-all p-2",
+                    "w-20 h-20 rounded-sm border-2 transition-all p-2 bg-white",
                     selectedImage === idx ? "border-[#C3110C]" : "border-gray-100 hover:border-gray-200"
                   )}
                 >
@@ -225,9 +228,9 @@ export function ProductDetailView() {
                     exit={{ opacity: 0, x: -10 }}
                     className="space-y-6"
                   >
-                    <h3 className="text-2xl font-bold text-[#162E93] tracking-tight">Engineered for Performance</h3>
-                    <div className="text-gray-500 text-[15px] leading-relaxed whitespace-pre-line">
-                      {MOCK_PRODUCT.longDescription}
+                    <h3 className="text-xl font-bold text-[#162E93] tracking-tight font-display">Engineered for Performance</h3>
+                    <div className="text-gray-500 text-[15px] leading-relaxed whitespace-pre-line font-light">
+                      {product.longDescription}
                     </div>
                   </motion.div>
                 ) : (
@@ -238,18 +241,14 @@ export function ProductDetailView() {
                     exit={{ opacity: 0, x: -10 }}
                     className="space-y-4 pt-4"
                   >
-                    {MOCK_PRODUCT.documents.map((doc, i) => (
+                    {product.documents.map((doc, i) => (
                       <a
                         key={i}
                         href={doc.url}
-                        className="flex items-center gap-3 group w-fit"
+                        className="flex items-center gap-4 group w-fit p-3 border border-gray-100 rounded-sm hover:border-[#C3110C]/30 hover:bg-[#FBFBFC] transition-all"
                       >
-                        <img
-                          src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg"
-                          alt="PDF"
-                          className="w-8 h-8 object-contain"
-                        />
-                        <span className="text-[15px] text-[#162E93] group-hover:text-[#C3110C] transition-colors underline decoration-1 underline-offset-4">
+                        <FileText size={20} className="text-[#C3110C]" />
+                        <span className="text-[14px] font-medium text-[#1A3263] group-hover:text-[#C3110C] transition-colors">
                           {doc.name}
                         </span>
                       </a>
@@ -263,54 +262,54 @@ export function ProductDetailView() {
 
         {/* ─── PRODUCT OPTIONS TABLE ─── */}
         <div className="mb-8">
-          <div className="bg-[#2D4566] text-white px-8 py-4 rounded-t-lg font-bold text-sm">
-            Product Option
+          <div className="bg-[#1A3263] text-white px-8 py-5 rounded-t-sm font-bold text-sm tracking-wide">
+            Product Options & Specifications
           </div>
-          <div className="overflow-x-auto border-x border-gray-100">
+          <div className="overflow-x-auto border-x border-b border-gray-100">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-gray-50/50 text-gray-600 text-xs font-bold border-b border-gray-100">
+                <tr className="bg-[#F8F9FA] text-gray-500 text-[12px] font-bold tracking-tight border-b border-gray-100">
                   <th className="px-8 py-5">Part Code</th>
-                  <th className="px-8 py-5">Specification</th>
-                  <th className="px-8 py-5">Price</th>
-                  <th className="px-8 py-5 text-center">Qty</th>
-                  <th className="px-8 py-5 text-center">Add to inquiry</th>
+                  <th className="px-8 py-5">Detailed Specification</th>
+                  <th className="px-8 py-5">Unit Price</th>
+                  <th className="px-8 py-5 text-center">Quantity</th>
+                  <th className="px-8 py-5 text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {MOCK_PRODUCT.options.map((opt, i) => (
-                  <tr key={opt.partCode} className="group hover:bg-gray-50/50 transition-colors">
-                    <td className="px-8 py-8 border-b border-gray-100 text-[13px] font-bold text-gray-700">
+                {product.options.map((opt, i) => (
+                  <tr key={opt.partCode} className="group hover:bg-[#FBFBFC] transition-colors">
+                    <td className="px-8 py-8 border-b border-gray-100 text-[13px] font-bold text-[#1A3263]">
                       {opt.partCode}
                     </td>
-                    <td className="px-8 py-8 border-b border-gray-100 text-[13px] text-gray-500 whitespace-pre-line leading-relaxed">
+                    <td className="px-8 py-8 border-b border-gray-100 text-[13px] text-gray-500 font-light whitespace-pre-line leading-relaxed">
                       {opt.specification}
                     </td>
-                    <td className="px-8 py-8 border-b border-gray-100 text-[16px] font-bold text-gray-700">
+                    <td className="px-8 py-8 border-b border-gray-100 text-[15px] font-bold text-[#1A3263]">
                       ${opt.price.toFixed(2)}
                     </td>
                     <td className="px-8 py-8 border-b border-gray-100">
-                      <div className="flex items-center justify-center gap-4 bg-gray-100/50 rounded-full py-1.5 px-3 w-fit mx-auto border border-gray-200/50">
+                      <div className="flex items-center justify-center gap-4 bg-white rounded-sm py-2 px-3 w-fit mx-auto border border-gray-200 shadow-sm">
                         <button
                           onClick={() => handleQtyChange(opt.partCode, -1)}
                           className="text-gray-400 hover:text-[#C3110C] transition-colors"
                         >
-                          <Minus size={14} />
+                          <Minus size={12} />
                         </button>
-                        <span className="text-sm font-bold text-gray-700 min-w-[20px] text-center">
+                        <span className="text-[13px] font-bold text-[#1A3263] min-w-[24px] text-center">
                           {quantities[opt.partCode]}
                         </span>
                         <button
                           onClick={() => handleQtyChange(opt.partCode, 1)}
                           className="text-gray-400 hover:text-[#C3110C] transition-colors"
                         >
-                          <Plus size={14} />
+                          <Plus size={12} />
                         </button>
                       </div>
                     </td>
                     <td className="px-8 py-8 border-b border-gray-100 text-center">
-                      <button className="text-gray-300 hover:text-[#C3110C] transition-all transform hover:scale-110">
-                        <ShoppingCart size={22} className={cn(quantities[opt.partCode] > 0 && "text-[#C3110C]")} />
+                      <button className="text-gray-200 hover:text-[#C3110C] transition-all transform hover:scale-110">
+                        <ShoppingCart size={20} className={cn(quantities[opt.partCode] > 0 && "text-[#C3110C]")} />
                       </button>
                     </td>
                   </tr>
@@ -322,7 +321,7 @@ export function ProductDetailView() {
 
         {/* ─── INQUIRY ACTION BUTTON (Under Table) ─── */}
         <div className="flex justify-end mb-24">
-          <button 
+          <button
             onClick={handleAddToInquiry}
             className="bg-[#162E93] hover:bg-[#0E1E61] text-white px-10 py-4 rounded-sm shadow-xl flex items-center gap-4 group transition-all transform hover:-translate-y-1"
           >
