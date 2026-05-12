@@ -17,8 +17,11 @@ import {
     X,
     PanelLeftClose,
     PanelLeftOpen,
-    Search
+    Search,
+    FileText,
+    ArrowRight
 } from "lucide-react";
+import { useInquiry } from "@/context/InquiryContext";
 import { cn } from "@/lib/utils";
 import logoImg from "@/assets/logo.avif";
 
@@ -82,10 +85,10 @@ const NAVIGATION_DATA = [
 ];
 
 
-export function CatalogSidebar({ 
+export function CatalogSidebar({
     activeCategory: propActiveCategory,
     isDesktopOpen = true,
-    setIsDesktopOpen = () => {}
+    setIsDesktopOpen = () => { }
 }: CatalogSidebarProps) {
     const location = useLocation();
     const navigate = useNavigate();
@@ -115,6 +118,7 @@ export function CatalogSidebar({
     const [expandedSections, setExpandedSections] = useState<string[]>(activeCategory ? [activeCategory] : []);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const { items } = useInquiry();
 
     // Auto-expand sections based on URL
     React.useEffect(() => {
@@ -190,7 +194,6 @@ export function CatalogSidebar({
 
     const sidebarContentJsx = (
         <div className="flex flex-col h-full">
-
             {/* ── HEADER ── */}
             <div className="px-5 py-4 border-b border-gray-200 bg-white flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-3">
@@ -398,27 +401,42 @@ export function CatalogSidebar({
                 })}
             </div>
 
-            {/* ── FOOTER (always visible, never scrolls away) ── */}
-            <div className="shrink-0 border-t border-gray-200 bg-white">
-                <div className="px-4 py-3 flex gap-2">
-                    <a
-                        href="#"
-                        className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#F1F3F5] hover:bg-[#1A3263] text-gray-500 hover:text-white transition-all duration-300 group border border-gray-200 hover:border-[#1A3263]"
-                    >
-                        <Facebook size={15} className="shrink-0" />
-                        <span className="text-xs font-semibold">Facebook</span>
-                    </a>
+            {/* ── FOOTER (Dynamic Return to Quote) ── */}
+            <div className="shrink-0 border-t border-gray-200 bg-white p-4">
+                <AnimatePresence>
+                    {items.length > 0 ? (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                        >
+                            <Link
+                                to="/request-quote"
+                                className="flex items-center justify-between w-full p-4 rounded-sm bg-[#1A3263] hover:bg-[#FC3B1F] text-white transition-all shadow-lg shadow-blue-900/20 group"
+                            >
+                                <div className="flex items-center gap-3">
 
-                    <a
-                        href="#"
-                        className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#F1F3F5] hover:bg-[#FC3B1F] text-gray-500 hover:text-white transition-all duration-300 group border border-gray-200 hover:border-[#FC3B1F]"
-                    >
-                        <Phone size={15} className="shrink-0" />
-                        <span className="text-xs font-semibold">Contact</span>
-                    </a>
-                </div>
+                                    <div className="flex flex-col">
 
-
+                                        <span className="text-sm font-bold">Return to Quote</span>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="w-6 h-6 bg-[#FC3B1F] text-[11px] flex items-center justify-center rounded-full font-bold border border-white/20">
+                                        {items.length}
+                                    </span>
+                                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                </div>
+                            </Link>
+                        </motion.div>
+                    ) : (
+                        <div className="text-center py-2">
+                            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-widest">
+                                Intersys Product Catalog
+                            </p>
+                        </div>
+                    )}
+                </AnimatePresence>
             </div>
         </div>
     );
