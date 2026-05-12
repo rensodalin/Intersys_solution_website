@@ -85,10 +85,12 @@ const NAVIGATION_DATA = [
 ];
 
 
-export function CatalogSidebar({
+import { searchProducts, SearchResult } from "@/utils/productSearch";
+
+export function CatalogSidebar({ 
     activeCategory: propActiveCategory,
     isDesktopOpen = true,
-    setIsDesktopOpen = () => { }
+    setIsDesktopOpen = () => {}
 }: CatalogSidebarProps) {
     const location = useLocation();
     const navigate = useNavigate();
@@ -118,21 +120,34 @@ export function CatalogSidebar({
     const [expandedSections, setExpandedSections] = useState<string[]>(activeCategory ? [activeCategory] : []);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
     const { items } = useInquiry();
 
-    // Auto-expand sections based on URL
+    // Handle Search
+    React.useEffect(() => {
+        if (searchQuery.length >= 2) {
+            const results = searchProducts(searchQuery);
+            setSearchResults(results);
+        } else {
+            setSearchResults([]);
+        }
+    }, [searchQuery]);
+
+    // Auto-expand sections based on URL or search 'from' parameter
     React.useEffect(() => {
         const sections: string[] = [];
-        if (location.pathname.includes("/access-control")) {
+        const path = activeFrom || location.pathname;
+
+        if (path.includes("/access-control")) {
             sections.push("access-control");
-            if (location.pathname.includes("/honeywell")) sections.push("Honeywell Systems");
-            if (location.pathname.includes("/salto")) sections.push("SALTO Solutions");
+            if (path.includes("/honeywell")) sections.push("Honeywell Systems");
+            if (path.includes("/salto")) sections.push("SALTO Solutions");
         }
-        if (location.pathname.includes("/building-management")) sections.push("building-management");
-        if (location.pathname.includes("/integrated-systems")) sections.push("integrated-systems");
-        if (location.pathname.includes("/surveillance")) sections.push("surveillance");
-        if (location.pathname.includes("/audio-visual")) sections.push("audio-visual");
-        if (location.pathname.includes("/fire-systems")) sections.push("fire-systems");
+        if (path.includes("/building-management")) sections.push("building-management");
+        if (path.includes("/integrated-systems")) sections.push("integrated-systems");
+        if (path.includes("/surveillance")) sections.push("surveillance");
+        if (path.includes("/audio-visual")) sections.push("audio-visual");
+        if (path.includes("/fire-systems")) sections.push("fire-systems");
 
         if (sections.length > 0) {
             setExpandedSections(prev => {
@@ -166,34 +181,9 @@ export function CatalogSidebar({
     const activeNav = NAVIGATION_DATA.find(n => n.id === activeCategory);
     const headerTitle = activeNav ? `Products / ${activeNav.label}` : "Products";
 
-    const filterNavData = (data: any[], query: string): any[] => {
-        if (!query) return data;
-        const lowerQuery = query.toLowerCase();
-
-        return data.reduce((acc, item) => {
-            const label = typeof item === 'string' ? item : item.label;
-            const matches = label.toLowerCase().includes(lowerQuery);
-            const sub = typeof item === 'string' ? undefined : item.sub;
-            const filteredSub = sub ? filterNavData(sub, query) : undefined;
-
-            if (matches || (filteredSub && filteredSub.length > 0)) {
-                if (typeof item === 'string') {
-                    acc.push(item);
-                } else {
-                    acc.push({
-                        ...item,
-                        sub: filteredSub
-                    });
-                }
-            }
-            return acc;
-        }, []);
-    };
-
-    const displayNavData = filterNavData(NAVIGATION_DATA, searchQuery);
-
     const sidebarContentJsx = (
         <div className="flex flex-col h-full">
+
             {/* ── HEADER ── */}
             <div className="px-5 py-4 border-b border-gray-200 bg-white flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-3">
@@ -222,15 +212,59 @@ export function CatalogSidebar({
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Search categories..."
+                        placeholder="Search products..."
                         className="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-4 py-2 text-[13px] text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1A3263]/20 focus:border-[#1A3263] transition-all"
                     />
                 </div>
             </div>
 
+            {/* ── SEARCH RESULTS ── */}
+            <AnimatePresence>
+                {searchQuery.length >= 2 && (
+                    <motion.div 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="bg-white border-b border-gray-100 overflow-hidden"
+                    >
+                        <div className="px-5 py-3">
+                            <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Search Results ({searchResults.length})</h4>
+                            <div className="space-y-2">
+                                {searchResults.length > 0 ? (
+                                    searchResults.map((result) => (
+                                        <Link
+                                            key={result.id}
+                                            to={result.link}
+                                            onClick={() => {
+                                                setSearchQuery("");
+                                                setIsMobileOpen(false);
+                                            }}
+                                            className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors group border border-transparent hover:border-gray-100"
+                                        >
+                                            <div className="w-10 h-10 rounded bg-[#FBFBFC] border border-gray-100 flex items-center justify-center p-1 overflow-hidden">
+                                                <img src={result.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="text-[12px] font-bold text-[#1A3263] truncate group-hover:text-[#FC3B1F] transition-colors">{result.title}</div>
+                                                <div className="text-[10px] text-gray-400 font-medium">{result.brand}</div>
+                                            </div>
+                                            <ChevronRight size={12} className="text-gray-300 group-hover:text-[#FC3B1F] transition-colors" />
+                                        </Link>
+                                    ))
+                                ) : (
+                                    <div className="py-4 text-center">
+                                        <p className="text-xs text-gray-400 italic">No products found for "{searchQuery}"</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* ── SCROLLABLE LIST ── */}
             <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar scroll-smooth min-h-0">
-                {displayNavData.map((item) => {
+                {NAVIGATION_DATA.map((item) => {
                     const isActive = isPathActive(item.link) || activeCategory === item.id || (item.id === "access-control" && !activeCategory);
                     const isExpanded = searchQuery ? true : expandedSections.includes(item.id);
                     return (
