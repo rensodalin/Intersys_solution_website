@@ -78,10 +78,10 @@ function ProductDetailPage() {
   // Map the raw data to the ProductData interface expected by ProductDetailView
   const mappedProduct = {
     id: productId,
-    category: "Security Solution",
-    brand: (product as any).brand || "Intersys Professional",
+    category: allSalto.some(p => p.id === productId) ? "Access Control" : "Access Control",
+    brand: allSalto.some(p => p.id === productId) ? "Salto" : "Honeywell",
     title: product.title,
-    description: (product as any).desc || product.title,
+    description: (product as any).desc || (product as any).description || product.title,
     mainImage: product.image,
     thumbnails: [product.image],
     longDescription: (product as any).longDescription || (product as any).desc || "Professional grade security component designed for enterprise deployments and high-reliability environments.",

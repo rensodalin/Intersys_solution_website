@@ -99,7 +99,8 @@ export function ProductDetailView({ product }: { product: ProductData }) {
           partCode: opt.partCode,
           specification: opt.specification,
           price: opt.price,
-          qty: qty
+          qty: qty,
+          brand: product.brand
         });
       }
     });

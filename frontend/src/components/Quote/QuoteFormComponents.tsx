@@ -68,9 +68,13 @@ interface SectionProps {
     register: UseFormRegister<QuoteFormValues>;
     errors: FieldErrors<QuoteFormValues>;
     control?: Control<QuoteFormValues>;
+    watch?: any;
+    setValue?: any;
 }
 
-export function InterestedSection({ register, control }: SectionProps) {
+export function InterestedSection({ register, control, watch }: SectionProps) {
+    const watchedCategories = watch ? watch("solutionCategories") || [] : [];
+    const watchedSections = watch ? watch("sections") || [] : [];
     const { fields, append, remove } = useFieldArray({
         control: control!,
         name: "products",
@@ -124,6 +128,7 @@ export function InterestedSection({ register, control }: SectionProps) {
                                 type="checkbox"
                                 value={text}
                                 {...register("solutionCategories")}
+                                checked={Array.isArray(watchedCategories) && watchedCategories.includes(text)}
                                 className="w-4 h-4 text-red-600 rounded border-gray-300 focus:ring-red-500"
                             />
                         </label>
@@ -146,6 +151,7 @@ export function InterestedSection({ register, control }: SectionProps) {
                                     type="checkbox"
                                     value={section}
                                     {...register("sections")}
+                                    checked={Array.isArray(watchedSections) && watchedSections.includes(section)}
                                     className="w-3.5 h-3.5 text-red-600 rounded border-gray-300 focus:ring-red-500"
                                 />
                                 {section}

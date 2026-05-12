@@ -4,7 +4,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { Send, Clock, Shield, ChevronRight, X, Plus } from "lucide-react";
+import { Send, Clock, Shield, ChevronRight, Trash2, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { quoteSchema, QuoteFormValues } from "./schema";
 import {
@@ -44,6 +44,7 @@ export function QuoteForm() {
         control,
         handleSubmit,
         setValue,
+        watch,
         formState: { errors, isSubmitting },
         reset,
     } = useForm<QuoteFormValues>({
@@ -76,23 +77,88 @@ export function QuoteForm() {
             const detectedSections: string[] = [];
 
             items.forEach(item => {
-                // Category Mapping
-                if (item.category === "Access Control") {
+                const title = item.title.toUpperCase();
+                const brand = item.brand;
+
+                // Category Mapping - Access Control is the primary category for these brands
+                if (item.category === "Access Control" || brand === "Salto" || brand === "Honeywell") {
                     if (!detectedCategories.includes("Access Control Systems")) {
                         detectedCategories.push("Access Control Systems");
                     }
+                }
+
+                // Section Mapping based on keywords
+                // 1. Readers / Locks / Cylinders (Devices)
+                if (
+                    title.includes("READER") || 
+                    title.includes("KEYPAD") || 
+                    title.includes("LOCK") || 
+                    title.includes("CYLINDER") || 
+                    title.includes("PADLOCK") || 
+                    title.includes("XS4") || 
+                    title.includes("NEO") || 
+                    title.includes("ÆLEMENT") ||
+                    title.includes("FUSION") ||
+                    title.includes("CREDENTIAL") ||
+                    title.includes("FOB") ||
+                    title.includes("CARD")
+                ) {
                     if (!detectedSections.includes("Access Control Devices")) {
                         detectedSections.push("Access Control Devices");
                     }
                 }
-                // Add more mappings as you expand your product catalog
+
+                // 2. Controllers / Panels
+                if (
+                    title.includes("CONTROLLER") || 
+                    title.includes("PANEL") || 
+                    title.includes("KIT") || 
+                    title.includes("BOARD") ||
+                    title.includes("IQ3") ||
+                    title.includes("GATEWAY") ||
+                    title.includes("NODE") ||
+                    title.includes("UBOX")
+                ) {
+                    if (!detectedSections.includes("Controllers & Control Panels")) {
+                        detectedSections.push("Controllers & Control Panels");
+                    }
+                }
+
+                // 3. Software
+                if (
+                    title.includes("SOFTWARE") || 
+                    title.includes("PRO-WATCH") || 
+                    title.includes("WIN-PAK") || 
+                    title.includes("MANAGEMENT") ||
+                    title.includes("SUITE") ||
+                    title.includes("PLATFORM") ||
+                    title.includes("SERVER")
+                ) {
+                    if (!detectedSections.includes("Software & Platforms")) {
+                        detectedSections.push("Software & Platforms");
+                    }
+                }
+
+                // 4. Power & Accessories
+                if (
+                    title.includes("POWER SUPPLY") || 
+                    title.includes("CABLE") || 
+                    title.includes("HOUSING") || 
+                    title.includes("ENCLOSURE") ||
+                    title.includes("CONVERTER") ||
+                    title.includes("BATTERY")
+                ) {
+                    if (!detectedSections.includes("Power Supplies & Accessories")) {
+                        detectedSections.push("Power Supplies & Accessories");
+                    }
+                }
             });
 
             if (detectedCategories.length > 0) {
-                setValue("solutionCategories", detectedCategories, { shouldDirty: true });
+                setValue("solutionCategories", detectedCategories, { shouldDirty: true, shouldValidate: true });
             }
             if (detectedSections.length > 0) {
-                setValue("sections", detectedSections, { shouldDirty: true });
+                setValue("sections", detectedSections, { shouldDirty: true, shouldValidate: true });
             }
         }
     }, [items, setValue]);
@@ -146,7 +212,7 @@ export function QuoteForm() {
                 <div className="flex flex-col lg:flex-row gap-6 items-start">
 
                     {/* ── STICKY SIDEBAR ── */}
-                    <div className="lg:sticky lg:top-8 w-full lg:w-80 shrink-0 flex flex-col gap-4">
+                    <div className="lg:sticky lg:top-8 w-full lg:w-96 shrink-0 flex flex-col gap-4">
 
                         {/* Selected Products List */}
                         <motion.div
@@ -156,29 +222,30 @@ export function QuoteForm() {
                             className="bg-white rounded-xl border border-gray-100 shadow-xl p-6"
                         >
                             <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-sm font-bold text-[#0A0F1A]">Selected Products</h3>
+                                <h3 className="text-md font-bold text-[#0A0F1A]">Selected Products</h3>
                                 <span className="bg-[#D62828] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
                                     {items.length}
                                 </span>
                             </div>
 
-                            <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                            <div className="space-y-5 max-h-[450px] overflow-y-auto pr-2 custom-scrollbar">
                                 {items.length > 0 ? (
                                     items.map((item: any) => (
-                                        <div key={item.partCode} className="flex gap-3 group">
-                                            <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center p-2 shrink-0 border border-gray-100">
+                                        <div key={item.partCode} className="flex gap-4 group items-center py-2">
+                                            <div className="w-14 h-14 bg-gray-50 rounded-lg flex items-center justify-center p-2 shrink-0 border border-gray-100 shadow-sm">
                                                 <img src={item.image} className="w-full h-full object-contain mix-blend-multiply" />
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <p className="text-xs font-bold text-gray-800 truncate">{item.title}</p>
-                                                <p className="text-[10px] text-gray-400 truncate">{item.partCode}</p>
-                                                <p className="text-[10px] text-[#D62828] font-bold mt-1">Qty: {item.qty}</p>
+                                                <p className="text-sm font-bold text-gray-800 truncate leading-tight">{item.title}</p>
+                                                <p className="text-[12px] text-gray-400 truncate mt-0.5">{item.partCode}</p>
+                                                <p className="text-[12px] text-[#D62828] font-bold mt-1">Qty: {item.qty}</p>
                                             </div>
                                             <button
                                                 onClick={() => removeItem(item.partCode)}
-                                                className="text-gray-300 hover:text-red-500 transition-colors"
+                                                className="p-2 text-gray-300 hover:text-[#D62828] hover:bg-red-50 rounded-lg transition-all"
+                                                title="Remove product"
                                             >
-                                                <X size={14} />
+                                                <Trash2 size={18} />
                                             </button>
                                         </div>
                                     ))
@@ -230,7 +297,13 @@ export function QuoteForm() {
 
                         <form onSubmit={handleSubmit(onSubmit)} className="p-8 md:p-12 space-y-14">
                             <UserSection register={register} errors={errors} />
-                            <InterestedSection register={register} control={control} errors={errors} />
+                            <InterestedSection 
+                                register={register} 
+                                control={control} 
+                                errors={errors} 
+                                watch={watch}
+                                setValue={setValue}
+                            />
                             <CompanySection register={register} errors={errors} />
 
                             {/* submit */}
@@ -270,28 +343,6 @@ export function QuoteForm() {
             </div>
 
             {/* Stats Overlay (Now under the form) */}
-            <section className="pb-24">
-                <div className="max-w-7xl mx-auto px-6">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="bg-white rounded-xl shadow-xl border border-gray-100 flex flex-wrap md:flex-nowrap divide-y md:divide-y-0 md:divide-x divide-gray-100 overflow-hidden"
-                    >
-                        <div className="flex-1 p-8 text-center bg-gray-50/50">
-                            <p className="text-xs font-bold text-red-600 tracking-widest mb-1">Expertise</p>
-                            <p className="text-sm text-gray-500 font-medium">Why choose Intersys?</p>
-                        </div>
-                        {stats.map((s) => (
-                            <div key={s.label} className="flex-1 p-8 text-center group hover:bg-gray-50 transition-colors">
-                                <p className="text-3xl font-bold text-[#0A0F1A] mb-1">{s.value}</p>
-                                <p className="text-xs font-medium text-gray-400 tracking-wider">{s.label}</p>
-                            </div>
-                        ))}
-                    </motion.div>
-                </div>
-            </section>
 
         </div>
     );
