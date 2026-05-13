@@ -10,33 +10,29 @@ const insights = [
     tag: "Institutional",
     title: "Krohom Bookstore",
     slug: "krohom-bookstore",
-    desc: "A bold architectural statement blending traditional Khmer elements with modern structural engineering.",
-    image:
-      "https://images.unsplash.com/photo-1470075801209-17f9ec0cada6?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    desc: "A bold architectural statement blending traditional Khmer elements with modern structural engineering and smart systems.",
+    image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1170&auto=format&fit=crop",
   },
   {
     tag: "Institutional",
     title: "Raffle Bookstore",
     slug: "raffle-bookstore",
     desc: "Redefining the educational landscape with open-concept learning spaces and sustainable building materials.",
-    image:
-      "https://images.unsplash.com/photo-1471039497385-b6d6ba609f9c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "https://images.unsplash.com/photo-1471039497385-b6d6ba609f9c?q=80&w=1170&auto=format&fit=crop",
   },
   {
     tag: "Residential",
-    title: "Hill House",
+    title: "Heritage Buildings",
     slug: "retrofitting-heritage",
-    desc: "Luxury living integrated into the natural topography, featuring panoramic views and passive cooling systems.",
-    image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200",
+    desc: "Preserving architectural history with smart building intelligence and advanced fire safety systems.",
+    image: "https://images.unsplash.com/photo-1673724319943-3a05bf8956e4?q=80&w=1332&auto=format&fit=crop",
   },
   {
     tag: "Commercial",
-    title: "KOH PICH COMMERCIAL COMPLEX",
+    title: "Koh Pich Complex",
     slug: "koh-pich-commercial-complex",
-    desc: "A landmark mixed-use development at the heart of the city's new economic zone.",
-    image:
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&q=80&w=1200",
+    desc: "A landmark mixed-use development featuring integrated security, surveillance, and smart automation.",
+    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&q=80&w=1200",
   },
 ];
 

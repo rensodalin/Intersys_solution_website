@@ -40,6 +40,9 @@ import { Route as ServicesAudioVisualRouteImport } from './routes/services_.audi
 import { Route as ServicesAccessControlRouteImport } from './routes/services_.access-control'
 import { Route as SectorsSectorIdRouteImport } from './routes/sectors.$sectorId'
 import { Route as InsightsRetrofittingHeritageRouteImport } from './routes/insights.retrofitting-heritage'
+import { Route as InsightsRaffleBookstoreRouteImport } from './routes/insights.raffle-bookstore'
+import { Route as InsightsKrohomBookstoreRouteImport } from './routes/insights.krohom-bookstore'
+import { Route as InsightsKohPichCommercialComplexRouteImport } from './routes/insights.koh-pich-commercial-complex'
 import { Route as ProductsSurveillanceIndexRouteImport } from './routes/products.surveillance.index'
 import { Route as ProductsBuildingManagementIndexRouteImport } from './routes/products.building-management.index'
 import { Route as ProductsAccessControlIndexRouteImport } from './routes/products.access-control.index'
@@ -214,6 +217,22 @@ const InsightsRetrofittingHeritageRoute =
     path: '/insights/retrofitting-heritage',
     getParentRoute: () => rootRouteImport,
   } as any)
+const InsightsRaffleBookstoreRoute = InsightsRaffleBookstoreRouteImport.update({
+  id: '/insights/raffle-bookstore',
+  path: '/insights/raffle-bookstore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsKrohomBookstoreRoute = InsightsKrohomBookstoreRouteImport.update({
+  id: '/insights/krohom-bookstore',
+  path: '/insights/krohom-bookstore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsKohPichCommercialComplexRoute =
+  InsightsKohPichCommercialComplexRouteImport.update({
+    id: '/insights/koh-pich-commercial-complex',
+    path: '/insights/koh-pich-commercial-complex',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ProductsSurveillanceIndexRoute =
   ProductsSurveillanceIndexRouteImport.update({
     id: '/surveillance/',
@@ -325,6 +344,9 @@ export interface FileRoutesByFullPath {
   '/technical-tips': typeof TechnicalTipsRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/insights/koh-pich-commercial-complex': typeof InsightsKohPichCommercialComplexRoute
+  '/insights/krohom-bookstore': typeof InsightsKrohomBookstoreRoute
+  '/insights/raffle-bookstore': typeof InsightsRaffleBookstoreRoute
   '/insights/retrofitting-heritage': typeof InsightsRetrofittingHeritageRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/services/access-control': typeof ServicesAccessControlRoute
@@ -372,6 +394,9 @@ export interface FileRoutesByTo {
   '/technical-tips': typeof TechnicalTipsRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/insights/koh-pich-commercial-complex': typeof InsightsKohPichCommercialComplexRoute
+  '/insights/krohom-bookstore': typeof InsightsKrohomBookstoreRoute
+  '/insights/raffle-bookstore': typeof InsightsRaffleBookstoreRoute
   '/insights/retrofitting-heritage': typeof InsightsRetrofittingHeritageRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/services/access-control': typeof ServicesAccessControlRoute
@@ -422,6 +447,9 @@ export interface FileRoutesById {
   '/technical-tips': typeof TechnicalTipsRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/insights/koh-pich-commercial-complex': typeof InsightsKohPichCommercialComplexRoute
+  '/insights/krohom-bookstore': typeof InsightsKrohomBookstoreRoute
+  '/insights/raffle-bookstore': typeof InsightsRaffleBookstoreRoute
   '/insights/retrofitting-heritage': typeof InsightsRetrofittingHeritageRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/services_/access-control': typeof ServicesAccessControlRoute
@@ -473,6 +501,9 @@ export interface FileRouteTypes {
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
+    | '/insights/koh-pich-commercial-complex'
+    | '/insights/krohom-bookstore'
+    | '/insights/raffle-bookstore'
     | '/insights/retrofitting-heritage'
     | '/sectors/$sectorId'
     | '/services/access-control'
@@ -520,6 +551,9 @@ export interface FileRouteTypes {
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
+    | '/insights/koh-pich-commercial-complex'
+    | '/insights/krohom-bookstore'
+    | '/insights/raffle-bookstore'
     | '/insights/retrofitting-heritage'
     | '/sectors/$sectorId'
     | '/services/access-control'
@@ -569,6 +603,9 @@ export interface FileRouteTypes {
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
+    | '/insights/koh-pich-commercial-complex'
+    | '/insights/krohom-bookstore'
+    | '/insights/raffle-bookstore'
     | '/insights/retrofitting-heritage'
     | '/sectors/$sectorId'
     | '/services_/access-control'
@@ -619,6 +656,9 @@ export interface RootRouteChildren {
   TechnicalTipsRoute: typeof TechnicalTipsRoute
   WarrantyRoute: typeof WarrantyRoute
   WhyChooseRoute: typeof WhyChooseRoute
+  InsightsKohPichCommercialComplexRoute: typeof InsightsKohPichCommercialComplexRoute
+  InsightsKrohomBookstoreRoute: typeof InsightsKrohomBookstoreRoute
+  InsightsRaffleBookstoreRoute: typeof InsightsRaffleBookstoreRoute
   InsightsRetrofittingHeritageRoute: typeof InsightsRetrofittingHeritageRoute
   ServicesAccessControlRoute: typeof ServicesAccessControlRoute
   ServicesAudioVisualRoute: typeof ServicesAudioVisualRoute
@@ -854,6 +894,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InsightsRetrofittingHeritageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/insights/raffle-bookstore': {
+      id: '/insights/raffle-bookstore'
+      path: '/insights/raffle-bookstore'
+      fullPath: '/insights/raffle-bookstore'
+      preLoaderRoute: typeof InsightsRaffleBookstoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights/krohom-bookstore': {
+      id: '/insights/krohom-bookstore'
+      path: '/insights/krohom-bookstore'
+      fullPath: '/insights/krohom-bookstore'
+      preLoaderRoute: typeof InsightsKrohomBookstoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights/koh-pich-commercial-complex': {
+      id: '/insights/koh-pich-commercial-complex'
+      path: '/insights/koh-pich-commercial-complex'
+      fullPath: '/insights/koh-pich-commercial-complex'
+      preLoaderRoute: typeof InsightsKohPichCommercialComplexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products/surveillance/': {
       id: '/products/surveillance/'
       path: '/surveillance'
@@ -1052,6 +1113,9 @@ const rootRouteChildren: RootRouteChildren = {
   TechnicalTipsRoute: TechnicalTipsRoute,
   WarrantyRoute: WarrantyRoute,
   WhyChooseRoute: WhyChooseRoute,
+  InsightsKohPichCommercialComplexRoute: InsightsKohPichCommercialComplexRoute,
+  InsightsKrohomBookstoreRoute: InsightsKrohomBookstoreRoute,
+  InsightsRaffleBookstoreRoute: InsightsRaffleBookstoreRoute,
   InsightsRetrofittingHeritageRoute: InsightsRetrofittingHeritageRoute,
   ServicesAccessControlRoute: ServicesAccessControlRoute,
   ServicesAudioVisualRoute: ServicesAudioVisualRoute,
