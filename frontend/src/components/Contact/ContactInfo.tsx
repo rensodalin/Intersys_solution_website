@@ -1,109 +1,125 @@
-import { Mail, Phone, MapPin } from "lucide-react";
+import {
+  Facebook,
+  Linkedin,
+  Send, // use this for Telegram
+} from "lucide-react";
+import { motion } from "framer-motion";
 
-interface ContactItemProps {
-  icon: any;
+interface ContactCardProps {
+  icon: string;
   title: string;
-  value: string;
-  link?: string;
+  description: string;
+  lines: string[];
+  delay?: number;
 }
 
-function ContactItem({ icon: Icon, title, value, link }: ContactItemProps) {
-  const content = (
-    <div className="flex items-start gap-4 p-4 rounded-lg border border-gray-100 bg-white shadow-sm hover:shadow-md hover:border-gray-200 transition-all">
-      <div className="w-11 h-11 shrink-0 bg-red-50 rounded-lg flex items-center justify-center">
-        <Icon className="w-5 h-5 text-red-600" />
+function ContactCard({
+  icon,
+  title,
+  description,
+  lines,
+  delay = 0,
+}: ContactCardProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay }}
+      className="bg-white p-8 flex flex-col items-center text-center shadow-sm hover:shadow-xl transition-all duration-500 rounded-lg group border border-transparent hover:border-[#DA3D20]/10"
+    >
+      {/* Icon */}
+      <div className="mb-5">
+        <img
+          src={icon}
+          alt={title}
+          className="w-9 h-9 object-contain"
+        />
       </div>
 
-      <div className="space-y-1">
-        <p className="text-sm text-gray-500">{title}</p>
-        <p className="text-base font-semibold text-gray-900 leading-relaxed break-words">
-          {value}
-        </p>
+      {/* Title */}
+      <h3 className="text-xl font-semibold text-[#1A3263] mb-2 tracking-tight">
+        {title}
+      </h3>
+
+      {/* Description */}
+      <p className="text-gray-500 text-[14px] leading-6 mb-5 max-w-[220px]">
+        {description}
+      </p>
+
+      {/* Red Line */}
+      <div className="w-12 h-[1px] bg-[#DA3D20]/40 mb-5" />
+
+      {/* Contact Text */}
+      <div className="space-y-1.5">
+        {lines.map((line, i) => (
+          <p
+            key={i}
+            className="text-[#DA3D20] font-semibold text-[14px] tracking-wide"
+          >
+            {line}
+          </p>
+        ))}
       </div>
-    </div>
+    </motion.div>
   );
-
-  if (link) {
-    return (
-      <a 
-        href={link} 
-        className="block"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {content}
-      </a>
-    );
-  }
-
-  return content;
 }
 
 export function ContactInfo() {
+  const socialLinks = [
+    { icon: Facebook, href: "#" },
+    { icon: Send, href: "#" }, // Telegram replacement
+    { icon: Linkedin, href: "#" },
+  ];
+
   return (
-    <div className="lg:col-span-4">
-      <div className="bg-white p-6 md:p-8 rounded-xl shadow-xl border border-gray-100 space-y-8">
+    <section className="bg-[#F9F7F5] py-16">
+      <div className="max-w-5xl mx-auto px-6">
 
-        {/* Header */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900">Contact information</h2>
-          <p className="text-gray-500 text-sm mt-1">
-            You can reach us through the following channels
-          </p>
-        </div>
-
-        {/* Contact Items */}
-        <div className="space-y-4">
-          <ContactItem
-            icon={Phone}
-            title="Phone / Telegram"
-            value="077 602 334"
-            link="https://t.me/chun_sochet"
+        {/* Cards */}
+        <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <ContactCard
+            icon="https://cdn-icons-png.flaticon.com/512/25/25694.png"
+            title="Visit Us"
+            description="Come visit our office in Phnom Penh."
+            lines={["Phnom Penh, Cambodia"]}
+            delay={0.1}
           />
 
-          <ContactItem
-            icon={Mail}
-            title="Email"
-            value="sochet@intersys-solutions.com"
-            link="mailto:sochet@intersys-solutions.com"
+          <ContactCard
+            icon="https://cdn-icons-png.flaticon.com/512/46/46854.png"
+            title="Call Us"
+            description="Speak directly with our support team."
+            lines={["(+855) 077 602 334", "(+855) 023 900 888"]}
+            delay={0.2}
           />
 
-          <ContactItem
-            icon={MapPin}
-            title="Office address"
-            value="No. 13, Borey Pipub Thmey Samrong Anthet (2), 2nd Floor, St 07, Krang Thmey Village, Sangkat Kok Khlang, Khan Sen Sok, Phnom Penh, Cambodia"
-            link="https://maps.app.goo.gl/kE5C1xd5F58TcYJo8"
+          <ContactCard
+            icon="https://cdn-icons-png.flaticon.com/256/17609/17609798.png"
+            title="Email Us"
+            description="Send us your questions anytime."
+            lines={["sochet@intersys-solutions.com"]}
+            delay={0.3}
           />
         </div>
 
-        {/* Telegram */}
-        <div className="rounded-xl border border-gray-100 bg-gradient-to-br from-blue-500 to-blue-600 p-6 text-white shadow-lg">
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold">Telegram</h3>
-            <p className="text-sm opacity-90">Chat with us instantly</p>
-          </div>
-
-          <div className="flex items-center justify-between gap-4">
-            <a
-              href="https://t.me/chun_sochet"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 bg-white text-blue-600 text-sm font-medium rounded-lg hover:bg-gray-100 transition"
+        {/* Social Icons */}
+        <div className="flex justify-center gap-5">
+          {socialLinks.map((social, i) => (
+            <motion.a
+              key={i}
+              href={social.href}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 + i * 0.1 }}
+              className="w-10 h-10 rounded-full bg-[#234C6A] flex items-center justify-center text-white hover:bg-[#D98B5F] transition-colors shadow-md"
             >
-              Open chat
-            </a>
-
-            <div className="bg-white p-2 rounded-lg">
-              <img
-                src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://t.me/chun_sochet"
-                className="w-20 h-20"
-                alt="Telegram QR"
-              />
-            </div>
-          </div>
+              <social.icon className="w-4 h-4" />
+            </motion.a>
+          ))}
         </div>
-
       </div>
-    </div>
+    </section>
   );
 }

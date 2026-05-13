@@ -1,80 +1,50 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import {
-  MessageSquare,
-  User,
-  Mail,
-  Smartphone,
-  Send,
-  type LucideIcon,
-  CheckCircle2,
-  MapPin,
-  Globe,
-  ChevronDown,
-} from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 
-interface InputFieldProps {
+interface FormInputProps {
   label: string;
   name: string;
   type?: string;
-  icon: LucideIcon;
-  autoComplete?: string;
   required?: boolean;
 }
 
-function InputField({ label, name, type = "text", icon: Icon, autoComplete, required = true }: InputFieldProps) {
+function FormInput({ label, name, type = "text", required = true }: FormInputProps) {
   return (
-    <div className="space-y-1">
-      <label className="text-sm text-gray-600 font-medium">{label}</label>
-      <div className="relative">
-        <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-        <input
-          name={name}
-          type={type}
-          autoComplete={autoComplete}
-          required={required}
-          placeholder={label}
-          className="w-full pl-11 p-3.5 rounded-lg border border-gray-200 
-          bg-white shadow-sm
-          focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-500 focus:shadow-md
-          hover:border-gray-300 transition-all"
-        />
-      </div>
+    <div className="space-y-2">
+      <input
+        name={name}
+        type={type}
+        required={required}
+        placeholder={`${label}${required ? "*" : ""}`}
+        className="w-full px-4 py-3 bg-white text-gray-900 border border-transparent focus:border-gray-300 focus:outline-none transition-all placeholder:text-gray-400 text-sm"
+      />
     </div>
   );
 }
 
-interface SelectFieldProps {
+interface FormSelectProps {
   label: string;
   name: string;
-  icon: LucideIcon;
   options: string[];
+  required?: boolean;
 }
 
-function SelectField({ label, name, icon: Icon, options }: SelectFieldProps) {
+function FormSelect({ label, name, options, required = true }: FormSelectProps) {
   return (
-    <div className="space-y-1">
-      <label className="text-sm text-gray-600 font-medium">{label}</label>
-      <div className="relative">
-        <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-        <select
-          name={name}
-          required
-          defaultValue=""
-          className="w-full pl-11 pr-10 p-3.5 rounded-lg border border-gray-200 
-          bg-white cursor-pointer shadow-sm
-          hover:border-gray-300
-          focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500
-          transition-all appearance-none"
-        >
-          <option value="" disabled>Select {label}</option>
-          {options.map((opt) => (
-            <option key={opt} value={opt}>{opt}</option>
-          ))}
-        </select>
-        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-      </div>
+    <div className="space-y-2">
+      <select
+        name={name}
+        required={required}
+        defaultValue=""
+        className="w-full px-4 py-3 bg-white text-gray-900 border border-transparent focus:border-gray-300 focus:outline-none transition-all text-sm appearance-none cursor-pointer invalid:text-gray-400"
+      >
+        <option value="" disabled>{label}{required ? "*" : ""}</option>
+        {options.map((opt) => (
+          <option key={opt} value={opt} className="text-gray-900">{opt}</option>
+        ))}
+      </select>
     </div>
   );
 }
@@ -82,22 +52,19 @@ function SelectField({ label, name, icon: Icon, options }: SelectFieldProps) {
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     setLoading(true);
-    setSubmitted(false);
 
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const res = await fetch("http://localhost:5000/api/contact", {
+      const res = await fetch("http://localhost:1000/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
@@ -108,9 +75,8 @@ export function ContactForm() {
       }
 
       setSubmitted(true);
-      e.currentTarget.reset();
+      formRef.current?.reset();
       toast.success("Message sent successfully!");
-
     } catch (err: any) {
       console.error("Contact Form Error:", err);
       toast.error(err.message || "Something went wrong. Please try again.");
@@ -119,114 +85,91 @@ export function ContactForm() {
     }
   };
 
+  const handleSendAnother = () => {
+    setSubmitted(false);
+    formRef.current?.reset();
+  };
+
   return (
-    <div className="lg:col-span-8">
-      <div className="bg-white p-6 md:p-10 rounded-2xl shadow-xl border border-gray-100 relative overflow-hidden">
-
-        <div className="absolute -top-24 -right-24 w-64 h-64 bg-red-50 rounded-3xl rotate-12 opacity-50" />
-
-        <div className="relative mb-8">
-          <h3 className="text-3xl font-bold mb-2 text-gray-900">
-            How can we help you?
-          </h3>
-          <p className="text-gray-500">
-            Fill out the form and we’ll get back to you within 24 hours.
+    <section className="bg-[#1A1A1A] py-24 text-white">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">How can we help you?</h2>
+          <p className="text-gray-400 max-w-2xl mx-auto text-sm">
+            Fill out the form and we'll get back to you within 24 hours.
           </p>
         </div>
 
-        {!submitted ? (
-          <form onSubmit={handleSubmit} className="space-y-8">
+        <div className="space-y-12">
+          <h3 className="text-2xl font-bold border-l-4 border-blue-400 pl-4">Send us a message</h3>
 
-            {/* Personal Info */}
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-gray-500">Personal Information</h4>
-              <InputField label="Your name" name="name" icon={User} />
-            </div>
-
-            {/* Contact */}
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
-              <SelectField
+              <FormInput label="Your name" name="name" />
+              <FormSelect
                 label="Preferred contact method"
                 name="contactMethod"
-                icon={Smartphone}
                 options={["By email", "By phone", "Other"]}
               />
-
-              <InputField label="Phone number" name="phone" type="tel" icon={Smartphone} required={false} />
-              <InputField label="Email address" name="email" type="email" icon={Mail} required={false} />
             </div>
 
-            {/* Location */}
             <div className="grid md:grid-cols-2 gap-6">
-              <SelectField
+              <FormInput label="Phone number" name="phone" type="tel" required={false} />
+              <FormInput label="Email address" name="email" type="email" required={false} />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <FormSelect
                 label="City / Province"
                 name="city"
-                icon={MapPin}
                 options={["Phnom Penh", "Siem Reap", "Sihanoukville", "Battambang", "Other"]}
               />
-
-              <SelectField
+              <FormSelect
                 label="Country"
                 name="country"
-                icon={Globe}
-                options={["Cambodia", "Thailand", "Vietnam", "Laos", "Singapore", "Other"]}
+                options={["Cambodia", "Korea", "Vietnam", "Laos", "Singapore", "Other"]}
               />
             </div>
 
-            {/* Message */}
-            <div className="space-y-1">
-              <label className="text-sm text-gray-600 font-medium">Message</label>
+            <div className="space-y-2">
               <textarea
                 name="message"
                 required
-                placeholder="How can we help you?"
-                className="w-full p-4 rounded-xl border border-gray-200 bg-white shadow-sm
-                focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 focus:shadow-md
-                hover:border-gray-300 transition-all min-h-[140px] resize-none"
+                placeholder="How can we help you?*"
+                className="w-full px-4 py-3 bg-white text-gray-900 border border-transparent focus:border-gray-300 focus:outline-none transition-all placeholder:text-gray-400 text-sm min-h-[150px] resize-none"
               />
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full md:w-auto px-10 py-4 bg-red-600 text-white rounded-lg font-semibold flex items-center justify-center gap-2 
-              hover:bg-gray-900 hover:shadow-xl hover:shadow-red-500/20 transition-all disabled:opacity-50"
-            >
-              {loading ? (
-                <span className="flex items-center gap-2">
-                  <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Sending...
-                </span>
-              ) : (
-                <>
-                  Send message
-                  <Send size={18} />
-                </>
+            {/* ✅ Inline success feedback — no full-page takeover */}
+            <div className="flex justify-end items-center gap-4">
+              {submitted && (
+                <motion.div
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="flex items-center gap-2 text-sm"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-green-400" />
+                  <span className="text-gray-300">Message sent!</span>
+                  <button
+                    type="button"
+                    onClick={handleSendAnother}
+                    className="text-blue-400 hover:underline ml-1"
+                  >
+                    Send another?
+                  </button>
+                </motion.div>
               )}
-            </button>
-          </form>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col items-center justify-center py-12 text-center gap-4"
-          >
-            <div className="w-20 h-20 bg-green-50 rounded-2xl flex items-center justify-center">
-              <CheckCircle2 className="w-10 h-10 text-green-500" />
+              <button
+                type="submit"
+                disabled={loading || submitted}
+                className="bg-[#BF1A1A] text-white px-8 py-3 font-bold text-xs hover:bg-[#D98B5F] transition-colors disabled:opacity-50"
+              >
+                {loading ? "Sending..." : submitted ? "Sent ✓" : "Submit"}
+              </button>
             </div>
-            <h4 className="text-2xl font-bold text-gray-900">Thank you!</h4>
-            <p className="text-gray-500 max-w-sm">
-              Your message has been received. We’ll contact you soon.
-            </p>
-            <button
-              onClick={() => setSubmitted(false)}
-              className="mt-4 px-8 py-3 bg-gray-900 text-white rounded-lg font-medium hover:bg-red-600 transition-all"
-            >
-              Send another message
-            </button>
-          </motion.div>
-        )}
+          </form>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

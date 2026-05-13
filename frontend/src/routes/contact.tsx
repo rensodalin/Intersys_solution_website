@@ -22,15 +22,9 @@ function Contact() {
   return (
     <div className="bg-white">
       <ContactHero />
-
-      <section className="py-24">
-        <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-12 gap-12">
-          <ContactInfo />
-          <ContactForm />
-        </div>
-      </section>
-
+      <ContactInfo />
       <ContactMap />
+      <ContactForm />
     </div>
   );
 }

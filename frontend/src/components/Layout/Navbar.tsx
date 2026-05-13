@@ -134,9 +134,9 @@ export function Navbar() {
           {/* LEFT */}
           <div className="flex items-center gap-6">
 
-            <a 
-              href="https://t.me/chun_sochet" 
-              target="_blank" 
+            <a
+              href="https://t.me/chun_sochet"
+              target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-white/70 hover:text-white transition cursor-pointer"
             >

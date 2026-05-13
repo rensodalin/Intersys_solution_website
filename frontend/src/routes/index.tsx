@@ -21,14 +21,14 @@ function Index() {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-    // Check if the user has already dismissed the promotion
-    const hasSeenPromotion = localStorage.getItem("hasSeenPromotion");
+    // Check if the user has already dismissed the promotion in this session
+    const hasSeenPromotion = sessionStorage.getItem("hasSeenPromotion");
 
     if (!hasSeenPromotion) {
-      // Show the promotion popup 2 seconds after the site opens
+      // Show the promotion popup 1.5 seconds after the site opens
       const timer = setTimeout(() => {
         setShowPopup(true);
-      }, 2000);
+      }, 1500);
 
       return () => clearTimeout(timer);
     }
@@ -36,7 +36,7 @@ function Index() {
 
   const handleClose = () => {
     setShowPopup(false);
-    localStorage.setItem("hasSeenPromotion", "true");
+    sessionStorage.setItem("hasSeenPromotion", "true");
   };
 
   return (
