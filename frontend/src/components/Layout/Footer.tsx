@@ -14,6 +14,7 @@ import {
 import { Container } from "@/components/Common/Container";
 import logoImg from "../../assets/logo.avif";
 import teamImg from "../../assets/Teamfooter.png";
+import foot from "../../assets/Certificates & Licenses/Certificates & Licenses/new/foot.jpg";
 
 export function Footer({ isCompact }: { isCompact?: boolean }) {
   if (isCompact) {
@@ -143,8 +144,15 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
         </div>
 
         {/* Right: Apply / QR Section (Now on the right) */}
-        <div className="w-full lg:w-1/2 bg-[#081F3D] py-12 px-10 flex flex-col items-center justify-center text-center">
-          <div className="max-w-xs w-full space-y-8">
+        <div 
+          className="w-full lg:w-1/2 py-12 px-10 flex flex-col items-center justify-center text-center relative overflow-hidden"
+          style={{ 
+            backgroundImage: `linear-gradient(rgba(8, 31, 61, 0.9), rgba(8, 31, 61, 0.9)), url(${foot})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        >
+          <div className="max-w-xs w-full space-y-8 relative z-10">
             <div className="space-y-3">
               <p className="text-white font-medium text-lg leading-relaxed">
                 Scan the QR code below or
@@ -157,12 +165,12 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
               </Link>
             </div>
 
-            <div className="bg-white p-6 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] inline-block group">
+            <div className="bg-white p-6 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] inline-block group hover:scale-105 transition-transform duration-500">
               <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer">
                 <img
                   src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://t.me/chun_sochet"
                   alt="Telegram QR Code"
-                  className="w-48 h-48 md:w-56 md:h-56 object-contain group-hover:scale-105 transition-transform"
+                  className="w-48 h-48 md:w-56 md:h-56 object-contain"
                 />
               </a>
             </div>
