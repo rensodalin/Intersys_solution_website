@@ -67,40 +67,53 @@ function AccessControlPage() {
             </section>
 
             {/* ─── COMPREHENSIVE PROTECTION ─── */}
-            <section className="py-28 bg-white">
+            <section className="py-28 bg-white relative overflow-hidden">
+
+                {/* subtle background accent */}
+                <div className="absolute -top-40 right-0 w-[500px] h-[500px] bg-red-600/5 blur-[120px] rounded-full" />
+
                 <Container>
 
                     {/* TOP CONTENT */}
-                    <div className="grid lg:grid-cols-2 gap-20 items-start">
+                    <div className="grid lg:grid-cols-2 gap-24 items-start">
 
+                        {/* LEFT */}
                         <div className="space-y-6">
-                            <h2 className="text-4xl md:text-5xl font-bold text-[#1A3263] leading-tight">
+                            <h2 className="text-4xl md:text-5xl font-bold text-[#1A3263] leading-tight tracking-tight">
                                 Comprehensive Protection <br />
                                 <span className="text-red-600 font-extrabold">
                                     for Your Business
                                 </span>
                             </h2>
 
-                            <div className="w-16 h-1 bg-red-600 rounded-full" />
+                            <div className="w-20 h-[3px] bg-red-600 rounded-full" />
+
+                            <p className="text-gray-500 leading-relaxed text-lg max-w-md">
+                                Strong security foundation combining digital resilience and physical access control systems.
+                            </p>
                         </div>
 
+                        {/* RIGHT */}
                         <div className="space-y-6">
-                            <p className="text-gray-500 leading-relaxed text-lg">
+                            <p className="text-gray-600 leading-relaxed text-lg">
                                 Intersys Solutions Co., Ltd provides robust IT disaster recovery and access control solutions to help businesses protect critical data, systems, and physical spaces from unexpected threats.
                             </p>
 
-                            <p className="text-gray-500 leading-relaxed text-lg">
+                            <p className="text-gray-600 leading-relaxed text-lg">
                                 Through advanced Access Control Systems powered by Honeywell, we enable secure and flexible control over who enters, exits, or accesses sensitive areas.
                             </p>
 
-                            <p className="text-gray-400 italic">
-                                From data backup to physical access monitoring, we ensure business continuity with minimal downtime.
-                            </p>
+                            <div className="border-l-2 border-red-500 pl-4">
+                                <p className="text-gray-500 italic">
+                                    From data backup to physical access monitoring, we ensure business continuity with minimal downtime.
+                                </p>
+                            </div>
                         </div>
+
                     </div>
 
                     {/* CARDS */}
-                    <div className="grid md:grid-cols-4 gap-6 mt-20">
+                    <div className="grid md:grid-cols-4 gap-6 mt-24">
 
                         {[
                             {
@@ -122,18 +135,23 @@ function AccessControlPage() {
                         ].map((card, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, y: 20 }}
+                                initial={{ opacity: 0, y: 25 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: i * 0.1 }}
-                                className="group p-7 bg-white rounded-2xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.08 }}
+                                className="group relative p-7 rounded-lg border border-gray-100 bg-white
+                    hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden"
                             >
 
-                                {/* NUMBER (REPLACES ICON) */}
-                                <div className="text-sm font-semibold text-red-600 mb-4">
+                                {/* hover glow */}
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-red-500/5 to-transparent" />
+
+                                {/* number */}
+                                <div className="text-sm font-semibold text-red-600 mb-5 tracking-wide">
                                     {`0${i + 1}`}
                                 </div>
 
-                                <h4 className="font-bold text-[#1A3263] text-lg mb-3 leading-snug">
+                                <h4 className="font-bold text-[#1A3263] text-lg mb-3 leading-snug group-hover:text-red-600 transition-colors">
                                     {card.title}
                                 </h4>
 
@@ -141,8 +159,8 @@ function AccessControlPage() {
                                     {card.desc}
                                 </p>
 
-                                {/* subtle bottom accent */}
-                                <div className="mt-6 h-[2px] w-0 bg-red-600 group-hover:w-full transition-all duration-300" />
+                                {/* bottom line */}
+                                <div className="mt-6 h-[2px] w-10 bg-red-600 group-hover:w-full transition-all duration-300" />
 
                             </motion.div>
                         ))}
@@ -153,29 +171,58 @@ function AccessControlPage() {
             </section>
             {/* ─── POWERED BY HONEYWELL ─── */}
             <section className="py-24 bg-[#0A0F1A] text-white relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-1/3 h-full bg-red-600/5 blur-[120px] -z-0" />
-                <Container className="relative z-10">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-                        <div className="space-y-4 max-w-2xl">
 
-                            <h2 className="text-3xl md:text-4xl font-bold">Powered by Honeywell</h2>
-                            <p className="text-white/40 text-sm leading-relaxed">
+                {/* background glow */}
+                <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-red-600/10 blur-[140px] -translate-y-1/2" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,0,0,0.08),transparent_60%)]" />
+
+                <Container className="relative z-10">
+
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-16">
+
+                        {/* LEFT CONTENT */}
+                        <div className="space-y-5 max-w-2xl">
+
+                            <div className="inline-flex items-center gap-3">
+                                <div className="w-10 h-[2px] bg-red-600" />
+                                <span className="text-xs tracking-widest text-white/50 uppercase">
+                                    Technology Partner
+                                </span>
+                            </div>
+
+                            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+                                Powered by Honeywell
+                            </h2>
+
+                            <p className="text-white/50 text-sm md:text-base leading-relaxed">
                                 As an authorized Honeywell Engineering System Distributor, we deliver end-to-end access solutions tailored to meet the highest organizational requirements. INTERSYS SOLUTIONS CO., LTD ensures your infrastructure is future-proof.
                             </p>
+
                         </div>
-                        <div className="flex items-center gap-10">
-                            <div className="bg-white/5 px-10 py-8 rounded-3xl border border-white/10 backdrop-blur-sm">
+
+                        {/* RIGHT LOGO */}
+                        <div className="relative">
+
+                            {/* glow behind logo */}
+                            <div className="absolute inset-0 bg-red-600/20 blur-3xl rounded-full scale-150 opacity-60" />
+
+                            <div className="relative bg-white/5 px-12 py-10 rounded-lg border border-white/10 backdrop-blur-md
+                    hover:bg-white/10 transition-all duration-300">
+
                                 <img
                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Honeywell_logo.svg/1280px-Honeywell_logo.svg.png"
                                     alt="Honeywell"
                                     className="h-8 w-auto brightness-0 invert"
                                 />
+
                             </div>
+
                         </div>
+
                     </div>
+
                 </Container>
             </section>
-
             {/* ─── SOLUTIONS HUB ─── */}
             <section className="py-28 bg-[#F8F9FA]">
                 <Container>
@@ -224,7 +271,7 @@ function AccessControlPage() {
                         ].map((hub, i) => (
                             <div
                                 key={i}
-                                className="group bg-white p-7 rounded-2xl border border-gray-100 flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                                className="group bg-white p-7 rounded-lg border border-gray-100 flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                             >
 
                                 {/* NUMBER (replaces emoji) */}
@@ -331,7 +378,7 @@ function AccessControlPage() {
                                     {tier.items.map((item, j) => (
                                         <div
                                             key={j}
-                                            className="group rounded-2xl overflow-hidden bg-gray-50 hover:bg-[#1A3263] transition-all duration-300 shadow-sm hover:shadow-xl"
+                                            className="group rounded-lg overflow-hidden bg-gray-50 hover:bg-[#1A3263] transition-all duration-300 shadow-sm hover:shadow-xl"
                                         >
                                             <div className="h-48 overflow-hidden relative">
                                                 <img
@@ -402,7 +449,7 @@ function AccessControlPage() {
                         ].map((feat, i) => (
                             <div
                                 key={i}
-                                className="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex flex-col justify-between min-h-[180px]"
+                                className="group p-6 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex flex-col justify-between min-h-[180px]"
                             >
 
                                 {/* TOP ACCENT LINE */}
@@ -475,7 +522,7 @@ function AccessControlPage() {
                             ].map((spec, i) => (
                                 <div
                                     key={i}
-                                    className="p-5 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-md transition-all duration-300"
+                                    className="p-5 rounded-lg border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-md transition-all duration-300"
                                 >
                                     <h5 className="font-semibold text-[#1A3263] text-sm mb-2">
                                         {spec.title}
@@ -497,7 +544,7 @@ function AccessControlPage() {
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            className="rounded-[40px] border border-gray-100 p-8 md:p-12 bg-gray-50 hover:shadow-xl transition-all duration-500"
+                            className="rounded-xl border border-gray-100 p-8 md:p-12 bg-gray-50 hover:shadow-xl transition-all duration-500"
                         >
                             <div className="mb-8 text-center">
 
@@ -506,7 +553,7 @@ function AccessControlPage() {
                             <img
                                 src="https://static.wixstatic.com/media/3d5958_65858de62beb4084be4a0a817e6c75f4~mv2.png/v1/fill/w_838,h_169,al_c,lg_1,q_85,enc_avif,quality_auto/3d5958_65858de62beb4084be4a0a817e6c75f4~mv2.png"
                                 alt="Security Blueprint"
-                                className="w-full max-w-xl mx-auto h-auto rounded-2xl transition-transform duration-700 hover:scale-[1.02]"
+                                className="w-full max-w-xl mx-auto h-auto rounded-lg transition-transform duration-700 hover:scale-[1.02]"
                             />
                         </motion.div>
 
@@ -515,7 +562,7 @@ function AccessControlPage() {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="rounded-[40px] border border-gray-100 p-8 md:p-12 bg-white hover:shadow-xl transition-all duration-500"
+                            className="rounded-xl border border-gray-100 p-8 md:p-12 bg-white hover:shadow-xl transition-all duration-500"
                         >
                             <div className="mb-10 text-center">
 

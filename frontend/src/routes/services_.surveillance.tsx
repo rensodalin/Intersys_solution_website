@@ -128,7 +128,7 @@ function SurveillancePage() {
             <section className="py-24 bg-[#0A0F1A] text-white">
                 <Container>
                     <div className="mb-14">
-                        <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4">
                             Focus & Why Us
                         </h2>
 
@@ -215,7 +215,7 @@ function SurveillancePage() {
                 <Container>
                     <div className="text-center max-w-3xl mx-auto space-y-6">
 
-                        <h2 className="text-4xl md:text-5xl font-bold">
+                        <h2 className="text-3xl md:text-4xl font-bold">
                             Secure By Default
                         </h2>
 
@@ -277,7 +277,7 @@ function SurveillancePage() {
                     </div>
                 </Container>
             </section>
-            <CtaBand />
+
         </div>
     );
 }

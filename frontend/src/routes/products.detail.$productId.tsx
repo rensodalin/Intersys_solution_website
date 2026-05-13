@@ -16,8 +16,13 @@ import {
     honeywellDoorHardware 
 } from "@/components/Product/AccessControl/Honeywell/data";
 import { saltoProducts } from "@/components/Product/AccessControl/Salto/data";
+import { bmsProducts } from "@/components/Product/BuildingManagement/data";
+import { surveillanceProducts } from "@/components/Product/Surveillance/data";
 
 export const Route = createFileRoute("/products/detail/$productId")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    from: (search.from as string) || "/products",
+  }),
   head: () => ({
     meta: [
       { title: "Product Details — Intersys Solutions" },
@@ -32,6 +37,7 @@ export const Route = createFileRoute("/products/detail/$productId")({
 
 function ProductDetailPage() {
   const { productId } = Route.useParams();
+  const { from } = Route.useSearch();
 
   // Combine all product lists for searching
   // Note: For Salto, we need to check subProducts
@@ -50,7 +56,7 @@ function ProductDetailPage() {
   const allSalto = saltoProducts.flatMap(p => p.subProducts || []);
 
   // Find product by slug/id
-  const product = [...allHoneywell, ...allSalto].find(p => {
+  const product = [...allHoneywell, ...allSalto, ...bmsProducts, ...surveillanceProducts].find(p => {
     const slug = p.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
     return slug === productId || (p as any).id === productId;
   });
@@ -75,11 +81,51 @@ function ProductDetailPage() {
     );
   }
 
+  // Detect Honeywell Sub-category
+  let subCat = "";
+  let subCatLink = "";
+  if (honeywellControlPanels.some(p => p.title === product.title)) {
+      subCat = "Control Panels";
+      subCatLink = "/products/access-control/honeywell/control-panels";
+  } else if (honeywellReaders.some(p => p.title === product.title)) {
+      subCat = "Readers";
+      subCatLink = "/products/access-control/honeywell/readers";
+  } else if (honeywellSoftware.some(p => p.title === product.title)) {
+      subCat = "Software";
+      subCatLink = "/products/access-control/honeywell/software";
+  } else if (honeywellAccessories.some(p => p.title === product.title)) {
+      subCat = "Accessories";
+      subCatLink = "/products/access-control/honeywell/accessories";
+  } else if (honeywellCredentials.some(p => p.title === product.title)) {
+      subCat = "Credentials";
+      subCatLink = "/products/access-control/honeywell/credentials";
+  } else if (honeywellControlPanelKits.some(p => p.title === product.title)) {
+      subCat = "Control Panel Kits";
+      subCatLink = "/products/access-control/honeywell/control-panel-kits";
+  } else if (honeywellKiosks.some(p => p.title === product.title)) {
+      subCat = "Lobby Kiosks";
+      subCatLink = "/products/access-control/honeywell/lobby-kiosks";
+  } else if (honeywellUpgrades.some(p => p.title === product.title)) {
+      subCat = "System Agreements & Upgrades";
+      subCatLink = "/products/access-control/honeywell/upgrades";
+  } else if (honeywellDoorHardware.some(p => p.title === product.title)) {
+      subCat = "Door Hardware";
+      subCatLink = "/products/access-control/honeywell/door-hardware";
+  }
+
   // Map the raw data to the ProductData interface expected by ProductDetailView
   const mappedProduct = {
     id: productId,
-    category: allSalto.some(p => p.id === productId) ? "Access Control" : "Access Control",
-    brand: allSalto.some(p => p.id === productId) ? "Salto" : "Honeywell",
+    category: allSalto.some(p => p.id === productId) ? "Access Control" : 
+              bmsProducts.some(p => p.id === productId) ? "Building Management" : 
+              surveillanceProducts.some(p => p.id === productId) ? "Surveillance (CCTV)" :
+              "Access Control",
+    brand: allSalto.some(p => p.id === productId) ? "Salto" : 
+           bmsProducts.some(p => p.id === productId) ? "BMS" : 
+           surveillanceProducts.some(p => p.id === productId) ? "Intersys" :
+           "Honeywell",
+    brandSubCategory: subCat,
+    brandSubCategoryLink: subCatLink,
     title: product.title,
     description: (product as any).desc || (product as any).description || product.title,
     mainImage: product.image,
@@ -91,13 +137,13 @@ function ProductDetailPage() {
             specification: "Standard Configuration \nProfessional Grade", 
             price: 0, 
             qty: 0 
-        }
-    ],
-    documents: (product as any).documents || [
-        { name: "Technical Datasheet", url: "#" },
-        { name: "Installation Manual", url: "#" }
-    ]
-  };
+          }
+      ],
+      documents: (product as any).documents || [
+          { name: "Technical Datasheet", url: "#" },
+          { name: "Installation Manual", url: "#" }
+      ]
+    };
 
-  return <ProductDetailView product={mappedProduct} />;
+  return <ProductDetailView product={mappedProduct} returnPath={from} />;
 }

@@ -59,105 +59,147 @@ function AudioVisualPage() {
             </section>
 
             {/* ─── INTEGRATED AV SOLUTIONS ─── */}
-            <section className="py-28 bg-white">
+            <section className="py-24 bg-white">
                 <Container>
-                    <div className="grid lg:grid-cols-2 gap-20 items-center">
-                        <div className="space-y-10">
-                            <div className="space-y-4">
-                                <h2 className="text-4xl font-bold text-[#1A3263]">Integrated AV Solutions</h2>
-                                <div className="w-20 h-1 bg-red-600" />
+
+                    <div className="grid lg:grid-cols-2 gap-14 items-center">
+
+                        {/* LEFT CONTENT */}
+                        <div>
+
+                            <div className="mb-8">
+
+
+                                <h2 className="text-3xl md:text-4xl font-bold text-[#1A3263] leading-tight">
+                                    Integrated AV Solutions
+                                </h2>
                             </div>
-                            <p className="text-gray-500 text-lg leading-relaxed">
-                                Whether it's for meeting rooms, classrooms, boardrooms, auditoriums, retail spaces, houses of worship, or control centers, we provide integrated AV systems that enhance communication, collaboration, and engagement.
+
+                            <p className="text-gray-600 leading-relaxed max-w-xl">
+                                We deliver integrated audio visual systems for meeting rooms,
+                                classrooms, auditoriums, retail environments, and control centers —
+                                designed to improve communication, presentation quality, and collaboration.
                             </p>
-                            <div className="grid grid-cols-2 gap-y-4 gap-x-8">
+
+                            {/* LIST */}
+                            <div className="grid grid-cols-2 gap-y-4 gap-x-6 mt-10">
+
                                 {[
-                                    "Meeting Rooms", "Auditoriums",
-                                    "Classrooms", "Retail Spaces",
-                                    "Boardrooms", "Control Center"
+                                    "Meeting Rooms",
+                                    "Auditoriums",
+                                    "Classrooms",
+                                    "Retail Spaces",
+                                    "Boardrooms",
+                                    "Control Centers"
                                 ].map((item, i) => (
-                                    <div key={i} className="flex items-center gap-3 text-gray-600 font-medium">
-                                        <div className="w-1.5 h-1.5 bg-red-600 rounded-full" />
-                                        {item}
+                                    <div
+                                        key={i}
+                                        className="flex items-center gap-3 text-sm text-gray-700"
+                                    >
+                                        <div className="w-2 h-2 bg-red-600" />
+                                        <span>{item}</span>
                                     </div>
                                 ))}
+
                             </div>
+
                         </div>
-                        <div className="relative group">
-                            <div className="absolute -inset-4 bg-red-600/5 rounded-2xl -z-10 group-hover:bg-red-600/10 transition-colors" />
+
+                        {/* RIGHT IMAGE */}
+                        <div className="relative">
+
+                            <div className="absolute -top-5 -left-5 w-full h-full border border-gray-200 z-0" />
+
                             <img
                                 src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=2070&auto=format&fit=crop"
-                                alt="Monitoring Center"
-                                className="w-full h-auto rounded-2xl shadow-2xl"
+                                alt="Integrated AV Solutions"
+                                className="relative z-10 w-full h-[500px] object-cover shadow-lg"
                             />
+
                         </div>
+
                     </div>
+
                 </Container>
             </section>
 
-
-
             {/* ─── INNOVATION CARDS ─── */}
-            <section className="py-28 bg-[#F8F9FA]">
-                <Container>
+            <section className="relative py-24 overflow-hidden">
+
+                {/* BACKGROUND IMAGE */}
+                <div className="absolute inset-0 z-0">
+                    <img
+                        src="https://plus.unsplash.com/premium_photo-1664699106229-1bc773380c35?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxwaGF0by1yYWxlfGVufDB8fHx8fA%3D%3D"
+                        alt="background"
+                        className="w-full h-full object-cover scale-105"
+                    />
+
+                    {/* overlay (keep image visible) */}
+                    <div className="absolute inset-0 bg-[#F8F9FA]/80" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/70 to-white/90" />
+                </div>
+
+                {/* CONTENT */}
+                <Container className="relative z-10">
 
                     {/* HEADER */}
-                    <div className="max-w-3xl mb-16 space-y-5">
-
-                        <h2 className="text-4xl font-bold text-[#1A3263]">
+                    <div className="max-w-3xl mb-14">
+                        <h2 className="text-3xl md:text-4xl font-semibold text-[#1A3263] tracking-tight">
                             Future-Ready Innovation
                         </h2>
 
-                        <div className="w-20 h-1 bg-red-600" />
+                        <div className="w-16 h-[2px] bg-red-600 mt-4 mb-5" />
 
-                        <p className="text-gray-500 text-lg leading-relaxed">
-                            As technology evolves, Intersys Solutions stays at the forefront by adopting the latest innovations in audio, video, and unified communications. Our goal is to deliver reliable performance, user-friendly systems, and long-term value for every client.
+                        <p className="text-gray-600 leading-relaxed">
+                            As technology evolves, Intersys Solutions stays ahead by integrating modern AV and communication technologies.
+                            We focus on performance, simplicity, and long-term reliability for every solution we deliver.
                         </p>
-
                     </div>
 
                     {/* GRID */}
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
 
                         {[
                             {
                                 title: "HD Displays",
-                                desc: "Crystal clear 4K and 8K visual solutions for maximum impact."
+                                desc: "4K/8K display systems designed for clarity and impact."
                             },
                             {
-                                title: "Professional Sound",
-                                desc: "Acoustically tuned systems for high-fidelity audio distribution."
+                                title: "Professional Audio",
+                                desc: "Balanced, high-quality sound systems for all environments."
                             },
                             {
                                 title: "Video Conferencing",
-                                desc: "Seamless collaborative technology for hybrid workspaces."
+                                desc: "Reliable collaboration tools for hybrid communication."
                             },
                             {
-                                title: "Smart Controls",
-                                desc: "Intuitive automated design through central interfaces."
+                                title: "Smart Control",
+                                desc: "Simple, centralized control for AV and building systems."
                             },
                             {
                                 title: "Digital Signage",
-                                desc: "Dynamic content distribution for modern retail and public spaces."
+                                desc: "Flexible content display for retail and corporate spaces."
                             },
                             {
-                                title: "Unified Communications",
-                                desc: "Integrated platforms with seamless multi-channel connectivity."
+                                title: "Unified Communication",
+                                desc: "Connected platforms for seamless communication flow."
                             }
                         ].map((item, i) => (
                             <div
                                 key={i}
-                                className="group p-8 bg-white border border-gray-100 rounded-xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                                className="group border border-gray-200 bg-white/85 backdrop-blur-sm
+                    rounded-lg p-6 hover:border-gray-300 hover:shadow-md transition-all duration-300"
                             >
 
-                                {/* subtle top line */}
-                                <div className="w-10 h-[2px] bg-red-600 mb-6 group-hover:w-16 transition-all duration-300" />
+                                <div className="w-8 h-8 mb-5 border border-gray-200 rounded-md flex items-center justify-center group-hover:border-red-600 transition">
+                                    <div className="w-2 h-2 bg-red-600" />
+                                </div>
 
-                                <h4 className="text-lg font-bold text-[#1A3263] group-hover:text-red-600 transition-colors mb-3">
+                                <h4 className="text-base font-semibold text-[#1A3263] group-hover:text-red-600 transition-colors">
                                     {item.title}
                                 </h4>
 
-                                <p className="text-gray-500 text-sm leading-relaxed">
+                                <p className="text-sm text-gray-500 leading-relaxed mt-2">
                                     {item.desc}
                                 </p>
 
@@ -167,27 +209,28 @@ function AudioVisualPage() {
                     </div>
 
                 </Container>
-            </section>
 
-            {/* ─── OUR CORE EXPERTISE ─── */}
+            </section>
             {/* ───── COMPREHENSIVE SERVICES ───── */}
-            <section className="py-28 bg-white">
+            <section className="py-24 bg-white">
                 <Container>
 
-                    <div className="max-w-4xl space-y-6 mb-20">
+                    <div className="max-w-3xl space-y-5 mb-16">
 
-                        <h2 className="text-4xl font-bold text-[#1A3263]">
+                        <h2 className="text-3xl md:text-4xl font-semibold text-[#1A3263] tracking-tight">
                             Comprehensive Services
                         </h2>
 
-                        <div className="w-16 h-1 bg-red-600" />
+                        <div className="w-14 h-[2px] bg-red-600" />
 
-                        <p className="text-gray-500 leading-relaxed">
-                            Comprehensive Services From high-definition displays, professional sound systems, and video conferencing tools to smart control systems and digital signage — we design, supply, install, and maintain solutions that are intuitive, scalable, and impactful.
+                        <p className="text-gray-600 leading-relaxed">
+                            From high-definition displays and professional sound systems to video conferencing,
+                            smart control, and digital signage — we design and deliver complete solutions that are
+                            intuitive, scalable, and built for real environments.
                         </p>
 
-                        <p className="text-gray-400 italic border-l-4 border-red-500 pl-4">
-                            "We don't just install equipment — we create immersive environments where sound and visuals work in harmony."
+                        <p className="text-gray-500 border-l-2 border-red-500 pl-4 italic leading-relaxed">
+                            “We don’t just install equipment — we design environments where technology feels invisible but powerful.”
                         </p>
 
                     </div>
@@ -201,60 +244,59 @@ function AudioVisualPage() {
                 <Container>
 
                     {/* HEADER */}
-                    <div className="max-w-3xl mb-16 space-y-4">
-                        <h2 className="text-4xl font-bold text-[#1A3263]">
+                    <div className="max-w-3xl mb-14 space-y-4">
+
+                        <h2 className="text-3xl md:text-4xl font-semibold text-[#1A3263] tracking-tight">
                             Our Core Expertise
                         </h2>
 
-                        <div className="w-16 h-1 bg-red-600" />
+                        <div className="w-14 h-[2px] bg-red-600" />
 
-                        <p className="text-gray-500">
-                            Specialized engineering for complex signal environments.
+                        <p className="text-gray-600">
+                            Specialized engineering for complex audio, video, and control environments.
                         </p>
+
                     </div>
 
                     {/* GRID */}
-                    <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                    <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
 
                         {[
                             {
                                 title: "Audio & Display",
-                                desc: "High-fidelity sound and 4K+ visual infrastructure."
+                                desc: "High-quality sound and modern visual systems."
                             },
                             {
                                 title: "Unified Conferencing",
-                                desc: "Hybrid ecosystems for seamless global collaboration."
+                                desc: "Seamless hybrid communication platforms."
                             },
                             {
                                 title: "Automation Control",
-                                desc: "Intuitive command via bespoke automation software."
+                                desc: "Smart centralized control systems."
                             },
                             {
                                 title: "Signal Management",
-                                desc: "Zero-latency routing by industry leaders."
+                                desc: "Stable, low-latency signal distribution."
                             },
                             {
                                 title: "Full Integration",
-                                desc: "Bespoke implementations that vanish into architecture."
+                                desc: "Systems designed to blend into architecture."
                             }
                         ].map((item, i) => (
                             <div
                                 key={i}
-                                className="group p-7 rounded-xl border border-gray-100 bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                                className="group bg-white border border-gray-200 rounded-lg p-6 hover:border-gray-300 hover:shadow-md transition-all duration-300"
                             >
 
-                                {/* TITLE */}
-                                <h4 className="font-bold text-[#1A3263] text-lg mb-3 group-hover:text-red-600 transition-colors">
+                                <h4 className="text-base font-semibold text-[#1A3263] group-hover:text-red-600 transition-colors">
                                     {item.title}
                                 </h4>
 
-                                {/* DESCRIPTION */}
-                                <p className="text-gray-500 text-md leading-relaxed">
+                                <p className="text-sm text-gray-500 leading-relaxed mt-2">
                                     {item.desc}
                                 </p>
 
-                                {/* ACCENT LINE */}
-                                <div className="w-0 group-hover:w-10 h-[2px] bg-red-500 mt-4 transition-all duration-300" />
+                                <div className="w-0 h-[2px] bg-red-600 mt-4 group-hover:w-10 transition-all duration-300" />
 
                             </div>
                         ))}
@@ -264,67 +306,65 @@ function AudioVisualPage() {
                 </Container>
             </section>
             {/* ─── CONFERENCE SOLUTION ─── */}
-            <section className="py-28 bg-gray-50">
+            <section className="py-24 bg-gray-50">
                 <Container>
 
                     {/* HEADER */}
-                    <div className="text-center mb-20 space-y-4">
-                        <h2 className="text-4xl font-bold text-[#1A3263]">
+                    <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
+
+                        <h2 className="text-3xl md:text-4xl font-semibold text-[#1A3263] tracking-tight">
                             Conferencing Solutions
                         </h2>
 
-                        <p className="text-gray-500 max-w-xl mx-auto">
-                            Stay connected anywhere with integrated video and collaboration tools.
+                        <p className="text-gray-600 leading-relaxed">
+                            Stay connected anywhere with integrated video conferencing and collaboration tools
+                            built for modern hybrid work environments.
                         </p>
+
                     </div>
 
                     {/* GRID */}
-                    <div className="grid md:grid-cols-3 gap-8">
+                    <div className="grid md:grid-cols-3 gap-6">
 
                         {[
                             {
                                 title: "Hybrid Connectivity",
-                                desc: "Seamless communication between local and remote teams.",
-                                img: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=800&auto=format&fit=crop",
-                                tag: "Hybrid Meetings"
+                                desc: "Seamless communication between in-office and remote teams.",
+                                img: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=800&auto=format&fit=crop"
                             },
                             {
-                                title: "Full Compatibility",
-                                desc: "Optimized for Zoom, Microsoft Teams, and Google Meet.",
-                                img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop",
-                                tag: "Compatibility"
+                                title: "Platform Integration",
+                                desc: "Optimized for Zoom, Microsoft Teams, and Google Meet environments.",
+                                img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop"
                             },
                             {
-                                title: "Professional Hardware",
-                                desc: "High-sensitivity microphones and AI-powered camera tracking.",
-                                img: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=800&auto=format&fit=crop",
-                                tag: "Microphones"
+                                title: "Smart Hardware",
+                                desc: "AI-assisted cameras and professional-grade audio systems.",
+                                img: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=800&auto=format&fit=crop"
                             }
                         ].map((item, i) => (
                             <div
                                 key={i}
-                                className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500"
+                                className="group bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md hover:border-gray-300 transition-all duration-300"
                             >
 
                                 {/* IMAGE */}
-                                <div className="h-56 overflow-hidden">
+                                <div className="h-52 overflow-hidden">
                                     <img
                                         src={item.img}
                                         alt={item.title}
-                                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                                        className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500"
                                     />
                                 </div>
 
                                 {/* CONTENT */}
-                                <div className="p-8 space-y-3">
+                                <div className="p-6 space-y-3">
 
-
-
-                                    <h4 className="text-xl font-bold text-[#1A3263]">
+                                    <h4 className="text-lg font-semibold text-[#1A3263] group-hover:text-red-600 transition-colors">
                                         {item.title}
                                     </h4>
 
-                                    <p className="text-gray-500 text-sm leading-relaxed">
+                                    <p className="text-sm text-gray-600 leading-relaxed">
                                         {item.desc}
                                     </p>
 
@@ -449,32 +489,32 @@ function AudioVisualPage() {
                 <Container>
 
                     {/* HEADER */}
-                    <div className="text-center mb-20 space-y-5">
+                    <div className="text-center mb-20 space-y-4">
                         <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
                             Signal Management
                         </h2>
 
-                        <p className="text-md tracking-wide">
+                        <p className="text-white/70 text-base">
                             Zero-latency routing powered by Lightware and Kramer
                         </p>
                     </div>
 
                     {/* GRID */}
-                    <div className="grid lg:grid-cols-3 gap-10">
+                    <div className="grid lg:grid-cols-3 gap-8">
 
                         {/* CARD 1 */}
-                        <div className="group rounded-2xl bg-white/5 border border-white/10 overflow-hidden
-                            hover:bg-white/10 hover:-translate-y-1 hover:shadow-2xl transition-all duration-500">
+                        <div className="group bg-white/5 border border-white/10 overflow-hidden
+                hover:bg-white/10 hover:-translate-y-1 transition-all duration-300">
 
-                            <div className="overflow-hidden">
+                            <div className="overflow-hidden h-64">
                                 <img
                                     src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=600"
                                     alt="Signal Wiring"
-                                    className="w-full h-64 object-cover group-hover:scale-105 transition duration-700"
+                                    className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
                                 />
                             </div>
 
-                            <div className="p-7 space-y-2">
+                            <div className="p-6 space-y-2">
                                 <h4 className="text-lg font-medium tracking-tight">
                                     Routing
                                 </h4>
@@ -485,22 +525,18 @@ function AudioVisualPage() {
                         </div>
 
                         {/* CARD 2 */}
-                        <div className="group rounded-2xl bg-white/5 border border-white/10 overflow-hidden
-                            hover:bg-white/10 hover:-translate-y-1 hover:shadow-2xl transition-all duration-500">
+                        <div className="group bg-white/5 border border-white/10 overflow-hidden
+                hover:bg-white/10 hover:-translate-y-1 transition-all duration-300">
 
-                            <div className="relative overflow-hidden bg-gradient-to-b from-white/5 to-transparent">
-
-                                {/* glow */}
-                                <div className="absolute inset-0 bg-blue-500/10 blur-2xl opacity-40 group-hover:opacity-60 transition" />
-
+                            <div className="overflow-hidden h-64">
                                 <img
                                     src="https://static.wixstatic.com/media/3d5958_eecc2f2ac2374cf4be9bc785dd16635d~mv2.png"
-                                    alt="Signal Logic 1"
-                                    className="w-full h-64 object-cover group-hover:scale-105 transition duration-700"
+                                    alt="Signal Extension"
+                                    className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
                                 />
                             </div>
 
-                            <div className="p-7 space-y-2">
+                            <div className="p-6 space-y-2">
                                 <h4 className="text-lg font-medium tracking-tight">
                                     Extension
                                 </h4>
@@ -511,22 +547,18 @@ function AudioVisualPage() {
                         </div>
 
                         {/* CARD 3 */}
-                        <div className="group rounded-2xl bg-white/5 border border-white/10 overflow-hidden
-                            hover:bg-white/10 hover:-translate-y-1 hover:shadow-2xl transition-all duration-500">
+                        <div className="group bg-white/5 border border-white/10 overflow-hidden
+                hover:bg-white/10 hover:-translate-y-1 transition-all duration-300">
 
-                            <div className="relative overflow-hidden bg-gradient-to-b from-white/5 to-transparent">
-
-                                {/* glow */}
-                                <div className="absolute inset-0 bg-purple-500/10 blur-2xl opacity-40 group-hover:opacity-60 transition" />
-
+                            <div className="overflow-hidden h-64">
                                 <img
                                     src="https://static.wixstatic.com/media/3d5958_5ff4c65272e14b26b5d1b465f857f9f1~mv2.png"
-                                    alt="Signal Logic 2"
-                                    className="w-full h-64 object-cover group-hover:scale-105 transition duration-700"
+                                    alt="Signal Hardware"
+                                    className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
                                 />
                             </div>
 
-                            <div className="p-7 space-y-2">
+                            <div className="p-6 space-y-2">
                                 <h4 className="text-lg font-medium tracking-tight">
                                     Hardware
                                 </h4>
@@ -539,42 +571,90 @@ function AudioVisualPage() {
                     </div>
                 </Container>
             </section>
-
             {/* ─── ROOM INTEGRATION ─── */}
             <section className="py-28 bg-white">
                 <Container>
+
                     <div className="grid lg:grid-cols-2 gap-20 items-center">
+
+                        {/* LEFT CONTENT */}
                         <div className="space-y-12">
+
                             <div className="space-y-4">
-                                <h2 className="text-4xl font-bold text-[#1A3263]">Room Integration</h2>
-                                <p className="text-gray-400">High-reliability design that blends seamlessly into your architectural vision.</p>
+                                <h2 className="text-4xl font-bold text-[#1A3263] tracking-tight">
+                                    Room Integration
+                                </h2>
+
+                                <p className="text-gray-500 leading-relaxed max-w-md">
+                                    High-reliability design that blends seamlessly into your architectural vision.
+                                </p>
                             </div>
+
                             <div className="space-y-8">
+
                                 {[
-                                    { title: "Scalable Architecture", desc: "Technology that adapts to everything from huddle rooms to auditoriums." },
-                                    { title: "Clean Aesthetics", desc: "Non-intrusive installations for a professional, clutter-free workspace." },
-                                    { title: "Unified AV", desc: "A single, intelligent point of control for your entire environment." }
+                                    {
+                                        title: "Scalable Architecture",
+                                        desc: "Technology that adapts from huddle rooms to large auditoriums."
+                                    },
+                                    {
+                                        title: "Clean Aesthetics",
+                                        desc: "Non-intrusive installations for a clutter-free workspace."
+                                    },
+                                    {
+                                        title: "Unified AV Control",
+                                        desc: "A single intelligent interface for managing the entire environment."
+                                    }
                                 ].map((item, i) => (
-                                    <div key={i} className="flex gap-6 group">
+                                    <div key={i} className="flex gap-5">
+
+                                        {/* subtle indicator */}
+                                        <div className="mt-2 w-2 h-2 bg-red-600 shrink-0" />
 
                                         <div className="space-y-1">
-                                            <h4 className="font-bold text-[#1A3263]">{item.title}</h4>
-                                            <p className="text-gray-400 text-sm">{item.desc}</p>
+                                            <h4 className="font-semibold text-[#1A3263]">
+                                                {item.title}
+                                            </h4>
+                                            <p className="text-gray-500 text-sm leading-relaxed">
+                                                {item.desc}
+                                            </p>
                                         </div>
+
                                     </div>
                                 ))}
+
                             </div>
                         </div>
+
+                        {/* RIGHT IMAGE GRID */}
                         <div className="grid grid-cols-2 gap-4">
+
                             <div className="space-y-4">
-                                <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=800&auto=format&fit=crop" className="rounded-xl shadow-xl" alt="Office 1" />
-                                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" className="rounded-xl shadow-xl" alt="Office 2" />
+                                <img
+                                    src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=800&auto=format&fit=crop"
+                                    className="w-full h-44 object-cover"
+                                    alt="Office 1"
+                                />
+
+                                <img
+                                    src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop"
+                                    className="w-full h-44 object-cover"
+                                    alt="Office 2"
+                                />
                             </div>
-                            <div className="">
-                                <img src="https://plus.unsplash.com/premium_photo-1724753995771-8ee6954e78da?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="rounded-xl shadow-xl h-full object-cover" alt="Large Meeting Room" />
+
+                            <div className="h-full">
+                                <img
+                                    src="https://plus.unsplash.com/premium_photo-1724753995771-8ee6954e78da?q=80&w=1171&auto=format&fit=crop"
+                                    className="w-full h-full object-cover"
+                                    alt="Meeting Room"
+                                />
                             </div>
+
                         </div>
+
                     </div>
+
                 </Container>
             </section>
 

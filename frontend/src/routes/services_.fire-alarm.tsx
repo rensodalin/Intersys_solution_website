@@ -301,56 +301,61 @@ function FireAlarmPage() {
                 </Container>
             </section>
             {/* ─── FLEXIBLE ARCHITECTURE ─── */}
-            <section className="py-24 bg-white">
+            <section className="py-28 bg-white">
                 <Container>
-                    {/* Header */}
-                    <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-                        <h2 className="text-4xl font-bold text-[#1A3263]">
+
+                    {/* HEADER */}
+                    <div className="max-w-4xl mb-20 space-y-5">
+                        <h2 className="text-3xl md:text-4xl font-bold text-[#1A3263] tracking-tight">
                             Flexible Architecture
                         </h2>
-                        <p className="text-gray-500 text-lg leading-relaxed">
-                            Scalable to suit any environment — from small offices to high-rise buildings and industrial facilities — ensuring tailored protection at every level.
+
+                        <div className="w-16 h-1 bg-red-600" />
+
+                        <p className="text-gray-500 text-lg leading-relaxed max-w-2xl">
+                            Scalable systems designed to adapt across environments — from compact offices to complex industrial infrastructures — ensuring consistent protection at every level.
                         </p>
                     </div>
 
-                    {/* Grid */}
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {/* CONTENT GRID (more editorial layout) */}
+                    <div className="grid lg:grid-cols-3 gap-10">
+
                         {[
                             {
                                 title: "Small Offices",
-                                desc: "Supports basic layouts with minimal zones or detection points. Ideal for startups or single-tenant offices that may grow in the future."
+                                desc: "Supports basic layouts with minimal zones and detection points. Ideal for startups or single-tenant offices that can scale later."
                             },
                             {
                                 title: "High-Rise Buildings",
-                                desc: "Handles complex multi-floor layouts, zoning, and vertical integration with elevators, stairwells, and fire compartments."
+                                desc: "Manages multi-floor zoning, vertical integration, and structured safety coordination across elevators, stairwells, and fire zones."
                             },
                             {
                                 title: "Industrial Facilities",
-                                desc: "Withstands harsh conditions, covers vast areas with integrated safety zones, explosion-proof devices, and high-risk area coverage."
+                                desc: "Designed for harsh environments with wide-area coverage, explosion-proof components, and advanced safety zoning."
                             }
                         ].map((item, i) => (
-                            <div
-                                key={i}
-                                className="group p-8 rounded-xl border border-gray-100 bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center"
-                            >
-                                {/* Number badge */}
-                                <div className="w-12 h-12 mx-auto mb-6 rounded-full bg-red-50 text-red-500 flex items-center justify-center font-bold text-lg group-hover:bg-red-600 group-hover:text-white transition">
-                                    {`0${i + 1}`}
-                                </div>
+                            <div key={i} className="space-y-4">
 
-                                <h4 className="font-bold text-[#1A3263] text-lg mb-3">
+                                {/* subtle line instead of badge */}
+                                <div className="w-10 h-[2px] bg-red-600/80" />
+
+                                <h3 className="text-xl font-semibold text-[#1A3263]">
                                     {item.title}
-                                </h4>
+                                </h3>
 
                                 <p className="text-gray-500 text-sm leading-relaxed">
                                     {item.desc}
                                 </p>
+
+                                {/* bottom spacing rhythm */}
+                                <div className="pt-6 border-b border-gray-100" />
                             </div>
                         ))}
+
                     </div>
+
                 </Container>
             </section>
-
             {/* ─── SMART MONITORING ─── */}
             <section className="py-24 bg-[#0A0F1A] text-white overflow-hidden">
                 <Container>

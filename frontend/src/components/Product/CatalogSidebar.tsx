@@ -107,14 +107,17 @@ export function CatalogSidebar({
 
     const NAVBAR_HEIGHT = scrolled ? 112 : 144;
 
-    // Auto-detect active category from URL
+    const searchParams = new URLSearchParams(location.search);
+    const activeFrom = searchParams.get("from");
+
+    // Auto-detect active category from URL or 'from' param
     const activeCategory = propActiveCategory || (
-        location.pathname.includes("/access-control") ? "access-control" :
-            location.pathname.includes("/building-management") ? "building-management" :
-                location.pathname.includes("/integrated-systems") ? "integrated-systems" :
-                    location.pathname.includes("/surveillance") ? "surveillance" :
-                        location.pathname.includes("/audio-visual") ? "audio-visual" :
-                            location.pathname.includes("/fire-systems") ? "fire-systems" : undefined
+        (location.pathname.includes("/access-control") || (activeFrom && activeFrom.includes("/access-control"))) ? "access-control" :
+            (location.pathname.includes("/building-management") || (activeFrom && activeFrom.includes("/building-management"))) ? "building-management" :
+                (location.pathname.includes("/integrated-systems") || (activeFrom && activeFrom.includes("/integrated-systems"))) ? "integrated-systems" :
+                    (location.pathname.includes("/surveillance") || (activeFrom && activeFrom.includes("/surveillance"))) ? "surveillance" :
+                        (location.pathname.includes("/audio-visual") || (activeFrom && activeFrom.includes("/audio-visual"))) ? "audio-visual" :
+                            (location.pathname.includes("/fire-systems") || (activeFrom && activeFrom.includes("/fire-systems"))) ? "fire-systems" : undefined
     );
 
     const [expandedSections, setExpandedSections] = useState<string[]>(activeCategory ? [activeCategory] : []);
@@ -160,8 +163,6 @@ export function CatalogSidebar({
         }
     }, [location.pathname]);
 
-    const searchParams = new URLSearchParams(location.search);
-    const activeFrom = searchParams.get("from");
 
     const isPathActive = (link?: string) => {
         if (!link || link === "/") return false;
@@ -265,7 +266,7 @@ export function CatalogSidebar({
             {/* ── SCROLLABLE LIST ── */}
             <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar scroll-smooth min-h-0">
                 {NAVIGATION_DATA.map((item) => {
-                    const isActive = isPathActive(item.link) || activeCategory === item.id || (item.id === "access-control" && !activeCategory);
+                    const isActive = isPathActive(item.link) || activeCategory === item.id;
                     const isExpanded = searchQuery ? true : expandedSections.includes(item.id);
                     return (
                         <div key={item.id} className="space-y-0.5">

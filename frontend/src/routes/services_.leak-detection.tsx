@@ -88,230 +88,357 @@ function LeakDetectionPage() {
         <div className="bg-[#FDFDFD] overflow-hidden scroll-smooth selection:bg-red-500 selection:text-white">
 
             {/* ─── HERO SECTION ─── */}
-            <section className="relative h-[90vh] min-h-[700px] flex items-center pt-32 overflow-hidden bg-[#0A0F1A]">
+            <section className="relative h-[90vh] min-h-[680px] flex items-center overflow-hidden bg-[#0A0F1A]">
+
+                {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=2000"
-                        alt="Leak Detection Technology"
-                        className="w-full h-full object-cover opacity-40 scale-110 animate-slow-zoom"
+                        src="https://plus.unsplash.com/premium_photo-1661921394349-9e3f394d80da?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx8fHx8fHx8fA%3D%3D"
+                        alt="Leak Detection"
+                        className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#0A0F1A] via-[#0A0F1A]/70 to-transparent" />
+
+                    {/* Softer overlay (less artificial look) */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#0A0F1A] via-[#0A0F1A]/60 to-[#0A0F1A]/20" />
+                    <div className="absolute inset-0 bg-black/10" />
                 </div>
 
-                {/* ─── BACK BUTTON ─── */}
+                {/* BACK BUTTON */}
                 <button
                     onClick={() => router.history.back()}
-                    className="absolute top-50 left-23 z-20 flex items-center gap-2 text-white hover:text-white/60 transition-colors duration-200 group"
+                    className="absolute top-8 left-8 z-20 flex items-center gap-2 text-white/80 hover:text-white transition pt-37 px-15"
                 >
-                    <ArrowLeft
-                        size={18}
-                        className="group-hover:-translate-x-1 transition-transform duration-200"
-                    />
+                    <div className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center">
+                        <ArrowLeft size={16} />
+                    </div>
                     <span className="text-sm font-medium">Back</span>
                 </button>
 
+                {/* CONTENT */}
                 <Container className="relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                        className="max-w-4xl"
-                    >
-                        <div className="space-y-4">
+                    <div className="max-w-2xl">
 
-                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
-                            Direct Liquid Cooling <br />
-                            <span className="text-red-600">
-                                Leak Detection
-                            </span>
-                        </h1>
-                        </div>
-                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
-                            Mitigate risks with meter-precise sensing technologies for water, hydrocarbons, and chemicals. Engineered for mission-critical reliability in data centers and industrial hubs.
-                        </p>
-                    </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 25 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                        >
+
+
+                            <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight mt-5 mb-5">
+                                Direct Liquid Cooling <br />
+                                <span className="text-red-500">Leak Detection</span>
+                            </h1>
+
+                            <p className="text-white/70 text-base leading-relaxed">
+                                Detect leaks early with precise sensing technology for water, oil, and chemical systems.
+                                Built for data centers and industrial environments where reliability matters most.
+                            </p>
+                        </motion.div>
+
+                    </div>
                 </Container>
 
-                {/* Background Decoration */}
-                <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#FDFDFD] to-transparent z-10" />
             </section>
 
             {/* ─── SPECIALIZED TECHNOLOGY ─── */}
-            <section className="py-32 bg-white relative">
+            {/* ─── SPECIALIZED SENSING TECHNOLOGIES ─── */}
+            <section className="py-28 bg-white">
                 <Container>
-                    <div className="grid lg:grid-cols-2 gap-20 items-end mb-20">
-                        <div className="space-y-6">
-                            <h2 className="text-4xl md:text-5xl font-bold text-[#1A3263] leading-tight tracking-tight">
-                                Specialized Sensing <br />
-                                <span className="text-red-600">Technologies</span>
+
+                    {/* HEADER */}
+                    <div className="grid lg:grid-cols-2 gap-16 items-end mb-16">
+                        <div className="space-y-4">
+                            <h2 className="text-3xl md:text-4xl font-semibold text-[#1A3263] leading-tight tracking-tight">
+                                Specialized Sensing
+                                <span className="block text-red-600 mt-1">
+                                    Technologies
+                                </span>
                             </h2>
-                            <p className="text-gray-500 text-lg leading-relaxed max-w-xl">
-                                We deploy diverse sensing architectures tailored to the specific fluid dynamics and environmental risks of your facility.
+
+                            <p className="text-gray-600 text-base leading-relaxed max-w-xl">
+                                Sensing technologies engineered for coolant, hydrocarbon,
+                                and water leak detection across mission-critical environments.
                             </p>
                         </div>
-                        <div className="hidden lg:flex justify-end">
-                            <div className="w-24 h-1 bg-red-600" />
+
+                        <div className="hidden lg:flex justify-end items-center">
+                            <div className="w-20 h-[2px] bg-red-600" />
                         </div>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8">
+                    {/* GRID */}
+                    <div className="grid md:grid-cols-3 gap-10">
+
                         {[
                             {
-                                icon: Server,
+                                icon: Cpu,
                                 title: "Detect Liquid Cooling (DLC)",
-                                desc: "High-sensitivity leak detection for Direct Liquid Cooling. Purpose-built for Direct-to-Chip systems, the FG-DLC sensor ensures fast, effective detection of all coolant leaks including PG25."
+                                desc: "Designed for Direct-to-Chip cooling systems with rapid PG25 coolant leak detection."
                             },
                             {
                                 icon: Flame,
-                                title: "Hydrocarbon Monitoring & Oil sensing ",
-                                desc: "The first reusable oil sense cables on the market. Specifically designed to detect and locate leaks of crude oil, diesel, and other refined hydrocarbons with precision."
+                                title: "Hydrocarbon Monitoring",
+                                desc: "Detects crude oil, diesel, and refined hydrocarbons with reusable sensing cables."
                             },
                             {
                                 icon: Droplets,
                                 title: "Digital Water Detection",
-                                desc: "Fully addressable digital sensing cables for mission-critical facilities. Pinpoints water leaks to the nearest meter under raised floors and around CRAC units."
+                                desc: "Addressable sensing cables that pinpoint leaks under floors and CRAC environments."
                             }
                         ].map((tech, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, y: 30 }}
+                                initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className="group p-10 rounded-3xl bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-all duration-500 relative overflow-hidden"
+                                transition={{ delay: i * 0.08 }}
+                                className="border-t border-gray-200 pt-6 group"
                             >
-                                <div className="absolute top-0 right-0 p-8 text-gray-100 group-hover:text-red-50 transition-colors">
-                                    <tech.icon size={80} strokeWidth={1} />
+
+                                {/* ICON */}
+                                <div className="text-red-600 mb-4">
+                                    <tech.icon size={22} strokeWidth={1.6} />
                                 </div>
-                                <div className="relative z-10 space-y-6">
-                                    <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white transition-all duration-500">
-                                        <tech.icon size={28} strokeWidth={1.5} />
-                                    </div>
-                                    <h3 className="text-2xl font-bold text-[#1A3263]">{tech.title}</h3>
-                                    <p className="text-gray-500 leading-relaxed text-sm">{tech.desc}</p>
-                                </div>
+
+                                {/* TITLE */}
+                                <h3 className="text-lg font-semibold text-[#1A3263] mb-3 group-hover:text-red-600 transition-colors">
+                                    {tech.title}
+                                </h3>
+
+                                {/* DESCRIPTION */}
+                                <p className="text-gray-600 text-sm leading-relaxed">
+                                    {tech.desc}
+                                </p>
+
                             </motion.div>
                         ))}
+
                     </div>
+
                 </Container>
             </section>
-
             {/* ─── INFRASTRUCTURE SECURITY ─── */}
-            <section className="py-28 bg-[#0A0F1A] relative overflow-hidden">
-                {/* Decorative Elements */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-600/5 blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2" />
+            <section className="py-28 bg-[#0A0F1A] relative overflow-hidden w-full">
+                {/* background texture */}
+                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#ffffff10_1px,transparent_1px)] [background-size:22px_22px]" />
 
-                <Container>
-                    <div className="max-w-4xl mx-auto text-center space-y-16">
-                        <div className="space-y-4">
-                            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">Infrastructure Security</h2>
-                            <p className="text-white/40 text-lg max-w-2xl mx-auto">
-                                Sophisticated technology designed for hospitals, data centers, and industrial environments.
-                            </p>
-                        </div>
+                {/* soft glow */}
+                <div className="absolute top-[-250px] right-[-250px] w-[600px] h-[600px] bg-red-600/10 blur-[160px] rounded-full" />
 
-                        <div className="grid md:grid-cols-3 gap-16 relative">
-                            {/* Connector Line */}
-                            <div className="hidden md:block absolute top-1/2 left-0 w-full h-px bg-white/5 -translate-y-1/2 z-0" />
+                {/* FULL WIDTH WRAPPER (no max container feel) */}
+                <div className="w-full px-6 md:px-16 lg:px-24">
 
-                            {[
-                                {
-                                    icon: Crosshair,
-                                    title: "Precision Localization",
-                                    desc: "Pinpoints exact leak location down to the meter for quick and targeted repairs."
-                                },
-                                {
-                                    icon: ShieldAlert,
-                                    title: "Active Protection",
-                                    desc: "Automated response systems that can shut off valves the moment a leak is detected."
-                                },
-                                {
-                                    icon: Clock,
-                                    title: "NA-NO Sensing",
-                                    desc: "High-sensitivity sensors capable of detecting single drops of fluid before damage occurrs."
-                                }
-                            ].map((item, i) => (
-                                <div key={i} className="relative z-10 space-y-6 group">
-                                    <div className="w-20 h-20 mx-auto rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-red-500 group-hover:bg-red-600 group-hover:text-white transition-all duration-500">
-                                        <item.icon size={32} />
-                                    </div>
-                                    <div className="space-y-3">
-                                        <h3 className="text-xl font-bold text-white">{item.title}</h3>
-                                        <p className="text-white/30 text-sm leading-relaxed">{item.desc}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                    {/* HEADER */}
+                    <div className="max-w-3xl space-y-4 mb-20">
+                        <h2 className="text-xl md:text-4xl font-semibold text-white tracking-tight">
+                            Infrastructure Security
+                        </h2>
+
+                        <p className="text-white/50 text-base md:text-lg leading-relaxed">
+                            Built for hospitals, data centers, and industrial environments where precision detection is critical.
+                        </p>
+
+                        <div className="w-16 h-[2px] bg-red-600" />
                     </div>
-                </Container>
+
+                    {/* GRID */}
+                    <div className="grid md:grid-cols-3 gap-14 relative">
+                        {[
+                            {
+                                icon: Server,
+                                title: "Detect Liquid Cooling (DLC)",
+                                desc: "High-sensitivity leak detection for Direct Liquid Cooling systems. Optimized for PG25 and advanced coolant environments."
+                            },
+                            {
+                                icon: Flame,
+                                title: "Hydrocarbon Monitoring",
+                                desc: "Detects crude oil, diesel, and industrial hydrocarbons with precise location tracking and stable long-term sensing."
+                            },
+                            {
+                                icon: Droplets,
+                                title: "Digital Water Detection",
+                                desc: "Pinpoint water leak detection accurate to the meter under raised floors, ceilings, and CRAC zones."
+                            }
+                        ].map((item, i) => (
+                            <div
+                                key={i}
+                                className="relative pl-6 border-l border-white/10 group"
+                            >
+                                {/* animated left bar */}
+                                <div className="absolute left-0 top-0 w-[2px] h-0 bg-red-600 group-hover:h-full transition-all duration-500" />
+
+                                {/* icon (simple, not boxed) */}
+                                <div className="text-red-500 mb-4">
+                                    <item.icon size={22} strokeWidth={1.6} />
+                                </div>
+
+                                <h3 className="text-lg font-medium text-white mb-2 group-hover:text-red-400 transition">
+                                    {item.title}
+                                </h3>
+
+                                <p className="text-white/40 text-sm leading-relaxed">
+                                    {item.desc}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                </div>
             </section>
 
             {/* ─── KEY FEATURES ─── */}
             <section className="py-20 bg-white">
                 <Container>
-                    <div className="mb-12 space-y-4">
-                        <h2 className="text-2xl md:text-3xl font-bold text-[#1A3263]">Industrial Grade Leak Detection & Prevention</h2>
-                        <p className="text-gray-500 text-sm max-w-lg">Advanced engineering for mission-critical environmental safety.</p>
+
+                    {/* HEADER */}
+                    <div className="mb-14 max-w-2xl space-y-3">
+                        <h2 className="text-2xl md:text-3xl font-semibold text-[#1A3263] tracking-tight">
+                            Industrial Grade Leak Detection & Prevention
+                        </h2>
+
+                        <p className="text-gray-500 text-sm leading-relaxed">
+                            Designed for mission-critical environments where early detection and reliability matter most.
+                        </p>
+
+                        <div className="w-14 h-[2px] bg-red-600" />
                     </div>
 
-                    <div className="grid md:grid-cols-5 gap-6">
+                    {/* GRID */}
+                    <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-10">
                         {[
                             {
                                 icon: ShieldAlert,
                                 title: "Early Detection",
-                                desc: "Detects leaks at the earliest stage before they cause major damage."
+                                desc: "Detects leaks before they escalate into system failures."
                             },
                             {
                                 icon: Crosshair,
                                 title: "High Accuracy",
-                                desc: "Pinpoints leak location within meters, allowing quick repair."
+                                desc: "Locates leaks within precise meter-level accuracy."
                             },
                             {
                                 icon: Cpu,
                                 title: "Integration Ready",
-                                desc: "Works seamlessly with Honeywell BMS and other automation platforms for centralized control."
+                                desc: "Seamless integration with BMS and automation systems."
                             },
                             {
                                 icon: Maximize,
-                                title: "Scalable Solutions",
-                                desc: "From small server rooms to large industrial fuel storage facilities."
+                                title: "Scalable Design",
+                                desc: "Works across small rooms to large industrial facilities."
                             },
                             {
                                 icon: Clock,
                                 title: "24/7 Monitoring",
-                                desc: "Continuous operation for critical environments like data centers, hospitals, airports, and refineries."
+                                desc: "Continuous protection for critical infrastructure."
                             }
                         ].map((feature, i) => (
-                            <motion.div
+                            <div
                                 key={i}
-                                whileHover={{ y: -5 }}
-                                className="p-6 rounded-2xl bg-gray-50 border border-gray-100 space-y-4 transition hover:bg-white hover:shadow-xl group"
+                                className="relative pl-5 border-l border-gray-200 group"
                             >
-                                <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
-                                    <feature.icon size={20} />
+                                {/* subtle active line */}
+                                <div className="absolute left-0 top-0 w-[2px] h-0 bg-red-600 group-hover:h-full transition-all duration-500" />
+
+                                {/* icon (no box, more technical) */}
+                                <div className="text-red-600 mb-3">
+                                    <feature.icon size={18} strokeWidth={1.6} />
                                 </div>
-                                <div className="space-y-2">
-                                    <h4 className="text-sm font-bold text-[#1A3263] leading-tight">{feature.title}</h4>
-                                    <p className="text-gray-500 text-[10px] leading-relaxed">{feature.desc}</p>
-                                </div>
-                            </motion.div>
+
+                                {/* title */}
+                                <h4 className="text-sm font-semibold text-[#1A3263] mb-1 group-hover:text-red-600 transition">
+                                    {feature.title}
+                                </h4>
+
+                                {/* desc */}
+                                <p className="text-gray-500 text-xs leading-relaxed">
+                                    {feature.desc}
+                                </p>
+                            </div>
                         ))}
                     </div>
+
                 </Container>
             </section>
 
             {/* ─── INDUSTRIES WATER LEAK (AUTO-SCROLL) ─── */}
             <section className="relative overflow-hidden py-10 bg-red-600">
-                <div className="flex items-center gap-10 whitespace-nowrap px-10">
-                    <h2 className="text-white font-black text-2xl tracking-tighter opacity-80">Water Leak Solutions</h2>
-                    <div className="h-px flex-grow bg-white/20" />
-                    <h2 className="text-white font-black text-2xl tracking-tighter opacity-80 italic">Industries Overview</h2>
+                <div className="flex items-center gap-8 px-10">
+                    <h2 className="text-white font-semibold text-xl tracking-tight opacity-90">
+                        Water Leak Solutions
+                    </h2>
+
+                    <div className="h-px flex-1 bg-white/20" />
+
+                    <h2 className="text-white font-semibold text-xl tracking-tight opacity-70 italic">
+                        Industries Overview
+                    </h2>
                 </div>
             </section>
 
-            <section className="py-32 bg-white overflow-hidden">
+            <section className="py-28 bg-white overflow-hidden">
                 <div className="relative">
-                    {/* Infinite Scroll Wrapper */}
+
+                    {/* SCROLL ROW */}
+                    <motion.div
+                        animate={{ x: [0, -2000] }}
+                        transition={{
+                            repeat: Infinity,
+                            duration: 42,
+                            ease: "linear"
+                        }}
+                        className="flex gap-8 whitespace-nowrap"
+                    >
+                        {[...waterLeakIndustries, ...waterLeakIndustries].map((item, i) => (
+                            <div key={i} className="w-[420px] shrink-0 group">
+
+                                {/* IMAGE (clean, no heavy rounding) */}
+                                <div className="h-[280px] w-full overflow-hidden border border-gray-200 bg-gray-50">
+                                    <img
+                                        src={item.img}
+                                        alt={item.name}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                    />
+                                </div>
+
+                                {/* TEXT */}
+                                <div className="mt-4 px-1">
+                                    <h4 className="text-lg font-semibold text-[#1A3263] group-hover:text-red-600 transition-colors">
+                                        {item.name}
+                                    </h4>
+
+                                    <div className="w-10 h-[2px] bg-red-600 mt-2 opacity-60 group-hover:opacity-100 transition" />
+                                </div>
+
+                            </div>
+                        ))}
+                    </motion.div>
+
+                    {/* EDGE FADE */}
+                    <div className="absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-white to-transparent z-10" />
+                    <div className="absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-white to-transparent z-10" />
+
+                </div>
+            </section>
+            {/* ─── INDUSTRIES FUEL LEAK (AUTO-SCROLL) ─── */}
+            <section className="relative overflow-hidden py-10 bg-[#0A0F1A]">
+                <div className="flex items-center gap-8 px-10">
+                    <h2 className="text-white font-semibold text-xl tracking-tight opacity-80">
+                        Fuel Leak Prevention
+                    </h2>
+
+                    <div className="h-px flex-1 bg-white/10" />
+
+                    <h2 className="text-white font-semibold text-xl tracking-tight opacity-60 italic">
+                        Sector Protection
+                    </h2>
+                </div>
+            </section>
+
+            <section className="py-28 bg-gray-50 overflow-hidden relative">
+                <div className="relative">
+
+                    {/* SCROLL ROW */}
                     <motion.div
                         animate={{ x: [0, -2000] }}
                         transition={{
@@ -319,76 +446,38 @@ function LeakDetectionPage() {
                             duration: 40,
                             ease: "linear"
                         }}
-                        className="flex gap-10 whitespace-nowrap"
-                    >
-                        {[...waterLeakIndustries, ...waterLeakIndustries].map((item, i) => (
-                            <div
-                                key={i}
-                                className="inline-block w-[450px] space-y-6 group"
-                            >
-                                <div className="h-[300px] w-full rounded-3xl overflow-hidden shadow-lg bg-gray-100 border border-gray-100">
-                                    <img
-                                        src={item.img}
-                                        alt={item.name}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                                    />
-                                </div>
-                                <div className="px-4">
-                                    <h4 className="text-xl font-bold text-[#1A3263] group-hover:text-red-600 transition-colors">{item.name}</h4>
-                                </div>
-                            </div>
-                        ))}
-                    </motion.div>
-
-                    {/* Gradient Overlays for smooth edges */}
-                    <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-white to-transparent z-10" />
-                    <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-white to-transparent z-10" />
-                </div>
-            </section>
-
-            {/* ─── INDUSTRIES FUEL LEAK (AUTO-SCROLL) ─── */}
-            <section className="relative overflow-hidden py-10 bg-[#0A0F1A]">
-                <div className="flex items-center gap-10 whitespace-nowrap px-10">
-                    <h2 className="text-white font-black text-2xl tracking-tighter opacity-80">Fuel Leak Prevention</h2>
-                    <div className="h-px flex-grow bg-white/10" />
-                    <h2 className="text-white font-black text-2xl tracking-tighter opacity-80 italic">Sector Protection</h2>
-                </div>
-            </section>
-
-            <section className="py-32 bg-gray-50 overflow-hidden">
-                <div className="relative">
-                    {/* Infinite Scroll Wrapper (Moving Right to Left, appearing Left to Right) */}
-                    <motion.div
-                        animate={{ x: [-2000, 0] }}
-                        transition={{
-                            repeat: Infinity,
-                            duration: 35,
-                            ease: "linear"
-                        }}
-                        className="flex gap-10 whitespace-nowrap"
+                        className="flex gap-8 whitespace-nowrap"
                     >
                         {[...fuelLeakIndustries, ...fuelLeakIndustries].map((item, i) => (
                             <div
                                 key={i}
-                                className="inline-block w-[450px] space-y-6 group"
+                                className="w-[420px] shrink-0 group"
                             >
-                                <div className="h-[300px] w-full rounded-3xl overflow-hidden shadow-lg bg-gray-200 border border-gray-100">
+                                {/* IMAGE CARD */}
+                                <div className="h-[280px] w-full overflow-hidden border border-gray-200 bg-white">
                                     <img
                                         src={item.img}
                                         alt={item.name}
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                                     />
                                 </div>
-                                <div className="px-4">
-                                    <h4 className="text-xl font-bold text-[#1A3263] group-hover:text-red-600 transition-colors">{item.name}</h4>
+
+                                {/* TEXT */}
+                                <div className="mt-4 px-1">
+                                    <h4 className="text-lg font-semibold text-[#1A3263] group-hover:text-red-600 transition-colors">
+                                        {item.name}
+                                    </h4>
+
+                                    <div className="w-10 h-[2px] bg-red-600 mt-2 opacity-60 group-hover:opacity-100 transition" />
                                 </div>
                             </div>
                         ))}
                     </motion.div>
 
-                    {/* Gradient Overlays */}
-                    <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-gray-50 to-transparent z-10" />
-                    <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-gray-50 to-transparent z-10" />
+                    {/* EDGE FADE */}
+                    <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-gray-50 to-transparent z-10" />
+                    <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-gray-50 to-transparent z-10" />
+
                 </div>
             </section>
 

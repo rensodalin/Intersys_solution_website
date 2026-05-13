@@ -8,7 +8,13 @@ import {
     Layout,
     Globe,
     Activity,
-    ArrowLeft
+    ArrowLeft,
+    Shield,
+    ShieldCheck,
+    Bell,
+    Grid3X3,
+    GlobeLock,
+    Radar
 } from "lucide-react";
 
 export const Route = createFileRoute("/services_/intrusion-system")({
@@ -33,15 +39,18 @@ function IntrusionSystemPage() {
                     <div className="absolute inset-0 bg-black/20" />
                 </div>
 
-                {/* ─── BACK BUTTON ─── */}
+                {/* ─── BACK BUTTON (FIXED) ─── */}
                 <button
                     onClick={() => router.history.back()}
-                    className="absolute top-50 left-23 z-20 flex items-center gap-2 text-black hover:text-black/60 transition-colors duration-200 group"
+                    className="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group pt-37 px-15"
                 >
-                    <ArrowLeft
-                        size={18}
-                        className="group-hover:-translate-x-1 transition-transform duration-200"
-                    />
+                    <div className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/40 transition">
+                        <ArrowLeft
+                            size={16}
+                            className="group-hover:-translate-x-0.5 transition-transform duration-200"
+                        />
+                    </div>
+
                     <span className="text-sm font-medium">Back</span>
                 </button>
 
@@ -98,34 +107,34 @@ function IntrusionSystemPage() {
 
                         {[
                             {
-                                icon: Eye,
+                                icon: Shield,
                                 title: "Proactive Protection",
                                 desc: "Stops threats before they escalate."
                             },
                             {
-                                icon: Cpu,
-                                title: "Cutting-edge Technology",
-                                desc: "Reliable sensors and control systems from trusted brands."
+                                icon: ShieldCheck,
+                                title: "Cutting-edge Security",
+                                desc: "Reliable intrusion detection with verified systems."
                             },
                             {
-                                icon: Smartphone,
-                                title: "Real-time Awareness",
-                                desc: "Instant alerts anytime, anywhere."
+                                icon: Bell,
+                                title: "Real-time Alerts",
+                                desc: "Instant notifications across mobile and monitoring systems."
                             },
                             {
-                                icon: Layout,
-                                title: "Customizable Design",
-                                desc: "Tailored to facility size and security needs."
+                                icon: Grid3X3,
+                                title: "Flexible Configuration",
+                                desc: "Fully customizable for any building layout."
                             },
                             {
-                                icon: Globe,
-                                title: "Scalable Solutions",
-                                desc: "Expand easily as your business grows."
+                                icon: GlobeLock,
+                                title: "Connected Security",
+                                desc: "Secure remote access and cloud integration."
                             },
                             {
-                                icon: Activity,
-                                title: "24/7 Reliability",
-                                desc: "Continuous monitoring with minimal downtime."
+                                icon: Radar,
+                                title: "24/7 Monitoring",
+                                desc: "Continuous detection with zero downtime coverage."
                             }
                         ].map((item, i) => (
                             <div

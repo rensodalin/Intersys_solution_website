@@ -27,14 +27,18 @@ function PublicAddressPage() {
             <section className="relative min-h-[60vh] flex items-center pt-50 pb-20 bg-[#0A0F1A]">
 
                 {/* ─── BACK BUTTON ─── */}
+                {/* ─── BACK BUTTON (FIXED) ─── */}
                 <button
                     onClick={() => router.history.back()}
-                    className="absolute top-50 left-23 z-20 flex items-center gap-2 text-white hover:text-white/60 transition-colors duration-200 group"
+                    className="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group pt-37 px-15"
                 >
-                    <ArrowLeft
-                        size={18}
-                        className="group-hover:-translate-x-1 transition-transform duration-200"
-                    />
+                    <div className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/40 transition">
+                        <ArrowLeft
+                            size={16}
+                            className="group-hover:-translate-x-0.5 transition-transform duration-200"
+                        />
+                    </div>
+
                     <span className="text-sm font-medium">Back</span>
                 </button>
 
@@ -46,7 +50,7 @@ function PublicAddressPage() {
                             transition={{ duration: 0.8 }}
                             className="max-w-xl"
                         >
-                             <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                            <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
                                 Public Address <br />
                                 <span className="text-red-600">Systems (PA)</span>
                             </h1>

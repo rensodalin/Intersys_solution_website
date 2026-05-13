@@ -42,15 +42,18 @@ function RoomControlPage() {
                     <div className="absolute inset-0 bg-gradient-to-r from-[#0A0F1A] via-[#0A0F1A]/30 to-transparent" />
                 </div>
 
-                {/* ─── BACK BUTTON ─── */}
+                {/* ─── BACK BUTTON (FIXED) ─── */}
                 <button
                     onClick={() => router.history.back()}
-                    className="absolute top-45 left-23 z-20 flex items-center gap-2 text-white hover:text-white/60 transition-colors duration-200 group"
+                    className="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group pt-37 px-15"
                 >
-                    <ArrowLeft
-                        size={18}
-                        className="group-hover:-translate-x-1 transition-transform duration-200"
-                    />
+                    <div className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/40 transition">
+                        <ArrowLeft
+                            size={16}
+                            className="group-hover:-translate-x-0.5 transition-transform duration-200"
+                        />
+                    </div>
+
                     <span className="text-sm font-medium">Back</span>
                 </button>
 

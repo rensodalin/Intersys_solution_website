@@ -17,7 +17,11 @@ export function BuildingManagementGrid({ products }: BuildingManagementGridProps
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: (i % 4) * 0.05 }}
                 >
-                    <div className="group cursor-pointer">
+                    <Link
+                        to={`/products/detail/${product.id}`}
+                        search={{ from: window.location.pathname }}
+                        className="group block cursor-pointer"
+                    >
                         {/* Image Container */}
                         <div className="relative aspect-square overflow-hidden bg-[#F6F6F6] flex items-center justify-center p-8 md:p-10 mb-3 group-hover:bg-[#F0F0F0] transition-colors duration-500 rounded-lg">
                             <motion.img
@@ -44,7 +48,7 @@ export function BuildingManagementGrid({ products }: BuildingManagementGridProps
                                 {product.description}
                             </p>
                         </div>
-                    </div>
+                    </Link>
                 </motion.div>
             ))}
         </div>

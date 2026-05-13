@@ -34,108 +34,122 @@ function CustomSolutionPage() {
     return (
         <div className="bg-white overflow-hidden scroll-smooth">
 
-            {/* HERO */}
+            {/* ─── HERO ─── */}
             <section className="relative h-[85vh] min-h-[600px] flex items-center pt-32">
                 <div className="absolute inset-0 z-0">
                     <img
                         src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=2000"
+                        alt="Custom Engineering"
                         className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/20" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/60 to-transparent" />
                 </div>
 
-                {/* glow */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-[600px] h-[600px] bg-red-500/10 blur-[120px] rounded-full" />
-                </div>
-
-                <Container className="relative z-10 text-center text-white">
+                <Container className="relative z-10 text-white">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="max-w-3xl mx-auto"
+                        className="max-w-3xl"
                     >
                         <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
                             Discover <br />
-                            <span className="text-red-600">Custom Solutions</span>
+                            <span className="text-red-500">Custom Solutions</span>
                         </h1>
-
-                        <p className="text-base text-white/70 max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
                             Empowering modern enterprises with resilient cloud solutions, airtight security protocols, and scalable infrastructure.
                         </p>
-
-                        <div className="flex gap-4 justify-center pt-4">
-
-                        </div>
                     </motion.div>
                 </Container>
             </section>
 
             {/* ABOUT */}
-            <section className="py-28 bg-white">
+            <section className="py-24 bg-white border-t border-gray-100">
                 <Container>
-                    <div className="text-center max-w-4xl mx-auto space-y-6">
-                        <h2 className="text-4xl font-bold text-[#1A3263]">
-                            Comprehensive <span className="text-red-500">Building</span> Automation Solution
+
+                    {/* HEADER */}
+                    <div className="max-w-3xl">
+
+                        <h2 className="text-3xl md:text-4xl font-bold text-[#1A3263] leading-tight">
+                            Comprehensive Building
+                            <span className="text-red-600"> Automation Solutions</span>
                         </h2>
-                        <p className="text-gray-500 leading-relaxed">
-                            Intersys Solutions Co., Ltd delivers integrated engineering systems and professional services that improve efficiency, reliability, and operational performance.
+
+                        <p className="text-gray-500 leading-relaxed mt-5 max-w-2xl">
+                            Intersys Solutions Co., Ltd provides integrated engineering systems
+                            and professional services designed to improve operational efficiency,
+                            infrastructure reliability, and long-term building performance.
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-12 mt-20">
+                    {/* FEATURES */}
+                    <div className="grid md:grid-cols-3 gap-6 mt-16">
+
                         {[
                             {
                                 icon: Zap,
                                 title: "Integrated Solutions",
-                                desc: "End-to-end engineering and system integration tailored to client needs."
+                                desc: "Engineering and system integration services tailored for commercial and industrial environments."
                             },
                             {
                                 icon: Target,
                                 title: "Client-Focused Design",
-                                desc: "Custom-built solutions aligned with operational goals."
+                                desc: "Solutions developed around operational requirements, scalability, and usability."
                             },
                             {
                                 icon: ShieldCheck,
                                 title: "Reliable Support",
-                                desc: "Long-term operational stability and technical support."
+                                desc: "Ongoing technical assistance, maintenance, and system optimization support."
                             }
                         ].map((item, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, y: 20 }}
+                                initial={{ opacity: 0, y: 12 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className="text-center space-y-4 p-6 rounded-2xl hover:-translate-y-1 transition"
+                                transition={{ delay: i * 0.08 }}
+                                className="border border-gray-200 bg-[#FAFAFA] p-7 rounded-xl hover:bg-white hover:border-gray-300 transition-all duration-300"
                             >
-                                <div className="w-14 h-14 mx-auto rounded-xl bg-gray-100 flex items-center justify-center text-[#1A3263] hover:bg-red-600 hover:text-white transition">
-                                    <item.icon size={28} />
+
+                                {/* ICON */}
+                                <div className="w-11 h-11 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-[#1A3263] mb-5">
+                                    <item.icon size={20} strokeWidth={1.8} />
                                 </div>
-                                <h3 className="text-xl font-bold text-[#1A3263]">
+
+                                {/* CONTENT */}
+                                <h3 className="text-lg font-semibold text-[#1A3263]">
                                     {item.title}
                                 </h3>
-                                <p className="text-gray-500 text-sm">{item.desc}</p>
+
+                                <p className="text-sm text-gray-500 leading-relaxed mt-3">
+                                    {item.desc}
+                                </p>
                             </motion.div>
                         ))}
+
                     </div>
+
                 </Container>
             </section>
 
             {/* TECH ECOSYSTEM */}
-            <section className="py-28 bg-[#F8F9FA]">
+            <section className="py-24 bg-[#F8F9FA]">
                 <Container>
-                    <div className="mb-16">
-                        <h2 className="text-4xl font-bold text-[#1A3263] mb-4">
+
+                    {/* HEADER */}
+                    <div className="mb-14 max-w-3xl">
+                        <h2 className="text-3xl md:text-4xl font-bold text-[#1A3263] leading-tight">
                             Technical Ecosystems
                         </h2>
-                        <p className="text-gray-500 max-w-2xl">
+
+                        <p className="text-gray-500 mt-4 leading-relaxed">
                             Advanced systems engineered for safety, intelligence, and infrastructure efficiency.
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    {/* GRID */}
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
+
                         {[
                             {
                                 title: "Intrusion Alarm Systems",
@@ -146,35 +160,35 @@ function CustomSolutionPage() {
                             },
                             {
                                 title: "Car Parking Systems",
-                                desc: "Streamlined vehicle access control, automated payment solutions, and real-time occupancy monitoring for seamless management.",
+                                desc: "Streamlined vehicle access control, automated payment solutions, and real-time occupancy monitoring.",
                                 icon: Car,
                                 img: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&q=80&w=800",
                                 href: "/services/car-parking"
                             },
                             {
                                 title: "Public Address Systems",
-                                desc: "Reliable audio solutions for announcements, background music, and emergency broadcasts across large facilities.",
+                                desc: "Reliable audio solutions for announcements and emergency broadcasts across facilities.",
                                 icon: Volume2,
                                 img: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=800",
                                 href: "/services/public-address"
                             },
                             {
                                 title: "Room Control Unit",
-                                desc: "Intelligent in-room control for lighting, HVAC, and access in hospitality and commercial environments.",
+                                desc: "Intelligent in-room control for lighting, HVAC, and access management.",
                                 icon: LayoutGrid,
                                 img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=800",
                                 href: "/services/room-control"
                             },
                             {
                                 title: "Leak Detection System",
-                                desc: "Early detection and alert systems to prevent costly damage and operational downtime from unforeseen leaks.",
+                                desc: "Early detection systems to prevent costly damage and operational downtime.",
                                 icon: Droplets,
                                 img: "https://www.airbestpractices.com/sites/default/files/Figure%201_18_0.jpg",
                                 href: "/services/leak-detection"
                             },
                             {
                                 title: "VESDA Systems",
-                                desc: "Highly sensitive smoke detection technology for mission-critical environments where early warning is essential.",
+                                desc: "Highly sensitive smoke detection technology for mission-critical environments.",
                                 icon: Flame,
                                 img: "https://www.suppressionsystems.com/wp-content/uploads/sites/4/2021/04/VESDA-Family-1000x720-1.jpg",
                                 href: "/services/vesda"
@@ -182,80 +196,108 @@ function CustomSolutionPage() {
                         ].map((eco, i) => (
                             <div
                                 key={i}
-                                className="group bg-white rounded-2xl overflow-hidden border border-gray-100 flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                                className="group bg-white border border-gray-200 rounded-md overflow-hidden hover:border-gray-300 hover:shadow-lg transition-all duration-300 flex flex-col"
                             >
-                                <div className="h-52 relative overflow-hidden">
+
+                                {/* IMAGE */}
+                                <div className="relative h-52 overflow-hidden">
                                     <img
                                         src={eco.img}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                                        alt={eco.title}
+                                        className="w-full h-full object-cover group-hover:scale-[1.03] transition duration-500"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+
+                                    {/* ICON */}
+                                    <div className="absolute top-4 left-4 w-10 h-10 rounded-lg bg-white/95 flex items-center justify-center">
+                                        <eco.icon size={18} className="text-red-600" />
+                                    </div>
                                 </div>
 
+                                {/* CONTENT */}
                                 <div className="p-6 flex flex-col flex-grow">
-                                    <div className="flex items-center gap-3 mb-3">
-                                        <eco.icon className="text-red-600" size={20} />
-                                        <h3 className="font-bold text-[#1A3263]">
-                                            {eco.title}
-                                        </h3>
-                                    </div>
 
-                                    <p className="text-gray-500 text-sm flex-grow">
+                                    <h3 className="text-lg font-semibold text-[#1A3263] leading-snug">
+                                        {eco.title}
+                                    </h3>
+
+                                    <p className="text-sm text-gray-500 leading-relaxed mt-3 flex-grow">
                                         {eco.desc}
                                     </p>
 
-                                    <Link to={eco.href || "#"} className="mt-6 w-full py-3 bg-[#1A3263] text-white text-xs tracking-widest rounded-lg hover:bg-red-600 transition flex items-center justify-center">
-                                        Explore Now
+                                    {/* BUTTON */}
+                                    <Link
+                                        to={eco.href || "#"}
+                                        className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[#1A3263] hover:text-red-600 transition-colors"
+                                    >
+                                        View Details
+
                                     </Link>
                                 </div>
                             </div>
                         ))}
+
                     </div>
                 </Container>
             </section>
-
             {/* SERVICES */}
-            <section className="py-28 bg-gradient-to-b from-[#0A0F1A] to-[#0F172A] text-white">
+            <section className="py-28 bg-[#0B1220] text-white">
                 <Container>
-                    <div className="grid lg:grid-cols-2 gap-20 items-center">
-                        <div>
-                            <h2 className="text-4xl font-bold mb-4">Services Integration</h2>
-                            <p className="text-white/60 text-lg">
-                                A holistic approach to building management
+                    <div className="grid lg:grid-cols-2 gap-16 items-start">
+
+                        {/* LEFT TEXT */}
+                        <div className="space-y-4">
+                            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
+                                Services Integration
+                            </h2>
+                            <p className="text-white/50 text-base max-w-md leading-relaxed">
+                                A practical, connected approach to building management systems that
+                                unify software, hardware, and operational services.
                             </p>
                         </div>
 
-                        <div className="space-y-6">
+                        {/* RIGHT LIST */}
+                        <div className="space-y-4">
+
                             {[
                                 {
                                     icon: Cpu,
                                     title: "Software",
-                                    desc: "Integrate System for better decision making and streamline building management."
+                                    desc: "Integrate systems for better decision-making and streamlined building operations."
                                 },
                                 {
                                     icon: Settings,
                                     title: "Hardware",
-                                    desc: "Equip your building with assets and sensors designed to make operations more efficient and reliable."
+                                    desc: "Deploy reliable sensors and infrastructure that support efficient building performance."
                                 },
                                 {
                                     icon: Activity,
                                     title: "Services",
-                                    desc: "Rely on our expertise to manage and operate your buildings day in and day out, floor after floor."
+                                    desc: "Operational support and maintenance to ensure consistent performance across all systems."
                                 }
                             ].map((s, i) => (
                                 <div
                                     key={i}
-                                    className="flex gap-5 p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-red-500/30 hover:translate-x-1 transition"
+                                    className="flex gap-4 p-5 bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-200"
                                 >
-                                    <div className="w-12 h-12 bg-red-600/20 rounded-xl flex items-center justify-center text-red-500">
-                                        <s.icon size={22} />
+                                    {/* ICON */}
+                                    <div className="w-10 h-10 flex items-center justify-center border border-white/10 text-white/80">
+                                        <s.icon size={18} />
                                     </div>
+
+                                    {/* TEXT */}
                                     <div>
-                                        <h4 className="font-bold text-lg">{s.title}</h4>
-                                        <p className="text-white/40 text-sm">{s.desc}</p>
+                                        <h4 className="text-base font-medium tracking-tight">
+                                            {s.title}
+                                        </h4>
+                                        <p className="text-white/40 text-sm mt-1 leading-relaxed">
+                                            {s.desc}
+                                        </p>
                                     </div>
                                 </div>
                             ))}
+
                         </div>
                     </div>
                 </Container>

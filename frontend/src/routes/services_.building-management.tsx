@@ -30,6 +30,10 @@ import {
     SlidersHorizontal,
 } from "lucide-react";
 
+// Products
+import { BuildingManagementGrid } from "@/components/Product/BuildingManagement/BuildingManagementGrid";
+import { bmsProducts } from "@/components/Product/BuildingManagement/data";
+
 export const Route = createFileRoute("/services_/building-management")({
     head: () => ({
         meta: [
@@ -176,7 +180,7 @@ function BMSPage() {
                                 ensure the highest standards of automation, safety, and efficiency.
                             </p>
                         </div>
-                        <div className="bg-white p-10 rounded-xl shadow-xl shrink-0">
+                        <div className=" p-10 ">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Honeywell_logo.svg/1280px-Honeywell_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail" alt="Honeywell Logo" className="h-12 w-auto object-contain" />
                         </div>
                     </div>
@@ -452,6 +456,30 @@ function BMSPage() {
                             </div>
                         </div>
                     </div>
+                </Container>
+            </section>
+            {/* ─── PRODUCT SOLUTIONS ─── */}
+            <section className="py-28 bg-white border-t border-gray-100">
+                <Container>
+                    <div className="flex flex-col md:flex-row items-end justify-between gap-8 mb-16">
+                        <div className="space-y-4 max-w-2xl">
+                            <h2 className="text-4xl font-bold text-[#1A3263]">
+                                Enterprise <span className="text-red-600">Product Solutions</span>
+                            </h2>
+                            <p className="text-gray-500 leading-relaxed">
+                                Our comprehensive BMS portfolio features state-of-the-art Honeywell technologies designed for high-performance building automation and critical system management.
+                            </p>
+                        </div>
+
+                        <Link 
+                            to="/products/building-management"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-[#1A3263] text-white rounded-lg font-bold text-sm hover:bg-[#25417e] transition shadow-lg"
+                        >
+                            View Full Catalog <ArrowRight className="w-4 h-4" />
+                        </Link>
+                    </div>
+
+                    <BuildingManagementGrid products={bmsProducts} />
                 </Container>
             </section>
 

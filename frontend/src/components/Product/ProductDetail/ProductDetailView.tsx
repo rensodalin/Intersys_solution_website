@@ -10,7 +10,8 @@ import {
   Plus,
   Info,
   CheckCircle2,
-  FileText
+  FileText,
+  ArrowLeft
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "@tanstack/react-router";
@@ -32,6 +33,8 @@ export interface ProductData {
   description: string;
   mainImage: string;
   thumbnails: string[];
+  brandSubCategory?: string;
+  brandSubCategoryLink?: string;
   longDescription: string;
   options: ProductOption[];
   documents: { name: string; url: string }[];
@@ -62,7 +65,7 @@ const MOCK_PRODUCT: ProductData = {
   ]
 };
 
-export function ProductDetailView({ product }: { product: ProductData }) {
+export function ProductDetailView({ product, returnPath }: { product: ProductData, returnPath?: string }) {
   const navigate = useNavigate();
   // Initialize quantities from global inquiry context if items already exist
   const { addItem, items } = useInquiry();
@@ -114,8 +117,9 @@ export function ProductDetailView({ product }: { product: ProductData }) {
   const breadcrumbs = [
     { name: "Home", href: "/" },
     { name: "Products", href: "/products" },
-    { name: product.category, href: "#" },
-    { name: product.brand, href: "#" },
+    { name: product.category, href: returnPath || (product.category === "Building Management" ? "/products/building-management" : product.category === "Surveillance (CCTV)" ? "/products/surveillance" : "#") },
+    ...((product.category !== "Building Management" && product.category !== "Surveillance (CCTV)") ? [{ name: product.brand, href: "#" }] : []),
+    ...(product.brandSubCategory ? [{ name: product.brandSubCategory, href: product.brandSubCategoryLink || "#" }] : []),
     { name: product.title, href: "#" },
   ];
 
