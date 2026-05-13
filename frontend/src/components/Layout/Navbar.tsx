@@ -4,61 +4,13 @@ import { Menu, X, User, ChevronRight, Phone, Mail, Facebook, Linkedin } from "lu
 import { cn } from "@/lib/utils";
 import logoImg from "@/assets/logo.avif";
 
-type ProductItem = { name: string; href: string };
-type AccessControlData = {
-  honeywell: ProductItem[];
-  salto: ProductItem[];
-};
-
-const PRODUCTS_DATA: Record<string, { href: string; sub?: string[] | AccessControlData }> = {
-  "Access Control": {
-    href: "/products/access-control",
-    sub: {
-      honeywell: [
-        { name: "Accessories", href: "/products/access-control/honeywell/accessories" },
-        { name: "Credential", href: "/products/access-control/honeywell/credentials" },
-        { name: "Reader & Keypad", href: "/products/access-control/honeywell/readers" },
-        { name: "Software", href: "/products/access-control/honeywell/software" },
-        { name: "Server", href: "/products/access-control/honeywell/server" },
-        { name: "Control Panel Kit", href: "/products/access-control/honeywell/control-panel-kits" },
-        { name: "Lobby Kiosk & Touch Screen", href: "/products/access-control/honeywell/lobby-kiosks" },
-        { name: "Door Hardware", href: "/products/access-control/honeywell/door-hardware" },
-        { name: "Control Panel", href: "/products/access-control/honeywell/control-panels" },
-      ],
-      salto: [
-        { name: "Electronic Locks", href: "/products/access-control/salto" },
-        { name: "Electronic Cylinder", href: "/products/access-control/salto" },
-        { name: "Electronic Locker Lock", href: "/products/access-control/salto" },
-        { name: "Electronic Pad Lock", href: "/products/access-control/salto" },
-        { name: "Wall Reader", href: "/products/access-control/salto" },
-        { name: "Face Recognition Terminal", href: "/products/access-control/salto" },
-        { name: "Access Controller", href: "/products/access-control/salto" },
-        { name: "Door Intercom System", href: "/products/access-control/salto" },
-        { name: "Motorized Lock", href: "/products/access-control/salto" },
-        { name: "Panel Bars & Emergency Exit", href: "/products/access-control/salto" },
-        { name: "Mortise Lock", href: "/products/access-control/salto" },
-        { name: "Cylindrical Latch Locks", href: "/products/access-control/salto" },
-        { name: "Energy Saving Device", href: "/products/access-control/salto" },
-        { name: "Peripherals", href: "/products/access-control/salto" },
-        { name: "Credential", href: "/products/access-control/salto" },
-      ],
-    }
-  },
+const PRODUCTS_DATA: Record<string, { href: string }> = {
+  "Access Control": { href: "/products/access-control" },
   "Surveillance": { href: "/products/surveillance" },
-  "Integrated System": {
-    href: "/products",
-    sub: [
-      "BMS", "Fire Alarm & Life Safety", "VESDA System", "Public Address",
-      "Audio Visual (AV)", "Access & Intrusion", "Video Surveillance",
-      "Car Parking System", "Leak Detection"
-    ]
-  },
-  "Building Management": { href: "/products" },
+  "Integrated System": { href: "/products" },
+  "Building Management": { href: "/products/building-management" },
   "Audio Visual": { href: "/products" },
-  "Fire System": {
-    href: "/products",
-    sub: ["Esser by Honeywell", "Notifier by Honeywell", "System Sensor"]
-  },
+  "Fire System": { href: "/products" },
 };
 
 const CLIENT_CENTER_DATA = [
@@ -88,8 +40,6 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [showProducts, setShowProducts] = useState(false);
   const [showServices, setShowServices] = useState(false);
-  const [hoveredL1, setHoveredL1] = useState<string | null>(null);
-  const [hoveredL2, setHoveredL2] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSupport, setActiveSupport] = useState<string | null>(null);
   const [user, setUser] = useState<{ name: string, avatar: string } | null>(null);
@@ -116,8 +66,6 @@ export function Navbar() {
   const closeMenus = () => {
     setShowProducts(false);
     setShowServices(false);
-    setHoveredL1(null);
-    setHoveredL2(null);
     setActiveSupport(null);
   };
 
@@ -133,7 +81,6 @@ export function Navbar() {
 
           {/* LEFT */}
           <div className="flex items-center gap-6">
-
             <a
               href="https://t.me/chun_sochet"
               target="_blank"
@@ -146,7 +93,6 @@ export function Navbar() {
 
             <div className="flex items-center gap-2 text-white/70 hover:text-white transition cursor-pointer">
               <Mail size={14} className="text-red-500" />
-
               <a
                 href="mailto:sochet@intersys-solutions.com"
                 className="text-xs hover:underline"
@@ -154,29 +100,22 @@ export function Navbar() {
                 sochet@intersys-solutions.com
               </a>
             </div>
-
-
           </div>
 
           {/* RIGHT */}
           <div className="flex items-center gap-4">
-
             <span className="text-white/40 text-xs mr-2">Follow</span>
-
             <a href="https://www.facebook.com/IntersysSolutions" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition">
               <Facebook size={16} />
             </a>
-
             <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition">
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.539.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.285-.346-.094L7.469 14.28l-2.76-.86c-.6-.184-.593-.6.126-.882l10.82-4.172c.504-.191.95.105.81.855z" />
               </svg>
             </a>
-
             <a href="https://www.linkedin.com/company/intersys-solutions2015" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition">
               <Linkedin size={16} />
             </a>
-
           </div>
 
         </div>
@@ -243,48 +182,27 @@ export function Navbar() {
               onMouseEnter={() => setShowProducts(true)}
               onMouseLeave={closeMenus}
             >
-              <Link
-                to="/products"
-                onClick={closeMenus}
-                className="relative h-full flex items-center text-sm font-medium text-white/70 hover:text-red-500 cursor-pointer transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500"
+              <div
+                className={cn(
+                  "relative h-full flex items-center text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center cursor-pointer",
+                  location.pathname.startsWith("/products") ? "text-red-500 after:scale-x-100" : "text-white/70 hover:text-red-500"
+                )}
               >
                 Products
-              </Link>
+              </div>
 
               {showProducts && (
-                <div className="absolute top-full left-0 pt-2 flex items-start animate-in fade-in slide-in-from-top-2 duration-200">
-                  {/* L1 Panel */}
-                  <div className="w-64 bg-[#1A3263] border border-white/10 shadow-2xl">
-                    {Object.entries(PRODUCTS_DATA).map(([label, data]) => (
-                      <div
-                        key={label}
-                        onMouseEnter={() => { setHoveredL1(label); setHoveredL2(null); }}
-                        className={cn(
-                          "group relative flex items-center justify-between px-5 py-4 border-b border-white/5 last:border-0 transition-colors cursor-pointer",
-                          hoveredL1 === label ? "bg-red-600 text-white" : "text-white/70 hover:bg-white/5"
-                        )}
-                      >
-                        <Link to={data.href} className="flex-1 text-sm font-medium" onClick={closeMenus}>
-                          {label}
-                        </Link>
-                        {data.sub && <ChevronRight className="w-4 h-4 ml-2 opacity-50" />}
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* L2 Panel */}
-                  {hoveredL1 && PRODUCTS_DATA[hoveredL1]?.sub && (
-                    <div className="w-64 bg-[#1A3263] border border-white/10 shadow-2xl ml-px">
-                      {activeL2Content(hoveredL1, setHoveredL2, hoveredL2, closeMenus)}
-                    </div>
-                  )}
-
-                  {/* L3 Panel */}
-                  {hoveredL2 && hoveredL1 === "Access Control" && (
-                    <div className="w-64 bg-[#1A3263] border border-white/10 shadow-2xl ml-px max-h-[500px] overflow-y-auto">
-                      {activeL3Content(hoveredL2, closeMenus)}
-                    </div>
-                  )}
+                <div className="absolute top-full left-0 pt-2 w-64 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
+                  {Object.entries(PRODUCTS_DATA).map(([label, data]) => (
+                    <Link
+                      key={label}
+                      to={data.href}
+                      onClick={closeMenus}
+                      className="block px-5 py-3.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors border-b border-white/5 last:border-0"
+                    >
+                      {label}
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
@@ -395,39 +313,4 @@ export function Navbar() {
       )}
     </header>
   );
-}
-
-function activeL2Content(hoveredL1: string, setHoveredL2: (s: string | null) => void, hoveredL2: string | null, closeMenus: () => void) {
-  const sub = PRODUCTS_DATA[hoveredL1].sub;
-  if (!sub) return null;
-
-  if (hoveredL1 === "Access Control") {
-    return (
-      <>
-        <div onMouseEnter={() => setHoveredL2("honeywell")} className="px-5 py-3 text-white/70 hover:bg-white/5 cursor-pointer flex justify-between">
-          Honeywell <ChevronRight className="w-4 h-4" />
-        </div>
-        <div onMouseEnter={() => setHoveredL2("salto")} className="px-5 py-3 text-white/70 hover:bg-white/5 cursor-pointer flex justify-between">
-          Salto <ChevronRight className="w-4 h-4" />
-        </div>
-      </>
-    );
-  }
-
-  return (sub as string[]).map(item => (
-    <Link key={item} to="/products" onClick={closeMenus} className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5">
-      {item}
-    </Link>
-  ));
-}
-
-function activeL3Content(hoveredL2: string, closeMenus: () => void) {
-  const data = (PRODUCTS_DATA["Access Control"].sub as AccessControlData);
-  const items = hoveredL2 === "honeywell" ? data.honeywell : data.salto;
-
-  return items.map(item => (
-    <Link key={item.name} to={item.href} onClick={closeMenus} className="block px-5 py-3 text-sm text-white/60 hover:text-white hover:bg-white/5">
-      {item.name}
-    </Link>
-  ));
 }
