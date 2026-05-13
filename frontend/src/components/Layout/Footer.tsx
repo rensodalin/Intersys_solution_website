@@ -81,19 +81,19 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
                   <span className="font-bold">Tel:</span>
                   <div className="flex flex-col sm:flex-row sm:gap-3">
                     <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer" className="hover:underline">
-                      077 602 334
+                      (+855) 077 602 334
                     </a>
                     <span className="hidden sm:inline text-white/30">/</span>
                     <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer" className="hover:underline">
-                      066 306 205
+                      (+855) 023 900 888
                     </a>
                   </div>
                 </div>
 
                 <div className="flex gap-2 text-sm">
                   <span className="font-bold">Email:</span>
-                  <a href="mailto:sochet@intersys-solutions.com" className="hover:underline">
-                    sochet@intersys-solutions.com
+                  <a href="mailto:rrensodalin@gmail.com" className="hover:underline">
+                    rrensodalin@gmail.com
                   </a>
                 </div>
 
