@@ -16,9 +16,20 @@ connectDB();
 
 
 app.use(cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"], // allow both ports
-    credentials: true, // Important to allow cookies for sessions
+    origin: [
+        "http://localhost:5173", 
+        "http://localhost:5174", 
+        "http://127.0.0.1:5173", 
+        "http://127.0.0.1:5174"
+    ],
+    credentials: true,
 }));
+
+// ✅ Request Logger
+app.use((req, res, next) => {
+    console.log(`[${new Date().toLocaleTimeString()}] ${req.method} ${req.path}`);
+    next();
+});
 
 app.use(express.json());
 
@@ -111,7 +122,7 @@ app.post("/api/contact", async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 1000;
+const PORT = 5000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
-});
+});

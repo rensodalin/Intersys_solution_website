@@ -33,6 +33,8 @@ const SERVICES_DATA = [
   { name: "Custom Solution", href: "/services/custom-solution" },
 ];
 
+import { AuthModal } from "@/components/Auth/AuthModal";
+
 export function Navbar() {
   const location = useLocation();
   const lightPages = ["/products", "/document-center", "/request-quote", "/technical-tips", "/warranty", "/services/public-address"];
@@ -43,6 +45,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSupport, setActiveSupport] = useState<string | null>(null);
   const [user, setUser] = useState<{ name: string, avatar: string } | null>(null);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   useEffect(() => {
     // Check if user is logged in
@@ -274,10 +277,13 @@ export function Navbar() {
               <a href="http://localhost:1000/auth/logout" className="text-xs text-red-500 hover:text-red-400 ml-2 font-medium">Logout</a>
             </div>
           ) : (
-            <a href="http://localhost:1000/auth/google" className="flex items-center gap-2 text-white/70 hover:text-white transition-colors group">
+            <button 
+              onClick={() => setIsAuthOpen(true)}
+              className="flex items-center gap-2 text-white/70 hover:text-white transition-colors group"
+            >
               <User size={16} className="text-red-500 group-hover:scale-110 transition-transform" />
               <span className="text-sm font-medium">Login</span>
-            </a>
+            </button>
           )}
           <Link
             to="/request-quote"
@@ -286,6 +292,9 @@ export function Navbar() {
             Request Quote
           </Link>
         </div>
+
+        {/* Auth Modal */}
+        <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
 
         {/* Mobile Toggle */}
         <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden text-white p-2 hover:bg-white/10 rounded-full transition-colors">
@@ -297,6 +306,34 @@ export function Navbar() {
       {mobileOpen && (
         <div className="lg:hidden bg-[#1A3263] border-t border-white/10 max-h-[calc(100vh-80px)] overflow-y-auto pb-10">
           <div className="p-6 space-y-8">
+            {/* User Section */}
+            <div className="space-y-4">
+              <p className="text-red-500 font-medium text-xs">Account</p>
+              {user ? (
+                <div className="flex items-center gap-3 bg-white/5 p-3 rounded-sm">
+                  <img src={user.avatar || "https://ui-avatars.com/api/?name=" + user.name} alt={user.name} className="w-10 h-10 rounded-full border border-white/20" />
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-white">{user.name}</p>
+                    <a href="http://localhost:1000/auth/logout" className="text-xs text-red-500 hover:underline">Logout</a>
+                  </div>
+                </div>
+              ) : (
+                <button 
+                  onClick={() => {
+                    setIsAuthOpen(true);
+                    setMobileOpen(false);
+                  }}
+                  className="w-full flex items-center justify-between bg-white/5 p-4 rounded-sm group active:bg-white/10 transition-all"
+                >
+                  <div className="flex items-center gap-3">
+                    <User size={18} className="text-red-500" />
+                    <span className="text-sm font-bold text-white">Login / Register</span>
+                  </div>
+                  <ChevronRight size={16} className="text-white/40 group-hover:translate-x-1 transition-transform" />
+                </button>
+              )}
+            </div>
+
             <div className="space-y-4">
               <p className="text-red-500 font-medium text-xs">Navigation</p>
               <div className="flex flex-col gap-4 text-white">
