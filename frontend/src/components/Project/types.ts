@@ -1,4 +1,5 @@
 export interface Project {
+    _id?: string;
     title: string;
     desc: string;
     image: string;
@@ -6,6 +7,7 @@ export interface Project {
     client?: string;
     location?: string;
     scope?: string[];
+    slug?: string;
 }
 
 export const categories = [

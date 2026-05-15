@@ -7,6 +7,7 @@ import passport from "./passportsetup/passportSetup.js";
 import connectDB from "./conn/conn.js";
 import authRoutes from "./auth/auth.js";
 import insightsRoutes from "./routes/insights.js";
+import projectRoutes from "./routes/project.js";
 
 dotenv.config();
 
@@ -55,6 +56,7 @@ app.use("/auth", authRoutes);
 
 // ✅ INSIGHTS ROUTES
 app.use("/api/insights", insightsRoutes);
+app.use("/api/projects", projectRoutes);
 
 // ✅ EMAIL TRANSPORT
 const transporter = nodemailer.createTransport({

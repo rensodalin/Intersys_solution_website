@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { ArrowUpRight } from "lucide-react";
 import { Project } from "./types";
+import { Link } from "@tanstack/react-router";
 
 interface ProjectGridProps {
     projects: Project[];
@@ -20,46 +21,64 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
                         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
                     >
                         <AnimatePresence mode="popLayout">
-                            {projects.map((p, i) => (
-                                <motion.div
-                                    key={`${p.title}-grid`}
-                                    layout
-                                    initial={{ opacity: 0, y: 24 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, scale: 0.96 }}
-                                    transition={{
-                                        duration: 0.45,
-                                        delay: i * 0.06,
-                                        ease: [0.25, 0.1, 0.25, 1],
-                                    }}
-                                    className="group relative overflow-hidden rounded-xl aspect-[4/5] cursor-pointer"
-                                >
-                                    <img
-                                        src={p.image}
-                                        alt={p.title}
-                                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                                    />
+                            {projects.map((p, i) => {
+                                const CardContent = (
+                                    <motion.div
+                                        layout
+                                        initial={{ opacity: 0, y: 24 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.96 }}
+                                        transition={{
+                                            duration: 0.45,
+                                            delay: i * 0.06,
+                                            ease: [0.25, 0.1, 0.25, 1],
+                                        }}
+                                        className={`group relative overflow-hidden rounded-xl aspect-[4/5] ${p.slug ? 'cursor-pointer' : 'cursor-default'}`}
+                                    >
+                                        <img
+                                            src={p.image}
+                                            alt={p.title}
+                                            className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out ${p.slug ? 'group-hover:scale-110' : ''}`}
+                                        />
 
-                                    {/* gradient */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+                                        {/* gradient */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
-                                    {/* hover icon */}
-                                    <div className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 bg-white/10 border border-white/30 transition-all duration-300 -translate-y-1 group-hover:translate-y-0">
-                                        <ArrowUpRight className="w-4 h-4 text-white" />
-                                    </div>
+                                        {/* hover icon */}
+                                        {p.slug && (
+                                            <div className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 bg-white/10 border border-white/30 transition-all duration-300 -translate-y-1 group-hover:translate-y-0">
+                                                <ArrowUpRight className="w-4 h-4 text-white" />
+                                            </div>
+                                        )}
 
-                                    {/* content */}
-                                    <div className="absolute bottom-0 left-0 right-0 p-5">
-                                        <span className="inline-block text-[10px] font-bold tracking-wider text-[#D62828] mb-1.5 bg-white/10 backdrop-blur-sm px-2 py-0.5 rounded-sm">
-                                            {p.category}
-                                        </span>
+                                        {/* content */}
+                                        <div className="absolute bottom-0 left-0 right-0 p-5">
+                                            <span className="inline-block text-[10px] font-bold tracking-wider text-[#D62828] mb-1.5 bg-white/10 backdrop-blur-sm px-2 py-0.5 rounded-sm">
+                                                {p.category}
+                                            </span>
 
-                                        <h3 className="text-white text-base font-semibold leading-snug">
-                                            {p.title}
-                                        </h3>
-                                    </div>
-                                </motion.div>
-                            ))}
+                                            <h3 className="text-white text-sm font-semibold leading-snug">
+                                                {p.title}
+                                            </h3>
+                                        </div>
+                                    </motion.div>
+                                );
+
+                                if (p.slug) {
+                                    return (
+                                        <Link 
+                                            key={p._id || `${p.title}-grid`} 
+                                            to="/insights/$slug" 
+                                            params={{ slug: p.slug }}
+                                            className="block"
+                                        >
+                                            {CardContent}
+                                        </Link>
+                                    );
+                                }
+
+                                return <div key={p._id || `${p.title}-grid`} className="block">{CardContent}</div>;
+                            })}
                         </AnimatePresence>
                     </motion.div>
                 )}
@@ -71,9 +90,8 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
                         {projects.map((p, i) => {
                             const isReversed = i % 2 !== 0;
 
-                            return (
+                            const FullContent = (
                                 <motion.div
-                                    key={`${p.title}-full`}
                                     initial={{ opacity: 0, y: 48 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true, margin: "-80px" }}
@@ -81,7 +99,7 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
                                         duration: 0.65,
                                         ease: [0.25, 0.1, 0.25, 1],
                                     }}
-                                    className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center"
+                                    className={`grid md:grid-cols-2 gap-10 lg:gap-16 items-center group ${p.slug ? 'cursor-pointer' : 'cursor-default'}`}
                                 >
 
                                     {/* IMAGE */}
@@ -94,7 +112,7 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
                                             <img
                                                 src={p.image}
                                                 alt={p.title}
-                                                className="w-full h-[460px] object-cover transition-transform duration-700 ease-out hover:scale-105"
+                                                className={`w-full h-[460px] object-cover transition-transform duration-700 ease-out ${p.slug ? 'group-hover:scale-105' : ''}`}
                                             />
 
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
@@ -116,7 +134,7 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
                                         </span>
 
                                         {/* title */}
-                                        <h2 className="text-3xl md:text-[2.5rem] leading-tight font-bold text-white mb-5">
+                                        <h2 className={`text-2xl md:text-4xl leading-tight font-bold text-white mb-5 transition-colors ${p.slug ? 'group-hover:text-[#D62828]' : ''}`}>
                                             {p.title}
                                         </h2>
 
@@ -162,6 +180,21 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
 
                                 </motion.div>
                             );
+
+                            if (p.slug) {
+                                return (
+                                    <Link 
+                                        key={p._id || `${p.title}-full`} 
+                                        to="/insights/$slug" 
+                                        params={{ slug: p.slug }}
+                                        className="block"
+                                    >
+                                        {FullContent}
+                                    </Link>
+                                );
+                            }
+
+                            return <div key={p._id || `${p.title}-full`} className="block">{FullContent}</div>;
                         })}
 
                     </div>

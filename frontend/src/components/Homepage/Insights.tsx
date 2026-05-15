@@ -77,7 +77,7 @@ export function Insights() {
             transition={{ delay: 0.1 }}
             className="text-3xl md:text-4xl font-bold text-[#0F172A] leading-[0.95] tracking-tight"
           >
-            Latest <span className="text-[#C3110C]">Insights</span>
+            Project Latest <span className="text-[#C3110C]">Insights</span>
           </motion.h2>
 
           <motion.div
