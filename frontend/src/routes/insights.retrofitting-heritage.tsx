@@ -33,7 +33,7 @@ function RetrofittingHeritagePage() {
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight pt-10"
+              className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight pt-10"
             >
               Retrofitting <br />
               Heritage Buildings

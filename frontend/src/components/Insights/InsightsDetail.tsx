@@ -1,96 +1,348 @@
-import React from 'react'
-import { motion } from 'framer-motion'
-import { ArrowLeft, Calendar, User, Share2 } from 'lucide-react'
-import { Link } from '@tanstack/react-router'
+import React from "react";
+import { motion } from "framer-motion";
+import { Container } from "@/components/Common/Container";
+import {
+  MoveLeft,
+  Download,
+  Zap,
+  BarChart3,
+  Settings2,
+  Eye,
+  Activity,
+  Shield,
+  Cpu,
+  Globe,
+  Lock,
+  Layers
+} from "lucide-react";
+import { Link } from "@tanstack/react-router";
+
+// Mapping string names to Lucide components
+const IconMap: Record<string, any> = {
+  Zap,
+  BarChart3,
+  Settings2,
+  Eye,
+  Activity,
+  Shield,
+  Cpu,
+  Globe,
+  Lock,
+  Layers
+};
 
 interface InsightsDetailProps {
-  title: string
-  category: string
-  date: string
-  image: string
-  content: React.ReactNode
+  title: string;
+  category: string;
+  date: string;
+  image: string[];
+  desc: string;
+  section1Title?: string;
+  section1Desc?: string;
+  section1Image?: string;
+  section1SubTitle?: string;
+  section1SubDesc?: string;
+  section1SubImage?: string;
+  articleTitle1?: string;
+  articleContent1?: string;
+  articleBannerImage?: string;
+  articleTitle2?: string;
+  articleContent2?: string;
+  pdfUrl?: string;
+  feature1Title?: string;
+  feature1Desc?: string;
+  feature2Title?: string;
+  feature2Desc?: string;
+  features?: Array<{
+    iconName: string;
+    title: string;
+    desc: string;
+  }>;
+  technicalTitle?: string;
+  galleryImages?: string[];
+  content?: React.ReactNode;
 }
 
-export function InsightsDetail({ title, category, date, image, content }: InsightsDetailProps) {
-  return (
-    <div className="min-h-screen bg-white">
-      {/* Header / Back Navigation */}
-      <nav className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-          <Link 
-            to="/insights" 
-            className="flex items-center gap-2 text-sm font-bold hover:text-blue-600 transition-colors"
-          >
-            <ArrowLeft size={18} /> Back to Insights
-          </Link>
-          <div className="flex gap-4">
-            <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-              <Share2 size={18} />
-            </button>
-          </div>
-        </div>
-      </nav>
+export function InsightsDetail(props: InsightsDetailProps) {
+  const {
+    title,
+    desc,
+    image,
+    category,
+    date,
+    section1Title,
+    section1Desc,
+    section1Image,
+    section1SubTitle,
+    section1SubDesc,
+    section1SubImage,
+    articleTitle1,
+    articleContent1,
+    articleBannerImage,
+    articleTitle2,
+    articleContent2,
+    pdfUrl,
+    feature1Title,
+    feature1Desc,
+    feature2Title,
+    feature2Desc,
+    features,
+    technicalTitle,
+    galleryImages,
+    content
+  } = props;
 
-      {/* Hero Content */}
-      <header className="pt-40 pb-20 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl">
+  return (
+    <div className="bg-white min-h-screen">
+      {/* ─── HERO SECTION ─── */}
+      <section className="relative h-[45vh] min-h-[400px] overflow-hidden">
+        <img
+          src={image && image[0]}
+          alt={title}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80" />
+
+        <Container className="relative h-full flex flex-col justify-between py-14">
+          <Link
+            to="/insights"
+            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors w-fit group"
+          >
+          </Link>
+
+          <div className="max-w-2xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="space-y-6"
+              className="flex items-center gap-3 mb-4"
             >
-              <span className="px-3 py-1 bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-sm">
-                {category}
+              <span className="text-white/50 text-xs font-medium tracking-wide">
+                {date}
               </span>
-              <h1 className="text-4xl md:text-6xl font-bold leading-[1.1] text-[#0A0A0A]">
-                {title}
-              </h1>
-              <div className="flex items-center gap-6 text-sm text-gray-500 font-medium border-t border-gray-200 pt-8">
-                <div className="flex items-center gap-2">
-                  <Calendar size={16} className="text-blue-600" />
-                  {date}
-                </div>
-                <div className="flex items-center gap-2">
-                  <User size={16} className="text-blue-600" />
-                  By Intersys Engineering
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-3xl md:text-4xl font-semibold text-white leading-tight tracking-tight"
+            >
+              {title}
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="mt-5 text-sm md:text-base text-white/75 leading-relaxed max-w-xl"
+            >
+              {desc}
+            </motion.p>
+          </div>
+        </Container>
+      </section>
+      {/* ─── CONTENT SECTION 1 ─── */}
+      {(section1Title || image?.[1]) && (
+        <section className="py-20">
+          <Container>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+              {/* Left Image Card */}
+              <div className="lg:col-span-7 relative group overflow-hidden rounded-sm">
+                <img
+                  src={section1Image || image?.[1]}
+                  alt={section1Title}
+                  className="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute bottom-8 left-8 right-8">
+                  <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">{section1Title || "Structural Preservation"}</h3>
+                  <p className="text-white/70 text-sm max-w-md">
+                    {section1Desc}
+                  </p>
                 </div>
               </div>
-            </motion.div>
-          </div>
-        </div>
-      </header>
 
-      {/* Featured Image */}
-      <section className="container mx-auto px-6 -mt-10">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="aspect-[21/9] rounded-sm overflow-hidden shadow-2xl"
-        >
-          <img src={image} alt={title} className="w-full h-full object-cover" />
-        </motion.div>
+              {/* Right Info Card (Conditional UI based on if section1SubImage exists) */}
+              <div className="lg:col-span-5 bg-gray-100 rounded-lg overflow-hidden shadow-sm flex flex-col">
+                {section1SubImage ? (
+                  /* Heritage Style: Full-bleed Image at top */
+                  <>
+                    <div className="w-full h-48">
+                      <img
+                        src={section1SubImage}
+                        alt={section1SubTitle}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-10 flex flex-col justify-center flex-grow">
+                      <h4 className="text-2xl font-bold text-[#162E93] mb-3">
+                        {section1SubTitle}
+                      </h4>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        {section1SubDesc}
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  /* Raffle Style: Icon + Content */
+                  <div className="p-10 flex flex-col justify-center h-full">
+                    <div className="mb-6">
+                      <Zap className="h-8 w-8 text-[#9B0F06] mb-4" />
+                      <h4 className="text-xl font-bold text-[#162E93] mb-3">{section1SubTitle || "Dynamic Intelligence"}</h4>
+                      <p className="text-gray-500 text-sm leading-relaxed">
+                        {section1SubDesc}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* ─── ARTICLE CONTENT ─── */}
+      <section className="pb-20">
+        <Container>
+          <div className="max-w-3xl">
+            <h2 className="text-2xl font-bold text-[#162E93] mb-6">{articleTitle1}</h2>
+            <div
+              className="text-gray-600 leading-relaxed mb-8"
+              dangerouslySetInnerHTML={{ __html: articleContent1 || "" }}
+            />
+          </div>
+
+          {/* Banner with Button */}
+          {(articleBannerImage || image?.[2]) && (
+            <div className="relative h-[250px] rounded-sm overflow-hidden my-16 group">
+              <img
+                src={articleBannerImage || image?.[2]}
+                alt="Banner"
+                className="absolute inset-0 w-full h-full object-cover brightness-50"
+              />
+              <div className="absolute inset-0 flex items-center justify-end px-12 pt-35">
+                {pdfUrl && (
+                  <a
+                    href={pdfUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#C3110C] hover:bg-red-700 text-white px-8 py-4 rounded-sm flex items-center gap-3 font-bold transition-all transform hover:scale-105 shadow-xl no-underline"
+                  >
+                    Project Reference
+                    <Download className="h-5 w-5" />
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
+
+          <div className="max-w-3xl">
+            <h2 className="text-2xl font-bold text-[#162E93] mb-6">{articleTitle2}</h2>
+            <div
+              className="text-gray-600 leading-relaxed mb-12"
+              dangerouslySetInnerHTML={{ __html: articleContent2 || "" }}
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">
+              {feature1Title && (
+                <div className="flex gap-4">
+                  <BarChart3 className="h-6 w-6 text-[#9B0F06] shrink-0" />
+                  <div>
+                    <h5 className="font-bold text-[#162E93] mb-1">{feature1Title}</h5>
+                    <p className="text-xs text-gray-400">{feature1Desc}</p>
+                  </div>
+                </div>
+              )}
+              {feature2Title && (
+                <div className="flex gap-4">
+                  <Settings2 className="h-6 w-6 text-[#9B0F06] shrink-0" />
+                  <div>
+                    <h5 className="font-bold text-[#162E93] mb-1">{feature2Title}</h5>
+                    <p className="text-xs text-gray-400">{feature2Desc}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </Container>
       </section>
 
-      {/* Content Area */}
-      <main className="container mx-auto px-6 py-24">
-        <div className="max-w-3xl mx-auto prose prose-lg prose-blue">
-          {content}
-        </div>
-      </main>
+      {/* ─── TECHNICAL DEPLOYMENT ─── */}
+      {(galleryImages && galleryImages.length >= 4) && (
+        <section className="py-24 bg-gray-50 border-t border-gray-100 overflow-hidden">
+          <Container>
+            <div className="mb-12">
+              <h2 className="text-3xl md:text-4xl font-semibold text-[#162E93] tracking-tight">
+                {technicalTitle || "Technical Deployment"}
+              </h2>
+              <div className="mt-3 h-[2px] w-16 bg-[#9B0F06]" />
+            </div>
 
-      {/* Footer CTA */}
-      <footer className="bg-gray-50 py-24 border-t border-gray-100">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-8">Ready to start your project?</h2>
-          <Link 
-            to="/contact"
-            className="inline-block bg-black text-white px-10 py-4 font-bold text-sm hover:bg-blue-600 transition-all"
-          >
-            Contact Our Team
-          </Link>
-        </div>
-      </footer>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-5 perspective-1000">
+              {/* BIG LEFT IMAGE */}
+              <motion.div
+                initial={{ opacity: 0, rotateX: 25, rotateY: -10, scale: 0.95 }}
+                whileInView={{ opacity: 1, rotateX: 0, rotateY: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, ease: "easeOut" }}
+                className="md:col-span-8 group relative overflow-hidden rounded-sm shadow-lg"
+              >
+                <img
+                  src={galleryImages[0]}
+                  className="w-full h-[420px] object-cover group-hover:scale-105 transition-transform duration-700"
+                  alt="Tech 1"
+                />
+              </motion.div>
+
+              {/* RIGHT IMAGE */}
+              <motion.div
+                initial={{ opacity: 0, rotateX: -25, rotateY: 10, scale: 0.95 }}
+                whileInView={{ opacity: 1, rotateX: 0, rotateY: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: 0.1 }}
+                className="md:col-span-4 group relative overflow-hidden rounded-sm shadow-lg"
+              >
+                <img
+                  src={galleryImages[1]}
+                  className="w-full h-[420px] object-cover group-hover:scale-105 transition-transform duration-700"
+                  alt="Tech 2"
+                />
+              </motion.div>
+
+              {/* SMALL LEFT IMAGE */}
+              <motion.div
+                initial={{ opacity: 0, rotateX: 20, rotateY: -10, scale: 0.95 }}
+                whileInView={{ opacity: 1, rotateX: 0, rotateY: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: 0.15 }}
+                className="md:col-span-4 group relative overflow-hidden rounded-sm shadow-md"
+              >
+                <img
+                  src={galleryImages[2]}
+                  className="w-full h-[260px] object-cover group-hover:scale-105 transition-transform duration-700"
+                  alt="Tech 3"
+                />
+              </motion.div>
+
+              {/* BOTTOM WIDE IMAGE */}
+              <motion.div
+                initial={{ opacity: 0, rotateX: -20, rotateY: 10, scale: 0.95 }}
+                whileInView={{ opacity: 1, rotateX: 0, rotateY: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: 0.2 }}
+                className="md:col-span-8 group relative overflow-hidden rounded-sm shadow-lg"
+              >
+                <img
+                  src={galleryImages[3]}
+                  className="w-full h-[260px] object-cover group-hover:scale-105 transition-transform duration-700"
+                  alt="Tech 4"
+                />
+              </motion.div>
+            </div>
+          </Container>
+        </section>
+      )}
     </div>
-  )
+  );
 }

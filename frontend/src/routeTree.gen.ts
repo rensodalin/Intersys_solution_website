@@ -44,6 +44,7 @@ import { Route as InsightsRetrofittingHeritageRouteImport } from './routes/insig
 import { Route as InsightsRaffleBookstoreRouteImport } from './routes/insights.raffle-bookstore'
 import { Route as InsightsKrohomBookstoreRouteImport } from './routes/insights.krohom-bookstore'
 import { Route as InsightsKohPichCommercialComplexRouteImport } from './routes/insights.koh-pich-commercial-complex'
+import { Route as InsightsSlugRouteImport } from './routes/insights.$slug'
 import { Route as ProductsSurveillanceIndexRouteImport } from './routes/products.surveillance.index'
 import { Route as ProductsBuildingManagementIndexRouteImport } from './routes/products.building-management.index'
 import { Route as ProductsAccessControlIndexRouteImport } from './routes/products.access-control.index'
@@ -239,6 +240,11 @@ const InsightsKohPichCommercialComplexRoute =
     path: '/insights/koh-pich-commercial-complex',
     getParentRoute: () => rootRouteImport,
   } as any)
+const InsightsSlugRoute = InsightsSlugRouteImport.update({
+  id: '/insights/$slug',
+  path: '/insights/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductsSurveillanceIndexRoute =
   ProductsSurveillanceIndexRouteImport.update({
     id: '/surveillance/',
@@ -350,6 +356,7 @@ export interface FileRoutesByFullPath {
   '/technical-tips': typeof TechnicalTipsRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/insights/$slug': typeof InsightsSlugRoute
   '/insights/koh-pich-commercial-complex': typeof InsightsKohPichCommercialComplexRoute
   '/insights/krohom-bookstore': typeof InsightsKrohomBookstoreRoute
   '/insights/raffle-bookstore': typeof InsightsRaffleBookstoreRoute
@@ -401,6 +408,7 @@ export interface FileRoutesByTo {
   '/technical-tips': typeof TechnicalTipsRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/insights/$slug': typeof InsightsSlugRoute
   '/insights/koh-pich-commercial-complex': typeof InsightsKohPichCommercialComplexRoute
   '/insights/krohom-bookstore': typeof InsightsKrohomBookstoreRoute
   '/insights/raffle-bookstore': typeof InsightsRaffleBookstoreRoute
@@ -455,6 +463,7 @@ export interface FileRoutesById {
   '/technical-tips': typeof TechnicalTipsRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/insights/$slug': typeof InsightsSlugRoute
   '/insights/koh-pich-commercial-complex': typeof InsightsKohPichCommercialComplexRoute
   '/insights/krohom-bookstore': typeof InsightsKrohomBookstoreRoute
   '/insights/raffle-bookstore': typeof InsightsRaffleBookstoreRoute
@@ -510,6 +519,7 @@ export interface FileRouteTypes {
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
+    | '/insights/$slug'
     | '/insights/koh-pich-commercial-complex'
     | '/insights/krohom-bookstore'
     | '/insights/raffle-bookstore'
@@ -561,6 +571,7 @@ export interface FileRouteTypes {
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
+    | '/insights/$slug'
     | '/insights/koh-pich-commercial-complex'
     | '/insights/krohom-bookstore'
     | '/insights/raffle-bookstore'
@@ -614,6 +625,7 @@ export interface FileRouteTypes {
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
+    | '/insights/$slug'
     | '/insights/koh-pich-commercial-complex'
     | '/insights/krohom-bookstore'
     | '/insights/raffle-bookstore'
@@ -668,6 +680,7 @@ export interface RootRouteChildren {
   TechnicalTipsRoute: typeof TechnicalTipsRoute
   WarrantyRoute: typeof WarrantyRoute
   WhyChooseRoute: typeof WhyChooseRoute
+  InsightsSlugRoute: typeof InsightsSlugRoute
   InsightsKohPichCommercialComplexRoute: typeof InsightsKohPichCommercialComplexRoute
   InsightsKrohomBookstoreRoute: typeof InsightsKrohomBookstoreRoute
   InsightsRaffleBookstoreRoute: typeof InsightsRaffleBookstoreRoute
@@ -935,6 +948,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InsightsKohPichCommercialComplexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/insights/$slug': {
+      id: '/insights/$slug'
+      path: '/insights/$slug'
+      fullPath: '/insights/$slug'
+      preLoaderRoute: typeof InsightsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products/surveillance/': {
       id: '/products/surveillance/'
       path: '/surveillance'
@@ -1133,6 +1153,7 @@ const rootRouteChildren: RootRouteChildren = {
   TechnicalTipsRoute: TechnicalTipsRoute,
   WarrantyRoute: WarrantyRoute,
   WhyChooseRoute: WhyChooseRoute,
+  InsightsSlugRoute: InsightsSlugRoute,
   InsightsKohPichCommercialComplexRoute: InsightsKohPichCommercialComplexRoute,
   InsightsKrohomBookstoreRoute: InsightsKrohomBookstoreRoute,
   InsightsRaffleBookstoreRoute: InsightsRaffleBookstoreRoute,

@@ -5,38 +5,28 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 
-const insights = [
-  {
-    tag: "Institutional",
-    title: "Krohom Bookstore",
-    slug: "krohom-bookstore",
-    desc: "A bold architectural statement blending traditional Khmer elements with modern structural engineering and smart systems.",
-    image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1170&auto=format&fit=crop",
-  },
-  {
-    tag: "Institutional",
-    title: "Raffle Bookstore",
-    slug: "raffle-bookstore",
-    desc: "Redefining the educational landscape with open-concept learning spaces and sustainable building materials.",
-    image: "https://images.unsplash.com/photo-1471039497385-b6d6ba609f9c?q=80&w=1170&auto=format&fit=crop",
-  },
-  {
-    tag: "Residential",
-    title: "Heritage Buildings",
-    slug: "retrofitting-heritage",
-    desc: "Preserving architectural history with smart building intelligence and advanced fire safety systems.",
-    image: "https://images.unsplash.com/photo-1673724319943-3a05bf8956e4?q=80&w=1332&auto=format&fit=crop",
-  },
-  {
-    tag: "Commercial",
-    title: "Koh Pich Complex",
-    slug: "koh-pich-commercial-complex",
-    desc: "A landmark mixed-use development featuring integrated security, surveillance, and smart automation.",
-    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&q=80&w=1200",
-  },
-];
-
 export function Insights() {
+  const [dynamicInsights, setDynamicInsights] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchInsights = async () => {
+      try {
+        const baseUrl = `http://${window.location.hostname}:5000`;
+        const res = await fetch(`${baseUrl}/api/insights`);
+        const data = await res.json();
+        if (data.success) {
+          setDynamicInsights(data.data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch insights:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchInsights();
+  }, []);
+
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       align: "center",
@@ -67,6 +57,10 @@ export function Insights() {
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
   }, [emblaApi, onSelect]);
+
+  if (loading || dynamicInsights.length === 0) {
+    return null; // Or a skeleton loader
+  }
 
   return (
     <section className="relative overflow-hidden bg-[#F8FAFC] py-10 md:py-14">
@@ -104,7 +98,7 @@ export function Insights() {
 
         <div className="overflow-visible" ref={emblaRef}>
           <div className="flex">
-            {[...insights, ...insights, ...insights].map((item, idx) => {
+            {[...dynamicInsights, ...dynamicInsights, ...dynamicInsights].map((item, idx) => {
               const isSelected = idx === selectedIndex;
 
               return (
@@ -146,7 +140,7 @@ export function Insights() {
                   >
                     {/* Image */}
                     <img
-                      src={item.image}
+                      src={item.image && item.image[0]}
                       alt={item.title}
                       className="
                         absolute
@@ -183,7 +177,7 @@ export function Insights() {
                             text-[#FF4400]
                           "
                         >
-                          {item.tag}
+                          {item.category}
                         </span>
                       </div>
 
@@ -219,18 +213,16 @@ export function Insights() {
         <div className="relative z-30 max-w-[1400px] mx-auto px-6 md:px-10 mt-6 flex items-center justify-between">
           {/* Progress */}
           <div className="hidden md:flex items-center gap-2">
-            {insights.map((_, i) => (
+            {dynamicInsights.map((_, i) => (
               <div
                 key={i}
-                className={`h-[2px] rounded-full transition-all duration-500 ${selectedIndex % insights.length === i
+                className={`h-[2px] rounded-full transition-all duration-500 ${selectedIndex % dynamicInsights.length === i
                   ? "w-12 bg-[#FF6B00]"
                   : "w-5 bg-white/10"
                   }`}
               />
             ))}
           </div>
-
-
         </div>
       </div>
     </section>

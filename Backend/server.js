@@ -6,6 +6,7 @@ import session from "express-session";
 import passport from "./passportsetup/passportSetup.js";
 import connectDB from "./conn/conn.js";
 import authRoutes from "./auth/auth.js";
+import insightsRoutes from "./routes/insights.js";
 
 dotenv.config();
 
@@ -17,9 +18,9 @@ connectDB();
 
 app.use(cors({
     origin: [
-        "http://localhost:5173", 
-        "http://localhost:5174", 
-        "http://127.0.0.1:5173", 
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5173",
         "http://127.0.0.1:5174"
     ],
     credentials: true,
@@ -51,6 +52,9 @@ app.use(passport.session());
 
 // ✅ AUTH ROUTES
 app.use("/auth", authRoutes);
+
+// ✅ INSIGHTS ROUTES
+app.use("/api/insights", insightsRoutes);
 
 // ✅ EMAIL TRANSPORT
 const transporter = nodemailer.createTransport({
@@ -143,4 +147,4 @@ app.post("/api/contact", async (req, res) => {
 const PORT = 5000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
-});
+});

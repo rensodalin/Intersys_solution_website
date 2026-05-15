@@ -1,39 +1,42 @@
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { ArrowUpRight, Calendar, User, Tag } from 'lucide-react'
+import { ArrowUpRight, Calendar, User, Tag, Loader2 } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 export const Route = createFileRoute('/insights/')({
   component: InsightsPage,
 })
 
-const insights = [
-  {
-    title: "Koh Pich Commercial Complex",
-    desc: "Implementing state-of-the-art security and building management systems for Cambodia's premier commercial hub.",
-    slug: "koh-pich-commercial-complex",
-    date: "May 12, 2024",
-    category: "Commercial",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
-  },
-  {
-    title: "Krohom Bookstore Security",
-    desc: "Seamless integration of loss prevention and inventory management systems for a modern retail environment.",
-    slug: "krohom-bookstore",
-    date: "May 10, 2024",
-    category: "Retail",
-    image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2070&auto=format&fit=crop"
-  },
-  {
-    title: "Retrofitting Heritage Buildings",
-    desc: "Modernizing historical structures with cutting-edge safety systems while preserving architectural integrity.",
-    slug: "retrofitting-heritage",
-    date: "May 08, 2024",
-    category: "Restoration",
-    image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2070&auto=format&fit=crop"
-  }
-];
-
 function InsightsPage() {
+  const [insights, setInsights] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchInsights = async () => {
+      try {
+        const baseUrl = `http://${window.location.hostname}:5000`;
+        const res = await fetch(`${baseUrl}/api/insights`);
+        const data = await res.json();
+        if (data.success) {
+          setInsights(data.data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch insights:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchInsights();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="w-10 h-10 animate-spin text-blue-600" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -92,7 +95,7 @@ function InsightsPage() {
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-gray-100 rounded-sm mb-6">
                   <img 
-                    src={item.image} 
+                    src={item.image && item.image[0]} 
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
@@ -109,7 +112,7 @@ function InsightsPage() {
                       <Calendar size={12} /> {item.date}
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <User size={12} /> Intersys Team
+                      <User size={12} /> {item.author || "Intersys Team"}
                     </span>
                   </div>
 
