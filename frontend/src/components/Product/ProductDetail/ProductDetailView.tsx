@@ -252,10 +252,14 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                       <a
                         key={i}
                         href={doc.url}
-                        className="flex items-center gap-4 group w-fit p-3 border border-gray-100 rounded-sm hover:border-[#C3110C]/30 hover:bg-[#FBFBFC] transition-all"
+                        className="flex items-center gap-1.5 group w-fit py-1 transition-all"
                       >
-                        <FileText size={20} className="text-[#C3110C]" />
-                        <span className="text-[14px] font-medium text-[#1A3263] group-hover:text-[#C3110C] transition-colors">
+                        <img 
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1280px-PDF_file_icon.svg.png" 
+                          alt="PDF"
+                          className="w-5 h-5 object-contain"
+                        />
+                        <span className="text-[14px] text-[#42526E] underline underline-offset-[2px] decoration-gray-400 hover:text-blue-700 hover:decoration-blue-700 transition-all font-display">
                           {doc.name}
                         </span>
                       </a>
