@@ -22,7 +22,7 @@ export function ProjectFilters({
                 <div className="flex flex-col items-center gap-8">
 
                     {/* CATEGORY FILTERS */}
-                    <div className="flex flex-wrap justify-center gap-2">
+                    <div className="flex flex-wrap justify-center gap-1">
                         {categories.map((cat) => {
                             const active = activeTab === cat;
 
@@ -31,20 +31,20 @@ export function ProjectFilters({
                                     key={cat}
                                     onClick={() => setActiveTab(cat)}
                                     className={`
-                    relative px-4 py-2 rounded-lg text-sm font-medium transition-all
-                    ${active
-                                            ? "text-[#D62828] bg-[#D62828]/10"
-                                            : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"
+                                        relative px-5 py-2 text-[14px] font-medium transition-all duration-300
+                                        ${active
+                                            ? "text-[#D62828]"
+                                            : "text-gray-400 hover:text-white"
                                         }
-                  `}
+                                    `}
                                 >
                                     {cat}
 
-                                    {/* underline animation */}
+                                    {/* indicator dot */}
                                     {active && (
                                         <motion.div
-                                            layoutId="projTab"
-                                            className="absolute left-3 right-3 -bottom-[2px] h-[2px] bg-[#D62828] rounded-full"
+                                            layoutId="projTabDot"
+                                            className="absolute left-1/2 -bottom-1 w-1 h-1 bg-[#D62828] rounded-full -translate-x-1/2"
                                         />
                                     )}
                                 </button>
@@ -52,34 +52,33 @@ export function ProjectFilters({
                         })}
                     </div>
 
-                    {/* VIEW TOGGLE */}
-                    <div className="flex items-center bg-gray-100 p-1 rounded-xl">
+                    <div className="flex items-center bg-white/5 border border-white/10 p-1 rounded-sm">
 
                         <button
                             onClick={() => setViewMode("grid")}
                             className={`
-                flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all
-                ${viewMode === "grid"
-                                    ? "bg-white text-[#D62828] shadow-sm"
-                                    : "text-gray-500 hover:text-gray-900"
+                                flex items-center gap-2 px-4 py-2 rounded-sm text-sm font-medium transition-all
+                                ${viewMode === "grid"
+                                    ? "bg-[#D62828] text-white shadow-lg shadow-[#D62828]/20"
+                                    : "text-gray-500 hover:text-white"
                                 }
-              `}
+                            `}
                         >
-                            <LayoutGrid size={16} />
+                            <LayoutGrid size={14} />
                             Grid
                         </button>
 
                         <button
                             onClick={() => setViewMode("full")}
                             className={`
-                flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all
-                ${viewMode === "full"
-                                    ? "bg-white text-[#D62828] shadow-sm"
-                                    : "text-gray-500 hover:text-gray-900"
+                                flex items-center gap-2 px-4 py-2 rounded-sm text-sm font-medium transition-all
+                                ${viewMode === "full"
+                                    ? "bg-[#D62828] text-white shadow-lg shadow-[#D62828]/20"
+                                    : "text-gray-500 hover:text-white"
                                 }
-              `}
+                            `}
                         >
-                            <Maximize2 size={16} />
+                            <Maximize2 size={14} />
                             Full
                         </button>
 

@@ -33,7 +33,7 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
                                             delay: i * 0.06,
                                             ease: [0.25, 0.1, 0.25, 1],
                                         }}
-                                        className={`group relative overflow-hidden rounded-xl aspect-[4/5] ${p.slug ? 'cursor-pointer' : 'cursor-default'}`}
+                                        className={`group relative overflow-hidden rounded-none aspect-[4/5] ${p.slug ? 'cursor-pointer' : 'cursor-default'}`}
                                     >
                                         <img
                                             src={p.image}
@@ -53,7 +53,7 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
 
                                         {/* content */}
                                         <div className="absolute bottom-0 left-0 right-0 p-5">
-                                            <span className="inline-block text-[10px] font-bold tracking-wider text-[#D62828] mb-1.5 bg-white/10 backdrop-blur-sm px-2 py-0.5 rounded-sm">
+                                            <span className="inline-block text-[10px] font-bold text-white mb-2 bg-[#D62828] px-2 py-0.5 rounded-[2px] shadow-sm">
                                                 {p.category}
                                             </span>
 
@@ -66,9 +66,9 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
 
                                 if (p.slug) {
                                     return (
-                                        <Link 
-                                            key={p._id || `${p.title}-grid`} 
-                                            to="/insights/$slug" 
+                                        <Link
+                                            key={p._id || `${p.title}-grid`}
+                                            to="/insights/$slug"
                                             params={{ slug: p.slug }}
                                             className="block"
                                         >
@@ -104,7 +104,7 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
 
                                     {/* IMAGE */}
                                     <div className={isReversed ? "md:order-2" : ""}>
-                                        <div className="relative overflow-hidden rounded-xl">
+                                        <div className="relative overflow-hidden rounded-none">
                                             <span className="absolute top-5 left-5 z-10 text-xs font-bold text-white/60 tabular-nums">
                                                 {String(i + 1).padStart(2, "0")}
                                             </span>
@@ -126,10 +126,10 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
                                     >
                                         {/* category */}
                                         <span
-                                            className={`inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[#D62828] mb-4 ${isReversed ? "md:self-end" : ""
+                                            className={`inline-flex items-center gap-2 text-[12px] font-bold text-[#D62828] mb-4 ${isReversed ? "md:self-end" : ""
                                                 }`}
                                         >
-                                            <span className="w-1.5 h-1.5 rounded-full bg-[#D62828]" />
+                                            <span className="w-8 h-[1px] bg-[#D62828]" />
                                             {p.category}
                                         </span>
 
@@ -166,7 +166,7 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
                                         {/* SCOPE / HIGHLIGHTS */}
                                         {p.scope && p.scope.length > 0 && (
                                             <div className={`flex flex-col gap-2 ${isReversed ? "md:items-end" : ""}`}>
-                                                <p className="text-[10px] font-bold tracking-wider text-gray-500 mb-2">Technical Scope</p>
+                                                <p className="text-[12px] font-medium text-gray-500 mb-2">Technical scope</p>
                                                 <div className={`flex flex-wrap gap-2 ${isReversed ? "md:justify-end" : ""}`}>
                                                     {p.scope.map((item) => (
                                                         <span key={item} className="px-3 py-1 bg-white/5 border border-white/10 rounded-md text-[12px] text-gray-400">
@@ -183,9 +183,9 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
 
                             if (p.slug) {
                                 return (
-                                    <Link 
-                                        key={p._id || `${p.title}-full`} 
-                                        to="/insights/$slug" 
+                                    <Link
+                                        key={p._id || `${p.title}-full`}
+                                        to="/insights/$slug"
                                         params={{ slug: p.slug }}
                                         className="block"
                                     >
