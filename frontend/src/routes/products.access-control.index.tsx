@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "framer-motion"; 
+import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
@@ -124,7 +124,7 @@ function AccessControlPage() {
 
                                     {/* Button */}
                                     <div className="mt-auto flex items-center text-[#1A3263] font-bold text-sm tracking-wide uppercase group-hover:text-[#FC3B1F] transition-colors duration-300">
-                                        Explore Solutions 
+                                        Explore Solutions
                                         <ArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300" />
                                     </div>
                                 </Link>
@@ -134,7 +134,7 @@ function AccessControlPage() {
                 </Container>
             </section>
 
-            <CtaBand />
+
         </div>
     );
 }

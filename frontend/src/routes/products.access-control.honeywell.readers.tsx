@@ -56,10 +56,10 @@ function HoneywellReadersPage() {
             {/* Product Grid */}
             <section className="py-14 md:py-16 relative z-20 px-8">
                 <Container>
-                    <ProductSort 
-                        currentSort={currentSort} 
-                        onSortChange={setCurrentSort} 
-                        totalProducts={honeywellReaders.length} 
+                    <ProductSort
+                        currentSort={currentSort}
+                        onSortChange={setCurrentSort}
+                        totalProducts={honeywellReaders.length}
                     />
                     <HoneywellGrid products={sortedProducts} />
                 </Container>
@@ -67,7 +67,6 @@ function HoneywellReadersPage() {
 
 
 
-            <CtaBand />
         </div>
     );
 }

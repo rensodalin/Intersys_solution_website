@@ -46,19 +46,16 @@ function HoneywellProductsPage() {
             {/* Product Grid */}
             <section className="pb-14 md:pb-16 pt-10 md:pt-14 relative z-20 px-8">
                 <Container>
-                    <ProductSort 
-                        currentSort={currentSort} 
-                        onSortChange={setCurrentSort} 
-                        totalProducts={honeywellMainProducts.length} 
+                    <ProductSort
+                        currentSort={currentSort}
+                        onSortChange={setCurrentSort}
+                        totalProducts={honeywellMainProducts.length}
                     />
                     <HoneywellGrid products={sortedProducts} />
                 </Container>
             </section>
 
 
-
-
-            <CtaBand />
         </div>
     );
 }

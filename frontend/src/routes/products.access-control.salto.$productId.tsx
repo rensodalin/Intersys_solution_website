@@ -32,7 +32,7 @@ function SaltoSubProductPage() {
   const sortedProducts = useMemo(() => {
     if (!product?.subProducts) return [];
     const products = [...product.subProducts];
-    
+
     switch (currentSort) {
       case "newest":
         // Since we don't have dates, we'll reverse the default order as a proxy for 'newest'
@@ -87,10 +87,10 @@ function SaltoSubProductPage() {
         <Container>
           {product.subProducts && product.subProducts.length > 0 ? (
             <>
-              <ProductSort 
-                currentSort={currentSort} 
-                onSortChange={setCurrentSort} 
-                totalProducts={product.subProducts.length} 
+              <ProductSort
+                currentSort={currentSort}
+                onSortChange={setCurrentSort}
+                totalProducts={product.subProducts.length}
               />
               <SaltoSubGrid products={sortedProducts} />
             </>
@@ -108,7 +108,7 @@ function SaltoSubProductPage() {
         </Container>
       </section>
 
-      <CtaBand />
+
     </div>
   );
 }

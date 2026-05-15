@@ -58,17 +58,16 @@ function HoneywellUpgradesPage() {
             {/* Product Grid */}
             <section className="py-14 md:py-16 relative z-20 px-8">
                 <Container>
-                    <ProductSort 
-                        currentSort={currentSort} 
-                        onSortChange={setCurrentSort} 
-                        totalProducts={honeywellUpgrades.length} 
+                    <ProductSort
+                        currentSort={currentSort}
+                        onSortChange={setCurrentSort}
+                        totalProducts={honeywellUpgrades.length}
                     />
                     <HoneywellGrid products={sortedProducts} />
                 </Container>
             </section>
 
 
-            <CtaBand />
         </div>
     );
 }

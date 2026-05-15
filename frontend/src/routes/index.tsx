@@ -12,6 +12,7 @@ import { Clients } from "@/components/Homepage/Clients";
 import { Partnership } from "@/components/Homepage/Partnership";
 import { Insights } from "@/components/Homepage/Insights";
 import { PromotionOverlay } from "@/components/Common/PromotionOverlay";
+import { PosterCarousel } from "@/components/Homepage/PosterCarousel";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -44,6 +45,7 @@ function Index() {
       <Hero />
       <MetricsStrip />
       <Ecosystem />
+      <PosterCarousel />
 
       <JourneySection />
       <FeaturedProjects />

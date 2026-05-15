@@ -100,7 +100,7 @@ export function Ecosystem() {
           >
             <motion.h3
               animate={{
-                color: hovered === "execution" ? "#b91c1c" : "#ffffff",
+                color: hovered === "execution" ? "#d47e71ff" : "#ffffff",
               }}
               transition={{ duration: 0.3 }}
               className="font-display text-2xl md:text-3xl font-bold mb-6 tracking-tight"
