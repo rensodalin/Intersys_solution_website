@@ -25,6 +25,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SectorsIndexRouteImport } from './routes/sectors.index'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
+import { Route as InsightsIndexRouteImport } from './routes/insights.index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as ServicesVesdaRouteImport } from './routes/services_.vesda'
 import { Route as ServicesSurveillanceRouteImport } from './routes/services_.surveillance'
@@ -139,6 +140,11 @@ const ProductsIndexRoute = ProductsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ProductsRoute,
+} as any)
+const InsightsIndexRoute = InsightsIndexRouteImport.update({
+  id: '/insights/',
+  path: '/insights/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AboutIndexRoute = AboutIndexRouteImport.update({
   id: '/about/',
@@ -362,6 +368,7 @@ export interface FileRoutesByFullPath {
   '/services/surveillance': typeof ServicesSurveillanceRoute
   '/services/vesda': typeof ServicesVesdaRoute
   '/about/': typeof AboutIndexRoute
+  '/insights/': typeof InsightsIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/sectors/': typeof SectorsIndexRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
@@ -412,6 +419,7 @@ export interface FileRoutesByTo {
   '/services/surveillance': typeof ServicesSurveillanceRoute
   '/services/vesda': typeof ServicesVesdaRoute
   '/about': typeof AboutIndexRoute
+  '/insights': typeof InsightsIndexRoute
   '/products': typeof ProductsIndexRoute
   '/sectors': typeof SectorsIndexRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
@@ -465,6 +473,7 @@ export interface FileRoutesById {
   '/services_/surveillance': typeof ServicesSurveillanceRoute
   '/services_/vesda': typeof ServicesVesdaRoute
   '/about/': typeof AboutIndexRoute
+  '/insights/': typeof InsightsIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/sectors/': typeof SectorsIndexRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
@@ -519,6 +528,7 @@ export interface FileRouteTypes {
     | '/services/surveillance'
     | '/services/vesda'
     | '/about/'
+    | '/insights/'
     | '/products/'
     | '/sectors/'
     | '/products/detail/$productId'
@@ -569,6 +579,7 @@ export interface FileRouteTypes {
     | '/services/surveillance'
     | '/services/vesda'
     | '/about'
+    | '/insights'
     | '/products'
     | '/sectors'
     | '/products/detail/$productId'
@@ -621,6 +632,7 @@ export interface FileRouteTypes {
     | '/services_/surveillance'
     | '/services_/vesda'
     | '/about/'
+    | '/insights/'
     | '/products/'
     | '/sectors/'
     | '/products/detail/$productId'
@@ -673,6 +685,7 @@ export interface RootRouteChildren {
   ServicesSurveillanceRoute: typeof ServicesSurveillanceRoute
   ServicesVesdaRoute: typeof ServicesVesdaRoute
   AboutIndexRoute: typeof AboutIndexRoute
+  InsightsIndexRoute: typeof InsightsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -788,6 +801,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/products/'
       preLoaderRoute: typeof ProductsIndexRouteImport
       parentRoute: typeof ProductsRoute
+    }
+    '/insights/': {
+      id: '/insights/'
+      path: '/insights'
+      fullPath: '/insights/'
+      preLoaderRoute: typeof InsightsIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/about/': {
       id: '/about/'
@@ -1130,6 +1150,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesSurveillanceRoute: ServicesSurveillanceRoute,
   ServicesVesdaRoute: ServicesVesdaRoute,
   AboutIndexRoute: AboutIndexRoute,
+  InsightsIndexRoute: InsightsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

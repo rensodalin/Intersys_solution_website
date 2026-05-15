@@ -62,10 +62,12 @@ export function ContactForm() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const res = await fetch("http://localhost:1000/api/contact", {
+      const baseUrl = `http://${window.location.hostname}:5000`;
+      const res = await fetch(`${baseUrl}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
+        credentials: "include",
       });
 
       const result = await res.json();

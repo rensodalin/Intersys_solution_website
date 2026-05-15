@@ -70,6 +70,8 @@ transporter.verify((error) => {
     }
 });
 
+import Contact from "./model/contact.js";
+
 // ✅ CONTACT API
 app.post("/api/contact", async (req, res) => {
     try {
@@ -91,6 +93,20 @@ app.post("/api/contact", async (req, res) => {
             });
         }
 
+        // ✅ 1. Save to Database
+        const newContact = new Contact({
+            name,
+            email,
+            phone,
+            contactMethod,
+            city,
+            country,
+            message
+        });
+        await newContact.save();
+        console.log("✅ Contact saved to DB:", newContact._id);
+
+        // ✅ 2. Send Email
         await transporter.sendMail({
             from: `"Contact Form" <${process.env.EMAIL_USER}>`,
             to: process.env.EMAIL_USER,
@@ -110,14 +126,16 @@ app.post("/api/contact", async (req, res) => {
                 </div>
             `,
         });
+        console.log("📧 Contact email sent successfully");
 
-        res.json({ success: true });
+        res.json({ success: true, message: "Message saved and sent successfully" });
 
     } catch (error) {
-        console.error("Email error:", error);
+        console.error("❌ Contact API error details:", error);
         res.status(500).json({
             success: false,
-            error: "Email failed",
+            error: "Failed to process request",
+            details: error.message
         });
     }
 });

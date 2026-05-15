@@ -71,14 +71,29 @@ function RetrofittingHeritagePage() {
             </div>
 
             {/* Right Info Card */}
-            <div className="lg:col-span-5 bg-gray-100 p-10 rounded-sm flex flex-col justify-center">
-              <div className="mb-6">
-                <Zap className="h-8 w-8 text-[#9B0F06] mb-4" />
-                <h4 className="text-xl font-bold text-[#162E93] mb-3">Load Balancers</h4>
-                <p className="text-gray-500 text-sm leading-relaxed">
+            {/* Right Info Card */}
+            <div className="lg:col-span-5 bg-gray-100 rounded-lg overflow-hidden shadow-sm">
+
+              {/* Image full-bleed inside card */}
+              <div className="w-full h-48">
+                <img
+                  src="https://images.unsplash.com/photo-1778483154281-70a8fa019871?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt="Load Balancers"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Content */}
+              <div className="p-10 flex flex-col justify-center">
+                <h4 className="text-2xl font-bold text-[#162E93] mb-3">
+                  Load Balancers
+                </h4>
+
+                <p className="text-gray-600 text-sm leading-relaxed">
                   Dynamic redistribution of power and mechanical loads based on real-time occupancy data in historic assembly spaces.
                 </p>
               </div>
+
             </div>
           </div>
         </Container>
