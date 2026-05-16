@@ -66,12 +66,11 @@ function InsightDetailRoute() {
       articleTitle2={insight.articleTitle2}
       articleContent2={insight.articleContent2}
       pdfUrl={insight.pdfUrl}
-      feature1Title={insight.feature1Title}
-      feature1Desc={insight.feature1Desc}
-      feature2Title={insight.feature2Title}
-      feature2Desc={insight.feature2Desc}
       technicalTitle={insight.technicalTitle}
       galleryImages={insight.galleryImages}
+      client={insight.client}
+      location={insight.location}
+      scope={insight.scope}
     />
   );
 }

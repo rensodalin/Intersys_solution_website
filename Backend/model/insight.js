@@ -3,18 +3,18 @@ import mongoose from "mongoose";
 const insightSchema = new mongoose.Schema({
     title: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
-    desc: { type: String, required: true }, // Short summary for the card
+    desc: { type: String, required: true },
     category: { type: String, required: true },
     date: { type: String, required: true },
-    image: { type: [String], required: true }, // Array of images
+    image: { type: [String], required: true },
     author: { type: String, default: "Intersys Team" },
 
-    // Project metadata for cases
+    // Project Metadata
     client: { type: String },
     location: { type: String },
     scope: { type: [String] },
 
-    // Section 1 (Side-by-side)
+    // Section 1
     section1Image: { type: String },
     section1Title: { type: String },
     section1Desc: { type: String },
@@ -30,15 +30,9 @@ const insightSchema = new mongoose.Schema({
     articleTitle2: { type: String },
     articleContent2: { type: String },
 
-    // Technical Gallery (The bottom grid)
+    // Gallery
     galleryImages: { type: [String] },
     technicalTitle: { type: String },
-
-    // Dynamic Features (Bottom of Article)
-    feature1Title: { type: String },
-    feature1Desc: { type: String },
-    feature2Title: { type: String },
-    feature2Desc: { type: String },
 
 }, { timestamps: true });
 

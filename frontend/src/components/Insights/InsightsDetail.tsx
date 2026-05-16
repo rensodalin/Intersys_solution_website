@@ -13,7 +13,10 @@ import {
   Cpu,
   Globe,
   Lock,
-  Layers
+  Layers,
+  Users,
+  MapPin,
+  ClipboardList
 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
@@ -61,6 +64,9 @@ interface InsightsDetailProps {
   technicalTitle?: string;
   galleryImages?: string[];
   content?: React.ReactNode;
+  client?: string;
+  location?: string;
+  scope?: string[];
 }
 
 export function InsightsDetail(props: InsightsDetailProps) {
@@ -89,7 +95,10 @@ export function InsightsDetail(props: InsightsDetailProps) {
     features,
     technicalTitle,
     galleryImages,
-    content
+    content,
+    client,
+    location,
+    scope
   } = props;
 
   return (
@@ -244,22 +253,40 @@ export function InsightsDetail(props: InsightsDetailProps) {
               dangerouslySetInnerHTML={{ __html: articleContent2 || "" }}
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">
-              {feature1Title && (
+            {/* PROJECT METADATA GRID */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-20">
+              {client && (
                 <div className="flex gap-4">
-                  <BarChart3 className="h-6 w-6 text-[#9B0F06] shrink-0" />
+                  <Users className="h-6 w-6 text-[#D62828] shrink-0" />
                   <div>
-                    <h5 className="font-bold text-[#162E93] mb-1">{feature1Title}</h5>
-                    <p className="text-xs text-gray-400">{feature1Desc}</p>
+                    <h5 className="font-bold text-[#162E93] mb-1">Client</h5>
+                    <p className="text-xs text-gray-500">{client}</p>
                   </div>
                 </div>
               )}
-              {feature2Title && (
+
+              {location && (
                 <div className="flex gap-4">
-                  <Settings2 className="h-6 w-6 text-[#9B0F06] shrink-0" />
+                  <MapPin className="h-6 w-6 text-[#D62828] shrink-0" />
                   <div>
-                    <h5 className="font-bold text-[#162E93] mb-1">{feature2Title}</h5>
-                    <p className="text-xs text-gray-400">{feature2Desc}</p>
+                    <h5 className="font-bold text-[#162E93] mb-1">Location</h5>
+                    <p className="text-xs text-gray-500">{location}</p>
+                  </div>
+                </div>
+              )}
+
+              {(scope && scope.length > 0) && (
+                <div className="flex gap-4">
+                  <ClipboardList className="h-6 w-6 text-[#D62828] shrink-0" />
+                  <div>
+                    <h5 className="font-bold text-[#162E93] mb-1">Technical Scope</h5>
+                    <div className="flex flex-wrap gap-1.5 mt-1">
+                      {scope.map((item, idx) => (
+                        <span key={idx} className="text-[10px] font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-none">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
