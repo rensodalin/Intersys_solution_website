@@ -254,42 +254,78 @@ export function InsightsDetail(props: InsightsDetailProps) {
             />
 
             {/* PROJECT METADATA GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-20">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10  text-center">
+
+              {/* Client */}
               {client && (
-                <div className="flex gap-4">
-                  <Users className="h-6 w-6 text-[#D62828] shrink-0" />
-                  <div>
-                    <h5 className="font-bold text-[#162E93] mb-1">Client</h5>
-                    <p className="text-xs text-gray-500">{client}</p>
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 bg-gray-100 flex items-center justify-center mb-4">
+                    <img
+                      src="https://icons.veryicon.com/png/o/miscellaneous/cloud-keeper/client-7.png"
+                      alt="Client Icon"
+                      className="w-5 h-5 object-contain"
+                    />
                   </div>
+
+                  <h5 className="text-sm font-semibold tracking-wide text-[#162E93] uppercase mb-2">
+                    Client
+                  </h5>
+
+                  <p className="text-sm text-gray-500 leading-relaxed max-w-[220px]">
+                    {client}
+                  </p>
                 </div>
               )}
 
+              {/* Location */}
               {location && (
-                <div className="flex gap-4">
-                  <MapPin className="h-6 w-6 text-[#D62828] shrink-0" />
-                  <div>
-                    <h5 className="font-bold text-[#162E93] mb-1">Location</h5>
-                    <p className="text-xs text-gray-500">{location}</p>
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 bg-gray-100 flex items-center justify-center mb-4">
+                    <img
+                      src="https://www.freeiconspng.com/uploads/google-location-icon-16.png"
+                      alt="Location Icon"
+                      className="w-5 h-5 object-contain"
+                    />
+                  </div>
+
+                  <h5 className="text-sm font-semibold tracking-wide text-[#162E93] uppercase mb-2">
+                    Location
+                  </h5>
+
+                  <p className="text-sm text-gray-500 leading-relaxed max-w-[220px]">
+                    {location}
+                  </p>
+                </div>
+              )}
+
+              {/* Technical Scope */}
+              {(scope && scope.length > 0) && (
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 bg-gray-100 flex items-center justify-center mb-4">
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/1835/1835948.png"
+                      alt="Technical Scope Icon"
+                      className="w-5 h-5 object-contain"
+                    />
+                  </div>
+
+                  <h5 className="text-sm font-semibold tracking-wide text-[#162E93] uppercase mb-3">
+                    Technical Scope
+                  </h5>
+
+                  <div className="flex flex-wrap justify-center gap-2 max-w-[260px]">
+                    {scope.map((item, idx) => (
+                      <span
+                        key={idx}
+                        className="text-[11px] font-medium bg-gray-100 text-gray-600 px-3 py-1"
+                      >
+                        {item}
+                      </span>
+                    ))}
                   </div>
                 </div>
               )}
 
-              {(scope && scope.length > 0) && (
-                <div className="flex gap-4">
-                  <ClipboardList className="h-6 w-6 text-[#D62828] shrink-0" />
-                  <div>
-                    <h5 className="font-bold text-[#162E93] mb-1">Technical Scope</h5>
-                    <div className="flex flex-wrap gap-1.5 mt-1">
-                      {scope.map((item, idx) => (
-                        <span key={idx} className="text-[10px] font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-none">
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </Container>

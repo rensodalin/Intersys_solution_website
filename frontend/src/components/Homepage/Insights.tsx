@@ -112,97 +112,100 @@ export function Insights() {
                     min-w-0
                   "
                 >
-                  <motion.div
-                    animate={{
-                      scale: isSelected ? 1 : 0.8,
-                      opacity: isSelected ? 1 : 0.6,
-                      y: isSelected ? 0 : 20,
-                    }}
-                    whileHover={{
-                      scale: 1.01,
-                      y: -4,
-                      rotateX: 1,
-                      rotateY: -1,
-                    }}
-                    transition={{
-                      duration: 0.8,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                    className="
-                      group/card
-                      relative
-                      aspect-[4/5]
-                      overflow-hidden
-                      rounded-[2px]
-                      bg-[#0A1628]
-                      overflow-hidden
-                    "
+                  <Link 
+                    to="/insights/$slug"
+                    params={{ slug: item.slug }}
+                    className="block"
                   >
-                    {/* Image */}
-                    <img
-                      src={item.image && item.image[0]}
-                      alt={item.title}
+                    <motion.div
+                      animate={{
+                        scale: isSelected ? 1 : 0.8,
+                        opacity: isSelected ? 1 : 0.6,
+                        y: isSelected ? 0 : 20,
+                      }}
+                      whileHover={{
+                        scale: 1.01,
+                        y: -4,
+                        rotateX: 1,
+                        rotateY: -1,
+                      }}
+                      transition={{
+                        duration: 0.8,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
                       className="
-                        absolute
-                        inset-0
-                        h-full
-                        w-full
-                        object-cover
-                        brightness-100
-                        contrast-100
-                        saturate-100
-                        transition-transform
-                        duration-[4000ms]
-                        ease-out
-                        group-hover/card:scale-105
+                        group/card
+                        relative
+                        aspect-[4/5]
+                        overflow-hidden
+                        rounded-[2px]
+                        bg-[#0A1628]
+                        overflow-hidden
                       "
-                    />
+                    >
+                      {/* Image */}
+                      <img
+                        src={item.image && item.image[0]}
+                        alt={item.title}
+                        className="
+                          absolute
+                          inset-0
+                          h-full
+                          w-full
+                          object-cover
+                          brightness-100
+                          contrast-100
+                          saturate-100
+                          transition-transform
+                          duration-[4000ms]
+                          ease-out
+                          group-hover/card:scale-105
+                        "
+                      />
 
-                    {/* Overlay - Localized at bottom for legibility */}
-                    <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                      {/* Overlay - Localized at bottom for legibility */}
+                      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
 
-                    {/* Top Light */}
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.15),transparent_45%)]"></div>
+                      {/* Top Light */}
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.15),transparent_45%)]"></div>
 
-                    {/* Content */}
-                    <div className="relative z-10 flex h-full flex-col justify-end p-6 md:p-8">
-                      <div className="mb-2">
-                        <span
-                          className="
-                            inline-flex
-                            items-center
-                            text-[11px]
-                            font-bold
-                            tracking-wider
-                            text-[#FF4400]
-                          "
-                        >
-                          {item.category}
-                        </span>
+                      {/* Content */}
+                      <div className="relative z-10 flex h-full flex-col justify-end p-6 md:p-8">
+                        <div className="mb-2">
+                          <span
+                            className="
+                              inline-flex
+                              items-center
+                              text-[11px]
+                              font-bold
+                              tracking-wider
+                              text-[#FF4400]
+                            "
+                          >
+                            {item.category}
+                          </span>
+                        </div>
+
+                        <h3 className="text-xl md:text-2xl font-bold leading-[1.1] tracking-tight text-white mb-2">
+                          {item.title}
+                        </h3>
+
+                        <div className="max-h-0 overflow-hidden opacity-0 transition-all duration-500 group-hover/card:max-h-[300px] group-hover/card:opacity-100">
+                          <p className="text-sm text-white/60 leading-relaxed mb-6 mt-4">
+                            {item.desc}
+                          </p>
+
+                          <div className="inline-flex items-center gap-2 text-sm font-semibold text-[#FF4400] hover:text-white transition-colors">
+                            <span>Explore More</span>
+                            <ArrowUpRight className="h-4 w-4" />
+                          </div>
+                        </div>
                       </div>
 
-                      <h3 className="text-xl md:text-2xl font-bold leading-[1.1] tracking-tight text-white mb-2">
-                        {item.title}
-                      </h3>
-
-                      <div className="max-h-0 overflow-hidden opacity-0 transition-all duration-500 group-hover/card:max-h-[300px] group-hover/card:opacity-100">
-                        <p className="text-sm text-white/60 leading-relaxed mb-6 mt-4">
-                          {item.desc}
-                        </p>
-
-                        <Link
-                          to={`/insights/${item.slug}`}
-                          className="inline-flex items-center gap-2 text-sm font-semibold text-[#FF4400] hover:text-white transition-colors"
-                        >
-                          <span>Explore More</span>
-                          <ArrowUpRight className="h-4 w-4" />
-                        </Link>
-                      </div>
-                    </div>
-
-                    {/* Border Glow */}
-                    <div className="absolute inset-0 rounded-[5px] ring-1 ring-inset ring-black/5"></div>
-                  </motion.div>
+                      {/* Border Glow */}
+                      <div className="absolute inset-0 rounded-[5px] ring-1 ring-inset ring-black/5"></div>
+                    </motion.div>
+                  </Link>
                 </div>
               );
             })}
