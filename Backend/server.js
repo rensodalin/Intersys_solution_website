@@ -8,6 +8,7 @@ import connectDB from "./conn/conn.js";
 import authRoutes from "./auth/auth.js";
 import insightsRoutes from "./routes/insights.js";
 import projectRoutes from "./routes/project.js";
+import posterRoutes from "./routes/posters.js";
 
 dotenv.config();
 
@@ -57,6 +58,7 @@ app.use("/auth", authRoutes);
 // ✅ INSIGHTS ROUTES
 app.use("/api/insights", insightsRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/posters", posterRoutes);
 
 // ✅ EMAIL TRANSPORT
 const transporter = nodemailer.createTransport({

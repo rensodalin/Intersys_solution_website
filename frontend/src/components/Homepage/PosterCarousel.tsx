@@ -1,49 +1,44 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import img1 from "@/assets/image.png";
-import img2 from "@/assets/image copy.png";
-import img3 from "@/assets/image copy 2.png";
-import img4 from "@/assets/image copy 3.png";
-import img5 from "@/assets/image copy 4.png";
-
-const posters = [
-  {
-    src: img1,
-    link: "https://www.facebook.com/IntersysSolutions/posts/pfbid06p9f9RFiXFo7Ry1WdqU3oparMRSyoiSSseijFGucuELYA3En1gQLQkFz8gdPbMp7l?rdid=288qEcMIhA3tD3JR#",
-  },
-  {
-    src: img2,
-    link: "https://www.facebook.com/IntersysSolutions/posts/pfbid0eCFEQKJka5DRktVaqU9mfFC32oq8NEXJiy5iSxAhWV9ywSEJp4ZFGatrH9azjRSKl?rdid=PVUlGtZxjGKzhgYG#",
-  },
-  {
-    src: img3,
-    link: "https://www.facebook.com/IntersysSolutions/posts/pfbid02zpeBZKXdRjkfUrmqMQd1NW6dfyy4UpvcEhZMaUWfk5Vxe6jCMbLtQetqsgE28FGql?rdid=VbFSh3qAHof0Hl6U#",
-  },
-  {
-    src: img4,
-    link: "https://www.facebook.com/IntersysSolutions/posts/pfbid0KCKGUAPfUpQUs7FWH2bYX9jnWfJ6njKtzgJLDzuwsfN4rVvvT5uTJWi2q8r3fA9Yl?rdid=op2J1cGAvEwtFIhZ#",
-  },
-  {
-    src: img5,
-    link: "https://www.facebook.com/share/p/1AzkC5TcDi/",
-  },
-];
+interface Poster {
+  _id: string;
+  image: string;
+  link: string;
+}
 
 export function PosterCarousel() {
+  const [posters, setPosters] = useState<Poster[]>([]);
+  const [loading, setLoading] = useState(true);
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  // auto move animation
+  // Fetch from Backend
+  useEffect(() => {
+    const fetchPosters = async () => {
+      try {
+        const baseUrl = `http://${window.location.hostname}:5000`;
+        const res = await fetch(`${baseUrl}/api/posters`);
+        const data = await res.json();
+        if (data.success) {
+          setPosters(data.data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch posters:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPosters();
+  }, []);
+
+  // auto move animation (KEEPING YOUR EXACT UI LOGIC)
   useEffect(() => {
     const slider = sliderRef.current;
-
-    if (!slider) return;
+    if (!slider || posters.length === 0) return;
 
     let scrollAmount = 0;
-
     const autoScroll = () => {
       scrollAmount += 1;
-
       slider.scrollTo({
         left: scrollAmount,
       });
@@ -55,20 +50,26 @@ export function PosterCarousel() {
     };
 
     const interval = setInterval(autoScroll, 16);
-
     return () => clearInterval(interval);
-  }, []);
+  }, [posters]);
 
   const scroll = (direction: "left" | "right") => {
     if (sliderRef.current) {
       const scrollAmount = direction === "left" ? -500 : 500;
-
       sliderRef.current.scrollBy({
         left: scrollAmount,
         behavior: "smooth",
       });
     }
   };
+
+  if (loading || posters.length === 0) {
+    return (
+      <div className="bg-[#f7f8fb] py-20 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#162E93] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <section className="relative overflow-hidden bg-[#f7f8fb] border-t border-black/5 group/section">
@@ -94,6 +95,7 @@ export function PosterCarousel() {
         ref={sliderRef}
         className="flex overflow-x-scroll whitespace-nowrap hide-scrollbar"
       >
+        {/* DUPLICATE ARRAY FOR SEAMLESS LOOP */}
         {[...posters, ...posters].map((post, idx) => (
           <a
             key={idx}
@@ -115,9 +117,13 @@ export function PosterCarousel() {
           >
             <div className="relative aspect-[3/4] overflow-hidden bg-[#eceff3]">
               <img
-                src={post.src}
+                src={post.image}
                 alt={`Poster ${idx + 1}`}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                onError={(e) => {
+                  // Fallback for bad links
+                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800";
+                }}
               />
 
               {/* overlay */}
@@ -127,12 +133,10 @@ export function PosterCarousel() {
               <div className="absolute inset-x-0 bottom-0 p-5 translate-y-5 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-[1px] bg-white/60" />
-
                   <span className="text-white text-[10px] uppercase tracking-[0.18em] font-medium">
                     Facebook
                   </span>
                 </div>
-
                 <p className="text-white text-sm mt-2 font-medium">
                   View Post
                 </p>
@@ -142,12 +146,10 @@ export function PosterCarousel() {
         ))}
       </div>
 
-      {/* hide scrollbar */}
       <style>{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }
-
         .hide-scrollbar {
           -ms-overflow-style: none;
           scrollbar-width: none;
