@@ -9,8 +9,10 @@ const insightSchema = new mongoose.Schema({
     image: { type: [String], required: true }, // Array of images
     author: { type: String, default: "Intersys Team" },
 
-    // Premium Layout Fields
-    layoutType: { type: String, enum: ["standard", "premium"], default: "premium" },
+    // Project metadata for cases
+    client: { type: String },
+    location: { type: String },
+    scope: { type: [String] },
 
     // Section 1 (Side-by-side)
     section1Image: { type: String },

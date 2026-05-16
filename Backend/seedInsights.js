@@ -13,6 +13,9 @@ const insights = [
     category: "Heritage",
     date: "May 15, 2024",
     image: ["https://images.unsplash.com/photo-1673724319943-3a05bf8956e4?q=80&w=1332&auto=format&fit=crop"],
+    client: "Heritage Cambodia",
+    location: "Siem Reap, Cambodia",
+    scope: ["Neural Mapping", "Thermal Inertia", "Load Balancing"],
 
     // Heritage style sections
     section1Title: "Structural Preservation",
@@ -48,6 +51,9 @@ const insights = [
     image: [
       "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1400&auto=format&fit=crop"
     ],
+    client: "Royal Medical Center",
+    location: "Phnom Penh, Cambodia",
+    scope: ["Critical Care Automation", "Energy Routing", "System Integration"],
 
     // SECTION 1
     section1Title: "Critical Care Automation",
@@ -97,6 +103,9 @@ const insights = [
     image: [
       "https://images.unsplash.com/photo-1778483154281-70a8fa019871?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     ],
+    client: "Green Urban Initiative",
+    location: "Sihanoukville, Cambodia",
+    scope: ["Green Grid Analytics", "Bio-Integrated Regulation", "Energy Optimization"],
 
     // SECTION 1
     section1Title: "Green Grid Integration",

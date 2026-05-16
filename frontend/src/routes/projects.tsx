@@ -68,9 +68,9 @@ function ProjectsPage() {
                                 desc: item.desc,
                                 image: item.image[0],
                                 category: item.category,
-                                client: item.author || "Intersys Solutions",
+                                client: item.client || item.author || "Intersys Solutions",
                                 location: item.location || "Phnom Penh, Cambodia",
-                                scope: scope.length > 0 ? scope : ["System Integration", "Smart Solutions"],
+                                scope: item.scope && item.scope.length > 0 ? item.scope : (scope.length > 0 ? scope : ["System Integration", "Smart Solutions"]),
                                 slug: item.slug
                             };
                         });

@@ -161,7 +161,7 @@ const projects = [
     {
         title: "Olympia Medical HUB",
         desc: "Integrated medical center AHU control for modern healthcare facilities.",
-        image: "https://lh6.googleusercontent.com/proxy/_IsgbK933Yakn_24DRgj-Gg8lsMWHGhUHMC5lJfCYEuZ47VfuVxiwtChCELgwrzkkxfPP3NCIIRXVTk9bETuZs6zHvguL2YiGPUURFw6pT-_yZte",
+        image: "https://cambodiagaylife.com/wp-content/uploads/2021/06/The-Olympia-Medical-Hub-%E5%A5%A7%E6%9E%97%E5%8C%B9%E4%BA%9E%E9%86%AB%E7%99%82%E4%B8%AD%E5%BF%83-%E6%96%B0%E5%86%A0%E8%82%BA%E7%82%8E%E6%AA%A2%E6%B8%AC-%E6%9F%AC%E5%9F%94%E5%AF%A8%E9%87%91%E9%82%8A-Covid-19-%E9%86%AB%E9%99%A2-hospital-Cambodia-Phnom-Penhintercare-medical-center-2-1024x767.jpg",
         category: "Commercial",
         client: "Krorvan I/O.",
         location: "C5 , 5th floor , Olympia City, Building C5, Street 161, Sangkat Veal Vong, Khan 7 Makara, Phnom Penh",
