@@ -230,16 +230,16 @@ export function InsightsDetail(props: InsightsDetailProps) {
                 alt="Banner"
                 className="absolute inset-0 w-full h-full object-cover brightness-50"
               />
-              <div className="absolute inset-0 flex items-center justify-end px-12 pt-35">
+              <div className="absolute inset-0 flex items-center justify-end px-10 pt-32">
                 {pdfUrl && (
                   <a
                     href={pdfUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-[#C3110C] hover:bg-red-700 text-white px-8 py-4 rounded-sm flex items-center gap-3 font-bold transition-all transform hover:scale-105 shadow-xl no-underline"
+                    className="inline-flex items-center gap-2 bg-[#C3110C] hover:bg-[#a80f0b] text-white text-sm font-medium px-5 py-2.5 rounded-md shadow-md transition-all duration-300 hover:translate-y-[-1px] no-underline"
                   >
-                    Project Reference
-                    <Download className="h-5 w-5" />
+                    <span>Project Reference</span>
+                    <Download className="h-4 w-4" />
                   </a>
                 )}
               </div>
@@ -300,7 +300,7 @@ export function InsightsDetail(props: InsightsDetailProps) {
         <section className="py-24 bg-gray-50 border-t border-gray-100 overflow-hidden">
           <Container>
             <div className="mb-12">
-              <h2 className="text-3xl md:text-4xl font-semibold text-[#162E93] tracking-tight">
+              <h2 className="text-2xl md:text-3xl font-semibold text-[#162E93] tracking-tight">
                 {technicalTitle || "Technical Deployment"}
               </h2>
               <div className="mt-3 h-[2px] w-16 bg-[#9B0F06]" />

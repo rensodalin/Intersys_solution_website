@@ -92,15 +92,11 @@ export function FeaturedProjects() {
                         </motion.div>
                     );
 
-                    if (p.slug) {
-                        return (
-                            <Link key={p._id || p.title} to="/insights/$slug" params={{ slug: p.slug }} className="block">
-                                {Content}
-                            </Link>
-                        );
-                    }
-
-                    return <div key={p._id || p.title}>{Content}</div>;
+                    return (
+                        <Link key={p._id || p.title} to="/projects" className="block">
+                            {Content}
+                        </Link>
+                    );
                 })}
             </div>
         </section>

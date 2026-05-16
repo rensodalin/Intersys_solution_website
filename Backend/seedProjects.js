@@ -45,7 +45,7 @@ const projects = [
         title: "Novotel Holiday Palace",
         desc: "Comprehensive building management system for coastal hospitality and luxury resort operations.",
         image: "https://www.novotelsihanoukville.com/wp-content/uploads/sites/78/2024/02/Parking.png",
-        category: "Hospitality",
+        category: "Office",
         client: "Lotus Grean Team",
         location: "2 Thnou St, Preah Sihanouk",
         scope: ["HVAC System", "Plumbing System", "Electrical System", "Lighting System", "Ventilation System", "Lift System", "Power Meter"]
@@ -54,7 +54,7 @@ const projects = [
         title: "PPM Pharma Product Manufacture",
         desc: "Controlled environment management system for high-standard pharmaceutical manufacturing.",
         image: "https://fhdev.info/uploads/677-photo_2024-04-08_11-04-27.jpg",
-        category: "Industrial",
+        category: "Hospitality",
         client: "Lotus Grean Team",
         location: "Russian Federation Blvd (110), Phnom Penh",
         scope: ["HVAC System", "Plumbing System", "Electrical System", "Power Meter"]
@@ -81,7 +81,7 @@ const projects = [
         title: "E‐Sun Tower",
         desc: "Intelligent office tower management featuring full HVAC, lift, and power metering integration.",
         image: "https://lotusgreenteam.com/wp-content/uploads/2022/02/E-Sun-Tower-for-web-2.jpg",
-        category: "Office",
+        category: "Industrial",
         client: "Lotus Green Team",
         location: "Preah Monivong Blvd, Phnom Penh",
         scope: ["HVAC System", "Plumbing System", "Electrical System", "Lighting System", "Ventilation System", "Lift System", "Power Meter"]

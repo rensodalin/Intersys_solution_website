@@ -144,36 +144,45 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
         </div>
 
         {/* Right: Apply / QR Section (Now on the right) */}
-        <div 
-          className="w-full lg:w-1/2 py-12 px-10 flex flex-col items-center justify-center text-center relative overflow-hidden"
-          style={{ 
-            backgroundImage: `linear-gradient(rgba(8, 31, 61, 0.9), rgba(8, 31, 61, 0.9)), url(${foot})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
+        <div
+          className="w-full lg:w-1/2 relative overflow-hidden flex items-center justify-center px-8 py-14"
+          style={{
+            backgroundImage: `linear-gradient(rgba(8,31,61,0.88), rgba(8,31,61,0.88)), url(${foot})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         >
-          <div className="max-w-xs w-full space-y-8 relative z-10">
-            <div className="space-y-3">
-              <p className="text-white font-medium text-lg leading-relaxed">
+          <div className="relative z-10 max-w-sm w-full text-center">
+
+            {/* Text */}
+            <div className="mb-8">
+              <p className="text-gray-200 text-base mb-3 tracking-wide">
                 Scan the QR code below or
               </p>
+
               <Link
                 to="/request-quote"
-                className="text-xl md:text-2xl font-bold text-white hover:text-[#FF6B00] transition-colors decoration-2 underline-offset-8 underline"
+                className="inline-block text-2xl font-semibold text-white border-b border-[#FF6B00] pb-1 hover:text-[#FF6B00] transition-colors duration-300"
               >
-                Click here to request a quote!
+                Request a Quote
               </Link>
             </div>
 
-            <div className="bg-white p-6 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] inline-block group hover:scale-105 transition-transform duration-500">
-              <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer">
+            {/* QR Card */}
+            <div className="bg-white/95 p-5 shadow-xl inline-block border border-gray-200">
+              <a
+                href="https://t.me/chun_sochet"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img
                   src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://t.me/chun_sochet"
                   alt="Telegram QR Code"
-                  className="w-48 h-48 md:w-56 md:h-56 object-contain"
+                  className="w-48 h-48 md:w-52 md:h-52 object-contain"
                 />
               </a>
             </div>
+
           </div>
         </div>
 
