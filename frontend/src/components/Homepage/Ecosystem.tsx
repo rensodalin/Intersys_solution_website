@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/Common/Container";
-import blueprintBg from "@/assets/project/image.png";
+import blueprintBg from "@/assets/BMS/image.png";
 import siteBg from "@/assets/Intelligeinc.png";
 
 export function Ecosystem() {
