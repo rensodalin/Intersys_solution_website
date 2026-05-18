@@ -79,7 +79,7 @@ function AccessControlPage() {
 
                         {/* LEFT */}
                         <div className="space-y-6">
-                            <h2 className="text-4xl md:text-5xl font-bold text-[#1A3263] leading-tight tracking-tight">
+                            <h2 className="text-3xl md:text-4xl font-bold text-[#1A3263] leading-tight tracking-tight">
                                 Comprehensive Protection <br />
                                 <span className="text-red-600 font-extrabold">
                                     for Your Business
@@ -88,18 +88,18 @@ function AccessControlPage() {
 
                             <div className="w-20 h-[3px] bg-red-600 rounded-full" />
 
-                            <p className="text-gray-500 leading-relaxed text-lg max-w-md">
+                            <p className="text-gray-500 leading-relaxed text-md max-w-md">
                                 Strong security foundation combining digital resilience and physical access control systems.
                             </p>
                         </div>
 
                         {/* RIGHT */}
                         <div className="space-y-6">
-                            <p className="text-gray-600 leading-relaxed text-lg">
+                            <p className="text-gray-600 leading-relaxed text-md">
                                 Intersys Solutions Co., Ltd provides robust IT disaster recovery and access control solutions to help businesses protect critical data, systems, and physical spaces from unexpected threats.
                             </p>
 
-                            <p className="text-gray-600 leading-relaxed text-lg">
+                            <p className="text-gray-600 leading-relaxed text-md">
                                 Through advanced Access Control Systems powered by Honeywell, we enable secure and flexible control over who enters, exits, or accesses sensitive areas.
                             </p>
 
@@ -114,35 +114,33 @@ function AccessControlPage() {
 
                     {/* CARDS */}
                     <div className="grid md:grid-cols-4 gap-6 mt-24">
-
                         {[
                             {
                                 title: "Physical Access Control",
-                                desc: "Secure entry points with biometric, card, and PIN-based authentication"
+                                desc: "Secure entry points with biometric, card, and PIN-based authentication",
                             },
                             {
                                 title: "IT Disaster Recovery",
-                                desc: "Automated backup and rapid system restoration capabilities"
+                                desc: "Automated backup and rapid system restoration capabilities",
                             },
                             {
                                 title: "Compliance Support",
-                                desc: "Meet regulatory requirements with detailed audit trails"
+                                desc: "Meet regulatory requirements with detailed audit trails",
                             },
                             {
                                 title: "Smart Integration",
-                                desc: "Seamless connectivity with existing building management systems"
-                            }
+                                desc: "Seamless connectivity with existing building management systems",
+                            },
                         ].map((card, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, y: 25 }}
+                                initial={{ opacity: 0, y: 22 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.08 }}
-                                className="group relative p-7 rounded-lg border border-gray-100 bg-white
-                    hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden"
+                                className="group relative p-7 bg-white border border-gray-100 rounded-md
+      hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                             >
-
                                 {/* hover glow */}
                                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-red-500/5 to-transparent" />
 
@@ -151,7 +149,7 @@ function AccessControlPage() {
                                     {`0${i + 1}`}
                                 </div>
 
-                                <h4 className="font-bold text-[#1A3263] text-lg mb-3 leading-snug group-hover:text-red-600 transition-colors">
+                                <h4 className="font-semibold text-[#1A3263] text-lg mb-3 leading-snug group-hover:text-red-600 transition-colors">
                                     {card.title}
                                 </h4>
 
@@ -161,10 +159,8 @@ function AccessControlPage() {
 
                                 {/* bottom line */}
                                 <div className="mt-6 h-[2px] w-10 bg-red-600 group-hover:w-full transition-all duration-300" />
-
                             </motion.div>
                         ))}
-
                     </div>
 
                 </Container>
@@ -185,9 +181,7 @@ function AccessControlPage() {
 
                             <div className="inline-flex items-center gap-3">
                                 <div className="w-10 h-[2px] bg-red-600" />
-                                <span className="text-xs tracking-widest text-white/50 uppercase">
-                                    Technology Partner
-                                </span>
+
                             </div>
 
                             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
@@ -206,7 +200,7 @@ function AccessControlPage() {
                             {/* glow behind logo */}
                             <div className="absolute inset-0 bg-red-600/20 blur-3xl rounded-full scale-150 opacity-60" />
 
-                            <div className="relative bg-white/5 px-12 py-10 rounded-lg border border-white/10 backdrop-blur-md
+                            <div className="relative  px-12 py-10 rounded-lg 
                     hover:bg-white/10 transition-all duration-300">
 
                                 <img

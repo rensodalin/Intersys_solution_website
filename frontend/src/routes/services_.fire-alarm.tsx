@@ -357,76 +357,93 @@ function FireAlarmPage() {
                 </Container>
             </section>
             {/* ─── SMART MONITORING ─── */}
-            <section className="py-24 bg-[#0A0F1A] text-white overflow-hidden">
+            <section className="py-24 bg-[#EEEEEE] text-white overflow-hidden">
                 <Container>
+                    {/* Header */}
                     <div className="text-center mb-16 space-y-4">
-                        <h2 className="text-4xl font-bold">Smart Monitoring</h2>
-                        <p className="text-white/50 max-w-2xl mx-auto">
-                            Complete visibility and control over your safety systems. Monitor, manage, and respond to
-                            critical events from anywhere in the world.
+                        <h2 className="text-4xl font-bold text-[#2C3947]">
+                            Smart Monitoring
+                        </h2>
+
+                        <p className="text-black/70 max-w-2xl mx-auto">
+                            Real-time visibility and control of fire safety systems across all sites.
+                            Monitor performance, detect events instantly, and respond from anywhere.
                         </p>
+
                         {/* Stats */}
                         <div className="flex flex-wrap justify-center gap-10 pt-6">
                             {[
-                                { value: "99.9%", label: "Uptime" },
-                                { value: "<1s", label: "Alert Latency" },
-                                { value: "24/7", label: "Monitoring" },
-                                { value: "256-bit", label: "Encryption" }
+                                { value: "99.9%", label: "System Uptime" },
+                                { value: "<1s", label: "Alert Response" },
+                                { value: "24/7", label: "Live Monitoring" },
+                                { value: "256-bit", label: "Encrypted Data" },
                             ].map((s, i) => (
                                 <div key={i} className="text-center">
                                     <p className="text-3xl font-bold text-red-500">{s.value}</p>
-                                    <p className="text-white/40 text-xs mt-1">{s.label}</p>
+                                    <p className="text-black/50 text-xs mt-1">{s.label}</p>
                                 </div>
                             ))}
                         </div>
                     </div>
 
+                    {/* Cards */}
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {[
                             {
                                 icon: Wifi,
                                 title: "Remote Access",
-                                desc: "Monitor system status from office, home, or while traveling.",
-                                bullets: ["Real-time visibility", "Device health check", "Fault detection"]
+                                desc: "Securely view system status and device health from any location in real time.",
+                                bullets: ["Live system status", "Device diagnostics", "Fault detection"],
                             },
                             {
                                 icon: Smartphone,
-                                title: "Mobile Alerts",
-                                desc: "Instant push notifications, SMS, or email alerts for critical events.",
-                                bullets: ["Fire/Gas alerts", "System faults", "Custom preferences"]
+                                title: "Instant Alerts",
+                                desc: "Receive critical event notifications instantly via mobile, SMS, or email.",
+                                bullets: ["Fire & gas events", "System faults", "Custom alert rules"],
                             },
                             {
                                 icon: LayoutDashboard,
-                                title: "Dashboards",
-                                desc: "Web or app-based interfaces for comprehensive visualization.",
-                                bullets: ["Live Sensor Maps", "Historical Logs", "Analytics Reports"]
+                                title: "System Dashboard",
+                                desc: "Centralized interface for live monitoring, logs, and system analytics.",
+                                bullets: ["Sensor visualization", "Event history", "Performance reports"],
                             },
                             {
                                 icon: Users,
-                                title: "Access Control",
-                                desc: "Grant access to facility managers or emergency response teams.",
-                                bullets: ["Role-based Access", "Team Management", "Audit Trails"]
-                            }
+                                title: "Access Management",
+                                desc: "Control user permissions for technicians, managers, and emergency teams.",
+                                bullets: ["Role-based access", "Team control", "Audit tracking"],
+                            },
                         ].map((card, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, y: 20 }}
+                                initial={{ opacity: 0, y: 18 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className="p-6 bg-white/5 border border-white/10 rounded-xl space-y-5"
+                                transition={{ delay: i * 0.08 }}
+                                className="p-6 bg-white text-[#0A0F1A] border border-gray-100 rounded-lg shadow-sm hover:shadow-md transition"
                             >
-                                <div className="w-10 h-10 bg-red-500/20 text-red-400 rounded-lg flex items-center justify-center">
-                                    <card.icon size={20} />
-                                </div>
+                                {/* Icon */}
+                                <card.icon size={20} className="text-[#0A0F1A] mb-4" />
+
+                                {/* Title + Description */}
                                 <div>
-                                    <h4 className="font-bold text-white mb-2">{card.title}</h4>
-                                    <p className="text-white/40 text-xs leading-relaxed">{card.desc}</p>
+                                    <h4 className="font-semibold text-base mb-2">
+                                        {card.title}
+                                    </h4>
+                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                        {card.desc}
+                                    </p>
                                 </div>
-                                <ul className="space-y-1.5">
+
+                                {/* Bullets */}
+                                <ul className="mt-4 space-y-2">
                                     {card.bullets.map((b) => (
-                                        <li key={b} className="flex items-center gap-2 text-white/60 text-xs">
-                                            <CheckCircle2 size={12} className="text-red-500 shrink-0" /> {b}
+                                        <li
+                                            key={b}
+                                            className="flex items-center gap-2 text-gray-600 text-xs"
+                                        >
+                                            <CheckCircle2 size={14} className="text-gray-400 shrink-0" />
+                                            {b}
                                         </li>
                                     ))}
                                 </ul>
@@ -437,62 +454,96 @@ function FireAlarmPage() {
                     {/* Role badges */}
                     <div className="mt-14 flex flex-wrap justify-center gap-4">
                         {[
-                            { abbr: "AD", role: "Administrator", desc: "Full system access" },
-                            { abbr: "FM", role: "Facility Manager", desc: "Monitoring & reports" },
-                            { abbr: "TC", role: "Technician", desc: "Maintenance access" }
+                            { abbr: "AD", role: "Administrator", desc: "Full system control" },
+                            { abbr: "FM", role: "Facility Manager", desc: "Monitoring and reporting access" },
+                            { abbr: "TC", role: "Technician", desc: "Maintenance and diagnostics access" },
                         ].map((r, i) => (
-                            <div key={i} className="flex items-center gap-4 px-6 py-4 bg-white/5 border border-white/10 rounded-xl">
-                                <div className="w-10 h-10 bg-red-600/30 text-red-400 font-bold rounded-full flex items-center justify-center text-sm">{r.abbr}</div>
+                            <div
+                                key={i}
+                                className="flex items-center gap-4 px-6 py-4 bg-white text-[#0A0F1A] border border-gray-100 rounded-lg"
+                            >
+                                <div className="w-9 h-9 bg-gray-100 text-[#0A0F1A] font-semibold rounded-md flex items-center justify-center text-sm">
+                                    {r.abbr}
+                                </div>
+
                                 <div>
-                                    <p className="font-semibold text-white text-sm">{r.role}</p>
-                                    <p className="text-white/40 text-xs">{r.desc}</p>
+                                    <p className="font-semibold text-sm">{r.role}</p>
+                                    <p className="text-gray-500 text-xs">{r.desc}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </Container>
             </section>
-
             {/* ─── UNRIVALED RELIABILITY ─── */}
             <section className="py-24 bg-[#F8F9FA]">
                 <Container>
-                    <div className="text-center mb-16 space-y-4">
-                        <h2 className="text-4xl font-bold text-[#1A3263]">High Reliability</h2>
-                        <p className="text-gray-500 max-w-2xl mx-auto">
+                    {/* Header */}
+                    <div className="text-center mb-14 space-y-3">
+                        <h2 className="text-3xl md:text-4xl font-semibold text-[#1A3263] tracking-tight">
+                            High Reliability
+                        </h2>
+                        <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
                             Engineered to operate accurately, consistently, and safely under all conditions — especially
                             during critical emergencies — without failure or delay.
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8">
+                    {/* Cards */}
+                    <div className="grid md:grid-cols-3 gap-6">
                         {[
-                            { title: "24/7 Dedicated Support", icon: Globe, desc: "Emergency hotline, rapid response teams, and remote system monitoring to detect issues instantly. Planned maintenance prevents failures before they occur." },
-                            { title: "Regulatory Compliance", icon: Shield, desc: "Meeting and exceeding NFPA, EN54, and local building codes. Certified components from trusted brands with proven performance in harsh environments." },
-                            { title: "Intensive Testing", icon: CheckCircle2, desc: "Rigorous system validation before every deployment. Redundancy and fail-safe features ensure consistent detection and response with real-time monitoring." }
+                            {
+                                title: "24/7 Dedicated Support",
+                                icon: Globe,
+                                desc: "Emergency hotline, rapid response teams, and remote system monitoring to detect issues instantly. Planned maintenance prevents failures before they occur.",
+                            },
+                            {
+                                title: "Regulatory Compliance",
+                                icon: Shield,
+                                desc: "Meeting and exceeding NFPA, EN54, and local building codes. Certified components from trusted brands with proven performance in harsh environments.",
+                            },
+                            {
+                                title: "Intensive Testing",
+                                icon: CheckCircle2,
+                                desc: "Rigorous system validation before every deployment. Redundancy and fail-safe features ensure consistent detection and response with real-time monitoring.",
+                            },
                         ].map((card, i) => (
-                            <div key={i} className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm space-y-4 text-center">
-                                <div className="w-12 h-12 bg-[#1A3263] text-white rounded-lg flex items-center justify-center mx-auto">
-                                    <card.icon size={24} />
+                            <div
+                                key={i}
+                                className="bg-white border border-gray-100 p-6 md:p-7 rounded-lg hover:shadow-sm transition-shadow duration-300"
+                            >
+                                <div className="flex items-center gap-3 mb-4">
+                                    <card.icon size={20} className="text-[#1A3263] stroke-[1.5]" />
+                                    <h4 className="text-base font-semibold text-[#1A3263]">
+                                        {card.title}
+                                    </h4>
                                 </div>
-                                <h4 className="text-lg font-bold text-[#1A3263]">{card.title}</h4>
-                                <p className="text-gray-500 text-sm leading-relaxed">{card.desc}</p>
+
+                                <p className="text-gray-600 text-sm leading-relaxed">
+                                    {card.desc}
+                                </p>
                             </div>
                         ))}
                     </div>
 
-                    {/* Reliability bullets */}
-                    <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {/* Bullet List */}
+                    <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                         {[
                             "Compliant with Global Standards",
                             "Certified Components from Trusted Brands",
                             "Proven Performance in Harsh Environments",
                             "Consistent Detection & Response (Real Time)",
                             "Redundancy & Fail-Safe Features",
-                            "Advanced Security Protection"
+                            "Advanced Security Protection",
                         ].map((item) => (
-                            <div key={item} className="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-100 shadow-sm">
-                                <CheckCircle2 size={18} className="text-red-600 shrink-0" />
-                                <span className="text-[#1A3263] text-sm font-medium">{item}</span>
+                            <div
+                                key={item}
+                                className="flex items-center gap-3 px-4 py-3 bg-white border border-gray-100 rounded-md"
+                            >
+
+                                <span className="text-[#1A3263] text-sm font-medium">
+                                    {item}
+                                </span>
                             </div>
                         ))}
                     </div>
@@ -500,69 +551,97 @@ function FireAlarmPage() {
             </section>
 
             {/* ─── WHY CHOOSE US ─── */}
-            <section className="py-24 bg-white">
-                <Container>
-                    <div className="text-center mb-16 space-y-4">
-                        <h2 className="text-4xl font-bold text-[#1A3263]">Why Choose Us</h2>
-                        <p className="text-gray-500 max-w-xl mx-auto">
-                            Comprehensive fire safety expertise backed by global technology and local service excellence.
-                        </p>
-                    </div>
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {[
-                            {
-                                icon: Cpu,
-                                title: "Customized Services",
-                                items: [
-                                    "Commercial buildings (integrated with BMS, PA systems, and access control)",
-                                    "Industrial facilities (high-sensitivity smoke detection, gas monitoring)",
-                                    "Hospitality and residential (aesthetically discreet detectors, guest-room integration)"
-                                ]
-                            },
-                            {
-                                icon: Globe,
-                                title: "24/7 Support",
-                                items: [
-                                    "Emergency hotline and rapid response teams",
-                                    "Remote system monitoring to detect issues instantly",
-                                    "Planned maintenance to prevent failures before they occur"
-                                ]
-                            },
-                            {
-                                icon: Zap,
-                                title: "Innovative Solutions",
-                                items: [
-                                    "VESDA (Very Early Smoke Detection Apparatus) for high-risk environments",
-                                    "Addressable fire alarm systems for pinpoint accuracy",
-                                    "Integration with HVAC and security systems for automated emergency response"
-                                ]
-                            }
-                        ].map((card, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 16 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className="p-8 bg-[#F8F9FA] rounded-xl space-y-6"
-                            >
-                                <div className="w-12 h-12 bg-[#1A3263] text-white rounded-lg flex items-center justify-center">
-                                    <card.icon size={22} />
-                                </div>
-                                <h3 className="text-xl font-bold text-[#1A3263]">{card.title}</h3>
-                                <ul className="space-y-3">
-                                    {card.items.map((item, j) => (
-                                        <li key={j} className="flex items-start gap-2 text-gray-500 text-sm leading-relaxed">
-                                            <ChevronRight size={16} className="text-red-500 mt-0.5 shrink-0" /> {item}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </motion.div>
-                        ))}
-                    </div>
-                </Container>
-            </section>
+            <section className="relative py-24">
+                {/* Background Image */}
+                <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{
+                        backgroundImage:
+                            "url('https://images.unsplash.com/photo-1608141468855-e5a1fc4e47b4?q=80&w=687&auto=format&fit=crop')",
+                    }}
+                />
 
+                {/* Neutral overlay (no blue) */}
+                <div className="absolute inset-0 bg-black/60" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/70" />
+
+                {/* Content */}
+                <div className="relative z-10">
+                    <Container>
+                        {/* Header */}
+                        <div className="text-center mb-14 space-y-3">
+                            <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight">
+                                Why Choose Us
+                            </h2>
+                            <p className="text-gray-300 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+                                Comprehensive fire safety expertise backed by global technology and local service excellence.
+                            </p>
+                        </div>
+
+                        {/* Cards */}
+                        <div className="grid md:grid-cols-3 gap-6">
+                            {[
+                                {
+                                    icon: Cpu,
+                                    title: "Customized Services",
+                                    items: [
+                                        "Commercial buildings (integrated with BMS, PA systems, and access control)",
+                                        "Industrial facilities (high-sensitivity smoke detection, gas monitoring)",
+                                        "Hospitality and residential (aesthetically discreet detectors, guest-room integration)",
+                                    ],
+                                },
+                                {
+                                    icon: Globe,
+                                    title: "24/7 Support",
+                                    items: [
+                                        "Emergency hotline and rapid response teams",
+                                        "Remote system monitoring to detect issues instantly",
+                                        "Planned maintenance to prevent failures before they occur",
+                                    ],
+                                },
+                                {
+                                    icon: Zap,
+                                    title: "Innovative Solutions",
+                                    items: [
+                                        "VESDA (Very Early Smoke Detection Apparatus) for high-risk environments",
+                                        "Addressable fire alarm systems for pinpoint accuracy",
+                                        "Integration with HVAC and security systems for automated emergency response",
+                                    ],
+                                },
+                            ].map((card, i) => (
+                                <div
+                                    key={i}
+                                    className="bg-white/10 backdrop-blur-sm border border-white/10 p-6 md:p-7 rounded-lg hover:bg-white/15 transition"
+                                >
+                                    <div className="flex items-center gap-3 mb-5">
+                                        <card.icon size={18} className="text-white" />
+                                        <h3 className="text-lg font-semibold text-white">
+                                            {card.title}
+                                        </h3>
+                                    </div>
+
+                                    <div className="h-px bg-white/10 mb-5" />
+
+                                    <ul className="space-y-3">
+                                        {card.items.map((item, j) => (
+                                            <li
+                                                key={j}
+                                                className="flex items-start gap-2 text-gray-300 text-sm leading-relaxed"
+                                            >
+                                                <ChevronRight
+                                                    size={14}
+                                                    className="text-white/70 mt-0.5 shrink-0"
+                                                />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+                    </Container>
+                </div>
+            </section>
             {/* ─── PARTNERS ─── */}
             <section className="py-24 bg-[#F8F9FA]">
                 <Container>

@@ -99,7 +99,7 @@ function SurveillancePage() {
                             <div key={i} className="space-y-5 flex flex-col items-center">
 
                                 {/* ICON */}
-                                <div className="w-16 h-16 rounded-2xl bg-white border border-gray-100 shadow-sm flex items-center justify-center">
+                                <div className="w-16 h-16 flex items-center justify-center">
                                     <img
                                         src={item.icon}
                                         alt={item.title}
