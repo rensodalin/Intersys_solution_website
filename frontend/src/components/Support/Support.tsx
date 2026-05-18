@@ -1,10 +1,10 @@
-import { Globe } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface SupportMember {
   name: string;
   email: string;
+  phone: string;
   position: string;
 }
 
@@ -12,11 +12,13 @@ const techSupport: SupportMember[] = [
   {
     name: "Jawhar Ayadi",
     email: "jayadi@aetherial.com",
+    phone: "+1 (555) 201-4412",
     position: "Applications Engineer",
   },
   {
     name: "Mohamed Asif",
     email: "masif@aetherial.com",
+    phone: "+1 (555) 884-2190",
     position: "Manager, Technical Design & Pre-Sales",
   },
 ];
@@ -33,58 +35,71 @@ function SupportSection({
   members: SupportMember[];
 }) {
   return (
-    <div className="space-y-10">
+    <div className="space-y-8">
       {/* Header */}
-      <div className="space-y-4">
-        <h2 className="text-3xl font-bold text-gray-900">
-          {title}
+      <div className="space-y-3">
+        <h2 className="text-2xl md:text-3xl font-semibold text-[#1A3263] tracking-tight">
+          {title.split("support")[0]}
+          <span className="text-[#CE2626]">support</span>
         </h2>
 
-        <p className="text-gray-500 max-w-2xl text-sm leading-relaxed">
+        <p className="text-gray-500 max-w-2xl text-sm md:text-base leading-relaxed">
           {subtitle}
         </p>
 
-        <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+        <div className="h-px bg-gray-200" />
       </div>
 
       {/* Table */}
-      <div className="overflow-hidden border border-gray-100 rounded-xl shadow-sm">
+      <div className="overflow-hidden border border-gray-200 bg-white shadow-sm">
         <table className="w-full text-left">
           <thead>
-            <tr className="bg-gray-50 border-b border-gray-100">
-              <th className="px-8 py-4 text-sm font-medium text-gray-600">
+            <tr className="bg-gray-50 border-b border-gray-200">
+              <th className="px-6 py-4 text-sm font-medium text-gray-500">
                 Contact
               </th>
-              <th className="px-8 py-4 text-sm font-medium text-gray-600">
-                Role
+
+              <th className="px-6 py-4 text-sm font-medium text-gray-500">
+                Position
               </th>
             </tr>
           </thead>
 
-          <tbody className="bg-white divide-y divide-gray-100">
+          <tbody>
             {members.map((member, i) => (
               <tr
                 key={i}
-                className="hover:bg-gray-50 transition-colors"
+                className="border-b border-gray-100 last:border-none hover:bg-gray-50 transition-colors"
               >
                 {/* Contact */}
-                <td className="px-8 py-6">
-                  <div className="space-y-1">
+                <td className="px-6 py-5">
+                  <div className="space-y-3">
                     <p className="text-base font-semibold text-gray-900">
                       {member.name}
                     </p>
 
-                    <a
-                      href={`mailto:${member.email}`}
-                      className="text-sm text-blue-500 hover:text-red-600 transition"
-                    >
-                      {member.email}
-                    </a>
+                    <div className="space-y-2">
+                      <a
+                        href={`mailto:${member.email}`}
+                        className="inline-flex items-center gap-2 text-sm font-medium text-[#1A3263] bg-[#1A3263]/5 border border-[#1A3263]/10 px-3 py-2 hover:bg-[#C3110C] hover:text-white hover:border-[#C3110C] transition-all duration-300 cursor-pointer"
+                      >
+                        <Mail className="w-4 h-4" />
+                        {member.email}
+                      </a>
+
+                      <a
+                        href={`tel:${member.phone}`}
+                        className="inline-flex items-center gap-2 text-sm font-medium text-[#1A3263] bg-[#1A3263]/5 border border-[#1A3263]/10 px-3 py-2 hover:bg-[#C3110C] hover:text-white hover:border-[#C3110C] transition-all duration-300 cursor-pointer"
+                      >
+                        <Phone className="w-4 h-4" />
+                        {member.phone}
+                      </a>
+                    </div>
                   </div>
                 </td>
 
-                {/* Role */}
-                <td className="px-8 py-6">
+                {/* Position */}
+                <td className="px-6 py-5">
                   <p className="text-sm text-gray-700 font-medium">
                     {member.position}
                   </p>
@@ -101,46 +116,49 @@ function SupportSection({
 export function Support() {
   return (
     <div className="min-h-screen bg-white">
-      {/* HERO (Homepage Style) */}
-      <section className="relative h-[500px] flex items-center justify-center overflow-hidden pt-20">
+      {/* Hero */}
+      <section className="relative h-[480px] flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src="https://plus.unsplash.com/premium_photo-1661763720755-a395a2a09f9a?q=80&w=1882&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Technical Support"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/50" />
+
+          <div className="absolute inset-0 bg-black/55" />
         </div>
 
         <div className="relative z-10 text-center text-white px-6 max-w-4xl">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
           >
-            <h1 className="text-3xl md:text-4xl lg:text-4xl font-bold leading-tight mb-6 pt-5">
-              Technical Support & <br /> Customer Service
+            <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-6 tracking-tight">
+              Technical support
+              <br />
+              & customer service
             </h1>
-            <p className="text-gray-200 text-lg max-w-2xl mx-auto mb-8">
-              Reliable technical support and responsive customer service
-              to ensure smooth and efficient operations.
-            </p>
 
+            <p className="text-gray-200 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+              Reliable technical support and responsive customer service to
+              ensure smooth and efficient operations.
+            </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Sections */}
-      <section className="py-28">
-        <div className="max-w-6xl mx-auto px-6 space-y-28">
+      {/* Content */}
+      <section className="py-20">
+        <div className="max-w-6xl mx-auto px-6 space-y-20">
           <SupportSection
-            title="Technical Support"
+            title="Technical support"
             subtitle="Direct access to our global network of engineers and technical specialists."
             members={techSupport}
           />
 
           <SupportSection
-            title="Customer Support"
+            title="Customer support"
             subtitle="Our team is ready to assist with inquiries, coordination, and service requests."
             members={customerSupport}
           />
