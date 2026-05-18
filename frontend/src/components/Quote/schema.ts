@@ -1,10 +1,10 @@
 import * as z from "zod";
 
 export const productRowSchema = z.object({
-    qty: z.string().optional(),
-    productNo: z.string().optional(),
-    description: z.string().optional(),
-    application: z.string().optional(),
+    qty: z.string().min(1, "Qty required"),
+    productNo: z.string().min(1, "Product No required"),
+    description: z.string().min(1, "Description required"),
+    application: z.string().min(1, "Application required"),
 });
 
 export const quoteSchema = z.object({
@@ -13,7 +13,7 @@ export const quoteSchema = z.object({
     sections: z.array(z.string()).optional(),
     name: z.string().min(2, "Name is required"),
     company: z.string().min(2, "Company is required"),
-    title: z.string().optional(),
+    title: z.string().min(2, "Job title is required"),
     phone: z.string().min(6, "Phone is required"),
     email: z.string().email("Invalid email"),
     address: z.string().min(5, "Address is required"),
@@ -21,8 +21,8 @@ export const quoteSchema = z.object({
     country: z.string().optional(),
     contactMethod: z.enum(["Email", "Phone", "Either"]),
     newsletter: z.string(),
-    companyType: z.string().optional(),
-    bmsSystem: z.string().optional(),
+    companyType: z.string().min(2, "Company type is required"),
+    bmsSystem: z.string().min(2, "System info is required"),
     otherBms: z.string().optional(),
 });
 

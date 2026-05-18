@@ -34,13 +34,21 @@ router.post("/", async (req, res) => {
             </div>
         `;
 
-        await transporter.sendMail({
-            from: `"Quote Request" <${process.env.EMAIL_USER}>`,
-            to: process.env.EMAIL_USER,
-            replyTo: quoteData.email,
-            subject: `New Quote Request - ${quoteData.company}`,
-            html: emailContent,
-        });
+        if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+            try {
+                await transporter.sendMail({
+                    from: `"Quote Request" <${process.env.EMAIL_USER}>`,
+                    to: process.env.EMAIL_USER,
+                    replyTo: quoteData.email,
+                    subject: `New Quote Request - ${quoteData.company}`,
+                    html: emailContent,
+                });
+            } catch (emailError) {
+                console.error("Failed to send notification email, but quote was saved:", emailError);
+            }
+        } else {
+            console.warn("Email credentials not configured. Skipping email notification.");
+        }
 
         res.status(201).json({ success: true, message: "Quote request submitted successfully." });
     } catch (error) {

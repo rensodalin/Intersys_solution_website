@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const productRowSchema = new mongoose.Schema({
-    qty: { type: String },
-    productNo: { type: String },
-    description: { type: String },
-    application: { type: String }
+    qty: { type: String, required: true },
+    productNo: { type: String, required: true },
+    description: { type: String, required: true },
+    application: { type: String, required: true }
 });
 
 const quoteSchema = new mongoose.Schema({
@@ -13,7 +13,7 @@ const quoteSchema = new mongoose.Schema({
     sections: [{ type: String }],
     name: { type: String, required: true },
     company: { type: String, required: true },
-    title: { type: String },
+    title: { type: String, required: true },
     phone: { type: String, required: true },
     email: { type: String, required: true },
     address: { type: String, required: true },
@@ -21,8 +21,8 @@ const quoteSchema = new mongoose.Schema({
     country: { type: String },
     contactMethod: { type: String, enum: ["Email", "Phone", "Either"] },
     newsletter: { type: String },
-    companyType: { type: String },
-    bmsSystem: { type: String },
+    companyType: { type: String, required: true },
+    bmsSystem: { type: String, required: true },
     otherBms: { type: String },
     createdAt: { type: Date, default: Date.now }
 });

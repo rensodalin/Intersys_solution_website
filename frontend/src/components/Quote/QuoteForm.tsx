@@ -90,13 +90,13 @@ export function QuoteForm() {
                 // Section Mapping based on keywords
                 // 1. Readers / Locks / Cylinders (Devices)
                 if (
-                    title.includes("READER") || 
-                    title.includes("KEYPAD") || 
-                    title.includes("LOCK") || 
-                    title.includes("CYLINDER") || 
-                    title.includes("PADLOCK") || 
-                    title.includes("XS4") || 
-                    title.includes("NEO") || 
+                    title.includes("READER") ||
+                    title.includes("KEYPAD") ||
+                    title.includes("LOCK") ||
+                    title.includes("CYLINDER") ||
+                    title.includes("PADLOCK") ||
+                    title.includes("XS4") ||
+                    title.includes("NEO") ||
                     title.includes("ÆLEMENT") ||
                     title.includes("FUSION") ||
                     title.includes("CREDENTIAL") ||
@@ -110,9 +110,9 @@ export function QuoteForm() {
 
                 // 2. Controllers / Panels
                 if (
-                    title.includes("CONTROLLER") || 
-                    title.includes("PANEL") || 
-                    title.includes("KIT") || 
+                    title.includes("CONTROLLER") ||
+                    title.includes("PANEL") ||
+                    title.includes("KIT") ||
                     title.includes("BOARD") ||
                     title.includes("IQ3") ||
                     title.includes("GATEWAY") ||
@@ -126,9 +126,9 @@ export function QuoteForm() {
 
                 // 3. Software
                 if (
-                    title.includes("SOFTWARE") || 
-                    title.includes("PRO-WATCH") || 
-                    title.includes("WIN-PAK") || 
+                    title.includes("SOFTWARE") ||
+                    title.includes("PRO-WATCH") ||
+                    title.includes("WIN-PAK") ||
                     title.includes("MANAGEMENT") ||
                     title.includes("SUITE") ||
                     title.includes("PLATFORM") ||
@@ -141,9 +141,9 @@ export function QuoteForm() {
 
                 // 4. Power & Accessories
                 if (
-                    title.includes("POWER SUPPLY") || 
-                    title.includes("CABLE") || 
-                    title.includes("HOUSING") || 
+                    title.includes("POWER SUPPLY") ||
+                    title.includes("CABLE") ||
+                    title.includes("HOUSING") ||
                     title.includes("ENCLOSURE") ||
                     title.includes("CONVERTER") ||
                     title.includes("BATTERY")
@@ -229,10 +229,10 @@ export function QuoteForm() {
                             initial={{ opacity: 0, x: -24 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="bg-white rounded-xl border border-gray-100 shadow-xl p-6"
+                            className="bg-white rounded-sm border border-gray-200 shadow-sm p-6"
                         >
                             <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-md font-bold text-[#0A0F1A]">Selected Products</h3>
+                                <h3 className="text-md font-bold text-[#1A3263]">Selected Products</h3>
                                 <span className="bg-[#D62828] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
                                     {items.length}
                                 </span>
@@ -242,9 +242,9 @@ export function QuoteForm() {
                                 {items.length > 0 ? (
                                     items.map((item: any) => (
                                         <div key={item.partCode} className="flex gap-4 group items-center py-2">
-                                            <Link 
-                                                to={`/products/detail/${item.id}`} 
-                                                className="w-14 h-14 bg-gray-50 rounded-lg flex items-center justify-center p-2 shrink-0 border border-gray-100 shadow-sm hover:border-gray-300 transition-all cursor-pointer"
+                                            <Link
+                                                to={`/products/detail/${item.id}`}
+                                                className="w-14 h-14 bg-[#F8F9FA] rounded-sm flex items-center justify-center p-2 shrink-0 border border-gray-200 hover:border-[#162E93] transition-all cursor-pointer"
                                             >
                                                 <img src={item.image} className="w-full h-full object-contain mix-blend-multiply" />
                                             </Link>
@@ -273,7 +273,7 @@ export function QuoteForm() {
                                 <button
                                     type="button"
                                     onClick={() => window.history.back()}
-                                    className="w-full py-3 bg-gray-50 hover:bg-gray-100 text-[#0A0F1A] text-xs font-bold rounded-lg transition-all border border-gray-100 flex items-center justify-center gap-2"
+                                    className="w-full py-3 bg-[#F8F9FA] hover:bg-gray-100 text-gray-700 text-[13px] font-bold rounded-sm transition-colors border border-gray-200 flex items-center justify-center gap-2"
                                 >
                                     <Plus size={14} className="text-[#D62828]" />
                                     Add more product
@@ -289,18 +289,18 @@ export function QuoteForm() {
                         initial={{ opacity: 0, y: 32 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3, duration: 0.6 }}
-                        className="flex-1 bg-white rounded-2xl shadow-2xl shadow-black/10 border border-gray-100 overflow-hidden"
+                        className="flex-1 bg-white rounded-sm shadow-sm border border-gray-200 overflow-hidden"
                     >
                         {/* form header */}
                         <div className="border-b border-gray-100 px-8 md:px-12 py-5 flex items-center justify-between">
                             <div>
-                                <h2 className="text-base font-bold text-[#0A0F1A]">Quote Request Form</h2>
+                                <h2 className="text-base font-bold text-[#1A3263]">Quote Request Form</h2>
                                 <p className="text-xs text-gray-400 mt-0.5">All fields marked are required</p>
                             </div>
-                            <div className="hidden md:flex items-center gap-1">
+                            <div className="hidden md:flex items-center gap-2">
                                 {formSections.map((s, i) => (
                                     <React.Fragment key={s.id}>
-                                        <span className="text-xs text-gray-400 bg-gray-50 border border-gray-100 px-3 py-1 rounded-full">
+                                        <span className="text-[12px] font-bold text-gray-600 bg-[#F8F9FA] border border-gray-200 px-3 py-1 rounded-sm">
                                             {s.label}
                                         </span>
                                         {i < formSections.length - 1 && (
@@ -313,10 +313,10 @@ export function QuoteForm() {
 
                         <form onSubmit={handleSubmit(onSubmit)} className="p-8 md:p-12 space-y-14">
                             <UserSection register={register} errors={errors} />
-                            <InterestedSection 
-                                register={register} 
-                                control={control} 
-                                errors={errors} 
+                            <InterestedSection
+                                register={register}
+                                control={control}
+                                errors={errors}
                                 watch={watch}
                                 setValue={setValue}
                             />
@@ -337,7 +337,7 @@ export function QuoteForm() {
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="group inline-flex items-center gap-3 px-10 py-4 rounded-lg bg-[#D62828] text-white text-sm font-semibold shadow-lg shadow-[#D62828]/25 hover:shadow-[#D62828]/40 hover:bg-[#b82020] hover:scale-[1.02] active:scale-[0.99] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                                    className="group inline-flex items-center gap-3 px-10 py-4 rounded-sm bg-[#162E93] text-white text-[14px] font-bold hover:bg-[#0E1E61] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                                 >
                                     {isSubmitting ? (
                                         <>
@@ -347,7 +347,7 @@ export function QuoteForm() {
                                     ) : (
                                         <>
                                             <span>Submit Quote Request</span>
-                                            <Send size={15} className="group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform duration-200" />
+                                            <Send size={15} />
                                         </>
                                     )}
                                 </button>

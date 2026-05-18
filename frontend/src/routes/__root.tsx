@@ -3,6 +3,7 @@ import { Navbar } from "@/components/Layout/Navbar";
 import { Footer } from "@/components/Layout/Footer";
 import { ScrollControls } from "@/components/Common/ScrollControls";
 import { FloatingChat } from "@/components/Common/FloatingChat";
+import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 
@@ -87,6 +88,7 @@ function RootComponent() {
       </main>
       <ScrollControls />
       {!isProductsPage && <Footer />}
+      <Toaster position="top-center" richColors />
     </>
   );
 }
