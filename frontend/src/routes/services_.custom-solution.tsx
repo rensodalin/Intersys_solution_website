@@ -83,52 +83,50 @@ function CustomSolutionPage() {
                     </div>
 
                     {/* FEATURES */}
-                    <div className="grid md:grid-cols-3 gap-6 mt-16">
-
+                    <div className="grid md:grid-cols-3 mt-16 border border-gray-200">
                         {[
                             {
                                 icon: Zap,
                                 title: "Integrated Solutions",
-                                desc: "Engineering and system integration services tailored for commercial and industrial environments."
+                                desc: "Engineering and system integration services tailored for commercial and industrial environments.",
                             },
                             {
                                 icon: Target,
                                 title: "Client-Focused Design",
-                                desc: "Solutions developed around operational requirements, scalability, and usability."
+                                desc: "Solutions developed around operational requirements, scalability, and usability.",
                             },
                             {
                                 icon: ShieldCheck,
                                 title: "Reliable Support",
-                                desc: "Ongoing technical assistance, maintenance, and system optimization support."
-                            }
+                                desc: "Ongoing technical assistance, maintenance, and system optimization support.",
+                            },
                         ].map((item, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, y: 12 }}
+                                initial={{ opacity: 0, y: 10 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.08 }}
-                                className="border border-gray-200 bg-[#FAFAFA] p-7 rounded-xl hover:bg-white hover:border-gray-300 transition-all duration-300"
+                                transition={{ delay: i * 0.06 }}
+                                className={`bg-[#FAFAFA] p-6
+        ${i !== 2 ? "border-r border-gray-200" : ""}
+        hover:bg-white transition-all duration-300`}
                             >
-
                                 {/* ICON */}
-                                <div className="w-11 h-11 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-[#1A3263] mb-5">
-                                    <item.icon size={20} strokeWidth={1.8} />
+                                <div className="w-10 h-10 rounded-sm  flex items-center justify-center text-[#1A3263] mb-4">
+                                    <item.icon size={18} strokeWidth={1.8} />
                                 </div>
 
                                 {/* CONTENT */}
-                                <h3 className="text-lg font-semibold text-[#1A3263]">
+                                <h3 className="text-base font-semibold text-[#1A3263] leading-snug">
                                     {item.title}
                                 </h3>
 
-                                <p className="text-sm text-gray-500 leading-relaxed mt-3">
+                                <p className="text-sm text-gray-500 leading-relaxed mt-2">
                                     {item.desc}
                                 </p>
                             </motion.div>
                         ))}
-
                     </div>
-
                 </Container>
             </section>
 
@@ -154,42 +152,42 @@ function CustomSolutionPage() {
                             {
                                 title: "Intrusion Alarm Systems",
                                 desc: "Protect your property with advanced motion sensors, door/window contacts, and integrated alarm notifications.",
-                                icon: Bell,
+
                                 img: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=800",
                                 href: "/services/intrusion-system"
                             },
                             {
                                 title: "Car Parking Systems",
                                 desc: "Streamlined vehicle access control, automated payment solutions, and real-time occupancy monitoring.",
-                                icon: Car,
+
                                 img: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&q=80&w=800",
                                 href: "/services/car-parking"
                             },
                             {
                                 title: "Public Address Systems",
                                 desc: "Reliable audio solutions for announcements and emergency broadcasts across facilities.",
-                                icon: Volume2,
+
                                 img: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=800",
                                 href: "/services/public-address"
                             },
                             {
                                 title: "Room Control Unit",
                                 desc: "Intelligent in-room control for lighting, HVAC, and access management.",
-                                icon: LayoutGrid,
+
                                 img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=800",
                                 href: "/services/room-control"
                             },
                             {
                                 title: "Leak Detection System",
                                 desc: "Early detection systems to prevent costly damage and operational downtime.",
-                                icon: Droplets,
+
                                 img: "https://www.airbestpractices.com/sites/default/files/Figure%201_18_0.jpg",
                                 href: "/services/leak-detection"
                             },
                             {
                                 title: "VESDA Systems",
                                 desc: "Highly sensitive smoke detection technology for mission-critical environments.",
-                                icon: Flame,
+
                                 img: "https://www.suppressionsystems.com/wp-content/uploads/sites/4/2021/04/VESDA-Family-1000x720-1.jpg",
                                 href: "/services/vesda"
                             }
@@ -209,10 +207,7 @@ function CustomSolutionPage() {
 
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
 
-                                    {/* ICON */}
-                                    <div className="absolute top-4 left-4 w-10 h-10 rounded-lg bg-white/95 flex items-center justify-center">
-                                        <eco.icon size={18} className="text-red-600" />
-                                    </div>
+
                                 </div>
 
                                 {/* CONTENT */}
@@ -244,13 +239,14 @@ function CustomSolutionPage() {
             {/* SERVICES */}
             <section className="py-28 bg-[#0B1220] text-white">
                 <Container>
-                    <div className="grid lg:grid-cols-2 gap-16 items-start">
+                    <div className="grid lg:grid-cols-2 gap-16 items-center">
 
                         {/* LEFT TEXT */}
                         <div className="space-y-4">
                             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
                                 Services Integration
                             </h2>
+
                             <p className="text-white/50 text-base max-w-md leading-relaxed">
                                 A practical, connected approach to building management systems that
                                 unify software, hardware, and operational services.

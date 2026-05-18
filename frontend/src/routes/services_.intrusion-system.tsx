@@ -31,7 +31,7 @@ function IntrusionSystemPage() {
             <section className="relative h-[85vh] min-h-[600px] flex items-center pt-32">
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2000"
+                        src="https://images.unsplash.com/photo-1627817471035-3333a9ece240?q=80&w=1418&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Security Background"
                         className="w-full h-full object-cover"
                     />
@@ -39,12 +39,12 @@ function IntrusionSystemPage() {
                     <div className="absolute inset-0 bg-black/20" />
                 </div>
 
-                {/* ─── BACK BUTTON (FIXED) ─── */}
+                {/* BACK BUTTON */}
                 <button
                     onClick={() => router.history.back()}
-                    className="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group pt-37 px-15"
+                    className="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group pt-35 pl-15"
                 >
-                    <div className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/40 transition">
+                    <div className="w-9 h-9 rounded-full  flex items-center justify-center group-hover:border-white/40 transition">
                         <ArrowLeft
                             size={16}
                             className="group-hover:-translate-x-0.5 transition-transform duration-200"
@@ -54,37 +54,40 @@ function IntrusionSystemPage() {
                     <span className="text-sm font-medium">Back</span>
                 </button>
 
+                {/* CONTENT */}
                 <Container className="relative z-10 text-white">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="max-w-3xl mx-auto"
+                        className="max-w-3xl text-left"
                     >
-                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6 text-center">
+                        <h1 className="text-4xl lg:text-5xl font-bold font-display leading-[1.2] mb-6">
                             Intelligent <br />
                             <span className="text-red-600">Intrusion Systems</span>
                         </h1>
 
-                        <p className="text-base text-white/70 max-w-2xl mx-auto leading-relaxed">
-                            Protect your property with our fully integrated intrusion alarm solutions, designed to detect and deter unauthorized access before it becomes a threat. We combine advanced motion sensors, door and window contact detectors, and glass break sensors with intelligent control panels for instant, reliable response.
+                        <p className="text-base text-white/70 leading-relaxed">
+                            Protect your property with our fully integrated intrusion alarm solutions,
+                            designed to detect and deter unauthorized access before it becomes a threat.
+                            We combine advanced motion sensors, door and window contact detectors, and
+                            glass break sensors with intelligent control panels for instant, reliable response.
                         </p>
                     </motion.div>
                 </Container>
             </section>
-
             {/* ─── INTRO ─── */}
             <section className="py-24 bg-white">
                 <Container>
                     <div className="grid lg:grid-cols-2 gap-20 items-center">
                         <div className="space-y-6">
-                            <h2 className="text-3xl md:text-4xl font-bold text-[#1A3263] leading-tight">
+                            <h2 className="text-2xl md:text-3xl font-bold text-[#1A3263] leading-tight">
                                 Advanced Threat Detection for Modern Infrastructure
                             </h2>
                         </div>
 
                         <div className="border-l-4 border-red-500 pl-8">
-                            <p className="text-gray-500 text-base md:text-lg leading-relaxed">
+                            <p className="text-gray-500 text-base md:text-md leading-relaxed">
                                 Intrusion systems combining motion sensors, door/window contacts, and glass break detectors with intelligent control panels for fast response.
                             </p>
                         </div>

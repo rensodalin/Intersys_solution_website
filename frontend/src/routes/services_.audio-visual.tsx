@@ -490,7 +490,7 @@ function AudioVisualPage() {
 
                     {/* HEADER */}
                     <div className="text-center mb-20 space-y-4">
-                        <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
+                        <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
                             Signal Management
                         </h2>
 

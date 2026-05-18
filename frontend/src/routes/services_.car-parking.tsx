@@ -44,7 +44,7 @@ function CarParkingPage() {
                     onClick={() => router.history.back()}
                     className="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group pt-37 px-15"
                 >
-                    <div className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/40 transition">
+                    <div className="w-9 h-9  flex items-center justify-center group-hover:border-white/40 transition">
                         <ArrowLeft
                             size={16}
                             className="group-hover:-translate-x-0.5 transition-transform duration-200"
@@ -78,7 +78,7 @@ function CarParkingPage() {
 
                     {/* HEADER (LEFT ALIGNED) */}
                     <div className="mb-20 space-y-4 max-w-2xl">
-                        <h2 className="text-4xl font-bold text-[#1A3263] tracking-tight">
+                        <h2 className="text-3xl font-bold text-[#1A3263] tracking-tight">
                             Why Choose Car Parking Systems
                         </h2>
                         <div className="w-20 h-1 bg-red-600" />
@@ -155,7 +155,7 @@ function CarParkingPage() {
 
                     {/* HEADER */}
                     <div className="mb-16 max-w-3xl space-y-4">
-                        <h2 className="text-3xl md:text-4xl font-bold text-[#1A3263] leading-tight">
+                        <h2 className="text-2xl md:text-3xl font-bold text-[#1A3263] leading-tight">
                             Comprehensive Parking Solutions
                         </h2>
 
