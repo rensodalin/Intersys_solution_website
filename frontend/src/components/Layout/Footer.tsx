@@ -57,11 +57,11 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
       <div className="flex flex-col lg:flex-row w-full">
 
         {/* Left: Contact / Team Section (Now on the left) */}
-        <div className="w-full lg:w-1/2 bg-[#C40C0C] py-12 px-10 md:px-20 relative overflow-hidden flex flex-col">
+        <div className="w-full lg:w-1/2 bg-[#C40C0C] py-8 px-10 md:px-16 relative overflow-hidden flex flex-col">
           <div className="relative z-10 max-w-lg">
-            <div className="space-y-1 mb-8">
+            <div className="space-y-1 mb-6">
               <p className="text-white font-medium text-sm">Contact us</p>
-              <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
                 Get in touch
               </h2>
             </div>
@@ -129,15 +129,15 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
           </div>
 
           {/* Team Photo - Centered at the bottom */}
-          <div className="mt-16 relative z-10 flex justify-center lg:justify-start">
+          <div className="mt-8 relative z-10 flex justify-center lg:justify-start">
             <div className="relative inline-block group">
-              {/* Abstract Watermark Background (like the 'L' in screenshot) */}
-              <div className="absolute -top-10 -left-10 w-40 h-40 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-colors" />
+              {/* Abstract Watermark Background */}
+              <div className="absolute -top-6 -left-6 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-colors" />
 
               <img
                 src={teamImg}
                 alt="Intersys Team"
-                className="relative z-10 w-full max-w-md h-auto object-contain drop-shadow-2xl"
+                className="relative z-10 w-full max-w-sm h-auto object-contain drop-shadow-2xl"
               />
             </div>
           </div>
@@ -145,7 +145,7 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
 
         {/* Right: Apply / QR Section (Now on the right) */}
         <div
-          className="w-full lg:w-1/2 relative overflow-hidden flex items-center justify-center px-8 py-14"
+          className="w-full lg:w-1/2 relative overflow-hidden flex items-center justify-center px-8 py-10"
           style={{
             backgroundImage: `linear-gradient(rgba(8,31,61,0.88), rgba(8,31,61,0.88)), url(${foot})`,
             backgroundSize: "cover",
@@ -155,8 +155,8 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
           <div className="relative z-10 max-w-sm w-full text-center">
 
             {/* Text */}
-            <div className="mb-8">
-              <p className="text-gray-200 text-base mb-3 tracking-wide">
+            <div className="mb-6">
+              <p className="text-gray-200 text-sm mb-2 tracking-wide">
                 Scan the QR code below or
               </p>
 
@@ -169,7 +169,7 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
             </div>
 
             {/* QR Card */}
-            <div className="bg-white/95 p-5 shadow-xl inline-block border border-gray-200">
+            <div className="bg-white/95 p-4 shadow-xl inline-block border border-gray-200">
               <a
                 href="https://t.me/chun_sochet"
                 target="_blank"
@@ -178,7 +178,7 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
                 <img
                   src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://t.me/chun_sochet"
                   alt="Telegram QR Code"
-                  className="w-48 h-48 md:w-52 md:h-52 object-contain"
+                  className="w-40 h-40 md:w-48 md:h-48 object-contain"
                 />
               </a>
             </div>

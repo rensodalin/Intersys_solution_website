@@ -168,7 +168,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                 {product.title}
               </h1>
 
-              <p className="text-gray-500 text-sm md:text-base leading-relaxed max-w-2xl font-light">
+              <p className="text-gray-500 text-xs md:text-sm leading-snug max-w-xl font-light">
                 {product.description}
               </p>
             </motion.div>
@@ -243,8 +243,8 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                     exit={{ opacity: 0, x: -10 }}
                     className="space-y-6"
                   >
-                    <h3 className="text-xl font-bold text-[#162E93] tracking-tight font-display">Engineered for Performance</h3>
-                    <div className="text-gray-500 text-[15px] leading-relaxed whitespace-pre-line font-light">
+                    <h3 className="text-lg font-bold text-[#162E93] tracking-tight font-display">Engineered for Performance</h3>
+                    <div className="text-gray-500 text-[13px] leading-relaxed whitespace-pre-line font-light">
                       {product.longDescription}
                     </div>
                   </motion.div>
@@ -262,8 +262,8 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                         href={doc.url}
                         className="flex items-center gap-1.5 group w-fit py-1 transition-all"
                       >
-                        <img 
-                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1280px-PDF_file_icon.svg.png" 
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1280px-PDF_file_icon.svg.png"
                           alt="PDF"
                           className="w-5 h-5 object-contain"
                         />
@@ -354,7 +354,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
             </div>
             <span className="font-bold text-[15px]">Add to inquiry</span>
           </button>
-          
+
           {error && (
             <motion.p
               initial={{ opacity: 0, y: -5 }}
