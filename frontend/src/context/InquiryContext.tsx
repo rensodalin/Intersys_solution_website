@@ -7,7 +7,6 @@ export interface InquiryItem {
   image: string;
   partCode: string;
   specification: string;
-  price: number;
   qty: number;
   brand?: string;
 }

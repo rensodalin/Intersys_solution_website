@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const productOptionSchema = new mongoose.Schema({
     partCode: { type: String, required: true },
     specification: { type: String },
-    price: { type: Number },
     qty: { type: Number, default: 0 }
 });
 

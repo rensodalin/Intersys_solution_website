@@ -16,13 +16,11 @@ import {
 import { cn } from "@/lib/utils";
 import { useNavigate } from "@tanstack/react-router";
 import { useInquiry } from "@/context/InquiryContext";
-import { toast } from "sonner";
 
 // ─── TYPES ───
 export interface ProductOption {
   partCode: string;
   specification: string;
-  price: number;
   qty: number;
 }
 
@@ -55,9 +53,9 @@ const MOCK_PRODUCT: ProductData = {
   ],
   longDescription: "The XS4 ONE is an all-in-one smart lock that brings together the latest in electronic security with the physical endurance required for high-traffic environments. Its modular design allows it to be fitted to any door, with multiple handle and cover plate options.\n\nPowered by four AA batteries, it delivers up to 40,000 operations on a single set. The integrated reader uses a high-density security matrix to prevent unauthorized data cloning.",
   options: [
-    { partCode: "TNAPA20AB", specification: "Brushed Steel (AISI 304) \nRFID / BLE / NFC ENABLED", price: 345.00, qty: 1 },
-    { partCode: "TNAPA20AM", specification: "Matte Black Chrome \nRFID / BLE / NFC ENABLED", price: 389.00, qty: 0 },
-    { partCode: "TNAPA2AV", specification: "Polished White \nSTANDARD SECURITY PROFILE", price: 315.00, qty: 1 },
+    { partCode: "TNAPA20AB", specification: "Brushed Steel (AISI 304) \nRFID / BLE / NFC ENABLED", qty: 1 },
+    { partCode: "TNAPA20AM", specification: "Matte Black Chrome \nRFID / BLE / NFC ENABLED", qty: 0 },
+    { partCode: "TNAPA2AV", specification: "Polished White \nSTANDARD SECURITY PROFILE", qty: 1 },
   ],
   documents: [
     { name: "Submittal", url: "#" },
@@ -111,7 +109,6 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
           image: product.mainImage,
           partCode: opt.partCode,
           specification: opt.specification,
-          price: opt.price,
           qty: qty,
           brand: product.brand
         });
@@ -243,7 +240,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                     exit={{ opacity: 0, x: -10 }}
                     className="space-y-6"
                   >
-                    <h3 className="text-lg font-bold text-[#162E93] tracking-tight font-display">Engineered for Performance</h3>
+                    <h3 className="text-md font-bold text-[#162E93] tracking-tight font-display">Engineered for Performance</h3>
                     <div className="text-gray-500 text-[13px] leading-relaxed whitespace-pre-line font-light">
                       {product.longDescription}
                     </div>
@@ -290,7 +287,6 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                 <tr className="bg-[#F8F9FA] text-gray-500 text-[12px] font-bold tracking-tight border-b border-gray-100">
                   <th className="px-8 py-5">Part Code</th>
                   <th className="px-8 py-5">Detailed Specification</th>
-                  <th className="px-8 py-5">Unit Price</th>
                   <th className="px-8 py-5 text-center">Quantity</th>
                   <th className="px-8 py-5 text-center">Action</th>
                 </tr>
@@ -304,9 +300,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                     <td className="px-8 py-8 border-b border-gray-100 text-[13px] text-gray-500 font-light whitespace-pre-line leading-relaxed">
                       {opt.specification}
                     </td>
-                    <td className="px-8 py-8 border-b border-gray-100 text-[15px] font-bold text-[#1A3263]">
-                      ${opt.price.toFixed(2)}
-                    </td>
+
                     <td className="px-8 py-8 border-b border-gray-100">
                       <div className="flex items-center justify-center gap-4 bg-white rounded-sm py-2 px-3 w-fit mx-auto border border-gray-200 shadow-sm">
                         <button
