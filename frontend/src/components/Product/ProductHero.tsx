@@ -29,7 +29,7 @@ export function ProductHero({
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.35 }}
-                    className="max-w-xl"
+                    className="max-w-xl pl-3"
                 >
                     {/* Breadcrumbs */}
                     <nav className="flex items-center gap-1.5 mb-3 flex-wrap">

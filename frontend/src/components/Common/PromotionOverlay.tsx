@@ -9,7 +9,10 @@ interface PromotionOverlayProps {
   onClose: () => void;
 }
 
-export function PromotionOverlay({ isOpen, onClose }: PromotionOverlayProps) {
+export function PromotionOverlay({
+  isOpen,
+  onClose,
+}: PromotionOverlayProps) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -20,7 +23,10 @@ export function PromotionOverlay({ isOpen, onClose }: PromotionOverlayProps) {
           className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden"
         >
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={onClose}
+          />
 
           {/* Modal Content */}
           <motion.div
@@ -37,7 +43,7 @@ export function PromotionOverlay({ isOpen, onClose }: PromotionOverlayProps) {
               <X className="w-6 h-6" />
             </button>
 
-            {/* Left Side: Visual/Branding (Image Background) */}
+            {/* Left Side */}
             <div className="relative w-full h-[40%] md:h-full md:w-[65%] overflow-hidden bg-[#f0f2f5]">
               <div className="absolute inset-0 opacity-40">
                 <img
@@ -46,11 +52,17 @@ export function PromotionOverlay({ isOpen, onClose }: PromotionOverlayProps) {
                   className="w-full h-full object-cover grayscale"
                 />
               </div>
+
               <div className="absolute inset-0 bg-gradient-to-tr from-white/80 via-white/40 to-transparent z-10" />
 
               <div className="relative z-20 h-full p-12 flex flex-col justify-between">
                 <div>
-                  <img src={logoImg} alt="Logo" className="h-10 w-auto mb-12" />
+                  <img
+                    src={logoImg}
+                    alt="Logo"
+                    className="h-10 w-auto mb-12"
+                  />
+
                   <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#1A3263] leading-tight max-w-md">
                     Engineering <br />
                     the Future <br />
@@ -65,42 +77,47 @@ export function PromotionOverlay({ isOpen, onClose }: PromotionOverlayProps) {
                 </div>
               </div>
 
-              {/* Tablet/Mobile Floating Visuals Style */}
+              {/* Floating Image */}
               <div className="hidden lg:block absolute -right-20 top-1/2 -translate-y-1/2 w-[400px] pointer-events-none">
                 <motion.div
                   animate={{ y: [0, -15, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                   className="relative"
                 >
                   <div className="bg-white p-2 rounded-2xl shadow-2xl border border-gray-100 rotate-12">
-                    <img src="https://plus.unsplash.com/premium_photo-1685148902867-0d917a4d2a67?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+                    <img
+                      src="https://plus.unsplash.com/premium_photo-1685148902867-0d917a4d2a67?q=80&w=1332&auto=format&fit=crop"
+                      alt="Building"
+                    />
                   </div>
                 </motion.div>
               </div>
             </div>
 
-            {/* Right Side: Action/Content */}
+            {/* Right Side */}
             <div className="w-full h-[60%] md:h-full md:w-[35%] bg-white p-12 flex flex-col justify-center relative">
-              {/* "NEW" Tag */}
-              <div className="absolute top-0 right-0 p-8">
-
-              </div>
-
               <div className="space-y-8">
                 <h3 className="text-4xl font-bold text-[#1A3263] tracking-tighter leading-tight">
                   Ready to transform <br /> your building?
                 </h3>
+
                 <p className="text-gray-500 text-base leading-relaxed">
-                  Join hundreds of businesses optimizing their operations with Intersys Solutions.
-                  Our engineers are ready to design your custom roadmap.
+                  Join hundreds of businesses optimizing their operations with
+                  Intersys Solutions. Our engineers are ready to design your
+                  custom roadmap.
                 </p>
 
                 <Link
                   to="/contact"
                   onClick={onClose}
-                  className="w-full bg-[#C3110C] text-white py-5 rounded-sm font-bold text-sm uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-[#1A3263] transition-all duration-500 group shadow-xl shadow-[#C3110C]/20"
+                  className="w-full bg-[#C3110C] text-white py-5 rounded-sm font-bold text-sm normal-case flex items-center justify-center gap-3 hover:bg-[#1A3263] transition-all duration-500 group shadow-xl shadow-[#C3110C]/20"
                 >
                   Get a Free Consultation
+
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
