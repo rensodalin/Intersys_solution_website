@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { Send, Clock, Shield, ChevronRight, Trash2, Plus } from "lucide-react";
-import { toast } from "sonner";
 import { quoteSchema, QuoteFormValues } from "./schema";
 import {
     InterestedSection,
@@ -57,6 +56,8 @@ export function QuoteForm() {
             sections: [],
         },
     });
+
+    const [submitStatus, setSubmitStatus] = React.useState<"success" | "error" | null>(null);
 
     // Auto-populate form when inquiry items change
     React.useEffect(() => {
@@ -164,6 +165,7 @@ export function QuoteForm() {
     }, [items, setValue]);
 
     const onSubmit = async (data: QuoteFormValues) => {
+        setSubmitStatus(null);
         try {
             const response = await fetch("http://localhost:5000/api/quotes", {
                 method: "POST",
@@ -177,10 +179,13 @@ export function QuoteForm() {
                 throw new Error("Failed to submit request");
             }
 
-            toast.success("Quote request submitted successfully!");
+            setSubmitStatus("success");
             reset();
+            
+            // clear success message after a few seconds
+            setTimeout(() => setSubmitStatus(null), 5000);
         } catch {
-            toast.error("Failed to submit request. Please try again.");
+            setSubmitStatus("error");
         }
     };
 
@@ -334,23 +339,45 @@ export function QuoteForm() {
                                         Response in 1–2 business days
                                     </span>
                                 </div>
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="group inline-flex items-center gap-3 px-10 py-4 rounded-sm bg-[#162E93] text-white text-[14px] font-bold hover:bg-[#0E1E61] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-                                >
-                                    {isSubmitting ? (
-                                        <>
-                                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                            <span>Submitting...</span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <span>Submit Quote Request</span>
-                                            <Send size={15} />
-                                        </>
+                                <div className="flex flex-col items-end">
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="group inline-flex items-center gap-3 px-10 py-4 rounded-sm bg-[#162E93] text-white text-[14px] font-bold hover:bg-[#0E1E61] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                                    >
+                                        {isSubmitting ? (
+                                            <>
+                                                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                                <span>Submitting...</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>Submit Quote Request</span>
+                                                <Send size={15} />
+                                            </>
+                                        )}
+                                    </button>
+
+                                    {submitStatus === "success" && (
+                                        <motion.p
+                                            initial={{ opacity: 0, y: -5 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className="text-[#10b981] text-sm font-bold mt-3"
+                                        >
+                                            Quote request submitted successfully!
+                                        </motion.p>
                                     )}
-                                </button>
+
+                                    {submitStatus === "error" && (
+                                        <motion.p
+                                            initial={{ opacity: 0, y: -5 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className="text-[#D62828] text-sm font-bold mt-3"
+                                        >
+                                            Failed to submit request. Please try again.
+                                        </motion.p>
+                                    )}
+                                </div>
                             </div>
                         </form>
                     </motion.div>

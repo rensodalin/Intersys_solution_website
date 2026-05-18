@@ -16,6 +16,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useNavigate } from "@tanstack/react-router";
 import { useInquiry } from "@/context/InquiryContext";
+import { toast } from "sonner";
 
 // ─── TYPES ───
 export interface ProductOption {
@@ -71,6 +72,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
   const { addItem, items } = useInquiry();
   const [activeTab, setActiveTab] = useState<"description" | "documents">("description");
   const [selectedImage, setSelectedImage] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   const [quantities, setQuantities] = useState<Record<string, number>>(() => {
     const initial: Record<string, number> = {};
@@ -89,9 +91,15 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
       ...prev,
       [code]: Math.max(0, (prev[code] || 0) + delta)
     }));
+    if (error) setError(null);
   };
 
   const handleAddToInquiry = () => {
+    if (inquiryCount === 0) {
+      setError("Please select at least one product quantity to proceed.");
+      return;
+    }
+
     // Add each product with qty > 0 to the global inquiry
     product.options.forEach(opt => {
       const qty = quantities[opt.partCode];
@@ -331,7 +339,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
         </div>
 
         {/* ─── INQUIRY ACTION BUTTON (Under Table) ─── */}
-        <div className="flex justify-end mb-24">
+        <div className="flex flex-col items-end mb-24">
           <button
             onClick={handleAddToInquiry}
             className="bg-[#162E93] hover:bg-[#0E1E61] text-white px-10 py-4 rounded-sm shadow-xl flex items-center gap-4 group transition-all transform hover:-translate-y-1"
@@ -346,6 +354,16 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
             </div>
             <span className="font-bold text-[15px]">Add to inquiry</span>
           </button>
+          
+          {error && (
+            <motion.p
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-[#D62828] text-sm font-bold mt-3"
+            >
+              {error}
+            </motion.p>
+          )}
         </div>
       </Container>
     </div>
