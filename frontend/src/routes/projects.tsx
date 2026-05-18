@@ -33,7 +33,7 @@ function ProjectsPage() {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const baseUrl = `http://${window.location.hostname}:5000`;
+                const baseUrl = `http://${window.location.hostname}:1000`;
 
                 // Fetch both Projects and Insights
                 const [projRes, insRes] = await Promise.all([

@@ -4,16 +4,16 @@ import { ArrowLeft } from "lucide-react";
 import { Container } from "@/components/Common/Container";
 
 // Import all product data for lookup
-import { 
-    honeywellControlPanels, 
-    honeywellAccessories, 
-    honeywellCredentials, 
-    honeywellReaders, 
-    honeywellSoftware, 
-    honeywellControlPanelKits, 
-    honeywellKiosks, 
-    honeywellUpgrades, 
-    honeywellDoorHardware 
+import {
+  honeywellControlPanels,
+  honeywellAccessories,
+  honeywellCredentials,
+  honeywellReaders,
+  honeywellSoftware,
+  honeywellControlPanelKits,
+  honeywellKiosks,
+  honeywellUpgrades,
+  honeywellDoorHardware
 } from "@/components/Product/AccessControl/Honeywell/data";
 import { saltoProducts } from "@/components/Product/AccessControl/Salto/data";
 import { bmsProducts } from "@/components/Product/BuildingManagement/data";
@@ -85,45 +85,45 @@ function ProductDetailPage() {
   let subCat = "";
   let subCatLink = "";
   if (honeywellControlPanels.some(p => p.title === product.title)) {
-      subCat = "Control Panels";
-      subCatLink = "/products/access-control/honeywell/control-panels";
+    subCat = "Control Panels";
+    subCatLink = "/products/access-control/honeywell/control-panels";
   } else if (honeywellReaders.some(p => p.title === product.title)) {
-      subCat = "Readers";
-      subCatLink = "/products/access-control/honeywell/readers";
+    subCat = "Readers";
+    subCatLink = "/products/access-control/honeywell/readers";
   } else if (honeywellSoftware.some(p => p.title === product.title)) {
-      subCat = "Software";
-      subCatLink = "/products/access-control/honeywell/software";
+    subCat = "Software";
+    subCatLink = "/products/access-control/honeywell/software";
   } else if (honeywellAccessories.some(p => p.title === product.title)) {
-      subCat = "Accessories";
-      subCatLink = "/products/access-control/honeywell/accessories";
+    subCat = "Accessories";
+    subCatLink = "/products/access-control/honeywell/accessories";
   } else if (honeywellCredentials.some(p => p.title === product.title)) {
-      subCat = "Credentials";
-      subCatLink = "/products/access-control/honeywell/credentials";
+    subCat = "Credentials";
+    subCatLink = "/products/access-control/honeywell/credentials";
   } else if (honeywellControlPanelKits.some(p => p.title === product.title)) {
-      subCat = "Control Panel Kits";
-      subCatLink = "/products/access-control/honeywell/control-panel-kits";
+    subCat = "Control Panel Kits";
+    subCatLink = "/products/access-control/honeywell/control-panel-kits";
   } else if (honeywellKiosks.some(p => p.title === product.title)) {
-      subCat = "Lobby Kiosks";
-      subCatLink = "/products/access-control/honeywell/lobby-kiosks";
+    subCat = "Lobby Kiosks";
+    subCatLink = "/products/access-control/honeywell/lobby-kiosks";
   } else if (honeywellUpgrades.some(p => p.title === product.title)) {
-      subCat = "System Agreements & Upgrades";
-      subCatLink = "/products/access-control/honeywell/upgrades";
+    subCat = "System Agreements & Upgrades";
+    subCatLink = "/products/access-control/honeywell/upgrades";
   } else if (honeywellDoorHardware.some(p => p.title === product.title)) {
-      subCat = "Door Hardware";
-      subCatLink = "/products/access-control/honeywell/door-hardware";
+    subCat = "Door Hardware";
+    subCatLink = "/products/access-control/honeywell/door-hardware";
   }
 
   // Map the raw data to the ProductData interface expected by ProductDetailView
   const mappedProduct = {
     id: productId,
-    category: allSalto.some(p => p.id === productId) ? "Access Control" : 
-              bmsProducts.some(p => p.id === productId) ? "Building Management" : 
-              surveillanceProducts.some(p => p.id === productId) ? "Surveillance (CCTV)" :
-              "Access Control",
-    brand: allSalto.some(p => p.id === productId) ? "Salto" : 
-           bmsProducts.some(p => p.id === productId) ? "BMS" : 
-           surveillanceProducts.some(p => p.id === productId) ? "Intersys" :
-           "Honeywell",
+    category: allSalto.some(p => p.id === productId) ? "Access Control" :
+      bmsProducts.some(p => p.id === productId) ? "Building Management" :
+        surveillanceProducts.some(p => p.id === productId) ? "Surveillance (CCTV)" :
+          "Access Control",
+    brand: allSalto.some(p => p.id === productId) ? "Salto" :
+      bmsProducts.some(p => p.id === productId) ? "BMS" :
+        surveillanceProducts.some(p => p.id === productId) ? "Intersys" :
+          "Honeywell",
     brandSubCategory: subCat,
     brandSubCategoryLink: subCatLink,
     title: product.title,
@@ -132,18 +132,18 @@ function ProductDetailPage() {
     thumbnails: [product.image],
     longDescription: (product as any).longDescription || (product as any).desc || "Professional grade security component designed for enterprise deployments and high-reliability environments.",
     options: (product as any).options || [
-        { 
-            partCode: (product as any).partCode || `${productId}-unit`, 
-            specification: "Standard Configuration \nProfessional Grade", 
-            price: 0, 
-            qty: 0 
-          }
-      ],
-      documents: (product as any).documents || [
-          { name: "Technical Datasheet", url: "#" },
-          { name: "Installation Manual", url: "#" }
-      ]
-    };
+      {
+        partCode: (product as any).partCode || `${productId}-unit`,
+        specification: "Standard Configuration \nProfessional Grade",
+        price: 0,
+        qty: 0
+      }
+    ],
+    documents: (product as any).documents || [
+      { name: "Technical Datasheet", url: "#" },
+      { name: "Installation Manual", url: "#" }
+    ]
+  };
 
   return <ProductDetailView product={mappedProduct} returnPath={from} />;
 }

@@ -15,7 +15,7 @@ function InsightDetailRoute() {
   useEffect(() => {
     const fetchInsight = async () => {
       try {
-        const baseUrl = `http://${window.location.hostname}:5000`;
+        const baseUrl = `http://${window.location.hostname}:1000`;
         const res = await fetch(`${baseUrl}/api/insights/${slug}`);
         const data = await res.json();
         if (data.success) {

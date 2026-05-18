@@ -55,7 +55,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         };
 
     try {
-      const baseUrl = `http://${window.location.hostname}:5000`;
+      const baseUrl = `http://${window.location.hostname}:1000`;
       const response = await fetch(`${baseUrl}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -84,7 +84,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   };
 
   const handleSocialLogin = (provider: "google" | "facebook") => {
-    window.location.href = `http://${window.location.hostname}:5000/auth/${provider}`;
+    window.location.href = `http://${window.location.hostname}:1000/auth/${provider}`;
   };
 
   return createPortal(

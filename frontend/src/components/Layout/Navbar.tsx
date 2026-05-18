@@ -277,7 +277,7 @@ export function Navbar() {
               <a href="http://localhost:1000/auth/logout" className="text-xs text-red-500 hover:text-red-400 ml-2 font-medium">Logout</a>
             </div>
           ) : (
-            <button 
+            <button
               onClick={() => setIsAuthOpen(true)}
               className="flex items-center gap-2 text-white/70 hover:text-white transition-colors group"
             >
@@ -318,7 +318,7 @@ export function Navbar() {
                   </div>
                 </div>
               ) : (
-                <button 
+                <button
                   onClick={() => {
                     setIsAuthOpen(true);
                     setMobileOpen(false);

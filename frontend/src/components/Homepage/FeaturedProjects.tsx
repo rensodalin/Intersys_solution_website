@@ -18,7 +18,7 @@ export function FeaturedProjects() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const baseUrl = `http://${window.location.hostname}:5000`;
+        const baseUrl = `http://${window.location.hostname}:1000`;
         const res = await fetch(`${baseUrl}/api/projects`);
         const data = await res.json();
         if (data.success) {
