@@ -29,7 +29,8 @@ export function InquiryProvider({ children }: { children: ReactNode }) {
     setItems(prev => {
       const existing = prev.find(i => i.partCode === item.partCode);
       if (existing) {
-        return prev.map(i => i.partCode === item.partCode ? { ...i, qty: i.qty + item.qty } : i);
+        // Replace the item since ProductDetailView sends the absolute total quantity
+        return prev.map(i => i.partCode === item.partCode ? item : i);
       }
       return [...prev, item];
     });

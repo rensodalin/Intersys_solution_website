@@ -165,8 +165,18 @@ export function QuoteForm() {
 
     const onSubmit = async (data: QuoteFormValues) => {
         try {
-            console.log("Form Data:", data);
-            await new Promise((resolve) => setTimeout(resolve, 1200));
+            const response = await fetch("http://localhost:5000/api/quotes", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to submit request");
+            }
+
             toast.success("Quote request submitted successfully!");
             reset();
         } catch {
@@ -232,11 +242,16 @@ export function QuoteForm() {
                                 {items.length > 0 ? (
                                     items.map((item: any) => (
                                         <div key={item.partCode} className="flex gap-4 group items-center py-2">
-                                            <div className="w-14 h-14 bg-gray-50 rounded-lg flex items-center justify-center p-2 shrink-0 border border-gray-100 shadow-sm">
+                                            <Link 
+                                                to={`/products/detail/${item.id}`} 
+                                                className="w-14 h-14 bg-gray-50 rounded-lg flex items-center justify-center p-2 shrink-0 border border-gray-100 shadow-sm hover:border-gray-300 transition-all cursor-pointer"
+                                            >
                                                 <img src={item.image} className="w-full h-full object-contain mix-blend-multiply" />
-                                            </div>
+                                            </Link>
                                             <div className="flex-1 min-w-0">
-                                                <p className="text-sm font-bold text-gray-800 truncate leading-tight">{item.title}</p>
+                                                <Link to={`/products/detail/${item.id}`} className="hover:underline">
+                                                    <p className="text-sm font-bold text-gray-800 truncate leading-tight">{item.title}</p>
+                                                </Link>
                                                 <p className="text-[12px] text-gray-400 truncate mt-0.5">{item.partCode}</p>
                                                 <p className="text-[12px] text-[#D62828] font-bold mt-1">Qty: {item.qty}</p>
                                             </div>
@@ -256,6 +271,7 @@ export function QuoteForm() {
 
                             <div className="mt-6 pt-6 border-t border-gray-50">
                                 <button
+                                    type="button"
                                     onClick={() => window.history.back()}
                                     className="w-full py-3 bg-gray-50 hover:bg-gray-100 text-[#0A0F1A] text-xs font-bold rounded-lg transition-all border border-gray-100 flex items-center justify-center gap-2"
                                 >
