@@ -23,7 +23,23 @@ interface InquiryContextType {
 const InquiryContext = createContext<InquiryContextType | undefined>(undefined);
 
 export function InquiryProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<InquiryItem[]>([]);
+  const [items, setItems] = useState<InquiryItem[]>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem("intersys_inquiry_cart");
+        if (saved) return JSON.parse(saved);
+      } catch (err) {
+        console.error("Failed to load inquiry cart from localStorage", err);
+      }
+    }
+    return [];
+  });
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("intersys_inquiry_cart", JSON.stringify(items));
+    }
+  }, [items]);
 
   const addItem = (item: InquiryItem) => {
     setItems(prev => {
