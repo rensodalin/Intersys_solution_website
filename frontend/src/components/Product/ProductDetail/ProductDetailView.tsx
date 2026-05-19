@@ -161,7 +161,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                 ))}
               </nav>
 
-              <h1 className="text-2xl md:text-2xl font-bold text-[#1A3263] tracking-tight mb-4 font-display">
+              <h1 className="text-xl md:text-xl font-bold text-[#1A3263] tracking-tight mb-4 font-display">
                 {product.title}
               </h1>
 
@@ -178,20 +178,20 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-24">
           {/* Gallery */}
           <div>
-            <div className="aspect-square bg-[#FBFBFC] rounded-sm border border-gray-100 flex items-center justify-center p-12 mb-6">
+            <div className="max-w-md aspect-square bg-[#FBFBFC] rounded-sm border border-gray-100 flex items-center justify-center p-8 mb-6">
               <img
                 src={product.thumbnails[selectedImage] || product.mainImage}
                 alt="Product"
-                className="max-w-full max-h-full object-contain mix-blend-multiply"
+                className="max-w-[80%] max-h-[80%] object-contain mix-blend-multiply"
               />
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-3 justify-start max-w-md">
               {product.thumbnails.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedImage(idx)}
                   className={cn(
-                    "w-20 h-20 rounded-sm border-2 transition-all p-2 bg-white",
+                    "w-16 h-16 rounded-sm border-2 transition-all p-1.5 bg-white",
                     selectedImage === idx ? "border-[#C3110C]" : "border-gray-100 hover:border-gray-200"
                   )}
                 >
