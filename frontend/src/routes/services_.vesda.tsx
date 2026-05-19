@@ -25,7 +25,7 @@ function VesdaPage() {
 
             {/* ───────────────── HERO ───────────────── */}
             {/* ───────────────── HERO ───────────────── */}
-            <section className="relative min-h-[720px] flex items-center bg-[#0F1720]">
+            <section className="relative min-h-[650px] flex items-center bg-[#0F1720]">
 
                 {/* Background */}
                 <div className="absolute inset-0">
@@ -44,7 +44,7 @@ function VesdaPage() {
                     onClick={() => router.history.back()}
                     className="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group pt-37 px-15"
                 >
-                    <div className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/40 transition">
+                    <div className="w-9 h-9 flex items-center justify-center group-hover:border-white/40 transition">
                         <ArrowLeft
                             size={16}
                             className="group-hover:-translate-x-0.5 transition-transform duration-200"
@@ -67,7 +67,7 @@ function VesdaPage() {
 
                         </div>
 
-                        <h1 className="text-4xl md:text-5xl font-bold text-white leading-[1.1] tracking-tight">
+                        <h1 className="text-4xl md:text-5xl font-bold text-white leading-[1.1] tracking-tight pt-20">
                             <span className="text-red-600">
                                 VESDA
                             </span>
@@ -75,7 +75,7 @@ function VesdaPage() {
                             Smoke Detection
                         </h1>
 
-                        <p className="mt-7 text-white/80 text-[15px] leading-7 max-w-2xl">
+                        <p className="mt-7 text-white/80 text-[16px] leading-7 max-w-2xl">
                             VESDA (Very Early Smoke Detection Apparatus) continuously
                             samples air through a network of pipes and analyzes it
                             using laser-based detection technology. This enables smoke
@@ -103,7 +103,7 @@ function VesdaPage() {
                         </div>
 
                         <div className="border-l border-gray-200 pl-8">
-                            <p className="text-gray-600 leading-8 text-[15px]">
+                            <p className="text-gray-600 leading-8 text-[14px]">
                                 Unlike traditional smoke detectors, VESDA actively
                                 draws air into a highly sensitive laser chamber,
                                 allowing earlier detection in environments such as

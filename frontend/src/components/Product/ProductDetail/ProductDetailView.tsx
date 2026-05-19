@@ -346,7 +346,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                 </span>
               )}
             </div>
-            <span className="font-bold text-[15px]">Add to inquiry</span>
+            <span className=" text-[15px]">Add to inquiry</span>
           </button>
 
           {error && (

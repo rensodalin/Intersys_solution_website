@@ -108,7 +108,7 @@ function LeakDetectionPage() {
                     onClick={() => router.history.back()}
                     className="absolute top-8 left-8 z-20 flex items-center gap-2 text-white/80 hover:text-white transition pt-37 px-15"
                 >
-                    <div className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center">
+                    <div className="w-9 h-9  flex items-center justify-center">
                         <ArrowLeft size={16} />
                     </div>
                     <span className="text-sm font-medium">Back</span>
@@ -125,7 +125,7 @@ function LeakDetectionPage() {
                         >
 
 
-                            <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight mt-5 mb-5">
+                            <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight mt-18 mb-5">
                                 Direct Liquid Cooling <br />
                                 <span className="text-red-500">Leak Detection</span>
                             </h1>
@@ -490,7 +490,7 @@ function LeakDetectionPage() {
                         <p className="text-gray-500">Contact our engineering team for a comprehensive site assessment and customized leak detection strategy.</p>
                         <button
                             onClick={() => router.navigate({ to: "/contact" })}
-                            className="px-12 py-4 bg-[#0A0F1A] text-white rounded-full font-bold hover:bg-red-600 transition-all duration-300 shadow-xl hover:shadow-red-500/20"
+                            className="px-12 py-4 bg-[#0A0F1A] text-white rounded-md font-bold hover:bg-red-600 transition-all duration-300 shadow-xl hover:shadow-red-500/20"
                         >
                             Consult an Expert
                         </button>

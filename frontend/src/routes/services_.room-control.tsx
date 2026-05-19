@@ -47,7 +47,7 @@ function RoomControlPage() {
                     onClick={() => router.history.back()}
                     className="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group pt-37 px-15"
                 >
-                    <div className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/40 transition">
+                    <div className="w-9 h-9  flex items-center justify-center group-hover:border-white/40 transition">
                         <ArrowLeft
                             size={16}
                             className="group-hover:-translate-x-0.5 transition-transform duration-200"
@@ -64,7 +64,7 @@ function RoomControlPage() {
                         transition={{ duration: 1, ease: "easeOut" }}
                         className="max-w-4xl"
                     >
-                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.1] mb-6">
                             Intelligent <br />
                             <span className="text-red-600">Room Control Units</span>
                         </h1>
@@ -76,44 +76,56 @@ function RoomControlPage() {
             </section>
 
             {/* ─── WHY CHOOSE RCU ─── */}
-            <section className="py-20 bg-white">
+            <section className="py-24 bg-white">
                 <Container>
-                    <div className="text-center mb-16 space-y-4">
-                        <h2 className="text-3xl font-bold text-[#1A3263]">Why Choose Room Control Unit Systems</h2>
-                        <div className="w-16 h-1 bg-red-600 mx-auto" />
+
+                    {/* HEADER */}
+                    <div className="text-center mb-18">
+                        <h2 className="text-3xl md:text-4xl font-bold text-[#1A3263] tracking-tight">
+                            Why Choose Room Control Unit Systems
+                        </h2>
+
+                        <p className="text-gray-500 text-sm mt-4 max-w-2xl mx-auto leading-relaxed">
+                            Intelligent room automation designed to enhance comfort, efficiency,
+                            and centralized control for modern smart environments.
+                        </p>
+
+                        <div className="w-14 h-[3px] bg-red-600 mx-auto mt-5 rounded-full" />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {/* GRID */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
                         {[
                             {
                                 icon: UserCheck,
-                                title: "Intergration",
-                                desc: "Connects seamlessly with HVAC, lighting, access control, and BMS for a unified smart room experience.."
+                                title: "Integration",
+                                desc: "Connects seamlessly with HVAC, lighting, access control, and BMS for a unified smart room experience."
                             },
                             {
                                 icon: Thermometer,
-                                title: "Aesthetics",
-                                desc: "Sleek, modern panels that complement any interior design."
+                                title: "Modern Aesthetics",
+                                desc: "Minimal and elegant wall panels designed to blend naturally into contemporary interiors."
                             },
                             {
                                 icon: Smartphone,
                                 title: "Lighting Control",
-                                desc: "Precise adjustment of brightness, color, and mood settings."
+                                desc: "Fine-tune brightness, scenes, and ambience with responsive smart lighting management."
                             },
                             {
                                 icon: Settings,
-                                title: "Automation",
-                                desc: "One-touch scenes to control multiple systems at once."
+                                title: "Smart Automation",
+                                desc: "Activate multiple room functions instantly using predefined scenes and automation logic."
                             },
                             {
                                 icon: Zap,
-                                title: "Energy Management",
-                                desc: "Smart scheduling and occupancy detection to reduce energy waste."
+                                title: "Energy Efficiency",
+                                desc: "Reduce unnecessary power consumption with occupancy-based automation and scheduling."
                             },
                             {
                                 icon: BarChart3,
-                                title: "Analytics",
-                                desc: "Data insights on usage and performance to optimize operations."
+                                title: "Usage Analytics",
+                                desc: "Monitor system usage and room performance through insightful real-time reporting."
                             }
                         ].map((item, i) => (
                             <motion.div
@@ -121,16 +133,36 @@ function RoomControlPage() {
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className="p-8 rounded-2xl bg-gray-50 border border-gray-100 space-y-4 hover:bg-white hover:shadow-xl transition-all duration-300"
+                                transition={{ delay: i * 0.08 }}
+                                whileHover={{ y: -4 }}
+                                className="group relative p-7 border border-gray-200 rounded-lg bg-white 
+                               hover:border-red-100 hover:shadow-[0_10px_40px_rgba(0,0,0,0.06)] 
+                               transition-all duration-300"
                             >
-                                <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-red-600">
-                                    <item.icon size={24} />
+
+                                {/* ICON */}
+                                <div className="w-12 h-12 rounded-md bg-[#232F72] border border-red-100 
+                                    flex items-center justify-center text-white mb-5
+                                    group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
+                                    <item.icon size={22} />
                                 </div>
-                                <h3 className="text-lg font-bold text-[#1A3263]">{item.title}</h3>
-                                <p className="text-gray-500 text-xs leading-relaxed">{item.desc}</p>
+
+                                {/* TITLE */}
+                                <h3 className="text-lg font-semibold text-[#1A3263] mb-3 tracking-tight">
+                                    {item.title}
+                                </h3>
+
+                                {/* DESCRIPTION */}
+                                <p className="text-sm text-gray-500 leading-relaxed">
+                                    {item.desc}
+                                </p>
+
+                                {/* SUBTLE CORNER ACCENT */}
+                                <div className="absolute top-0 right-0 w-16 h-16 bg-red-50/40 rounded-bl-[40px] opacity-0 
+                                    group-hover:opacity-100 transition duration-300" />
                             </motion.div>
                         ))}
+
                     </div>
                 </Container>
             </section>
@@ -138,12 +170,18 @@ function RoomControlPage() {
             {/* ─── GUEST EXPERIENCE ─── */}
             <section className="py-20 bg-gray-50">
                 <Container>
-                    <div className="text-center mb-16 space-y-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="text-center mb-16 space-y-4"
+                    >
                         <h2 className="text-3xl font-bold text-[#1A3263]">
                             Guest Experience with INNCOM
                         </h2>
                         <div className="w-16 h-1 bg-red-600 mx-auto" />
-                    </div>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {[
@@ -172,8 +210,16 @@ function RoomControlPage() {
                                 img: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&q=80&w=800"
                             }
                         ].map((item, i) => (
-                            <div key={i} className="group space-y-4">
-                                <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-md">
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1, duration: 0.6 }}
+                                whileHover={{ y: -6 }}
+                                className="group space-y-4 transition-all duration-300"
+                            >
+                                <div className="aspect-[4/3] rounded-md overflow-hidden shadow-md">
                                     <img
                                         src={item.img}
                                         alt={item.title}
@@ -194,7 +240,7 @@ function RoomControlPage() {
                                         {item.note}
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </Container>
@@ -203,12 +249,18 @@ function RoomControlPage() {
             {/* ─── ROOM STATUS MODES ─── */}
             <section className="py-20 bg-[#0A0F1A] text-white">
                 <Container>
-                    <div className="text-center mb-16 space-y-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="text-center mb-16 space-y-4"
+                    >
                         <h2 className="text-3xl font-bold">
                             Room Status Modes & Energy Management
                         </h2>
                         <div className="w-16 h-1 bg-red-600 mx-auto" />
-                    </div>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                         {[
@@ -237,9 +289,14 @@ function RoomControlPage() {
                                 img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800"
                             }
                         ].map((item, i) => (
-                            <div
+                            <motion.div
                                 key={i}
-                                className="relative aspect-[3/4] rounded-2xl overflow-hidden group shadow-xl"
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1, duration: 0.6 }}
+                                whileHover={{ y: -6 }}
+                                className="relative aspect-[3/4] rounded-md overflow-hidden group shadow-xl transition-all duration-300"
                             >
                                 <img
                                     src={item.img}
@@ -262,18 +319,25 @@ function RoomControlPage() {
                                         {item.note}
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </Container>
             </section>
+
             {/* ─── ENERGY SAVINGS ─── */}
             <section className="py-20 bg-white">
                 <Container>
-                    <div className="text-center mb-16 space-y-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="text-center mb-16 space-y-4"
+                    >
                         <h2 className="text-3xl font-bold text-[#1A3263]">Energy Savings & ROI</h2>
                         <div className="w-16 h-1 bg-red-600 mx-auto" />
-                    </div>
+                    </motion.div>
 
                     <div className="grid md:grid-cols-3 gap-12 text-center">
                         {[
@@ -281,10 +345,17 @@ function RoomControlPage() {
                             { val: "8% - 10%", label: "Property Wide Savings" },
                             { val: "2-3 Year", label: "Expected Payback period" }
                         ].map((item, i) => (
-                            <div key={i} className="space-y-2">
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1, duration: 0.6, type: "spring", stiffness: 100 }}
+                                className="space-y-2"
+                            >
                                 <div className="text-4xl md:text-5xl font-black text-red-600 tracking-tighter">{item.val}</div>
                                 <div className="text-xs font-bold text-[#1A3263] uppercase tracking-widest">{item.label}</div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </Container>
@@ -293,7 +364,13 @@ function RoomControlPage() {
             {/* ─── COMPARISON TABLE ─── */}
             <section className="py-20 bg-gray-50">
                 <Container>
-                    <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="max-w-6xl mx-auto bg-white rounded-md shadow-xl overflow-hidden"
+                    >
                         <div className="bg-[#1A3263] p-6 text-white text-center">
                             <h3 className="text-2xl font-bold">
                                 INNCOM vs Industry
@@ -403,17 +480,23 @@ function RoomControlPage() {
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </motion.div>
                 </Container>
             </section>
 
             {/* ─── SOFTWARE OPTIONS (INFINITE SCROLL) ─── */}
             <section className="py-20 bg-white overflow-hidden">
                 <Container>
-                    <div className="text-center mb-16 space-y-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="text-center mb-16 space-y-4"
+                    >
                         <h2 className="text-3xl font-bold text-[#1A3263]">Software Options</h2>
                         <div className="w-16 h-1 bg-red-600 mx-auto" />
-                    </div>
+                    </motion.div>
                 </Container>
 
                 <div className="relative">
@@ -437,7 +520,7 @@ function RoomControlPage() {
                             "https://static.wixstatic.com/media/3d5958_324aa4528f304910bfe3f579e279a221~mv2.png/v1/fill/w_634,h_350,al_c,q_80,usm_0.66_1.00_0.01/3d5958_324aa4528f304910bfe3f579e279a221~mv2.png",
                             "https://static.wixstatic.com/media/3d5958_15e31618980645c9a708cdf897d352d4~mv2.png/v1/fill/w_634,h_352,al_c,q_80,usm_0.66_1.00_0.01/3d5958_15e31618980645c9a708cdf897d352d4~mv2.png"
                         ].map((img, i) => (
-                            <div key={i} className="inline-block w-[450px] shrink-0 rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                            <div key={i} className="inline-block w-[450px] shrink-0 rounded-md overflow-hidden shadow-lg border border-gray-100">
                                 <img src={img} alt={`Software Option ${i + 1}`} className="w-full h-full object-cover" />
                             </div>
                         ))}
@@ -450,10 +533,16 @@ function RoomControlPage() {
             {/* ─── INNCONTROL 5 (INFINITE SCROLL) ─── */}
             <section className="py-20 bg-gray-50 overflow-hidden">
                 <Container>
-                    <div className="text-center mb-16 space-y-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="text-center mb-16 space-y-4"
+                    >
                         <h2 className="text-3xl font-bold text-[#1A3263]">INNControl 5 – Powered by Niagara</h2>
                         <div className="w-16 h-1 bg-red-600 mx-auto" />
-                    </div>
+                    </motion.div>
                 </Container>
 
                 <div className="relative">
@@ -476,7 +565,7 @@ function RoomControlPage() {
                             "https://uploads.onecompiler.io/4478e2a8t/448b49fby/3d5958_b4161bd122e6432ca277ff8a417646dc~mv2.avif",
                             "https://uploads.onecompiler.io/4478e2a8t/448b49fby/3d5958_a72ae7d6d3ab46d2bc15130c02c9f8b1~mv2.avif"
                         ].map((img, i) => (
-                            <div key={i} className="inline-block w-[450px] shrink-0 rounded-2xl overflow-hidden shadow-lg bg-white border border-gray-100">
+                            <div key={i} className="inline-block w-[450px] shrink-0 rounded-md overflow-hidden shadow-lg bg-white border border-gray-100">
                                 <img src={img} alt={`INNControl Feature ${i + 1}`} className="w-full h-full object-cover" />
                             </div>
                         ))}
@@ -485,20 +574,27 @@ function RoomControlPage() {
                     <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-gray-50 to-transparent z-10" />
                 </div>
             </section>
+
             {/* ─── FINAL CTA ─── */}
             <section className="py-24 bg-white text-center">
                 <Container>
-                    <div className="max-w-2xl mx-auto space-y-6">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.7 }}
+                        className="max-w-2xl mx-auto space-y-6"
+                    >
                         <div className="w-12 h-1 bg-red-600 mx-auto" />
                         <h2 className="text-3xl font-bold text-[#1A3263]">Modernize your property today</h2>
                         <p className="text-gray-500 text-sm">Our engineering team can design a customized room control strategy that enhances guest satisfaction while cutting operational costs.</p>
                         <button
                             onClick={() => router.navigate({ to: "/contact" })}
-                            className="px-10 py-3 bg-[#0A0F1A] text-white rounded-full font-bold hover:bg-red-600 transition-all duration-300 shadow-xl hover:shadow-red-500/20 text-sm"
+                            className="px-10 py-3 bg-[#0A0F1A] text-white rounded-md font-bold hover:bg-red-600 transition-all duration-300 shadow-xl hover:shadow-red-500/20 text-sm"
                         >
                             Consult an Expert
                         </button>
-                    </div>
+                    </motion.div>
                 </Container>
             </section>
         </div>
