@@ -91,7 +91,7 @@ export function Hero() {
 
 
             {/* Smaller, Clean Heading */}
-            <h1 className="text-3xl md:text-5xl lg:text-[3.5rem] font-bold text-white leading-[1.2] tracking-tight">
+            <h1 className="text-3xl md:text-5xl lg:text-[3rem] font-bold text-white leading-[1.2] tracking-tight">
               Smart Building Solutions <br />
               with <span className="text-[#DB1A1A]">Safer Future.</span>
             </h1>

@@ -167,7 +167,8 @@ export function QuoteForm() {
     const onSubmit = async (data: QuoteFormValues) => {
         setSubmitStatus(null);
         try {
-            const response = await fetch("http://localhost:1000/api/quotes", {
+            const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+            const response = await fetch(`${baseUrl}/api/quotes`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

@@ -106,11 +106,29 @@ router.get(
     }
 );
 
-// ✅ Logout Route
-router.get("/logout", (req, res, next) => {
+// ✅ Logout Route (Destroys session, clears cookie, and handles both GET & POST)
+router.all("/logout", (req, res, next) => {
     req.logout((err) => {
-        if (err) return next(err);
-        res.redirect("http://localhost:5173/");
+        if (err) {
+            console.error("Logout Error:", err);
+            return res.status(500).json({ success: false, message: "Failed to log out" });
+        }
+        
+        req.session.destroy((destroyErr) => {
+            if (destroyErr) {
+                console.error("Session destroy error during logout:", destroyErr);
+            }
+            
+            // Explicitly clear the connect.sid session cookie with security flags matching server config
+            res.clearCookie("connect.sid", {
+                path: "/",
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
+            });
+            
+            return res.json({ success: true, message: "Logged out successfully" });
+        });
     });
 });
 

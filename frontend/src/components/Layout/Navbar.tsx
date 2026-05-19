@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Menu, X, User, ChevronRight, Phone, Mail, Facebook, Linkedin } from "lucide-react";
+import { Menu, X, User, ChevronRight, Phone, Mail, Facebook, Linkedin, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store";
+import { initializeAuth, logoutSuccess } from "@/store/authSlice";
 import logoImg from "@/assets/logo.avif";
 
 const PRODUCTS_DATA: Record<string, { href: string }> = {
@@ -36,6 +40,7 @@ const SERVICES_DATA = [
 import { AuthModal } from "@/components/Auth/AuthModal";
 
 export function Navbar() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const lightPages = ["/products", "/document-center", "/request-quote", "/technical-tips", "/warranty", "/services/public-address"];
   const isLightPage = lightPages.some(path => location.pathname.startsWith(path));
@@ -44,22 +49,34 @@ export function Navbar() {
   const [showServices, setShowServices] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSupport, setActiveSupport] = useState<string | null>(null);
-  const [user, setUser] = useState<{ name: string, avatar: string } | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const [mobileClientOpen, setMobileClientOpen] = useState(false);
+
+  const user = useSelector((state: RootState) => state.auth.user);
+  
+  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+
+  const handleLogout = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${baseUrl}/auth/logout`, {
+        method: "POST",
+        credentials: "include"
+      });
+      const data = await response.json();
+      if (data.success) {
+        dispatch(logoutSuccess());
+      }
+    } catch (err) {
+      console.error("Logout failed:", err);
+      // Safe local reset regardless of network errors to prevent stale UI state
+      dispatch(logoutSuccess());
+    }
+  };
 
   useEffect(() => {
-    // Check if user is logged in
-    fetch("http://localhost:1000/auth/user", {
-      credentials: "include" // Important to send cookies
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success && data.user) {
-          setUser(data.user);
-        }
-      })
-      .catch(err => console.error("Not logged in", err));
-
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -274,7 +291,7 @@ export function Navbar() {
             <div className="flex items-center gap-3">
               <img src={user.avatar || "https://ui-avatars.com/api/?name=" + user.name} alt={user.name} className="w-8 h-8 rounded-full border border-white/20 shadow-md" referrerPolicy="no-referrer" />
               <span className="text-sm font-medium text-white/90">{user.name}</span>
-              <a href="http://localhost:1000/auth/logout" className="text-xs text-red-500 hover:text-red-400 ml-2 font-medium">Logout</a>
+              <button onClick={handleLogout} className="text-xs text-red-500 hover:text-red-400 ml-2 font-medium bg-transparent border-0 cursor-pointer">Logout</button>
             </div>
           ) : (
             <button
@@ -303,51 +320,209 @@ export function Navbar() {
       </div>
 
       {/* Mobile Menu */}
-      {mobileOpen && (
-        <div className="lg:hidden bg-[#1A3263] border-t border-white/10 max-h-[calc(100vh-80px)] overflow-y-auto pb-10">
-          <div className="p-6 space-y-8">
-            {/* User Section */}
-            <div className="space-y-4">
-              <p className="text-red-500 font-medium text-xs">Account</p>
-              {user ? (
-                <div className="flex items-center gap-3 bg-white/5 p-3 rounded-sm">
-                  <img src={user.avatar || "https://ui-avatars.com/api/?name=" + user.name} alt={user.name} className="w-10 h-10 rounded-full border border-white/20" />
-                  <div className="flex-1">
-                    <p className="text-sm font-bold text-white">{user.name}</p>
-                    <a href="http://localhost:1000/auth/logout" className="text-xs text-red-500 hover:underline">Logout</a>
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="lg:hidden bg-[#0A0F1A]/95 backdrop-blur-2xl border-t border-white/10 max-h-[calc(100vh-80px)] overflow-y-auto w-full shadow-2xl"
+          >
+            <div className="p-6 space-y-6">
+              {/* User Account Section */}
+              <div className="space-y-3">
+                <p className="text-white/40 font-bold uppercase tracking-wider text-[10px]">Account</p>
+                {user ? (
+                  <div className="flex items-center gap-3 bg-white/5 p-4 rounded-sm border border-white/5">
+                    <img
+                      src={user.avatar || "https://ui-avatars.com/api/?name=" + user.name}
+                      alt={user.name}
+                      className="w-10 h-10 rounded-full border border-white/20"
+                    />
+                    <div className="flex-1">
+                      <p className="text-sm font-bold text-white leading-none mb-1">{user.name}</p>
+                      <button
+                        onClick={(e) => {
+                          handleLogout(e);
+                          setMobileOpen(false);
+                        }}
+                        className="text-xs text-red-500 hover:underline bg-transparent border-0 cursor-pointer text-left p-0 font-medium"
+                      >
+                        Logout
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <button
-                  onClick={() => {
-                    setIsAuthOpen(true);
-                    setMobileOpen(false);
-                  }}
-                  className="w-full flex items-center justify-between bg-white/5 p-4 rounded-sm group active:bg-white/10 transition-all"
-                >
-                  <div className="flex items-center gap-3">
-                    <User size={18} className="text-red-500" />
-                    <span className="text-sm font-bold text-white">Login / Register</span>
-                  </div>
-                  <ChevronRight size={16} className="text-white/40 group-hover:translate-x-1 transition-transform" />
-                </button>
-              )}
-            </div>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setIsAuthOpen(true);
+                      setMobileOpen(false);
+                    }}
+                    className="w-full flex items-center justify-between bg-white/5 hover:bg-white/10 p-4 rounded-sm border border-white/5 group transition-all"
+                  >
+                    <div className="flex items-center gap-3">
+                      <User size={18} className="text-red-500" />
+                      <span className="text-sm font-semibold text-white">Login / Register</span>
+                    </div>
+                    <ChevronRight size={16} className="text-white/40 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                )}
+              </div>
 
-            <div className="space-y-4">
-              <p className="text-red-500 font-medium text-xs">Navigation</p>
-              <div className="flex flex-col gap-4 text-white">
-                <Link to="/products" onClick={() => setMobileOpen(false)}>Products</Link>
-                <Link to="/" hash="solutions" onClick={() => setMobileOpen(false)}>Services</Link>
-                <Link to="/portfolio" onClick={() => setMobileOpen(false)}>Client Center</Link>
-                <Link to="/contact" onClick={() => setMobileOpen(false)}>Contact Us</Link>
-                <Link to="/about" onClick={() => setMobileOpen(false)}>About Us</Link>
-                <Link to="/projects" onClick={() => setMobileOpen(false)}>Projects</Link>
+              {/* Navigation Links */}
+              <div className="space-y-3">
+                <p className="text-white/40 font-bold uppercase tracking-wider text-[10px]">Navigation</p>
+                <div className="flex flex-col gap-1 text-white">
+                  
+                  {/* About Us */}
+                  <Link
+                    to="/about"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium transition-all"
+                  >
+                    <span>About Us</span>
+                  </Link>
+
+                  {/* Collapsible Services Accordion */}
+                  <div className="border-b border-white/5 last:border-0">
+                    <button
+                      onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                      className="w-full flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium text-left transition-all"
+                    >
+                      <span>Services</span>
+                      <ChevronDown
+                        size={16}
+                        className={cn("text-white/50 transition-transform duration-300", mobileServicesOpen && "rotate-180")}
+                      />
+                    </button>
+                    <AnimatePresence>
+                      {mobileServicesOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden pl-6 pr-4 bg-black/20 rounded-sm"
+                        >
+                          {SERVICES_DATA.map((item) => (
+                            <Link
+                              key={item.name}
+                              to={item.href}
+                              onClick={() => setMobileOpen(false)}
+                              className="block py-2.5 text-xs text-white/70 hover:text-white transition-colors"
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Collapsible Products Accordion */}
+                  <div className="border-b border-white/5 last:border-0">
+                    <button
+                      onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
+                      className="w-full flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium text-left transition-all"
+                    >
+                      <span>Products</span>
+                      <ChevronDown
+                        size={16}
+                        className={cn("text-white/50 transition-transform duration-300", mobileProductsOpen && "rotate-180")}
+                      />
+                    </button>
+                    <AnimatePresence>
+                      {mobileProductsOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden pl-6 pr-4 bg-black/20 rounded-sm"
+                        >
+                          {Object.entries(PRODUCTS_DATA).map(([label, data]) => (
+                            <Link
+                              key={label}
+                              to={data.href}
+                              onClick={() => setMobileOpen(false)}
+                              className="block py-2.5 text-xs text-white/70 hover:text-white transition-colors"
+                            >
+                              {label}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Collapsible Client Center Accordion */}
+                  <div className="border-b border-white/5 last:border-0">
+                    <button
+                      onClick={() => setMobileClientOpen(!mobileClientOpen)}
+                      className="w-full flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium text-left transition-all"
+                    >
+                      <span>Client Center</span>
+                      <ChevronDown
+                        size={16}
+                        className={cn("text-white/50 transition-transform duration-300", mobileClientOpen && "rotate-180")}
+                      />
+                    </button>
+                    <AnimatePresence>
+                      {mobileClientOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden pl-6 pr-4 bg-black/20 rounded-sm"
+                        >
+                          {CLIENT_CENTER_DATA.map((item) => (
+                            <Link
+                              key={item.name}
+                              to={item.href}
+                              onClick={() => setMobileOpen(false)}
+                              className="block py-2.5 text-xs text-white/70 hover:text-white transition-colors"
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Projects */}
+                  <Link
+                    to="/projects"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium transition-all"
+                  >
+                    <span>Projects</span>
+                  </Link>
+
+                  {/* Contact Us */}
+                  <Link
+                    to="/contact"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium transition-all"
+                  >
+                    <span>Contact Us</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Request Quote Button */}
+              <div className="pt-4 border-t border-white/10">
+                <Link
+                  to="/request-quote"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex h-12 items-center justify-center rounded-sm bg-[#C3110C] text-sm font-bold text-white hover:bg-red-700 transition-all duration-300 shadow-lg shadow-red-600/20 w-full"
+                >
+                  Request Quote
+                </Link>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

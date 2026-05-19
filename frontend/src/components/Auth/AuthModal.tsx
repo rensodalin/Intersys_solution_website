@@ -3,6 +3,8 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "@/store/authSlice";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 
@@ -16,6 +18,7 @@ type AuthTab = "login" | "register";
 import logoImg from "@/assets/logo.avif";
 
 export function AuthModal({ isOpen, onClose }: AuthModalProps) {
+  const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState<AuthTab>("login");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -55,7 +58,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         };
 
     try {
-      const baseUrl = `http://${window.location.hostname}:1000`;
+      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
       const response = await fetch(`${baseUrl}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -70,7 +73,8 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           setActiveTab("login");
           setError("Registration successful! Please login.");
         } else {
-          window.location.reload(); 
+          dispatch(loginSuccess(data.user));
+          onClose();
         }
       } else {
         setError(data.message || data.error || "An error occurred");
@@ -84,7 +88,8 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   };
 
   const handleSocialLogin = (provider: "google" | "facebook") => {
-    window.location.href = `http://${window.location.hostname}:1000/auth/${provider}`;
+    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+    window.location.href = `${baseUrl}/auth/${provider}`;
   };
 
   return createPortal(

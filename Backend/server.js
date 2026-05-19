@@ -20,13 +20,19 @@ const app = express();
 connectDB();
 
 
+// CORS Configuration - dynamically adds the production domain from environment variables
+const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5174"
+];
+if (process.env.FRONTEND_URL) {
+    allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
 app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "http://localhost:5174",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:5174"
-    ],
+    origin: allowedOrigins,
     credentials: true,
 }));
 
@@ -38,7 +44,7 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-// Session setup
+// Session setup with secure, HTTP-only cookie configuration
 app.use(
     session({
         secret: process.env.SESSION_SECRET || "intersys_super_secret",
@@ -46,6 +52,9 @@ app.use(
         saveUninitialized: false,
         cookie: {
             maxAge: 1000 * 60 * 60 * 24, // 1 day
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         },
     })
 );
