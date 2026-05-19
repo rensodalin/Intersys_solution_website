@@ -175,24 +175,28 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
 
       <Container>
         {/* ─── MAIN PRODUCT SECTION ─── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-16 mb-24 max-w-5xl mx-auto">
+          {/* Gallery */}
           {/* Gallery */}
           <div>
-            <div className="max-w-md aspect-square bg-[#FBFBFC] rounded-sm border border-gray-100 flex items-center justify-center p-8 mb-6">
+            <div className="w-[360px] aspect-square bg-[#FBFBFC] rounded-sm border border-gray-100 flex items-center justify-center p-6 mb-5">
               <img
                 src={product.thumbnails[selectedImage] || product.mainImage}
                 alt="Product"
-                className="max-w-[80%] max-h-[80%] object-contain mix-blend-multiply"
+                className="max-w-[72%] max-h-[72%] object-contain mix-blend-multiply"
               />
             </div>
-            <div className="flex gap-3 justify-start max-w-md">
+
+            <div className="flex gap-2 justify-start w-[360px]">
               {product.thumbnails.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedImage(idx)}
                   className={cn(
-                    "w-16 h-16 rounded-sm border-2 transition-all p-1.5 bg-white",
-                    selectedImage === idx ? "border-[#C3110C]" : "border-gray-100 hover:border-gray-200"
+                    "w-14 h-14 rounded-sm border transition-all p-1 bg-white",
+                    selectedImage === idx
+                      ? "border-[#C3110C]"
+                      : "border-gray-100 hover:border-gray-200"
                   )}
                 >
                   <img src={img} className="w-full h-full object-contain" />
@@ -201,6 +205,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
             </div>
           </div>
 
+          {/* Info Tabs */}
           {/* Info Tabs */}
           <div>
             <div className="flex gap-10 border-b border-gray-100 mb-8">
@@ -238,10 +243,9 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                     initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -10 }}
-                    className="space-y-6"
+                    className="space-y-2"
                   >
-                    <h3 className="text-md font-bold text-[#162E93] tracking-tight font-display">Engineered for Performance</h3>
-                    <div className="text-gray-500 text-[13px] leading-relaxed whitespace-pre-line font-light">
+                    <div className="text-gray-500 text-[14px]  font-light leading-7">
                       {product.longDescription}
                     </div>
                   </motion.div>
