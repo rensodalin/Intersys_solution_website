@@ -89,7 +89,8 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
   const handleSocialLogin = (provider: "google" | "facebook") => {
     const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
-    window.location.href = `${baseUrl}/auth/${provider}`;
+    const currentUrl = window.location.href;
+    window.location.href = `${baseUrl}/auth/${provider}?redirect=${encodeURIComponent(currentUrl)}`;
   };
 
   return createPortal(

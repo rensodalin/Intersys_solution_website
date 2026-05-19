@@ -24,6 +24,24 @@ const MOCK_PRODUCTS = [
                 "specification": "Standard Profile",
                 "price": 0,
                 "qty": 0
+            },
+            {
+                "partCode": "DEFAULT-2",
+                "specification": "Standard Profile",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "DEFAULT-3",
+                "specification": "Standard Profile",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "DEFAULT-4",
+                "specification": "Standard Profile",
+                "price": 0,
+                "qty": 0
             }
         ],
         "documents": [

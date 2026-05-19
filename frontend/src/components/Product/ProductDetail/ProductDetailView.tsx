@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/Common/Container";
@@ -16,6 +16,9 @@ import {
 import { cn } from "@/lib/utils";
 import { useNavigate } from "@tanstack/react-router";
 import { useInquiry } from "@/context/InquiryContext";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { AuthModal } from "@/components/Auth/AuthModal";
 
 // ─── TYPES ───
 export interface ProductOption {
@@ -71,6 +74,30 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
   const [activeTab, setActiveTab] = useState<"description" | "documents">("description");
   const [selectedImage, setSelectedImage] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  
+  const user = useSelector((state: RootState) => state.auth.user);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [pendingDocUrl, setPendingDocUrl] = useState<string | null>(null);
+
+  // Handle auto-opening PDF after successful login (local or OAuth)
+  useEffect(() => {
+    if (user) {
+      // 1. Check local state (for email/password login)
+      if (pendingDocUrl) {
+        window.open(pendingDocUrl, "_blank");
+        setPendingDocUrl(null);
+        localStorage.removeItem("pending_pdf_url");
+        return;
+      }
+      
+      // 2. Check localStorage (for Google OAuth redirect login)
+      const storedPdf = localStorage.getItem("pending_pdf_url");
+      if (storedPdf) {
+        window.open(storedPdf, "_blank");
+        localStorage.removeItem("pending_pdf_url");
+      }
+    }
+  }, [user, pendingDocUrl]);
 
   const [quantities, setQuantities] = useState<Record<string, number>>(() => {
     const initial: Record<string, number> = {};
@@ -261,6 +288,16 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                       <a
                         key={i}
                         href={doc.url}
+                        onClick={(e) => {
+                          if (!user) {
+                            e.preventDefault();
+                            setPendingDocUrl(doc.url);
+                            localStorage.setItem("pending_pdf_url", doc.url);
+                            setIsAuthOpen(true);
+                          }
+                        }}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-1.5 group w-fit py-1 transition-all"
                       >
                         <img
@@ -364,6 +401,15 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
           )}
         </div>
       </Container>
+
+      <AuthModal 
+        isOpen={isAuthOpen} 
+        onClose={() => {
+          setIsAuthOpen(false);
+          setPendingDocUrl(null);
+          localStorage.removeItem("pending_pdf_url");
+        }} 
+      />
     </div>
   );
 }

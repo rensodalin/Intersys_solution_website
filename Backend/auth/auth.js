@@ -79,6 +79,12 @@ router.post("/login", async (req, res, next) => {
 // ✅ Trigger Google OAuth
 router.get(
     "/google",
+    (req, res, next) => {
+        if (req.query.redirect) {
+            req.session.redirectTo = req.query.redirect;
+        }
+        next();
+    },
     passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
@@ -87,20 +93,25 @@ router.get(
     "/google/callback",
     (req, res, next) => {
         passport.authenticate("google", (err, user, info) => {
+            const defaultRedirect = "http://localhost:5173/";
+            const redirectTo = req.session.redirectTo || defaultRedirect;
+            // Clean up session redirect
+            delete req.session.redirectTo;
+
             if (err) {
                 console.error("Google Auth Error:", err);
-                return res.redirect("http://localhost:5173/?error=auth_failed");
+                return res.redirect(`${defaultRedirect}?error=auth_failed`);
             }
             if (!user) {
-                return res.redirect("http://localhost:5173/?error=user_not_found");
+                return res.redirect(`${defaultRedirect}?error=user_not_found`);
             }
             req.logIn(user, (err) => {
                 if (err) {
                     console.error("Session Login Error:", err);
-                    return res.redirect("http://localhost:5173/?error=session_error");
+                    return res.redirect(`${defaultRedirect}?error=session_error`);
                 }
-                // Successful login
-                return res.redirect("http://localhost:5173/");
+                // Successful login, redirect to saved location
+                return res.redirect(redirectTo);
             });
         })(req, res, next);
     }
