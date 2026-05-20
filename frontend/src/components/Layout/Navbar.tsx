@@ -89,6 +89,13 @@ export function Navbar() {
     setActiveSupport(null);
   };
 
+  const handleLogoClick = (e: React.MouseEvent) => {
+    closeMenus();
+    if (location.pathname === "/") {
+      window.scrollTo(0, 0);
+    }
+  };
+
   return (
     <header
       className={cn(
@@ -103,7 +110,7 @@ export function Navbar() {
           ? "h-16 bg-[#081F3D]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.4)]"
           : isLightPage ? "h-24 bg-[#0A0F1A]" : "h-24 bg-transparent",
       )}>
-        <Link to="/" className="flex items-center transition-transform hover:scale-105 duration-300" onClick={closeMenus}>
+        <Link to="/" className="flex items-center transition-transform hover:scale-105 duration-300" onClick={handleLogoClick}>
           <img
             src={logoImg}
             alt="Intersys Logo"

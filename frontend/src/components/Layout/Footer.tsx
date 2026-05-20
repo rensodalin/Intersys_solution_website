@@ -199,7 +199,7 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
 
             {/* Center: Copyright */}
             <div className="flex-1 flex justify-center">
-              <p className="text-[12px] text-white/60 tracking-wider font-medium">
+              <p className="text-[12px] text-white/60  font-medium">
                 © {new Date().getFullYear()} Intersys Solutions Co., Ltd. All Rights Reserved
               </p>
             </div>

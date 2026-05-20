@@ -16,22 +16,53 @@ export function FeaturedProjects() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProjects = async () => {
+    const fetchProjectsAndInsights = async () => {
       try {
         const baseUrl = `http://${window.location.hostname}:1000`;
-        const res = await fetch(`${baseUrl}/api/projects`);
-        const data = await res.json();
-        if (data.success) {
-          // Show all projects from the database to match the project page
-          setProjects(data.data);
+        
+        // Fetch both Projects and Insights
+        const [projRes, insRes] = await Promise.all([
+          fetch(`${baseUrl}/api/projects`),
+          fetch(`${baseUrl}/api/insights`)
+        ]);
+
+        let combined: Project[] = [];
+
+        if (projRes.ok) {
+          const projData = await projRes.json();
+          if (projData.success) {
+            combined = [...projData.data];
+          }
         }
+
+        if (insRes.ok) {
+          const insData = await insRes.json();
+          if (insData.success) {
+            // Map insights to Project format
+            const insightProjects: Project[] = insData.data.map((item: any) => ({
+              _id: item._id,
+              title: item.title,
+              desc: item.desc,
+              image: item.image[0],
+              category: item.category,
+              slug: item.slug
+            }));
+
+            // Add insights to combined list, avoiding duplicates by title
+            combined = [...combined, ...insightProjects.filter(ip =>
+              !combined.some(cp => cp.title === ip.title)
+            )];
+          }
+        }
+
+        setProjects(combined);
       } catch (err) {
-        console.error("Failed to fetch featured projects:", err);
+        console.error("Failed to fetch featured projects and insights:", err);
       } finally {
         setLoading(false);
       }
     };
-    fetchProjects();
+    fetchProjectsAndInsights();
   }, []);
 
   if (loading) {
@@ -91,6 +122,19 @@ export function FeaturedProjects() {
               </div>
             </motion.div>
           );
+
+          if (p.slug) {
+            return (
+              <Link 
+                key={p._id || p.title} 
+                to="/insights/$slug"
+                params={{ slug: p.slug }}
+                className="block"
+              >
+                {Content}
+              </Link>
+            );
+          }
 
           return (
             <Link key={p._id || p.title} to="/projects" className="block">

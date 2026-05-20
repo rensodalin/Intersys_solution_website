@@ -30,10 +30,10 @@ export function AboutHero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             src={honeywellLogo}
             alt="Honeywell Authorized Partner"
-            className="h-8 md:h-10 mb-8 invert grayscale brightness-200"
+            className="h-14 md:h-14 mb-8 invert grayscale brightness-200 hover:invert-0 hover:grayscale-0 hover:brightness-100 transition-all duration-500"
           />
 
-          <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+          <h1 className="text-3xl lg:text-4xl font-bold text-white font-display leading-[1.2] mb-6">
             About{" "}
             <span className="text-red-600">
               <Typewriter

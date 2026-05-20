@@ -112,7 +112,7 @@ export function Insights() {
                     min-w-0
                   "
                 >
-                  <Link 
+                  <Link
                     to="/insights/$slug"
                     params={{ slug: item.slug }}
                     className="block"
@@ -178,8 +178,8 @@ export function Insights() {
                               items-center
                               text-[11px]
                               font-bold
-                              tracking-wider
-                              text-[#FF4400]
+                            
+                              text-[#EED9B9]
                             "
                           >
                             {item.category}

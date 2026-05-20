@@ -23,8 +23,8 @@ export function AboutMission() {
   return (
     <section className="relative py-24 bg-[#F5F7FA] overflow-hidden">
       {/* Background Blur */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-red-100 rounded-full blur-3xl opacity-20" />
-      <div className="absolute bottom-0 right-0 w-72 h-72 bg-blue-100 rounded-full blur-3xl opacity-20" />
+      <div className="absolute top-0 left-0 w-72 h-72 bg-red-100 rounded-md blur-3xl opacity-20" />
+      <div className="absolute bottom-0 right-0 w-72 h-72 bg-blue-100 rounded-md blur-3xl opacity-20" />
 
       <Container>
         <div className="text-center mb-7">
@@ -45,13 +45,13 @@ export function AboutMission() {
                 ease: "easeOut",
               }}
               whileHover={{ y: -10 }}
-              className="relative bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 group overflow-hidden"
+              className="relative bg-white rounded-md p-8 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 group overflow-hidden"
             >
               {/* Top Gradient Line */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-600 to-red-400" />
 
               {/* Icon */}
-              <div className="w-20 h-20 rounded-2xl bg-[#F8F9FA] flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+              <div className="w-20 h-20 rounded-md bg-[#F8F9FA] flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                 <img
                   src={v.icon}
                   alt={v.title}

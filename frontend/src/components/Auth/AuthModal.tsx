@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "@/store/authSlice";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
+import { toast } from "sonner";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -22,6 +23,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [activeTab, setActiveTab] = useState<AuthTab>("login");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -38,12 +40,37 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (error) setError(null);
+    if (name === "password" && passwordError) setPasswordError(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError(null);
+    setPasswordError(null);
+
+    // Client-side validation for registration
+    if (activeTab === "register") {
+      if (!formData.firstName.trim()) return setError("First name is required");
+      if (!formData.lastName.trim()) return setError("Last name is required");
+      if (!formData.gender) return setError("Please select a gender");
+      if (!formData.mobileNumber.trim()) return setError("Phone number is required");
+      if (!formData.email.trim()) return setError("Email is required");
+      if (!formData.password) return setPasswordError("Password is required");
+
+      // Strong password validation
+      const pw = formData.password;
+      const isStrong = 
+        pw.length >= 8 &&
+        /[A-Z]/.test(pw) &&
+        /[a-z]/.test(pw) &&
+        /[0-9]/.test(pw) &&
+        /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pw);
+      if (!isStrong) {
+        return setPasswordError("Please choose a stronger password. Try a mix of letters, numbers, and symbols.");
+      }
+    }
+
+    setLoading(true);
 
     const endpoint = activeTab === "login" ? "/auth/login" : "/auth/register";
     const payload = activeTab === "login" 
@@ -73,13 +100,19 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
       if (data.success) {
         if (activeTab === "register") {
           setActiveTab("login");
-          setError("Registration successful! Please login.");
+          toast.success("Account created successfully. Please log in.");
         } else {
           dispatch(loginSuccess(data.user));
+          toast.success("Logged in successfully.");
           onClose();
         }
       } else {
-        setError(data.message || data.error || "An error occurred");
+        const errMsg = data.message || data.error || "An error occurred";
+        if (activeTab === "register" && errMsg.toLowerCase().includes("password")) {
+          setPasswordError(errMsg);
+        } else {
+          setError(errMsg);
+        }
       }
     } catch (err) {
       console.error("Fetch error:", err);
@@ -122,7 +155,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 {(["login", "register"] as const).map((tab) => (
                   <button
                     key={tab}
-                    onClick={() => { setActiveTab(tab); setError(null); }}
+                    onClick={() => { setActiveTab(tab); setError(null); setPasswordError(null); }}
                     className={cn(
                       "relative pb-2 text-sm font-medium tracking-wide transition-all capitalize",
                       activeTab === tab ? "text-black" : "text-gray-400 hover:text-gray-600"
@@ -164,6 +197,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                   loading={loading} 
                   formData={formData} 
                   handleInputChange={handleInputChange} 
+                  passwordError={passwordError}
                 />
               )}
 
@@ -190,7 +224,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 <p className="text-xs text-gray-500 font-medium tracking-tight">
                   {activeTab === "login" ? "New to INTERSYS? " : "Already have an account? "}
                   <button
-                    onClick={() => { setActiveTab(activeTab === "login" ? "register" : "login"); setError(null); }}
+                    onClick={() => { setActiveTab(activeTab === "login" ? "register" : "login"); setError(null); setPasswordError(null); }}
                     className="text-black font-bold hover:underline"
                   >
                     {activeTab === "login" ? "Register" : "Login"}

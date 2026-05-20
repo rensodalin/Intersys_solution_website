@@ -10,9 +10,42 @@ router.post("/register", async (req, res) => {
         console.log("Register payload:", req.body);
         const { firstName, lastName, email, password, phone, gender, country, role } = req.body;
 
-        // Validation
-        if (!email || !password) {
-            return res.status(400).json({ success: false, message: "Email and password are required" });
+        // Validation - All fields required except role
+        if (!firstName || !firstName.trim()) {
+            return res.status(400).json({ success: false, message: "First name is required" });
+        }
+        if (!lastName || !lastName.trim()) {
+            return res.status(400).json({ success: false, message: "Last name is required" });
+        }
+        if (!email || !email.trim()) {
+            return res.status(400).json({ success: false, message: "Email is required" });
+        }
+        if (!password) {
+            return res.status(400).json({ success: false, message: "Password is required" });
+        }
+        if (!phone || !phone.trim()) {
+            return res.status(400).json({ success: false, message: "Phone number is required" });
+        }
+        if (!gender) {
+            return res.status(400).json({ success: false, message: "Gender is required" });
+        }
+        if (!country || !country.trim()) {
+            return res.status(400).json({ success: false, message: "Country is required" });
+        }
+
+        // Strong password validation
+        const isStrong = 
+            password.length >= 8 &&
+            /[A-Z]/.test(password) &&
+            /[a-z]/.test(password) &&
+            /[0-9]/.test(password) &&
+            /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+        if (!isStrong) {
+            return res.status(400).json({
+                success: false,
+                message: "Please choose a stronger password. Try a mix of letters, numbers, and symbols."
+            });
         }
 
         // Check if user already exists

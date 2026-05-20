@@ -6,6 +6,7 @@ interface RegisterFormProps {
   loading: boolean;
   formData: any;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  passwordError?: string | null;
 }
 
 export function RegisterForm({
@@ -13,10 +14,11 @@ export function RegisterForm({
   loading,
   formData,
   handleInputChange,
+  passwordError,
 }: RegisterFormProps) {
   const [showPassword, setShowPassword] = useState(false);
 
-  const countries = ["Cambodia", "South Korea", "Singapore", "Thailand", "Vietnam", "Japan", "USA"];
+  const countries = ["Cambodia", "South Korea", "Singapore", "Vietnam", "Japan", "USA", "other"];
 
   const jobTitles = [
     "Engineer",
@@ -29,8 +31,6 @@ export function RegisterForm({
     "Other",
   ];
 
-  const roles = ["Admin", "User", "Manager", "Staff"];
-
   return (
     <form onSubmit={onSubmit} className="space-y-8">
       <div className="space-y-6">
@@ -38,7 +38,7 @@ export function RegisterForm({
         {/* Gender */}
         <div className="space-y-2.5">
           <label className="text-[11px] font-medium text-gray-500 tracking-wide uppercase">
-            Gender (Required)
+            Gender <span className="text-red-400">*</span>
           </label>
           <div className="flex gap-6">
             <label className="flex items-center gap-2.5 cursor-pointer group">
@@ -81,7 +81,6 @@ export function RegisterForm({
             name="role"
             value={formData.role}
             onChange={handleInputChange}
-
             className="w-full px-4 py-3.5 text-sm border border-gray-200 rounded-md bg-white focus:border-black focus:ring-2 focus:ring-black/5 outline-none transition-all"
           >
             <option value="">Select role</option>
@@ -97,7 +96,7 @@ export function RegisterForm({
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2.5">
             <label className="text-[11px] font-medium text-gray-500 tracking-wide uppercase">
-              First name
+              First name <span className="text-red-400">*</span>
             </label>
             <input
               type="text"
@@ -112,7 +111,7 @@ export function RegisterForm({
 
           <div className="space-y-2.5">
             <label className="text-[11px] font-medium text-gray-500 tracking-wide uppercase">
-              Last name
+              Last name <span className="text-red-400">*</span>
             </label>
             <input
               type="text"
@@ -129,7 +128,7 @@ export function RegisterForm({
         {/* Country & Phone */}
         <div className="space-y-3">
           <label className="text-[11px] font-medium text-gray-500 tracking-wide uppercase">
-            Country & Phone
+            Country & Phone <span className="text-red-400">*</span>
           </label>
 
           <div className="flex gap-3">
@@ -167,7 +166,7 @@ export function RegisterForm({
         {/* Email */}
         <div className="space-y-2.5">
           <label className="text-[11px] font-medium text-gray-500 tracking-wide uppercase">
-            Email
+            Email <span className="text-red-400">*</span>
           </label>
           <input
             type="email"
@@ -183,7 +182,7 @@ export function RegisterForm({
         {/* Password */}
         <div className="space-y-2.5">
           <label className="text-[11px] font-medium text-gray-500 tracking-wide uppercase">
-            Password
+            Password <span className="text-red-400">*</span>
           </label>
 
           <div className="relative">
@@ -205,6 +204,11 @@ export function RegisterForm({
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
+          {passwordError && (
+            <p className="text-[11px] font-medium text-red-500 mt-1.5 transition-all">
+              {passwordError}
+            </p>
+          )}
         </div>
 
       </div>
