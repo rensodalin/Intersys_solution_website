@@ -73,7 +73,7 @@ export function Partnership() {
                             >
                                 {/* FRONT */}
                                 <div
-                                    className="absolute inset-0 bg-white rounded-2xl border border-gray-100 shadow-sm flex items-center justify-center p-5 transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:[transform:rotateY(180deg)]"
+                                    className="absolute inset-0 bg-white rounded-lg border border-gray-100 shadow-sm flex items-center justify-center p-5 transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:[transform:rotateY(180deg)]"
                                     style={{ backfaceVisibility: "hidden" }}
                                 >
                                     <img

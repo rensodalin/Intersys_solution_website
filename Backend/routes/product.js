@@ -6,15 +6,47 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     try {
         const { category, brand, brandSubCategory } = req.query;
-        let filter = {};
-        if (category) filter.category = category;
-        if (brand) filter.brand = brand;
-        if (brandSubCategory) filter.brandSubCategory = brandSubCategory;
 
-        const products = await Product.find(filter).sort({ createdAt: -1 });
-        res.status(200).json({ success: true, data: products });
+        // Build filter dynamically
+        const filter = {};
+
+        if (category) {
+            filter.category = category;
+        }
+
+        if (brand) {
+            filter.brand = brand;
+        }
+
+        if (brandSubCategory) {
+            filter.brandSubCategory = brandSubCategory;
+        }
+
+        // Fetch products
+        const products = await Product.find(filter)
+            .sort({ createdAt: -1 })
+            .lean();
+
+        // Debug options count
+        const formattedProducts = products.map((product) => ({
+            ...product,
+            optionsCount: product.options?.length || 0
+        }));
+
+        res.status(200).json({
+            success: true,
+            total: formattedProducts.length,
+            data: formattedProducts
+        });
+
     } catch (error) {
-        res.status(500).json({ success: false, error: "Failed to fetch products" });
+        console.error("Fetch products error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch products",
+            error: error.message
+        });
     }
 });
 

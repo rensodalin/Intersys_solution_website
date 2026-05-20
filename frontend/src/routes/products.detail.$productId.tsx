@@ -39,7 +39,7 @@ export const Route = createFileRoute("/products/detail/$productId")({
 function ProductDetailPage() {
   const { productId } = Route.useParams();
   const { from } = Route.useSearch();
-  
+
   const [productData, setProductData] = useState<ProductData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -51,7 +51,7 @@ function ProductDetailPage() {
         const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
         const response = await fetch(`${baseUrl}/api/products/${productId}`);
         const result = await response.json();
-        
+
         if (isMounted && result.success && result.data) {
           const item = result.data;
           // Map to ProductData expected format

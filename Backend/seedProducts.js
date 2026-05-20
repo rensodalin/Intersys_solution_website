@@ -47,7 +47,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "https://www.intersys-solutions.com/pdf_document/Internship%20Agreement.pdf"
             }
         ]
     },
@@ -74,8 +74,8 @@ const MOCK_PRODUCTS = [
         ],
         "documents": [
             {
-                "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "name": "Internship Proposal",
+                "url": "https://www.intersys-solutions.com/pdf_document/Ren_Sodalin-Internship_Proposal.pdf"
             }
         ]
     },

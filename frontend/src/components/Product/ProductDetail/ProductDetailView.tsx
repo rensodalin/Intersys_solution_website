@@ -74,7 +74,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
   const [activeTab, setActiveTab] = useState<"description" | "documents">("description");
   const [selectedImage, setSelectedImage] = useState(0);
   const [error, setError] = useState<string | null>(null);
-  
+
   const user = useSelector((state: RootState) => state.auth.user);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [pendingDocUrl, setPendingDocUrl] = useState<string | null>(null);
@@ -89,7 +89,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
         localStorage.removeItem("pending_pdf_url");
         return;
       }
-      
+
       // 2. Check localStorage (for Google OAuth redirect login)
       const storedPdf = localStorage.getItem("pending_pdf_url");
       if (storedPdf) {
@@ -402,13 +402,13 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
         </div>
       </Container>
 
-      <AuthModal 
-        isOpen={isAuthOpen} 
+      <AuthModal
+        isOpen={isAuthOpen}
         onClose={() => {
           setIsAuthOpen(false);
           setPendingDocUrl(null);
           localStorage.removeItem("pending_pdf_url");
-        }} 
+        }}
       />
     </div>
   );
