@@ -49,13 +49,14 @@ function Index() {
 
       <JourneySection />
       <FeaturedProjects />
-      <Certificates />
+
       <ServicesGrid />
 
       <Clients />
 
       <WhyChooseIntersys />
       <Partnership />
+      <Certificates />
 
       <Insights />
 

@@ -12,7 +12,7 @@ export function Ecosystem() {
   const section2Img = hovered === "design" ? blueprintBg : siteBg;
 
   return (
-    <section className="bg-white overflow-hidden">
+    <section className="bg-white overflow-hidden pt-5">
       {/* Section 1: Design & Engineering (Left Floating Box) */}
       <div
         className="relative min-h-[500px] flex items-center cursor-pointer"
