@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
     try {
         console.log("Register payload:", req.body);
-        const { firstName, lastName, email, password, phone, gender, country } = req.body;
+        const { firstName, lastName, email, password, phone, gender, country, role } = req.body;
 
         // Validation
         if (!email || !password) {
@@ -30,7 +30,8 @@ router.post("/register", async (req, res) => {
             password,
             phone,
             gender: gender || undefined,
-            country
+            country,
+            role: role || undefined
         });
 
         await newUser.save();

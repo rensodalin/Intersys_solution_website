@@ -61,9 +61,9 @@ export function ServicesGrid() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-gray-400 max-w-sm text-sm leading-relaxed md:text-right"
+            className="text-gray-400 max-w-lg text-sm leading-relaxed md:text-right"
           >
-            Integrated technology solutions for modern infrastructure — designed, deployed, and managed with precision.
+            At Intersys Solutions Co.,Ltd , we offer a comprehensive range of smart building solutions tailored to meet your specific needs. It's easy to get started - simply explore our key services below.
           </motion.p>
         </div>
 
@@ -75,7 +75,7 @@ export function ServicesGrid() {
             id="bms"
             icon={Cpu}
             title="Building Management Systems"
-            desc="Optimize your building's essential systems with advanced BMS — ensuring seamless operation, energy efficiency, and real-time control."
+            desc="Discover how our advanced Building Management Systems (BMS) can optimize the performance of your building's essential systems, ensuring seamless operation and energy efficiency."
             features={["Real-time monitoring", "Energy analytics", "Remote HVAC control"]}
             img={bmsImg}
             className="lg:col-span-4"
@@ -83,6 +83,9 @@ export function ServicesGrid() {
             onToggle={() => toggleExpand("bms")}
             layout="horizontal"
             href="/services/building-management"
+            btnText="Discover BMS Solutions"
+
+
           />
 
           {/* Fire */}
@@ -90,12 +93,13 @@ export function ServicesGrid() {
             id="fire"
             icon={Flame}
             title="Fire Alarm System"
-            desc="Safeguard occupants with state-of-the-art fire detection and rapid response systems designed to international standards."
+            desc="Safeguard your property and occupants with our state-of-the-art Fire Alarm Systems, designed to provide early detection and rapid response to potential fire hazards."
             className="lg:col-span-2"
             isExpanded={expandedIds.includes("fire")}
             onToggle={() => toggleExpand("fire")}
             href="/services/fire-alarm"
             theme="dark"
+            btnText="Explore Fire Safety"
           />
 
           {/* CCTV */}
@@ -103,13 +107,14 @@ export function ServicesGrid() {
             id="cctv"
             icon={Video}
             title="CCTV Surveillance"
-            desc="Comprehensive coverage and real-time visual insights for enhanced security across your entire facility."
+            desc="Ensure constant vigilance and monitoring with our Surveillance (CCTV) solutions, providing comprehensive coverage and real-time visual insights for enhanced security."
             img={cctvImg}
             className="lg:col-span-2"
             isExpanded={expandedIds.includes("cctv")}
             onToggle={() => toggleExpand("cctv")}
             href="/services/surveillance"
             theme="image"
+            btnText="View CCTV Solutions"
           />
 
           {/* Security & Access */}
@@ -117,7 +122,7 @@ export function ServicesGrid() {
             id="security"
             icon={LayoutGrid}
             title="Security & Access Control"
-            desc="Advanced access management tailored to your building's security requirements with real-time authentication."
+            desc="Protect your building and assets with our Access Control Systems, offering advanced security features and flexible access management tailored to your requirements."
             stats={[
               { label: "Auth Speed", value: "0.3s" },
               { label: "Encryption", value: "AES-256" },
@@ -128,6 +133,7 @@ export function ServicesGrid() {
             onToggle={() => toggleExpand("security")}
             layout="horizontal-reverse"
             href="/services/access-control"
+            btnText="Enhance Security"
           />
 
           {/* AV */}
@@ -135,12 +141,13 @@ export function ServicesGrid() {
             id="av"
             icon={Volume2}
             title="Audio Visual Systems"
-            desc="Seamless audio, visual, and collaboration experiences for meeting rooms, auditoriums, and control centers."
+            desc="Enhance communication and engagement with our AV solutions designed for meeting rooms, classrooms, auditoriums, and control centers, delivering seamless audio, visual, and collaboration experiences."
             tags={["Video walls", "Smart glass", "PA systems"]}
             className="lg:col-span-3"
             isExpanded={expandedIds.includes("av")}
             onToggle={() => toggleExpand("av")}
             href="/services/audio-visual"
+            btnText="Explore AV Solutions"
           />
 
           {/* Custom */}
@@ -148,12 +155,12 @@ export function ServicesGrid() {
             id="custom"
             icon={Settings}
             title="Custom Solutions"
-            desc="Expert consulting and bespoke engineering support tailored to your unique infrastructure challenges."
+            desc="Unleash the full potential of your building with our expert support and consulting services, tailored to address your unique challenges and requirements."
             className="lg:col-span-3"
             isExpanded={expandedIds.includes("custom")}
             onToggle={() => toggleExpand("custom")}
             theme="red"
-            btnText="View More"
+            btnText="Explore Custom Solutions"
             href="/services/custom-solution"
           />
 

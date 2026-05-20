@@ -55,7 +55,7 @@ export function Navbar() {
   const [mobileClientOpen, setMobileClientOpen] = useState(false);
 
   const user = useSelector((state: RootState) => state.auth.user);
-  
+
   const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
 
   const handleLogout = async (e: React.MouseEvent) => {
@@ -96,50 +96,7 @@ export function Navbar() {
         scrolled ? "translate-y-0" : "translate-y-0",
       )}
     >
-      <div className="bg-[#081F3D] text-white border-t-2 border-red-600 border-b border-white/5 px-6 md:px-20 hidden lg:block">
-        <div className="flex justify-between items-center h-12 text-sm">
 
-          {/* LEFT */}
-          <div className="flex items-center gap-6">
-            <a
-              href="https://t.me/chun_sochet"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-white/70 hover:text-white transition cursor-pointer"
-            >
-              <Phone size={14} className="text-red-500" />
-              <span className="text-xs">+855 077 602 334</span>
-            </a>
-
-            <div className="flex items-center gap-2 text-white/70 hover:text-white transition cursor-pointer">
-              <Mail size={14} className="text-red-500" />
-              <a
-                href="mailto:sochet@intersys-solutions.com"
-                className="text-xs hover:underline"
-              >
-                sochet@intersys-solutions.com
-              </a>
-            </div>
-          </div>
-
-          {/* RIGHT */}
-          <div className="flex items-center gap-4">
-            <span className="text-white/40 text-xs mr-2">Follow</span>
-            <a href="https://www.facebook.com/IntersysSolutions" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition">
-              <Facebook size={16} />
-            </a>
-            <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition">
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.539.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.285-.346-.094L7.469 14.28l-2.76-.86c-.6-.184-.593-.6.126-.882l10.82-4.172c.504-.191.95.105.81.855z" />
-              </svg>
-            </a>
-            <a href="https://www.linkedin.com/company/intersys-solutions2015" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition">
-              <Linkedin size={16} />
-            </a>
-          </div>
-
-        </div>
-      </div>
       <div className={cn(
         "w-full px-6 md:px-20 flex items-center justify-between transition-all duration-500",
         scrolled
@@ -152,7 +109,7 @@ export function Navbar() {
             alt="Intersys Logo"
             className={cn(
               "transition-all duration-500 object-contain",
-              scrolled ? "h-10" : "h-14"
+              scrolled ? "h-12" : "h-16"
             )}
           />
         </Link>
@@ -286,19 +243,33 @@ export function Navbar() {
         </div>
 
         {/* Actions */}
-        <div className="hidden lg:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-6">
+          {/* Social Links */}
+          <div className="flex items-center gap-4 pr-6 border-r border-white/20">
+
+            <a href="https://www.facebook.com/IntersysSolutions" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition">
+              <Facebook size={16} />
+            </a>
+            <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition">
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.539.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.285-.346-.094L7.469 14.28l-2.76-.86c-.6-.184-.593-.6.126-.882l10.82-4.172c.504-.191.95.105.81.855z" />
+              </svg>
+            </a>
+            <a href="https://www.linkedin.com/company/intersys-solutions2015" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white transition">
+              <Linkedin size={16} />
+            </a>
+          </div>
           {user ? (
             <div className="flex items-center gap-3">
               <img src={user.avatar || "https://ui-avatars.com/api/?name=" + user.name} alt={user.name} className="w-8 h-8 rounded-full border border-white/20 shadow-md" referrerPolicy="no-referrer" />
-              <span className="text-sm font-medium text-white/90">{user.name}</span>
-              <button onClick={handleLogout} className="text-xs text-red-500 hover:text-red-400 ml-2 font-medium bg-transparent border-0 cursor-pointer">Logout</button>
+              <button onClick={handleLogout} className="text-xs text-white hover:text-white/80 font-medium bg-transparent border-0 cursor-pointer">Logout</button>
             </div>
           ) : (
             <button
               onClick={() => setIsAuthOpen(true)}
               className="flex items-center gap-2 text-white/70 hover:text-white transition-colors group"
             >
-              <User size={16} className="text-red-500 group-hover:scale-110 transition-transform" />
+
               <span className="text-sm font-medium">Login</span>
             </button>
           )}
@@ -341,13 +312,12 @@ export function Navbar() {
                       className="w-10 h-10 rounded-full border border-white/20"
                     />
                     <div className="flex-1">
-                      <p className="text-sm font-bold text-white leading-none mb-1">{user.name}</p>
                       <button
                         onClick={(e) => {
                           handleLogout(e);
                           setMobileOpen(false);
                         }}
-                        className="text-xs text-red-500 hover:underline bg-transparent border-0 cursor-pointer text-left p-0 font-medium"
+                        className="text-xs text-white hover:underline bg-transparent border-0 cursor-pointer text-left p-0 font-medium"
                       >
                         Logout
                       </button>
@@ -374,7 +344,7 @@ export function Navbar() {
               <div className="space-y-3">
                 <p className="text-white/40 font-bold uppercase tracking-wider text-[10px]">Navigation</p>
                 <div className="flex flex-col gap-1 text-white">
-                  
+
                   {/* About Us */}
                   <Link
                     to="/about"

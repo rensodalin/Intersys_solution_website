@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema({
     country: {
         type: String,
     },
+    role: {
+        type: String,
+        enum: ["engineer", "project manager", "architect", "technician", "director", "procurement", "consultant", "other"],
+    },
     avatar: {
         type: String
     }

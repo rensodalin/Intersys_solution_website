@@ -31,6 +31,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     mobileNumber: "",
     gender: "",
     country: "Cambodia",
+    role: "",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -54,7 +55,8 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           password: formData.password,
           phone: formData.mobileNumber,
           gender: formData.gender,
-          country: formData.country 
+          country: formData.country,
+          role: formData.role 
         };
 
     try {
