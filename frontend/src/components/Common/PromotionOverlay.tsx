@@ -38,7 +38,7 @@ export function PromotionOverlay({
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-6 right-6 z-50 p-2 rounded-full bg-black/10 hover:bg-black/20 text-gray-800 transition-colors"
+              className="absolute top-6 right-6 z-50 p-2 rounded-md bg-black/10 hover:bg-black/20 text-gray-800 transition-colors"
             >
               <X className="w-6 h-6" />
             </button>
@@ -88,7 +88,7 @@ export function PromotionOverlay({
                   }}
                   className="relative"
                 >
-                  <div className="bg-white p-2 rounded-2xl shadow-2xl border border-gray-100 rotate-12">
+                  <div className="bg-white p-2 rounded-md shadow-2xl border border-gray-100 rotate-12">
                     <img
                       src="https://plus.unsplash.com/premium_photo-1685148902867-0d917a4d2a67?q=80&w=1332&auto=format&fit=crop"
                       alt="Building"

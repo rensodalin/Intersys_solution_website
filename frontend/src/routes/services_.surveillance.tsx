@@ -24,7 +24,7 @@ function SurveillancePage() {
         <div className="bg-white overflow-hidden">
 
             {/* HERO SECTION */}
-            <section className="relative h-[85vh] min-h-[600px] flex items-center pt-40">
+            <section className="relative h-[85vh] min-h-[600px] flex items-center pt-18">
                 <div className="absolute inset-0 z-0">
                     <img
                         src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=2000"
@@ -52,23 +52,17 @@ function SurveillancePage() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
                         className="max-w-2xl text-white"
-                    >
-                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                    ><h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
                             Smarter Business.<br />
-                            <span className="text-red-600">Safer Environments.</span>
+                            <span className="text-red-500">Safer Environments.</span>
                         </h1>
-
                         <p className="text-base text-white/70 max-w-2xl leading-relaxed">
                             Intersys Solutions Co., Ltd delivers comprehensive cloud solutions and CCTV surveillance systems designed to meet the evolving needs of modern businesses.
                             <br /><br />
                             Our integrated approach combines virtual desktops with real-time intelligent monitoring to ensure round-the-clock security and peak productivity.
                         </p>
 
-                        <div className="pt-4">
-                            <button className="px-8 py-3 bg-[#9B0F06] text-white font-medium text-sm rounded-md hover:bg-white hover:text-[#9B0F06] transition-all duration-300 shadow-md">
-                                Explore our solutions
-                            </button>
-                        </div>
+
                     </motion.div>
                 </Container>
             </section>

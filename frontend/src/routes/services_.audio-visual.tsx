@@ -29,7 +29,7 @@ function AudioVisualPage() {
         <div className="bg-white overflow-hidden scroll-smooth">
 
             {/* ─── HERO SECTION ─── */}
-            <section className="relative h-[80vh] min-h-[600px] flex items-center pt-32">
+            <section className="relative h-[80vh] min-h-[600px] flex items-center pt-19">
                 <div className="absolute inset-0 z-0">
                     <img
                         src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2069&auto=format&fit=crop"
@@ -48,7 +48,7 @@ function AudioVisualPage() {
                     >
                         <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
                             Delivering Advanced <br />
-                            <span className="text-red-600">Audio Visual</span> Solutions
+                            <span className="text-red-500">Audio Visual</span> Solutions
                         </h1>
                         <p className="text-base text-white/70 max-w-2xl leading-relaxed">
                             Transform your spaces with cutting-edge technology that enhances communication, collaboration, and engagement.

@@ -35,7 +35,7 @@ function AccessControlPage() {
         <div className="bg-white overflow-hidden scroll-smooth">
 
             {/* ─── HERO SECTION ─── */}
-            <section className="relative h-[85vh] min-h-[600px] flex items-center pt-32">
+            <section className="relative h-[85vh] min-h-[600px] flex items-center pt-20">
                 <div className="absolute inset-0 z-0">
                     <img
                         src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?q=80&w=2070&auto=format&fit=crop"

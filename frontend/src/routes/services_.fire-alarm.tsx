@@ -27,7 +27,7 @@ function FireAlarmPage() {
         <div className="bg-white overflow-hidden scroll-smooth">
 
             {/* ─── HERO ─── */}
-            <section className="relative h-[85vh] min-h-[600px] flex items-center pt-32">
+            <section className="relative h-[85vh] min-h-[600px] flex items-center pt-19">
                 <div className="absolute inset-0 z-0">
                     <img
                         src="https://images.unsplash.com/photo-1582139329536-e7284fece509?q=80&w=2000&auto=format&fit=crop"
@@ -54,9 +54,9 @@ function FireAlarmPage() {
                             System Distributor, we offer trusted global brands like NOTIFIER, ESSER, and System Sensor
                             by Honeywell — bringing proven global technology to your local projects.
                         </p>
-                        <div className="flex flex-wrap gap-4 pt-2">
+                        <div className="flex flex-wrap gap-4 pt-4">
                             {["Early Detection", "Fast Response", "System Integration"].map((tag) => (
-                                <span key={tag} className="px-4 py-1.5 border border-white/30 text-white/80 text-sm rounded-full backdrop-blur-sm">
+                                <span key={tag} className="px-4 py-1.5 border border-white/30 text-white/80 text-sm rounded-md backdrop-blur-sm">
                                     {tag}
                                 </span>
                             ))}
@@ -71,7 +71,7 @@ function FireAlarmPage() {
                     <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                         <div className="max-w-2xl space-y-4">
                             <h2 className="text-4xl md:text-4xl font-bold text-[#1A3263]">Optimized for Diverse Sectors</h2>
-                            <p className="text-gray-500 text-lg leading-relaxed">
+                            <p className="text-gray-500 text-md leading-relaxed">
                                 Every environment has a unique risk profile. Our fire alarm solutions are custom-engineered to
                                 meet international safety standards for every architectural scale — providing fast response
                                 times, real-time monitoring, and long-term peace of mind.
@@ -106,7 +106,7 @@ function FireAlarmPage() {
                                 transition={{ delay: i * 0.1 }}
                                 className="group space-y-6"
                             >
-                                <div className="h-64 overflow-hidden rounded-xl relative">
+                                <div className="h-64 overflow-hidden rounded-md relative">
                                     <img src={sector.img} alt={sector.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
 
@@ -132,7 +132,7 @@ function FireAlarmPage() {
                             className="space-y-8"
                         >
                             <h2 className="text-4xl md:text-5xl font-bold leading-tight">Unified Systems Integration</h2>
-                            <p className="text-white/60 text-lg leading-relaxed font-light">
+                            <p className="text-white/60 text-md leading-relaxed font-light">
                                 We integrate Honeywell's world-class fire safety technologies — NOTIFIER, ESSER, and
                                 System Sensor — to deliver reliable protection fully compliant with international standards.
                                 Our integrated approach connects fire detection with building management and security
@@ -145,7 +145,7 @@ function FireAlarmPage() {
                                     { label: "Response", title: "Emergency Response", desc: "Coordinates with emergency response networks for rapid action during critical situations." },
                                     { label: "Control", title: "Intelligent Control", desc: "Programmable logic for multi-zone coordination and automated emergency response." },
                                 ].map((item, i) => (
-                                    <div key={i} className="p-6 bg-white/5 rounded-xl border border-white/10">
+                                    <div key={i} className="p-6 bg-white/5 rounded-md border border-white/10">
                                         <h4 className="text-red-500 font-bold mb-2">{item.title}</h4>
                                         <p className="text-white/40 text-xs">{item.desc}</p>
                                     </div>
@@ -272,11 +272,11 @@ function FireAlarmPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.08 }}
-                                className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm space-y-4 hover:shadow-md transition-all duration-300"
+                                className="bg-white p-8 rounded-md border border-gray-100 shadow-sm space-y-4 hover:shadow-md transition-all duration-300"
                             >
 
                                 {/* ICON */}
-                                <div className="w-14 h-14 bg-red-50 rounded-xl flex items-center justify-center shadow-sm">
+                                <div className="w-14 h-14  rounded-md flex items-center justify-center">
                                     <img
                                         src={cap.icon}
                                         alt={cap.title}

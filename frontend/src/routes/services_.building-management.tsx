@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { TypeAnimation } from "react-type-animation";
+
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
@@ -53,9 +55,21 @@ function BMSPage() {
         <div className="bg-white overflow-hidden scroll-smooth">
 
             {/* ─── HERO ─── */}
-            <section className="relative h-[85vh] min-h-[600px] flex items-center pt-32">
+            {/* ─── HERO ─── */}
+            <section className="relative h-[85vh] min-h-[600px] flex items-center pt-17 overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    <img
+                    <motion.img
+                        initial={{ scale: 1.15, x: "-3%", y: "-2%", opacity: 0 }}
+                        animate={{
+                            x: ["-3%", "3%", "-3%"],
+                            y: ["-2%", "2%", "-2%"],
+                            opacity: 1,
+                        }}
+                        transition={{
+                            opacity: { duration: 1.5, ease: "easeOut" },
+                            x: { duration: 30, ease: "easeInOut", repeat: Infinity },
+                            y: { duration: 20, ease: "easeInOut", repeat: Infinity },
+                        }}
                         src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000"
                         alt="Modern Cityscape"
                         className="w-full h-full object-cover"
@@ -73,11 +87,27 @@ function BMSPage() {
 
                         <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
                             Intelligent <br />
-                            <span className="text-red-500">Building Management Solutions.</span>
+
+                            {/* Typewriter Animation */}
+                            <span className="text-red-500">
+                                <TypeAnimation
+                                    sequence={[
+                                        "Building Management Solutions.",
+                                        2000,
+
+                                    ]}
+                                    wrapper="span"
+                                    speed={50}
+                                    repeat={Infinity}
+
+                                />
+                            </span>
                         </h1>
+
                         <p className="text-base text-white/70 max-w-2xl leading-relaxed">
                             Transform your facilities with advanced automation, safety, and efficiency
                         </p>
+
                         <div className="pt-2">
 
                         </div>
@@ -127,16 +157,27 @@ function BMSPage() {
                         </div>
 
                         {/* RIGHT IMAGE */}
-                        <div className="relative">
+                        {/* RIGHT IMAGE */}
+                        <motion.div
+                            initial={{ opacity: 0, rotateY: -90 }}
+                            whileInView={{ opacity: 1, rotateY: 0 }}
+                            viewport={{ once: true }}
+                            transition={{
+                                duration: 1,
+                                ease: [0.22, 1, 0.36, 1],
+                            }}
+                            style={{ transformStyle: "preserve-3d" }}
+                            className="relative perspective-[2000px]"
+                        >
                             <img
                                 src="https://uploads.onecompiler.io/42e6qwqtt/4463hvbwt/Screenshot%202025-11-29%20141610.png"
                                 alt="BMS Diagram"
-                                className="w-full h-auto rounded-xl shadow-xl border border-gray-100"
+                                className="w-full h-auto rounded-xl shadow-xl border border-gray-100 backface-hidden"
                             />
 
                             {/* soft glow */}
                             <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-red-500/10 blur-[90px] rounded-full -z-10" />
-                        </div>
+                        </motion.div>
 
                     </div>
                 </Container>
@@ -364,7 +405,7 @@ function BMSPage() {
                     {/* Top row — white | dark navy | white */}
                     <div className="grid md:grid-cols-3 gap-4 mb-4">
                         <div className="bg-white p-8 rounded-xl space-y-4 border border-gray-100">
-                            <div className="w-10 h-10 bg-red-50 text-red-500 rounded-xl flex items-center justify-center">
+                            <div className="w-10 h-10 bg-red-50 text-red-500 rounded-sm flex items-center justify-center">
                                 <SlidersHorizontal size={18} />
                             </div>
                             <h4 className="text-lg font-bold text-[#1A3263]">Automated Control</h4>
@@ -375,7 +416,7 @@ function BMSPage() {
                         </div>
 
                         <div className="bg-[#1A3263] p-8 rounded-xl space-y-4">
-                            <div className="w-10 h-10 bg-white/10 text-white rounded-xl flex items-center justify-center">
+                            <div className="w-10 h-10 bg-white/10 text-white rounded-sm flex items-center justify-center">
                                 <Activity size={18} />
                             </div>
                             <h4 className="text-lg font-bold text-white">Real-time Monitoring</h4>
@@ -386,7 +427,7 @@ function BMSPage() {
                         </div>
 
                         <div className="bg-white p-8 rounded-xl space-y-4 border border-gray-100">
-                            <div className="w-10 h-10 bg-red-50 text-red-500 rounded-xl flex items-center justify-center">
+                            <div className="w-10 h-10 bg-red-50 text-red-500 rounded-sm flex items-center justify-center">
                                 <Settings size={18} />
                             </div>
                             <h4 className="text-lg font-bold text-[#1A3263]">Customized Solutions</h4>
@@ -401,7 +442,7 @@ function BMSPage() {
                     <div className="grid md:grid-cols-3 gap-6 items-stretch">
                         {/* LEFT (1 Col) */}
                         <div className="group bg-white p-7 rounded-xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 space-y-4 h-full">
-                            <div className="w-11 h-11 bg-red-50 text-red-500 rounded-xl flex items-center justify-center">
+                            <div className="w-11 h-11 bg-red-50 text-red-500 rounded-sm flex items-center justify-center">
                                 <Shield size={18} />
                             </div>
                             <h4 className="text-lg font-bold text-[#1A3263]">Expert Support</h4>
@@ -471,7 +512,7 @@ function BMSPage() {
                             </p>
                         </div>
 
-                        <Link 
+                        <Link
                             to="/products/building-management"
                             className="inline-flex items-center gap-2 px-6 py-3 bg-[#1A3263] text-white rounded-lg font-bold text-sm hover:bg-[#25417e] transition shadow-lg"
                         >
@@ -551,11 +592,11 @@ function BMSPage() {
                             >
 
                                 {/* ICON */}
-                                <div className="w-14 h-14 bg-white rounded-xl border border-gray-100 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+                                <div className="w-12 h-12  flex items-center justify-center  group-hover:shadow-md transition-all duration-300">
                                     <img
                                         src={item.icon}
                                         alt={item.title}
-                                        className="w-8 h-8 object-contain"
+                                        className="w-7 h-7 object-contain"
                                     />
                                 </div>
 
@@ -581,7 +622,7 @@ function BMSPage() {
                 <div className="grid md:grid-cols-4 gap-4">
 
                     {/* MAIN CARD */}
-                    <div className="md:col-span-2 bg-[#1A3263] p-8 rounded-xl text-white flex flex-col justify-between min-h-[320px]">
+                    <div className="md:col-span-2 bg-[#1A3263] p-8 rounded-md text-white flex flex-col justify-between min-h-[320px]">
 
                         <div className="space-y-3">
 
@@ -603,7 +644,7 @@ function BMSPage() {
                     </div>
 
                     {/* CARD 1 */}
-                    <div className="h-[320px] rounded-xl overflow-hidden relative group">
+                    <div className="h-[320px] rounded-md overflow-hidden relative group">
                         <img
                             src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
@@ -615,7 +656,7 @@ function BMSPage() {
                     </div>
 
                     {/* CARD 2 */}
-                    <div className="h-[320px] rounded-xl overflow-hidden relative group">
+                    <div className="h-[320px] rounded-md overflow-hidden relative group">
                         <img
                             src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
@@ -627,7 +668,7 @@ function BMSPage() {
                     </div>
 
                     {/* CARD 3 */}
-                    <div className="md:col-span-2 h-[320px] rounded-xl overflow-hidden relative group">
+                    <div className="md:col-span-2 h-[320px] rounded-md overflow-hidden relative group">
                         <img
                             src="https://images.unsplash.com/photo-1577412647305-991150c7d163?auto=format&fit=crop&q=80&w=1200"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
@@ -639,7 +680,7 @@ function BMSPage() {
                     </div>
 
                     {/* CARD 4 */}
-                    <div className="md:col-span-2 h-[320px] rounded-xl overflow-hidden relative group">
+                    <div className="md:col-span-2 h-[320px] rounded-md overflow-hidden relative group">
                         <img
                             src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
@@ -694,7 +735,7 @@ function BMSPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className={`p-10 rounded-xl space-y-6 ${card.dark ? "bg-[#1A3263] text-white" : "bg-gray-50 border border-gray-100"}`}
+                                className={`p-10 rounded-md space-y-6 ${card.dark ? "bg-[#1A3263] text-white" : "bg-gray-50 border border-gray-100"}`}
                             >
                                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${card.dark ? "bg-white/10" : "bg-white border border-gray-100 shadow-sm"}`}>
                                     <card.icon size={22} className="text-red-600" />
