@@ -81,7 +81,7 @@ function SupportSection({
                     <div className="space-y-2">
                       <a
                         href={`mailto:${member.email}`}
-                        className="inline-flex items-center gap-2 text-sm font-medium text-[#1A3263] bg-[#1A3263]/5 border border-[#1A3263]/10 px-3 py-2 hover:bg-[#C3110C] hover:text-white hover:border-[#C3110C] transition-all duration-300 cursor-pointer"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-[#2F2FE4] bg-[#1A3263]/5 border border-[#1A3263]/10 px-3 py-2 hover:bg-[#C3110C] hover:text-white hover:border-[#C3110C] transition-all duration-300 cursor-pointer"
                       >
                         <Mail className="w-4 h-4" />
                         {member.email}
@@ -125,7 +125,7 @@ export function Support() {
             className="w-full h-full object-cover"
           />
 
-          <div className="absolute inset-0 bg-black/55" />
+          <div className="absolute inset-0 bg-black/60" />
         </div>
 
         <div className="relative z-10 text-center text-white px-6 max-w-4xl">
