@@ -14,7 +14,7 @@ export function Warranty() {
                         alt="Warranty Commitment"
                         className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/35" />
+                    <div className="absolute inset-0 bg-black/55" />
                 </div>
 
                 <Container className="relative z-10">

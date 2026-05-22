@@ -76,26 +76,7 @@ export function DocumentCenter() {
     return (
         <div className="min-h-screen bg-[#F5F3EF] font-sans">
 
-            {/* HEADER */}
-            <div className="border-b-2 border-[#0A0F1A] bg-[#F5F3EF]">
-                <Container>
-                    <div className="flex items-center justify-between py-4">
-                        <div className="flex items-center gap-3">
-                            <span className="text-[11px] font-bold text-[#D62828]">
-                                Intersys Systems
-                            </span>
-                            <span className="text-gray-300">/</span>
-                            <span className="text-[11px] text-gray-400">
-                                Resource Library
-                            </span>
-                        </div>
 
-                        <span className="text-[11px] text-gray-400">
-                            {new Date().toLocaleDateString("en-US", { month: "short", year: "numeric" })}
-                        </span>
-                    </div>
-                </Container>
-            </div>
 
             <Container>
 
@@ -103,7 +84,7 @@ export function DocumentCenter() {
                 <div className="border-b-2 border-[#0A0F1A] py-16 pt-40 grid grid-cols-12 gap-4">
 
                     <div className="col-span-12 lg:col-span-8">
-                        <h1 className="text-3xl lg:text-[55px] font-extrabold text-[#111FA2] tracking-tight">
+                        <h1 className="text-2xl lg:text-[45px] text-[#111FA2] font-extrabold  tracking-tight">
                             Document
                             <br />
                             <span className="text-[#D62828]">Center</span>

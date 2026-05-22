@@ -242,9 +242,7 @@ export function WhyChooseUs() {
                 transition={{ delay: 0.2 }}
                 className="mt-8 text-[15px] leading-8 text-gray-500 max-w-xl"
               >
-                Integrated engineering systems designed for safety,
-                operational efficiency, and long-term performance
-                across commercial and industrial environments.
+                Authorized Honeywell Engineering Services Distributor (ESD).
               </motion.p>
             </div>
 
