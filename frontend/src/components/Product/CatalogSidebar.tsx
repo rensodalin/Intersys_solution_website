@@ -105,7 +105,7 @@ export function CatalogSidebar({
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
-    const NAVBAR_HEIGHT = scrolled ? 112 : 144;
+    const NAVBAR_HEIGHT = scrolled ? 64 : 96;
 
     const searchParams = new URLSearchParams(location.search);
     const activeFrom = searchParams.get("from");

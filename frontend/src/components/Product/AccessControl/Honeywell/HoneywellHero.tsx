@@ -32,7 +32,7 @@ export function HoneywellHero({
     ],
 }: HoneywellHeroProps) {
     return (
-        <section className="bg-[#F8F9FA] pt-40 md:pt-44 pb-10 px-8 border-b border-gray-200/50">
+        <section className="bg-[#F8F9FA] pt-28 md:pt-32 pb-10 px-8 border-b border-gray-200/50">
             <Container>
                 <div className="max-w-3xl">
                     <motion.div

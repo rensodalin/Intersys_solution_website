@@ -23,7 +23,7 @@ export function ProductHero({
     ],
 }: ProductHeroProps) {
     return (
-        <section className="bg-[#F8F9FA] pt-45 pb-8 border-b border-gray-200">
+        <section className="bg-[#F8F9FA] pt-28 md:pt-32 pb-8 border-b border-gray-200">
             <Container>
                 <motion.div
                     initial={{ opacity: 0, y: 12 }}

@@ -158,7 +158,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
   return (
     <div className="bg-white min-h-screen">
       {/* ─── HERO SECTION (Matching Sub-pages) ─── */}
-      <section className="bg-[#F8F9FA] pt-40 md:pt-44 pb-10 px-8 border-b border-gray-200/50 mb-16">
+      <section className="bg-[#F8F9FA] pt-28 md:pt-32 pb-10 px-8 border-b border-gray-200/50 mb-16">
         <Container>
           <div className="max-w-3xl">
             <motion.div
