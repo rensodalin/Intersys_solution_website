@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 
 import { Container } from "@/components/Common/Container";
-import heroImg from "@/assets/hero.jpg";
+import heroImg from "@/assets/Hero.png";
 import honeywellLogo from "@/assets/honeywelllogo.png";
 
 export function AboutHero() {

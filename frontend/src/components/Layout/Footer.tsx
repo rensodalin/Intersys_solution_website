@@ -14,7 +14,7 @@ import {
 import { Container } from "@/components/Common/Container";
 import logoImg from "../../assets/logo.avif";
 import teamImg from "../../assets/Teamfooter.png";
-import foot from "../../assets/Certificates & Licenses/Certificates & Licenses/new/foot.jpg";
+import foot from "../../assets/Certificates & Licenses/Certificates & Licenses/new/foot.png";
 
 export function Footer({ isCompact }: { isCompact?: boolean }) {
   if (isCompact) {

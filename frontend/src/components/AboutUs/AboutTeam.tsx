@@ -1,16 +1,40 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 
-import team1 from "@/assets/team/team1.png";
-import team2 from "@/assets/team/team2.png";
-import team3 from "@/assets/team/team3.png";
-import team4 from "@/assets/team/team4.png";
+import team1 from "@/assets/team/picture on QR cord/Chyvorn1.jpeg";
+import team2 from "@/assets/team/picture on QR cord/Frame 3.png";
+import team3 from "@/assets/team/picture on QR cord/Frame 4.png";
+import team4 from "@/assets/team/picture on QR cord/Frame 5.png";
+import team5 from "@/assets/team/picture on QR cord/Frame 6.png";
+import team6 from "@/assets/team/picture on QR cord/Frame 7.png";
+import team7 from "@/assets/team/picture on QR cord/Frame 8.png";
+import team8 from "@/assets/team/picture on QR cord/Frame 9.png";
+import team9 from "@/assets/team/picture on QR cord/Frame 10.png";
+import team10 from "@/assets/team/picture on QR cord/Frame 11.png";
+import team11 from "@/assets/team/picture on QR cord/Frame 12.png";
+import team12 from "@/assets/team/picture on QR cord/Frame 13.png";
+import team13 from "@/assets/team/picture on QR cord/Frame 14.png";
+import team14 from "@/assets/team/picture on QR cord/Frame 17.png";
+import team15 from "@/assets/team/picture on QR cord/Frame 16.png";
+
 
 const teamData = [
-  { name: "Omar Mehri", designation: "Founder & CEO", image: team1 },
-  { name: "Layla Samuel", designation: "Managing Director", image: team2 },
-  { name: "Draper Timothy", designation: "Technical Director", image: team3 },
-  { name: "Mariam Shah", designation: "Operations Manager", image: team4 },
+  { name: "Sok Somang", designation: "T&C and Design Technical Manager ", image: team14 },
+  { name: "Chun Sochet", designation: "Managing Director ", image: team15 },
+  { name: "Vy Leangcheu", designation: "Senior ELV Engineer ", image: team6 },
+  { name: "You Chyvon", designation: "T&C ELV Engineer ", image: team1 },
+  { name: "Soun Seamouy", designation: "ELV Design & Costing Enginner", image: team2 },
+  { name: "Suo Huyna", designation: "Accountant", image: team3 },
+  { name: "Rous Chenda", designation: "ELV Design & Costing Enginner", image: team4 },
+  { name: "Chen Daneth", designation: "BMS & ELV Design engineer", image: team5 },
+  { name: "Soeun Sol", designation: "T&C ELV Engineer ", image: team7 },
+  { name: "Phan Chitra", designation: "Junior Sale & Digital marketing ", image: team8 },
+  { name: "Rin Seyha", designation: "BMS T&C Engineer ", image: team9 },
+  { name: "Mon Chhaiheng", designation: "Engineer", image: team10 },
+  { name: "Lim Theavan", designation: "BMS & ELV T&C Engineer", image: team11 },
+  { name: "Chun Leapheng", designation: "BMS & ELV ENGINEER", image: team12 },
+  { name: "Kov Bunly", designation: "T&C ELV Engineer ", image: team13 },
+
 ];
 
 export function AboutTeam() {
@@ -19,7 +43,7 @@ export function AboutTeam() {
       <Container>
         {/* Header Section */}
         <div className="max-w-3xl mb-20">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -27,32 +51,43 @@ export function AboutTeam() {
           >
             The Team Behind Intersys
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="text-gray-500 text-base leading-relaxed"
           >
-            Our dedicated team of experienced professionals is at the heart of what we do. 
-            With a deep knowledge of the local market and a passion for helping clients 
+            Our dedicated team of experienced professionals is at the heart of what we do.
+            With a deep knowledge of the local market and a passion for helping clients
             achieve their engineering goals, we're here to guide you every step of the way.
           </motion.p>
         </div>
 
-        {/* Minimalist Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
-          {teamData.map((member, i) => (
-            <motion.div
-              key={member.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.6 }}
-              className="flex flex-col group"
+      </Container>
+
+      {/* Infinite Animated Marquee */}
+      <div className="relative w-full overflow-hidden py-10 mt-4 flex">
+        {/* Gradient overlays for smooth fading edges */}
+        <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-[#F9F8F3] to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-[#F9F8F3] to-transparent z-10 pointer-events-none" />
+
+        <motion.div
+          className="flex space-x-8 w-max px-4"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            duration: 40,
+            ease: "linear",
+            repeat: Infinity,
+          }}
+        >
+          {[...teamData, ...teamData].map((member, i) => (
+            <div
+              key={`${member.name}-${i}`}
+              className="flex flex-col group w-[280px] shrink-0"
             >
               {/* Image Container */}
-              <div className="relative aspect-[1/1.1] bg-[#E8E7E2] overflow-hidden mb-6">
+              <div className="relative aspect-[1/1.1] bg-[#E8E7E2] overflow-hidden mb-6 rounded-md shadow-sm">
                 <img
                   src={member.image}
                   alt={member.name}
@@ -61,7 +96,7 @@ export function AboutTeam() {
               </div>
 
               {/* Info Area */}
-              <div className="space-y-0.5">
+              <div className="space-y-0.5 text-center">
                 <h3 className="text-base font-bold text-[#1A1A1A]">
                   {member.name}
                 </h3>
@@ -69,10 +104,10 @@ export function AboutTeam() {
                   {member.designation}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </div>
-      </Container>
+        </motion.div>
+      </div>
     </section>
   );
 }

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
-import ceoImg from "@/assets/team/ceo.png";
+import ceoImg from "@/assets/team/picture on QR cord/Frame 16.png";
 
 export function AboutLeadership() {
   return (
@@ -37,7 +37,7 @@ export function AboutLeadership() {
               <motion.img
                 src={ceoImg}
                 alt="CEO"
-                className="rounded-xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700 w-full aspect-[4/5] object-cover max-w-[320px] mx-auto lg:mx-0"
+                className="rounded-md shadow-2xl  transition-all duration-700 w-full aspect-[4/5] object-cover max-w-[320px] mx-auto lg:mx-0"
               />
 
               {/* Page shine effect */}
@@ -69,7 +69,7 @@ export function AboutLeadership() {
             </p>
 
             <h4 className="text-lg font-bold text-[#0A0F1A]">
-              Nathaniel Thorne
+              Chun sochet
             </h4>
           </motion.div>
 

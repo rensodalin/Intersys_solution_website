@@ -11,7 +11,7 @@ const metrics = [
     label: "Projects Completed",
     desc: "Successfully delivered high-tier ELV projects across Cambodia.",
     icon: "https://static.thenounproject.com/png/1598382-200.png",
-    bg: "https://i.pinimg.com/1200x/88/c0/cb/88c0cb9ddb8e6ee74ed64be01a4e1f7d.jpg",
+    bg: "https://www.intersys-solutions.com/website_asset/Project.JPG",
   },
   {
     prefix: "Over",
@@ -20,7 +20,7 @@ const metrics = [
     label: "Years Experience",
     desc: "A decade of engineering excellence and system integration.",
     icon: "https://cdn-icons-png.flaticon.com/512/3442/3442327.png",
-    bg: "https://i.pinimg.com/736x/7b/ae/43/7bae43c1c1e014819f7982115b36bea8.jpg",
+    bg: "https://www.intersys-solutions.com/website_asset/global.png",
   },
   {
     prefix: "Available",
@@ -29,7 +29,7 @@ const metrics = [
     label: "Expert Support",
     desc: "Round-the-clock technical assistance for all systems.",
     icon: "https://cdn-icons-png.flaticon.com/512/943/943941.png",
-    bg: "https://i.pinimg.com/736x/75/d2/fd/75d2fd3aa464181a15b029eb241c6bcf.jpg",
+    bg: "https://www.intersys-solutions.com/website_asset/support.jpg",
   },
   {
     prefix: "Trusted by",
@@ -38,7 +38,7 @@ const metrics = [
     label: "Global Clients",
     desc: "Trusted by international brands for high-quality engineering.",
     icon: "https://cdn-icons-png.flaticon.com/512/1322/1322246.png",
-    bg: "https://i.pinimg.com/736x/d7/29/dd/d729dd5248143e120ca299cf3d448f9f.jpg",
+    bg: "https://www.intersys-solutions.com/website_asset/year_experice.jpg",
   },
 ];
 

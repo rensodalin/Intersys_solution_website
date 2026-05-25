@@ -18,8 +18,8 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-import aboutImage2 from "@/assets/Certificates & Licenses/Certificates & Licenses/new/new1.jpg";
-import aboutImage3 from "@/assets/Certificates & Licenses/Certificates & Licenses/new/new2.jpg";
+import aboutImage2 from "@/assets/Certificates & Licenses/Certificates & Licenses/new/image copy.png";
+import aboutImage3 from "@/assets/Certificates & Licenses/Certificates & Licenses/new/image.png";
 
 const solutions = [
   {
@@ -178,19 +178,7 @@ export function WhyChooseUs() {
               </motion.div>
 
               {/* Floating Image */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="absolute -bottom-6 -right-6 w-44 rounded-md overflow-hidden border-[6px] border-white shadow-2xl"
-              >
-                <img
-                  src={aboutImage2}
-                  alt="Technician"
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
+
 
               {/* Experience Card */}
               <motion.div

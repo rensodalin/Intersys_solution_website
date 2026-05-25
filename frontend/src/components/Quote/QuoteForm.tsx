@@ -13,9 +13,9 @@ import {
 } from "./QuoteFormComponents";
 
 import engineerImg from "@/assets/enginner.png";
-import team1 from "@/assets/team/team1.png";
-import team2 from "@/assets/team/team2.png";
-import team3 from "@/assets/team/team3.png";
+import team1 from "@/assets/team/picture on QR cord/Frame 3.png";
+import team2 from "@/assets/team/picture on QR cord/Frame 4.png";
+import team3 from "@/assets/team/picture on QR cord/Frame 5.png";
 
 const people = [
     { img: team1, name: "Design Engineer", role: "System Planning" },

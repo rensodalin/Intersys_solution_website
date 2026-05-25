@@ -28,7 +28,7 @@ function SectorsPage() {
       <section className="relative h-[75vh] min-h-[400px] overflow-hidden flex items-center">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1774600166818-e554a4d4c376?q=80&w=1322&auto=format&fit=crop"
+            src="https://www.intersys-solutions.com/website_asset/specialize.jpg"
             alt="Engineering Projects"
             className="w-full h-full object-cover"
           />
