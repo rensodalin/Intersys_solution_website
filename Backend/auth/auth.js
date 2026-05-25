@@ -4,11 +4,35 @@ import User from "../model/user.js";
 
 const router = express.Router();
 
+const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "6LfwwfssAAAAAABLeDbe3IaO5dr0BHeFfozkcW-1";
+
+async function verifyRecaptcha(token) {
+    if (!token) return false;
+    try {
+        const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `secret=${RECAPTCHA_SECRET_KEY}&response=${token}`
+        });
+        const data = await response.json();
+        return data.success;
+    } catch (err) {
+        console.error("reCAPTCHA verification error:", err);
+        return false;
+    }
+}
+
 // ✅ Register Route
 router.post("/register", async (req, res) => {
     try {
         console.log("Register payload:", req.body);
-        const { firstName, lastName, email, password, phone, gender, country, role } = req.body;
+        const { firstName, lastName, email, password, phone, gender, country, role, recaptchaToken } = req.body;
+
+        // Verify reCAPTCHA
+        const isHuman = await verifyRecaptcha(recaptchaToken);
+        if (!isHuman) {
+            return res.status(400).json({ success: false, message: "reCAPTCHA verification failed. Please try again." });
+        }
 
         // Validation - All fields required except role
         if (!firstName || !firstName.trim()) {
@@ -80,7 +104,13 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res, next) => {
     try {
         console.log("Login payload:", req.body);
-        const { email, password } = req.body;
+        const { email, password, recaptchaToken } = req.body;
+
+        // Verify reCAPTCHA
+        const isHuman = await verifyRecaptcha(recaptchaToken);
+        if (!isHuman) {
+            return res.status(400).json({ success: false, message: "reCAPTCHA verification failed. Please try again." });
+        }
 
         if (!email || !password) {
             return res.status(400).json({ success: false, message: "Email and password are required" });
