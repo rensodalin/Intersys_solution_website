@@ -70,7 +70,7 @@ function BMSPage() {
                             x: { duration: 30, ease: "easeInOut", repeat: Infinity },
                             y: { duration: 20, ease: "easeInOut", repeat: Infinity },
                         }}
-                        src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000"
+                        src="https://www.intersys-solutions.com/website_asset/Hero_BMS.png"
                         alt="Modern Cityscape"
                         className="w-full h-full object-cover"
                     />
@@ -646,7 +646,7 @@ function BMSPage() {
                     {/* CARD 1 */}
                     <div className="h-[320px] rounded-md overflow-hidden relative group">
                         <img
-                            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800"
+                            src="https://www.intersys-solutions.com/website_asset/support.jpg"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -658,7 +658,7 @@ function BMSPage() {
                     {/* CARD 2 */}
                     <div className="h-[320px] rounded-md overflow-hidden relative group">
                         <img
-                            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800"
+                            src="https://www.intersys-solutions.com/website_asset/industry.jpg"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -670,7 +670,7 @@ function BMSPage() {
                     {/* CARD 3 */}
                     <div className="md:col-span-2 h-[320px] rounded-md overflow-hidden relative group">
                         <img
-                            src="https://images.unsplash.com/photo-1577412647305-991150c7d163?auto=format&fit=crop&q=80&w=1200"
+                            src="https://www.intersys-solutions.com/website_asset/room.jpg"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -682,7 +682,7 @@ function BMSPage() {
                     {/* CARD 4 */}
                     <div className="md:col-span-2 h-[320px] rounded-md overflow-hidden relative group">
                         <img
-                            src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200"
+                            src="https://www.intersys-solutions.com/website_asset/office.jpg"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />

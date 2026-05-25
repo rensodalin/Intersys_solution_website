@@ -120,7 +120,7 @@ export function Support() {
       <section className="relative h-[480px] flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0">
           <img
-            src="https://plus.unsplash.com/premium_photo-1661763720755-a395a2a09f9a?q=80&w=1882&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src="https://www.intersys-solutions.com/website_asset/technical%20support.jpg"
             alt="Technical Support"
             className="w-full h-full object-cover"
           />

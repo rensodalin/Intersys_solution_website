@@ -182,7 +182,7 @@ export function QuoteForm() {
 
             setSubmitStatus("success");
             reset();
-            
+
             // clear success message after a few seconds
             setTimeout(() => setSubmitStatus(null), 5000);
         } catch {
@@ -197,7 +197,7 @@ export function QuoteForm() {
             <div className="relative bg-[#0A0F1A] overflow-hidden pt-20">
                 <div className="absolute inset-0">
                     <img
-                        src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
+                        src="https://www.intersys-solutions.com/website_asset/request.jpg"
                         className="w-full h-full object-cover opacity-40 grayscale"
                         alt="Background"
                     />

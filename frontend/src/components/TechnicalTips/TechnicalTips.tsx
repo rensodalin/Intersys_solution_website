@@ -78,7 +78,7 @@ export function TechnicalTips() {
             {/* HERO (simplified) */}
             <div className="relative w-full h-[400px] overflow-hidden">
                 <img
-                    src="https://images.unsplash.com/photo-1563770660941-20978e870e26?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    src="https://www.intersys-solutions.com/website_asset/technical.jpg"
                     alt="Technical"
                     className="w-full h-full object-cover"
                 />

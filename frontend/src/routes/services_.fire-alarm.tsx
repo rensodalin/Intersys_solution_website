@@ -30,7 +30,7 @@ function FireAlarmPage() {
             <section className="relative h-[85vh] min-h-[600px] flex items-center pt-19">
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://images.unsplash.com/photo-1582139329536-e7284fece509?q=80&w=2000&auto=format&fit=crop"
+                        src="https://www.intersys-solutions.com/website_asset/fire_fire.png"
                         alt="Fire Safety"
                         className="w-full h-full object-cover"
                     />
@@ -84,17 +84,17 @@ function FireAlarmPage() {
                         {[
                             {
                                 title: "Commercial",
-                                img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800",
+                                img: "https://www.intersys-solutions.com/website_asset/Commercial_building.jpg",
                                 desc: "Advanced fire safety systems for office buildings, retail spaces, and business complexes — integrated with BMS, PA systems, and access control."
                             },
                             {
                                 title: "Residential",
-                                img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=800",
+                                img: "https://www.intersys-solutions.com/website_asset/commercail.jpg",
                                 desc: "Reliable protection for apartments, condominiums, and residential developments with aesthetically discreet detectors and guest-room integration."
                             },
                             {
                                 title: "Industrial",
-                                img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800",
+                                img: "https://www.intersys-solutions.com/website_asset/industrie.jpg",
                                 desc: "Heavy-duty fire detection and suppression for factories and industrial facilities — high-sensitivity smoke detection, gas monitoring, and explosion-proof devices."
                             }
                         ].map((sector, i) => (
@@ -107,7 +107,7 @@ function FireAlarmPage() {
                                 className="group space-y-6"
                             >
                                 <div className="h-64 overflow-hidden rounded-md relative">
-                                    <img src={sector.img} alt={sector.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                    <img src={sector.img} alt={sector.title} className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110" />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
 
                                 </div>
@@ -557,7 +557,7 @@ function FireAlarmPage() {
                     className="absolute inset-0 bg-cover bg-center"
                     style={{
                         backgroundImage:
-                            "url('https://images.unsplash.com/photo-1608141468855-e5a1fc4e47b4?q=80&w=687&auto=format&fit=crop')",
+                            "url('https://www.intersys-solutions.com/website_asset/whychooseus.jpg')",
                     }}
                 />
 
