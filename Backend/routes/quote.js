@@ -15,7 +15,11 @@ const transporter = nodemailer.createTransport({
 router.post("/", async (req, res) => {
     try {
         const quoteData = req.body;
-        const newQuote = new Quote(quoteData);
+        // Associate quote with logged-in user if session exists
+        const newQuote = new Quote({
+            ...quoteData,
+            userId: req.user ? req.user._id : null
+        });
         await newQuote.save();
 
         const emailContent = `
@@ -59,17 +63,20 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
     try {
-        let filter = {};
-        if (req.user) {
-            filter = { email: req.user.email };
-        } else if (req.query.email) {
-            filter = { email: req.query.email };
-        } else {
-            return res.status(401).json({ success: false, error: "Authentication required or email query parameter missing" });
+        if (!req.user) {
+            return res.status(401).json({ success: false, error: "Authentication required" });
         }
+        // Match by userId (new quotes) OR by account email (older quotes without userId)
+        const filter = {
+            $or: [
+                { userId: req.user._id },
+                { email: req.user.email }
+            ]
+        };
         const quotes = await Quote.find(filter).sort({ createdAt: -1 });
         res.status(200).json({ success: true, data: quotes });
     } catch (error) {
+        console.error("Failed to fetch quotes:", error);
         res.status(500).json({ success: false, error: "Failed to fetch quotes" });
     }
 });

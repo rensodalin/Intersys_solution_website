@@ -24,6 +24,7 @@ const quoteSchema = new mongoose.Schema({
     companyType: { type: String, required: true },
     bmsSystem: { type: String, required: true },
     otherBms: { type: String },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null },
     createdAt: { type: Date, default: Date.now }
 });
 
