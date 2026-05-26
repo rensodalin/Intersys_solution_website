@@ -5,6 +5,19 @@ export interface UserState {
   name: string;
   email: string;
   avatar?: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  gender?: string;
+  country?: string;
+  role?: string;
+  newsletter?: boolean;
+  receiveUpdates?: boolean;
+  downloadedPdfs?: Array<{
+    title: string;
+    url: string;
+    downloadedAt: string;
+  }>;
 }
 
 interface AuthState {

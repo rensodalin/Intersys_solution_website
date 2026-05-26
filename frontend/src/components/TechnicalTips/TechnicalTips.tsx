@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "@tanstack/react-router";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 import {
     FileText,
     Building2,
@@ -72,6 +74,23 @@ const tipCategories = [
 ];
 
 export function TechnicalTips() {
+    const user = useSelector((state: RootState) => state.auth.user);
+    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+
+    const trackPdfDownload = async (title: string, url: string) => {
+        if (!user || url === "#") return;
+        try {
+            await fetch(`${baseUrl}/auth/user/download`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title, url }),
+                credentials: "include"
+            });
+        } catch (err) {
+            console.error("Failed to track download:", err);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-white">
 
@@ -125,6 +144,7 @@ export function TechnicalTips() {
                                             <a
                                                 key={tidx}
                                                 href={tip.url}
+                                                onClick={() => trackPdfDownload(tip.title, tip.url)}
                                                 className="group flex items-center gap-2 text-[15px] text-[#4A4A4A] hover:text-[#D62828] transition-colors"
                                             >
                                                 <img

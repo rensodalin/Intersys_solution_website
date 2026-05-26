@@ -216,4 +216,86 @@ router.get("/user", (req, res) => {
     }
 });
 
+// ✅ Update User Profile Details
+router.put("/user/update", async (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ success: false, message: "Not authenticated" });
+    }
+    try {
+        const { firstName, lastName, phone, country, role, password, newsletter, receiveUpdates } = req.body;
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        if (firstName) user.firstName = firstName;
+        if (lastName) user.lastName = lastName;
+        if (firstName || lastName) user.name = `${firstName || user.firstName} ${lastName || user.lastName}`.trim();
+        if (phone) user.phone = phone;
+        if (country) user.country = country;
+        if (role) user.role = role;
+        if (typeof newsletter !== 'undefined') user.newsletter = newsletter;
+        if (typeof receiveUpdates !== 'undefined') user.receiveUpdates = receiveUpdates;
+
+        if (password && password.trim() !== "") {
+            // Strong password validation
+            const isStrong = 
+                password.length >= 8 &&
+                /[A-Z]/.test(password) &&
+                /[a-z]/.test(password) &&
+                /[0-9]/.test(password) &&
+                /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+            if (!isStrong) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Please choose a stronger password. Try a mix of letters, numbers, and symbols."
+                });
+            }
+            user.password = password;
+        }
+
+        await user.save();
+        
+        // Update passport session to keep it synchronized
+        req.login(user, (err) => {
+            if (err) {
+                console.error("Error updating passport session:", err);
+            }
+        });
+
+        res.json({ success: true, message: "Profile updated successfully", user });
+    } catch (error) {
+        console.error("Update User Error:", error);
+        res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+    }
+});
+
+// ✅ Record PDF Download
+router.post("/user/download", async (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ success: false, message: "Not authenticated" });
+    }
+    try {
+        const { title, url } = req.body;
+        if (!title || !url) {
+            return res.status(400).json({ success: false, message: "Title and URL are required" });
+        }
+        
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        user.downloadedPdfs = user.downloadedPdfs || [];
+        user.downloadedPdfs.push({ title, url, downloadedAt: new Date() });
+        await user.save();
+
+        res.json({ success: true, downloadedPdfs: user.downloadedPdfs });
+    } catch (error) {
+        console.error("Record Download Error:", error);
+        res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+    }
+});
+
 export default router;

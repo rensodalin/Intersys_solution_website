@@ -40,7 +40,20 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: String
-    }
+    },
+    newsletter: {
+        type: Boolean,
+        default: false
+    },
+    receiveUpdates: {
+        type: Boolean,
+        default: false
+    },
+    downloadedPdfs: [{
+        title: { type: String, required: true },
+        url: { type: String, required: true },
+        downloadedAt: { type: Date, default: Date.now }
+    }]
 }, { timestamps: true });
 
 // Hash password before saving

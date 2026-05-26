@@ -278,7 +278,17 @@ export function Navbar() {
           </div>
           {user ? (
             <div className="flex items-center gap-3">
-              <img src={user.avatar || "https://ui-avatars.com/api/?name=" + user.name} alt={user.name} className="w-8 h-8 rounded-full border border-white/20 shadow-md" referrerPolicy="no-referrer" />
+              <Link to="/my-account" className="flex items-center gap-2 group">
+                <img 
+                  src={user.avatar || "https://ui-avatars.com/api/?name=" + user.name} 
+                  alt={user.name} 
+                  className="w-8 h-8 rounded-full border border-white/20 shadow-md group-hover:border-red-500 transition-colors" 
+                  referrerPolicy="no-referrer" 
+                />
+                <span className={cn("text-xs font-semibold hidden md:inline group-hover:text-red-500 transition-colors", loginClass)}>
+                  {user.firstName || user.name.split(" ")[0]}
+                </span>
+              </Link>
               <button onClick={handleLogout} className={cn("text-xs font-medium bg-transparent border-0 cursor-pointer", btnClass)}>Logout</button>
             </div>
           ) : (
@@ -323,22 +333,32 @@ export function Navbar() {
                 <p className="text-white/40 font-bold uppercase tracking-wider text-[10px]">Account</p>
                 {user ? (
                   <div className="flex items-center gap-3 bg-white/5 p-4 rounded-sm border border-white/5">
-                    <img
-                      src={user.avatar || "https://ui-avatars.com/api/?name=" + user.name}
-                      alt={user.name}
-                      className="w-10 h-10 rounded-full border border-white/20"
-                    />
-                    <div className="flex-1">
-                      <button
-                        onClick={(e) => {
-                          handleLogout(e);
-                          setMobileOpen(false);
-                        }}
-                        className="text-xs text-white hover:underline bg-transparent border-0 cursor-pointer text-left p-0 font-medium"
-                      >
-                        Logout
-                      </button>
-                    </div>
+                    <Link
+                      to="/my-account"
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-3 flex-1"
+                    >
+                      <img
+                        src={user.avatar || "https://ui-avatars.com/api/?name=" + user.name}
+                        alt={user.name}
+                        className="w-10 h-10 rounded-full border border-white/20"
+                      />
+                      <div className="text-left">
+                        <span className="text-sm font-bold text-white hover:text-red-500 transition-colors block">
+                          {user.name}
+                        </span>
+                        <span className="text-[10px] text-white/50 block">View Profile</span>
+                      </div>
+                    </Link>
+                    <button
+                      onClick={(e) => {
+                        handleLogout(e);
+                        setMobileOpen(false);
+                      }}
+                      className="text-xs text-red-500 hover:text-red-400 font-bold bg-transparent border-0 cursor-pointer p-2 rounded-sm hover:bg-white/5 transition"
+                    >
+                      Logout
+                    </button>
                   </div>
                 ) : (
                   <button

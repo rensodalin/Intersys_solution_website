@@ -59,7 +59,15 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
     try {
-        const quotes = await Quote.find().sort({ createdAt: -1 });
+        let filter = {};
+        if (req.user) {
+            filter = { email: req.user.email };
+        } else if (req.query.email) {
+            filter = { email: req.query.email };
+        } else {
+            return res.status(401).json({ success: false, error: "Authentication required or email query parameter missing" });
+        }
+        const quotes = await Quote.find(filter).sort({ createdAt: -1 });
         res.status(200).json({ success: true, data: quotes });
     } catch (error) {
         res.status(500).json({ success: false, error: "Failed to fetch quotes" });

@@ -79,12 +79,29 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [pendingDocUrl, setPendingDocUrl] = useState<string | null>(null);
 
+  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+
+  const trackPdfDownload = async (title: string, url: string) => {
+    if (!user) return;
+    try {
+      await fetch(`${baseUrl}/auth/user/download`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, url }),
+        credentials: "include"
+      });
+    } catch (err) {
+      console.error("Failed to track download:", err);
+    }
+  };
+
   // Handle auto-opening PDF after successful login (local or OAuth)
   useEffect(() => {
     if (user) {
       // 1. Check local state (for email/password login)
       if (pendingDocUrl) {
         window.open(pendingDocUrl, "_blank");
+        trackPdfDownload(product.title + " - Document", pendingDocUrl);
         setPendingDocUrl(null);
         localStorage.removeItem("pending_pdf_url");
         return;
@@ -94,6 +111,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
       const storedPdf = localStorage.getItem("pending_pdf_url");
       if (storedPdf) {
         window.open(storedPdf, "_blank");
+        trackPdfDownload(product.title + " - Document", storedPdf);
         localStorage.removeItem("pending_pdf_url");
       }
     }
@@ -294,6 +312,8 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                             setPendingDocUrl(doc.url);
                             localStorage.setItem("pending_pdf_url", doc.url);
                             setIsAuthOpen(true);
+                          } else {
+                            trackPdfDownload(doc.name, doc.url);
                           }
                         }}
                         target="_blank"

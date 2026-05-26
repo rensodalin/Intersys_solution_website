@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Download, ArrowUpRight, FileText } from "lucide-react";
 import { Container } from "@/components/Common/Container";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 const categories = [
     "All",
@@ -61,6 +63,23 @@ const documents = [
 export function DocumentCenter() {
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [query, setQuery] = useState("");
+
+    const user = useSelector((state: RootState) => state.auth.user);
+    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+
+    const trackPdfDownload = async (title: string, url: string) => {
+        if (!user || url === "#") return;
+        try {
+            await fetch(`${baseUrl}/auth/user/download`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title, url }),
+                credentials: "include"
+            });
+        } catch (err) {
+            console.error("Failed to track download:", err);
+        }
+    };
 
     const filtered = documents.filter((d) => {
         const matchCat =
@@ -153,6 +172,7 @@ export function DocumentCenter() {
                             href="/documents/project-references-bms.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={() => trackPdfDownload("Intersys Systems - Corporate Overview", "/documents/project-references-bms.pdf")}
                             className="mt-4 flex items-center justify-between bg-[#D62828] text-white text-[11px] font-bold px-5 py-3 hover:bg-[#111FA2] transition outline-none"
                         >
                             Download
@@ -235,6 +255,7 @@ export function DocumentCenter() {
                                         href={doc.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        onClick={() => trackPdfDownload(doc.title, doc.url)}
                                         className="w-8 h-8 border flex items-center justify-center hover:border-[#D62828] hover:text-[#D62828] transition-colors"
                                     >
                                         <Download size={13} />
