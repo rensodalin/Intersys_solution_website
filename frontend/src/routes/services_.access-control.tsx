@@ -38,7 +38,7 @@ function AccessControlPage() {
             <section className="relative h-[85vh] min-h-[600px] flex items-center pt-20">
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://www.intersys-solutions.com/website_asset/acces_control.jpg"
+                        src="https://www.intersys-solutions.com/website_asset/access_control.jpg"
                         alt="Access Control Hero"
                         className="w-full h-full object-cover"
                     />

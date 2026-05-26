@@ -58,19 +58,8 @@ function BMSPage() {
             {/* ─── HERO ─── */}
             <section className="relative h-[85vh] min-h-[600px] flex items-center pt-17 overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    <motion.img
-                        initial={{ scale: 1.15, x: "-3%", y: "-2%", opacity: 0 }}
-                        animate={{
-                            x: ["-3%", "3%", "-3%"],
-                            y: ["-2%", "2%", "-2%"],
-                            opacity: 1,
-                        }}
-                        transition={{
-                            opacity: { duration: 1.5, ease: "easeOut" },
-                            x: { duration: 30, ease: "easeInOut", repeat: Infinity },
-                            y: { duration: 20, ease: "easeInOut", repeat: Infinity },
-                        }}
-                        src="https://www.intersys-solutions.com/website_asset/Hero_BMS.png"
+                    <img
+                        src="https://www.intersys-solutions.com/website_asset/BMS_hero.jpg"
                         alt="Modern Cityscape"
                         className="w-full h-full object-cover"
                     />
@@ -78,29 +67,12 @@ function BMSPage() {
                 </div>
 
                 <Container className="relative z-10 text-white">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="max-w-4xl"
-                    >
-
+                    <div className="max-w-4xl">
                         <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
                             Intelligent <br />
 
-                            {/* Typewriter Animation */}
                             <span className="text-red-500">
-                                <TypeAnimation
-                                    sequence={[
-                                        "Building Management Solutions.",
-                                        2000,
-
-                                    ]}
-                                    wrapper="span"
-                                    speed={50}
-                                    repeat={Infinity}
-
-                                />
+                                Building Management Solutions.
                             </span>
                         </h1>
 
@@ -109,12 +81,10 @@ function BMSPage() {
                         </p>
 
                         <div className="pt-2">
-
                         </div>
-                    </motion.div>
+                    </div>
                 </Container>
             </section>
-
             {/* ─── WHAT IS BMS ─── */}
             <section className="py-28 bg-white">
                 <Container>

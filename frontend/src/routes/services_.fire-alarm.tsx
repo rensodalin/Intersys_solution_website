@@ -27,41 +27,58 @@ function FireAlarmPage() {
         <div className="bg-white overflow-hidden scroll-smooth">
 
             {/* ─── HERO ─── */}
-            <section className="relative h-[85vh] min-h-[600px] flex items-center pt-19">
-                <div className="absolute inset-0 z-0">
-                    <img
-                        src="https://www.intersys-solutions.com/website_asset/fire_fire.png"
-                        alt="Fire Safety"
-                        className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
-                </div>
+            <section className="relative min-h-[85vh] flex items-center pt-19 bg-black overflow-hidden">
+                {/* Optional dark overlay background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/70 z-0" />
 
-                <Container className="relative z-10 text-white">
-                    <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="max-w-3xl"
-                    >
-                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
-                            Intelligent <br />
-                            <span className="text-red-500">Fire Safety</span> Solutions
-                        </h1>
-                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
-                            At Intersys Solutions Co., Ltd, we specialize in delivering intelligent fire alarm systems
-                            designed to protect lives, assets, and infrastructure. As an authorized Honeywell Engineering
-                            System Distributor, we offer trusted global brands like NOTIFIER, ESSER, and System Sensor
-                            by Honeywell — bringing proven global technology to your local projects.
-                        </p>
-                        <div className="flex flex-wrap gap-4 pt-4">
-                            {["Early Detection", "Fast Response", "System Integration"].map((tag) => (
-                                <span key={tag} className="px-4 py-1.5 border border-white/30 text-white/80 text-sm rounded-md backdrop-blur-sm">
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-                    </motion.div>
+                <Container className="relative z-10">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+                        {/* Left Content */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8 }}
+                            className="text-white max-w-3xl"
+                        >
+                            <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                                Intelligent <br />
+                                <span className="text-red-500">Fire Safety</span> Solutions
+                            </h1>
+
+                            <p className="text-base text-white/70 max-w-2xl leading-relaxed">
+                                At Intersys Solutions Co., Ltd, we specialize in delivering intelligent fire alarm systems
+                                designed to protect lives, assets, and infrastructure. As an authorized Honeywell Engineering
+                                System Distributor, we offer trusted global brands like NOTIFIER, ESSER, and System Sensor
+                                by Honeywell — bringing proven global technology to your local projects.
+                            </p>
+
+                            <div className="flex flex-wrap gap-4 pt-6">
+                                {["Early Detection", "Fast Response", "System Integration"].map((tag) => (
+                                    <span
+                                        key={tag}
+                                        className="px-4 py-1.5 border border-white/30 text-white/80 text-sm rounded-md backdrop-blur-sm"
+                                    >
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        </motion.div>
+
+                        {/* Right Image */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="flex justify-center"
+                        >
+                            <img
+                                src="https://cdn.sytechweb.com/uon3j8c3/wp-content/uploads/2025/12/Product-portfolio-diagram-2-scaled.png"
+                                alt="Fire Safety Diagram"
+                                className="w-full max-w-2xl object-contain"
+                            />
+                        </motion.div>
+                    </div>
                 </Container>
             </section>
 
@@ -94,7 +111,7 @@ function FireAlarmPage() {
                             },
                             {
                                 title: "Industrial",
-                                img: "https://www.intersys-solutions.com/website_asset/industrie.jpg",
+                                img: "https://www.intersys-solutions.com/website_asset/fire.jpg",
                                 desc: "Heavy-duty fire detection and suppression for factories and industrial facilities — high-sensitivity smoke detection, gas monitoring, and explosion-proof devices."
                             }
                         ].map((sector, i) => (

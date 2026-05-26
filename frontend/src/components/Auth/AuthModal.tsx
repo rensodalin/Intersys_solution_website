@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "@/store/authSlice";
@@ -101,10 +101,36 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
       if (data.success) {
         if (activeTab === "register") {
           setActiveTab("login");
-          toast.success("Account created successfully. Please log in.");
+          toast.custom((t) => (
+            <div className="bg-gray-900 border border-gray-800 rounded-xl shadow-2xl p-4 flex items-center gap-4 min-w-[320px]">
+              <div className="bg-emerald-500/20 text-emerald-400 p-2 rounded-full flex-shrink-0">
+                <CheckCircle size={20} />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-white text-sm">Registration Complete</h3>
+                <p className="text-gray-400 text-xs mt-0.5">Account created successfully. Please log in.</p>
+              </div>
+              <button onClick={() => toast.dismiss(t)} className="text-gray-500 hover:text-white transition-colors ml-2">
+                <X size={16} />
+              </button>
+            </div>
+          ), { duration: 4000 });
         } else {
           dispatch(loginSuccess(data.user));
-          toast.success("Logged in successfully.");
+          toast.custom((t) => (
+            <div className="bg-gray-900 border border-gray-800 rounded-xl shadow-2xl p-4 flex items-center gap-4 min-w-[320px]">
+              <div className="bg-emerald-500/20 text-emerald-400 p-2 rounded-full flex-shrink-0">
+                <CheckCircle size={20} />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-white text-sm">Welcome Back</h3>
+                <p className="text-gray-400 text-xs mt-0.5">Logged in successfully.</p>
+              </div>
+              <button onClick={() => toast.dismiss(t)} className="text-gray-500 hover:text-white transition-colors ml-2">
+                <X size={16} />
+              </button>
+            </div>
+          ), { duration: 3000 });
           onClose();
         }
       } else {
