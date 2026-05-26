@@ -2,7 +2,8 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts, useLocation } from
 import { Navbar } from "@/components/Layout/Navbar";
 import { Footer } from "@/components/Layout/Footer";
 import { ScrollControls } from "@/components/Common/ScrollControls";
-import { FloatingChat } from "@/components/Common/FloatingChat";
+
+import { ChatWidget } from "@/components/Chat/ChatWidget";
 import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
@@ -87,6 +88,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <ScrollControls />
+      <ChatWidget />
       {!isProductsPage && <Footer />}
       <Toaster position="top-center" richColors />
     </>
