@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { TypeAnimation } from "react-type-animation";
 
 import { motion } from "framer-motion";
@@ -23,7 +23,6 @@ import {
     ChevronRight,
     ArrowRight,
     Flame,
-    Link,
     Code2,
     BarChart3,
     Lock,
@@ -607,9 +606,9 @@ function BMSPage() {
                                 Customizing intelligence for diverse operational environments.
                             </p>
 
-                            <button className="px-6 py-2.5 bg-red-600 rounded-sm font-semibold text-xs hover:bg-red-700 transition">
+                            <Link to="/projects" className="inline-block px-6 py-2.5 bg-red-600 rounded-sm font-semibold text-xs hover:bg-red-700 transition">
                                 Explore Projects
-                            </button>
+                            </Link>
                         </div>
                     </div>
 
@@ -628,7 +627,7 @@ function BMSPage() {
                     {/* CARD 2 */}
                     <div className="h-[320px] rounded-md overflow-hidden relative group">
                         <img
-                            src="https://www.intersys-solutions.com/website_asset/industry.jpg"
+                            src="https://www.intersys-solutions.com/website_asset/BMS_image2.JPG"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
