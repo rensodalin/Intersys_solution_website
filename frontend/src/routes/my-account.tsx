@@ -135,12 +135,12 @@ function MyAccountPage() {
     fetchProfile();
   }, []);
 
-  // Fetch quotes whenever quotes tab is selected
+  // Fetch quotes whenever user is available so dashboard count is accurate
   useEffect(() => {
-    if (activeTab === "quotes" && user) {
+    if (user) {
       fetchQuotes();
     }
-  }, [activeTab, user]);
+  }, [user]);
 
   const handleLogout = async (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
