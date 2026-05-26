@@ -44,10 +44,10 @@ export function Navbar() {
   const location = useLocation();
   const lightPages = ["/products", "/services/public-address"];
   const isLightPage = lightPages.some(path => location.pathname.startsWith(path));
-  const isDocCenter = location.pathname.startsWith("/document-center");
+  const isDarkNavPage = ["/document-center", "/my-account"].some(path => location.pathname.startsWith(path));
   const [scrolled, setScrolled] = useState(false);
 
-  const useDarkText = isDocCenter && !scrolled;
+  const useDarkText = isDarkNavPage && !scrolled;
   const navItemClass = useDarkText ? "text-[#0A0F1A]/80 hover:text-[#D62828]" : "text-white/70 hover:text-red-500";
   const iconClass = useDarkText ? "text-[#0A0F1A]/60 hover:text-[#0A0F1A]" : "text-white/50 hover:text-white";
   const btnClass = useDarkText ? "text-[#0A0F1A] hover:text-[#0A0F1A]/80" : "text-white hover:text-white/80";

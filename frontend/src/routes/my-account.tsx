@@ -162,6 +162,33 @@ function MyAccountPage() {
     }
   };
 
+  const handleDownload = async (url: string, title: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!url || url === "#") {
+      toast.error("Document file is currently unavailable for download.");
+      return;
+    }
+    
+    try {
+      // Fetch the file to trigger a real download prompt instead of just opening
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Failed to fetch file");
+      
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = `${title}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      console.error("Programmatic download failed, falling back to new tab:", error);
+      window.open(url, "_blank");
+    }
+  };
+
   const handleDetailsChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setDetailsForm(prev => ({ ...prev, [name]: value }));
@@ -273,7 +300,7 @@ function MyAccountPage() {
     <div className="bg-gray-50 min-h-screen pt-28 pb-20">
       <Container>
         <div className="mb-10">
-          <h1 className="font-display text-4xl font-extrabold tracking-tight text-gray-900">My Account</h1>
+          <h1 className="font-display text-4xl font-bold tracking-tight text-gray-900 pt-25">My Account</h1>
           <div className="h-1 w-20 bg-red-600 mt-3" />
         </div>
 
@@ -504,8 +531,8 @@ function MyAccountPage() {
                     {user.downloadedPdfs.map((pdf, idx) => (
                       <div key={idx} className="p-4 border border-gray-150 rounded-sm hover:border-[#1A3263] transition flex items-center justify-between bg-white group gap-4">
                         <div className="flex items-center gap-3.5 min-w-0">
-                          <div className="w-10 h-10 bg-red-50 text-red-600 rounded-sm flex items-center justify-center flex-shrink-0">
-                            <span className="text-[10px] font-extrabold">PDF</span>
+                          <div className="w-10 h-10  text-red-600 rounded-sm flex items-center justify-center flex-shrink-0">
+                            <span className="text-[10px] ">PDF</span>
                           </div>
                           <div className="min-w-0">
                             <h4 className="text-sm font-bold text-gray-800 truncate group-hover:text-[#1A3263] transition" title={pdf.title}>
@@ -516,15 +543,13 @@ function MyAccountPage() {
                             </p>
                           </div>
                         </div>
-                        <a
-                          href={pdf.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2.5 rounded-full bg-gray-50 text-gray-500 hover:bg-red-50 hover:text-red-600 transition flex-shrink-0"
+                        <button
+                          onClick={(e) => handleDownload(pdf.url, pdf.title, e)}
+                          className="p-2.5 rounded-full bg-gray-50 text-gray-500 hover:bg-red-50 hover:text-red-600 transition flex-shrink-0 cursor-pointer border-none"
                           title="Redownload File"
                         >
                           <Download size={16} />
-                        </a>
+                        </button>
                       </div>
                     ))}
                   </div>
@@ -737,7 +762,7 @@ function MyAccountPage() {
                           <option value="Yemen">Yemen</option>
                           <option value="Zimbabwe">Zimbabwe</option>
                         </select>
-                        <svg className="absolute right-3 top-3 text-gray-400 pointer-events-none" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                        <svg className="absolute right-3 top-3 text-gray-400 pointer-events-none" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
                       </div>
                     </div>
                   </div>
