@@ -13,7 +13,10 @@ import {
 
 import { Container } from "@/components/Common/Container";
 import logoImg from "../../assets/logo.avif";
-import teamImg from "../../assets/Teamfooter.png";
+import companyImg from "../../assets/a.png";
+import teamWorkImg from "../../assets/b.jpg";
+import bmsImg from "../../assets/c.jpg";
+import engineerImg from "../../assets/d.jpg";
 import foot from "../../assets/Certificates & Licenses/Certificates & Licenses/new/foot.png";
 
 export function Footer({ isCompact }: { isCompact?: boolean }) {
@@ -128,18 +131,22 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
             </div>
           </div>
 
-          {/* Team Photo - Centered at the bottom */}
-          <div className="mt-8 relative z-10 flex justify-center lg:justify-start">
-            <div className="relative inline-block group">
-              {/* Abstract Watermark Background */}
-              <div className="absolute -top-6 -left-6 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-colors" />
-
-              <img
-                src={teamImg}
-                alt="Intersys Team"
-                className="relative z-10 w-full max-w-sm h-auto object-contain drop-shadow-2xl"
-              />
-            </div>
+          {/* Photo Row */}
+          <div className="mt-6 relative z-10 flex gap-2 pb-15">
+            {[
+              { src: companyImg, alt: "Intersys Office" },
+              { src: teamWorkImg, alt: "Team at Work" },
+              { src: bmsImg, alt: "BMS System" },
+              { src: engineerImg, alt: "Engineer" },
+            ].map((img) => (
+              <div key={img.alt} className="w-16 h-16 overflow-hidden rounded-sm flex-shrink-0">
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                />
+              </div>
+            ))}
           </div>
         </div>
 
