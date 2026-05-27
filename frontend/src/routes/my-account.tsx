@@ -61,6 +61,7 @@ function MyAccountPage() {
   const [quotes, setQuotes] = useState<QuoteItem[]>([]);
   const [loadingQuotes, setLoadingQuotes] = useState(false);
   const [savingDetails, setSavingDetails] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   // Account Details form states
   const [detailsForm, setDetailsForm] = useState({
@@ -247,7 +248,8 @@ function MyAccountPage() {
       const data = await response.json();
       if (data.success && data.user) {
         dispatch(loginSuccess(data.user));
-        toast.success("Account details updated successfully");
+        setSaveSuccess(true);
+        setTimeout(() => setSaveSuccess(false), 4000);
         setDetailsForm(prev => ({ ...prev, currentPassword: "", password: "", confirmPassword: "" }));
       } else {
         toast.error(data.message || "Failed to update profile");
@@ -572,6 +574,14 @@ function MyAccountPage() {
                 </div>
 
                 <form onSubmit={handleSaveDetails} className="space-y-6">
+
+                  {/* Inline success banner */}
+                  {saveSuccess && (
+                    <div className="flex items-center gap-2.5 border border-green-200 bg-green-50 px-4 py-3 rounded-sm">
+                      <CheckCircle2 className="text-green-600 flex-shrink-0" size={16} />
+                      <p className="text-green-800 text-sm font-semibold">Account details changed successfully.</p>
+                    </div>
+                  )}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-xs  text-gray-400  mb-2">First Name *</label>
