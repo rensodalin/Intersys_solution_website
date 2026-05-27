@@ -19,6 +19,7 @@ import { useInquiry } from "@/context/InquiryContext";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { AuthModal } from "@/components/Auth/AuthModal";
+import { saltoProducts } from "@/components/Product/AccessControl/Salto/data";
 
 // ─── TYPES ───
 export interface ProductOption {
@@ -164,14 +165,57 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
     navigate({ to: "/request-quote" });
   };
 
-  const breadcrumbs = [
-    { name: "Home", href: "/" },
-    { name: "Products", href: "/products" },
-    { name: product.category, href: returnPath || (product.category === "Building Management" ? "/products/building-management" : product.category === "Surveillance (CCTV)" ? "/products/surveillance" : "#") },
-    ...((product.category !== "Building Management" && product.category !== "Surveillance (CCTV)") ? [{ name: product.brand, href: "#" }] : []),
-    ...(product.brandSubCategory ? [{ name: product.brandSubCategory, href: product.brandSubCategoryLink || "#" }] : []),
-    { name: product.title, href: "#" },
-  ];
+  // Build breadcrumbs properly for all product types
+  const buildBreadcrumbs = () => {
+    const crumbs: { name: string; href: string }[] = [
+      { name: "Home", href: "/" },
+      { name: "Products", href: "/products" },
+    ];
+
+    if (product.category === "Building Management") {
+      crumbs.push({ name: "Building Management", href: "/products/building-management" });
+    } else if (product.category === "Surveillance (CCTV)") {
+      crumbs.push({ name: "Surveillance (CCTV)", href: "/products/surveillance" });
+    } else {
+      // Access Control
+      crumbs.push({ name: "Access Control", href: "/products/access-control" });
+
+      if (product.brand === "Salto") {
+        crumbs.push({ name: "Salto", href: "/products/access-control/salto" });
+
+        // If returnPath points to a Salto sub-category page, derive the name from saltoProducts
+        if (returnPath && returnPath.startsWith("/products/access-control/salto/")) {
+          const saltoParentId = returnPath
+            .replace("/products/access-control/salto/", "")
+            .split("?")[0]
+            .split("/")[0];
+          const parentCategory = saltoProducts.find((p) => p.id === saltoParentId);
+          const subCatName = parentCategory?.title || product.brandSubCategory;
+          if (subCatName) {
+            crumbs.push({ name: subCatName, href: returnPath });
+          }
+        } else if (product.brandSubCategory) {
+          crumbs.push({ name: product.brandSubCategory, href: product.brandSubCategoryLink || "#" });
+        }
+
+      } else if (product.brand === "Honeywell") {
+        crumbs.push({ name: "Honeywell", href: "/products/access-control/honeywell" });
+        if (product.brandSubCategory) {
+          crumbs.push({ name: product.brandSubCategory, href: product.brandSubCategoryLink || "#" });
+        }
+      } else if (product.brand) {
+        crumbs.push({ name: product.brand, href: "#" });
+        if (product.brandSubCategory) {
+          crumbs.push({ name: product.brandSubCategory, href: product.brandSubCategoryLink || "#" });
+        }
+      }
+    }
+
+    crumbs.push({ name: product.title, href: "#" });
+    return crumbs;
+  };
+
+  const breadcrumbs = buildBreadcrumbs();
 
   return (
     <div className="bg-white min-h-screen">
