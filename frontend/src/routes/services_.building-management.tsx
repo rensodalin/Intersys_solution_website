@@ -55,10 +55,10 @@ function BMSPage() {
 
             {/* ─── HERO ─── */}
             {/* ─── HERO ─── */}
-            <section className="relative h-[85vh] min-h-[600px] flex items-center pt-17 overflow-hidden">
+            <section className="relative h-[70vh] min-h-[500px] flex items-center pt-17 overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://www.intersys-solutions.com/website_asset/BMS_hero.jpg"
+                        src="https://www.intersys-solutions.com/website_asset/IT KPS REVISE_37 - Photo (1).jpg"
                         alt="Modern Cityscape"
                         className="w-full h-full object-cover"
                     />

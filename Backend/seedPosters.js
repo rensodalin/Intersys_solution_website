@@ -29,16 +29,58 @@ const posters = [
     image: "https://scontent.fpnh19-1.fna.fbcdn.net/v/t39.30808-6/548892210_1474303960281453_35818430066383983_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFzleOUcERf-5N5-1UMzsrb7D4QUsobDebsPhBSyhsN5vAjBGOiCCcT7KnPv6BFt292qjcSipRRi3ySgRxGaqDZ&_nc_ohc=5dSwFHXInpoQ7kNvwGXLC89&_nc_oc=Adp_GUAFseBIC1RoYY6SWjXHkzlDWUHXBv6g9BcktWfc8jc0HHZ6ZLZhSM6xxIq80gk&_nc_zt=23&_nc_ht=scontent.fpnh19-1.fna&_nc_gid=ap7JE1v94UmeNCdl6V_zvg&_nc_ss=7b2a8&oh=00_Af64p3kDFioP4VZIi96LtCQyq3HiIVCun5Fi1tudz8C9TQ&oe=6A0DC7DA",
     link: "https://www.facebook.com/share/p/1AzkC5TcDi/",
     order: 5
-  }
+  },
+  {
+    image: "https://scontent.fpnh19-1.fna.fbcdn.net/v/t39.30808-6/548892210_1474303960281453_35818430066383983_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFzleOUcERf-5N5-1UMzsrb7D4QUsobDebsPhBSyhsN5vAjBGOiCCcT7KnPv6BFt292qjcSipRRi3ySgRxGaqDZ&_nc_ohc=5dSwFHXInpoQ7kNvwGXLC89&_nc_oc=Adp_GUAFseBIC1RoYY6SWjXHkzlDWUHXBv6g9BcktWfc8jc0HHZ6ZLZhSM6xxIq80gk&_nc_zt=23&_nc_ht=scontent.fpnh19-1.fna&_nc_gid=ap7JE1v94UmeNCdl6V_zvg&_nc_ss=7b2a8&oh=00_Af64p3kDFioP4VZIi96LtCQyq3HiIVCun5Fi1tudz8C9TQ&oe=6A0DC7DA",
+    link: "https://www.facebook.com/share/p/1AzkC5TcDi/",
+    order: 6
+  },
+  {
+    image: "https://scontent.fpnh11-1.fna.fbcdn.net/v/t39.30808-6/708168962_1679430116435502_6878553064290167276_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHW13tAoEM5InkxyUK_5ZVPUdpjrhmP-MhR2mOuGY_4yOL61a7cqysVD2TvrxFbaak8LhdMwom_B3UlBCu_BSy7&_nc_ohc=Kv-4Ykwu-pgQ7kNvwHwnMGf&_nc_oc=AdpeG0iBqMlwjReDa3U74glHqp6DyOzr32gpYSX8v-zSBp4B6rDlS1aIPLDG1yosGsw&_nc_zt=23&_nc_ht=scontent.fpnh11-1.fna&_nc_gid=qqJb8jgSSYDVU49z25-ECA&_nc_ss=7b2a8&oh=00_Af7HBpxDe628zKlaPDzOZ9hR1pZQuofk7FeLPrv9pxworQ&oe=6A1C36F5",
+    link: "https://www.facebook.com/share/p/18YKhV5YmG/",
+    order: 7
+  },
+
+
+
+
 ];
 
 async function seed() {
   try {
     await mongoose.connect(process.env.URI);
     console.log("Connected to MongoDB...");
-    await Poster.deleteMany({});
-    await Poster.insertMany(posters);
-    console.log("Seeded posters successfully!");
+
+    // Find existing posters to avoid duplicating emails
+    const existingPosters = await Poster.find({});
+    const existingLinks = new Set(existingPosters.map(p => p.link));
+
+    let addedCount = 0;
+
+    for (const poster of posters) {
+      if (!existingLinks.has(poster.link)) {
+        console.log(`\n✨ Found NEW poster! Adding and sending emails for: ${poster.link}`);
+
+        // Use the API so the email logic is triggered!
+        const response = await fetch("http://localhost:1000/api/posters", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(poster)
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          console.log(`✅ Success! Emails sent to ${result.notified} subscriber(s).`);
+          addedCount++;
+        } else {
+          console.error(`❌ Failed to add poster:`, result.message);
+        }
+      } else {
+        console.log(`⏩ Poster already exists, skipping: ${poster.link}`);
+      }
+    }
+
+    console.log(`\n🎉 Finished checking posters! Added ${addedCount} new posters.`);
     process.exit();
   } catch (err) {
     console.error("Seeding error:", err);

@@ -24,7 +24,7 @@ function SurveillancePage() {
         <div className="bg-white overflow-hidden">
 
             {/* HERO SECTION */}
-            <section className="relative h-[85vh] min-h-[600px] flex items-center pt-18">
+            <section className="relative h-[70vh] min-h-[500px] flex items-center pt-18">
                 <div className="absolute inset-0 z-0">
                     <img
                         src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=2000"

@@ -117,15 +117,17 @@ export function Support() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
+      {/* Hero */}
       <section className="relative h-[480px] flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0">
           <img
-            src="https://www.intersys-solutions.com/website_asset/technical%20support.jpg"
+            src="https://www.intersys-solutions.com/website_asset/IMG_20260509_105536.jpg"
             alt="Technical Support"
             className="w-full h-full object-cover"
           />
 
-          <div className="absolute inset-0 bg-black/60" />
+          {/* Darker Overlay */}
+          <div className="absolute inset-0 bg-black/75" />
         </div>
 
         <div className="relative z-10 text-center text-white px-6 max-w-4xl">
@@ -134,13 +136,17 @@ export function Support() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-6 tracking-tight">
-              Technical support
+            <h1 className="text-4xl md:text-x5l font-bold leading-tight tracking-tight mb-6">
+              <span className="text-white">
+                Technical Support
+              </span>
               <br />
-              & customer service
+              <span className="text-red-300">
+                & Customer Service
+              </span>
             </h1>
 
-            <p className="text-gray-200 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
               Reliable technical support and responsive customer service to
               ensure smooth and efficient operations.
             </p>

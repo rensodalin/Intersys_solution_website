@@ -29,7 +29,7 @@ function AudioVisualPage() {
         <div className="bg-white overflow-hidden scroll-smooth">
 
             {/* ─── HERO SECTION ─── */}
-            <section className="relative h-[80vh] min-h-[600px] flex items-center pt-19">
+            <section className="relative h-[65vh] min-h-[450px] flex items-center pt-19">
                 <div className="absolute inset-0 z-0">
                     <img
                         src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2069&auto=format&fit=crop"

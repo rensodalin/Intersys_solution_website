@@ -168,12 +168,12 @@ function MyAccountPage() {
       toast.error("Document file is currently unavailable for download.");
       return;
     }
-    
+
     try {
       // Fetch the file to trigger a real download prompt instead of just opening
       const response = await fetch(url);
       if (!response.ok) throw new Error("Failed to fetch file");
-      
+
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -539,7 +539,7 @@ function MyAccountPage() {
                               {pdf.title}
                             </h4>
                             <p className="text-[10px] text-gray-400 font-semibold mt-0.5">
-                              Downloaded {new Date(pdf.downloadedAt).toLocaleDateString()}
+                              Visited  {new Date(pdf.downloadedAt).toLocaleDateString()}
                             </p>
                           </div>
                         </div>
