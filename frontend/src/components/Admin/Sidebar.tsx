@@ -26,37 +26,37 @@ export function Sidebar({ userName }: SidebarProps) {
         </div>
 
         <nav className="p-4 space-y-1">
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-md text-white/50 hover:bg-white/5 hover:text-white transition">
+          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-sm text-white/50 hover:bg-white/5 hover:text-white transition">
             <LayoutDashboard size={18} />
             <span>Dashboard</span>
           </button>
 
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-md bg-[#C3110C] text-white shadow-lg shadow-[#C3110C]/20 transition">
+          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-sm bg-[#C3110C] text-white shadow-lg shadow-[#C3110C]/20 transition">
             <FileText size={18} />
             <span>Quote Requests</span>
           </button>
 
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-md text-white/50 hover:bg-white/5 hover:text-white transition">
+          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-sm text-white/50 hover:bg-white/5 hover:text-white transition">
             <BarChart2 size={18} />
             <span>Analytics</span>
           </button>
 
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-md text-white/50 hover:bg-white/5 hover:text-white transition">
+          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-sm text-white/50 hover:bg-white/5 hover:text-white transition">
             <Users size={18} />
             <span>Customer</span>
           </button>
 
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-md text-white/50 hover:bg-white/5 hover:text-white transition">
+          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-sm text-white/50 hover:bg-white/5 hover:text-white transition">
             <Package size={18} />
             <span>Product Management</span>
           </button>
 
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-md text-white/50 hover:bg-white/5 hover:text-white transition">
+          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-sm text-white/50 hover:bg-white/5 hover:text-white transition">
             <FileCheck size={18} />
             <span>Reports</span>
           </button>
 
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-md text-white/50 hover:bg-white/5 hover:text-white transition">
+          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-sm text-white/50 hover:bg-white/5 hover:text-white transition">
             <Settings size={18} />
             <span>Settings</span>
           </button>

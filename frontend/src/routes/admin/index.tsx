@@ -93,6 +93,7 @@ function AdminDashboardPage() {
 
   const totalOutstanding = quotes.filter((q) => q.status === "Pending").length;
   const inProgressCount = quotes.filter((q) => q.status === "In Progress").length;
+  const completedCount = quotes.filter((q) => q.status === "Completed").length;
 
   const filteredQuotes = quotes
     .filter((q) => {
@@ -176,7 +177,13 @@ function AdminDashboardPage() {
             <MetricsCards
               totalOutstanding={totalOutstanding}
               inProgressCount={inProgressCount}
+              completedCount={completedCount}
               loading={loading}
+              selectedTab={selectedTab}
+              onTabChange={(tab) => {
+                setSelectedTab(tab);
+                setCurrentPage(1);
+              }}
             />
           </div>
 

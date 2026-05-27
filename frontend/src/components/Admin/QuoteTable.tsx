@@ -51,7 +51,7 @@ export function QuoteTable({ quotes, loading, onViewDetails, onCycleStatus, onDe
   return (
     <table className="w-full text-left border-collapse min-w-[1200px]">
       <thead>
-        <tr className="border-b border-gray-150 text-[10px] text-gray-400 font-bold bg-gray-50/50">
+        <tr className="border-b border-gray-150 text-[11px] text-gray-400 font-bold bg-gray-50/50">
           <th className="px-6 py-4">ID & Date</th>
           <th className="px-6 py-4">Customer & Company</th>
           <th className="px-6 py-4">Contact Info</th>
@@ -176,22 +176,20 @@ export function QuoteTable({ quotes, loading, onViewDetails, onCycleStatus, onDe
                 <span
                   onClick={() => onCycleStatus(quote)}
                   title="Click to cycle status"
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider cursor-pointer transition select-none ${
-                    quote.status === "Completed"
-                      ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
-                      : quote.status === "In Progress"
-                        ? "bg-blue-50 text-blue-700 border border-blue-100"
-                        : "bg-amber-50 text-amber-700 border border-amber-100"
-                  }`}
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider cursor-pointer transition select-none ${quote.status === "Completed"
+                    ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
+                    : quote.status === "In Progress"
+                      ? "bg-blue-50 text-blue-700 border border-blue-100"
+                      : "bg-amber-50 text-amber-700 border border-amber-100"
+                    }`}
                 >
                   <span
-                    className={`w-1.5 h-1.5 rounded-full ${
-                      quote.status === "Completed"
-                        ? "bg-emerald-500"
-                        : quote.status === "In Progress"
-                          ? "bg-blue-500"
-                          : "bg-amber-500"
-                    }`}
+                    className={`w-1.5 h-1.5 rounded-full ${quote.status === "Completed"
+                      ? "bg-emerald-500"
+                      : quote.status === "In Progress"
+                        ? "bg-blue-500"
+                        : "bg-amber-500"
+                      }`}
                   ></span>
                   <span>{quote.status}</span>
                 </span>
