@@ -92,7 +92,9 @@ const isAdmin = (req, res, next) => {
 // GET /api/quotes/admin - Fetch all quotes (Admin only)
 router.get("/admin", isAdmin, async (req, res) => {
     try {
-        const quotes = await Quote.find({}).sort({ createdAt: -1 });
+        const quotes = await Quote.find({})
+            .populate("userId", "name avatar email")
+            .sort({ createdAt: -1 });
         res.status(200).json({ success: true, data: quotes });
     } catch (error) {
         console.error("Failed to fetch admin quotes:", error);

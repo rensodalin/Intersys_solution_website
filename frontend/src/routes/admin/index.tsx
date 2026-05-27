@@ -5,7 +5,7 @@ import { RootState } from "@/store";
 import { QuoteRequest } from "@/components/Admin/types";
 import {
   fetchQuotes as fetchQuotesApi,
-  cycleQuoteStatus,
+  updateQuoteStatus,
   deleteQuote,
   exportQuotesToCSV,
 } from "@/components/Admin/api";
@@ -67,12 +67,15 @@ function AdminDashboardPage() {
     }
   }, [user]);
 
-  const handleCycleStatus = async (quote: QuoteRequest) => {
+  const handleStatusChange = async (
+    quote: QuoteRequest,
+    status: "Pending" | "In Progress" | "Completed"
+  ) => {
     try {
-      const newStatus = await cycleQuoteStatus(quote);
-      setQuotes((prev) => prev.map((q) => (q._id === quote._id ? { ...q, status: newStatus } : q)));
+      await updateQuoteStatus(quote._id, status);
+      setQuotes((prev) => prev.map((q) => (q._id === quote._id ? { ...q, status } : q)));
       if (selectedQuote && selectedQuote._id === quote._id) {
-        setSelectedQuote((prev) => (prev ? { ...prev, status: newStatus } : null));
+        setSelectedQuote((prev) => (prev ? { ...prev, status } : null));
       }
     } catch (err) {
       console.error(err);
@@ -156,7 +159,7 @@ function AdminDashboardPage() {
     <div className="min-h-screen flex bg-[#F8FAFC]">
       <Sidebar userName={user.name} />
 
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 ml-64">
         <Header
           userName={user.name}
           avatar={user.avatar}
@@ -209,7 +212,7 @@ function AdminDashboardPage() {
                 quotes={currentQuotes}
                 loading={loading}
                 onViewDetails={setSelectedQuote}
-                onCycleStatus={handleCycleStatus}
+                onStatusChange={handleStatusChange}
                 onDelete={handleDelete}
               />
             </div>
@@ -260,7 +263,7 @@ function AdminDashboardPage() {
         <QuoteDetailModal
           quote={selectedQuote}
           onClose={() => setSelectedQuote(null)}
-          onCycleStatus={handleCycleStatus}
+          onStatusChange={handleStatusChange}
           onDelete={handleDelete}
         />
       )}

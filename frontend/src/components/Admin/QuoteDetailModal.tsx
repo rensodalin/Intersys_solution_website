@@ -12,11 +12,11 @@ import { QuoteRequest } from "./types";
 interface QuoteDetailModalProps {
   quote: QuoteRequest;
   onClose: () => void;
-  onCycleStatus: (quote: QuoteRequest) => void;
+  onStatusChange: (quote: QuoteRequest, status: "Pending" | "In Progress" | "Completed") => void;
   onDelete: (id: string) => void;
 }
 
-export function QuoteDetailModal({ quote, onClose, onCycleStatus, onDelete }: QuoteDetailModalProps) {
+export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: QuoteDetailModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-hidden">
       <div onClick={onClose} className="fixed inset-0 bg-black/60 backdrop-blur-sm cursor-pointer" />
@@ -90,20 +90,26 @@ export function QuoteDetailModal({ quote, onClose, onCycleStatus, onDelete }: Qu
                     {quote.contactMethod || "Either"}
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-medium text-gray-400">Status:</span>
-                  <span
-                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                      quote.status === "Completed"
-                        ? "bg-emerald-50 text-emerald-700"
-                        : quote.status === "In Progress"
-                          ? "bg-blue-50 text-blue-700"
-                          : "bg-amber-50 text-amber-700"
-                    }`}
-                  >
-                    {quote.status}
-                  </span>
-                </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-gray-400">Status:</span>
+                      <select
+                        value={quote.status}
+                        onChange={(e) =>
+                          onStatusChange(quote, e.target.value as "Pending" | "In Progress" | "Completed")
+                        }
+                        className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border outline-none cursor-pointer ${
+                          quote.status === "Completed"
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                            : quote.status === "In Progress"
+                              ? "bg-blue-50 text-blue-700 border-blue-200"
+                              : "bg-amber-50 text-amber-700 border-amber-200"
+                        }`}
+                      >
+                        <option value="Pending" className="bg-amber-50 text-amber-700">Pending</option>
+                        <option value="In Progress" className="bg-blue-50 text-blue-700">In Progress</option>
+                        <option value="Completed" className="bg-emerald-50 text-emerald-700">Completed</option>
+                      </select>
+                    </div>
               </div>
             </div>
           </div>
@@ -159,12 +165,7 @@ export function QuoteDetailModal({ quote, onClose, onCycleStatus, onDelete }: Qu
         </div>
 
         <div className="px-8 py-4 bg-gray-50 border-t border-gray-150 flex items-center justify-between gap-4">
-          <button
-            onClick={() => onCycleStatus(quote)}
-            className="bg-[#081F3D] text-white hover:bg-red-700 transition font-bold text-xs px-5 py-2.5 rounded-sm cursor-pointer"
-          >
-            Cycle Status (Currently: {quote.status})
-          </button>
+          <span className="text-[10px] text-gray-400">Change status using the dropdown above</span>
 
           <button
             onClick={() => onDelete(quote._id)}

@@ -5,6 +5,13 @@ export interface ProductRow {
   application: string;
 }
 
+export interface QuoteUser {
+  _id: string;
+  name?: string;
+  avatar?: string;
+  email?: string;
+}
+
 export interface QuoteRequest {
   _id: string;
   solutionCategories: string[];
@@ -23,4 +30,5 @@ export interface QuoteRequest {
   otherBms?: string;
   status: "Pending" | "In Progress" | "Completed";
   createdAt: string;
+  userId?: QuoteUser | string | null;
 }

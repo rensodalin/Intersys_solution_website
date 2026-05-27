@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import logo from "../../assets/logo.avif";
 import {
   LayoutDashboard,
   FileText,
@@ -15,13 +16,15 @@ interface SidebarProps {
 
 export function Sidebar({ userName }: SidebarProps) {
   return (
-    <aside className="w-64 bg-[#081F3D] text-white flex flex-col justify-between flex-shrink-0 min-h-screen shadow-xl">
+    <aside className="w-64 bg-[#081F3D] text-white flex flex-col justify-between flex-shrink-0 min-h-screen shadow-xl fixed left-0 top-0 bottom-0">
       <div>
         <div className="p-6 border-b border-white/5">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="font-display font-black text-xl tracking-tight">
-              <span className="text-[#C3110C]">INTERSYS</span> SOLUTIONS
-            </span>
+          <Link to="/" className="flex items-center justify-center gap-2">
+            <img
+              src={logo}
+              alt="INTERSYS SOLUTIONS"
+              className="h-10 w-auto"
+            />
           </Link>
         </div>
 

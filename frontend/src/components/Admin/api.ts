@@ -14,26 +14,20 @@ export async function fetchQuotes(): Promise<QuoteRequest[]> {
   throw new Error(data.error || "Failed to fetch quotes");
 }
 
-export async function cycleQuoteStatus(
-  quote: QuoteRequest
-): Promise<"Pending" | "In Progress" | "Completed"> {
-  const nextStatus: "Pending" | "In Progress" | "Completed" =
-    quote.status === "Pending"
-      ? "In Progress"
-      : quote.status === "In Progress"
-        ? "Completed"
-        : "Pending";
-
-  const response = await fetch(`${baseUrl}/api/quotes/${quote._id}/status`, {
+export async function updateQuoteStatus(
+  id: string,
+  status: "Pending" | "In Progress" | "Completed"
+): Promise<void> {
+  const response = await fetch(`${baseUrl}/api/quotes/${id}/status`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ status: nextStatus }),
+    body: JSON.stringify({ status }),
     credentials: "include",
   });
   const data = await response.json();
   if (data.success) {
-    toast.success(`Quote status updated to ${nextStatus}`);
-    return nextStatus;
+    toast.success(`Quote status updated to ${status}`);
+    return;
   }
   throw new Error(data.error || "Failed to update status");
 }

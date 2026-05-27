@@ -1,11 +1,11 @@
-import { Eye, Check, Trash2, FileText, Loader2 } from "lucide-react";
+import { Eye, Trash2, FileText, Loader2 } from "lucide-react";
 import { QuoteRequest } from "./types";
 
 interface QuoteTableProps {
   quotes: QuoteRequest[];
   loading: boolean;
   onViewDetails: (quote: QuoteRequest) => void;
-  onCycleStatus: (quote: QuoteRequest) => void;
+  onStatusChange: (quote: QuoteRequest, status: "Pending" | "In Progress" | "Completed") => void;
   onDelete: (id: string) => void;
 }
 
@@ -26,7 +26,7 @@ function getInitials(name: string) {
     .slice(0, 2);
 }
 
-export function QuoteTable({ quotes, loading, onViewDetails, onCycleStatus, onDelete }: QuoteTableProps) {
+export function QuoteTable({ quotes, loading, onViewDetails, onStatusChange, onDelete }: QuoteTableProps) {
   if (loading) {
     return (
       <div className="flex flex-col items-center py-20 gap-3">
@@ -51,8 +51,8 @@ export function QuoteTable({ quotes, loading, onViewDetails, onCycleStatus, onDe
   return (
     <table className="w-full text-left border-collapse min-w-[1200px]">
       <thead>
-        <tr className="border-b border-gray-150 text-[11px] text-gray-400 font-bold bg-gray-50/50">
-          <th className="px-6 py-4">ID & Date</th>
+        <tr className="border-b border-gray-150 text-xs text-gray-400 font-bold bg-gray-50/50">
+          <th className="px-8 py-4">ID & Date</th>
           <th className="px-6 py-4">Customer & Company</th>
           <th className="px-6 py-4">Contact Info</th>
           <th className="px-6 py-4">Location</th>
@@ -75,32 +75,40 @@ export function QuoteTable({ quotes, loading, onViewDetails, onCycleStatus, onDe
           return (
             <tr
               key={quote._id}
-              className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 text-xs text-gray-700 transition"
+              className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 text-sm text-gray-700 transition"
             >
-              <td className="px-6 py-4">
-                <span className="font-bold text-gray-900 block">{idShort}</span>
-                <span className="text-[10px] text-gray-400 mt-0.5 block">
+              <td className="px-6 py-4 whitespace-nowrap">
+                <span className="font-bold text-gray-900">{idShort}</span>
+                <span className="text-xs text-gray-400 ml-2">
                   {formatDate(quote.createdAt)}
                 </span>
               </td>
 
               <td className="px-6 py-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#1A3263]/10 text-[#1A3263] flex items-center justify-center font-bold text-xs flex-shrink-0">
-                    {getInitials(quote.name)}
+                  <div className="w-8 h-8 rounded-full bg-[#1A3263]/10 text-[#1A3263] flex items-center justify-center font-bold text-xs flex-shrink-0 overflow-hidden">
+                    {quote.userId && typeof quote.userId === "object" && quote.userId.avatar ? (
+                      <img
+                        src={quote.userId.avatar}
+                        alt={quote.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      getInitials(quote.name)
+                    )}
                   </div>
                   <div className="min-w-0">
                     <span className="font-bold text-gray-900 block truncate" title={quote.name}>
                       {quote.name}
                     </span>
                     <span
-                      className="text-[10px] text-gray-400 block truncate"
+                      className="text-xs text-gray-400 block truncate"
                       title={`${quote.title} | ${quote.company}`}
                     >
                       {quote.title}
                     </span>
                     <span
-                      className="text-[10px] font-semibold text-[#1A3263] block truncate"
+                      className="text-xs font-semibold text-[#1A3263] block truncate"
                       title={quote.company}
                     >
                       {quote.company}
@@ -116,12 +124,12 @@ export function QuoteTable({ quotes, loading, onViewDetails, onCycleStatus, onDe
                 >
                   {quote.email}
                 </span>
-                <span className="text-[10px] text-gray-400 block mt-0.5">{quote.phone}</span>
+                <span className="text-xs text-gray-400 block mt-0.5">{quote.phone}</span>
               </td>
 
               <td className="px-6 py-4">
                 <span className="font-medium text-gray-900 block">{quote.city || "N/A"}</span>
-                <span className="text-[10px] text-gray-400 block mt-0.5">
+                <span className="text-xs text-gray-400 block mt-0.5">
                   {quote.country || "Cambodia"}
                 </span>
               </td>
@@ -131,7 +139,7 @@ export function QuoteTable({ quotes, loading, onViewDetails, onCycleStatus, onDe
                   {quote.solutionCategories.map((sys, idx) => (
                     <span
                       key={idx}
-                      className="bg-[#081F3D]/5 text-[#081F3D] text-[9px] font-bold px-2 py-0.5 rounded-sm"
+                      className="bg-[#081F3D]/5 text-[#081F3D] text-[11px] font-bold px-2 py-0.5 rounded-sm"
                     >
                       {sys.replace("System", "").trim()}
                     </span>
@@ -142,7 +150,7 @@ export function QuoteTable({ quotes, loading, onViewDetails, onCycleStatus, onDe
               <td className="px-6 py-4">
                 {firstProduct ? (
                   <div className="min-w-0 max-w-[200px]">
-                    <span className="font-bold text-red-600 bg-red-50 text-[9px] px-1 py-0.5 rounded-sm">
+                    <span className="font-bold text-red-600 bg-red-50 text-[11px] px-1 py-0.5 rounded-sm">
                       {firstProduct.qty}x
                     </span>{" "}
                     <span className="font-bold text-[#081F3D]">{firstProduct.productNo}</span>{" "}
@@ -154,7 +162,7 @@ export function QuoteTable({ quotes, loading, onViewDetails, onCycleStatus, onDe
                     </span>
                     {quote.products.length > 1 && (
                       <span
-                        className="text-[10px] text-gray-400 font-semibold mt-0.5 block hover:underline cursor-pointer"
+                        className="text-xs text-gray-400 font-semibold mt-0.5 block hover:underline cursor-pointer"
                         onClick={() => onViewDetails(quote)}
                       >
                         + {quote.products.length - 1} more items (Total: {totalProductsCount})
@@ -167,32 +175,28 @@ export function QuoteTable({ quotes, loading, onViewDetails, onCycleStatus, onDe
               </td>
 
               <td className="px-6 py-4">
-                <span className="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded-sm">
+                <span className="bg-gray-100 text-gray-700 text-xs font-bold px-2 py-1 rounded-sm">
                   {quote.bmsSystem}
                 </span>
               </td>
 
               <td className="px-6 py-4">
-                <span
-                  onClick={() => onCycleStatus(quote)}
-                  title="Click to cycle status"
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider cursor-pointer transition select-none ${quote.status === "Completed"
-                    ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
+                <select
+                  value={quote.status}
+                  onChange={(e) =>
+                    onStatusChange(quote, e.target.value as "Pending" | "In Progress" | "Completed")
+                  }
+                  className={`px-2.5 py-1 rounded text-xs font-bold uppercase tracking-wider border outline-none cursor-pointer ${quote.status === "Completed"
+                    ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                     : quote.status === "In Progress"
-                      ? "bg-blue-50 text-blue-700 border border-blue-100"
-                      : "bg-amber-50 text-amber-700 border border-amber-100"
+                      ? "bg-blue-50 text-blue-700 border-blue-200"
+                      : "bg-amber-50 text-amber-700 border-amber-200"
                     }`}
                 >
-                  <span
-                    className={`w-1.5 h-1.5 rounded-full ${quote.status === "Completed"
-                      ? "bg-emerald-500"
-                      : quote.status === "In Progress"
-                        ? "bg-blue-500"
-                        : "bg-amber-500"
-                      }`}
-                  ></span>
-                  <span>{quote.status}</span>
-                </span>
+                  <option value="Pending" className="bg-amber-50 text-amber-700">Pending</option>
+                  <option value="In Progress" className="bg-blue-50 text-blue-700">In Progress</option>
+                  <option value="Completed" className="bg-emerald-50 text-emerald-700">Completed</option>
+                </select>
               </td>
 
               <td className="px-6 py-4">
@@ -203,14 +207,6 @@ export function QuoteTable({ quotes, loading, onViewDetails, onCycleStatus, onDe
                     title="View Details"
                   >
                     <Eye size={15} />
-                  </button>
-
-                  <button
-                    onClick={() => onCycleStatus(quote)}
-                    className="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-sm cursor-pointer transition"
-                    title="Cycle Status"
-                  >
-                    <Check size={15} />
                   </button>
 
                   <button
