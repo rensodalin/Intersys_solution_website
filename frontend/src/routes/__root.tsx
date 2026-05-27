@@ -80,6 +80,18 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   const location = useLocation();
   const isProductsPage = location.pathname.startsWith("/products");
+  const isAdminPage = location.pathname.startsWith("/admin");
+
+  if (isAdminPage) {
+    return (
+      <>
+        <main>
+          <Outlet />
+        </main>
+        <Toaster position="top-center" richColors />
+      </>
+    );
+  }
 
   return (
     <>

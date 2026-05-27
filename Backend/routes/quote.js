@@ -81,4 +81,55 @@ router.get("/", async (req, res) => {
     }
 });
 
+// Admin authorization middleware
+const isAdmin = (req, res, next) => {
+    if (req.isAuthenticated && req.isAuthenticated() && req.user && req.user.isAdmin) {
+        return next();
+    }
+    return res.status(403).json({ success: false, error: "Access denied. Admin authorization required." });
+};
+
+// GET /api/quotes/admin - Fetch all quotes (Admin only)
+router.get("/admin", isAdmin, async (req, res) => {
+    try {
+        const quotes = await Quote.find({}).sort({ createdAt: -1 });
+        res.status(200).json({ success: true, data: quotes });
+    } catch (error) {
+        console.error("Failed to fetch admin quotes:", error);
+        res.status(500).json({ success: false, error: "Failed to fetch quotes" });
+    }
+});
+
+// PUT /api/quotes/:id/status - Update quote status (Admin only)
+router.put("/:id/status", isAdmin, async (req, res) => {
+    try {
+        const { status } = req.body;
+        if (!status || !["Pending", "In Progress", "Completed"].includes(status)) {
+            return res.status(400).json({ success: false, error: "Invalid status value" });
+        }
+        const quote = await Quote.findByIdAndUpdate(req.params.id, { status }, { new: true });
+        if (!quote) {
+            return res.status(404).json({ success: false, error: "Quote not found" });
+        }
+        res.status(200).json({ success: true, data: quote });
+    } catch (error) {
+        console.error("Failed to update status:", error);
+        res.status(500).json({ success: false, error: "Failed to update quote status" });
+    }
+});
+
+// DELETE /api/quotes/:id - Delete a quote (Admin only)
+router.delete("/:id", isAdmin, async (req, res) => {
+    try {
+        const quote = await Quote.findByIdAndDelete(req.params.id);
+        if (!quote) {
+            return res.status(404).json({ success: false, error: "Quote not found" });
+        }
+        res.status(200).json({ success: true, message: "Quote request deleted successfully" });
+    } catch (error) {
+        console.error("Failed to delete quote:", error);
+        res.status(500).json({ success: false, error: "Failed to delete quote" });
+    }
+});
+
 export default router;

@@ -1,0 +1,179 @@
+import {
+  X,
+  Users,
+  Mail,
+  Phone,
+  Building2,
+  MapPin,
+  Layers,
+} from "lucide-react";
+import { QuoteRequest } from "./types";
+
+interface QuoteDetailModalProps {
+  quote: QuoteRequest;
+  onClose: () => void;
+  onCycleStatus: (quote: QuoteRequest) => void;
+  onDelete: (id: string) => void;
+}
+
+export function QuoteDetailModal({ quote, onClose, onCycleStatus, onDelete }: QuoteDetailModalProps) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-hidden">
+      <div onClick={onClose} className="fixed inset-0 bg-black/60 backdrop-blur-sm cursor-pointer" />
+
+      <div className="relative w-full max-w-3xl bg-white rounded-sm shadow-2xl overflow-hidden flex flex-col max-h-[90vh] z-10 animate-in fade-in zoom-in-95 duration-200">
+        <div className="px-8 py-5 bg-[#081F3D] text-white flex items-center justify-between">
+          <div>
+            <h3 className="font-display font-bold text-lg">
+              Quote Details - QR-{quote._id.substring(quote._id.length - 5).toUpperCase()}
+            </h3>
+            <span className="text-[10px] text-white/50 block mt-0.5">
+              Requested on {new Date(quote.createdAt).toLocaleString()}
+            </span>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition cursor-pointer"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-8 space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-b border-gray-100 pb-6">
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Customer Contact</h4>
+              <div className="space-y-2 text-xs text-gray-700">
+                <p className="flex items-center gap-2">
+                  <Users size={14} className="text-gray-400" />
+                  <span className="font-bold text-gray-900">{quote.name}</span>
+                  <span className="text-gray-500">({quote.title})</span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Mail size={14} className="text-gray-400" />
+                  <a href={`mailto:${quote.email}`} className="text-red-600 hover:underline">
+                    {quote.email}
+                  </a>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Phone size={14} className="text-gray-400" />
+                  <span>{quote.phone}</span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Building2 size={14} className="text-gray-400" />
+                  <span>
+                    {quote.company} <span className="text-gray-400">({quote.companyType})</span>
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Project Specification</h4>
+              <div className="space-y-2 text-xs text-gray-700">
+                <p className="flex items-start gap-2">
+                  <MapPin size={14} className="text-gray-400 mt-0.5 flex-shrink-0" />
+                  <span>
+                    {quote.address}, {quote.city || "N/A"}, {quote.country || "Cambodia"}
+                  </span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Layers size={14} className="text-gray-400" />
+                  <span>
+                    BMS System: <b className="text-gray-900">{quote.bmsSystem}</b>{" "}
+                    {quote.otherBms && `(${quote.otherBms})`}
+                  </span>
+                </p>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium text-gray-400">Prefer Contact:</span>
+                  <span className="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-sm">
+                    {quote.contactMethod || "Either"}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium text-gray-400">Status:</span>
+                  <span
+                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                      quote.status === "Completed"
+                        ? "bg-emerald-50 text-emerald-700"
+                        : quote.status === "In Progress"
+                          ? "bg-blue-50 text-blue-700"
+                          : "bg-amber-50 text-amber-700"
+                    }`}
+                  >
+                    {quote.status}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Solution Categories</h4>
+            <div className="flex flex-wrap gap-2">
+              {quote.solutionCategories.map((cat, idx) => (
+                <span
+                  key={idx}
+                  className="bg-gray-100 border border-gray-200 text-gray-700 text-xs px-3 py-1 rounded-sm"
+                >
+                  {cat}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+              Requested Specifications ({quote.products.length} Products)
+            </h4>
+            <div className="border border-gray-150 rounded-sm overflow-hidden bg-white shadow-sm">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-gray-150 text-[10px] text-gray-400 font-bold uppercase bg-gray-50/50">
+                    <th className="px-4 py-2.5 w-12 text-center">Qty</th>
+                    <th className="px-4 py-2.5 pl-6">Product No</th>
+                    <th className="px-4 py-2.5">Description</th>
+                    <th className="px-4 py-2.5">Application</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {quote.products.map((prod, idx) => (
+                    <tr
+                      key={idx}
+                      className="border-b border-gray-50 last:border-0 text-xs text-gray-700 hover:bg-gray-50/30"
+                    >
+                      <td className="px-4 py-2.5 text-center font-bold text-gray-900 bg-gray-50/80">
+                        {prod.qty}x
+                      </td>
+                      <td className="px-4 py-2.5 pl-6 font-mono font-bold text-red-600">
+                        {prod.productNo}
+                      </td>
+                      <td className="px-4 py-2.5 font-medium text-gray-800">{prod.description}</td>
+                      <td className="px-4 py-2.5 text-gray-500">{prod.application}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div className="px-8 py-4 bg-gray-50 border-t border-gray-150 flex items-center justify-between gap-4">
+          <button
+            onClick={() => onCycleStatus(quote)}
+            className="bg-[#081F3D] text-white hover:bg-red-700 transition font-bold text-xs px-5 py-2.5 rounded-sm cursor-pointer"
+          >
+            Cycle Status (Currently: {quote.status})
+          </button>
+
+          <button
+            onClick={() => onDelete(quote._id)}
+            className="border border-red-200 text-red-600 hover:bg-red-50 transition font-bold text-xs px-5 py-2.5 rounded-sm cursor-pointer"
+          >
+            Delete Quote
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

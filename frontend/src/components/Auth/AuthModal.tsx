@@ -5,6 +5,7 @@ import { X, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "@/store/authSlice";
+import { useNavigate } from "@tanstack/react-router";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 import { toast } from "sonner";
@@ -20,6 +21,7 @@ import logoImg from "@/assets/logo.avif";
 
 export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<AuthTab>("login");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -132,6 +134,9 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             </div>
           ), { duration: 3000 });
           onClose();
+          if (data.user?.isAdmin) {
+            navigate({ to: "/admin" });
+          }
         }
       } else {
         const errMsg = data.message || data.error || "An error occurred";

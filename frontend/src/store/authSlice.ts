@@ -11,6 +11,7 @@ export interface UserState {
   gender?: string;
   country?: string;
   role?: string;
+  isAdmin?: boolean;
   newsletter?: boolean;
   receiveUpdates?: boolean;
   downloadedPdfs?: Array<{

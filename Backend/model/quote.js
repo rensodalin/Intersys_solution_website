@@ -25,6 +25,7 @@ const quoteSchema = new mongoose.Schema({
     bmsSystem: { type: String, required: true },
     otherBms: { type: String },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null },
+    status: { type: String, enum: ["Pending", "In Progress", "Completed"], default: "Pending" },
     createdAt: { type: Date, default: Date.now }
 });
 

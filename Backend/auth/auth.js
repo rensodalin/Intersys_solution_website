@@ -99,7 +99,7 @@ router.post("/register", async (req, res) => {
             return res.status(400).json({ success: false, message: "User already exists with this email" });
         }
 
-        // Create new user
+        // Create new user (isAdmin is always false for public registration)
         const newUser = new User({
             firstName,
             lastName,
@@ -109,7 +109,8 @@ router.post("/register", async (req, res) => {
             phone,
             gender: gender || undefined,
             country,
-            role: role || undefined
+            role: role || undefined,
+            isAdmin: false
         });
 
         await newUser.save();
@@ -153,7 +154,16 @@ router.post("/login", async (req, res, next) => {
                 console.error("Passport Login Error:", err);
                 return next(err);
             }
-            return res.json({ success: true, user: { id: user._id, name: user.name, email: user.email } });
+            return res.json({
+                success: true,
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                    isAdmin: user.isAdmin
+                }
+            });
         });
     } catch (error) {
         console.error("Login Error Details:", error);

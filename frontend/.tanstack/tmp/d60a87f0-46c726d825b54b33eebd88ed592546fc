@@ -151,9 +151,9 @@ const InsightsIndexRoute = InsightsIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AboutIndexRoute = AboutIndexRouteImport.update({
   id: '/about/',
@@ -669,7 +669,6 @@ export interface RootRouteChildren {
   ServicesSurveillanceRoute: typeof ServicesSurveillanceRoute
   ServicesVesdaRoute: typeof ServicesVesdaRoute
   AboutIndexRoute: typeof AboutIndexRoute
-  AdminIndexRoute: typeof AdminIndexRoute
   InsightsIndexRoute: typeof InsightsIndexRoute
 }
 
@@ -803,10 +802,10 @@ declare module '@tanstack/react-router' {
     }
     '/admin/': {
       id: '/admin/'
-      path: '/admin'
+      path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/about/': {
       id: '/about/'
@@ -1126,7 +1125,6 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesSurveillanceRoute: ServicesSurveillanceRoute,
   ServicesVesdaRoute: ServicesVesdaRoute,
   AboutIndexRoute: AboutIndexRoute,
-  AdminIndexRoute: AdminIndexRoute,
   InsightsIndexRoute: InsightsIndexRoute,
 }
 export const routeTree = rootRouteImport

@@ -38,6 +38,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ["engineer", "project manager", "architect", "technician", "director", "procurement", "consultant", "other"],
     },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
     avatar: {
         type: String
     },
