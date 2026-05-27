@@ -243,7 +243,7 @@ router.put("/user/update", async (req, res) => {
         return res.status(401).json({ success: false, message: "Not authenticated" });
     }
     try {
-        const { firstName, lastName, phone, country, role, password, newsletter, receiveUpdates } = req.body;
+        const { firstName, lastName, phone, country, role, password, currentPassword, newsletter, receiveUpdates } = req.body;
         const user = await User.findById(req.user._id);
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" });
@@ -252,7 +252,7 @@ router.put("/user/update", async (req, res) => {
         if (firstName) user.firstName = firstName;
         if (lastName) user.lastName = lastName;
         if (firstName || lastName) user.name = `${firstName || user.firstName} ${lastName || user.lastName}`.trim();
-        if (phone) user.phone = phone;
+        if (phone !== undefined && phone !== null) user.phone = phone || user.phone;
         if (country) {
             if (!VALID_COUNTRIES.includes(country.trim())) {
                 return res.status(400).json({ success: false, message: "Please select a valid country" });
@@ -264,6 +264,25 @@ router.put("/user/update", async (req, res) => {
         if (typeof receiveUpdates !== 'undefined') user.receiveUpdates = receiveUpdates;
 
         if (password && password.trim() !== "") {
+            // Verify current password first
+            if (!currentPassword || currentPassword.trim() === "") {
+                return res.status(400).json({
+                    success: false,
+                    message: "Please enter your current password to set a new one."
+                });
+            }
+
+            // For Google accounts that have no password yet, skip current password check
+            if (user.password) {
+                const isMatch = await user.comparePassword(currentPassword);
+                if (!isMatch) {
+                    return res.status(400).json({
+                        success: false,
+                        message: "Current password is incorrect. Please try again."
+                    });
+                }
+            }
+
             // Strong password validation
             const isStrong = 
                 password.length >= 8 &&

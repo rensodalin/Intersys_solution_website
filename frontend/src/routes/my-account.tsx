@@ -71,12 +71,14 @@ function MyAccountPage() {
     role: "",
     newsletter: false,
     receiveUpdates: false,
+    currentPassword: "",
     password: "",
     confirmPassword: ""
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
 
   const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
 
@@ -99,6 +101,7 @@ function MyAccountPage() {
           role: data.user.role || "",
           newsletter: data.user.newsletter || false,
           receiveUpdates: data.user.receiveUpdates || false,
+          currentPassword: "",
           password: "",
           confirmPassword: ""
         });
@@ -204,6 +207,9 @@ function MyAccountPage() {
     if (!detailsForm.lastName.trim()) return toast.error("Last name is required");
 
     if (detailsForm.password) {
+      if (!detailsForm.currentPassword.trim()) {
+        return toast.error("Please enter your current password to set a new one.");
+      }
       if (detailsForm.password !== detailsForm.confirmPassword) {
         return toast.error("Passwords do not match");
       }
@@ -228,11 +234,12 @@ function MyAccountPage() {
         body: JSON.stringify({
           firstName: detailsForm.firstName,
           lastName: detailsForm.lastName,
-          phone: detailsForm.phone,
-          country: detailsForm.country,
-          role: detailsForm.role,
+          phone: detailsForm.phone || undefined,
+          country: detailsForm.country || undefined,
+          role: detailsForm.role || undefined,
           newsletter: detailsForm.newsletter,
           receiveUpdates: detailsForm.receiveUpdates,
+          currentPassword: detailsForm.password ? detailsForm.currentPassword : undefined,
           password: detailsForm.password || undefined
         }),
         credentials: "include"
@@ -241,7 +248,7 @@ function MyAccountPage() {
       if (data.success && data.user) {
         dispatch(loginSuccess(data.user));
         toast.success("Account details updated successfully");
-        setDetailsForm(prev => ({ ...prev, password: "", confirmPassword: "" }));
+        setDetailsForm(prev => ({ ...prev, currentPassword: "", password: "", confirmPassword: "" }));
       } else {
         toast.error(data.message || "Failed to update profile");
       }
@@ -768,11 +775,35 @@ function MyAccountPage() {
                   </div>
 
                   <div className="pt-4 border-t border-gray-100">
-                    <h3 className="text-sm font-bold text-gray-900 mb-4">Password Change (Leave blank to keep current)</h3>
+                    <h3 className="text-sm font-bold text-gray-900 mb-1">Password Change</h3>
+                    <p className="text-[10px] text-gray-400 mb-4">Leave all password fields blank to keep your current password.</p>
+
+                    {/* Current Password */}
+                    <div className="mb-4">
+                      <label className="block text-xs text-gray-400 mb-2">Current Password</label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-3 text-gray-400" size={16} />
+                        <input
+                          type={showCurrentPassword ? "text" : "password"}
+                          name="currentPassword"
+                          value={detailsForm.currentPassword}
+                          onChange={handleDetailsChange}
+                          className="pl-10 pr-10 w-full text-sm border border-gray-200 px-4 py-2.5 rounded-sm outline-none focus:border-red-600 transition"
+                          placeholder="Enter your current password"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                          className="absolute right-3 top-3.5 text-gray-400 hover:text-black cursor-pointer"
+                        >
+                          {showCurrentPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                        </button>
+                      </div>
+                    </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-xs  text-gray-400  mb-2">New Password</label>
+                        <label className="block text-xs text-gray-400 mb-2">New Password</label>
                         <div className="relative">
                           <Lock className="absolute left-3 top-3 text-gray-400" size={16} />
                           <input
@@ -794,7 +825,7 @@ function MyAccountPage() {
                       </div>
 
                       <div>
-                        <label className="block text-xs  text-gray-400  mb-2">Confirm New Password</label>
+                        <label className="block text-xs text-gray-400 mb-2">Confirm New Password</label>
                         <div className="relative">
                           <Lock className="absolute left-3 top-3 text-gray-400" size={16} />
                           <input
