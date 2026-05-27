@@ -10,6 +10,20 @@ import {
   Settings,
 } from "lucide-react";
 
+const avatarColors = [
+  "#1A3263", "#C3110C", "#0D7C5E", "#B85C1A",
+  "#6C3483", "#1B7B9E", "#A04000", "#2E86C1",
+  "#7D3C98", "#1E8449", "#D35400", "#2471A3",
+];
+
+function getAvatarColor(name: string) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return avatarColors[Math.abs(hash) % avatarColors.length];
+}
+
 interface SidebarProps {
   userName: string;
 }
@@ -69,7 +83,7 @@ export function Sidebar({ userName }: SidebarProps) {
       <div className="p-4 border-t border-white/5 bg-black/10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-9 h-9 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-sm">
+            <div className="w-9 h-9 rounded-full text-white flex items-center justify-center font-bold text-sm" style={{ backgroundColor: getAvatarColor(userName) }}>
               {userName.slice(0, 2).toUpperCase()}
             </div>
             <div className="min-w-0">

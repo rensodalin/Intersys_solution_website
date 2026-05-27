@@ -26,6 +26,20 @@ function getInitials(name: string) {
     .slice(0, 2);
 }
 
+const avatarColors = [
+  "#1A3263", "#C3110C", "#0D7C5E", "#B85C1A",
+  "#6C3483", "#1B7B9E", "#A04000", "#2E86C1",
+  "#7D3C98", "#1E8449", "#D35400", "#2471A3",
+];
+
+function getAvatarColor(name: string) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return avatarColors[Math.abs(hash) % avatarColors.length];
+}
+
 export function QuoteTable({ quotes, loading, onViewDetails, onStatusChange, onDelete }: QuoteTableProps) {
   if (loading) {
     return (
@@ -86,7 +100,10 @@ export function QuoteTable({ quotes, loading, onViewDetails, onStatusChange, onD
 
               <td className="px-6 py-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#1A3263]/10 text-[#1A3263] flex items-center justify-center font-bold text-xs flex-shrink-0 overflow-hidden">
+                  <div
+                    className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0 overflow-hidden text-white"
+                    style={{ backgroundColor: getAvatarColor(quote.name) }}
+                  >
                     {quote.userId && typeof quote.userId === "object" && quote.userId.avatar ? (
                       <img
                         src={quote.userId.avatar}
