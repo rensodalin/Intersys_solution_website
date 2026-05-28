@@ -13,6 +13,21 @@ import { LoadingState } from "@/components/Admin/LoadingState";
 import { AccessDenied } from "@/components/Admin/AccessDenied";
 import { Sidebar } from "@/components/Admin/Sidebar";
 import { Header } from "@/components/Admin/Header";
+import {
+  honeywellMainProducts,
+  honeywellAccessories,
+  honeywellCredentials,
+  honeywellReaders,
+  honeywellSoftware,
+  honeywellControlPanels,
+  honeywellControlPanelKits,
+  honeywellKiosks,
+  honeywellUpgrades,
+  honeywellDoorHardware,
+} from "@/components/Product/AccessControl/Honeywell/data";
+import { saltoProducts } from "@/components/Product/AccessControl/Salto/data";
+import { bmsProducts } from "@/components/Product/BuildingManagement/data";
+import { surveillanceProducts } from "@/components/Product/Surveillance/data";
 import { MetricsCards } from "@/components/Admin/MetricsCards";
 import { FilterBar } from "@/components/Admin/FilterBar";
 import { QuoteTable } from "@/components/Admin/QuoteTable";
@@ -139,6 +154,39 @@ function AdminDashboardPage() {
     .sort((a, b) => b.percentage - a.percentage)
     .slice(0, 4);
 
+  const productCounts: Record<string, number> = {};
+  quotes.forEach((q) => {
+    (q.products || []).forEach((p) => {
+      const key = p.description || p.productNo;
+      if (key) productCounts[key] = (productCounts[key] || 0) + 1;
+    });
+  });
+
+  const sortedProductPopularity = Object.entries(productCounts)
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+
+  const productImageMap: Record<string, string> = {};
+  const allProducts = [
+    ...honeywellMainProducts, ...honeywellAccessories, ...honeywellCredentials,
+    ...honeywellReaders, ...honeywellSoftware, ...honeywellControlPanels,
+    ...honeywellControlPanelKits, ...honeywellKiosks, ...honeywellUpgrades,
+    ...honeywellDoorHardware,
+    ...saltoProducts.flatMap((p: any) => [p, ...(p.subProducts || [])]),
+    ...bmsProducts, ...surveillanceProducts,
+  ];
+  allProducts.forEach((p: any) => { if (p.title) productImageMap[p.title.toLowerCase()] = p.image; });
+
+  const getProductImage = (name: string) => {
+    const key = name.toLowerCase();
+    if (productImageMap[key]) return productImageMap[key];
+    for (const [t, img] of Object.entries(productImageMap)) {
+      if (key.includes(t) || t.includes(key)) return img;
+    }
+    return "";
+  };
+
   const totalPages = Math.ceil(filteredQuotes.length / itemsPerPage) || 1;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -239,7 +287,42 @@ function AdminDashboardPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <SystemPopularity sortedPopularity={sortedPopularity} loading={loading} />
+            <div className="space-y-8">
+              <SystemPopularity sortedPopularity={sortedPopularity} loading={loading} />
+
+              {/* Popular Products */}
+              <div className="bg-white p-6 rounded-sm border border-gray-150 shadow-sm">
+                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-4">
+                  Popular Products
+                </span>
+                {loading ? (
+                  <div className="flex justify-center py-10">
+                    <div className="w-8 h-8 border-2 border-[#C3110C] border-t-transparent rounded-full animate-spin" />
+                  </div>
+                ) : sortedProductPopularity.length === 0 ? (
+                  <p className="text-xs text-gray-400 py-10 text-center">No product data available.</p>
+                ) : (
+                  <div className="space-y-3">
+                    {sortedProductPopularity.map((p, i) => (
+                      <div key={i} className="flex items-center gap-3 text-xs">
+                        <span className="w-5 h-5 rounded-full bg-[#C3110C]/10 text-[#C3110C] text-[10px] font-bold flex items-center justify-center shrink-0">
+                          {i + 1}
+                        </span>
+                        {getProductImage(p.name) && (
+                          <img
+                            src={getProductImage(p.name)}
+                            alt={p.name}
+                            className="w-8 h-8 rounded object-contain bg-gray-50 border border-gray-100 shrink-0"
+                          />
+                        )}
+                        <span className="font-medium text-gray-800 truncate flex-1">{p.name}</span>
+                        <span className="font-bold text-[#C3110C] shrink-0">{p.count}x</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
 
             <div className="bg-white p-6 rounded-sm border border-gray-150 shadow-sm flex flex-col lg:col-span-2">
               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-4">

@@ -1,5 +1,6 @@
 import express from "express";
 import Product from "../model/product.js";
+import Quote from "../model/quote.js";
 
 const router = express.Router();
 
@@ -67,6 +68,23 @@ router.post("/", async (req, res) => {
         const newProduct = new Product(req.body);
         await newProduct.save();
         res.status(201).json({ success: true, data: newProduct });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// GET /api/products/popularity - Count how many times each product appears in quotes
+router.get("/popularity/list", async (req, res) => {
+    try {
+        const quotes = await Quote.find({}).lean();
+        const counts = {};
+        quotes.forEach(quote => {
+            (quote.products || []).forEach(p => {
+                const key = p.description || p.productNo;
+                if (key) counts[key] = (counts[key] || 0) + 1;
+            });
+        });
+        res.status(200).json({ success: true, data: counts });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }

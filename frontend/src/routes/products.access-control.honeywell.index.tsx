@@ -1,11 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ProductSort, SortOption } from "@/components/Product/ProductSort";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { HoneywellHero } from "@/components/Product/AccessControl/Honeywell/HoneywellHero";
 import { HoneywellGrid } from "@/components/Product/AccessControl/Honeywell/HoneywellGrid";
 import { honeywellMainProducts } from "@/components/Product/AccessControl/Honeywell/data";
+
+const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
 
 export const Route = createFileRoute("/products/access-control/honeywell/")({
     head: () => ({
@@ -22,6 +24,14 @@ export const Route = createFileRoute("/products/access-control/honeywell/")({
 
 function HoneywellProductsPage() {
     const [currentSort, setCurrentSort] = useState<SortOption>("popular");
+    const [popularity, setPopularity] = useState<Record<string, number>>({});
+
+    useEffect(() => {
+        fetch(`${baseUrl}/api/products/popularity/list`, { credentials: "include" })
+            .then(r => r.json())
+            .then(d => { if (d.success) setPopularity(d.data); })
+            .catch(() => {});
+    }, []);
 
     const sortedProducts = useMemo(() => {
         const products = [...honeywellMainProducts];
@@ -29,7 +39,7 @@ function HoneywellProductsPage() {
             case "newest":
                 return products.reverse();
             case "popular":
-                return products.sort((a, b) => b.title.length - a.title.length);
+                return products.sort((a, b) => (popularity[b.title] || 0) - (popularity[a.title] || 0));
             case "name-asc":
                 return products.sort((a, b) => a.title.localeCompare(b.title));
             case "name-desc":
@@ -37,7 +47,7 @@ function HoneywellProductsPage() {
             default:
                 return products;
         }
-    }, [currentSort]);
+    }, [currentSort, popularity]);
 
     return (
         <div className="bg-white min-h-screen">
