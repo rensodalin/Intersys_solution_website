@@ -22,7 +22,7 @@ const MOCK_PRODUCTS = [
             {
                 "partCode": "DEFAULT-1",
                 "specification": "Standard Profile",
-                "price": 0,
+                "price": 54,
                 "qty": 0
             },
             {

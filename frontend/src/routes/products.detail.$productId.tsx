@@ -153,6 +153,7 @@ function ProductDetailPage() {
               {
                 partCode: (fallbackProduct as any).partCode || `${productId}-unit`,
                 specification: "Standard Configuration \nProfessional Grade",
+                price: 0,
                 qty: 0
               }
             ],

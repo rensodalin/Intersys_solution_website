@@ -15,6 +15,7 @@ export interface QuoteUser {
 export interface QuoteRequest {
   _id: string;
   solutionCategories: string[];
+  sections?: string[];
   products: ProductRow[];
   name: string;
   company: string;

@@ -6,6 +6,7 @@ import {
   Building2,
   MapPin,
   Layers,
+  Briefcase,
 } from "lucide-react";
 import { QuoteRequest } from "./types";
 
@@ -42,12 +43,12 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
         <div className="flex-1 overflow-y-auto p-8 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-b border-gray-100 pb-6">
             <div className="space-y-3">
-              <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Customer Contact</h4>
+              <h4 className="text-[13px] font-semibold text-gray-400">Customer Contact Information</h4>
               <div className="space-y-2 text-xs text-gray-700">
                 <p className="flex items-center gap-2">
                   <Users size={14} className="text-gray-400" />
                   <span className="font-bold text-gray-900">{quote.name}</span>
-                  <span className="text-gray-500">({quote.title})</span>
+                  <span className="text-gray-500">(Role : {quote.title})</span>
                 </p>
                 <p className="flex items-center gap-2">
                   <Mail size={14} className="text-gray-400" />
@@ -61,15 +62,17 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
                 </p>
                 <p className="flex items-center gap-2">
                   <Building2 size={14} className="text-gray-400" />
-                  <span>
-                    {quote.company} <span className="text-gray-400">({quote.companyType})</span>
-                  </span>
+                  <span >Company Name : {quote.company}</span>
+                </p>
+                <p className="flex items-center gap-2 text-xs text-gray-700">
+                  <Briefcase size={14} className="text-gray-400" />
+                  <span >Company Type:</span> <span className="font-medium text-gray-900">{quote.companyType}</span>
                 </p>
               </div>
             </div>
 
             <div className="space-y-3">
-              <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Project Specification</h4>
+              <h4 className="text-[13px] font-semibold text-gray-400">Project Specification</h4>
               <div className="space-y-2 text-xs text-gray-700">
                 <p className="flex items-start gap-2">
                   <MapPin size={14} className="text-gray-400 mt-0.5 flex-shrink-0" />
@@ -80,8 +83,7 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
                 <p className="flex items-center gap-2">
                   <Layers size={14} className="text-gray-400" />
                   <span>
-                    BMS System: <b className="text-gray-900">{quote.bmsSystem}</b>{" "}
-                    {quote.otherBms && `(${quote.otherBms})`}
+                    Current System / Platform: <b className="text-gray-900">{quote.bmsSystem}</b>
                   </span>
                 </p>
                 <div className="flex items-center gap-2">
@@ -90,32 +92,31 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
                     {quote.contactMethod || "Either"}
                   </span>
                 </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-gray-400">Status:</span>
-                      <select
-                        value={quote.status}
-                        onChange={(e) =>
-                          onStatusChange(quote, e.target.value as "Pending" | "In Progress" | "Completed")
-                        }
-                        className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border outline-none cursor-pointer ${
-                          quote.status === "Completed"
-                            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                            : quote.status === "In Progress"
-                              ? "bg-blue-50 text-blue-700 border-blue-200"
-                              : "bg-amber-50 text-amber-700 border-amber-200"
-                        }`}
-                      >
-                        <option value="Pending" className="bg-amber-50 text-amber-700">Pending</option>
-                        <option value="In Progress" className="bg-blue-50 text-blue-700">In Progress</option>
-                        <option value="Completed" className="bg-emerald-50 text-emerald-700">Completed</option>
-                      </select>
-                    </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium text-gray-400">Status:</span>
+                  <select
+                    value={quote.status}
+                    onChange={(e) =>
+                      onStatusChange(quote, e.target.value as "Pending" | "In Progress" | "Completed")
+                    }
+                    className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border outline-none cursor-pointer ${quote.status === "Completed"
+                      ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                      : quote.status === "In Progress"
+                        ? "bg-blue-50 text-blue-700 border-blue-200"
+                        : "bg-amber-50 text-amber-700 border-amber-200"
+                      }`}
+                  >
+                    <option value="Pending" className="bg-amber-50 text-amber-700">Pending</option>
+                    <option value="In Progress" className="bg-blue-50 text-blue-700">In Progress</option>
+                    <option value="Completed" className="bg-emerald-50 text-emerald-700">Completed</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
 
           <div className="space-y-3">
-            <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Solution Categories</h4>
+            <h4 className="text-xs font-semibold text-gray-400">Product Categories</h4>
             <div className="flex flex-wrap gap-2">
               {quote.solutionCategories.map((cat, idx) => (
                 <span
@@ -128,8 +129,33 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
             </div>
           </div>
 
+          {quote.sections && quote.sections.length > 0 && (
+            <div className="space-y-3">
+              <h4 className="text-[13px] font-bold text-gray-400 ">Product Sections</h4>
+              <div className="flex flex-wrap gap-2">
+                {quote.sections.map((section, idx) => (
+                  <span
+                    key={idx}
+                    className="bg-gray-100 border border-gray-200 text-gray-700 text-xs px-3 py-1 rounded-sm"
+                  >
+                    {section}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {quote.otherBms && (
+            <div className="space-y-2">
+              <h4 className="text-[13px] font-bold text-gray-400 ">Descriptions</h4>
+              <p className="text-xs text-gray-700 bg-gray-50 border border-gray-100 rounded-sm p-4 leading-relaxed">
+                {quote.otherBms}
+              </p>
+            </div>
+          )}
+
           <div className="space-y-3">
-            <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+            <h4 className="text-[13px] font-bold text-gray-400 ">
               Requested Specifications ({quote.products.length} Products)
             </h4>
             <div className="border border-gray-150 rounded-sm overflow-hidden bg-white shadow-sm">
@@ -137,9 +163,9 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
                 <thead>
                   <tr className="border-b border-gray-150 text-[10px] text-gray-400 font-bold uppercase bg-gray-50/50">
                     <th className="px-4 py-2.5 w-12 text-center">Qty</th>
-                    <th className="px-4 py-2.5 pl-6">Product No</th>
-                    <th className="px-4 py-2.5">Description</th>
-                    <th className="px-4 py-2.5">Application</th>
+                    <th className="px-4 py-2.5 pl-6">Part Code</th>
+                    <th className="px-4 py-2.5">Product Name</th>
+                    <th className="px-4 py-2.5">Detail Specification</th>
                   </tr>
                 </thead>
                 <tbody>
