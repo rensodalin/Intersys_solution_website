@@ -70,7 +70,7 @@ export function QuoteTable({ quotes, loading, onViewDetails, onStatusChange, onD
           <th className="px-6 py-4">Customer & Company</th>
           <th className="px-6 py-4">Contact Info</th>
           <th className="px-6 py-4">Location</th>
-          <th className="px-6 py-6 min-w-[200px]">Selected Systems</th>
+          <th className="px-6 py-4 min-w-[200px]">Selected Systems</th>
           <th className="px-6 py-4">Products & Categories</th>
           <th className="px-6 py-4">Platform</th>
           <th className="px-6 py-4">Status</th>
