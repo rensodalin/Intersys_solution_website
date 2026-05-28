@@ -77,7 +77,7 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
                 <p className="flex items-start gap-2">
                   <MapPin size={14} className="text-gray-400 mt-0.5 flex-shrink-0" />
                   <span>
-                    {quote.address}, {quote.city || "N/A"}, {quote.country || "Cambodia"}
+                    {quote.address || "—"}
                   </span>
                 </p>
                 <p className="flex items-center gap-2">

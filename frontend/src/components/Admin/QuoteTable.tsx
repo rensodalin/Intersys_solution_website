@@ -145,10 +145,7 @@ export function QuoteTable({ quotes, loading, onViewDetails, onStatusChange, onD
               </td>
 
               <td className="px-6 py-4">
-                <span className="font-medium text-gray-900 block">{quote.city || "N/A"}</span>
-                <span className="text-xs text-gray-400 block mt-0.5">
-                  {quote.country || "Cambodia"}
-                </span>
+                <span className="font-xs text-gray-900 block">{quote.address || "—"}</span>
               </td>
 
               <td className="px-6 py-4">
