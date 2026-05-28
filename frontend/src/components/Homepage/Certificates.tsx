@@ -127,12 +127,7 @@ export function Certificates() {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
-              <button
-                onClick={() => router.navigate({ to: '/credentials' })}
-                className="bg-white text-[#9B0F06] px-6 py-3 rounded-sm font-semibold text-xs hover:bg-[#162E93] hover:text-white transition-all duration-300 shadow-xl"
-              >
-                View credentials
-              </button>
+
             </motion.div>
           </div>
         </div>

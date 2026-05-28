@@ -69,7 +69,7 @@ export function HoneywellHero({
                         </nav>
 
                         {/* Title */}
-                        <h1 className="text-xl md:text-2xl font-bold text-[#1A3263] tracking-tight mb-3">
+                        <h1 className="text-lg md:text-xl font-bold text-[#1A3263] tracking-tight mb-3">
                             {title}
                         </h1>
 

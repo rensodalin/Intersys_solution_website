@@ -14,7 +14,7 @@ import {
   ArrowRight,
   ArrowUpRight,
 } from "lucide-react";
-import bmsImg from "@/assets/bms_service.png";
+import bmsImg from "@/assets/BMS/pic1.png";
 import fireImg from "@/assets/fire_safety.png";
 import securityImg from "@/assets/security_access.png";
 import cctvImg from "@/assets/cctv_service.png";
