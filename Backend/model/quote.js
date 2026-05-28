@@ -4,7 +4,8 @@ const productRowSchema = new mongoose.Schema({
     qty: { type: String, required: true },
     productNo: { type: String, required: true },
     description: { type: String, required: true },
-    application: { type: String, required: true }
+    application: { type: String, required: true },
+    price: { type: Number, default: 0 }
 });
 
 const quoteSchema = new mongoose.Schema({

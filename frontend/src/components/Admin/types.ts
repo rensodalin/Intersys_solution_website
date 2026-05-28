@@ -3,6 +3,7 @@ export interface ProductRow {
   productNo: string;
   description: string;
   application: string;
+  price?: number;
 }
 
 export interface QuoteUser {
