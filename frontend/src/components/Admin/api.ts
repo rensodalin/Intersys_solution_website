@@ -33,9 +33,6 @@ export async function updateQuoteStatus(
 }
 
 export async function deleteQuote(id: string): Promise<void> {
-  if (!window.confirm("Are you sure you want to delete this quote request?"))
-    return;
-
   const response = await fetch(`${baseUrl}/api/quotes/${id}`, {
     method: "DELETE",
     credentials: "include",

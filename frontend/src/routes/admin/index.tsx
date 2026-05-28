@@ -19,6 +19,7 @@ import { QuoteTable } from "@/components/Admin/QuoteTable";
 import { Pagination } from "@/components/Admin/Pagination";
 import { SystemPopularity } from "@/components/Admin/SystemPopularity";
 import { QuoteDetailModal } from "@/components/Admin/QuoteDetailModal";
+import { ConfirmModal } from "@/components/Admin/ConfirmModal";
 
 export const Route = createFileRoute("/admin/")({
   head: () => ({
@@ -45,6 +46,7 @@ function AdminDashboardPage() {
   const [showSearch, setShowSearch] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedQuote, setSelectedQuote] = useState<QuoteRequest | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   const itemsPerPage = 5;
@@ -83,14 +85,21 @@ function AdminDashboardPage() {
   };
 
   const handleDelete = async (id: string) => {
+    setDeleteTarget(id);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
     try {
-      await deleteQuote(id);
-      setQuotes((prev) => prev.filter((q) => q._id !== id));
-      if (selectedQuote?._id === id) {
+      await deleteQuote(deleteTarget);
+      setQuotes((prev) => prev.filter((q) => q._id !== deleteTarget));
+      if (selectedQuote?._id === deleteTarget) {
         setSelectedQuote(null);
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setDeleteTarget(null);
     }
   };
 
@@ -267,6 +276,16 @@ function AdminDashboardPage() {
           onDelete={handleDelete}
         />
       )}
+
+      <ConfirmModal
+        isOpen={!!deleteTarget}
+        title="Delete Quote"
+        message="Are you sure you want to delete this quote request? This action cannot be undone."
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={confirmDelete}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }
