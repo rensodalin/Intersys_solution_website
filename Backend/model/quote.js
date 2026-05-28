@@ -23,7 +23,7 @@ const quoteSchema = new mongoose.Schema({
     contactMethod: { type: String, enum: ["Email", "Phone", "Either"] },
     newsletter: { type: String },
     companyType: { type: String, required: true },
-    bmsSystem: { type: String, required: true },
+    bmsSystem: { type: String },
     otherBms: { type: String },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null },
     status: { type: String, enum: ["Pending", "In Progress", "Completed"], default: "Pending" },

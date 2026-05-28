@@ -22,7 +22,7 @@ export const quoteSchema = z.object({
     contactMethod: z.enum(["Email", "Phone", "Either"]),
     newsletter: z.string(),
     companyType: z.string().min(2, "Company type is required"),
-    bmsSystem: z.string().min(2, "System info is required"),
+    bmsSystem: z.string().optional(),
     otherBms: z.string().optional(),
 });
 
