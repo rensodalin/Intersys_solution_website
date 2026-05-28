@@ -227,10 +227,10 @@ function AdminDashboardPage() {
         <main className="flex-1 p-8 space-y-8 overflow-y-auto">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
-              <h1 className="font-display text-3xl font-bold tracking-tight text-gray-900">
+              <h1 className="text-3xl font-bold  text-gray-900">
                 Quote Requests
               </h1>
-              <p className="text-gray-500 text-sm mt-1 leading-relaxed max-w-xl">
+              <p className="text-gray-500 text-sm mt-1 max-w-xl">
                 Review and process inbound system specifications from clients.
               </p>
             </div>

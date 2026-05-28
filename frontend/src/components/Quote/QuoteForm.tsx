@@ -279,7 +279,7 @@ export function QuoteForm() {
                             <div className="mt-6 pt-6 border-t border-gray-50">
                                 <button
                                     type="button"
-                                    onClick={() => window.history.back()}
+                                    onClick={() => navigate({ to: "/products/access-control" })}
                                     className="w-full py-3 bg-[#F8F9FA] hover:bg-gray-100 text-gray-700 text-[13px] font-bold rounded-sm transition-colors border border-gray-200 flex items-center justify-center gap-2"
                                 >
                                     <Plus size={14} className="text-[#D62828]" />
