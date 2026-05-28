@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, useCallback, ReactNode } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 export interface InquiryItem {
   id: string;
@@ -22,10 +24,13 @@ interface InquiryContextType {
 const InquiryContext = createContext<InquiryContextType | undefined>(undefined);
 
 export function InquiryProvider({ children }: { children: ReactNode }) {
+  const user = useSelector((state: RootState) => state.auth.user);
+  const storageKey = user ? `intersys_inquiry_cart_${user.id}` : "intersys_inquiry_cart_guest";
+
   const [items, setItems] = useState<InquiryItem[]>(() => {
     if (typeof window !== "undefined") {
       try {
-        const saved = localStorage.getItem("intersys_inquiry_cart");
+        const saved = localStorage.getItem(storageKey);
         if (saved) return JSON.parse(saved);
       } catch (err) {
         console.error("Failed to load inquiry cart from localStorage", err);
@@ -34,11 +39,24 @@ export function InquiryProvider({ children }: { children: ReactNode }) {
     return [];
   });
 
+  // Reload cart when user changes (login/logout)
   React.useEffect(() => {
     if (typeof window !== "undefined") {
-      localStorage.setItem("intersys_inquiry_cart", JSON.stringify(items));
+      try {
+        const saved = localStorage.getItem(storageKey);
+        setItems(saved ? JSON.parse(saved) : []);
+      } catch (err) {
+        console.error("Failed to load inquiry cart from localStorage", err);
+        setItems([]);
+      }
     }
-  }, [items]);
+  }, [storageKey]);
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(storageKey, JSON.stringify(items));
+    }
+  }, [items, storageKey]);
 
   const addItem = (item: InquiryItem) => {
     setItems(prev => {
