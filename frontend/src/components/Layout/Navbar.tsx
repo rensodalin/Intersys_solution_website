@@ -278,18 +278,7 @@ export function Navbar() {
           </div>
           {user ? (
             <div className="flex items-center gap-3">
-              {user.isAdmin && (
-                <Link
-                  to="/admin"
-                  className={cn(
-                    "text-xs font-bold px-3 py-1.5 rounded-sm bg-red-600/10 text-red-500 hover:bg-red-600 hover:text-white transition-all duration-300",
-                    useDarkText && "bg-red-600/5 hover:bg-red-600"
-                  )}
-                >
-                  Admin Panel
-                </Link>
-              )}
-              <Link to="/my-account" className="flex items-center gap-2 group">
+              <Link to={user.isAdmin ? "/admin" : "/my-account"} className="flex items-center gap-2 group">
                 <img 
                   src={user.avatar || "https://ui-avatars.com/api/?name=" + user.name} 
                   alt={user.name} 
@@ -345,7 +334,7 @@ export function Navbar() {
                 {user ? (
                   <div className="flex items-center gap-3 bg-white/5 p-4 rounded-sm border border-white/5">
                     <Link
-                      to="/my-account"
+                      to={user.isAdmin ? "/admin" : "/my-account"}
                       onClick={() => setMobileOpen(false)}
                       className="flex items-center gap-3 flex-1"
                     >
@@ -358,16 +347,9 @@ export function Navbar() {
                         <span className="text-sm font-bold text-white hover:text-red-500 transition-colors block">
                           {user.name}
                         </span>
-                        <span className="text-[10px] text-white/50 block">View Profile</span>
-                        {user.isAdmin && (
-                          <Link
-                            to="/admin"
-                            onClick={() => setMobileOpen(false)}
-                            className="text-[10px] text-red-500 font-bold hover:underline block mt-0.5 animate-pulse"
-                          >
-                            Admin Dashboard →
-                          </Link>
-                        )}
+                        <span className="text-[10px] text-white/50 block">
+                          {user.isAdmin ? "Admin Dashboard" : "View Profile"}
+                        </span>
                       </div>
                     </Link>
                     <button
