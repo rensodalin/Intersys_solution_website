@@ -60,13 +60,13 @@ export function ProductHero({
                     </nav>
 
                     {/* Title */}
-                    <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#1A3263] leading-tight mb-2">
+                    <h1 className="text-xl md:text-2xl font-bold tracking-tight text-[#1A3263] leading-tight mb-2">
                         {title}
                     </h1>
 
                     {/* Subtitle */}
                     {subtitle && (
-                        <p className="text-sm text-gray-600 leading-relaxed">
+                        <p className="text-[11px] md:text-[14px] text-gray-600 leading-relaxed">
                             {subtitle}
                         </p>
                     )}
