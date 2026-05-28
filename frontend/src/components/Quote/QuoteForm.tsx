@@ -37,7 +37,7 @@ const formSections = [
 
 export function QuoteForm() {
     const navigate = useNavigate();
-    const { items, removeItem, updateQty } = useInquiry();
+    const { items, removeItem, updateQty, clearInquiry } = useInquiry();
     const {
         register,
         control,
@@ -182,6 +182,7 @@ export function QuoteForm() {
             }
 
             setSubmitStatus("success");
+            clearInquiry();
             reset();
 
             // clear success message after a few seconds
