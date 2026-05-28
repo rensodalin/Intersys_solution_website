@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { useLocation } from "@tanstack/react-router";
+import { cn } from "@/lib/utils";
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +17,8 @@ export function ChatWidget() {
   });
 
   const user = useSelector((state: RootState) => state.auth.user);
+  const location = useLocation();
+  const isProductPage = location.pathname.startsWith("/products");
   const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
 
   // Auto-fill if user is logged in
@@ -65,7 +69,7 @@ export function ChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 left-6 z-50">
+    <div className={cn("fixed bottom-6 z-50", isProductPage ? "left-[312px]" : "left-6")}>
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -73,7 +77,7 @@ export function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-16 left-0 w-[340px] bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-100 flex flex-col"
+            className="absolute bottom-16 right-0 w-[340px] bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-100 flex flex-col"
           >
             {/* Header */}
             <div className="bg-[#0A0F1A] text-white p-4 flex justify-between items-center">

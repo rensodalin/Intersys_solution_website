@@ -328,21 +328,28 @@ export function CatalogSidebar({
                                                     <div className="flex items-center justify-between group py-2 px-3 rounded-lg hover:bg-white/60 transition-all duration-200">
                                                         <div className="flex items-center gap-2.5 flex-1">
                                                             <SubIcon size={14} className="text-gray-400 group-hover:text-[#1A3263] transition-colors" />
-                                                            {subItem.link ? (
-                                                                <Link
-                                                                    to={subItem.link}
-                                                                    className={cn(
-                                                                        "text-[13px] font-semibold transition-colors flex-1 hover:underline",
-                                                                        isPathActive(subItem.link) ? "text-[#FC3B1F]" : "text-gray-500 group-hover:text-[#1A3263]"
-                                                                    )}
-                                                                >
-                                                                    {subItem.label}
-                                                                </Link>
-                                                            ) : (
-                                                                <span className="text-[13px] font-semibold text-gray-500 group-hover:text-[#1A3263] transition-colors">
-                                                                    {subItem.label}
-                                                                </span>
-                                                            )}
+                                                            {subItem.link && !Array.isArray(subItem.sub) ? (
+                                                                 <Link
+                                                                     to={subItem.link}
+                                                                     className={cn(
+                                                                         "text-[13px] font-semibold transition-colors flex-1 hover:underline",
+                                                                         isPathActive(subItem.link) ? "text-[#FC3B1F]" : "text-gray-500 group-hover:text-[#1A3263]"
+                                                                     )}
+                                                                 >
+                                                                     {subItem.label}
+                                                                 </Link>
+                                                             ) : (
+                                                                 <span
+                                                                     onClick={Array.isArray(subItem.sub) ? (e) => { e.preventDefault(); e.stopPropagation(); toggleSection(subItem.label); } : undefined}
+                                                                     className={cn(
+                                                                         "text-[13px] font-semibold transition-colors flex-1",
+                                                                         Array.isArray(subItem.sub) ? "cursor-pointer hover:text-[#1A3263]" : "text-gray-500",
+                                                                         isPathActive(subItem.link) && !Array.isArray(subItem.sub) ? "text-[#FC3B1F]" : "text-gray-500"
+                                                                     )}
+                                                                 >
+                                                                     {subItem.label}
+                                                                 </span>
+                                                             )}
                                                         </div>
                                                         {Array.isArray(subItem.sub) && (
                                                             <div
