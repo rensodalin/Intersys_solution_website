@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import cors from "cors";
 import dotenv from "dotenv";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 import passport from "./passportsetup/passportSetup.js";
 import connectDB from "./conn/conn.js";
 import authRoutes from "./auth/auth.js";
@@ -44,12 +45,17 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-// Session setup with secure, HTTP-only cookie configuration
+// Session setup with MongoDB-backed store (required for load-balanced clusters)
 app.use(
     session({
         secret: process.env.SESSION_SECRET || "intersys_super_secret",
         resave: false,
         saveUninitialized: false,
+        store: MongoStore.create({
+            mongoUrl: process.env.URI,
+            collectionName: "sessions",
+            ttl: 24 * 60 * 60, // 1 day (matches cookie maxAge)
+        }),
         cookie: {
             maxAge: 1000 * 60 * 60 * 24, // 1 day
             httpOnly: true,

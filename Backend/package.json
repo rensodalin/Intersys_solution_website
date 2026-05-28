@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "start:cluster": "pm2 start ecosystem.config.cjs",
+    "stop": "pm2 stop intersys-backend",
+    "logs": "pm2 logs intersys-backend"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +16,7 @@
   "type": "module",
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "connect-mongo": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
@@ -23,5 +27,8 @@
     "passport-google-oauth20": "^2.0.0",
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3"
+  },
+  "devDependencies": {
+    "pm2": "^7.0.1"
   }
 }
