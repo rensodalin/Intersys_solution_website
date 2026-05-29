@@ -36,6 +36,7 @@ import { SystemPopularity } from "@/components/Admin/SystemPopularity";
 import { QuoteDetailModal } from "@/components/Admin/QuoteDetailModal";
 import { ConfirmModal } from "@/components/Admin/ConfirmModal";
 import { DashboardOverview } from "@/components/Admin/DashboardOverview";
+import { AnalyticsOverview } from "@/components/Admin/AnalyticsOverview";
 
 export const Route = createFileRoute("/admin/")({
   head: () => ({
@@ -233,6 +234,7 @@ function AdminDashboardPage() {
 
         <main className="flex-1 p-8 space-y-8 overflow-y-auto">
           {activeSection === "dashboard" && <DashboardOverview />}
+          {activeSection === "analytics" && <AnalyticsOverview />}
 
           {activeSection === "quotes" && (
             <>
