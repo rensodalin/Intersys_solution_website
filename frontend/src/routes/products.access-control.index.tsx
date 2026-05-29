@@ -59,11 +59,11 @@ function AccessControlPage() {
                 <Container>
                     {/* Heading */}
                     <div className="text-center max-w-xl mx-auto mb-12">
-                        <h2 className="text-2xl md:text-3xl font-semibold text-[#1A3263] mb-3 tracking-tight">
+                        <h2 className="text-xl md:text-2xl font-semibold text-[#1A3263] mb-3 tracking-tight">
                             Working with trusted brands
                         </h2>
 
-                        <p className="text-gray-500 text-sm md:text-base leading-relaxed">
+                        <p className="text-gray-500 text-xs md:text-sm leading-relaxed">
                             We partner with global technology leaders to deliver reliable and
                             future-ready security infrastructure.
                         </p>
@@ -100,12 +100,12 @@ function AccessControlPage() {
                                     </div>
 
                                     {/* Title */}
-                                    <h3 className="text-xl md:text-2xl font-semibold text-[#1A3263] mb-3 tracking-tight group-hover:text-[#FC3B1F] transition-colors">
+                                    <h3 className="text-lg md:text-xl font-semibold text-[#1A3263] mb-3 tracking-tight group-hover:text-[#FC3B1F] transition-colors">
                                         {brand.name} integration
                                     </h3>
 
                                     {/* Description */}
-                                    <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">
+                                    <p className="text-gray-500 text-xs md:text-sm leading-relaxed mb-6 flex-grow">
                                         {brand.desc}
                                     </p>
 
