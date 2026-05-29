@@ -73,7 +73,7 @@ function FireAlarmPage() {
                             className="flex justify-center"
                         >
                             <img
-                                src="https://cdn.sytechweb.com/uon3j8c3/wp-content/uploads/2025/12/Product-portfolio-diagram-2-scaled.png"
+                                src="https://www.intersys-solutions.com/website_asset/fire-alarm-new.png"
                                 alt="Fire Safety Diagram"
                                 className="w-full max-w-2xl object-contain"
                             />

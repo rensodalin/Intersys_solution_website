@@ -95,9 +95,9 @@ export function TechnicalTips() {
         <div className="min-h-screen bg-white">
 
             {/* HERO (simplified) */}
-            <div className="relative w-full h-[400px] overflow-hidden">
+            <div className="relative w-full h-[300px] overflow-hidden">
                 <img
-                    src="https://www.intersys-solutions.com/website_asset/technical.jpg"
+                    src="https://plus.unsplash.com/premium_photo-1667238586553-e4ddb2b0cdbb?q=80&w=1062&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Technical"
                     className="w-full h-full object-cover"
                 />
