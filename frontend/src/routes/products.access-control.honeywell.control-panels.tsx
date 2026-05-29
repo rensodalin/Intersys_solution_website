@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ProductSort, SortOption } from "@/components/Product/ProductSort";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
@@ -23,7 +23,17 @@ export const Route = createFileRoute("/products/access-control/honeywell/control
 });
 
 function HoneywellControlPanelsPage() {
-    const [currentSort, setCurrentSort] = useState<SortOption>("popular");
+    const [currentSort, setCurrentSort] = useState<SortOption>("name-asc");
+    const [popularity, setPopularity] = useState<Record<string, number>>({});
+
+    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+
+    useEffect(() => {
+        fetch(`${baseUrl}/api/products/popularity/list`, { credentials: "include" })
+            .then(r => r.json())
+            .then(d => { if (d.success) setPopularity(d.data); })
+            .catch(() => {});
+    }, []);
 
     const sortedProducts = useMemo(() => {
         const products = [...honeywellControlPanels];
@@ -31,7 +41,9 @@ function HoneywellControlPanelsPage() {
             case "newest":
                 return products.reverse();
             case "popular":
-                return products.sort((a, b) => b.title.length - a.title.length);
+                return products
+                    .filter(p => (popularity[p.title] || 0) > 0)
+                    .sort((a, b) => (popularity[b.title] || 0) - (popularity[a.title] || 0));
             case "name-asc":
                 return products.sort((a, b) => a.title.localeCompare(b.title));
             case "name-desc":
@@ -39,7 +51,7 @@ function HoneywellControlPanelsPage() {
             default:
                 return products;
         }
-    }, [currentSort]);
+    }, [currentSort, popularity]);
 
     return (
         <div className="bg-white min-h-screen">
