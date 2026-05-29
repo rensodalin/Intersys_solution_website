@@ -24,7 +24,7 @@ export function BuildingManagementHero({
     ],
 }: BuildingManagementHeroProps) {
     return (
-        <section className="relative w-full overflow-hidden bg-white pt-25">
+        <section className="relative w-full overflow-hidden bg-white pt-20">
             {/* Banner Image */}
             <div className="w-full relative h-[180px] md:h-[220px] overflow-hidden">
                 <motion.img
