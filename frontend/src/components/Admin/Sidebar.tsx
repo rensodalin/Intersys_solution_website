@@ -26,9 +26,19 @@ function getAvatarColor(name: string) {
 
 interface SidebarProps {
   userName: string;
+  activeSection: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "reports" | "settings";
+  onSectionChange: (section: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "reports" | "settings") => void;
 }
 
-export function Sidebar({ userName }: SidebarProps) {
+export function Sidebar({ userName, activeSection, onSectionChange }: SidebarProps) {
+  const getButtonClass = (section: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "reports" | "settings") => {
+    const baseClass = "w-full flex items-center gap-3 px-4 py-3 text-sm transition cursor-pointer rounded-sm";
+    if (activeSection === section) {
+      return `${baseClass} font-bold bg-[#C3110C] text-white shadow-lg shadow-[#C3110C]/20`;
+    }
+    return `${baseClass} font-semibold text-white/50 hover:bg-white/5 hover:text-white`;
+  };
+
   return (
     <aside className="w-64 bg-[#081F3D] text-white flex flex-col justify-between flex-shrink-0 min-h-screen shadow-xl fixed left-0 top-0 bottom-0">
       <div>
@@ -43,37 +53,58 @@ export function Sidebar({ userName }: SidebarProps) {
         </div>
 
         <nav className="p-4 space-y-1">
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-sm text-white/50 hover:bg-white/5 hover:text-white transition">
+          <button 
+            onClick={() => onSectionChange("dashboard")}
+            className={getButtonClass("dashboard")}
+          >
             <LayoutDashboard size={18} />
             <span>Dashboard</span>
           </button>
 
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-sm bg-[#C3110C] text-white shadow-lg shadow-[#C3110C]/20 transition">
+          <button 
+            onClick={() => onSectionChange("quotes")}
+            className={getButtonClass("quotes")}
+          >
             <FileText size={18} />
             <span>Quote Requests</span>
           </button>
 
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-sm text-white/50 hover:bg-white/5 hover:text-white transition">
+          <button 
+            onClick={() => onSectionChange("analytics")}
+            className={getButtonClass("analytics")}
+          >
             <BarChart2 size={18} />
             <span>Analytics</span>
           </button>
 
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-sm text-white/50 hover:bg-white/5 hover:text-white transition">
+          <button 
+            onClick={() => onSectionChange("customers")}
+            className={getButtonClass("customers")}
+          >
             <Users size={18} />
             <span>Customer</span>
           </button>
 
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-sm text-white/50 hover:bg-white/5 hover:text-white transition">
+          <button 
+            onClick={() => onSectionChange("products")}
+            className={getButtonClass("products")}
+          >
             <Package size={18} />
             <span>Product Management</span>
           </button>
 
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-sm text-white/50 hover:bg-white/5 hover:text-white transition">
+          <button 
+            onClick={() => onSectionChange("reports")}
+            className={getButtonClass("reports")}
+          >
             <FileCheck size={18} />
             <span>Reports</span>
           </button>
 
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-sm text-white/50 hover:bg-white/5 hover:text-white transition">
+          <button 
+            onClick={() => onSectionChange("settings")}
+            className={getButtonClass("settings")}
+          >
             <Settings size={18} />
             <span>Settings</span>
           </button>

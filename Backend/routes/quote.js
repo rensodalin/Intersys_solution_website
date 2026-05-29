@@ -1,5 +1,7 @@
 import express from "express";
 import Quote from "../model/quote.js";
+import Contact from "../model/contact.js";
+import User from "../model/user.js";
 import nodemailer from "nodemailer";
 
 const router = express.Router();
@@ -88,6 +90,53 @@ const isAdmin = (req, res, next) => {
     }
     return res.status(403).json({ success: false, error: "Access denied. Admin authorization required." });
 };
+
+// GET /api/quotes/admin-stats - Admin dashboard statistics
+router.get("/admin-stats", isAdmin, async (req, res) => {
+    try {
+        const totalQuotes = await Quote.countDocuments({});
+        const pendingQuotes = await Quote.countDocuments({ status: "Pending" });
+        const inProgressQuotes = await Quote.countDocuments({ status: "In Progress" });
+        const completedQuotes = await Quote.countDocuments({ status: "Completed" });
+        
+        const totalContacts = await Contact.countDocuments({});
+        const totalUsers = await User.countDocuments({});
+
+        // Fetch recent quotes
+        const recentQuotes = await Quote.find({})
+            .sort({ createdAt: -1 })
+            .limit(5);
+
+        // Fetch recent contacts
+        const recentContacts = await Contact.find({})
+            .sort({ createdAt: -1 })
+            .limit(5);
+
+        // Fetch recent users (excluding sensitive info)
+        const recentUsers = await User.find({})
+            .select("name email role createdAt avatar")
+            .sort({ createdAt: -1 })
+            .limit(5);
+
+        res.status(200).json({
+            success: true,
+            data: {
+                totalQuotes,
+                pendingQuotes,
+                inProgressQuotes,
+                completedQuotes,
+                totalContacts,
+                totalUsers,
+                recentQuotes,
+                recentContacts,
+                recentUsers
+            }
+        });
+    } catch (error) {
+        console.error("Failed to fetch admin stats:", error);
+        res.status(500).json({ success: false, error: "Failed to fetch admin statistics" });
+    }
+});
 
 // GET /api/quotes/admin - Fetch all quotes (Admin only)
 router.get("/admin", isAdmin, async (req, res) => {

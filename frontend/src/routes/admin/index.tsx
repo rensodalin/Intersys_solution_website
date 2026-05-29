@@ -35,6 +35,7 @@ import { Pagination } from "@/components/Admin/Pagination";
 import { SystemPopularity } from "@/components/Admin/SystemPopularity";
 import { QuoteDetailModal } from "@/components/Admin/QuoteDetailModal";
 import { ConfirmModal } from "@/components/Admin/ConfirmModal";
+import { DashboardOverview } from "@/components/Admin/DashboardOverview";
 
 export const Route = createFileRoute("/admin/")({
   head: () => ({
@@ -63,6 +64,7 @@ function AdminDashboardPage() {
   const [selectedQuote, setSelectedQuote] = useState<QuoteRequest | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<"dashboard" | "quotes" | "analytics" | "customers" | "products" | "reports" | "settings">("dashboard");
 
   const itemsPerPage = 5;
 
@@ -214,140 +216,161 @@ function AdminDashboardPage() {
 
   return (
     <div className="min-h-screen flex bg-[#F8FAFC]">
-      <Sidebar userName={user.name} />
+      <Sidebar 
+        userName={user.name} 
+        activeSection={activeSection} 
+        onSectionChange={setActiveSection} 
+      />
 
       <div className="flex-1 flex flex-col min-w-0 ml-64">
         <Header
           userName={user.name}
+          userRole={user.role}
           avatar={user.avatar}
           loading={loading}
-          onRefresh={loadQuotes}
+          onRefresh={activeSection === "dashboard" ? () => window.location.reload() : loadQuotes}
         />
 
         <main className="flex-1 p-8 space-y-8 overflow-y-auto">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div>
-              <h1 className="text-3xl font-bold  text-gray-900">
-                Quote Requests
-              </h1>
-              <p className="text-gray-500 text-sm mt-1 max-w-xl">
-                Review and process inbound system specifications from clients.
-              </p>
-            </div>
-            <MetricsCards
-              totalOutstanding={totalOutstanding}
-              inProgressCount={inProgressCount}
-              completedCount={completedCount}
-              loading={loading}
-              selectedTab={selectedTab}
-              onTabChange={(tab) => {
-                setSelectedTab(tab);
-                setCurrentPage(1);
-              }}
-            />
-          </div>
+          {activeSection === "dashboard" && <DashboardOverview />}
 
-          <div className="bg-white rounded-sm border border-gray-150 shadow-sm overflow-hidden flex flex-col">
-            <FilterBar
-              selectedTab={selectedTab}
-              onTabChange={(tab) => {
-                setSelectedTab(tab);
-                setCurrentPage(1);
-              }}
-              showSearch={showSearch}
-              searchTerm={searchTerm}
-              onSearchToggle={() => setShowSearch(!showSearch)}
-              onSearchChange={(value) => {
-                setSearchTerm(value);
-                setCurrentPage(1);
-              }}
-              onExport={() => exportQuotesToCSV(quotes)}
-            />
+          {activeSection === "quotes" && (
+            <>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                  <h1 className="text-3xl font-bold  text-gray-900">
+                    Quote Requests
+                  </h1>
+                  <p className="text-gray-500 text-sm mt-1 max-w-xl">
+                    Review and process inbound system specifications from clients.
+                  </p>
+                </div>
+                <MetricsCards
+                  totalOutstanding={totalOutstanding}
+                  inProgressCount={inProgressCount}
+                  completedCount={completedCount}
+                  loading={loading}
+                  selectedTab={selectedTab}
+                  onTabChange={(tab) => {
+                    setSelectedTab(tab);
+                    setCurrentPage(1);
+                  }}
+                />
+              </div>
 
-            <div className="overflow-x-auto">
-              <QuoteTable
-                quotes={currentQuotes}
-                loading={loading}
-                onViewDetails={setSelectedQuote}
-                onStatusChange={handleStatusChange}
-                onDelete={handleDelete}
-              />
-            </div>
+              <div className="bg-white rounded-sm border border-gray-150 shadow-sm overflow-hidden flex flex-col">
+                <FilterBar
+                  selectedTab={selectedTab}
+                  onTabChange={(tab) => {
+                    setSelectedTab(tab);
+                    setCurrentPage(1);
+                  }}
+                  showSearch={showSearch}
+                  searchTerm={searchTerm}
+                  onSearchToggle={() => setShowSearch(!showSearch)}
+                  onSearchChange={(value) => {
+                    setSearchTerm(value);
+                    setCurrentPage(1);
+                  }}
+                  onExport={() => exportQuotesToCSV(quotes)}
+                />
 
-            {!loading && filteredQuotes.length > 0 && (
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                indexOfFirstItem={indexOfFirstItem}
-                indexOfLastItem={indexOfLastItem}
-                totalItems={filteredQuotes.length}
-                onPageChange={setCurrentPage}
-              />
-            )}
-          </div>
+                <div className="overflow-x-auto">
+                  <QuoteTable
+                    quotes={currentQuotes}
+                    loading={loading}
+                    onViewDetails={setSelectedQuote}
+                    onStatusChange={handleStatusChange}
+                    onDelete={handleDelete}
+                  />
+                </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="space-y-8">
-              <SystemPopularity sortedPopularity={sortedPopularity} loading={loading} />
-
-              {/* Popular Products */}
-              <div className="bg-white p-6 rounded-sm border border-gray-150 shadow-sm">
-                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-4">
-                  Popular Products
-                </span>
-                {loading ? (
-                  <div className="flex justify-center py-10">
-                    <div className="w-8 h-8 border-2 border-[#C3110C] border-t-transparent rounded-full animate-spin" />
-                  </div>
-                ) : sortedProductPopularity.length === 0 ? (
-                  <p className="text-xs text-gray-400 py-10 text-center">No product data available.</p>
-                ) : (
-                  <div className="space-y-3">
-                    {sortedProductPopularity.map((p, i) => (
-                      <div key={i} className="flex items-center gap-3 text-xs">
-                        <span className="w-5 h-5 rounded-full bg-[#C3110C]/10 text-[#C3110C] text-[10px] font-bold flex items-center justify-center shrink-0">
-                          {i + 1}
-                        </span>
-                        {getProductImage(p.name) && (
-                          <img
-                            src={getProductImage(p.name)}
-                            alt={p.name}
-                            className="w-8 h-8 rounded object-contain bg-gray-50 border border-gray-100 shrink-0"
-                          />
-                        )}
-                        <span className="font-medium text-gray-800 truncate flex-1">{p.name}</span>
-                        <span className="font-bold text-[#C3110C] shrink-0">{p.count}x</span>
-                      </div>
-                    ))}
-                  </div>
+                {!loading && filteredQuotes.length > 0 && (
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    indexOfFirstItem={indexOfFirstItem}
+                    indexOfLastItem={indexOfLastItem}
+                    totalItems={filteredQuotes.length}
+                    onPageChange={setCurrentPage}
+                  />
                 )}
               </div>
-            </div>
 
-            <div className="bg-white p-6 rounded-sm border border-gray-150 shadow-sm flex flex-col lg:col-span-2">
-              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-4">
-                Operations Notes
-              </span>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-gray-600 leading-relaxed">
-                <div className="space-y-3">
-                  <p className="font-semibold text-gray-900">Status Cycling Control</p>
-                  <p>
-                    Clicking on the status badge in the table cycles the quote through the three
-                    stages: <b>Pending → In Progress → Completed → Pending</b>. Changes are saved
-                    instantly to the database.
-                  </p>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="space-y-8">
+                  <SystemPopularity sortedPopularity={sortedPopularity} loading={loading} />
+
+                  {/* Popular Products */}
+                  <div className="bg-white p-6 rounded-sm border border-gray-150 shadow-sm">
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-4">
+                      Popular Products
+                    </span>
+                    {loading ? (
+                      <div className="flex justify-center py-10">
+                        <div className="w-8 h-8 border-2 border-[#C3110C] border-t-transparent rounded-full animate-spin" />
+                      </div>
+                    ) : sortedProductPopularity.length === 0 ? (
+                      <p className="text-xs text-gray-400 py-10 text-center">No product data available.</p>
+                    ) : (
+                      <div className="space-y-3">
+                        {sortedProductPopularity.map((p, i) => (
+                          <div key={i} className="flex items-center gap-3 text-xs">
+                            <span className="w-5 h-5 rounded-full bg-[#C3110C]/10 text-[#C3110C] text-[10px] font-bold flex items-center justify-center shrink-0">
+                              {i + 1}
+                            </span>
+                            {getProductImage(p.name) && (
+                              <img
+                                src={getProductImage(p.name)}
+                                alt={p.name}
+                                className="w-8 h-8 rounded object-contain bg-gray-50 border border-gray-100 shrink-0"
+                              />
+                            )}
+                            <span className="font-medium text-gray-800 truncate flex-1">{p.name}</span>
+                            <span className="font-bold text-[#C3110C] shrink-0">{p.count}x</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="space-y-3">
-                  <p className="font-semibold text-gray-900">System Platform Indicator</p>
-                  <p>
-                    The "Platform" column represents the preferred Building Management System (BMS)
-                    selected by the client during quote assembly, such as{" "}
-                    <b>In-House DB, Cloud v2.1, or On-Premises</b>.
-                  </p>
+
+                <div className="bg-white p-6 rounded-sm border border-gray-150 shadow-sm flex flex-col lg:col-span-2">
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-4">
+                    Operations Notes
+                  </span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-gray-600 leading-relaxed">
+                    <div className="space-y-3">
+                      <p className="font-semibold text-gray-900">Status Cycling Control</p>
+                      <p>
+                        Clicking on the status badge in the table cycles the quote through the three
+                        stages: <b>Pending → In Progress → Completed → Pending</b>. Changes are saved
+                        instantly to the database.
+                      </p>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="font-semibold text-gray-900">System Platform Indicator</p>
+                      <p>
+                        The "Platform" column represents the preferred Building Management System (BMS)
+                        selected by the client during quote assembly, such as{" "}
+                        <b>In-House DB, Cloud v2.1, or On-Premises</b>.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </>
+          )}
+
+          {activeSection !== "dashboard" && activeSection !== "quotes" && (
+            <div className="flex flex-col items-center justify-center py-20 text-center bg-white rounded-xl border border-gray-150 shadow-sm p-8">
+              <span className="text-4xl">🛠️</span>
+              <h2 className="text-xl font-black text-gray-800 mt-4 capitalize">{activeSection} Section</h2>
+              <p className="text-xs text-gray-400 mt-1 max-w-sm">
+                We are currently implementing real-time panels for {activeSection} overview. Please check back shortly.
+              </p>
             </div>
-          </div>
+          )}
         </main>
       </div>
 
