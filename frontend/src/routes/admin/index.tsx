@@ -270,9 +270,7 @@ function AdminDashboardPage() {
                     Review and process inbound system specifications from clients.
                   </p>
                 </div>
-                <div className="flex items-center gap-4 flex-wrap">
-                  <DateRangePicker date={quoteDateRange} onDateChange={handleQuoteDateChange} />
-                  <MetricsCards
+                <MetricsCards
                   totalOutstanding={totalOutstanding}
                   inProgressCount={inProgressCount}
                   completedCount={completedCount}
@@ -284,10 +282,12 @@ function AdminDashboardPage() {
                   }}
                 />
               </div>
-            </div>
+              <div className="flex justify-end">
+                <DateRangePicker date={quoteDateRange} onDateChange={handleQuoteDateChange} />
+              </div>
 
             <div className="bg-white rounded-sm border border-gray-150 shadow-sm overflow-hidden flex flex-col">
-                <FilterBar
+              <FilterBar
                   selectedTab={selectedTab}
                   onTabChange={(tab) => {
                     setSelectedTab(tab);
