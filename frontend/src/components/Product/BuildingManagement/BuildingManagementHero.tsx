@@ -26,7 +26,7 @@ export function BuildingManagementHero({
     return (
         <section className="relative w-full overflow-hidden bg-white pt-25">
             {/* Banner Image */}
-            <div className="w-full relative h-[180px] md:h-[220px] overflow-hidden">
+            <div className="w-full relative h-[160px] md:h-[194px] overflow-hidden ">
                 <motion.img
                     initial={{ scale: 1.1, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
