@@ -85,7 +85,7 @@ const NAVIGATION_DATA = [
 ];
 
 
-import { searchProducts, SearchResult } from "@/utils/productSearch";
+import { searchProducts, initSearchIndex, SearchResult } from "@/utils/productSearch";
 
 export function CatalogSidebar({ 
     activeCategory: propActiveCategory,
@@ -125,6 +125,11 @@ export function CatalogSidebar({
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
     const { items } = useInquiry();
+
+    // Initialize search index from API on mount
+    React.useEffect(() => {
+        initSearchIndex();
+    }, []);
 
     // Handle Search
     React.useEffect(() => {

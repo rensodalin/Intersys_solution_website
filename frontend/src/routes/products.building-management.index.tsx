@@ -5,7 +5,7 @@ import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { BuildingManagementHero } from "@/components/Product/BuildingManagement/BuildingManagementHero";
 import { BuildingManagementGrid } from "@/components/Product/BuildingManagement/BuildingManagementGrid";
-import { bmsProducts } from "@/components/Product/BuildingManagement/data";
+import { fetchProducts } from "@/utils/productApi";
 
 export const Route = createFileRoute("/products/building-management/")({
     head: () => ({
@@ -23,8 +23,17 @@ export const Route = createFileRoute("/products/building-management/")({
 function BuildingManagementPage() {
     const [currentSort, setCurrentSort] = useState<SortOption>("name-asc");
     const [popularity, setPopularity] = useState<Record<string, number>>({});
+    const [apiProducts, setApiProducts] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
 
     const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+
+    useEffect(() => {
+        fetchProducts("Building Management")
+            .then(data => setApiProducts(data))
+            .catch(() => {})
+            .finally(() => setLoading(false));
+    }, []);
 
     useEffect(() => {
         fetch(`${baseUrl}/api/products/popularity/list`, { credentials: "include" })
@@ -33,8 +42,16 @@ function BuildingManagementPage() {
             .catch(() => {});
     }, []);
 
+    const mapped = useMemo(() =>
+        apiProducts.map(p => ({
+            id: p.productId,
+            title: p.title,
+            image: p.mainImage,
+            description: p.description,
+        })), [apiProducts]);
+
     const sortedProducts = useMemo(() => {
-        const products = [...bmsProducts];
+        const products = [...mapped];
         switch (currentSort) {
             case "newest":
                 return products.reverse();
@@ -49,7 +66,18 @@ function BuildingManagementPage() {
             default:
                 return products;
         }
-    }, [currentSort, popularity]);
+    }, [currentSort, popularity, mapped]);
+
+    if (loading) return (
+        <div className="bg-white min-h-screen">
+            <BuildingManagementHero />
+            <section className="py-14 md:py-16 relative z-20 px-8">
+                <Container>
+                    <div className="text-center py-20 text-gray-400 text-sm">Loading products...</div>
+                </Container>
+            </section>
+        </div>
+    );
 
     return (
         <div className="bg-white min-h-screen">
@@ -61,7 +89,7 @@ function BuildingManagementPage() {
                     <ProductSort
                         currentSort={currentSort}
                         onSortChange={setCurrentSort}
-                        totalProducts={bmsProducts.length}
+                        totalProducts={mapped.length}
                     />
                     <BuildingManagementGrid products={sortedProducts} />
                 </Container>

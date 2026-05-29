@@ -1,18 +1,4 @@
-import { 
-    honeywellAccessories, 
-    honeywellCredentials, 
-    honeywellReaders, 
-    honeywellSoftware, 
-    honeywellControlPanelKits, 
-    honeywellKiosks, 
-    honeywellUpgrades, 
-    honeywellDoorHardware, 
-    honeywellControlPanels 
-} from "@/components/Product/AccessControl/Honeywell/data";
-
-import { saltoProducts } from "@/components/Product/AccessControl/Salto/data";
-import { bmsProducts } from "@/components/Product/BuildingManagement/data";
-import { surveillanceProducts } from "@/components/Product/Surveillance/data";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:1000";
 
 export interface SearchResult {
     id: string;
@@ -23,89 +9,56 @@ export interface SearchResult {
     link: string;
 }
 
-export const getAllSearchableProducts = (): SearchResult[] => {
-    const products: SearchResult[] = [];
+let searchCache: SearchResult[] | null = null;
+let initPromise: Promise<void> | null = null;
 
-    // --- HONEYWELL ---
-    const honeywellGroups = [
-        { data: honeywellAccessories, cat: "accessories" },
-        { data: honeywellCredentials, cat: "credentials" },
-        { data: honeywellReaders, cat: "readers" },
-        { data: honeywellSoftware, cat: "software" },
-        { data: honeywellControlPanelKits, cat: "control-panel-kits" },
-        { data: honeywellKiosks, cat: "lobby-kiosks" },
-        { data: honeywellUpgrades, cat: "upgrades" },
-        { data: honeywellDoorHardware, cat: "door-hardware" },
-        { data: honeywellControlPanels, cat: "control-panels" },
-    ];
+function categoryFromLink(category: string): string {
+    if (category.includes("Surveillance")) return "/products/surveillance";
+    if (category.includes("Building Management")) return "/products/building-management";
+    if (category.includes("Access Control")) return "/products/access-control";
+    return "/products";
+}
 
-    honeywellGroups.forEach(group => {
-        group.data.forEach(p => {
-            const slug = p.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-            const catLink = `/products/access-control/honeywell/${group.cat}`;
-            products.push({
-                id: slug,
+function brandLabel(brand: string): string {
+    if (brand === "Intersys") return "Surveillance";
+    if (brand === "BMS") return "Building Management";
+    return brand;
+}
+
+export async function initSearchIndex(): Promise<void> {
+    if (searchCache) return;
+    if (initPromise) return initPromise;
+
+    initPromise = (async () => {
+        try {
+            const res = await fetch(`${BASE_URL}/api/products`, { credentials: "include" });
+            const json = await res.json();
+            if (!json.success || !json.data) return;
+
+            searchCache = json.data.map((p: any) => ({
+                id: p.productId,
                 title: p.title,
-                description: p.desc,
-                image: p.image,
-                brand: "Honeywell",
-                link: `/products/detail/${slug}?from=${catLink}`
-            });
-        });
-    });
-
-    // --- SALTO ---
-    saltoProducts.forEach(cat => {
-        if (cat.subProducts) {
-            const catLink = `/products/access-control/salto/${cat.id}`;
-            cat.subProducts.forEach(p => {
-                products.push({
-                    id: p.id,
-                    title: p.title,
-                    description: p.description,
-                    image: p.image,
-                    brand: "Salto",
-                    link: `/products/detail/${p.id}?from=${catLink}`
-                });
-            });
+                description: p.description || "",
+                image: p.mainImage || "",
+                brand: brandLabel(p.brand),
+                link: `/products/detail/${p.productId}?from=${categoryFromLink(p.category)}`,
+            }));
+        } catch {
+            searchCache = [];
         }
-    });
+    })();
 
-    // --- SURVEILLANCE ---
-    surveillanceProducts.forEach(p => {
-        products.push({
-            id: p.id,
-            title: p.title,
-            image: p.image,
-            description: p.description,
-            brand: "Surveillance",
-            link: `/products/detail/${p.id}?from=/products/surveillance`
-        });
-    });
-
-    // --- BUILDING MANAGEMENT ---
-    bmsProducts.forEach(p => {
-        products.push({
-            id: p.id,
-            title: p.title,
-            image: p.image,
-            description: p.description,
-            brand: "Building Management",
-            link: `/products/detail/${p.id}?from=/products/building-management`
-        });
-    });
-
-    return products;
-};
+    return initPromise;
+}
 
 export const searchProducts = (query: string): SearchResult[] => {
     if (!query || query.length < 2) return [];
-    const products = getAllSearchableProducts();
+    const products = searchCache || [];
     const lowerQuery = query.toLowerCase();
 
-    return products.filter(p => 
-        p.title.toLowerCase().includes(lowerQuery) || 
+    return products.filter(p =>
+        p.title.toLowerCase().includes(lowerQuery) ||
         p.description.toLowerCase().includes(lowerQuery) ||
         p.brand.toLowerCase().includes(lowerQuery)
-    ).slice(0, 8); // Limit to 8 results for sidebar
+    ).slice(0, 8);
 };

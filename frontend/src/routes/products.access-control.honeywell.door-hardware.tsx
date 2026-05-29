@@ -5,7 +5,7 @@ import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { HoneywellHero } from "@/components/Product/AccessControl/Honeywell/HoneywellHero";
 import { HoneywellGrid } from "@/components/Product/AccessControl/Honeywell/HoneywellGrid";
-import { honeywellDoorHardware } from "@/components/Product/AccessControl/Honeywell/data";
+import { fetchProducts } from "@/utils/productApi";
 import { motion } from "framer-motion";
 import { Lock, DoorOpen, ShieldCheck } from "lucide-react";
 
@@ -25,8 +25,17 @@ export const Route = createFileRoute("/products/access-control/honeywell/door-ha
 function HoneywellDoorHardwarePage() {
     const [currentSort, setCurrentSort] = useState<SortOption>("name-asc");
     const [popularity, setPopularity] = useState<Record<string, number>>({});
+    const [apiProducts, setApiProducts] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
 
     const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+
+    useEffect(() => {
+        fetchProducts("Access Control", "Honeywell", "Door Hardware")
+            .then(data => setApiProducts(data))
+            .catch(() => {})
+            .finally(() => setLoading(false));
+    }, []);
 
     useEffect(() => {
         fetch(`${baseUrl}/api/products/popularity/list`, { credentials: "include" })
@@ -35,8 +44,15 @@ function HoneywellDoorHardwarePage() {
             .catch(() => {});
     }, []);
 
+    const mapped = useMemo(() =>
+        apiProducts.map(p => ({
+            title: p.title,
+            desc: p.description,
+            image: p.mainImage,
+        })), [apiProducts]);
+
     const sortedProducts = useMemo(() => {
-        const products = [...honeywellDoorHardware];
+        const products = [...mapped];
         switch (currentSort) {
             case "newest":
                 return products.reverse();
@@ -51,7 +67,28 @@ function HoneywellDoorHardwarePage() {
             default:
                 return products;
         }
-    }, [currentSort, popularity]);
+    }, [currentSort, popularity, mapped]);
+
+    if (loading) return (
+        <div className="bg-white min-h-screen">
+            <HoneywellHero
+                title="Door Hardware"
+                subtitle="Reliable physical security. Professional locking devices and egress solutions."
+                breadcrumbs={[
+                    { name: "Home", href: "/" },
+                    { name: "Products", href: "/products" },
+                    { name: "Access Control", href: "/products/access-control" },
+                    { name: "Honeywell", href: "/products/access-control/honeywell" },
+                    { name: "Door Hardware", href: "/products/access-control/honeywell/door-hardware" },
+                ]}
+            />
+            <section className="py-14 md:py-16 relative z-20 px-8">
+                <Container>
+                    <div className="text-center py-20 text-gray-400 text-sm">Loading products...</div>
+                </Container>
+            </section>
+        </div>
+    );
 
     return (
         <div className="bg-white min-h-screen">
@@ -73,7 +110,7 @@ function HoneywellDoorHardwarePage() {
                     <ProductSort
                         currentSort={currentSort}
                         onSortChange={setCurrentSort}
-                        totalProducts={honeywellDoorHardware.length}
+                        totalProducts={mapped.length}
                     />
                     <HoneywellGrid products={sortedProducts} />
                 </Container>
