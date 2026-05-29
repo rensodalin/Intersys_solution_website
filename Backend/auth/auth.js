@@ -5,23 +5,24 @@ import User from "../model/user.js";
 const router = express.Router();
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "6LfwwfssAAAAAABLeDbe3IaO5dr0BHeFfozkcW-1";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@intersys.com";
 
 const VALID_COUNTRIES = [
-    "Afghanistan","Albania","Algeria","Argentina","Australia","Austria","Azerbaijan",
-    "Bangladesh","Belarus","Belgium","Bolivia","Bosnia and Herzegovina","Brazil","Bulgaria",
-    "Cambodia","Cameroon","Canada","Chile","China","Colombia","Croatia","Cuba","Czech Republic",
-    "Denmark","Dominican Republic","Ecuador","Egypt","Ethiopia","Finland","France",
-    "Germany","Ghana","Greece","Guatemala","Hong Kong","Hungary",
-    "India","Indonesia","Iran","Iraq","Ireland","Israel","Italy",
-    "Japan","Jordan","Kazakhstan","Kenya","Kuwait",
-    "Laos","Lebanon","Libya","Malaysia","Mexico","Morocco","Myanmar",
-    "Nepal","Netherlands","New Zealand","Nigeria","North Korea","Norway",
-    "Oman","Pakistan","Panama","Peru","Philippines","Poland","Portugal",
-    "Qatar","Romania","Russia","Saudi Arabia","Serbia","Singapore","Slovakia",
-    "South Africa","South Korea","Spain","Sri Lanka","Sweden","Switzerland","Syria",
-    "Taiwan","Thailand","Tunisia","Turkey","Ukraine",
-    "United Arab Emirates","United Kingdom","United States",
-    "Uruguay","Uzbekistan","Venezuela","Vietnam","Yemen","Zimbabwe"
+    "Afghanistan", "Albania", "Algeria", "Argentina", "Australia", "Austria", "Azerbaijan",
+    "Bangladesh", "Belarus", "Belgium", "Bolivia", "Bosnia and Herzegovina", "Brazil", "Bulgaria",
+    "Cambodia", "Cameroon", "Canada", "Chile", "China", "Colombia", "Croatia", "Cuba", "Czech Republic",
+    "Denmark", "Dominican Republic", "Ecuador", "Egypt", "Ethiopia", "Finland", "France",
+    "Germany", "Ghana", "Greece", "Guatemala", "Hong Kong", "Hungary",
+    "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy",
+    "Japan", "Jordan", "Kazakhstan", "Kenya", "Kuwait",
+    "Laos", "Lebanon", "Libya", "Malaysia", "Mexico", "Morocco", "Myanmar",
+    "Nepal", "Netherlands", "New Zealand", "Nigeria", "North Korea", "Norway",
+    "Oman", "Pakistan", "Panama", "Peru", "Philippines", "Poland", "Portugal",
+    "Qatar", "Romania", "Russia", "Saudi Arabia", "Serbia", "Singapore", "Slovakia",
+    "South Africa", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Syria",
+    "Taiwan", "Thailand", "Tunisia", "Turkey", "Ukraine",
+    "United Arab Emirates", "United Kingdom", "United States",
+    "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zimbabwe"
 ];
 
 async function verifyRecaptcha(token) {
@@ -79,7 +80,7 @@ router.post("/register", async (req, res) => {
         }
 
         // Strong password validation
-        const isStrong = 
+        const isStrong =
             password.length >= 8 &&
             /[A-Z]/.test(password) &&
             /[a-z]/.test(password) &&
@@ -160,8 +161,17 @@ router.post("/login", async (req, res, next) => {
                     id: user._id,
                     name: user.name,
                     email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    avatar: user.avatar,
+                    phone: user.phone,
+                    gender: user.gender,
+                    country: user.country,
                     role: user.role,
-                    isAdmin: user.isAdmin
+                    isAdmin: user.email === ADMIN_EMAIL,
+                    newsletter: user.newsletter,
+                    receiveUpdates: user.receiveUpdates,
+                    downloadedPdfs: user.downloadedPdfs
                 }
             });
         });
@@ -205,8 +215,14 @@ router.get(
                     console.error("Session Login Error:", err);
                     return res.redirect(`${defaultRedirect}?error=session_error`);
                 }
-                // Successful login, redirect to saved location
-                return res.redirect(redirectTo);
+                // Send HTML page that sets cookie via 200 response, then redirects via JS
+                // (Express 5 + res.redirect has issues sending Set-Cookie headers properly)
+                res.status(200).send(`<!DOCTYPE html>
+<html><head>
+<meta http-equiv="refresh" content="0;url=${redirectTo}">
+</head><body>
+<script>window.location.replace("${redirectTo}");</script>
+</body></html>`);
             });
         })(req, res, next);
     }
@@ -219,20 +235,20 @@ router.all("/logout", (req, res, next) => {
             console.error("Logout Error:", err);
             return res.status(500).json({ success: false, message: "Failed to log out" });
         }
-        
+
         req.session.destroy((destroyErr) => {
             if (destroyErr) {
                 console.error("Session destroy error during logout:", destroyErr);
             }
-            
+
             // Explicitly clear the connect.sid session cookie with security flags matching server config
             res.clearCookie("connect.sid", {
                 path: "/",
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
-                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
+                secure: true,
+                sameSite: "none"
             });
-            
+
             return res.json({ success: true, message: "Logged out successfully" });
         });
     });
@@ -242,7 +258,9 @@ router.all("/logout", (req, res, next) => {
 router.get("/user", (req, res) => {
     if (req.user) {
         const user = req.user.toObject ? req.user.toObject() : req.user;
-        res.json({ success: true, user: { ...user, id: user._id } });
+        const { password, __v, ...safeUser } = user;
+        safeUser.isAdmin = user.email === ADMIN_EMAIL;
+        res.json({ success: true, user: { ...safeUser, id: user._id } });
     } else {
         res.status(401).json({ success: false, message: "Not authenticated" });
     }
@@ -295,7 +313,7 @@ router.put("/user/update", async (req, res) => {
             }
 
             // Strong password validation
-            const isStrong = 
+            const isStrong =
                 password.length >= 8 &&
                 /[A-Z]/.test(password) &&
                 /[a-z]/.test(password) &&
@@ -312,7 +330,7 @@ router.put("/user/update", async (req, res) => {
         }
 
         await user.save();
-        
+
         // Update passport session to keep it synchronized
         req.login(user, (err) => {
             if (err) {
@@ -320,7 +338,9 @@ router.put("/user/update", async (req, res) => {
             }
         });
 
-        res.json({ success: true, message: "Profile updated successfully", user });
+        const updatedUser = user.toObject ? user.toObject() : user;
+        updatedUser.isAdmin = user.email === ADMIN_EMAIL;
+        res.json({ success: true, message: "Profile updated successfully", user: updatedUser });
     } catch (error) {
         console.error("Update User Error:", error);
         res.status(500).json({ success: false, message: "Internal server error", error: error.message });
@@ -337,7 +357,7 @@ router.post("/user/download", async (req, res) => {
         if (!title || !url) {
             return res.status(400).json({ success: false, message: "Title and URL are required" });
         }
-        
+
         const user = await User.findById(req.user._id);
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" });

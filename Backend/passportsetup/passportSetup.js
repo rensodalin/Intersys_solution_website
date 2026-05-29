@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@intersys.com";
+
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
@@ -33,6 +35,7 @@ passport.use(
 
                 if (user) {
                     // User exists, return user
+                    user.isAdmin = user.email === ADMIN_EMAIL;
                     done(null, user);
                 } else {
                     // Create a new user
@@ -42,6 +45,7 @@ passport.use(
                         email: profile.emails?.[0]?.value || "",
                         avatar: profile.photos?.[0]?.value || "",
                     });
+                    user.isAdmin = user.email === ADMIN_EMAIL;
                     done(null, user);
                 }
             } catch (error) {
