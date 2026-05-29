@@ -102,6 +102,31 @@ router.get("/admin-stats", isAdmin, async (req, res) => {
         const totalContacts = await Contact.countDocuments({});
         const totalUsers = await User.countDocuments({});
 
+        // Visitor & active user counts
+        const totalVisitors = totalUsers;
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        const activeUsers = await User.countDocuments({ lastLogin: { $gte: thirtyDaysAgo } });
+
+        // Monthly quote velocity (last 6 months)
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+        const monthlyVelocityRaw = await Quote.aggregate([
+            { $match: { createdAt: { $gte: sixMonthsAgo } } },
+            {
+                $group: {
+                    _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
+                    count: { $sum: 1 }
+                }
+            },
+            { $sort: { "_id.year": 1, "_id.month": 1 } }
+        ]);
+        const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+        const monthlyVelocity = monthlyVelocityRaw.map((item) => ({
+            name: monthNames[item._id.month - 1],
+            quotes: item.count
+        }));
+
         // Fetch recent quotes
         const recentQuotes = await Quote.find({})
             .sort({ createdAt: -1 })
@@ -126,10 +151,13 @@ router.get("/admin-stats", isAdmin, async (req, res) => {
                 inProgressQuotes,
                 completedQuotes,
                 totalContacts,
+                totalVisitors,
+                activeUsers,
                 totalUsers,
                 recentQuotes,
                 recentContacts,
-                recentUsers
+                recentUsers,
+                monthlyVelocity
             }
         });
     } catch (error) {

@@ -34,7 +34,9 @@ passport.use(
                 let user = await User.findOne({ googleId: profile.id });
 
                 if (user) {
-                    // User exists, return user
+                    // User exists, update lastLogin and return user
+                    user.lastLogin = new Date();
+                    await user.save();
                     user.isAdmin = user.email === ADMIN_EMAIL;
                     done(null, user);
                 } else {
@@ -44,6 +46,7 @@ passport.use(
                         name: profile.displayName,
                         email: profile.emails?.[0]?.value || "",
                         avatar: profile.photos?.[0]?.value || "",
+                        lastLogin: new Date(),
                     });
                     user.isAdmin = user.email === ADMIN_EMAIL;
                     done(null, user);

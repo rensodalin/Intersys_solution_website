@@ -53,6 +53,9 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    lastLogin: {
+        type: Date,
+    },
     downloadedPdfs: [{
         title: { type: String, required: true },
         url: { type: String, required: true },

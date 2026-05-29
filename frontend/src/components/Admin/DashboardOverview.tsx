@@ -22,11 +22,14 @@ interface DashboardStats {
   pendingQuotes: number;
   inProgressQuotes: number;
   completedQuotes: number;
+  totalVisitors: number;
+  activeUsers: number;
   totalContacts: number;
   totalUsers: number;
   recentQuotes: any[];
   recentContacts: any[];
   recentUsers: any[];
+  monthlyVelocity: { name: string; quotes: number }[];
 }
 
 export function DashboardOverview() {
@@ -120,58 +123,7 @@ export function DashboardOverview() {
     // Sort by date (descending)
     logItems.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
 
-    // Fallback/Mockup items to ensure UI is full and matches image exactly
-    const mockItems = [
-      {
-        id: "mock-1",
-        type: "success" as const,
-        title: "Quote #6212 Approved",
-        description: "Global Logistics Park - Phase 1",
-        time: "2 MINS AGO",
-        timestamp: new Date(Date.now() - 2 * 60000)
-      },
-      {
-        id: "mock-2",
-        type: "warning" as const,
-        title: "High Latency Alert",
-        description: "East Tower HVAC Sensor Network",
-        time: "10 MINS AGO",
-        timestamp: new Date(Date.now() - 10 * 60000)
-      },
-      {
-        id: "mock-3",
-        type: "primary" as const,
-        title: "New Client Message",
-        description: "Inquiry regarding Structural Mesh 2.0",
-        time: "1 HOUR AGO",
-        timestamp: new Date(Date.now() - 60 * 60000)
-      },
-      {
-        id: "mock-4",
-        type: "info" as const,
-        title: "Architect Onboarded",
-        description: "Lia Wang joined the Project Group",
-        time: "3 HOURS AGO",
-        timestamp: new Date(Date.now() - 180 * 60000)
-      }
-    ];
-
-    // Combine: place real items on top, fill with mock items to have at least 4 items
-    const combined = [...logItems];
-    mockItems.forEach((mock) => {
-      if (combined.length < 4 && !combined.some(item => item.title === mock.title)) {
-        combined.push({
-          id: mock.id,
-          type: mock.type,
-          title: mock.title,
-          description: mock.description,
-          time: mock.time,
-          timestamp: mock.timestamp
-        });
-      }
-    });
-
-    return combined.slice(0, 4);
+    return logItems.slice(0, 4);
   };
 
   const getRelativeTime = (date: Date) => {
@@ -204,34 +156,28 @@ export function DashboardOverview() {
 
   const trajectoryData = timeframe === "week" ? trajectoryDataWeek : trajectoryDataMonth;
 
-  // Velocity Bar Chart Data (JUN to NOV)
-  const velocityData = [
-    { name: "JUN", quotes: 15 },
-    { name: "JUL", quotes: 28 },
-    { name: "AUG", quotes: 35 },
-    { name: "SEP", quotes: 48 },
-    { name: "OCT", quotes: 58, highlight: true }, // Highlighted in red in mockup image
-    { name: "NOV", quotes: 42 }
-  ];
+  // Velocity Bar Chart Data from API
+  const velocityData = (stats?.monthlyVelocity?.length ?? 0) > 0
+    ? stats.monthlyVelocity!.map((item, index) => ({
+        name: item.name,
+        quotes: item.quotes,
+        highlight: index === stats.monthlyVelocity!.length - 1
+      }))
+    : [{ name: "No Data", quotes: 0 }];
 
-  // Helper to get metric counts with mockup default values
+  // Helper to get metric counts from real API data
   const getMetric = (type: "visitors" | "active" | "quotes" | "pending" | "completed" | "contacts") => {
-    if (type === "visitors") return "42.8k";
-    if (type === "active") return "12.4k";
-    
-    if (stats) {
-      if (type === "quotes") return stats.totalQuotes.toString();
-      if (type === "pending") return stats.pendingQuotes.toString();
-      if (type === "completed") return stats.completedQuotes.toString();
-      if (type === "contacts") return stats.totalContacts.toString();
-    }
-    
-    // Default mock fallbacks from the image
-    if (type === "quotes") return "842";
-    if (type === "pending") return "156";
-    if (type === "completed") return "686";
-    if (type === "contacts") return "686";
-    return "0";
+    if (!stats) return "0";
+    const val = (() => {
+      if (type === "visitors") return stats.totalVisitors;
+      if (type === "active") return stats.activeUsers;
+      if (type === "quotes") return stats.totalQuotes;
+      if (type === "pending") return stats.pendingQuotes;
+      if (type === "completed") return stats.completedQuotes;
+      if (type === "contacts") return stats.totalContacts;
+      return undefined;
+    })();
+    return val != null ? val.toLocaleString() : "0";
   };
 
   const activityColors = {
@@ -271,9 +217,6 @@ export function DashboardOverview() {
             <span className="p-2 rounded-lg bg-slate-100 text-slate-600 transition group-hover:scale-110 duration-300">
               <Eye size={16} />
             </span>
-            <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
-              +11%
-            </span>
           </div>
           <div className="mt-4">
             <h3 className="text-2xl font-black text-gray-900">{getMetric("visitors")}</h3>
@@ -281,14 +224,11 @@ export function DashboardOverview() {
           </div>
         </div>
 
-        {/* Card 2: Active Users */}
+        {/* Card 2: Active Users (logged in within 30 days) */}
         <div className="bg-white p-5 rounded-xl border border-gray-150 shadow-sm relative overflow-hidden group hover:shadow-md transition duration-300">
           <div className="flex items-center justify-between">
             <span className="p-2 rounded-lg bg-blue-50 text-blue-600 transition group-hover:scale-110 duration-300">
               <UsersIcon size={16} />
-            </span>
-            <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
-              +6%
             </span>
           </div>
           <div className="mt-4">

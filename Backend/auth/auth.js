@@ -149,6 +149,10 @@ router.post("/login", async (req, res, next) => {
             return res.status(401).json({ success: false, message: "Invalid email or password" });
         }
 
+        // Update lastLogin timestamp
+        user.lastLogin = new Date();
+        await user.save();
+
         // Log the user in via Passport
         req.logIn(user, (err) => {
             if (err) {
