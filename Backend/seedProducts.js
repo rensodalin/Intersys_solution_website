@@ -22,24 +22,6 @@ const MOCK_PRODUCTS = [
             {
                 "partCode": "DEFAULT-1",
                 "specification": "Standard Profile",
-                "price": 54,
-                "qty": 0
-            },
-            {
-                "partCode": "DEFAULT-2",
-                "specification": "Standard Profile",
-                "price": 0,
-                "qty": 0
-            },
-            {
-                "partCode": "DEFAULT-3",
-                "specification": "Standard Profile",
-                "price": 0,
-                "qty": 0
-            },
-            {
-                "partCode": "DEFAULT-4",
-                "specification": "Standard Profile",
                 "price": 0,
                 "qty": 0
             }
@@ -47,7 +29,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://www.intersys-solutions.com/pdf_document/Internship%20Agreement.pdf"
+                "url": "#"
             }
         ]
     },
@@ -74,8 +56,8 @@ const MOCK_PRODUCTS = [
         ],
         "documents": [
             {
-                "name": "Internship Proposal",
-                "url": "https://www.intersys-solutions.com/pdf_document/Ren_Sodalin-Internship_Proposal.pdf"
+                "name": "Datasheet",
+                "url": "#"
             }
         ]
     },
@@ -103,7 +85,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -131,7 +113,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -146,7 +128,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/xs4-one-eu-satin-stainless-blacklector_0.png?itok=jNkD-pEK"
         ],
         "brandSubCategory": "Electronic Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-locks",
         "longDescription": "The classic SALTO One redesigned with a slim silhouette for modern European environments.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -159,7 +141,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -174,7 +156,7 @@ const MOCK_PRODUCTS = [
             "https://strapi-media-bucket.fly.storage.tigris.dev/salto_xs4_one_deadlatch_satin_stainless_steel_front_bc201e46b9.png"
         ],
         "brandSubCategory": "Electronic Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-locks",
         "longDescription": "High-security deadlatch integration for the proven XS4 One electronic platform.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -187,7 +169,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -202,7 +184,7 @@ const MOCK_PRODUCTS = [
             "https://entrypass.co.id/wp-content/uploads/2023/12/Group-13.jpg"
         ],
         "brandSubCategory": "Electronic Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-locks",
         "longDescription": "DIN-standard compliant electronic lock providing robust security and easy system integration.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -215,7 +197,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -230,7 +212,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/aelement-fusion-eu-satin-stainless-blacklector.png?itok=mlcg0HnP"
         ],
         "brandSubCategory": "Electronic Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-locks",
         "longDescription": "An elegant, minimalist locking solution compatible with European and DIN hardware standards.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -243,7 +225,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -258,7 +240,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/aelement-eu-satin-stainless-blacklector.png?itok=YGcoOqY5"
         ],
         "brandSubCategory": "Electronic Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-locks",
         "longDescription": "Premium European-style electronic lock blending advanced technology with refined aesthetics.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -271,7 +253,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -286,7 +268,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/xs4-mini-ansi.png?itok=uBMfDGuD"
         ],
         "brandSubCategory": "Electronic Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-locks",
         "longDescription": "Compact ANSI-standard electronic lock ideal for internal office doors and light-duty applications.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -299,7 +281,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -314,7 +296,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/cylinder-eu-satinchrome-black.png?itok=-ppoadNb"
         ],
         "brandSubCategory": "Electronic Cylinders",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-cylinders",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-cylinders",
         "longDescription": "The platform's most versatile cylinder, compliant with European profile doors.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -327,7 +309,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -342,7 +324,7 @@ const MOCK_PRODUCTS = [
             "https://strapi-media-bucket.fly.storage.tigris.dev/salto_neo_cylinder_black_front_af26794bde.png"
         ],
         "brandSubCategory": "Electronic Cylinders",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-cylinders",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-cylinders",
         "longDescription": "Specialized oval cylinder designed for UK-standard professional installations.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -355,7 +337,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -370,7 +352,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/cylinder-swiss-satinchrome-black_0.png?itok=3Rh3_oDq"
         ],
         "brandSubCategory": "Electronic Cylinders",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-cylinders",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-cylinders",
         "longDescription": "Swiss-standard compliant electronic cylinder with high-precision engineering.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -383,7 +365,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -398,7 +380,7 @@ const MOCK_PRODUCTS = [
             "https://entrypass.co.id/wp-content/uploads/2023/12/Group-38.jpg"
         ],
         "brandSubCategory": "Electronic Cylinders",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-cylinders",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-cylinders",
         "longDescription": "Designed for Scandinavian profile doors, balancing security and ease of use.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -411,7 +393,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -426,7 +408,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/neo-scand-security-list_0.jpg?itok=NpEHFh53"
         ],
         "brandSubCategory": "Electronic Cylinders",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-cylinders",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-cylinders",
         "longDescription": "Ultra-high security variant for specialized Scandinavian perimeter hardware.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -439,7 +421,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -454,7 +436,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/neo-rim-uk-satin-chrome-blacklector_7.jpg?itok=2-szuujY"
         ],
         "brandSubCategory": "Electronic Cylinders",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-cylinders",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-cylinders",
         "longDescription": "Rim-mounted cylinder solution for UK-style night latches and gates.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -467,7 +449,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -482,7 +464,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/neo-rim-us-satin-chrome-blacklector_7.jpg?itok=ji6XLvS_"
         ],
         "brandSubCategory": "Electronic Cylinders",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-cylinders",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-cylinders",
         "longDescription": "US-standard Rim cylinder for panic bars and storefront locking hardware.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -495,7 +477,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -510,7 +492,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/neo-mortise-satin-chrome-blacklector_1.jpg?itok=Z-diQOsh"
         ],
         "brandSubCategory": "Electronic Cylinders",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-cylinders",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-cylinders",
         "longDescription": "Industrial-grade mortise cylinder for heavy-duty commercial locking systems.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -523,7 +505,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -538,7 +520,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/neo-camlock-satin-chrome-blacklector_6.jpg?itok=qUr07kCe"
         ],
         "brandSubCategory": "Electronic Cylinders",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-cylinders",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-cylinders",
         "longDescription": "Compact cam lock cylinder for secure cabinets, lockers, and furniture.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -551,7 +533,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -566,7 +548,7 @@ const MOCK_PRODUCTS = [
             "https://entrypass.co.id/wp-content/uploads/2023/12/Group-42.jpg"
         ],
         "brandSubCategory": "Electronic Cylinders",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-cylinders",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-cylinders",
         "longDescription": "Secure deadbolt integration providing high-torque resistance and keyless convenience.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -579,7 +561,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -594,7 +576,7 @@ const MOCK_PRODUCTS = [
             "https://entrypass.co.id/wp-content/uploads/2023/11/Group-1.jpg"
         ],
         "brandSubCategory": "Electronic Locker Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-locker-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-locker-locks",
         "longDescription": "Smart networked locker lock for advanced facility management and security.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -607,7 +589,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -622,7 +604,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/xs4-locker-lock.png?itok=NLTskoUJ"
         ],
         "brandSubCategory": "Electronic Locker Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-locker-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-locker-locks",
         "longDescription": "Sustainable and easy-to-install electronic locker lock for various applications.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -635,7 +617,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -650,7 +632,7 @@ const MOCK_PRODUCTS = [
             "https://www.gantner.com/Website/Products/ECO.Side%20Lock/876/image-thumb__876__image-slider-hero-image/Gantner-ECO-Side.Lock-220114148594.f502dc84.jpg"
         ],
         "brandSubCategory": "Electronic Locker Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-locker-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-locker-locks",
         "longDescription": "Battery-powered electronic lock for lockers with advanced RFID technology.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -663,7 +645,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -678,7 +660,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/eco-lock-finish.jpg?itok=Q7Rztwgd"
         ],
         "brandSubCategory": "Electronic Locker Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-locker-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-locker-locks",
         "longDescription": "Efficient and reliable electronic locker lock for secure storage solutions.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -691,7 +673,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -706,7 +688,7 @@ const MOCK_PRODUCTS = [
             "https://www.gantner.com/Website/Products/GL7p/151/image-thumb__151__image-slider-hero-image/Battery%20Lock%20GL7p%20GANTNER%2002.c642728d.jpg"
         ],
         "brandSubCategory": "Electronic Locker Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-locker-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-locker-locks",
         "longDescription": "High-performance battery-operated locker lock for premium environments.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -719,7 +701,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -734,7 +716,7 @@ const MOCK_PRODUCTS = [
             "https://support.saltosystems.com/installation-guides/locker-locks/images/xs4-eco-lock.7ce45aa38e6ada3ef71796ad1a6470862af360e4a048408ab7e6259d59d8dc90.png"
         ],
         "brandSubCategory": "Electronic Locker Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-locker-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-locker-locks",
         "longDescription": "Environmentally friendly and cost-effective electronic locker locking solution.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -747,7 +729,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -762,7 +744,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/neoxx-g3-list-2.jpg?itok=pjj-u0VO"
         ],
         "brandSubCategory": "Electronic Padlocks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-padlocks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-padlocks",
         "longDescription": "The next generation of high-security electronic padlocks with a versatile design.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -775,7 +757,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -790,7 +772,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/neoxx-padlock-g4-list_0.png?itok=EA1dtfcB"
         ],
         "brandSubCategory": "Electronic Padlocks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFelectronic-padlocks",
+        "brandSubCategoryLink": "/products/access-control/salto#electronic-padlocks",
         "longDescription": "Advanced electronic padlock featuring robust engineering and cloud-native integration.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -803,7 +785,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -818,7 +800,7 @@ const MOCK_PRODUCTS = [
             "https://lsc.com.au/Images/ProductImages/WRDM0E4B.jpg"
         ],
         "brandSubCategory": "Wall Readers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFwall-readers",
+        "brandSubCategoryLink": "/products/access-control/salto#wall-readers",
         "longDescription": "Sleek European-standard wall reader with advanced authentication technology.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -831,7 +813,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -846,7 +828,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/news/design-xs-reader-keypad-1490-news.jpg?itok=0DTu8tUD"
         ],
         "brandSubCategory": "Wall Readers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFwall-readers",
+        "brandSubCategoryLink": "/products/access-control/salto#wall-readers",
         "longDescription": "Integrated keypad and reader for multi-factor authentication in a European profile.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -859,7 +841,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -874,7 +856,7 @@ const MOCK_PRODUCTS = [
             "https://shop.cie-group.com/media/prod_images_nodel/WRD_MB_1-scaled.jpg"
         ],
         "brandSubCategory": "Wall Readers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFwall-readers",
+        "brandSubCategoryLink": "/products/access-control/salto#wall-readers",
         "longDescription": "Compact mullion-mount reader ideal for narrow door frames and aluminum profiles.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -887,7 +869,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -902,7 +884,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/wallreader-ansi-blacklector_0.png?itok=JMLWsD0s"
         ],
         "brandSubCategory": "Wall Readers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFwall-readers",
+        "brandSubCategoryLink": "/products/access-control/salto#wall-readers",
         "longDescription": "ANSI-standard wall reader designed for the North American market and international standards.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -915,7 +897,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -930,7 +912,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/wallreader-ansi-keypad-2.png?itok=dExJDFMX"
         ],
         "brandSubCategory": "Wall Readers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFwall-readers",
+        "brandSubCategoryLink": "/products/access-control/salto#wall-readers",
         "longDescription": "Robust ANSI-profile reader with integrated secure PIN keypad.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -943,7 +925,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -958,7 +940,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/wave-xs-eu-list.jpg?itok=d7TjmIJa"
         ],
         "brandSubCategory": "Wall Readers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFwall-readers",
+        "brandSubCategoryLink": "/products/access-control/salto#wall-readers",
         "longDescription": "Hygienic touchless exit button with customizable LED response for European gang boxes.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -971,7 +953,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -986,7 +968,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/wave-xs-dk-list.jpg?itok=OlSKKETu"
         ],
         "brandSubCategory": "Wall Readers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFwall-readers",
+        "brandSubCategoryLink": "/products/access-control/salto#wall-readers",
         "longDescription": "Advanced touchless button technology optimized for Danish-standard installations.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -999,7 +981,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1014,7 +996,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/modular-xs-eu-wr-list.jpg?itok=-nO_worG"
         ],
         "brandSubCategory": "Wall Readers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFwall-readers",
+        "brandSubCategoryLink": "/products/access-control/salto#wall-readers",
         "longDescription": "Flexible, modular reader solution designed for diverse mounting and integration requirements.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1027,7 +1009,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1042,7 +1024,7 @@ const MOCK_PRODUCTS = [
             "https://image.archify.com/catalog/product/l/sbz79-53v8u-1656562640.jpg"
         ],
         "brandSubCategory": "Wall Readers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFwall-readers",
+        "brandSubCategoryLink": "/products/access-control/salto#wall-readers",
         "longDescription": "Integrated panel reader designed for seamless mounting within elevator or intercom panels.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1055,7 +1037,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1070,7 +1052,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/long-distance-wr-list.jpg?itok=ekFE3zhI"
         ],
         "brandSubCategory": "Wall Readers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFwall-readers",
+        "brandSubCategoryLink": "/products/access-control/salto#wall-readers",
         "longDescription": "Specialized reader for long-range identification, ideal for vehicle gates and parking areas.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1083,7 +1065,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1098,7 +1080,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/salto-product-orion-c-header-op.png?itok=_SEDnUCC"
         ],
         "brandSubCategory": "Face Recognition Terminals",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFface-recognition-terminals",
+        "brandSubCategoryLink": "/products/access-control/salto#face-recognition-terminals",
         "longDescription": "AI-powered facial recognition camera for seamless and ultra-secure contactless access control.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1111,7 +1093,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1126,7 +1108,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/bluenet-door-controller-finish.jpg?itok=bjRPVu37"
         ],
         "brandSubCategory": "Access Controllers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFaccess-controllers",
+        "brandSubCategoryLink": "/products/access-control/salto#access-controllers",
         "longDescription": "Wireless network door controller with BlueNet technology for real-time access management.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1139,7 +1121,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1154,7 +1136,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/CU4200.jpg?itok=HiMr9eLJ"
         ],
         "brandSubCategory": "Access Controllers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFaccess-controllers",
+        "brandSubCategoryLink": "/products/access-control/salto#access-controllers",
         "longDescription": "High-performance auxiliary door controller with enterprise-level security features.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1167,7 +1149,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1182,7 +1164,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/CU42E0.jpg?itok=MIpwy6A5"
         ],
         "brandSubCategory": "Access Controllers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFaccess-controllers",
+        "brandSubCategoryLink": "/products/access-control/salto#access-controllers",
         "longDescription": "Smart online door controller powered by SALTO Virtual Network (SVN) technology.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1195,7 +1177,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1210,7 +1192,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/UBOX4000.jpg?itok=ytzYuEjO"
         ],
         "brandSubCategory": "Access Controllers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFaccess-controllers",
+        "brandSubCategoryLink": "/products/access-control/salto#access-controllers",
         "longDescription": "Robust and compact security unit for centralized access management.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1223,7 +1205,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1238,7 +1220,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/CU4EB8.jpg?itok=DowhAQPU"
         ],
         "brandSubCategory": "Access Controllers",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFaccess-controllers",
+        "brandSubCategoryLink": "/products/access-control/salto#access-controllers",
         "longDescription": "Versatile expansion board adding additional input/output capacity to CU series controllers.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1251,7 +1233,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1266,7 +1248,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/product-XS4-com-igo-header.png?itok=Ls92RafT"
         ],
         "brandSubCategory": "Door Intercom Systems",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFdoor-intercom-systems",
+        "brandSubCategoryLink": "/products/access-control/salto#door-intercom-systems",
         "longDescription": "Smart video intercom unit providing secure and visual visitor management directly from your mobile device.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1279,7 +1261,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1294,7 +1276,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/danalock-eu-ambiente.jpg?itok=isgApHhJ"
         ],
         "brandSubCategory": "Motorized Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFmotorized-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#motorized-locks",
         "longDescription": "Smart motorized lock solution compatible with European profile doors for effortless entry.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1307,7 +1289,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1322,7 +1304,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/Danalock_deadbolt_black.png?itok=sx4G46IQ"
         ],
         "brandSubCategory": "Motorized Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFmotorized-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#motorized-locks",
         "longDescription": "Heavy-duty smart deadbolt motorized lock for superior residential and commercial security.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1335,7 +1317,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1350,7 +1332,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/finishs/Danalock_silver_finish_0.png?itok=jKarA41K"
         ],
         "brandSubCategory": "Motorized Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFmotorized-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#motorized-locks",
         "longDescription": "Modern motorized smart lock optimized for Scandinavian door hardware standards.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1363,7 +1345,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1378,7 +1360,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/PBE900-satin-stainless.jpg?itok=xbuFoIT5"
         ],
         "brandSubCategory": "Panic Bars & Emergency Exit Devices",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFpanic-bars",
+        "brandSubCategoryLink": "/products/access-control/salto#panic-bars",
         "longDescription": "Europe-compliant electronic panic bar solution for high-security emergency exits.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1391,7 +1373,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1406,7 +1388,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/PBA1200-satin-stainless.jpg?itok=fGpxdU0M"
         ],
         "brandSubCategory": "Panic Bars & Emergency Exit Devices",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFpanic-bars",
+        "brandSubCategoryLink": "/products/access-control/salto#panic-bars",
         "longDescription": "Advanced panic bar interface compatible with wide-stile doors and SALTO access control.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1419,7 +1401,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1434,7 +1416,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/xs4-push-bar.png?itok=Rkeai8GW"
         ],
         "brandSubCategory": "Panic Bars & Emergency Exit Devices",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFpanic-bars",
+        "brandSubCategoryLink": "/products/access-control/salto#panic-bars",
         "longDescription": "Secure push bar solution designed for rapid egress and effortless system integration.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1447,7 +1429,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1462,7 +1444,7 @@ const MOCK_PRODUCTS = [
             "https://www.sourcesecurity.com/img/products/400/xs4-kpbs-400.jpg"
         ],
         "brandSubCategory": "Panic Bars & Emergency Exit Devices",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFpanic-bars",
+        "brandSubCategoryLink": "/products/access-control/salto#panic-bars",
         "longDescription": "High-security keypad-integrated panic bar for controlled emergency exit monitoring.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1475,7 +1457,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1490,7 +1472,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/le7s-list.jpg?itok=Rz3vMlqv"
         ],
         "brandSubCategory": "Mortise Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFmortise-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#mortise-locks",
         "longDescription": "Standard European profile mortise lock for secure and reliable door operations.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1503,7 +1485,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1518,7 +1500,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/la1t-automatic-list.jpg?itok=OX2SmrL2"
         ],
         "brandSubCategory": "Mortise Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFmortise-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#mortise-locks",
         "longDescription": "Heavy-duty ANSI-standard mortise lock designed for North American hardware requirements.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1531,7 +1513,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1546,7 +1528,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/ls5n-list.jpg?itok=zo2YMZSR"
         ],
         "brandSubCategory": "Mortise Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFmortise-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#mortise-locks",
         "longDescription": "Specialized Scandinavian profile mortise lock for northern European door standards.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1559,7 +1541,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1574,7 +1556,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/le8p-list.jpg?itok=h5dbdO-E"
         ],
         "brandSubCategory": "Mortise Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFmortise-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#mortise-locks",
         "longDescription": "European-style mortise lock featuring high-torque resistance and precision engineering.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1587,7 +1569,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1602,7 +1584,7 @@ const MOCK_PRODUCTS = [
             "https://saltosystems.com/sites/default/files/styles/breakpoint_1920/public/images/products/la1t-list.jpg?itok=a6-FmiDs"
         ],
         "brandSubCategory": "Mortise Locks",
-        "brandSubCategoryLink": "/products/access-control/saltohttps://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBFmortise-locks",
+        "brandSubCategoryLink": "/products/access-control/salto#mortise-locks",
         "longDescription": "Automatic latching ANSI mortise lock for enhanced convenience and perimeter security.\n\nDesigned for seamless integration into modern access control systems.",
         "options": [
             {
@@ -1643,7 +1625,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1671,7 +1653,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1699,7 +1681,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1727,7 +1709,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1755,7 +1737,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1783,7 +1765,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1811,7 +1793,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1839,7 +1821,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1867,7 +1849,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1895,7 +1877,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1923,7 +1905,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1951,7 +1933,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -1979,7 +1961,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2007,7 +1989,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2035,7 +2017,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2063,7 +2045,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2091,7 +2073,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2119,7 +2101,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2147,7 +2129,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2175,7 +2157,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Datasheet",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2203,7 +2185,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2231,7 +2213,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2259,7 +2241,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2287,7 +2269,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2315,7 +2297,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2343,7 +2325,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2371,7 +2353,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2399,7 +2381,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2427,7 +2409,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2455,7 +2437,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2483,7 +2465,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2511,7 +2493,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2539,7 +2521,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2567,7 +2549,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -2595,7 +2577,7 @@ const MOCK_PRODUCTS = [
         "documents": [
             {
                 "name": "Technical Specifications",
-                "url": "https://1drv.ms/b/c/3757616ab70f510e/IQDPwt32Yf2sQob5lsD0Am0SAeRpMcSvX6b32AdAYEf-Yko?e=tQzJBF"
+                "url": "#"
             }
         ]
     },
@@ -3970,12 +3952,572 @@ const MOCK_PRODUCTS = [
                 "url": "#"
             }
         ]
+    },
+    {
+        "productId": "micro-dome-cameras",
+        "category": "Surveillance (CCTV)",
+        "brand": "Intersys",
+        "title": "Micro-Dome Cameras",
+        "description": "Compact and discreet dome cameras designed for subtle high-definition indoor surveillance.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_b26d12913a0b4f8b922dc4088603cb5f~mv2.png/v1/fill/w_502,h_488,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_b26d12913a0b4f8b922dc4088603cb5f~mv2.png/v1/fill/w_502,h_488,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/surveillance",
+        "longDescription": "Compact and discreet dome cameras designed for subtle high-definition indoor surveillance.",
+        "options": [
+            {
+                "partCode": "SURV-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "thermal-cameras",
+        "category": "Surveillance (CCTV)",
+        "brand": "Intersys",
+        "title": "Thermal Cameras",
+        "description": "Advanced thermal imaging technology for superior detection in complete darkness or challenging weather.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_850558503705441bb667090e899adddb~mv2.png/v1/fill/w_414,h_420,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_850558503705441bb667090e899adddb~mv2.png/v1/fill/w_414,h_420,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/surveillance",
+        "longDescription": "Advanced thermal imaging technology for superior detection in complete darkness or challenging weather.",
+        "options": [
+            {
+                "partCode": "SURV-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "dome-cameras",
+        "category": "Surveillance (CCTV)",
+        "brand": "Intersys",
+        "title": "Dome Cameras",
+        "description": "Versatile, vandal-resistant dome cameras suitable for both indoor and outdoor security applications.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_4c3ae0174b6b4a94b8919040aabc9215~mv2.png/v1/fill/w_414,h_410,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_4c3ae0174b6b4a94b8919040aabc9215~mv2.png/v1/fill/w_414,h_410,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/surveillance",
+        "longDescription": "Versatile, vandal-resistant dome cameras suitable for both indoor and outdoor security applications.",
+        "options": [
+            {
+                "partCode": "SURV-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "corner-cameras",
+        "category": "Surveillance (CCTV)",
+        "brand": "Intersys",
+        "title": "Corner Cameras",
+        "description": "Specialized cameras designed for corner mounting to provide wide-angle coverage of entire rooms.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_7070598aa3f3442baca4f4518b8e57f3~mv2.png/v1/fill/w_436,h_440,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_7070598aa3f3442baca4f4518b8e57f3~mv2.png/v1/fill/w_436,h_440,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/surveillance",
+        "longDescription": "Specialized cameras designed for corner mounting to provide wide-angle coverage of entire rooms.",
+        "options": [
+            {
+                "partCode": "SURV-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "explosion-proof-cameras",
+        "category": "Surveillance (CCTV)",
+        "brand": "Intersys",
+        "title": "Explosion-Proof Cameras",
+        "description": "Heavy-duty cameras engineered for hazardous environments where safety and reliability are paramount.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_fd1eb100bdef440f9c3a2b25b68903e0~mv2.png/v1/fill/w_480,h_410,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_fd1eb100bdef440f9c3a2b25b68903e0~mv2.png/v1/fill/w_480,h_410,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/surveillance",
+        "longDescription": "Heavy-duty cameras engineered for hazardous environments where safety and reliability are paramount.",
+        "options": [
+            {
+                "partCode": "SURV-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "fisheye-cameras",
+        "category": "Surveillance (CCTV)",
+        "brand": "Intersys",
+        "title": "Fisheye Cameras",
+        "description": "360-degree panoramic cameras for complete situational awareness with no blind spots.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_d36cbb20f5964b84a88218b977b650be~mv2.png/v1/fill/w_402,h_410,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_d36cbb20f5964b84a88218b977b650be~mv2.png/v1/fill/w_402,h_410,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/surveillance",
+        "longDescription": "360-degree panoramic cameras for complete situational awareness with no blind spots.",
+        "options": [
+            {
+                "partCode": "SURV-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "ptz-cameras",
+        "category": "Surveillance (CCTV)",
+        "brand": "Intersys",
+        "title": "PTZ Cameras",
+        "description": "Pan-Tilt-Zoom cameras offering dynamic control and powerful optical zoom for large areas.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_20bc17c7cfdd4adf906e10afd45fc489~mv2.png/v1/fill/w_404,h_404,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_20bc17c7cfdd4adf906e10afd45fc489~mv2.png/v1/fill/w_404,h_404,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/surveillance",
+        "longDescription": "Pan-Tilt-Zoom cameras offering dynamic control and powerful optical zoom for large areas.",
+        "options": [
+            {
+                "partCode": "SURV-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "ball-cameras",
+        "category": "Surveillance (CCTV)",
+        "brand": "Intersys",
+        "title": "Ball Cameras",
+        "description": "Flexible ball-and-socket design for easy adjustment and precise targeting of surveillance areas.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_20de4f265f564c23a8f5df44bce8abbd~mv2.png/v1/fill/w_450,h_450,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_20de4f265f564c23a8f5df44bce8abbd~mv2.png/v1/fill/w_450,h_450,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/surveillance",
+        "longDescription": "Flexible ball-and-socket design for easy adjustment and precise targeting of surveillance areas.",
+        "options": [
+            {
+                "partCode": "SURV-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "bullet-cameras",
+        "category": "Surveillance (CCTV)",
+        "brand": "Intersys",
+        "title": "Bullet Cameras",
+        "description": "Visible deterrent bullet cameras with integrated IR for powerful long-range outdoor monitoring.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_41330c2f9f144a6cbd9b569af86d48ac~mv2.png/v1/fill/w_436,h_428,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_41330c2f9f144a6cbd9b569af86d48ac~mv2.png/v1/fill/w_436,h_428,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/surveillance",
+        "longDescription": "Visible deterrent bullet cameras with integrated IR for powerful long-range outdoor monitoring.",
+        "options": [
+            {
+                "partCode": "SURV-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "accessories",
+        "category": "Surveillance (CCTV)",
+        "brand": "Intersys",
+        "title": "Accessories",
+        "description": "Comprehensive range of mounts, brackets, and power solutions for surveillance installations.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_b18aeaae90dd4c82b76f9860e37829f6~mv2.png/v1/fill/w_448,h_448,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_b18aeaae90dd4c82b76f9860e37829f6~mv2.png/v1/fill/w_448,h_448,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/surveillance",
+        "longDescription": "Comprehensive range of mounts, brackets, and power solutions for surveillance installations.",
+        "options": [
+            {
+                "partCode": "SURV-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "multi-sensor-cameras",
+        "category": "Surveillance (CCTV)",
+        "brand": "Intersys",
+        "title": "Multi-Sensor Cameras",
+        "description": "High-resolution multi-sensor cameras for seamless wide-area coverage with multiple focal points.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_c8187247a23945eb9562a1c7a3704bfd~mv2.png/v1/fill/w_520,h_516,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_c8187247a23945eb9562a1c7a3704bfd~mv2.png/v1/fill/w_520,h_516,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/surveillance",
+        "longDescription": "High-resolution multi-sensor cameras for seamless wide-area coverage with multiple focal points.",
+        "options": [
+            {
+                "partCode": "SURV-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "35-series-ip-camera",
+        "category": "Surveillance (CCTV)",
+        "brand": "Intersys",
+        "title": "35 Series IP Camera",
+        "description": "Next-generation IP cameras featuring smart analytics and ultra-high-definition video quality.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_8be9bd4cd60d44a3860f55fda58f1fe2~mv2.png/v1/fill/w_516,h_309,al_c,lg_1,q_85,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_8be9bd4cd60d44a3860f55fda58f1fe2~mv2.png/v1/fill/w_516,h_309,al_c,lg_1,q_85,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/surveillance",
+        "longDescription": "Next-generation IP cameras featuring smart analytics and ultra-high-definition video quality.",
+        "options": [
+            {
+                "partCode": "SURV-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "field-devices",
+        "category": "Building Management",
+        "brand": "BMS",
+        "title": "Field Devices",
+        "description": "High-precision sensors and actuators for real-time monitoring and control of building environments.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_e1eea28ea2f44602b7bce78f2f1b4555~mv2.png/v1/fill/w_710,h_384,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_e1eea28ea2f44602b7bce78f2f1b4555~mv2.png/v1/fill/w_710,h_384,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/building-management",
+        "longDescription": "High-precision sensors and actuators for real-time monitoring and control of building environments.",
+        "options": [
+            {
+                "partCode": "BMS-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "lighting-control",
+        "category": "Building Management",
+        "brand": "BMS",
+        "title": "Lighting Control",
+        "description": "Intelligent lighting solutions that optimize energy consumption and enhance occupant comfort.",
+        "mainImage": "https://www.mepmiddleeast.com/cloud/2021/07/07/Douglas_Bluetooth.jpg",
+        "thumbnails": [
+            "https://www.mepmiddleeast.com/cloud/2021/07/07/Douglas_Bluetooth.jpg"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/building-management",
+        "longDescription": "Intelligent lighting solutions that optimize energy consumption and enhance occupant comfort.",
+        "options": [
+            {
+                "partCode": "BMS-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "networking",
+        "category": "Building Management",
+        "brand": "BMS",
+        "title": "Networking",
+        "description": "Robust and secure communication infrastructure for seamless integration of building systems.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_1a5d138124664a1d97ac8e3b6afd87d4~mv2.png/v1/fill/w_542,h_360,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/HBT-BP-Fire-NFN-GW-EM-3-PrimaryPhoto_edi.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_1a5d138124664a1d97ac8e3b6afd87d4~mv2.png/v1/fill/w_542,h_360,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/HBT-BP-Fire-NFN-GW-EM-3-PrimaryPhoto_edi.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/building-management",
+        "longDescription": "Robust and secure communication infrastructure for seamless integration of building systems.",
+        "options": [
+            {
+                "partCode": "BMS-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "controllers",
+        "category": "Building Management",
+        "brand": "BMS",
+        "title": "Controllers",
+        "description": "Advanced programmable controllers for precise management of HVAC and other mechanical systems.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_4814d293199a43bb8e78b4972baaf8ed~mv2.png/v1/fill/w_632,h_298,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_4814d293199a43bb8e78b4972baaf8ed~mv2.png/v1/fill/w_632,h_298,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/building-management",
+        "longDescription": "Advanced programmable controllers for precise management of HVAC and other mechanical systems.",
+        "options": [
+            {
+                "partCode": "BMS-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "software",
+        "category": "Building Management",
+        "brand": "BMS",
+        "title": "Software",
+        "description": "Unified software platforms for centralized monitoring, analytics, and optimization of building performance.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_d29b4edbf55e42dea4a9273e02511fa1~mv2.png/v1/fill/w_320,h_384,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_d29b4edbf55e42dea4a9273e02511fa1~mv2.png/v1/fill/w_320,h_384,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/building-management",
+        "longDescription": "Unified software platforms for centralized monitoring, analytics, and optimization of building performance.",
+        "options": [
+            {
+                "partCode": "BMS-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "additional-bms-products",
+        "category": "Building Management",
+        "brand": "BMS",
+        "title": "Additional BMS Products",
+        "description": "Comprehensive range of auxiliary components to complete and enhance building management systems.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_32169f804ce549aaaf4129d10a9471b8~mv2.png/v1/fill/w_512,h_328,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/3d5958_32169f804ce549aaaf4129d10a9471b8~mv2.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_32169f804ce549aaaf4129d10a9471b8~mv2.png/v1/fill/w_512,h_328,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/3d5958_32169f804ce549aaaf4129d10a9471b8~mv2.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/building-management",
+        "longDescription": "Comprehensive range of auxiliary components to complete and enhance building management systems.",
+        "options": [
+            {
+                "partCode": "BMS-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "lighting",
+        "category": "Building Management",
+        "brand": "BMS",
+        "title": "Lighting",
+        "description": "Energy-efficient LED lighting systems designed for durability and superior illumination.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_b6e1f107a2ad40b7ada10c62975ce213~mv2.png/v1/fill/w_372,h_384,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/3d5958_b6e1f107a2ad40b7ada10c62975ce213~mv2.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_b6e1f107a2ad40b7ada10c62975ce213~mv2.png/v1/fill/w_372,h_384,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/3d5958_b6e1f107a2ad40b7ada10c62975ce213~mv2.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/building-management",
+        "longDescription": "Energy-efficient LED lighting systems designed for durability and superior illumination.",
+        "options": [
+            {
+                "partCode": "BMS-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
+    },
+    {
+        "productId": "air-filtration-disinfection",
+        "category": "Building Management",
+        "brand": "BMS",
+        "title": "Air Filtration & Disinfection",
+        "description": "Innovative air purification solutions ensuring healthy and safe indoor air quality.",
+        "mainImage": "https://static.wixstatic.com/media/3d5958_37bde61b1b5a41ddbddfd31c15ce2d90~mv2.png/v1/fill/w_462,h_334,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png",
+        "thumbnails": [
+            "https://static.wixstatic.com/media/3d5958_37bde61b1b5a41ddbddfd31c15ce2d90~mv2.png/v1/fill/w_462,h_334,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
+        ],
+        "brandSubCategory": "General",
+        "brandSubCategoryLink": "/products/building-management",
+        "longDescription": "Innovative air purification solutions ensuring healthy and safe indoor air quality.",
+        "options": [
+            {
+                "partCode": "BMS-DEF",
+                "specification": "Standard Configuration",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        "documents": [
+            {
+                "name": "Datasheet",
+                "url": "#"
+            }
+        ]
     }
 ];
 
 const seedDB = async () => {
     try {
-        await mongoose.connect(process.env.URI || "mongodb://localhost:27017/intersys");
+        await mongoose.connect(process.env.URI);
         console.log("MongoDB Connected for seeding Products...");
 
         await Product.deleteMany({});

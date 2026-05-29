@@ -10,6 +10,24 @@ const saltoDataCode = saltoDataStr
 let saltoProducts = [];
 eval(saltoDataCode + '\n saltoProducts_ = saltoProducts;');
 
+// --- READ SURVEILLANCE DATA ---
+const surveillanceDataStr = fs.readFileSync(path.join(__dirname, '../frontend/src/components/Product/Surveillance/data.ts'), 'utf-8');
+const surveillanceDataCode = surveillanceDataStr
+    .replace(/export interface.*?\{[^}]*\}/gs, '')
+    .replace(/export const surveillanceProducts.*?=/s, 'const surveillanceProducts =');
+
+let surveillanceProducts = [];
+eval(surveillanceDataCode + '\n surveillanceProducts_ = surveillanceProducts;');
+
+// --- READ BUILDING MANAGEMENT DATA ---
+const bmsDataStr = fs.readFileSync(path.join(__dirname, '../frontend/src/components/Product/BuildingManagement/data.ts'), 'utf-8');
+const bmsDataCode = bmsDataStr
+    .replace(/export interface.*?\{[^}]*\}/gs, '')
+    .replace(/export const bmsProducts.*?=/s, 'const bmsProducts =');
+
+let bmsProducts = [];
+eval(bmsDataCode + '\n bmsProducts_ = bmsProducts;');
+
 // --- READ HONEYWELL DATA ---
 const honeywellDataStr = fs.readFileSync(path.join(__dirname, '../frontend/src/components/Product/AccessControl/Honeywell/data.ts'), 'utf-8');
 const honeywellDataCode = honeywellDataStr.replace(/export const /g, 'const ');
@@ -114,6 +132,50 @@ processHoneywell(honeywellUpgrades_, "Upgrades");
 processHoneywell(honeywellDoorHardware_, "Door Hardware");
 processHoneywell(honeywellControlPanels_, "Control Panels");
 
+// Map Surveillance
+surveillanceProducts_.forEach(item => {
+    finalProducts.push({
+        productId: item.id,
+        category: "Surveillance (CCTV)",
+        brand: "Intersys",
+        title: item.title,
+        description: item.description,
+        mainImage: item.image,
+        thumbnails: [item.image],
+        brandSubCategory: "General",
+        brandSubCategoryLink: "/products/surveillance",
+        longDescription: item.description,
+        options: [
+            { partCode: "SURV-DEF", specification: "Standard Configuration", price: 0, qty: 0 }
+        ],
+        documents: [
+            { name: "Datasheet", url: "#" }
+        ]
+    });
+});
+
+// Map Building Management
+bmsProducts_.forEach(item => {
+    finalProducts.push({
+        productId: item.id,
+        category: "Building Management",
+        brand: "BMS",
+        title: item.title,
+        description: item.description,
+        mainImage: item.image,
+        thumbnails: [item.image],
+        brandSubCategory: "General",
+        brandSubCategoryLink: "/products/building-management",
+        longDescription: item.description,
+        options: [
+            { partCode: "BMS-DEF", specification: "Standard Configuration", price: 0, qty: 0 }
+        ],
+        documents: [
+            { name: "Datasheet", url: "#" }
+        ]
+    });
+});
+
 const seedScriptContent = `import mongoose from "mongoose";
 import dotenv from "dotenv";
 import Product from "./model/product.js";
@@ -124,7 +186,7 @@ const MOCK_PRODUCTS = ${JSON.stringify(finalProducts, null, 4)};
 
 const seedDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/intersys");
+        await mongoose.connect(process.env.URI);
         console.log("MongoDB Connected for seeding Products...");
 
         await Product.deleteMany({});
