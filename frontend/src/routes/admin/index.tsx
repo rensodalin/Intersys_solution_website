@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { QuoteRequest } from "@/components/Admin/types";
@@ -37,6 +37,8 @@ import { QuoteDetailModal } from "@/components/Admin/QuoteDetailModal";
 import { ConfirmModal } from "@/components/Admin/ConfirmModal";
 import { DashboardOverview } from "@/components/Admin/DashboardOverview";
 import { AnalyticsOverview } from "@/components/Admin/AnalyticsOverview";
+import type { DateRange } from "react-day-picker";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
 
 export const Route = createFileRoute("/admin/")({
   head: () => ({
@@ -69,16 +71,37 @@ function AdminDashboardPage() {
 
   const itemsPerPage = 5;
 
-  const loadQuotes = async () => {
+  const toDateString = (d: Date) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  };
+
+  const [quoteDateRange, setQuoteDateRange] = useState<DateRange | undefined>(undefined);
+  const latestRequest = useRef(0);
+
+  const loadQuotes = async (startDate?: string, endDate?: string) => {
+    const requestId = ++latestRequest.current;
     setLoading(true);
     try {
-      const data = await fetchQuotesApi();
+      const data = await fetchQuotesApi(startDate, endDate);
+      if (requestId !== latestRequest.current) return;
       setQuotes(data);
     } catch (err) {
+      if (requestId !== latestRequest.current) return;
       console.error("Error fetching quotes:", err);
     } finally {
+      if (requestId !== latestRequest.current) return;
       setLoading(false);
     }
+  };
+
+  const handleQuoteDateChange = (dr: DateRange | undefined) => {
+    setQuoteDateRange(dr);
+    const sd = dr?.from ? toDateString(dr.from) : undefined;
+    const ed = dr?.to ? toDateString(dr.to) : dr?.from ? toDateString(dr.from) : undefined;
+    loadQuotes(sd, ed);
   };
 
   useEffect(() => {
@@ -229,7 +252,7 @@ function AdminDashboardPage() {
           userRole={user.role}
           avatar={user.avatar}
           loading={loading}
-          onRefresh={activeSection === "dashboard" ? () => window.location.reload() : loadQuotes}
+          onRefresh={activeSection === "dashboard" ? () => window.location.reload() : activeSection === "quotes" ? () => { const sd = quoteDateRange?.from ? toDateString(quoteDateRange.from) : undefined; const ed = quoteDateRange?.to ? toDateString(quoteDateRange.to) : quoteDateRange?.from ? toDateString(quoteDateRange.from) : undefined; loadQuotes(sd, ed); } : loadQuotes}
         />
 
         <main className="flex-1 p-8 space-y-8 overflow-y-auto">
@@ -247,7 +270,9 @@ function AdminDashboardPage() {
                     Review and process inbound system specifications from clients.
                   </p>
                 </div>
-                <MetricsCards
+                <div className="flex items-center gap-4 flex-wrap">
+                  <DateRangePicker date={quoteDateRange} onDateChange={handleQuoteDateChange} />
+                  <MetricsCards
                   totalOutstanding={totalOutstanding}
                   inProgressCount={inProgressCount}
                   completedCount={completedCount}
@@ -259,8 +284,9 @@ function AdminDashboardPage() {
                   }}
                 />
               </div>
+            </div>
 
-              <div className="bg-white rounded-sm border border-gray-150 shadow-sm overflow-hidden flex flex-col">
+            <div className="bg-white rounded-sm border border-gray-150 shadow-sm overflow-hidden flex flex-col">
                 <FilterBar
                   selectedTab={selectedTab}
                   onTabChange={(tab) => {

@@ -3,8 +3,11 @@ import { QuoteRequest } from "./types";
 
 const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
 
-export async function fetchQuotes(): Promise<QuoteRequest[]> {
-  const response = await fetch(`${baseUrl}/api/quotes/admin`, {
+export async function fetchQuotes(startDate?: string, endDate?: string): Promise<QuoteRequest[]> {
+  const params = new URLSearchParams();
+  if (startDate) params.set("startDate", startDate);
+  if (endDate) params.set("endDate", endDate);
+  const response = await fetch(`${baseUrl}/api/quotes/admin?${params.toString()}`, {
     credentials: "include",
   });
   const data = await response.json();

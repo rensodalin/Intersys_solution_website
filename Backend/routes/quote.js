@@ -94,25 +94,67 @@ const isAdmin = (req, res, next) => {
 // GET /api/quotes/admin-stats - Admin dashboard statistics
 router.get("/admin-stats", isAdmin, async (req, res) => {
     try {
-        const totalQuotes = await Quote.countDocuments({});
-        const pendingQuotes = await Quote.countDocuments({ status: "Pending" });
-        const inProgressQuotes = await Quote.countDocuments({ status: "In Progress" });
-        const completedQuotes = await Quote.countDocuments({ status: "Completed" });
+        // Parse date filter from query params (YYYY-MM-DD format)
+        const parseStart = (s) => s ? new Date(s + "T00:00:00.000Z") : null;
+        const parseEnd = (s) => s ? new Date(s + "T23:59:59.999Z") : null;
+
+        const dateFilter = {};
+        if (req.query.startDate || req.query.endDate) {
+            dateFilter.createdAt = {};
+            if (req.query.startDate) dateFilter.createdAt.$gte = parseStart(req.query.startDate);
+            if (req.query.endDate) dateFilter.createdAt.$lte = parseEnd(req.query.endDate);
+        }
+        // Use 30-day default range when no filter is provided
+        if (!dateFilter.createdAt) {
+            dateFilter.createdAt = {};
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+            dateFilter.createdAt.$gte = thirtyDaysAgo;
+        }
+
+        const totalQuotes = await Quote.countDocuments(dateFilter);
+        const pendingQuotes = await Quote.countDocuments({ ...dateFilter, status: "Pending" });
+        const inProgressQuotes = await Quote.countDocuments({ ...dateFilter, status: "In Progress" });
+        const completedQuotes = await Quote.countDocuments({ ...dateFilter, status: "Completed" });
         
-        const totalContacts = await Contact.countDocuments({});
-        const totalUsers = await User.countDocuments({});
+        const totalContacts = await Contact.countDocuments(dateFilter);
 
-        // Visitor & active user counts
+        // Users created within date range
+        const totalUsers = await User.countDocuments(dateFilter);
         const totalVisitors = totalUsers;
-        const thirtyDaysAgo = new Date();
-        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-        const activeUsers = await User.countDocuments({ lastLogin: { $gte: thirtyDaysAgo } });
 
-        // Monthly quote velocity (last 6 months)
-        const sixMonthsAgo = new Date();
-        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+        // Active users: logged in, submitted a quote, or downloaded a doc within date range
+        const actStart = req.query.startDate ? parseStart(req.query.startDate) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+        const actEnd = req.query.endDate ? parseEnd(req.query.endDate) : new Date();
+
+        const quoteUserIds = (await Quote.distinct("userId", {
+            createdAt: { $gte: actStart, $lte: actEnd },
+            userId: { $ne: null }
+        })).filter(id => id != null);
+
+        const activeConditions = [
+            { lastLogin: { $gte: actStart, $lte: actEnd } },
+            { "downloadedPdfs.downloadedAt": { $gte: actStart, $lte: actEnd } },
+        ];
+        if (quoteUserIds.length > 0) {
+            activeConditions.push({ _id: { $in: quoteUserIds } });
+        }
+
+        const activeUsers = await User.countDocuments({ $or: activeConditions });
+
+        // Monthly quote velocity — deep-clone dateFilter to avoid mutating original
+        const velocityFilter = {
+            createdAt: { ...dateFilter.createdAt }
+        };
+        if (!velocityFilter.createdAt.$lte) {
+            const sixMonthsAgo = new Date();
+            sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+            velocityFilter.createdAt.$gte = new Date(
+                Math.max(velocityFilter.createdAt.$gte?.getTime() || 0, sixMonthsAgo.getTime())
+            );
+        }
         const monthlyVelocityRaw = await Quote.aggregate([
-            { $match: { createdAt: { $gte: sixMonthsAgo } } },
+            { $match: velocityFilter },
             {
                 $group: {
                     _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
@@ -128,17 +170,17 @@ router.get("/admin-stats", isAdmin, async (req, res) => {
         }));
 
         // Fetch recent quotes
-        const recentQuotes = await Quote.find({})
+        const recentQuotes = await Quote.find(dateFilter)
             .sort({ createdAt: -1 })
             .limit(5);
 
         // Fetch recent contacts
-        const recentContacts = await Contact.find({})
+        const recentContacts = await Contact.find(dateFilter)
             .sort({ createdAt: -1 })
             .limit(5);
 
         // Fetch recent users (excluding sensitive info)
-        const recentUsers = await User.find({})
+        const recentUsers = await User.find(dateFilter)
             .select("name email role createdAt avatar")
             .sort({ createdAt: -1 })
             .limit(5);
@@ -157,7 +199,9 @@ router.get("/admin-stats", isAdmin, async (req, res) => {
                 recentQuotes,
                 recentContacts,
                 recentUsers,
-                monthlyVelocity
+                monthlyVelocity,
+                dateFrom: dateFilter.createdAt.$gte,
+                dateTo: dateFilter.createdAt.$lte || new Date()
             }
         });
     } catch (error) {
@@ -204,7 +248,13 @@ router.get("/admin-analytics", isAdmin, async (req, res) => {
 // GET /api/quotes/admin - Fetch all quotes (Admin only)
 router.get("/admin", isAdmin, async (req, res) => {
     try {
-        const quotes = await Quote.find({})
+        const filter = {};
+        if (req.query.startDate || req.query.endDate) {
+            filter.createdAt = {};
+            if (req.query.startDate) filter.createdAt.$gte = new Date(req.query.startDate + "T00:00:00.000Z");
+            if (req.query.endDate) filter.createdAt.$lte = new Date(req.query.endDate + "T23:59:59.999Z");
+        }
+        const quotes = await Quote.find(filter)
             .populate("userId", "name avatar email")
             .sort({ createdAt: -1 });
         res.status(200).json({ success: true, data: quotes });

@@ -6,7 +6,6 @@ import {
   Clock, 
   CheckCircle, 
   Mail, 
-  Calendar, 
   Download,
   AlertTriangle,
   ArrowRight,
@@ -157,13 +156,14 @@ export function DashboardOverview() {
   const trajectoryData = timeframe === "week" ? trajectoryDataWeek : trajectoryDataMonth;
 
   // Velocity Bar Chart Data from API
-  const velocityData = (stats?.monthlyVelocity?.length ?? 0) > 0
-    ? stats.monthlyVelocity!.map((item, index) => ({
-        name: item.name,
-        quotes: item.quotes,
-        highlight: index === stats.monthlyVelocity!.length - 1
-      }))
-    : [{ name: "No Data", quotes: 0 }];
+  const velocityData = (() => {
+    if (!stats?.monthlyVelocity?.length) return [{ name: "No Data", quotes: 0, highlight: false }];
+    return stats.monthlyVelocity.map((item, index) => ({
+      name: item.name,
+      quotes: item.quotes,
+      highlight: index === stats.monthlyVelocity.length - 1
+    }));
+  })();
 
   // Helper to get metric counts from real API data
   const getMetric = (type: "visitors" | "active" | "quotes" | "pending" | "completed" | "contacts") => {
@@ -197,15 +197,11 @@ export function DashboardOverview() {
           </h1>
         </div>
 
-        {/* Date Range Selector Mockup */}
+        {/* Date Range Selector */}
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-semibold text-gray-600 shadow-sm cursor-pointer hover:bg-gray-50 transition">
-            <Calendar size={14} className="text-gray-400" />
-            <span>Oct 24 — Nov 24, 2023</span>
+          <div className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-semibold text-gray-600 shadow-sm">
+            <span>All Dates</span>
           </div>
-          <button className="p-2 bg-black hover:bg-gray-900 text-white rounded-lg shadow-sm hover:shadow transition flex items-center justify-center cursor-pointer">
-            <Download size={14} />
-          </button>
         </div>
       </div>
 
