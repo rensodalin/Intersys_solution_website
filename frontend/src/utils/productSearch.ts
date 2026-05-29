@@ -11,13 +11,15 @@ import {
 } from "@/components/Product/AccessControl/Honeywell/data";
 
 import { saltoProducts } from "@/components/Product/AccessControl/Salto/data";
+import { bmsProducts } from "@/components/Product/BuildingManagement/data";
+import { surveillanceProducts } from "@/components/Product/Surveillance/data";
 
 export interface SearchResult {
     id: string;
     title: string;
     description: string;
     image: string;
-    brand: "Honeywell" | "Salto";
+    brand: string;
     link: string;
 }
 
@@ -67,6 +69,30 @@ export const getAllSearchableProducts = (): SearchResult[] => {
                 });
             });
         }
+    });
+
+    // --- SURVEILLANCE ---
+    surveillanceProducts.forEach(p => {
+        products.push({
+            id: p.id,
+            title: p.title,
+            image: p.image,
+            description: p.description,
+            brand: "Surveillance",
+            link: `/products/detail/${p.id}?from=/products/surveillance`
+        });
+    });
+
+    // --- BUILDING MANAGEMENT ---
+    bmsProducts.forEach(p => {
+        products.push({
+            id: p.id,
+            title: p.title,
+            image: p.image,
+            description: p.description,
+            brand: "Building Management",
+            link: `/products/detail/${p.id}?from=/products/building-management`
+        });
     });
 
     return products;

@@ -16,7 +16,7 @@ export function SurveillanceHero({
         <section className="relative w-full overflow-hidden bg-white">
 
             {/* IMAGE FIRST */}
-            <div className="w-full relative h-[220px] md:h-[320px] overflow-hidden">
+            <div className="w-full relative h-[190px] md:h-[250px] overflow-hidden">
                 <motion.img
                     initial={{ scale: 1.1, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -61,12 +61,12 @@ export function SurveillanceHero({
                             </nav>
 
                             {/* Title */}
-                            <h1 className="text-xl md:text-2xl font-bold text-[#1A3263] tracking-tight mb-3">
+                            <h1 className="text-lg md:text-xl font-bold text-[#1A3263] tracking-tight mb-2">
                                 {title}
                             </h1>
 
                             {/* Subtitle */}
-                            <p className="text-gray-500 text-sm md:text-[15px] leading-relaxed max-w-2xl">
+                            <p className="text-gray-500 text-xs md:text-sm leading-relaxed max-w-2xl">
                                 {subtitle}
                             </p>
                         </motion.div>
