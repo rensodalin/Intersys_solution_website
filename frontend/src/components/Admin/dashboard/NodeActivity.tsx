@@ -19,7 +19,7 @@ interface ActivityResponse {
 
 const baseUrl = `http://${window.location.hostname}:1000`;
 
-const activityColors = {
+const activityColors: Record<string, { bg: string; text: string }> = {
   success: { bg: "bg-[#0D7C5E]/10", text: "text-[#0D7C5E]" },
   warning: { bg: "bg-[#C3110C]/10", text: "text-[#C3110C]" },
   info: { bg: "bg-gray-100", text: "text-gray-500" },
@@ -36,14 +36,23 @@ function getRelativeTime(date: Date) {
   return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
+const iconMap: Record<string, React.ReactNode> = {
+  success: <CheckCircle size={16} />,
+  warning: <AlertTriangle size={16} />,
+  primary: <Mail size={16} />,
+  info: <UserPlus size={16} />,
+};
+
 export function NodeActivity() {
   const [activities, setActivities] = useState<ActivityItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showAll, setShowAll] = useState(false);
 
-  const fetchActivities = async () => {
+  const fetchActivities = async (all?: boolean) => {
     setLoading(true);
     try {
-      const res = await fetch(`${baseUrl}/api/activity`);
+      const url = all ? `${baseUrl}/api/activity` : `${baseUrl}/api/activity?limit=4`;
+      const res = await fetch(url);
       const json = await res.json();
       if (json.success) {
         const items: ActivityItem[] = (json.data as ActivityResponse[]).map((item) => ({
@@ -60,8 +69,14 @@ export function NodeActivity() {
   };
 
   useEffect(() => {
-    fetchActivities();
+    fetchActivities(false);
   }, []);
+
+  const handleToggle = () => {
+    const next = !showAll;
+    setShowAll(next);
+    fetchActivities(next);
+  };
 
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm flex flex-col justify-between">
@@ -74,10 +89,7 @@ export function NodeActivity() {
             return (
               <div key={activity.id} className="flex items-start gap-4 text-xs group">
                 <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition duration-300 group-hover:scale-105 ${colorConfig.bg} ${colorConfig.text}`}>
-                  {activity.type === "success" && <CheckCircle size={16} />}
-                  {activity.type === "warning" && <AlertTriangle size={16} />}
-                  {activity.type === "primary" && <Mail size={16} />}
-                  {activity.type === "info" && <UserPlus size={16} />}
+                  {iconMap[activity.type] || iconMap.info}
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-gray-800 truncate">{activity.title}</p>
@@ -90,11 +102,11 @@ export function NodeActivity() {
         </div>
       </div>
       <button
-        onClick={fetchActivities}
+        onClick={handleToggle}
         className="w-full mt-6 py-2.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-600 font-bold text-xs uppercase tracking-wider rounded-lg shadow-sm hover:shadow transition flex items-center justify-center gap-1.5 cursor-pointer"
       >
         <RefreshCw size={12} className={loading ? "animate-spin" : ""} />
-        <span>View Full System Log</span>
+        <span>{showAll ? "Show Less" : "View Full System Log"}</span>
       </button>
     </div>
   );

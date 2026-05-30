@@ -45,7 +45,7 @@ router.get("/", async (req, res) => {
             const roleStr = u.role ? u.role.charAt(0).toUpperCase() + u.role.slice(1) : "Member";
             activities.push({
                 id: `user-${u._id}`,
-                type: "warning",
+                type: "info",
                 title: `${roleStr} Onboarded`,
                 description: `${u.name} joined the project group`,
                 timestamp: date,
@@ -54,7 +54,9 @@ router.get("/", async (req, res) => {
 
         activities.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
-        res.json({ success: true, data: activities.slice(0, 4) });
+        const limit = parseInt(req.query.limit) || 4;
+
+        res.json({ success: true, data: activities.slice(0, limit) });
     } catch (err) {
         console.error("Activity feed error:", err);
         res.status(500).json({ success: false, message: err.message });

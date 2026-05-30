@@ -62,7 +62,7 @@ export function TrafficTrajectory() {
   }
 
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm lg:col-span-2 flex flex-col justify-between">
+    <div className="bg-white p-6 rounded-md border border-gray-150 shadow-sm lg:col-span-2 flex flex-col justify-between">
       <div className="flex items-start justify-between mb-6">
         <div>
           <h2 className="text-lg font-black text-gray-900 tracking-tight">Traffic Trajectory</h2>
