@@ -6,7 +6,7 @@ import { QuoteVelocity } from "./dashboard/QuoteVelocity";
 import { FeaturedNode } from "./dashboard/FeaturedNode";
 
 export function DashboardOverview() {
-  const { stats, loading, fetchStats } = useDashboardStats();
+  const { stats } = useDashboardStats();
 
   return (
     <div className="space-y-8 animate-fadeIn">
@@ -27,7 +27,7 @@ export function DashboardOverview() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <TrafficTrajectory />
-        <NodeActivity stats={stats} loading={loading} onRefresh={fetchStats} />
+        <NodeActivity />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

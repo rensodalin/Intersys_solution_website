@@ -1,14 +1,23 @@
+import { useEffect, useState } from "react";
 import { CheckCircle, AlertTriangle, Mail, UserPlus, RefreshCw } from "lucide-react";
-import { DashboardStats } from "./types";
 
 interface ActivityItem {
   id: string;
   type: "success" | "warning" | "info" | "primary";
   title: string;
   description: string;
-  time: string;
-  timestamp: Date;
+  timestamp: string;
 }
+
+interface ActivityResponse {
+  id: string;
+  type: string;
+  title: string;
+  description: string;
+  timestamp: string;
+}
+
+const baseUrl = `http://${window.location.hostname}:1000`;
 
 const activityColors = {
   success: { bg: "bg-[#0D7C5E]/10", text: "text-[#0D7C5E]" },
@@ -27,67 +36,41 @@ function getRelativeTime(date: Date) {
   return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
-function getActivityLog(stats: DashboardStats | null): ActivityItem[] {
-  const logItems: ActivityItem[] = [];
-  if (stats) {
-    stats.recentQuotes.forEach((q: any) => {
-      const date = new Date(q.createdAt);
-      const name = q.name || "Client";
-      const company = q.company || "Intersys Client";
-      const isApproved = q.status === "Completed";
-      logItems.push({
-        id: `quote-${q._id}`,
-        type: isApproved ? "success" : "info",
-        title: isApproved ? `Quote #${q._id.substring(q._id.length - 4).toUpperCase()} Approved` : "New Quote Request",
-        description: isApproved ? `${company} - Phase 1` : `${name} from ${company}`,
-        time: getRelativeTime(date),
-        timestamp: date,
-      });
-    });
-    stats.recentContacts.forEach((c: any) => {
-      const date = new Date(c.createdAt);
-      logItems.push({
-        id: `contact-${c._id}`,
-        type: "primary",
-        title: "New Client Message",
-        description: `Inquiry regarding ${c.message.substring(0, 25)}...`,
-        time: getRelativeTime(date),
-        timestamp: date,
-      });
-    });
-    stats.recentUsers.forEach((u: any) => {
-      const date = new Date(u.createdAt);
-      const roleStr = u.role ? u.role.charAt(0).toUpperCase() + u.role.slice(1) : "Member";
-      logItems.push({
-        id: `user-${u._id}`,
-        type: "warning",
-        title: `${roleStr} Onboarded`,
-        description: `${u.name} joined the project group`,
-        time: getRelativeTime(date),
-        timestamp: date,
-      });
-    });
-  }
-  logItems.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
-  return logItems.slice(0, 4);
-}
+export function NodeActivity() {
+  const [activities, setActivities] = useState<ActivityItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-interface Props {
-  stats: DashboardStats | null;
-  loading: boolean;
-  onRefresh: () => void;
-}
+  const fetchActivities = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${baseUrl}/api/activity`);
+      const json = await res.json();
+      if (json.success) {
+        const items: ActivityItem[] = (json.data as ActivityResponse[]).map((item) => ({
+          ...item,
+          type: item.type as ActivityItem["type"],
+        }));
+        setActivities(items);
+      }
+    } catch (err) {
+      console.error("Failed to fetch activity:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-export function NodeActivity({ stats, loading, onRefresh }: Props) {
-  const log = getActivityLog(stats);
+  useEffect(() => {
+    fetchActivities();
+  }, []);
 
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm flex flex-col justify-between">
       <div>
         <h2 className="text-lg font-black text-gray-900 tracking-tight mb-6">Node Activity</h2>
         <div className="space-y-5">
-          {log.map((activity) => {
+          {activities.map((activity) => {
             const colorConfig = activityColors[activity.type] || activityColors.info;
+            const date = new Date(activity.timestamp);
             return (
               <div key={activity.id} className="flex items-start gap-4 text-xs group">
                 <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition duration-300 group-hover:scale-105 ${colorConfig.bg} ${colorConfig.text}`}>
@@ -99,7 +82,7 @@ export function NodeActivity({ stats, loading, onRefresh }: Props) {
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-gray-800 truncate">{activity.title}</p>
                   <p className="text-[10px] font-medium text-gray-400 truncate mt-0.5">{activity.description}</p>
-                  <p className="text-[9px] font-bold text-gray-300 uppercase tracking-wider mt-1">{activity.time}</p>
+                  <p className="text-[9px] font-bold text-gray-300 uppercase tracking-wider mt-1">{getRelativeTime(date)}</p>
                 </div>
               </div>
             );
@@ -107,7 +90,7 @@ export function NodeActivity({ stats, loading, onRefresh }: Props) {
         </div>
       </div>
       <button
-        onClick={onRefresh}
+        onClick={fetchActivities}
         className="w-full mt-6 py-2.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-600 font-bold text-xs uppercase tracking-wider rounded-lg shadow-sm hover:shadow transition flex items-center justify-center gap-1.5 cursor-pointer"
       >
         <RefreshCw size={12} className={loading ? "animate-spin" : ""} />

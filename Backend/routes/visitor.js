@@ -10,18 +10,13 @@ router.post("/track", async (req, res) => {
             return res.status(400).json({ success: false, message: "sessionId is required" });
         }
 
-        // Only record one visit per sessionId per calendar day
-        const todayStart = new Date();
-        todayStart.setHours(0, 0, 0, 0);
+        const visitDate = new Date().toISOString().slice(0, 10);
 
-        const existing = await VisitorVisit.findOne({
-            sessionId,
-            visitedAt: { $gte: todayStart }
-        });
-
-        if (!existing) {
-            await VisitorVisit.create({ sessionId, page: page || "/", visitedAt: new Date() });
-        }
+        await VisitorVisit.updateOne(
+            { sessionId, visitDate },
+            { $setOnInsert: { sessionId, visitDate, page: page || "/", visitedAt: new Date() } },
+            { upsert: true }
+        );
 
         res.json({ success: true });
     } catch (err) {
