@@ -1,4 +1,5 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts, useLocation } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { Navbar } from "@/components/Layout/Navbar";
 import { Footer } from "@/components/Layout/Footer";
 import { ScrollControls } from "@/components/Common/ScrollControls";
@@ -81,6 +82,21 @@ function RootComponent() {
   const location = useLocation();
   const isProductsPage = location.pathname.startsWith("/products");
   const isAdminPage = location.pathname.startsWith("/admin");
+
+  // Track page visits
+  useEffect(() => {
+    let sessionId = localStorage.getItem("visitorSessionId");
+    if (!sessionId) {
+      sessionId = crypto.randomUUID();
+      localStorage.setItem("visitorSessionId", sessionId);
+    }
+    const baseUrl = `http://${window.location.hostname}:1000`;
+    fetch(`${baseUrl}/api/visitors/track`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sessionId, page: location.pathname }),
+    }).catch(() => {});
+  }, [location.pathname]);
 
   if (isAdminPage) {
     return (

@@ -1,29 +1,65 @@
+import { useEffect, useState } from "react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
-const trajectoryDataWeek = [
-  { name: "MON", visitors: 320 },
-  { name: "TUE", visitors: 620 },
-  { name: "WED: peak", visitors: 940 },
-  { name: "THU", visitors: 780 },
-  { name: "FRI", visitors: 580 },
-  { name: "SAT", visitors: 1240 },
-  { name: "SUN", visitors: 980 },
-];
-
-const trajectoryDataMonth = [
-  { name: "W1", visitors: 1800 },
-  { name: "W2", visitors: 3400 },
-  { name: "W3", visitors: 4200 },
-  { name: "W4", visitors: 3100 },
-];
-
-interface Props {
-  timeframe: "week" | "month";
-  onTimeframeChange: (t: "week" | "month") => void;
+interface TrendPoint {
+  name: string;
+  visitors: number;
 }
 
-export function TrafficTrajectory({ timeframe, onTimeframeChange }: Props) {
-  const data = timeframe === "week" ? trajectoryDataWeek : trajectoryDataMonth;
+interface VisitorTrend {
+  weekly: TrendPoint[];
+  monthly: TrendPoint[];
+}
+
+const baseUrl = `http://${window.location.hostname}:1000`;
+
+export function TrafficTrajectory() {
+  const [timeframe, setTimeframe] = useState<"week" | "month">("week");
+  const [data, setData] = useState<TrendPoint[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const fetchTrend = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(`${baseUrl}/api/visitors/trend`);
+        const json = await res.json();
+        if (!cancelled) {
+          if (json.success) {
+            const trend: VisitorTrend = json.data;
+            setData(timeframe === "week" ? trend.weekly : trend.monthly);
+          } else {
+            setError(json.message || "Failed to load visitor data");
+          }
+        }
+      } catch (err: any) {
+        if (!cancelled) setError(err.message || "Failed to connect");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+    fetchTrend();
+    return () => { cancelled = true; };
+  }, [timeframe]);
+
+  if (loading) {
+    return (
+      <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm lg:col-span-2 flex items-center justify-center h-80">
+        <div className="w-8 h-8 border-2 border-[#C3110C] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm lg:col-span-2 flex items-center justify-center h-80">
+        <p className="text-sm text-red-500 font-medium">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm lg:col-span-2 flex flex-col justify-between">
@@ -34,13 +70,13 @@ export function TrafficTrajectory({ timeframe, onTimeframeChange }: Props) {
         </div>
         <div className="bg-gray-100 p-0.5 rounded-lg flex items-center text-[10px] font-black uppercase tracking-wider text-gray-500 shadow-inner">
           <button
-            onClick={() => onTimeframeChange("week")}
+            onClick={() => setTimeframe("week")}
             className={`px-3 py-1.5 rounded-md transition duration-200 cursor-pointer ${timeframe === "week" ? "bg-white text-gray-900 shadow-sm font-black" : "hover:text-gray-800"}`}
           >
             Week
           </button>
           <button
-            onClick={() => onTimeframeChange("month")}
+            onClick={() => setTimeframe("month")}
             className={`px-3 py-1.5 rounded-md transition duration-200 cursor-pointer ${timeframe === "month" ? "bg-white text-gray-900 shadow-sm font-black" : "hover:text-gray-800"}`}
           >
             Month

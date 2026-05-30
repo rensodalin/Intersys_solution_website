@@ -1,0 +1,97 @@
+import express from "express";
+import VisitorVisit from "../model/visitor.js";
+
+const router = express.Router();
+
+router.post("/track", async (req, res) => {
+    try {
+        const { sessionId, page } = req.body;
+        if (!sessionId) {
+            return res.status(400).json({ success: false, message: "sessionId is required" });
+        }
+
+        // Only record one visit per sessionId per calendar day
+        const todayStart = new Date();
+        todayStart.setHours(0, 0, 0, 0);
+
+        const existing = await VisitorVisit.findOne({
+            sessionId,
+            visitedAt: { $gte: todayStart }
+        });
+
+        if (!existing) {
+            await VisitorVisit.create({ sessionId, page: page || "/", visitedAt: new Date() });
+        }
+
+        res.json({ success: true });
+    } catch (err) {
+        console.error("Visit track error:", err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+router.get("/trend", async (req, res) => {
+    try {
+        const now = new Date();
+
+        // Weekly: past 7 days, group by day of week
+        const weekStart = new Date(now);
+        weekStart.setDate(weekStart.getDate() - 6);
+        weekStart.setHours(0, 0, 0, 0);
+
+        const weeklyRaw = await VisitorVisit.aggregate([
+            { $match: { visitedAt: { $gte: weekStart } } },
+            {
+                $group: {
+                    _id: { $dayOfWeek: "$visitedAt" },
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+
+        const countByDow = {};
+        weeklyRaw.forEach(r => { countByDow[r._id] = r.count; });
+
+        // $dayOfWeek: 1=Sun, 2=Mon ... 7=Sat
+        const dowMap = { 2: "Mon", 3: "Tue", 4: "Wed", 5: "Thu", 6: "Fri", 7: "Sat", 1: "Sun" };
+        const dayOrder = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+        const weekly = dayOrder.map(name => {
+            const dow = Object.entries(dowMap).find(([, v]) => v === name)?.[0];
+            return { name, visitors: countByDow[parseInt(dow)] || 0 };
+        });
+
+        // Monthly: past 4 weeks (28 days)
+        const monthStart = new Date(now);
+        monthStart.setDate(monthStart.getDate() - 27);
+        monthStart.setHours(0, 0, 0, 0);
+
+        const monthlyRaw = await VisitorVisit.aggregate([
+            { $match: { visitedAt: { $gte: monthStart } } },
+            { $sort: { visitedAt: 1 } }
+        ]);
+
+        const weekCounts = [0, 0, 0, 0];
+        monthlyRaw.forEach(v => {
+            const daysAgo = Math.floor((now - v.visitedAt) / (24 * 60 * 60 * 1000));
+            if (daysAgo <= 6) weekCounts[3]++;
+            else if (daysAgo <= 13) weekCounts[2]++;
+            else if (daysAgo <= 20) weekCounts[1]++;
+            else weekCounts[0]++;
+        });
+
+        const monthly = [
+            { name: "Week 1", visitors: weekCounts[0] },
+            { name: "Week 2", visitors: weekCounts[1] },
+            { name: "Week 3", visitors: weekCounts[2] },
+            { name: "Week 4", visitors: weekCounts[3] }
+        ];
+
+        res.json({ success: true, data: { weekly, monthly } });
+    } catch (err) {
+        console.error("Visitor trend error:", err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+export default router;

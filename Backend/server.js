@@ -12,6 +12,7 @@ import projectRoutes from "./routes/project.js";
 import posterRoutes from "./routes/posters.js";
 import quoteRoutes from "./routes/quote.js";
 import productRoutes from "./routes/product.js";
+import visitorRoutes from "./routes/visitor.js";
 
 dotenv.config();
 
@@ -78,6 +79,7 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/posters", posterRoutes);
 app.use("/api/quotes", quoteRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/visitors", visitorRoutes);
 
 // ✅ EMAIL TRANSPORT
 const transporter = nodemailer.createTransport({

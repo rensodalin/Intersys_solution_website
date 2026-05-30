@@ -7,7 +7,6 @@ export function useDashboardStats() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [timeframe, setTimeframe] = useState<"week" | "month">("week");
 
   const fetchStats = async () => {
     setLoading(true);
@@ -34,5 +33,5 @@ export function useDashboardStats() {
     fetchStats();
   }, []);
 
-  return { stats, loading, error, fetchStats, timeframe, setTimeframe };
+  return { stats, loading, error, fetchStats };
 }

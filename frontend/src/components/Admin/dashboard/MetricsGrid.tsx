@@ -22,9 +22,9 @@ interface Props {
 export function MetricsGrid({ stats }: Props) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-      <div className="bg-white p-5 rounded-xl border border-gray-150 shadow-sm relative overflow-hidden group hover:shadow-md transition duration-300">
+      <div className="bg-white p-5 rounded-sm border border-gray-150 shadow-sm relative overflow-hidden group hover:shadow-md transition duration-300">
         <div className="flex items-center justify-between">
-          <span className="p-2 rounded-lg bg-slate-100 text-slate-600 transition group-hover:scale-110 duration-300">
+          <span className="p-2 rounded-sm bg-slate-100 text-slate-600 transition group-hover:scale-110 duration-300">
             <Eye size={16} />
           </span>
         </div>
@@ -34,9 +34,9 @@ export function MetricsGrid({ stats }: Props) {
         </div>
       </div>
 
-      <div className="bg-white p-5 rounded-xl border border-gray-150 shadow-sm relative overflow-hidden group hover:shadow-md transition duration-300">
+      <div className="bg-white p-5 rounded-sm border border-gray-150 shadow-sm relative overflow-hidden group hover:shadow-md transition duration-300">
         <div className="flex items-center justify-between">
-          <span className="p-2 rounded-lg bg-blue-50 text-blue-600 transition group-hover:scale-110 duration-300">
+          <span className="p-2 rounded-sm bg-blue-50 text-blue-600 transition group-hover:scale-110 duration-300">
             <UsersIcon size={16} />
           </span>
         </div>
@@ -46,9 +46,9 @@ export function MetricsGrid({ stats }: Props) {
         </div>
       </div>
 
-      <div className="bg-white p-5 rounded-xl border border-gray-150 shadow-sm relative overflow-hidden group hover:shadow-md transition duration-300">
+      <div className="bg-white p-5 rounded-sm border border-gray-150 shadow-sm relative overflow-hidden group hover:shadow-md transition duration-300">
         <div className="flex items-center justify-between">
-          <span className="p-2 rounded-lg bg-purple-50 text-purple-600 transition group-hover:scale-110 duration-300">
+          <span className="p-2 rounded-sm bg-purple-50 text-purple-600 transition group-hover:scale-110 duration-300">
             <FileText size={16} />
           </span>
         </div>
@@ -58,9 +58,9 @@ export function MetricsGrid({ stats }: Props) {
         </div>
       </div>
 
-      <div className="bg-white p-5 rounded-xl border border-gray-150 shadow-sm relative overflow-hidden group hover:shadow-md transition duration-300 border-l-4 border-l-amber-500">
+      <div className="bg-white p-5 rounded-sm border border-gray-150 shadow-sm relative overflow-hidden group hover:shadow-md transition duration-300 border-l-4 border-l-amber-500">
         <div className="flex items-center justify-between">
-          <span className="p-2 rounded-lg bg-amber-50 text-amber-600 transition group-hover:scale-110 duration-300">
+          <span className="p-2 rounded-sm bg-amber-50 text-amber-600 transition group-hover:scale-110 duration-300">
             <Clock size={16} />
           </span>
         </div>
@@ -70,9 +70,9 @@ export function MetricsGrid({ stats }: Props) {
         </div>
       </div>
 
-      <div className="bg-white p-5 rounded-xl border border-gray-150 shadow-sm relative overflow-hidden group hover:shadow-md transition duration-300 border-l-4 border-l-[#0D7C5E]">
+      <div className="bg-white p-5 rounded-sm border border-gray-150 shadow-sm relative overflow-hidden group hover:shadow-md transition duration-300 border-l-4 border-l-[#0D7C5E]">
         <div className="flex items-center justify-between">
-          <span className="p-2 rounded-lg bg-[#0D7C5E]/10 text-[#0D7C5E] transition group-hover:scale-110 duration-300">
+          <span className="p-2 rounded-sm bg-[#0D7C5E]/10 text-[#0D7C5E] transition group-hover:scale-110 duration-300">
             <CheckCircle size={16} />
           </span>
         </div>
@@ -82,9 +82,9 @@ export function MetricsGrid({ stats }: Props) {
         </div>
       </div>
 
-      <div className="bg-white p-5 rounded-xl border border-gray-150 shadow-sm relative overflow-hidden group hover:shadow-md transition duration-300 border-l-4 border-l-cyan-600">
+      <div className="bg-white p-5 rounded-sm border border-gray-150 shadow-sm relative overflow-hidden group hover:shadow-md transition duration-300 border-l-4 border-l-cyan-600">
         <div className="flex items-center justify-between">
-          <span className="p-2 rounded-lg bg-cyan-50 text-cyan-600 transition group-hover:scale-110 duration-300">
+          <span className="p-2 rounded-sm bg-cyan-50 text-cyan-600 transition group-hover:scale-110 duration-300">
             <Mail size={16} />
           </span>
         </div>
