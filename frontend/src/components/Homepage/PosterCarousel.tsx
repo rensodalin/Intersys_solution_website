@@ -103,17 +103,17 @@ export function PosterCarousel() {
             target="_blank"
             rel="noopener noreferrer"
             className="
-              relative
-              shrink-0
-              w-[68vw]
-              sm:w-[250px]
-              md:w-[280px]
-              lg:w-[300px]
-              overflow-hidden
-              border-r
-              border-black/5
-              group
-            "
+                relative
+                shrink-0
+                w-[68vw]
+                sm:w-[250px]
+                md:w-[280px]
+                lg:w-[300px]
+                overflow-hidden
+                border-r
+                border-black/5
+                group
+              "
           >
             <div className="relative aspect-[3/4] overflow-hidden bg-[#eceff3]">
               <img
@@ -121,8 +121,7 @@ export function PosterCarousel() {
                 alt={`Poster ${idx + 1}`}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 onError={(e) => {
-                  // Fallback for bad links
-                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800";
+                  (e.currentTarget.closest("a") as HTMLElement).style.display = "none";
                 }}
               />
 
@@ -147,14 +146,14 @@ export function PosterCarousel() {
       </div>
 
       <style>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
+          .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+          }
+          .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}</style>
     </section>
   );
 }
