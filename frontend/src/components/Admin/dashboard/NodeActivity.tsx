@@ -3,14 +3,6 @@ import { CheckCircle, AlertTriangle, Mail, UserPlus, RefreshCw } from "lucide-re
 
 interface ActivityItem {
   id: string;
-  type: "success" | "warning" | "info" | "primary";
-  title: string;
-  description: string;
-  timestamp: string;
-}
-
-interface ActivityResponse {
-  id: string;
   type: string;
   title: string;
   description: string;
@@ -24,6 +16,11 @@ const activityColors: Record<string, { bg: string; text: string }> = {
   warning: { bg: "bg-[#C3110C]/10", text: "text-[#C3110C]" },
   info: { bg: "bg-gray-100", text: "text-gray-500" },
   primary: { bg: "bg-[#1B7B9E]/10", text: "text-[#1B7B9E]" },
+  engineer: { bg: "bg-blue-50", text: "text-blue-600" },
+  technician: { bg: "bg-amber-50", text: "text-amber-600" },
+  member: { bg: "bg-gray-100", text: "text-gray-500" },
+  admin: { bg: "bg-purple-50", text: "text-purple-600" },
+  manager: { bg: "bg-cyan-50", text: "text-cyan-600" },
 };
 
 function getRelativeTime(date: Date) {
@@ -40,7 +37,6 @@ const iconMap: Record<string, React.ReactNode> = {
   success: <CheckCircle size={16} />,
   warning: <AlertTriangle size={16} />,
   primary: <Mail size={16} />,
-  info: <UserPlus size={16} />,
 };
 
 export function NodeActivity() {
@@ -55,11 +51,7 @@ export function NodeActivity() {
       const res = await fetch(url);
       const json = await res.json();
       if (json.success) {
-        const items: ActivityItem[] = (json.data as ActivityResponse[]).map((item) => ({
-          ...item,
-          type: item.type as ActivityItem["type"],
-        }));
-        setActivities(items);
+        setActivities(json.data as ActivityItem[]);
       }
     } catch (err) {
       console.error("Failed to fetch activity:", err);
@@ -82,14 +74,14 @@ export function NodeActivity() {
     <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm flex flex-col justify-between">
       <div>
         <h2 className="text-lg font-black text-gray-900 tracking-tight mb-6">Node Activity</h2>
-        <div className="space-y-5">
+        <div className="space-y-5 max-h-80 overflow-y-auto pr-1">
           {activities.map((activity) => {
             const colorConfig = activityColors[activity.type] || activityColors.info;
             const date = new Date(activity.timestamp);
             return (
               <div key={activity.id} className="flex items-start gap-4 text-xs group">
                 <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition duration-300 group-hover:scale-105 ${colorConfig.bg} ${colorConfig.text}`}>
-                  {iconMap[activity.type] || iconMap.info}
+                  {iconMap[activity.type] ?? <UserPlus size={16} />}
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-gray-800 truncate">{activity.title}</p>
@@ -106,7 +98,7 @@ export function NodeActivity() {
         className="w-full mt-6 py-2.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-600 font-bold text-xs uppercase tracking-wider rounded-lg shadow-sm hover:shadow transition flex items-center justify-center gap-1.5 cursor-pointer"
       >
         <RefreshCw size={12} className={loading ? "animate-spin" : ""} />
-        <span>{showAll ? "Show Less" : "View Full System Log"}</span>
+        <span>{showAll ? "Show Less" : "View More"}</span>
       </button>
     </div>
   );

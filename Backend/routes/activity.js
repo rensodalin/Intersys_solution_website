@@ -43,20 +43,21 @@ router.get("/", async (req, res) => {
         recentUsers.forEach((u) => {
             const date = new Date(u.createdAt);
             const roleStr = u.role ? u.role.charAt(0).toUpperCase() + u.role.slice(1) : "Member";
+            const roleType = (u.role || "member").toLowerCase();
             activities.push({
                 id: `user-${u._id}`,
-                type: "info",
+                type: roleType,
                 title: `${roleStr} Onboarded`,
-                description: `${u.name} joined the project group`,
+                description: `${u.name} joined the Website`,
                 timestamp: date,
             });
         });
 
         activities.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
-        const limit = parseInt(req.query.limit) || 4;
+        const limit = req.query.limit ? parseInt(req.query.limit) : null;
 
-        res.json({ success: true, data: activities.slice(0, limit) });
+        res.json({ success: true, data: limit ? activities.slice(0, limit) : activities });
     } catch (err) {
         console.error("Activity feed error:", err);
         res.status(500).json({ success: false, message: err.message });
