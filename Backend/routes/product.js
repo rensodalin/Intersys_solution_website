@@ -4,6 +4,14 @@ import Quote from "../model/quote.js";
 
 const router = express.Router();
 
+const isAdmin = (req, res, next) => {
+    if (req.isAuthenticated && req.isAuthenticated() && req.user && req.user.isAdmin) {
+        return next();
+    }
+    return res.status(403).json({ success: false, error: "Access denied. Admin authorization required." });
+};
+
+
 router.get("/", async (req, res) => {
     try {
         const { category, brand, brandSubCategory } = req.query;
@@ -63,7 +71,7 @@ router.get("/:productId", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", isAdmin, async (req, res) => {
     try {
         const newProduct = new Product(req.body);
         await newProduct.save();
@@ -72,6 +80,35 @@ router.post("/", async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 });
+
+router.put("/:productId", isAdmin, async (req, res) => {
+    try {
+        const product = await Product.findOneAndUpdate(
+            { productId: req.params.productId },
+            req.body,
+            { new: true, runValidators: true }
+        );
+        if (!product) {
+            return res.status(404).json({ success: false, error: "Product not found" });
+        }
+        res.status(200).json({ success: true, data: product });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+router.delete("/:productId", isAdmin, async (req, res) => {
+    try {
+        const product = await Product.findOneAndDelete({ productId: req.params.productId });
+        if (!product) {
+            return res.status(404).json({ success: false, error: "Product not found" });
+        }
+        res.status(200).json({ success: true, message: "Product deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 
 // GET /api/products/popularity - Count how many times each product appears in quotes
 router.get("/popularity/list", async (req, res) => {

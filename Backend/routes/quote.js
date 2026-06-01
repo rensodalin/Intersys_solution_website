@@ -221,6 +221,30 @@ router.get("/admin-analytics", isAdmin, async (req, res) => {
         const liveUsers = 1400 + totalUsers;
         const avgDepth = "4.2m";
 
+        // Country distribution from quotes + contacts
+        const [quoteCountryAgg, contactCountryAgg] = await Promise.all([
+            Quote.aggregate([
+                { $match: { country: { $exists: true, $ne: "" } } },
+                { $group: { _id: "$country", count: { $sum: 1 } } }
+            ]),
+            Contact.aggregate([
+                { $match: { country: { $exists: true, $ne: "" } } },
+                { $group: { _id: "$country", count: { $sum: 1 } } }
+            ])
+        ]);
+        const countryMap = {};
+        [...quoteCountryAgg, ...contactCountryAgg].forEach(r => {
+            countryMap[r._id] = (countryMap[r._id] || 0) + r.count;
+        });
+        const sorted = Object.entries(countryMap)
+            .map(([name, count]) => ({ name, count }))
+            .sort((a, b) => b.count - a.count);
+        const totalWithCountry = sorted.reduce((sum, c) => sum + c.count, 0) || 1;
+        const countryDistribution = sorted.map(c => ({
+            name: c.name,
+            percentage: Math.round((c.count / totalWithCountry) * 100),
+        }));
+
         // Fetch recent activities for logs
         const recentQuotes = await Quote.find({}).sort({ createdAt: -1 }).limit(3);
         const recentContacts = await Contact.find({}).sort({ createdAt: -1 }).limit(3);
@@ -236,7 +260,8 @@ router.get("/admin-analytics", isAdmin, async (req, res) => {
                 totalUsers,
                 recentQuotes,
                 recentContacts,
-                recentUsers
+                recentUsers,
+                countryDistribution
             }
         });
     } catch (error) {

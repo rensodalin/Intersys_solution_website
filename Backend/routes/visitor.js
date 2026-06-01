@@ -25,6 +25,50 @@ router.post("/track", async (req, res) => {
     }
 });
 
+router.get("/hourly", async (req, res) => {
+    try {
+        const now = new Date();
+        const start = new Date(now);
+        start.setHours(start.getHours() - 23, 0, 0, 0);
+
+        const raw = await VisitorVisit.aggregate([
+            { $match: { visitedAt: { $gte: start } } },
+            {
+                $group: {
+                    _id: {
+                        year: { $year: "$visitedAt" },
+                        month: { $month: "$visitedAt" },
+                        day: { $dayOfMonth: "$visitedAt" },
+                        hour: { $hour: "$visitedAt" }
+                    },
+                    count: { $sum: 1 }
+                }
+            },
+            { $sort: { "_id.year": 1, "_id.month": 1, "_id.day": 1, "_id.hour": 1 } }
+        ]);
+
+        const buckets = {};
+        raw.forEach(r => {
+            const key = `${r._id.year}-${r._id.month}-${r._id.day}-${r._id.hour}`;
+            buckets[key] = r.count;
+        });
+
+        const hourly = [];
+        const cursor = new Date(start);
+        for (let i = 0; i < 24; i++) {
+            const key = `${cursor.getFullYear()}-${cursor.getMonth() + 1}-${cursor.getDate()}-${cursor.getHours()}`;
+            const label = `${String(cursor.getHours()).padStart(2, "0")}:00`;
+            hourly.push({ name: label, visitors: buckets[key] || 0 });
+            cursor.setHours(cursor.getHours() + 1);
+        }
+
+        res.json({ success: true, data: hourly });
+    } catch (err) {
+        console.error("Visitor hourly error:", err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
 router.get("/trend", async (req, res) => {
     try {
         const now = new Date();

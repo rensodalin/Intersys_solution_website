@@ -6,7 +6,16 @@ import { VisitorTrajectoryChart } from "./analytic/VisitorTrajectoryChart";
 import { GlobalPresenceCard } from "./analytic/GlobalPresenceCard";
 import { SystemPopularity } from "./analytic/SystemPopularity";
 import { InterfaceDynamicsCard } from "./analytic/InterfaceDynamicsCard";
-import { RealTimeTelemetryCard } from "./analytic/RealTimeTelemetryCard";
+import { PopularProductsCard } from "./analytic/PopularProductsCard";
+import {
+  honeywellMainProducts, honeywellAccessories, honeywellCredentials,
+  honeywellReaders, honeywellSoftware, honeywellControlPanels,
+  honeywellControlPanelKits, honeywellKiosks, honeywellUpgrades,
+  honeywellDoorHardware,
+} from "@/components/Product/AccessControl/Honeywell/data";
+import { saltoProducts } from "@/components/Product/AccessControl/Salto/data";
+import { bmsProducts } from "@/components/Product/BuildingManagement/data";
+import { surveillanceProducts } from "@/components/Product/Surveillance/data";
 
 export function AnalyticsOverview() {
   const [stats, setStats] = useState<AnalyticsStats | null>(null);
@@ -43,8 +52,37 @@ export function AnalyticsOverview() {
     fetchAllQuotesData();
   }, []);
 
-  const liveUsersCount = stats ? stats.liveUsers : 1402;
-  const avgDepthVal = stats ? stats.avgDepth : "4.2m";
+  const productCounts: Record<string, number> = {};
+  allQuotes.forEach((q: any) => {
+    (q.products || []).forEach((p: any) => {
+      const key = p.description || p.productNo;
+      if (key) productCounts[key] = (productCounts[key] || 0) + 1;
+    });
+  });
+  const sortedProductPopularity = Object.entries(productCounts)
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+
+  const productImageMap: Record<string, string> = {};
+  const allProducts = [
+    ...honeywellMainProducts, ...honeywellAccessories, ...honeywellCredentials,
+    ...honeywellReaders, ...honeywellSoftware, ...honeywellControlPanels,
+    ...honeywellControlPanelKits, ...honeywellKiosks, ...honeywellUpgrades,
+    ...honeywellDoorHardware,
+    ...saltoProducts.flatMap((p: any) => [p, ...(p.subProducts || [])]),
+    ...bmsProducts, ...surveillanceProducts,
+  ];
+  allProducts.forEach((p: any) => { if (p.title) productImageMap[p.title.toLowerCase()] = p.image; });
+
+  const getProductImage = (name: string) => {
+    const key = name.toLowerCase();
+    if (productImageMap[key]) return productImageMap[key];
+    for (const [t, img] of Object.entries(productImageMap)) {
+      if (key.includes(t) || t.includes(key)) return img;
+    }
+    return "";
+  };
 
   const systemCounts: Record<string, number> = {};
   allQuotes.forEach((q: any) => {
@@ -74,27 +112,25 @@ export function AnalyticsOverview() {
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="bg-white px-5 py-3 rounded-lg border border-gray-150 shadow-sm text-center min-w-[90px]">
-            <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Live Users</p>
-            <p className="text-lg font-black text-gray-800 mt-1">{liveUsersCount.toLocaleString()}</p>
-          </div>
-          <div className="bg-white px-5 py-3 rounded-lg border border-gray-150 shadow-sm text-center min-w-[90px]">
-            <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Avg Depth</p>
-            <p className="text-lg font-black text-gray-800 mt-1">{avgDepthVal}</p>
-          </div>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <VisitorTrajectoryChart timeframe={timeframe} onTimeframeChange={setTimeframe} />
-        <GlobalPresenceCard />
+        <GlobalPresenceCard countryDistribution={stats?.countryDistribution ?? []} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <PopularProductsCard
+          products={sortedProductPopularity}
+          loading={loading}
+          getProductImage={getProductImage}
+        />
         <SystemPopularity sortedPopularity={sortedPopularity} loading={loading} />
-        <InterfaceDynamicsCard />
-        <RealTimeTelemetryCard stats={stats} loading={loading} onRefresh={fetchAnalytics} />
+        <InterfaceDynamicsCard
+          totalQuotes={stats?.totalQuotes ?? 0}
+          totalContacts={stats?.totalContacts ?? 0}
+          totalUsers={stats?.totalUsers ?? 0}
+        />
       </div>
 
       <footer className="pt-8 border-t border-gray-150 flex flex-col sm:flex-row items-center justify-between gap-4 text-[9px] font-bold text-gray-300 uppercase tracking-wider">

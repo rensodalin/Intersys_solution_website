@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { getTrajectoryData, type TrajectoryEntry } from "./utils";
+import { fetchTrajectoryData } from "./api";
 
 interface VisitorTrajectoryChartProps {
   timeframe: "24h" | "7d" | "30d";
@@ -7,7 +8,21 @@ interface VisitorTrajectoryChartProps {
 }
 
 export function VisitorTrajectoryChart({ timeframe, onTimeframeChange }: VisitorTrajectoryChartProps) {
-  const data: TrajectoryEntry[] = getTrajectoryData(timeframe);
+  const [data, setData] = useState<{ name: string; value: number }[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    fetchTrajectoryData(timeframe)
+      .then((d) => { if (!cancelled) setData(d); })
+      .catch(() => { if (!cancelled) setData([]); })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [timeframe]);
+
+  const maxVal = Math.max(...data.map((d) => d.value), 1);
+  const peakThreshold = maxVal * 0.85;
 
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm lg:col-span-2 flex flex-col justify-between">
@@ -30,24 +45,25 @@ export function VisitorTrajectoryChart({ timeframe, onTimeframeChange }: Visitor
       </div>
 
       <div className="h-64 w-full relative">
-        <div className="absolute top-[5%] left-[55%] -translate-x-1/2 z-10 hidden sm:block">
-          <span className="bg-[#C3110C] text-white text-[8px] font-bold px-2 py-0.5 rounded uppercase shadow">Peak</span>
-          <div className="w-0.5 h-6 bg-[#C3110C] mx-auto mt-0.5 opacity-50"></div>
-        </div>
-
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 20, right: 10, left: -25, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
-            <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: "#94A3B8", fontSize: 10, fontWeight: 700 }} />
-            <YAxis tickLine={false} axisLine={false} tick={{ fill: "#94A3B8", fontSize: 10, fontWeight: 700 }} />
-            <Tooltip cursor={{ fill: "transparent" }} contentStyle={{ background: "#0F172A", border: "none", borderRadius: "8px", color: "#fff", fontSize: "11px", fontWeight: "bold" }} />
-            <Bar dataKey="value" radius={[2, 2, 0, 0]} maxBarSize={36}>
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.isPeak ? "#C3110C" : "#E2E8F0"} />
-              ))}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
+        {loading ? (
+          <div className="flex items-center justify-center h-full">
+            <div className="w-8 h-8 border-2 border-[#C3110C] border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : (
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={data} margin={{ top: 20, right: 10, left: -25, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
+              <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: "#94A3B8", fontSize: 10, fontWeight: 700 }} />
+              <YAxis tickLine={false} axisLine={false} tick={{ fill: "#94A3B8", fontSize: 10, fontWeight: 700 }} />
+              <Tooltip cursor={{ fill: "transparent" }} contentStyle={{ background: "#0F172A", border: "none", borderRadius: "8px", color: "#fff", fontSize: "11px", fontWeight: "bold" }} />
+              <Bar dataKey="value" radius={[2, 2, 0, 0]} maxBarSize={36}>
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.value >= peakThreshold ? "#C3110C" : "#E2E8F0"} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        )}
       </div>
     </div>
   );

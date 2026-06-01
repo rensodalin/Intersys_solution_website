@@ -95,44 +95,6 @@ export function getTelemetryLog(stats: AnalyticsStats | null) {
   return combined.slice(0, 4);
 }
 
-export interface TrajectoryEntry {
-  name: string;
-  value: number;
-  isPeak?: boolean;
-}
-
-export function getTrajectoryData(timeframe: "24h" | "7d" | "30d"): TrajectoryEntry[] {
-  if (timeframe === "24h") {
-    return [
-      { name: "00:00", value: 120 },
-      { name: "03:00", value: 90 },
-      { name: "06:00", value: 210 },
-      { name: "09:00", value: 290 },
-      { name: "12:00", value: 310, isPeak: true },
-      { name: "15:00", value: 260 },
-      { name: "18:00", value: 280 },
-      { name: "21:00", value: 190 },
-    ];
-  }
-  if (timeframe === "7d") {
-    return [
-      { name: "MON", value: 1800 },
-      { name: "TUE", value: 2200 },
-      { name: "WED", value: 2400 },
-      { name: "THU", value: 3200, isPeak: true },
-      { name: "FRI", value: 2800 },
-      { name: "SAT", value: 1500 },
-      { name: "SUN", value: 1300 },
-    ];
-  }
-  return [
-    { name: "W1", value: 9800 },
-    { name: "W2", value: 12400, isPeak: true },
-    { name: "W3", value: 11200 },
-    { name: "W4", value: 10500 },
-  ];
-}
-
 export const dynamicsData = [
   { name: "Desktop", value: 75, color: "#C3110C" },
   { name: "Mobile", value: 25, color: "#1E293B" },

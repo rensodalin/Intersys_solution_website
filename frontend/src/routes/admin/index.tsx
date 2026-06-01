@@ -36,6 +36,7 @@ import { QuoteDetailModal } from "@/components/Admin/QuoteDetailModal";
 import { ConfirmModal } from "@/components/Admin/ConfirmModal";
 import { DashboardOverview } from "@/components/Admin/DashboardOverview";
 import { AnalyticsOverview } from "@/components/Admin/AnalyticsOverview";
+import { PopularProductsCard } from "@/components/Admin/analytic/PopularProductsCard";
 import type { DateRange } from "react-day-picker";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 
@@ -309,40 +310,11 @@ function AdminDashboardPage() {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="space-y-8">
-                  {/* Popular Products */}
-                  <div className="bg-white p-6 rounded-sm border border-gray-150 shadow-sm">
-                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-4">
-                      Popular Products
-                    </span>
-                    {loading ? (
-                      <div className="flex justify-center py-10">
-                        <div className="w-8 h-8 border-2 border-[#C3110C] border-t-transparent rounded-full animate-spin" />
-                      </div>
-                    ) : sortedProductPopularity.length === 0 ? (
-                      <p className="text-xs text-gray-400 py-10 text-center">No product data available.</p>
-                    ) : (
-                      <div className="space-y-3">
-                        {sortedProductPopularity.map((p, i) => (
-                          <div key={i} className="flex items-center gap-3 text-xs">
-                            <span className="w-5 h-5 rounded-full bg-[#C3110C]/10 text-[#C3110C] text-[10px] font-bold flex items-center justify-center shrink-0">
-                              {i + 1}
-                            </span>
-                            {getProductImage(p.name) && (
-                              <img
-                                src={getProductImage(p.name)}
-                                alt={p.name}
-                                className="w-8 h-8 rounded object-contain bg-gray-50 border border-gray-100 shrink-0"
-                              />
-                            )}
-                            <span className="font-medium text-gray-800 truncate flex-1">{p.name}</span>
-                            <span className="font-bold text-[#C3110C] shrink-0">{p.count}x</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <PopularProductsCard
+                  products={sortedProductPopularity}
+                  loading={loading}
+                  getProductImage={getProductImage}
+                />
 
                 <div className="bg-white p-6 rounded-sm border border-gray-150 shadow-sm flex flex-col lg:col-span-2">
                   <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-4">
@@ -371,7 +343,7 @@ function AdminDashboardPage() {
             </>
           )}
 
-          {activeSection !== "dashboard" && activeSection !== "quotes" && (
+          {activeSection !== "dashboard" && activeSection !== "quotes" && activeSection !== "analytics" && (
             <div className="flex flex-col items-center justify-center py-20 text-center bg-white rounded-xl border border-gray-150 shadow-sm p-8">
               <span className="text-4xl">🛠️</span>
               <h2 className="text-xl font-black text-gray-800 mt-4 capitalize">{activeSection} Section</h2>

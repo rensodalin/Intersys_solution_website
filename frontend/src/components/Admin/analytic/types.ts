@@ -1,3 +1,8 @@
+export interface CountryEntry {
+  name: string;
+  percentage: number;
+}
+
 export interface AnalyticsStats {
   liveUsers: number;
   avgDepth: string;
@@ -7,4 +12,5 @@ export interface AnalyticsStats {
   recentQuotes: any[];
   recentContacts: any[];
   recentUsers: any[];
+  countryDistribution: CountryEntry[];
 }
