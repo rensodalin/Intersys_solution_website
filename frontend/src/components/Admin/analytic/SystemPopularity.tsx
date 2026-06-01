@@ -8,7 +8,7 @@ interface SystemPopularityProps {
 export function SystemPopularity({ sortedPopularity, loading }: SystemPopularityProps) {
   return (
     <div className="bg-white p-6 rounded-sm border border-gray-150 shadow-sm flex flex-col lg:col-span-1">
-      <span className="text-[10px] font-bold text-gray-400 block mb-4">System Popularity</span>
+      <span className="text-[13px] font-bold text-gray-400 block mb-4">System Popularity</span>
       {loading ? (
         <div className="flex justify-center py-10">
           <Loader2 className="animate-spin text-gray-400 w-8 h-8" />

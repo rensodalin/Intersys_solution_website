@@ -32,7 +32,6 @@ import { MetricsCards } from "@/components/Admin/MetricsCards";
 import { FilterBar } from "@/components/Admin/FilterBar";
 import { QuoteTable } from "@/components/Admin/QuoteTable";
 import { Pagination } from "@/components/Admin/Pagination";
-import { SystemPopularity } from "@/components/Admin/SystemPopularity";
 import { QuoteDetailModal } from "@/components/Admin/QuoteDetailModal";
 import { ConfirmModal } from "@/components/Admin/ConfirmModal";
 import { DashboardOverview } from "@/components/Admin/DashboardOverview";
@@ -163,22 +162,6 @@ function AdminDashboardPage() {
         (q.city && q.city.toLowerCase().includes(term))
       );
     });
-
-  const systemCounts: Record<string, number> = {};
-  quotes.forEach((q) => {
-    q.solutionCategories.forEach((cat) => {
-      const cleanCat = cat.replace("System", "").trim();
-      systemCounts[cleanCat] = (systemCounts[cleanCat] || 0) + 1;
-    });
-  });
-
-  const sortedPopularity = Object.entries(systemCounts)
-    .map(([name, count]) => ({
-      name,
-      percentage: quotes.length ? Math.round((count / quotes.length) * 100) : 0,
-    }))
-    .sort((a, b) => b.percentage - a.percentage)
-    .slice(0, 4);
 
   const productCounts: Record<string, number> = {};
   quotes.forEach((q) => {
@@ -327,8 +310,6 @@ function AdminDashboardPage() {
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="space-y-8">
-                  <SystemPopularity sortedPopularity={sortedPopularity} loading={loading} />
-
                   {/* Popular Products */}
                   <div className="bg-white p-6 rounded-sm border border-gray-150 shadow-sm">
                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-4">

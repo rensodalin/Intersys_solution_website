@@ -17,9 +17,7 @@ export function DashboardOverview() {
           </h1>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-semibold text-gray-600 shadow-sm">
-            <span>All Dates</span>
-          </div>
+
         </div>
       </div>
 
