@@ -37,6 +37,7 @@ import { ConfirmModal } from "@/components/Admin/ConfirmModal";
 import { DashboardOverview } from "@/components/Admin/DashboardOverview";
 import { AnalyticsOverview } from "@/components/Admin/AnalyticsOverview";
 import { PopularProductsCard } from "@/components/Admin/analytic/PopularProductsCard";
+import { ProductManagement } from "@/components/Admin/ProductManagement";
 import type { DateRange } from "react-day-picker";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 
@@ -242,6 +243,7 @@ function AdminDashboardPage() {
         <main className="flex-1 p-8 space-y-8 overflow-y-auto">
           {activeSection === "dashboard" && <DashboardOverview />}
           {activeSection === "analytics" && <AnalyticsOverview />}
+          {activeSection === "products" && <ProductManagement />}
 
           {activeSection === "quotes" && (
             <>
@@ -343,7 +345,7 @@ function AdminDashboardPage() {
             </>
           )}
 
-          {activeSection !== "dashboard" && activeSection !== "quotes" && activeSection !== "analytics" && (
+          {activeSection !== "dashboard" && activeSection !== "quotes" && activeSection !== "analytics" && activeSection !== "products" && (
             <div className="flex flex-col items-center justify-center py-20 text-center bg-white rounded-xl border border-gray-150 shadow-sm p-8">
               <span className="text-4xl">🛠️</span>
               <h2 className="text-xl font-black text-gray-800 mt-4 capitalize">{activeSection} Section</h2>
