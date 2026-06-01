@@ -32,7 +32,7 @@ export function DashboardOverview() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <QuoteVelocity stats={stats} />
-        <FeaturedNode />
+        <FeaturedNode stats={stats} />
       </div>
     </div>
   );

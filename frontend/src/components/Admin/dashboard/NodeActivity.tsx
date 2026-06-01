@@ -73,7 +73,7 @@ export function NodeActivity() {
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm flex flex-col justify-between">
       <div>
-        <h2 className="text-lg font-black text-gray-900 tracking-tight mb-6">Node Activity</h2>
+        <h2 className="text-lg font-black text-gray-900 mb-6">Node Activity</h2>
         <div className="space-y-5 max-h-80 overflow-y-auto pr-1">
           {activities.map((activity) => {
             const colorConfig = activityColors[activity.type] || activityColors.info;
@@ -86,7 +86,7 @@ export function NodeActivity() {
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-gray-800 truncate">{activity.title}</p>
                   <p className="text-[10px] font-medium text-gray-400 truncate mt-0.5">{activity.description}</p>
-                  <p className="text-[9px] font-bold text-gray-300 uppercase tracking-wider mt-1">{getRelativeTime(date)}</p>
+                  <p className="text-[9px] font-bold text-blue-400 uppercase tracking-wider mt-1">{getRelativeTime(date)}</p>
                 </div>
               </div>
             );
@@ -95,7 +95,7 @@ export function NodeActivity() {
       </div>
       <button
         onClick={handleToggle}
-        className="w-full mt-6 py-2.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-600 font-bold text-xs uppercase tracking-wider rounded-lg shadow-sm hover:shadow transition flex items-center justify-center gap-1.5 cursor-pointer"
+        className="w-full mt-6 py-2.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-600 font-bold text-xs rounded-lg shadow-sm hover:shadow transition flex items-center justify-center gap-1.5 cursor-pointer"
       >
         <RefreshCw size={12} className={loading ? "animate-spin" : ""} />
         <span>{showAll ? "Show Less" : "View More"}</span>

@@ -1,6 +1,20 @@
 import { ArrowRight } from "lucide-react";
+import type { DashboardStats } from "./types";
 
-export function FeaturedNode() {
+interface FeaturedNodeProps {
+  stats: DashboardStats | null;
+}
+
+export function FeaturedNode({ stats }: FeaturedNodeProps) {
+  const latestQuote = stats?.recentQuotes?.[0];
+  const completionRate = stats && stats.totalQuotes > 0
+    ? Math.round((stats.completedQuotes / stats.totalQuotes) * 100)
+    : 0;
+
+  const title = latestQuote?.company || "No Recent Activity";
+  const subtitle = latestQuote?.solutionCategories?.join(", ") || "Awaiting inbound specifications";
+  const category = latestQuote?.solutionCategories?.[0] || "";
+
   return (
     <div className="relative rounded-xl overflow-hidden shadow-lg border border-slate-800 text-white min-h-[220px] flex flex-col justify-between p-8 bg-[#041527] group">
       <div className="absolute inset-0 z-0 opacity-20 pointer-events-none select-none">
@@ -25,25 +39,32 @@ export function FeaturedNode() {
           Featured Node
         </span>
         <h2 className="text-2xl font-black tracking-tight text-white mt-3 group-hover:text-[#38BDF8] transition duration-300">
-          Skyline Apex Smart Integration
+          {title}
         </h2>
+        <p className="text-xs text-gray-400 mt-1 font-medium max-w-md">{subtitle}</p>
       </div>
       <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-6">
         <div className="flex items-center gap-6">
           <div>
-            <p className="text-xs font-bold text-sky-400">98%</p>
-            <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Efficiency</p>
+            <p className="text-xs font-bold text-emerald-400">{completionRate}%</p>
+            <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Completion</p>
           </div>
           <div className="w-px h-6 bg-slate-700" />
           <div>
-            <p className="text-xs font-bold text-emerald-400">4.2ms</p>
-            <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Latency</p>
+            <p className="text-xs font-bold text-sky-400">{stats?.activeUsers ?? 0}</p>
+            <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Active Users</p>
           </div>
+          {category && (
+            <>
+              <div className="w-px h-6 bg-slate-700" />
+              <div>
+                <p className="text-xs font-bold text-amber-400">{category}</p>
+                <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Category</p>
+              </div>
+            </>
+          )}
         </div>
-        <button className="flex items-center gap-2 bg-white hover:bg-sky-50 text-gray-900 px-4 py-2.5 text-xs font-bold rounded-full shadow hover:shadow-md transition duration-300 cursor-pointer">
-          <span>Project Details</span>
-          <ArrowRight size={14} />
-        </button>
+
       </div>
     </div>
   );

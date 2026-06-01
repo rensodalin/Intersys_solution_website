@@ -29,7 +29,7 @@ export function QuoteVelocity({ stats }: Props) {
             <YAxis tickLine={false} axisLine={false} tick={{ fill: "#94A3B8", fontSize: 10, fontWeight: 700 }} />
             <Tooltip
               cursor={{ fill: "transparent" }}
-              contentStyle={{ background: "#0F172A", border: "none", borderRadius: "8px", color: "#fff", fontSize: "11px", fontWeight: "bold" }}
+              contentStyle={{ background: "#8d9199ff", border: "none", borderRadius: "8px", color: "#fff", fontSize: "11px", fontWeight: "bold" }}
             />
             <Bar dataKey="quotes" radius={[4, 4, 0, 0]} maxBarSize={32}>
               {velocityData.map((entry, index) => (

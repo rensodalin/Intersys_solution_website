@@ -45,11 +45,32 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
             <div className="space-y-3">
               <h4 className="text-[13px] font-semibold text-gray-400">Customer Contact Information</h4>
               <div className="space-y-2 text-xs text-gray-700">
-                <p className="flex items-center gap-2">
-                  <Users size={14} className="text-gray-400" />
-                  <span className="font-bold text-gray-900">{quote.name}</span>
-                  <span className="text-gray-500">(Role : {quote.title})</span>
-                </p>
+                <div className="flex items-center gap-3 pb-2">
+                  {(() => {
+                    const avatarUrl =
+                      typeof quote.userId === "object" && quote.userId?.avatar
+                        ? quote.userId.avatar
+                        : null;
+                    const initial = quote.name?.charAt(0)?.toUpperCase() || "?";
+                    return avatarUrl ? (
+                      <img
+                        src={avatarUrl}
+                        alt={quote.name}
+                        className="w-10 h-10 rounded-full object-cover border border-gray-200"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-[#081F3D] flex items-center justify-center text-white text-sm font-bold">
+                        {initial}
+                      </div>
+                    );
+                  })()}
+                  <div>
+                    <p className="flex items-center gap-2">
+                      <span className="font-bold text-gray-900">{quote.name}</span>
+                      <span className="text-gray-500">(Role : {quote.title})</span>
+                    </p>
+                  </div>
+                </div>
                 <p className="flex items-center gap-2">
                   <Mail size={14} className="text-gray-400" />
                   <a href={`mailto:${quote.email}`} className="text-red-600 hover:underline">

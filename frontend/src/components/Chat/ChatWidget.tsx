@@ -77,56 +77,56 @@ export function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-16 right-0 w-[340px] bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-100 flex flex-col"
+            className="absolute bottom-16 left-0 w-[340px] bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-100 flex flex-col"
           >
             {/* Header */}
-            <div className="bg-[#0A0F1A] text-white p-4 flex justify-between items-center">
+            <div className="bg-[#081F3D] text-white p-4 flex justify-between items-center">
               <div>
                 <h3 className="font-bold text-sm">Contact Support</h3>
                 <p className="text-xs text-gray-400 mt-0.5">Leave us a message</p>
               </div>
-              <button 
+              <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-white transition-colors cursor-pointer"
               >
                 <X size={20} />
               </button>
             </div>
 
             {/* Body */}
-            <div className="p-5 bg-[#F5F3EF]">
+            <div className="p-5 bg-white">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#0A0F1A] mb-1.5">Name <span className="text-red-500">*</span></label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Name <span className="text-[#C3110C]">*</span></label>
                   <input
                     type="text"
                     required
                     placeholder="John Doe"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm focus:outline-none focus:border-[#0A0F1A] transition-colors"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm outline-none focus:border-[#C3110C] transition-colors"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
-                
+
                 <div>
-                  <label className="block text-xs font-bold text-[#0A0F1A] mb-1.5">Email <span className="text-red-500">*</span></label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Email <span className="text-[#C3110C]">*</span></label>
                   <input
                     type="email"
                     required
                     placeholder="john@example.com"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm focus:outline-none focus:border-[#0A0F1A] transition-colors"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm outline-none focus:border-[#C3110C] transition-colors"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#0A0F1A] mb-1.5">Message <span className="text-red-500">*</span></label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Message <span className="text-[#C3110C]">*</span></label>
                   <textarea
                     required
                     rows={4}
                     placeholder="How can we help you today?"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm focus:outline-none focus:border-[#0A0F1A] transition-colors resize-none"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm outline-none focus:border-[#C3110C] transition-colors resize-none"
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   />
@@ -135,7 +135,7 @@ export function ChatWidget() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#D62828] text-white font-bold text-sm py-2.5 rounded-sm hover:bg-[#111FA2] transition-colors flex justify-center items-center gap-2 disabled:opacity-70"
+                  className="w-full bg-[#C3110C] text-white font-bold text-sm py-2.5 rounded-sm hover:bg-red-700 transition-colors flex justify-center items-center gap-2 disabled:opacity-70 cursor-pointer"
                 >
                   {isSubmitting ? "Sending..." : "Send Message"}
                   {!isSubmitting && <Send size={14} />}

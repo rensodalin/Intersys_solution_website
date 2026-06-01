@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
-import { 
-  BarChart, 
-  Bar, 
-  Cell, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
   PieChart,
   Pie,
   Label
 } from "recharts";
-import { 
-  Activity, 
-  Wind, 
-  Lightbulb, 
-  ShieldAlert, 
-  Wifi, 
-  RefreshCw 
+import {
+  Activity,
+  Wind,
+  Lightbulb,
+  ShieldAlert,
+  Wifi,
+  RefreshCw
 } from "lucide-react";
 
 const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
@@ -282,30 +282,30 @@ export function AnalyticsOverview() {
               </span>
               <div className="w-0.5 h-6 bg-[#C3110C] mx-auto mt-0.5 opacity-50"></div>
             </div>
-            
+
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={trajectoryData} margin={{ top: 20, right: 10, left: -25, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
-                <XAxis 
-                  dataKey="name" 
-                  tickLine={false} 
-                  axisLine={false} 
+                <XAxis
+                  dataKey="name"
+                  tickLine={false}
+                  axisLine={false}
                   tick={{ fill: '#94A3B8', fontSize: 10, fontWeight: 700 }}
                 />
-                <YAxis 
-                  tickLine={false} 
-                  axisLine={false} 
+                <YAxis
+                  tickLine={false}
+                  axisLine={false}
                   tick={{ fill: '#94A3B8', fontSize: 10, fontWeight: 700 }}
                 />
-                <Tooltip 
+                <Tooltip
                   cursor={{ fill: 'transparent' }}
                   contentStyle={{ background: '#0F172A', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '11px', fontWeight: 'bold' }}
                 />
                 <Bar dataKey="value" radius={[2, 2, 0, 0]} maxBarSize={36}>
                   {trajectoryData.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
-                      fill={entry.isPeak ? "#C3110C" : "#E2E8F0"} 
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={entry.isPeak ? "#C3110C" : "#E2E8F0"}
                     />
                   ))}
                 </Bar>
@@ -378,7 +378,7 @@ export function AnalyticsOverview() {
         <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm flex flex-col justify-between">
           <div>
             <h2 className="text-sm font-black text-gray-900 uppercase tracking-wider mb-6">Product Popularity</h2>
-            
+
             <div className="space-y-6">
               {/* Product 1: HVAC Smart Nodes */}
               <div className="flex items-center gap-4 text-xs">
@@ -432,7 +432,7 @@ export function AnalyticsOverview() {
         <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm flex flex-col justify-between">
           <div>
             <h2 className="text-sm font-black text-gray-900 uppercase tracking-wider mb-6">Interface Dynamics</h2>
-            
+
             <div className="h-44 w-full relative flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -448,9 +448,9 @@ export function AnalyticsOverview() {
                     {dynamicsData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
-                    <Label 
-                      value="2.4k" 
-                      position="center" 
+                    <Label
+                      value="2.4k"
+                      position="center"
                       className="font-black text-gray-800 text-xl"
                       fill="#1E293B"
                     />
@@ -480,7 +480,7 @@ export function AnalyticsOverview() {
         <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm flex flex-col justify-between">
           <div>
             <h2 className="text-sm font-black text-gray-900 uppercase tracking-wider mb-6">Real-time Telemetry</h2>
-            
+
             <div className="space-y-4">
               {getTelemetryLog().map((item) => (
                 <div key={item.id} className="flex gap-4 pl-3 border-l-2 relative" style={{ borderLeftColor: item.level === "danger" ? "#C3110C" : "#E2E8F0" }}>
@@ -494,7 +494,7 @@ export function AnalyticsOverview() {
             </div>
           </div>
 
-          <button 
+          <button
             onClick={() => fetchAnalytics()}
             className="w-full mt-6 py-2.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-600 font-bold text-xs uppercase tracking-wider rounded-lg shadow-sm hover:shadow transition flex items-center justify-center gap-1.5 cursor-pointer"
           >
@@ -511,7 +511,7 @@ export function AnalyticsOverview() {
           <span className="hidden sm:inline w-1 h-1 bg-gray-200 rounded-full"></span>
           <span>Active Nodes: 12,402 Units</span>
         </div>
-        
+
         <div className="flex items-center gap-1.5 text-center sm:text-right">
           <span>© 2023 Structural Intel — Architectural Data Systems</span>
           <span className="w-2.5 h-2.5 rounded-full bg-[#C3110C]/20 border border-[#C3110C]/40 flex items-center justify-center shrink-0">
