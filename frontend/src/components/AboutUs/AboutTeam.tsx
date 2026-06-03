@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 
-import team1 from "@/assets/team/picture on QR cord/Chyvorn1.jpeg";
+import team1 from "@/assets/team/picture on QR cord/Frame 15.png";
 import team2 from "@/assets/team/picture on QR cord/Frame 3.png";
 import team3 from "@/assets/team/picture on QR cord/Frame 4.png";
 import team4 from "@/assets/team/picture on QR cord/Frame 5.png";
@@ -19,8 +19,7 @@ import team15 from "@/assets/team/picture on QR cord/Frame 16.png";
 
 
 const teamData = [
-  { name: "Sok Somang", designation: "T&C and Design Technical Manager ", image: team14 },
-  { name: "Chun Sochet", designation: "Managing Director ", image: team15 },
+  { name: "Sok Samnang", designation: "T&C and Design Technical Manager ", image: team14 },
   { name: "Vy Leangcheu", designation: "Senior ELV Engineer ", image: team6 },
   { name: "You Chyvon", designation: "T&C ELV Engineer ", image: team1 },
   { name: "Soun Seamouy", designation: "ELV Design & Costing Enginner", image: team2 },
@@ -30,10 +29,10 @@ const teamData = [
   { name: "Soeun Sol", designation: "T&C ELV Engineer ", image: team7 },
   { name: "Phan Chitra", designation: "Junior Sale & Digital marketing ", image: team8 },
   { name: "Rin Seyha", designation: "BMS T&C Engineer ", image: team9 },
-  { name: "Mon Chhaiheng", designation: "Engineer", image: team10 },
+  { name: "Kov Bunly", designation: "Engineer", image: team10 },
   { name: "Lim Theavan", designation: "BMS & ELV T&C Engineer", image: team11 },
   { name: "Chun Leapheng", designation: "BMS & ELV ENGINEER", image: team12 },
-  { name: "Kov Bunly", designation: "T&C ELV Engineer ", image: team13 },
+  { name: "Vy Vandy", designation: "T&C ELV Engineer ", image: team13 },
 
 ];
 
