@@ -14,6 +14,9 @@ import quoteRoutes from "./routes/quote.js";
 import productRoutes from "./routes/product.js";
 import visitorRoutes from "./routes/visitor.js";
 import activityRoutes from "./routes/activity.js";
+import chatRoutes from "./routes/chat.js";
+import { sendTelegramNotification } from "./utils/telegram.js";
+import Message from "./model/message.js";
 
 dotenv.config();
 
@@ -85,6 +88,7 @@ app.use("/api/quotes", quoteRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/visitors", visitorRoutes);
 app.use("/api/activity", activityRoutes);
+app.use("/api/chat", chatRoutes);
 
 // ✅ EMAIL TRANSPORT
 const transporter = nodemailer.createTransport({
@@ -140,6 +144,23 @@ app.post("/api/contact", async (req, res) => {
         await newContact.save();
         console.log("✅ Contact saved to DB:", newContact._id);
 
+        // ✅ 1b. Create chat message
+        try {
+            const chatMsg = new Message({
+                email: email || "unknown@intersys.com",
+                name,
+                subject: `Contact Request - ${name}`,
+                content: message,
+                source: "contact",
+                sourceId: newContact._id,
+                isFromAdmin: false,
+                read: false
+            });
+            await chatMsg.save();
+        } catch (chatErr) {
+            console.error("Failed to create chat message for contact:", chatErr);
+        }
+
         // ✅ 2. Send Email
         await transporter.sendMail({
             from: `"Contact Form" <${process.env.EMAIL_USER}>`,
@@ -161,6 +182,13 @@ app.post("/api/contact", async (req, res) => {
             `,
         });
         console.log("📧 Contact email sent successfully");
+
+        // ✅ 3. Send Telegram notification
+        const pref = contactMethod || "Not specified";
+        const loc = [city, country].filter(Boolean).join(", ") || "Not specified";
+        await sendTelegramNotification(
+            `<b>📩 New Contact Request</b>\n\n<b>Name:</b> ${name}\n<b>Prefers:</b> ${pref}\n<b>Email:</b> ${email || "—"}\n<b>Phone:</b> ${phone || "—"}\n<b>Location:</b> ${loc}\n\n<b>Message:</b>\n${message.slice(0, 500)}`
+        );
 
         res.json({ success: true, message: "Message saved and sent successfully" });
 

@@ -40,6 +40,7 @@ import { PopularProductsCard } from "@/components/Admin/analytic/PopularProducts
 import { ProductManagement } from "@/components/Admin/ProductManagement";
 import { PosterManagement } from "@/components/Admin/PosterManagement";
 import { InsightManagement } from "@/components/Admin/InsightManagement";
+import { ChatInbox } from "@/components/Admin/ChatInbox";
 import type { DateRange } from "react-day-picker";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 
@@ -70,7 +71,7 @@ function AdminDashboardPage() {
   const [selectedQuote, setSelectedQuote] = useState<QuoteRequest | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<"dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "reports" | "settings">("dashboard");
+  const [activeSection, setActiveSection] = useState<"dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "chat" | "reports" | "settings">("dashboard");
 
   const itemsPerPage = 5;
 
@@ -248,8 +249,58 @@ function AdminDashboardPage() {
           {activeSection === "products" && <ProductManagement />}
           {activeSection === "posters" && <PosterManagement />}
           {activeSection === "insights" && <InsightManagement />}
+          {activeSection === "chat" && <ChatInbox />}
 
-          {activeSection !== "dashboard" && activeSection !== "quotes" && activeSection !== "analytics" && activeSection !== "products" && activeSection !== "posters" && activeSection !== "insights" && (
+          {activeSection === "quotes" && (
+            <>
+              <div className="flex items-center justify-between">
+                <MetricsCards
+                  totalOutstanding={totalOutstanding}
+                  inProgressCount={inProgressCount}
+                  completedCount={completedCount}
+                  loading={loading}
+                  selectedTab={selectedTab}
+                  onTabChange={setSelectedTab}
+                />
+                <DateRangePicker date={quoteDateRange} onDateChange={handleQuoteDateChange} />
+              </div>
+
+              <div className="bg-white rounded-xl border border-gray-150 shadow-sm">
+                <div className="rounded-t-xl overflow-hidden">
+                  <FilterBar
+                    selectedTab={selectedTab}
+                    onTabChange={setSelectedTab}
+                    showSearch={showSearch}
+                    searchTerm={searchTerm}
+                    onSearchToggle={() => setShowSearch(!showSearch)}
+                    onSearchChange={setSearchTerm}
+                    onExport={() => exportQuotesToCSV(quotes)}
+                  />
+                </div>
+                <div style={{ overflowX: "auto", overflowY: "visible" }}>
+                  <QuoteTable
+                    quotes={currentQuotes}
+                    loading={loading}
+                    onViewDetails={setSelectedQuote}
+                    onStatusChange={handleStatusChange}
+                    onDelete={handleDelete}
+                  />
+                </div>
+                <div className="rounded-b-xl overflow-hidden">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    indexOfFirstItem={indexOfFirstItem}
+                    indexOfLastItem={indexOfLastItem}
+                    totalItems={filteredQuotes.length}
+                    onPageChange={setCurrentPage}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+
+          {activeSection !== "dashboard" && activeSection !== "quotes" && activeSection !== "analytics" && activeSection !== "products" && activeSection !== "posters" && activeSection !== "insights" && activeSection !== "chat" && (
             <div className="flex flex-col items-center justify-center py-20 text-center bg-white rounded-xl border border-gray-150 shadow-sm p-8">
               <span className="text-4xl">🛠️</span>
               <h2 className="text-xl font-black text-gray-800 mt-4 capitalize">{activeSection} Section</h2>

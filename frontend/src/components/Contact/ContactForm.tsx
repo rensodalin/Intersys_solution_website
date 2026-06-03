@@ -116,7 +116,7 @@ export function ContactForm() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <FormInput label="Phone number" name="phone" type="tel" required={false} />
+              <FormInput label="Phone number(telegram Number)" name="phone" type="tel" required={false} />
               <FormInput label="Email address" name="email" type="email" required={false} />
             </div>
 

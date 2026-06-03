@@ -2,6 +2,8 @@ import express from "express";
 import Quote from "../model/quote.js";
 import Contact from "../model/contact.js";
 import User from "../model/user.js";
+import Message from "../model/message.js";
+import { sendTelegramNotification } from "../utils/telegram.js";
 import nodemailer from "nodemailer";
 
 const router = express.Router();
@@ -23,6 +25,23 @@ router.post("/", async (req, res) => {
             userId: req.user ? req.user._id : null
         });
         await newQuote.save();
+
+        try {
+            const productSummary = (quoteData.products || []).map(p => `${p.qty}x ${p.productNo}`).join(", ");
+            const chatMsg = new Message({
+                email: quoteData.email,
+                name: quoteData.name,
+                subject: `Quote Request - ${quoteData.company}`,
+                content: `Quote request from ${quoteData.name} at ${quoteData.company}.\n\nProducts: ${productSummary || "None"}\n\nDetails: ${quoteData.otherBms || ""}`,
+                source: "quote",
+                sourceId: newQuote._id,
+                isFromAdmin: false,
+                read: false
+            });
+            await chatMsg.save();
+        } catch (chatErr) {
+            console.error("Failed to create chat message for quote:", chatErr);
+        }
 
         const emailContent = `
             <div style="font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px;">
@@ -55,6 +74,11 @@ router.post("/", async (req, res) => {
         } else {
             console.warn("Email credentials not configured. Skipping email notification.");
         }
+
+        const productList = (quoteData.products || []).map(p => `${p.qty}x ${p.productNo}`).join("\n");
+        await sendTelegramNotification(
+            `<b>📋 New Quote Request</b>\n\n<b>Name:</b> ${quoteData.name}\n<b>Company:</b> ${quoteData.company}\n<b>Email:</b> ${quoteData.email}\n<b>Phone:</b> ${quoteData.phone}\n<b>Contact Method:</b> ${quoteData.contactMethod || "Not specified"}\n\n<b>Products:</b>\n${productList || "None"}\n\n<b>Details:</b>\n${(quoteData.otherBms || "").slice(0, 500)}`
+        );
 
         res.status(201).json({ success: true, message: "Quote request submitted successfully." });
     } catch (error) {
