@@ -12,6 +12,7 @@ import {
   Phone,
   MapPin,
   Globe,
+  Building2,
   SendHorizontal,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -52,6 +53,7 @@ export function ChatInbox() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [selectedEmail, setSelectedEmail] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
+  const [replyingTo, setReplyingTo] = useState<ChatMessage | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [sending, setSending] = useState(false);
@@ -97,6 +99,7 @@ export function ChatInbox() {
   const handleSelectConversation = async (email: string) => {
     setSelectedEmail(email);
     setReplyText("");
+    setReplyingTo(null);
     await fetchMessages(email);
     await markConversationRead(email);
     setConversations(prev => prev.map(c =>
@@ -109,6 +112,11 @@ export function ChatInbox() {
     setSending(true);
     try {
       const conv = conversations.find(c => c.email === selectedEmail);
+      let finalContent = replyText.trim();
+      if (replyingTo) {
+        const quoted = replyingTo.content.split("\n").map(l => `> ${l}`).join("\n");
+        finalContent = `${finalContent}\n\n${quoted}`;
+      }
       const res = await fetch(`${baseUrl}/api/chat/reply`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -116,7 +124,7 @@ export function ChatInbox() {
         body: JSON.stringify({
           email: selectedEmail,
           name: conv?.name || selectedEmail,
-          content: replyText.trim(),
+          content: finalContent,
           subject: "Conversation with Intersys Solutions",
         }),
       });
@@ -124,6 +132,7 @@ export function ChatInbox() {
       if (json.success) {
         toast.success("Reply sent");
         setReplyText("");
+        setReplyingTo(null);
         await fetchMessages(selectedEmail);
         await fetchConversations();
       } else {
@@ -352,13 +361,86 @@ export function ChatInbox() {
                         </div>
                       )}
 
+                      {msg.source === "quote" && msg.company && (
+                        <div className="px-3 pt-3 pb-2 space-y-1.5 border-b border-gray-200/50">
+                          <div className="flex items-center gap-2 text-[11px] text-gray-600">
+                            <Building2 size={12} className="text-gray-400 flex-shrink-0" />
+                            <span className="font-bold text-gray-900">{msg.company}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-[11px] text-gray-600">
+                            <Mail size={12} className="text-gray-400 flex-shrink-0" />
+                            <a href={`mailto:${msg.email}`} className="hover:text-[#C3110C] underline">{msg.email}</a>
+                          </div>
+                          {msg.phone && (
+                            <div className="flex items-center gap-2 text-[11px] text-gray-600">
+                              <Phone size={12} className="text-gray-400 flex-shrink-0" />
+                              <a href={`tel:${msg.phone}`} className="hover:text-[#C3110C]">{msg.phone}</a>
+                            </div>
+                          )}
+                          <div className="flex items-center gap-2 text-[11px] text-gray-600">
+                            <MapPin size={12} className="text-gray-400 flex-shrink-0" />
+                            <span>{[msg.address, msg.city, msg.country].filter(Boolean).join(", ")}</span>
+                          </div>
+                          {msg.bmsSystem && (
+                            <div className="flex items-center gap-2 text-[11px] text-gray-600">
+                              <Globe size={12} className="text-gray-400 flex-shrink-0" />
+                              <span className="font-medium">Platform: {msg.bmsSystem}</span>
+                            </div>
+                          )}
+                          {msg.solutionCategories && msg.solutionCategories.length > 0 && (
+                            <div className="flex flex-wrap gap-1 pt-1">
+                              {msg.solutionCategories.map((cat, i) => (
+                                <span key={i} className="bg-[#081F3D]/5 text-[#081F3D] text-[9px] font-bold px-1.5 py-0.5 rounded-sm">{cat}</span>
+                              ))}
+                            </div>
+                          )}
+                          {msg.products && msg.products.length > 0 && (
+                            <div className="pt-1">
+                              <div className="text-[10px] font-bold text-gray-500 mb-1">Products ({msg.products.length})</div>
+                              <div className="space-y-1">
+                                {msg.products.map((p, i) => (
+                                  <div key={i} className="flex items-center gap-2 text-[10px] bg-gray-100/50 rounded-sm px-2 py-1">
+                                    <span className="font-bold text-red-600">{p.qty}x</span>
+                                    <span className="font-bold text-[#081F3D]">{p.productNo}</span>
+                                    <span className="text-gray-500 truncate flex-1">{p.description}</span>
+                                    <span className="font-bold text-gray-900">${p.price.toFixed(2)}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          {msg.otherBms && (
+                            <div className="pt-1">
+                              <div className="text-[10px] font-bold text-gray-500 mb-1">Details</div>
+                              <p className="text-[10px] text-gray-600 bg-gray-50 rounded-sm px-2 py-1.5 whitespace-pre-wrap">{msg.otherBms}</p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+
                       <div className="px-3 py-3">
                         <p className="text-xs whitespace-pre-wrap leading-relaxed">{msg.content}</p>
                       </div>
 
-                      <p className={`text-[9px] px-3 pb-3 ${msg.isFromAdmin ? "text-red-200" : "text-gray-400"}`}>
-                        {new Date(msg.createdAt).toLocaleString()}
-                      </p>
+                      <div className={`flex items-center justify-between px-3 pb-3 ${msg.isFromAdmin ? "" : ""}`}>
+                        <p className={`text-[9px] ${msg.isFromAdmin ? "text-red-200" : "text-gray-400"}`}>
+                          {new Date(msg.createdAt).toLocaleString()}
+                        </p>
+                        {!msg.isFromAdmin && (
+                          <button
+                            onClick={() => setReplyingTo(replyingTo?._id === msg._id ? null : msg)}
+                            className={`text-[9px] font-bold flex items-center gap-1 transition cursor-pointer ${
+                              replyingTo?._id === msg._id
+                                ? "text-[#C3110C]"
+                                : "text-gray-400 hover:text-[#C3110C]"
+                            }`}
+                            title="Reply to this message"
+                          >
+                            <Reply size={10} />
+                            Reply
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ))
@@ -367,12 +449,26 @@ export function ChatInbox() {
             </div>
 
             <div className="px-6 py-4 border-t border-gray-150 bg-white">
+              {replyingTo && (
+                <div className="flex items-center justify-between bg-gray-100 rounded-sm px-3 py-2 mb-2 text-xs text-gray-600">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Reply size={12} className="text-gray-400 flex-shrink-0" />
+                    <span className="truncate font-medium">Replying to: {replyingTo.content.slice(0, 80)}{replyingTo.content.length > 80 ? "..." : ""}</span>
+                  </div>
+                  <button
+                    onClick={() => setReplyingTo(null)}
+                    className="text-gray-400 hover:text-[#C3110C] ml-2 flex-shrink-0 cursor-pointer"
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
               <div className="flex items-end gap-3">
                 <div className="flex-1">
                   <textarea
                     value={replyText}
                     onChange={e => setReplyText(e.target.value)}
-                    placeholder="Type your reply..."
+                    placeholder={replyingTo ? "Type your reply..." : "Type your reply..."}
                     rows={2}
                     onKeyDown={e => {
                       if (e.key === "Enter" && !e.shiftKey) {

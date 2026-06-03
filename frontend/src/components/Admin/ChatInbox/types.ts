@@ -12,6 +12,14 @@ export interface Conversation {
   unreadCount: number;
 }
 
+export interface ProductRow {
+  qty: string;
+  productNo: string;
+  description: string;
+  application: string;
+  price: number;
+}
+
 export interface ChatMessage {
   _id: string;
   email: string;
@@ -22,6 +30,12 @@ export interface ChatMessage {
   contactMethod?: string;
   city?: string;
   country?: string;
+  company?: string;
+  address?: string;
+  bmsSystem?: string;
+  otherBms?: string;
+  products?: ProductRow[];
+  solutionCategories?: string[];
   source: "contact" | "quote" | "reply";
   sourceId: string | null;
   isFromAdmin: boolean;
