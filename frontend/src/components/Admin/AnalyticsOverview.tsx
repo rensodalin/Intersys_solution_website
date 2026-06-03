@@ -107,7 +107,7 @@ export function AnalyticsOverview() {
           <h1 className="text-3xl font-black text-gray-900 tracking-tight">
             Structural <span className="text-[#C3110C]">Insights</span>
           </h1>
-          <p className="text-gray-500 text-xs mt-1 max-w-xl font-medium leading-relaxed">
+          <p className="text-gray-500 text-[14px] mt-1 max-w-xl font-medium leading-relaxed">
             Real-time building system telemetry and digital visitor interaction metrics for global architectural assets.
           </p>
         </div>
@@ -133,7 +133,7 @@ export function AnalyticsOverview() {
         />
       </div>
 
-      <footer className="pt-8 border-t border-gray-150 flex flex-col sm:flex-row items-center justify-between gap-4 text-[9px] font-bold text-gray-300 uppercase tracking-wider">
+      <footer className="pt-8 border-t border-gray-150 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px]  text-gray-400 ">
         <div className="flex flex-wrap items-center gap-4 text-center sm:text-left">
           <span>Last Update: {lastUpdate || "Oct 24, 2023 - 14:22:01 UTC"}</span>
           <span className="hidden sm:inline w-1 h-1 bg-gray-200 rounded-full"></span>
@@ -142,9 +142,7 @@ export function AnalyticsOverview() {
 
         <div className="flex items-center gap-1.5 text-center sm:text-right">
           <span>© 2023 Structural Intel — Architectural Data Systems</span>
-          <span className="w-2.5 h-2.5 rounded-full bg-[#C3110C]/20 border border-[#C3110C]/40 flex items-center justify-center shrink-0">
-            <span className="w-1 h-1 bg-[#C3110C] rounded-full animate-ping"></span>
-          </span>
+
         </div>
       </footer>
     </div>

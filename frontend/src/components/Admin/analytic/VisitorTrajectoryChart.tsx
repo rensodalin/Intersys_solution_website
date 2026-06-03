@@ -28,8 +28,8 @@ export function VisitorTrajectoryChart({ timeframe, onTimeframeChange }: Visitor
     <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm lg:col-span-2 flex flex-col justify-between">
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h2 className="text-sm font-black text-gray-900 uppercase tracking-wider">Visitor Trajectory</h2>
-          <p className="text-[10px] text-gray-400 font-bold uppercase mt-1">Net page views across all structural systems</p>
+          <h2 className="text-md font-black text-gray-900 ">Visitor Trajectory</h2>
+          <p className="text-sm text-gray-400 font-bold mt-1">Net page views across all structural systems</p>
         </div>
         <div className="bg-gray-100 p-0.5 rounded-lg flex items-center text-[9px] font-black uppercase tracking-wider text-gray-500">
           {(["24h", "7d", "30d"] as const).map((t) => (

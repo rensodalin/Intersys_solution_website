@@ -225,10 +225,10 @@ function AdminDashboardPage() {
 
   return (
     <div className="min-h-screen flex bg-[#F8FAFC]">
-      <Sidebar 
-        userName={user.name} 
-        activeSection={activeSection} 
-        onSectionChange={setActiveSection} 
+      <Sidebar
+        userName={user.name}
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
       />
 
       <div className="flex-1 flex flex-col min-w-0 ml-64">
@@ -272,8 +272,8 @@ function AdminDashboardPage() {
                 <DateRangePicker date={quoteDateRange} onDateChange={handleQuoteDateChange} />
               </div>
 
-            <div className="bg-white rounded-sm border border-gray-150 shadow-sm overflow-hidden flex flex-col">
-              <FilterBar
+              <div className="bg-white rounded-sm border border-gray-150 shadow-sm overflow-hidden flex flex-col">
+                <FilterBar
                   selectedTab={selectedTab}
                   onTabChange={(tab) => {
                     setSelectedTab(tab);

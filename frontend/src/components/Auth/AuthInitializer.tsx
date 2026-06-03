@@ -46,7 +46,7 @@ export function AuthInitializer({ children }: AuthInitializerProps) {
         </div>
 
         <p className="text-neutral-300 text-sm ">
-          Initializing Session
+          Loading....
         </p>
       </div>
     );
