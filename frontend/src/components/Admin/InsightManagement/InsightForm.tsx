@@ -43,7 +43,7 @@ function FieldTextarea({ label, value, onChange, placeholder, rows }: {
       <label className="block text-[12px] font-black text-gray-500 mb-1.5">{label}</label>
       <textarea value={value} onChange={e => onChange(e.target.value)} rows={rows || 3}
         placeholder={placeholder}
-        className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg resize-none focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition" />
+        className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-sm resize-none focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition" />
     </div>
   );
 }
@@ -53,7 +53,7 @@ export function InsightForm({ form, editingId, saving, onFieldChange, onClose, o
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
+      <div className="bg-white rounded-md shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
           <div>
             <h2 className="text-lg font-black text-gray-900">

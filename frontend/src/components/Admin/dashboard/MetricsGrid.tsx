@@ -30,7 +30,7 @@ export function MetricsGrid({ stats }: Props) {
         </div>
         <div className="mt-4">
           <h3 className="text-2xl font-black text-gray-900">{getMetric(stats, "visitors")}</h3>
-          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-1">Total Visitors</p>
+          <p className="text-[12px] font-bold text-gray-400  mt-1">Total Visitors</p>
         </div>
       </div>
 
@@ -42,7 +42,7 @@ export function MetricsGrid({ stats }: Props) {
         </div>
         <div className="mt-4">
           <h3 className="text-2xl font-black text-gray-900">{getMetric(stats, "active")}</h3>
-          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-1">Active Users</p>
+          <p className="text-[12px] font-bold text-gray-400  mt-1">Active Users</p>
         </div>
       </div>
 
@@ -54,7 +54,7 @@ export function MetricsGrid({ stats }: Props) {
         </div>
         <div className="mt-4">
           <h3 className="text-2xl font-black text-gray-900">{getMetric(stats, "quotes")}</h3>
-          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-1">Total Quotes</p>
+          <p className="text-[12px] font-bold text-gray-400  mt-1">Total Quotes</p>
         </div>
       </div>
 
@@ -66,7 +66,7 @@ export function MetricsGrid({ stats }: Props) {
         </div>
         <div className="mt-4">
           <h3 className="text-2xl font-black text-amber-600">{getMetric(stats, "pending")}</h3>
-          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-1">Pending</p>
+          <p className="text-[12px] font-bold text-gray-400  mt-1">Pending</p>
         </div>
       </div>
 
@@ -78,7 +78,7 @@ export function MetricsGrid({ stats }: Props) {
         </div>
         <div className="mt-4">
           <h3 className="text-2xl font-black text-[#0D7C5E]">{getMetric(stats, "completed")}</h3>
-          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-1">Completed</p>
+          <p className="text-[12px] font-bold text-gray-400  mt-1">Completed</p>
         </div>
       </div>
 
@@ -90,7 +90,7 @@ export function MetricsGrid({ stats }: Props) {
         </div>
         <div className="mt-4">
           <h3 className="text-2xl font-black text-cyan-600">{getMetric(stats, "contacts")}</h3>
-          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-1">Contact</p>
+          <p className="text-[12px] font-bold text-gray-400  mt-1">Contact</p>
         </div>
       </div>
     </div>

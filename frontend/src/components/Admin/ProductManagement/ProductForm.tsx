@@ -93,13 +93,13 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1.5">Product ID *</label>
+                  <label className="block text-[12px] font-black text-gray-500  mb-1.5">Product ID *</label>
                   <input value={form.productId} onChange={e => onFieldChange("productId", e.target.value)} disabled={!!editingId}
                     placeholder="auto-generated-slug"
                     className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 font-mono focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 disabled:opacity-60 transition" />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1.5">Title *</label>
+                  <label className="block text-[12px] font-black text-gray-500  mb-1.5">Title *</label>
                   <input value={form.title} onChange={e => onTitleChange(e.target.value)}
                     placeholder="e.g. PW7000 Intelligent Control Panel"
                     className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition" />
@@ -108,7 +108,7 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1.5">Category *</label>
+                  <label className="block text-[12px] font-black text-gray-500  mb-1.5">Category *</label>
                   <select value={form.category} onChange={e => { onFieldChange("category", e.target.value); onFieldChange("brand", ""); onFieldChange("brandSubCategory", ""); }}
                     className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition">
                     <option value="">Select...</option>
@@ -116,7 +116,7 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1.5">Brand *</label>
+                  <label className="block text-[12px] font-black text-gray-500  mb-1.5">Brand *</label>
                   <select value={form.brand} onChange={e => { onFieldChange("brand", e.target.value); onFieldChange("brandSubCategory", ""); }}
                     disabled={!form.category}
                     className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 disabled:opacity-50 transition">
@@ -125,7 +125,7 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1.5">Subcategory</label>
+                  <label className="block text-[12px] font-black text-gray-500  mb-1.5">Subcategory</label>
                   <select value={form.brandSubCategory} onChange={e => onSubCategoryChange(e.target.value)}
                     disabled={!form.brand || availableSubCategories.length === 0}
                     className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 disabled:opacity-50 transition">
@@ -136,7 +136,7 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
               </div>
 
               <div>
-                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                <label className="block text-[12px] font-black text-gray-500  mb-1.5 flex items-center gap-1">
                   <LinkIcon size={10} /> Subcategory Link
                 </label>
                 <input value={form.brandSubCategoryLink} onChange={e => onFieldChange("brandSubCategoryLink", e.target.value)}
@@ -145,14 +145,14 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
               </div>
 
               <div>
-                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1.5">Short Description</label>
+                <label className="block text-[12px] font-black text-gray-500  mb-1.5">Short Description</label>
                 <textarea value={form.description} onChange={e => onFieldChange("description", e.target.value)} rows={2}
                   placeholder="Brief product description for catalog listings..."
                   className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg resize-none focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition" />
               </div>
 
               <div>
-                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1.5">Long Description</label>
+                <label className="block text-[12px] font-black text-gray-500  mb-1.5">Long Description</label>
                 <textarea value={form.longDescription} onChange={e => onFieldChange("longDescription", e.target.value)} rows={4}
                   placeholder="Full detailed description shown on the product detail page..."
                   className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg resize-none focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition" />
@@ -163,7 +163,7 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
           {activeTab === "media" && (
             <div className="space-y-5">
               <div>
-                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1.5">Main Image URL</label>
+                <label className="block text-[12px] font-black text-gray-500  mb-1.5">Main Image URL</label>
                 <input value={form.mainImage} onChange={e => onFieldChange("mainImage", e.target.value)}
                   placeholder="https://..."
                   className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition" />
@@ -175,7 +175,7 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
                 )}
               </div>
               <div>
-                <label className="block text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1.5">
+                <label className="block text-[12px] font-black text-gray-500  mb-1.5">
                   Thumbnail URLs <span className="normal-case text-gray-400 font-normal">(comma-separated)</span>
                 </label>
                 <textarea value={form.thumbnails} onChange={e => onFieldChange("thumbnails", e.target.value)} rows={3}
@@ -213,22 +213,22 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
               {form.options.map((opt, i) => (
                 <div key={i} className="grid grid-cols-12 gap-2 items-start p-3 bg-gray-50 rounded-lg border border-gray-100">
                   <div className="col-span-3">
-                    <label className="block text-[9px] font-black text-gray-400 uppercase mb-1">Part Code *</label>
+                    <label className="block text-[9px] font-black text-gray-400  mb-1">Part Code *</label>
                     <input value={opt.partCode} onChange={e => updateOption(i, "partCode", e.target.value)}
                       placeholder="PW7000" className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded font-mono focus:outline-none focus:border-[#C3110C]/50 transition" />
                   </div>
                   <div className="col-span-5">
-                    <label className="block text-[9px] font-black text-gray-400 uppercase mb-1">Specification</label>
+                    <label className="block text-[9px] font-black text-gray-400  mb-1">Specification</label>
                     <input value={opt.specification} onChange={e => updateOption(i, "specification", e.target.value)}
                       placeholder="Standard Configuration" className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded focus:outline-none focus:border-[#C3110C]/50 transition" />
                   </div>
                   <div className="col-span-1">
-                    <label className="block text-[9px] font-black text-gray-400 uppercase mb-1">Price</label>
+                    <label className="block text-[9px] font-black text-gray-400  mb-1">Price</label>
                     <input type="number" value={opt.price} onChange={e => updateOption(i, "price", parseFloat(e.target.value) || 0)}
                       className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded focus:outline-none focus:border-[#C3110C]/50 transition" />
                   </div>
                   <div className="col-span-1">
-                    <label className="block text-[9px] font-black text-gray-400 uppercase mb-1">Qty</label>
+                    <label className="block text-[9px] font-black text-gray-400  mb-1">Qty</label>
                     <input type="number" value={opt.qty} onChange={e => updateOption(i, "qty", parseInt(e.target.value) || 0)}
                       className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded focus:outline-none focus:border-[#C3110C]/50 transition" />
                   </div>
@@ -261,12 +261,12 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
               {form.documents.map((doc, i) => (
                 <div key={i} className="grid grid-cols-12 gap-2 items-start p-3 bg-gray-50 rounded-lg border border-gray-100">
                   <div className="col-span-4">
-                    <label className="block text-[9px] font-black text-gray-400 uppercase mb-1">Document Name *</label>
+                    <label className="block text-[12px] font-black text-gray-500 mb-1">Document Name *</label>
                     <input value={doc.name} onChange={e => updateDocument(i, "name", e.target.value)}
-                      placeholder="Technical Datasheet" className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded focus:outline-none focus:border-[#C3110C]/50 transition" />
+                      placeholder="Technical Datasheet" className="w-full px-2 py-1.5 text-sm border border-gray-200 rounded focus:outline-none focus:border-[#C3110C]/50 transition" />
                   </div>
                   <div className="col-span-7">
-                    <label className="block text-[9px] font-black text-gray-400 uppercase mb-1">URL *</label>
+                    <label className="block text-[12px] font-black text-gray-500 mb-1">URL *</label>
                     <input value={doc.url} onChange={e => updateDocument(i, "url", e.target.value)}
                       placeholder="https://..." className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded font-mono focus:outline-none focus:border-[#C3110C]/50 transition" />
                   </div>

@@ -34,7 +34,7 @@ export function PosterList({ posters, loading, onEdit, onDelete, onMoveOrder, on
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-150 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-md border border-gray-150 shadow-sm overflow-hidden">
       <div className="divide-y divide-gray-100">
         {posters.map((poster, index) => (
           <div key={poster._id} className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50/80 transition-colors group">

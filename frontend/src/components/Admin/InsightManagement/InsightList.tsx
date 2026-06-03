@@ -11,7 +11,7 @@ interface InsightListProps {
 export function InsightList({ insights, loading, onEdit, onDelete }: InsightListProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-xl border border-gray-150 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-sm border border-gray-150 shadow-sm overflow-hidden">
         <div className="flex flex-col items-center justify-center py-20 gap-4">
           <Loader2 size={32} className="text-[#C3110C] animate-spin" />
           <p className="text-sm text-gray-400 font-medium">Loading insights...</p>
@@ -22,7 +22,7 @@ export function InsightList({ insights, loading, onEdit, onDelete }: InsightList
 
   if (insights.length === 0) {
     return (
-      <div className="bg-white rounded-xl border border-gray-150 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-sm border border-gray-150 shadow-sm overflow-hidden">
         <div className="flex flex-col items-center justify-center py-20 gap-4">
           <FileText size={40} className="text-gray-200" />
           <p className="text-sm text-gray-400 font-medium">No insights yet. Click "Add New Insight" to get started.</p>
@@ -32,7 +32,7 @@ export function InsightList({ insights, loading, onEdit, onDelete }: InsightList
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-150 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-sm border border-gray-150 shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
