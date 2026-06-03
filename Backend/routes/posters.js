@@ -1,4 +1,5 @@
 import express from "express";
+import fs from "fs";
 import Poster from "../model/poster.js";
 import User from "../model/user.js";
 import nodemailer from "nodemailer";
@@ -14,6 +15,30 @@ const transporter = nodemailer.createTransport({
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
     },
+});
+
+// POST /api/posters/save-image — Download an image and save to local uploads (for Facebook CDN hotlink bypass)
+router.post("/save-image", async (req, res) => {
+    try {
+        const { url } = req.body;
+        if (!url) return res.status(400).json({ success: false, message: "URL is required" });
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Failed to fetch image: ${response.status}`);
+
+        const contentType = response.headers.get("content-type") || "image/jpeg";
+        const ext = contentType.split("/").pop() || "jpg";
+        const filename = `poster_${Date.now()}.${ext}`;
+        const filepath = `uploads/${filename}`;
+        const buffer = Buffer.from(await response.arrayBuffer());
+
+        await fs.promises.writeFile(filepath, buffer);
+
+        const localUrl = `${req.protocol}://${req.get("host")}/uploads/${filename}`;
+        res.json({ success: true, url: localUrl });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
 });
 
 // GET all posters sorted by order
@@ -105,6 +130,44 @@ router.post("/", async (req, res) => {
 
     } catch (err) {
         console.error("❌ Poster creation error:", err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// PUT /api/posters/:id — Update a poster (Admin only)
+const isAdmin = (req, res, next) => {
+    if (req.isAuthenticated && req.isAuthenticated() && req.user && req.user.isAdmin) {
+        return next();
+    }
+    return res.status(403).json({ success: false, error: "Access denied. Admin authorization required." });
+};
+
+router.put("/:id", isAdmin, async (req, res) => {
+    try {
+        const { image, link, order } = req.body;
+        const poster = await Poster.findByIdAndUpdate(
+            req.params.id,
+            { image, link, order },
+            { new: true, runValidators: true }
+        );
+        if (!poster) {
+            return res.status(404).json({ success: false, message: "Poster not found" });
+        }
+        res.json({ success: true, data: poster });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// DELETE /api/posters/:id — Delete a poster (Admin only)
+router.delete("/:id", isAdmin, async (req, res) => {
+    try {
+        const poster = await Poster.findByIdAndDelete(req.params.id);
+        if (!poster) {
+            return res.status(404).json({ success: false, message: "Poster not found" });
+        }
+        res.json({ success: true, message: "Poster deleted successfully" });
+    } catch (err) {
         res.status(500).json({ success: false, message: err.message });
     }
 });

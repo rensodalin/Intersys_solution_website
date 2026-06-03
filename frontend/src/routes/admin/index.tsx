@@ -38,6 +38,8 @@ import { DashboardOverview } from "@/components/Admin/DashboardOverview";
 import { AnalyticsOverview } from "@/components/Admin/AnalyticsOverview";
 import { PopularProductsCard } from "@/components/Admin/analytic/PopularProductsCard";
 import { ProductManagement } from "@/components/Admin/ProductManagement";
+import { PosterManagement } from "@/components/Admin/PosterManagement";
+import { InsightManagement } from "@/components/Admin/InsightManagement";
 import type { DateRange } from "react-day-picker";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 
@@ -68,7 +70,7 @@ function AdminDashboardPage() {
   const [selectedQuote, setSelectedQuote] = useState<QuoteRequest | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<"dashboard" | "quotes" | "analytics" | "customers" | "products" | "reports" | "settings">("dashboard");
+  const [activeSection, setActiveSection] = useState<"dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "reports" | "settings">("dashboard");
 
   const itemsPerPage = 5;
 
@@ -244,108 +246,10 @@ function AdminDashboardPage() {
           {activeSection === "dashboard" && <DashboardOverview />}
           {activeSection === "analytics" && <AnalyticsOverview />}
           {activeSection === "products" && <ProductManagement />}
+          {activeSection === "posters" && <PosterManagement />}
+          {activeSection === "insights" && <InsightManagement />}
 
-          {activeSection === "quotes" && (
-            <>
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div>
-                  <h1 className="text-3xl font-bold  text-gray-900">
-                    Quote Requests
-                  </h1>
-                  <p className="text-gray-500 text-sm mt-1 max-w-xl">
-                    Review and process inbound system specifications from clients.
-                  </p>
-                </div>
-                <MetricsCards
-                  totalOutstanding={totalOutstanding}
-                  inProgressCount={inProgressCount}
-                  completedCount={completedCount}
-                  loading={loading}
-                  selectedTab={selectedTab}
-                  onTabChange={(tab) => {
-                    setSelectedTab(tab);
-                    setCurrentPage(1);
-                  }}
-                />
-              </div>
-              <div className="flex justify-end">
-                <DateRangePicker date={quoteDateRange} onDateChange={handleQuoteDateChange} />
-              </div>
-
-              <div className="bg-white rounded-sm border border-gray-150 shadow-sm overflow-hidden flex flex-col">
-                <FilterBar
-                  selectedTab={selectedTab}
-                  onTabChange={(tab) => {
-                    setSelectedTab(tab);
-                    setCurrentPage(1);
-                  }}
-                  showSearch={showSearch}
-                  searchTerm={searchTerm}
-                  onSearchToggle={() => setShowSearch(!showSearch)}
-                  onSearchChange={(value) => {
-                    setSearchTerm(value);
-                    setCurrentPage(1);
-                  }}
-                  onExport={() => exportQuotesToCSV(quotes)}
-                />
-
-                <div className="overflow-x-auto">
-                  <QuoteTable
-                    quotes={currentQuotes}
-                    loading={loading}
-                    onViewDetails={setSelectedQuote}
-                    onStatusChange={handleStatusChange}
-                    onDelete={handleDelete}
-                  />
-                </div>
-
-                {!loading && filteredQuotes.length > 0 && (
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    indexOfFirstItem={indexOfFirstItem}
-                    indexOfLastItem={indexOfLastItem}
-                    totalItems={filteredQuotes.length}
-                    onPageChange={setCurrentPage}
-                  />
-                )}
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <PopularProductsCard
-                  products={sortedProductPopularity}
-                  loading={loading}
-                  getProductImage={getProductImage}
-                />
-
-                <div className="bg-white p-6 rounded-sm border border-gray-150 shadow-sm flex flex-col lg:col-span-2">
-                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-4">
-                    Operations Notes
-                  </span>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-gray-600 leading-relaxed">
-                    <div className="space-y-3">
-                      <p className="font-semibold text-gray-900">Status Cycling Control</p>
-                      <p>
-                        Clicking on the status badge in the table cycles the quote through the three
-                        stages: <b>Pending → In Progress → Completed → Pending</b>. Changes are saved
-                        instantly to the database.
-                      </p>
-                    </div>
-                    <div className="space-y-3">
-                      <p className="font-semibold text-gray-900">System Platform Indicator</p>
-                      <p>
-                        The "Platform" column represents the preferred Building Management System (BMS)
-                        selected by the client during quote assembly, such as{" "}
-                        <b>In-House DB, Cloud v2.1, or On-Premises</b>.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-
-          {activeSection !== "dashboard" && activeSection !== "quotes" && activeSection !== "analytics" && activeSection !== "products" && (
+          {activeSection !== "dashboard" && activeSection !== "quotes" && activeSection !== "analytics" && activeSection !== "products" && activeSection !== "posters" && activeSection !== "insights" && (
             <div className="flex flex-col items-center justify-center py-20 text-center bg-white rounded-xl border border-gray-150 shadow-sm p-8">
               <span className="text-4xl">🛠️</span>
               <h2 className="text-xl font-black text-gray-800 mt-4 capitalize">{activeSection} Section</h2>

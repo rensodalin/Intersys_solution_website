@@ -47,6 +47,9 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
+// Serve uploaded images
+app.use('/uploads', express.static('uploads'));
+
 // Session setup with MongoDB-backed store (required for load-balanced clusters)
 app.use(
     session({
