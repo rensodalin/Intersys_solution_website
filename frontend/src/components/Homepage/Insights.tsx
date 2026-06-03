@@ -68,17 +68,25 @@ export function Insights() {
       <div className="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-[#F8FAFC]/75 via-[#F8FAFC]/20 to-transparent"></div>
 
       {/* Header */}
-      <div className="relative z-20 max-w-[1400px] mx-auto px-6 md:px-10 mb-6">
+      <div className="relative z-20 max-w-[1400px] mx-auto px-6 md:px-10 mb-15 mt-10 pb-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <motion.h2
+
+          <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-4xl font-bold text-[#0F172A] leading-[0.95] tracking-tight"
+            className="max-w-2xl"
           >
-            Project Latest <span className="text-[#C3110C]">Insights</span>
-          </motion.h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0F172A] leading-[0.95] tracking-tight">
+              Project Latest <span className="text-[#C3110C]">Insights</span>
+            </h2>
+
+            <p className="mt-4 text-sm md:text-base text-slate-600 leading-relaxed">
+              Explore the latest project updates, development progress, key milestones,
+              and insights that highlight ongoing achievements and improvements.
+            </p>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -86,10 +94,11 @@ export function Insights() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
+            {/* Right-side content */}
           </motion.div>
+
         </div>
       </div>
-
       {/* Carousel */}
       <div className="relative">
         {/* Side Fades */}

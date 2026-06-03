@@ -27,7 +27,7 @@ function FieldInput({ label, value, onChange, placeholder, disabled, type, mono 
 }) {
   return (
     <div>
-      <label className="block text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1.5">{label}</label>
+      <label className="block text-[12px] font-black text-gray-500  mb-1.5">{label}</label>
       <input type={type || "text"} value={value} onChange={e => onChange(e.target.value)} disabled={disabled}
         placeholder={placeholder}
         className={`w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 ${disabled ? "bg-gray-50 opacity-60" : ""} ${mono ? "font-mono" : ""} transition`} />
@@ -40,7 +40,7 @@ function FieldTextarea({ label, value, onChange, placeholder, rows }: {
 }) {
   return (
     <div>
-      <label className="block text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1.5">{label}</label>
+      <label className="block text-[12px] font-black text-gray-500 mb-1.5">{label}</label>
       <textarea value={value} onChange={e => onChange(e.target.value)} rows={rows || 3}
         placeholder={placeholder}
         className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg resize-none focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition" />
@@ -93,7 +93,7 @@ export function InsightForm({ form, editingId, saving, onFieldChange, onClose, o
               <FieldTextarea label="Description *" value={form.desc} onChange={v => onFieldChange("desc", v)} placeholder="Brief description of the insight..." />
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-wider mb-1.5">Category *</label>
+                  <label className="block text-[12px] font-black text-gray-500 mb-1.5">Category *</label>
                   <select value={form.category} onChange={e => onFieldChange("category", e.target.value)}
                     className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition">
                     <option value="">Select...</option>

@@ -37,11 +37,11 @@ export function InsightList({ insights, loading, onEdit, onDelete }: InsightList
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-gray-50 border-b border-gray-100">
-              <th className="text-left text-[10px] font-black text-gray-400 uppercase tracking-wider px-4 py-3">Title</th>
-              <th className="text-left text-[10px] font-black text-gray-400 uppercase tracking-wider px-4 py-3">Category</th>
-              <th className="text-left text-[10px] font-black text-gray-400 uppercase tracking-wider px-4 py-3">Date</th>
-              <th className="text-left text-[10px] font-black text-gray-400 uppercase tracking-wider px-4 py-3">Author</th>
-              <th className="text-right text-[10px] font-black text-gray-400 uppercase tracking-wider px-4 py-3">Actions</th>
+              <th className="text-left text-[12px] font-black text-gray-400  px-4 py-3">Title</th>
+              <th className="text-left text-[12px] font-black text-gray-400  px-4 py-3">Category</th>
+              <th className="text-left text-[12px] font-black text-gray-400  px-4 py-3">Date</th>
+              <th className="text-left text-[12px] font-black text-gray-400  px-4 py-3">Author</th>
+              <th className="text-right text-[12px] font-black text-gray-400  px-4 py-3">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
@@ -63,11 +63,11 @@ export function InsightList({ insights, loading, onEdit, onDelete }: InsightList
                 <td className="px-4 py-3">
                   <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button onClick={() => onEdit(i)}
-                      className="p-1.5 rounded-lg bg-blue-50 text-blue-500 hover:bg-blue-100 transition" title="Edit">
+                      className="p-1.5 rounded-sm bg-blue-50 text-gray-500 hover:bg-blue-100 transition" title="Edit">
                       <Pencil size={13} />
                     </button>
                     <button onClick={() => onDelete(i)}
-                      className="p-1.5 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 transition" title="Delete">
+                      className="p-1.5 rounded-sm bg-red-50 text-gray-500 hover:bg-red-100 transition" title="Delete">
                       <Trash2 size={13} />
                     </button>
                   </div>
