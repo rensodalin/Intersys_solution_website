@@ -1,6 +1,34 @@
 import express from "express";
 import passport from "passport";
+import multer from "multer";
+import path from "path";
+import { fileURLToPath } from "url";
 import User from "../model/user.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const avatarStorage = multer.diskStorage({
+    destination: path.join(__dirname, "../uploads/avatars"),
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname) || ".png";
+        cb(null, `avatar_${req.user?._id || "unknown"}${ext}`);
+    },
+});
+
+const uploadAvatar = multer({
+    storage: avatarStorage,
+    limits: { fileSize: 2 * 1024 * 1024 },
+    fileFilter: (req, file, cb) => {
+        const allowed = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
+        const ext = path.extname(file.originalname).toLowerCase();
+        if (allowed.includes(ext)) {
+            cb(null, true);
+        } else {
+            cb(new Error("Only image files (jpg, png, gif, webp) are allowed"));
+        }
+    },
+});
 
 const router = express.Router();
 
@@ -348,6 +376,36 @@ router.put("/user/update", async (req, res) => {
     } catch (error) {
         console.error("Update User Error:", error);
         res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+    }
+});
+
+// ✅ Upload Avatar
+router.post("/user/avatar", uploadAvatar.single("avatar"), async (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ success: false, message: "Not authenticated" });
+    }
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: "No image file provided" });
+        }
+
+        const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+        const user = await User.findByIdAndUpdate(
+            req.user._id,
+            { avatar: avatarUrl },
+            { new: true }
+        );
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        const userObj = user.toObject ? user.toObject() : user;
+        userObj.isAdmin = user.email === ADMIN_EMAIL;
+        res.json({ success: true, avatar: avatarUrl, user: userObj });
+    } catch (error) {
+        console.error("Avatar Upload Error:", error);
+        res.status(500).json({ success: false, message: "Failed to upload avatar", error: error.message });
     }
 });
 
