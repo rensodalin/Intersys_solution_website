@@ -54,13 +54,21 @@ router.get("/", async (req, res) => {
 // POST — Create a new poster and notify all newsletter subscribers
 router.post("/", async (req, res) => {
     try {
-        const { image, link, order } = req.body;
-        if (!image || !link) {
-            return res.status(400).json({ success: false, message: "image and link are required." });
+        const { image, link, title, description, facebookLink, linkedinLink, order } = req.body;
+        if (!image) {
+            return res.status(400).json({ success: false, message: "image is required." });
         }
 
         // 1. Save the new poster
-        const poster = new Poster({ image, link, order: order || 0 });
+        const poster = new Poster({
+            image,
+            link: link || "",
+            title: title || "",
+            description: description || "",
+            facebookLink: facebookLink || "",
+            linkedinLink: linkedinLink || "",
+            order: order || 0,
+        });
         await poster.save();
         console.log("✅ New poster saved:", poster._id);
 
@@ -68,13 +76,16 @@ router.post("/", async (req, res) => {
         const subscribers = await User.find({ newsletter: true }).select("email name firstName");
         console.log(`📧 Sending newsletter to ${subscribers.length} subscriber(s)...`);
 
+        const posterTitle = poster.title || "New Update";
+        const posterDesc = poster.description || "We have a new update just for you!";
+
         // 3. Send email to each subscriber
         const emailPromises = subscribers.map((user) => {
             const displayName = user.firstName || user.name || "Valued Subscriber";
             return transporter.sendMail({
                 from: `"Intersys Solutions" <${process.env.EMAIL_USER}>`,
                 to: user.email,
-                subject: "🔔 New Update from Intersys Solutions!",
+                subject: `🔔 ${posterTitle} — Intersys Solutions`,
                 html: `
                     <div style="font-family: 'Segoe UI', sans-serif; max-width: 600px; margin: auto; border-radius: 10px; overflow: hidden; border: 1px solid #e5e7eb;">
                         <!-- Header -->
@@ -88,16 +99,18 @@ router.post("/", async (req, res) => {
                         <!-- Body -->
                         <div style="padding: 32px; background: #ffffff;">
                             <p style="font-size: 15px; color: #374151; margin: 0 0 12px;">Dear <strong>${displayName}</strong>,</p>
+                            <h2 style="font-size: 18px; color: #1f2937; margin: 0 0 8px;">${posterTitle}</h2>
                             <p style="font-size: 14px; color: #6b7280; line-height: 1.7; margin: 0 0 24px;">
-                                We have a new update just for you! Our team has published fresh content — check it out below.
+                                ${posterDesc}
                             </p>
 
                             <!-- Poster Image -->
                             <div style="border-radius: 8px; overflow: hidden; margin-bottom: 24px; border: 1px solid #f3f4f6;">
-                                <img src="${image}" alt="New Poster" style="width: 100%; display: block; object-fit: cover;" />
+                                <img src="${image}" alt="${posterTitle}" style="width: 100%; display: block; object-fit: cover;" />
                             </div>
 
                             <!-- CTA Button -->
+                            ${link ? `
                             <div style="text-align: center; margin-bottom: 24px;">
                                 <a href="${link}" target="_blank"
                                     style="display: inline-block; background: #D62828; color: #ffffff; text-decoration: none;
@@ -105,6 +118,7 @@ router.post("/", async (req, res) => {
                                     View Full Post →
                                 </a>
                             </div>
+                            ` : ""}
 
                             <p style="font-size: 13px; color: #9ca3af; text-align: center; margin: 0;">
                                 You're receiving this because you subscribed to Intersys Solutions newsletter updates.<br/>
@@ -144,10 +158,10 @@ const isAdmin = (req, res, next) => {
 
 router.put("/:id", isAdmin, async (req, res) => {
     try {
-        const { image, link, order } = req.body;
+        const { image, link, title, description, facebookLink, linkedinLink, order } = req.body;
         const poster = await Poster.findByIdAndUpdate(
             req.params.id,
-            { image, link, order },
+            { image, link, title, description, facebookLink, linkedinLink, order },
             { new: true, runValidators: true }
         );
         if (!poster) {

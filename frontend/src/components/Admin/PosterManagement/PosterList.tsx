@@ -69,11 +69,24 @@ export function PosterList({ posters, loading, onEdit, onDelete, onMoveOrder, on
 
             {/* Info */}
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-mono text-gray-400 truncate">{poster.image}</p>
-              <a href={poster.link} target="_blank" rel="noopener noreferrer"
-                className="text-xs text-blue-500 hover:underline truncate block mt-0.5">
-                {poster.link}
-              </a>
+              <p className="text-sm font-bold text-gray-900 truncate">{poster.title || "Untitled"}</p>
+              {poster.description && (
+                <p className="text-xs text-gray-500 truncate mt-0.5">{poster.description}</p>
+              )}
+              <div className="flex items-center gap-3 mt-1">
+                {poster.link && (
+                  <a href={poster.link} target="_blank" rel="noopener noreferrer"
+                    className="text-[10px] text-blue-500 hover:underline">Facebook Post</a>
+                )}
+                {poster.facebookLink && (
+                  <a href={poster.facebookLink} target="_blank" rel="noopener noreferrer"
+                    className="text-[10px] text-blue-500 hover:underline">Facebook Page</a>
+                )}
+                {poster.linkedinLink && (
+                  <a href={poster.linkedinLink} target="_blank" rel="noopener noreferrer"
+                    className="text-[10px] text-blue-500 hover:underline">LinkedIn</a>
+                )}
+              </div>
             </div>
 
             {/* Actions */}

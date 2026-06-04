@@ -2,6 +2,10 @@ export interface Poster {
   _id: string;
   image: string;
   link: string;
+  title: string;
+  description: string;
+  facebookLink: string;
+  linkedinLink: string;
   order: number;
 }
 

@@ -17,6 +17,10 @@ export function PosterManagement() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formImage, setFormImage] = useState("");
   const [formLink, setFormLink] = useState("");
+  const [formTitle, setFormTitle] = useState("");
+  const [formDescription, setFormDescription] = useState("");
+
+  const [formLinkedinLink, setFormLinkedinLink] = useState("");
   const [formOrder, setFormOrder] = useState(0);
 
   // Delete modal
@@ -64,6 +68,9 @@ export function PosterManagement() {
     setEditingId(null);
     setFormImage("");
     setFormLink("");
+    setFormTitle("");
+    setFormDescription("");
+    setFormLinkedinLink("");
     setFormOrder(posters.length);
     setShowForm(true);
   }
@@ -72,6 +79,9 @@ export function PosterManagement() {
     setEditingId(p._id);
     setFormImage(p.image);
     setFormLink(p.link);
+    setFormTitle(p.title);
+    setFormDescription(p.description);
+    setFormLinkedinLink(p.linkedinLink);
     setFormOrder(p.order);
     setShowForm(true);
   }
@@ -79,18 +89,26 @@ export function PosterManagement() {
   function closeForm() { setShowForm(false); setEditingId(null); }
 
   async function handleSave() {
-    if (!formImage || !formLink) {
-      toast.error("Image URL and Link are required.");
+    if (!formImage) {
+      toast.error("Image URL is required.");
       return;
     }
     setSaving(true);
+    const body = {
+      image: formImage,
+      link: formLink,
+      title: formTitle,
+      description: formDescription,
+      linkedinLink: formLinkedinLink,
+      order: formOrder,
+    };
     try {
       if (editingId) {
         const res = await fetch(`${BASE_URL}/api/posters/${editingId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify({ image: formImage, link: formLink, order: formOrder }),
+          body: JSON.stringify(body),
         });
         const json = await res.json();
         if (!json.success) throw new Error(json.message);
@@ -101,7 +119,7 @@ export function PosterManagement() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify({ image: formImage, link: formLink, order: formOrder }),
+          body: JSON.stringify(body),
         });
         const json = await res.json();
         if (!json.success) throw new Error(json.message);
@@ -152,7 +170,7 @@ export function PosterManagement() {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify({ image: p.image, link: p.link, order: p.order }),
+          body: JSON.stringify({ image: p.image, link: p.link, title: p.title, description: p.description, linkedinLink: p.linkedinLink, order: p.order }),
         })
       ));
     } catch {
@@ -193,12 +211,18 @@ export function PosterManagement() {
         <PosterForm
           formImage={formImage}
           formLink={formLink}
+          formTitle={formTitle}
+          formDescription={formDescription}
+          formLinkedinLink={formLinkedinLink}
           formOrder={formOrder}
           editingId={editingId}
           saving={saving}
           savingImage={savingImage}
           onImageChange={setFormImage}
           onLinkChange={setFormLink}
+          onTitleChange={setFormTitle}
+          onDescriptionChange={setFormDescription}
+          onLinkedinLinkChange={setFormLinkedinLink}
           onOrderChange={setFormOrder}
           onSaveImageLocally={saveImageLocally}
           onClose={closeForm}
