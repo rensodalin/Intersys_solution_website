@@ -89,11 +89,15 @@ router.post("/", async (req, res) => {
                 html: `
                     <div style="font-family: 'Segoe UI', sans-serif; max-width: 600px; margin: auto; border-radius: 10px; overflow: hidden; border: 1px solid #e5e7eb;">
                         <!-- Header -->
-                        <div style="background: #0A0F1A; padding: 24px 32px; text-align: center;">
-                            <h1 style="color: #ffffff; font-size: 22px; margin: 0; letter-spacing: 1px;">
-                                INTERSYS <span style="color: #D62828;">SOLUTIONS</span>
-                            </h1>
-                            <p style="color: #9ca3af; font-size: 12px; margin: 6px 0 0;">Smart Building & Engineering Systems</p>
+                        <div style="background: #081F3D; padding: 24px 30px; text-align:center;">
+                            <img
+                                src="https://static.wixstatic.com/media/3d5958_de5e6808f56c48b48bdf976b6224847c~mv2.png/v1/crop/x_0,y_0,w_3932,h_1626/fill/w_248,h_90,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/new%20Logo.png"
+                                alt="Intersys Solutions"
+                                style="max-width:180px; height:auto; display:block; margin:0 auto;"
+                            />
+                            <p style="color: rgba(255,255,255,0.6); margin:4px 0 0 0; font-size:11px;">
+                                Building Management & Security Systems
+                            </p>
                         </div>
 
                         <!-- Body -->
