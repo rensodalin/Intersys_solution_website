@@ -1,5 +1,6 @@
-import { Eye, Trash2, FileText, Loader2 } from "lucide-react";
+import { Eye, Trash2, FileText, Loader2, FileDown } from "lucide-react";
 import { QuoteRequest } from "./types";
+import { exportQuoteToPDF } from "./exportQuotePDF";
 
 interface QuoteTableProps {
   quotes: QuoteRequest[];
@@ -221,6 +222,14 @@ export function QuoteTable({ quotes, loading, onViewDetails, onStatusChange, onD
                     title="View Details"
                   >
                     <Eye size={15} />
+                  </button>
+
+                  <button
+                    onClick={() => exportQuoteToPDF(quote)}
+                    className="p-2 text-gray-400 hover:text-[#081F3D] hover:bg-gray-100 rounded-sm cursor-pointer transition"
+                    title="Export BOQ PDF"
+                  >
+                    <FileDown size={15} />
                   </button>
 
                   <button

@@ -7,8 +7,10 @@ import {
   MapPin,
   Layers,
   Briefcase,
+  FileDown,
 } from "lucide-react";
 import { QuoteRequest } from "./types";
+import { exportQuoteToPDF } from "./exportQuotePDF";
 
 interface QuoteDetailModalProps {
   quote: QuoteRequest;
@@ -218,12 +220,21 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
         <div className="px-8 py-4 bg-gray-50 border-t border-gray-150 flex items-center justify-between gap-4">
           <span className="text-[10px] text-gray-400">Change status using the dropdown above</span>
 
-          <button
-            onClick={() => onDelete(quote._id)}
-            className="border border-red-200 text-red-600 hover:bg-red-50 transition font-bold text-xs px-5 py-2.5 rounded-sm cursor-pointer"
-          >
-            Delete Quote
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => exportQuoteToPDF(quote)}
+              className="border border-[#081F3D] text-[#081F3D] hover:bg-[#081F3D]/5 transition font-bold text-xs px-5 py-2.5 rounded-sm cursor-pointer flex items-center gap-2"
+            >
+              <FileDown size={14} />
+              Export BOQ PDF
+            </button>
+            <button
+              onClick={() => onDelete(quote._id)}
+              className="border border-red-200 text-red-600 hover:bg-red-50 transition font-bold text-xs px-5 py-2.5 rounded-sm cursor-pointer"
+            >
+              Delete Quote
+            </button>
+          </div>
         </div>
       </div>
     </div>
