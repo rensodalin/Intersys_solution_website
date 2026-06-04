@@ -8,7 +8,10 @@ interface HeaderProps {
   onRefresh: () => void;
 }
 
+const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+
 export function Header({ userName, userRole = "ADMINISTRATOR", avatar, loading, onRefresh }: HeaderProps) {
+  const avatarSrc = avatar?.startsWith("/") ? `${baseUrl}${avatar}` : avatar;
   return (
     <header className="h-16 bg-white border-b border-gray-150 flex items-center justify-between px-8 z-10 shadow-sm">
       <div className="flex items-center gap-8 flex-1">
@@ -43,7 +46,7 @@ export function Header({ userName, userRole = "ADMINISTRATOR", avatar, loading, 
             <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mt-0.5">{userRole}</p>
           </div>
           <img
-            src={avatar || `https://ui-avatars.com/api/?name=${userName}`}
+            src={avatarSrc || `https://ui-avatars.com/api/?name=${userName}`}
             alt={userName}
             className="w-8 h-8 rounded-full border border-gray-100 shadow-sm object-cover"
           />

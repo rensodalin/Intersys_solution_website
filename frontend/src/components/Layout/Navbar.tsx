@@ -8,6 +8,9 @@ import { RootState } from "@/store";
 import { initializeAuth, logoutSuccess } from "@/store/authSlice";
 import logoImg from "@/assets/logo.avif";
 
+const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+const avatarUrl = (url?: string) => (url?.startsWith("/") ? `${baseUrl}${url}` : url);
+
 const PRODUCTS_DATA: Record<string, { href: string }> = {
   "Access Control": { href: "/products/access-control" },
   "Surveillance": { href: "/products/surveillance" },
@@ -280,7 +283,7 @@ export function Navbar() {
             <div className="flex items-center gap-3">
               <Link to={user.isAdmin ? "/admin" : "/my-account"} className="flex items-center gap-2 group">
                 <img 
-                  src={user.avatar || "https://ui-avatars.com/api/?name=" + user.name} 
+                  src={avatarUrl(user.avatar) || "https://ui-avatars.com/api/?name=" + user.name} 
                   alt={user.name} 
                   className="w-8 h-8 rounded-full border border-white/20 shadow-md group-hover:border-red-500 transition-colors" 
                   referrerPolicy="no-referrer" 
@@ -339,7 +342,7 @@ export function Navbar() {
                       className="flex items-center gap-3 flex-1"
                     >
                       <img
-                        src={user.avatar || "https://ui-avatars.com/api/?name=" + user.name}
+                        src={avatarUrl(user.avatar) || "https://ui-avatars.com/api/?name=" + user.name}
                         alt={user.name}
                         className="w-10 h-10 rounded-full border border-white/20"
                       />

@@ -56,7 +56,7 @@ export function Sidebar({ userName, activeSection, onSectionChange }: SidebarPro
         </div>
 
         <nav className="p-4 space-y-1">
-          <button 
+          <button
             onClick={() => onSectionChange("dashboard")}
             className={getButtonClass("dashboard")}
           >
@@ -64,7 +64,7 @@ export function Sidebar({ userName, activeSection, onSectionChange }: SidebarPro
             <span>Dashboard</span>
           </button>
 
-          <button 
+          <button
             onClick={() => onSectionChange("quotes")}
             className={getButtonClass("quotes")}
           >
@@ -72,7 +72,7 @@ export function Sidebar({ userName, activeSection, onSectionChange }: SidebarPro
             <span>Quote Requests</span>
           </button>
 
-          <button 
+          <button
             onClick={() => onSectionChange("analytics")}
             className={getButtonClass("analytics")}
           >
@@ -80,15 +80,15 @@ export function Sidebar({ userName, activeSection, onSectionChange }: SidebarPro
             <span>Analytics</span>
           </button>
 
-          <button 
+          {/* <button 
             onClick={() => onSectionChange("customers")}
             className={getButtonClass("customers")}
           >
             <Users size={18} />
             <span>Customer</span>
-          </button>
+          </button> */}
 
-          <button 
+          <button
             onClick={() => onSectionChange("products")}
             className={getButtonClass("products")}
           >
@@ -96,7 +96,7 @@ export function Sidebar({ userName, activeSection, onSectionChange }: SidebarPro
             <span>Product Management</span>
           </button>
 
-          <button 
+          <button
             onClick={() => onSectionChange("posters")}
             className={getButtonClass("posters")}
           >
@@ -104,7 +104,7 @@ export function Sidebar({ userName, activeSection, onSectionChange }: SidebarPro
             <span>Posters</span>
           </button>
 
-          <button 
+          <button
             onClick={() => onSectionChange("insights")}
             className={getButtonClass("insights")}
           >
@@ -112,7 +112,7 @@ export function Sidebar({ userName, activeSection, onSectionChange }: SidebarPro
             <span>Insights</span>
           </button>
 
-          <button 
+          <button
             onClick={() => onSectionChange("chat")}
             className={getButtonClass("chat")}
           >
@@ -120,15 +120,15 @@ export function Sidebar({ userName, activeSection, onSectionChange }: SidebarPro
             <span>Inbox</span>
           </button>
 
-          <button 
+          {/* <button 
             onClick={() => onSectionChange("reports")}
             className={getButtonClass("reports")}
           >
             <FileCheck size={18} />
             <span>Reports</span>
-          </button>
+          </button> */}
 
-          <button 
+          <button
             onClick={() => onSectionChange("settings")}
             className={getButtonClass("settings")}
           >
