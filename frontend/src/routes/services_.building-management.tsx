@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { TypeAnimation } from "react-type-animation";
+import img from "../assets/BMS/IT KPS REVISE_6 - Photo.jpg";
 
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
@@ -58,7 +59,7 @@ function BMSPage() {
             <section className="relative h-[70vh] min-h-[500px] flex items-center pt-17 overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://www.intersys-solutions.com/website_asset/IT KPS REVISE_37 - Photo (1).jpg"
+                        src={img}
                         alt="Modern Cityscape"
                         className="w-full h-full object-cover"
                     />

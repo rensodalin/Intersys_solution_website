@@ -1,5 +1,6 @@
 import { Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
+import support from "../../assets/BMS/IMG_20260509_105536.jpg";
 
 interface SupportMember {
   name: string;
@@ -121,7 +122,7 @@ export function Support() {
       <section className="relative h-[480px] flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0">
           <img
-            src="https://www.intersys-solutions.com/website_asset/IMG_20260509_105536.jpg"
+            src={support}
             alt="Technical Support"
             className="w-full h-full object-cover"
           />

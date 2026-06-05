@@ -50,12 +50,12 @@ export function WhyChooseIntersys() {
 
             {/* Background */}
             <div
-                className="absolute inset-0 z-0 opacity-[0.08]"
+                className="absolute inset-0 z-0 opacity-[0.2]"
                 style={{
                     backgroundImage: `url(${bgImg})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
-                    filter: "grayscale(100%) contrast(120%)",
+                    filter: "grayscale(70%) contrast(120%)",
                 }}
             />
 

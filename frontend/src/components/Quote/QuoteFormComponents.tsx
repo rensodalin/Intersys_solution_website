@@ -275,6 +275,28 @@ export function UserSection({ register, errors }: SectionProps) {
                 <InputField label="Phone Number" {...register("phone")} error={errors.phone?.message} />
                 <InputField label="Email Address" {...register("email")} error={errors.email?.message} />
                 <InputField label="Location" {...register("address")} error={errors.address?.message} />
+
+                <div className="space-y-2">
+                    <label className="text-[13px] font-semibold text-gray-700">
+                        Preferred Contact Method
+                    </label>
+                    <div className="flex flex-wrap gap-3">
+                        {["Email", "Phone", "Either"].map((method) => (
+                            <label
+                                key={method}
+                                className="flex items-center gap-2 px-4 py-2.5 rounded-sm border border-gray-200 bg-[#F8F9FA] text-[13px] font-medium text-gray-700 hover:border-[#162E93] transition-colors cursor-pointer has-checked:bg-[#162E93] has-checked:text-white has-checked:border-[#162E93]"
+                            >
+                                <input
+                                    type="radio"
+                                    value={method}
+                                    {...register("contactMethod")}
+                                    className="accent-[#162E93]"
+                                />
+                                {method}
+                            </label>
+                        ))}
+                    </div>
+                </div>
             </div>
         </section>
     );

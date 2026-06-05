@@ -20,7 +20,7 @@ const quoteSchema = new mongoose.Schema({
     address: { type: String, required: true },
     city: { type: String },
     country: { type: String },
-    contactMethod: { type: String, enum: ["Email", "Phone", "Either"] },
+    contactpreference: { type: String, enum: ["Email", "Phone", "Either"] },
     newsletter: { type: String },
     companyType: { type: String, required: true },
     bmsSystem: { type: String },

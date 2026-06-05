@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
-import bgImage from "@/assets/project/esuntower.png"; // Using a high-end project as background
+import bgImage from "@/assets/BMS/IMG_20260425_124911.jpg"; // Using a high-end project as background
 
 export function AnniversaryBanner() {
   return (

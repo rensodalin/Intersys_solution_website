@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import img from "../assets/BMS/IMG_20260425_124911.jpg";
+
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import {
@@ -38,7 +40,7 @@ function AccessControlPage() {
             <section className="relative h-[65vh] min-h-[450px] flex items-center pt-20">
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://www.intersys-solutions.com/website_asset/access_control.jpg"
+                        src={img}
                         alt="Access Control Hero"
                         className="w-full h-full object-cover"
                     />

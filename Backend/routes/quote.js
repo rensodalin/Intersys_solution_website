@@ -43,19 +43,81 @@ router.post("/", async (req, res) => {
             console.error("Failed to create chat message for quote:", chatErr);
         }
 
+        const productsEmailHtml = (quoteData.products || []).map(p => `
+            <tr>
+                <td style="padding:8px 12px; border:1px solid #e5e7eb; text-align:center; font-size:13px;">${p.qty}x</td>
+                <td style="padding:8px 12px; border:1px solid #e5e7eb; font-size:13px; font-weight:600; color:#C3110C;">${p.productNo}</td>
+                <td style="padding:8px 12px; border:1px solid #e5e7eb; font-size:13px;">${p.description}</td>
+                <td style="padding:8px 12px; border:1px solid #e5e7eb; font-size:13px; color:#6b7280;">${p.application}</td>
+            </tr>
+        `).join("");
+        const categoriesList = (quoteData.solutionCategories || []).join(", ");
+        const sectionsList = (quoteData.sections || []).join(", ");
+        const fullAddress = [quoteData.address, quoteData.city, quoteData.country].filter(Boolean).join(", ");
         const emailContent = `
-            <div style="font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px;">
-                <h2 style="color: #dc2626; border-bottom: 2px solid #dc2626; padding-bottom: 10px;">New Quote Request</h2>
-                <p><strong>Name:</strong> ${quoteData.name}</p>
-                <p><strong>Company:</strong> ${quoteData.company}</p>
-                <p><strong>Email:</strong> ${quoteData.email}</p>
-                <p><strong>Phone:</strong> ${quoteData.phone}</p>
-                <p><strong>Address:</strong> ${quoteData.address}, ${quoteData.city || ""}, ${quoteData.country || ""}</p>
-                <p><strong>Contact Method:</strong> ${quoteData.contactMethod}</p>
-                <h3>Products Requested</h3>
-                <ul>
-                    ${(quoteData.products || []).map(p => `<li>${p.qty}x ${p.productNo} - ${p.description}</li>`).join("")}
-                </ul>
+            <div style="font-family:'Helvetica Neue',Arial,sans-serif; max-width:640px; margin:auto; background:#fff;">
+                <div style="background:#081F3D; padding:24px 30px; text-align:center;">
+                    <img src="https://static.wixstatic.com/media/3d5958_de5e6808f56c48b48bdf976b6224847c~mv2.png/v1/crop/x_0,y_0,w_3932,h_1626/fill/w_248,h_90,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/new%20Logo.png"
+                        alt="Intersys Solutions" style="max-width:180px; height:auto; display:block; margin:0 auto;" />
+                    <p style="color:rgba(255,255,255,0.6); margin:4px 0 0 0; font-size:11px;">Building Management & Security Systems</p>
+                </div>
+                <div style="padding:30px;">
+                    <h2 style="color:#C3110C; font-size:18px; margin:0 0 6px 0;">📋 New Quote Request</h2>
+                    <p style="font-size:13px; color:#6b7280; margin:0 0 20px 0;">A new quote request has been submitted from the website.</p>
+
+                    <div style="background:#f8fafc; border:1px solid #e5e7eb; border-radius:6px; padding:20px; margin:15px 0;">
+                        <h3 style="margin:0 0 12px 0; font-size:15px; color:#081F3D;">Contact Information</h3>
+                        <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                            <tr><td style="padding:4px 0; color:#6b7280; width:120px;">Name:</td><td style="padding:4px 0; font-weight:600;">${quoteData.name}</td></tr>
+                            <tr><td style="padding:4px 0; color:#6b7280;">Company:</td><td style="padding:4px 0; font-weight:600;">${quoteData.company}</td></tr>
+                            <tr><td style="padding:4px 0; color:#6b7280;">Title:</td><td style="padding:4px 0;">${quoteData.title || "—"}</td></tr>
+                            <tr><td style="padding:4px 0; color:#6b7280;">Email:</td><td style="padding:4px 0;">${quoteData.email}</td></tr>
+                            <tr><td style="padding:4px 0; color:#6b7280;">Phone:</td><td style="padding:4px 0;">${quoteData.phone}</td></tr>
+                            <tr><td style="padding:4px 0; color:#6b7280;">Contact Method:</td><td style="padding:4px 0; font-weight:600;">${quoteData.contactMethod || "—"}</td></tr>
+                            <tr><td style="padding:4px 0; color:#6b7280;">Company Type:</td><td style="padding:4px 0;">${quoteData.companyType || "—"}</td></tr>
+                            <tr><td style="padding:4px 0; color:#6b7280;">Address:</td><td style="padding:4px 0;">${fullAddress || "—"}</td></tr>
+                            ${quoteData.bmsSystem ? `<tr><td style="padding:4px 0; color:#6b7280;">Platform:</td><td style="padding:4px 0;">${quoteData.bmsSystem}</td></tr>` : ""}
+                        </table>
+                    </div>
+
+                    ${categoriesList ? `
+                    <div style="background:#f8fafc; border:1px solid #e5e7eb; border-radius:6px; padding:20px; margin:15px 0;">
+                        <h3 style="margin:0 0 8px 0; font-size:15px; color:#081F3D;">Categories & Sections</h3>
+                        <p style="margin:0; font-size:13px; color:#374151;"><strong>Categories:</strong> ${categoriesList}</p>
+                        ${sectionsList ? `<p style="margin:6px 0 0 0; font-size:13px; color:#374151;"><strong>Sections:</strong> ${sectionsList}</p>` : ""}
+                    </div>
+                    ` : ""}
+
+                    ${(quoteData.products || []).length > 0 ? `
+                    <div style="background:#f8fafc; border:1px solid #e5e7eb; border-radius:6px; padding:20px; margin:15px 0;">
+                        <h3 style="margin:0 0 12px 0; font-size:15px; color:#081F3D;">Requested Products</h3>
+                        <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                            <thead>
+                                <tr style="background:#e5e7eb;">
+                                    <th style="padding:8px 12px; border:1px solid #d1d5db; text-align:center;">Qty</th>
+                                    <th style="padding:8px 12px; border:1px solid #d1d5db; text-align:left;">Part Code</th>
+                                    <th style="padding:8px 12px; border:1px solid #d1d5db; text-align:left;">Product</th>
+                                    <th style="padding:8px 12px; border:1px solid #d1d5db; text-align:left;">Spec</th>
+                                </tr>
+                            </thead>
+                            <tbody>${productsEmailHtml}</tbody>
+                        </table>
+                    </div>
+                    ` : ""}
+
+                    ${quoteData.otherBms ? `
+                    <div style="background:#f8fafc; border:1px solid #e5e7eb; border-radius:6px; padding:20px; margin:15px 0;">
+                        <h3 style="margin:0 0 8px 0; font-size:15px; color:#081F3D;">Additional Details</h3>
+                        <div style="font-size:13px; color:#374151; white-space:pre-wrap; line-height:1.5;">${quoteData.otherBms}</div>
+                    </div>
+                    ` : ""}
+
+                    <hr style="border:none; border-top:1px solid #e5e7eb; margin:20px 0;" />
+                    <p style="font-size:12px; color:#9ca3af; text-align:center;">This is an automated notification from Intersys Solutions website.</p>
+                </div>
+                <div style="background:#f3f4f6; padding:12px 30px; text-align:center; font-size:10px; color:#9ca3af;">
+                    Intersys Solutions Co., Ltd. · Phnom Penh, Cambodia
+                </div>
             </div>
         `;
 
@@ -75,9 +137,24 @@ router.post("/", async (req, res) => {
             console.warn("Email credentials not configured. Skipping email notification.");
         }
 
-        const productList = (quoteData.products || []).map(p => `${p.qty}x ${p.productNo}`).join("\n");
+        const productList = (quoteData.products || []).map(p =>
+            `${p.qty}x <b>${p.productNo}</b> — ${p.description} (${p.application})`
+        ).join("\n");
         await sendTelegramNotification(
-            `<b>📋 New Quote Request</b>\n\n<b>Name:</b> ${quoteData.name}\n<b>Company:</b> ${quoteData.company}\n<b>Email:</b> ${quoteData.email}\n<b>Phone:</b> ${quoteData.phone}\n<b>Contact Method:</b> ${quoteData.contactMethod || "Not specified"}\n\n<b>Products:</b>\n${productList || "None"}\n\n<b>Details:</b>\n${(quoteData.otherBms || "").slice(0, 500)}`
+            `<b>📋 New Quote Request</b>\n\n` +
+            `<b>Name:</b> ${quoteData.name}\n` +
+            `<b>Company:</b> ${quoteData.company}\n` +
+            `<b>Title:</b> ${quoteData.title || "—"}\n` +
+            `<b>Email:</b> ${quoteData.email}\n` +
+            `<b>Phone:</b> ${quoteData.phone}\n` +
+            `<b>Contact Method:</b> ${quoteData.contactMethod || "Not specified"}\n` +
+            `<b>Company Type:</b> ${quoteData.companyType || "—"}\n` +
+            `<b>Address:</b> ${fullAddress || "—"}\n\n` +
+            `${categoriesList ? `<b>Categories:</b> ${categoriesList}\n\n` : ""}` +
+            `${sectionsList ? `<b>Sections:</b> ${sectionsList}\n\n` : ""}` +
+            `<b>Products:</b>\n${productList || "None"}\n\n` +
+            `<b>Platform:</b> ${quoteData.bmsSystem || "—"}\n\n` +
+            `<b>Details:</b>\n${(quoteData.otherBms || "").slice(0, 500)}`
         );
 
         res.status(201).json({ success: true, message: "Quote request submitted successfully." });
