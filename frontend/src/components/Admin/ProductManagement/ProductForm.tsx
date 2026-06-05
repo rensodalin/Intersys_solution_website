@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { X, Tag, Image, Settings, FileText, Plus, Trash2, Loader2, LinkIcon } from "lucide-react";
+import { Combobox } from "@/components/ui/combobox";
 import type { FormState, ProductOption, ProductDocument } from "./types";
-import { CATEGORIES, BRANDS, SUBCATEGORIES } from "./constants";
 
 interface ProductFormProps {
   form: FormState;
@@ -12,13 +12,16 @@ interface ProductFormProps {
   onSubCategoryChange: (val: string) => void;
   onClose: () => void;
   onSave: () => void;
+  categories: string[];
+  brands: Record<string, string[]>;
+  subCategories: Record<string, Record<string, string[]>>;
 }
 
-export function ProductForm({ form, editingId, saving, onFieldChange, onTitleChange, onSubCategoryChange, onClose, onSave }: ProductFormProps) {
+export function ProductForm({ form, editingId, saving, onFieldChange, onTitleChange, onSubCategoryChange, onClose, onSave, categories, brands, subCategories }: ProductFormProps) {
   const [activeTab, setActiveTab] = useState<"basic" | "media" | "options" | "documents">("basic");
 
-  const availableBrands = BRANDS[form.category] || [];
-  const availableSubCategories = (SUBCATEGORIES[form.category]?.[form.brand]) || [];
+  const availableBrands = brands[form.category] || [];
+  const availableSubCategories = (subCategories[form.category]?.[form.brand]) || [];
 
   function addOption() {
     onFieldChange("options", [...form.options, { partCode: "", specification: "", price: 0, qty: 0 }]);
@@ -112,27 +115,34 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
                   <select value={form.category} onChange={e => { onFieldChange("category", e.target.value); onFieldChange("brand", ""); onFieldChange("brandSubCategory", ""); }}
                     className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition">
                     <option value="">Select...</option>
-                    {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                    {categories.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[12px] font-black text-gray-500  mb-1.5">Brand *</label>
-                  <select value={form.brand} onChange={e => { onFieldChange("brand", e.target.value); onFieldChange("brandSubCategory", ""); }}
+                  <label className="block text-[12px] font-black text-gray-500  mb-1.5">
+                    Brand {availableBrands.length > 0 ? '*' : ''}
+                    {availableBrands.length === 0 && <span className="text-gray-400 font-normal normal-case"> (optional)</span>}
+                  </label>
+                  <Combobox
+                    value={form.brand}
+                    onChange={v => { onFieldChange("brand", v); onFieldChange("brandSubCategory", ""); }}
+                    options={availableBrands}
+                    placeholder={availableBrands.length > 0 ? "Select or type brand..." : "Optional — type a brand or leave empty"}
                     disabled={!form.category}
-                    className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 disabled:opacity-50 transition">
-                    <option value="">Select...</option>
-                    {availableBrands.map(b => <option key={b} value={b}>{b}</option>)}
-                  </select>
+                    allowCustom={true}
+                  />
                 </div>
+                {availableSubCategories.length > 0 && (
                 <div>
                   <label className="block text-[12px] font-black text-gray-500  mb-1.5">Subcategory</label>
                   <select value={form.brandSubCategory} onChange={e => onSubCategoryChange(e.target.value)}
-                    disabled={!form.brand || availableSubCategories.length === 0}
+                    disabled={!form.brand}
                     className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 disabled:opacity-50 transition">
                     <option value="">None</option>
                     {availableSubCategories.map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </div>
+                )}
               </div>
 
               <div>

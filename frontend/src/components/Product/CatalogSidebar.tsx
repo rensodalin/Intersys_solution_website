@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import {
@@ -19,11 +19,29 @@ import {
     PanelLeftOpen,
     Search,
     FileText,
-    ArrowRight
+    ArrowRight,
+    Package
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useInquiry } from "@/context/InquiryContext";
+import { useTaxonomy } from "@/hooks/useTaxonomy";
 import { cn } from "@/lib/utils";
 import logoImg from "@/assets/logo.avif";
+
+interface NavDataItem {
+    id: string;
+    label: string;
+    icon: LucideIcon;
+    link: string;
+    sub?: NavDataSubItem[];
+}
+
+interface NavDataSubItem {
+    label: string;
+    icon?: LucideIcon;
+    link?: string;
+    sub?: NavDataSubItem[];
+}
 
 interface CatalogSidebarProps {
     activeCategory?: string;
@@ -31,7 +49,7 @@ interface CatalogSidebarProps {
     setIsDesktopOpen?: (open: boolean) => void;
 }
 
-const NAVIGATION_DATA = [
+const NAVIGATION_DATA: NavDataItem[] = [
     {
         id: "access-control",
         label: "Access Control",
@@ -94,6 +112,33 @@ export function CatalogSidebar({
 }: CatalogSidebarProps) {
     const location = useLocation();
     const navigate = useNavigate();
+    const { taxonomy } = useTaxonomy();
+
+    // Merge any admin-created categories into NAVIGATION_DATA
+    const navData = useMemo(() => {
+        const existingIds = new Set(NAVIGATION_DATA.map(n => n.id));
+        const extra: NavDataItem[] = [];
+        for (const t of taxonomy) {
+            const id = t.category.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
+            if (!existingIds.has(id)) {
+                const slug = t.category.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
+                const brands = t.brands || [];
+                const hasSub = brands.length > 0;
+                extra.push({
+                    id,
+                    label: t.category,
+                    icon: Package,
+                    link: `/products/${slug}`,
+                    sub: hasSub ? brands.map(b => ({
+                        label: b.name,
+                        link: `/products/${slug}/${b.name.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "")}`,
+                    })) : undefined,
+                });
+                existingIds.add(id);
+            }
+        }
+        return [...NAVIGATION_DATA, ...extra];
+    }, [taxonomy]);
 
     // Track scroll to match Navbar's dynamic height
     const [scrolled, setScrolled] = useState(false);
@@ -184,7 +229,7 @@ export function CatalogSidebar({
         );
     };
 
-    const activeNav = NAVIGATION_DATA.find(n => n.id === activeCategory);
+    const activeNav = navData.find(n => n.id === activeCategory);
     const headerTitle = activeNav ? `Products / ${activeNav.label}` : "Products";
 
     const sidebarContentJsx = (
@@ -270,7 +315,7 @@ export function CatalogSidebar({
 
             {/* ── SCROLLABLE LIST ── */}
             <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar scroll-smooth min-h-0">
-                {NAVIGATION_DATA.map((item) => {
+                {navData.map((item) => {
                     const isActive = isPathActive(item.link) || activeCategory === item.id;
                     const isExpanded = searchQuery ? true : expandedSections.includes(item.id);
                     return (

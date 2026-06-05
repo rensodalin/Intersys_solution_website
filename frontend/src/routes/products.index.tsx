@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { CtaBand } from "@/components/Common/CtaBand";
 import {
@@ -7,7 +8,9 @@ import {
   Cpu,
   Speaker,
   Flame,
+  Package,
 } from "lucide-react";
+import { fetchTaxonomy } from "@/utils/taxonomyApi";
 
 // Components
 import { ProductHero } from "@/components/Product/ProductHero";
@@ -30,7 +33,7 @@ export const Route = createFileRoute("/products/")({
   component: ProductsPage,
 });
 
-const productCategories: ProductCategory[] = [
+const HARDCODED_CATEGORIES: ProductCategory[] = [
   {
     title: "Access Control",
     desc: "Secure biometric and card-based entry systems designed for enterprise-grade facility protection.",
@@ -79,11 +82,38 @@ const productCategories: ProductCategory[] = [
   }
 ];
 
+function buildCategories(taxonomy: Awaited<ReturnType<typeof fetchTaxonomy>>): ProductCategory[] {
+  const hardcodedTitles = new Set(HARDCODED_CATEGORIES.map(c => c.title));
+  const extra: ProductCategory[] = [];
+  for (const t of taxonomy) {
+    if (!hardcodedTitles.has(t.category)) {
+      const slug = t.category.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
+      extra.push({
+        title: t.category,
+        desc: `Explore our range of ${t.category.toLowerCase()} solutions.`,
+        image: "",
+        icon: Package,
+        buttonText: "View Products",
+        link: `/products/${slug}`,
+      });
+    }
+  }
+  return [...HARDCODED_CATEGORIES, ...extra];
+}
+
 function ProductsPage() {
+  const [categories, setCategories] = useState<ProductCategory[]>(HARDCODED_CATEGORIES);
+
+  useEffect(() => {
+    fetchTaxonomy().then(data => {
+      setCategories(buildCategories(data));
+    }).catch(() => {});
+  }, []);
+
   return (
     <>
         <ProductHero />
-        <ProductGrid categories={productCategories} />
+        <ProductGrid categories={categories} />
     </>
   );
 }

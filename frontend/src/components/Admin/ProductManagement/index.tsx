@@ -1,20 +1,43 @@
 import { useEffect, useState, useCallback } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Layers } from "lucide-react";
 import { fetchProducts, addProduct, updateProduct, deleteProduct } from "@/utils/productApi";
+import { fetchTaxonomy } from "@/utils/taxonomyApi";
+import type { TaxonomyCategory } from "@/utils/taxonomyApi";
 import { toast } from "sonner";
 import type { ApiProduct } from "./types";
 import { BLANK_FORM } from "./types";
 import { productToForm, toSlug } from "./utils";
-import { ITEMS_PER_PAGE } from "./constants";
+import { ITEMS_PER_PAGE, CATEGORIES as FALLBACK_CATEGORIES, BRANDS as FALLBACK_BRANDS, SUBCATEGORIES as FALLBACK_SUBCATEGORIES } from "./constants";
 import { FilterBar } from "./FilterBar";
 import { ProductTable } from "./ProductTable";
 import { ProductForm } from "./ProductForm";
 import { DeleteConfirmModal } from "./DeleteConfirmModal";
+import { TaxonomyManager } from "./TaxonomyManager";
 
 export function ProductManagement() {
   const [products, setProducts] = useState<ApiProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+
+  // Taxonomy
+  const [taxonomy, setTaxonomy] = useState<TaxonomyCategory[]>([]);
+  const [showTaxonomyManager, setShowTaxonomyManager] = useState(false);
+
+  const categories = taxonomy.length > 0 ? taxonomy.map(t => t.category) : FALLBACK_CATEGORIES;
+  const brands: Record<string, string[]> = {};
+  const subCategories: Record<string, Record<string, string[]>> = {};
+  if (taxonomy.length > 0) {
+    for (const t of taxonomy) {
+      brands[t.category] = t.brands.map(b => b.name);
+      subCategories[t.category] = {};
+      for (const b of t.brands) {
+        subCategories[t.category][b.name] = b.subCategories;
+      }
+    }
+  } else {
+    Object.assign(brands, FALLBACK_BRANDS);
+    Object.assign(subCategories, FALLBACK_SUBCATEGORIES);
+  }
 
   // Filters
   const [search, setSearch] = useState("");
@@ -36,6 +59,13 @@ export function ProductManagement() {
 
   // ─── Load Products ──────────────────────────────────────────
 
+  const loadTaxonomy = useCallback(async () => {
+    try {
+      const data = await fetchTaxonomy();
+      setTaxonomy(data);
+    } catch { /* use defaults */ }
+  }, []);
+
   const loadProducts = useCallback(async () => {
     setLoading(true);
     try {
@@ -53,6 +83,7 @@ export function ProductManagement() {
     }
   }, [filterCategory, filterBrand, filterSubCategory]);
 
+  useEffect(() => { loadTaxonomy(); }, [loadTaxonomy]);
   useEffect(() => { loadProducts(); }, [loadProducts]);
 
   // ─── Filtered / Paginated List ──────────────────────────────
@@ -69,8 +100,30 @@ export function ProductManagement() {
 
   // ─── Form Handlers ──────────────────────────────────────────
 
+  function autoGenerateLink(cat: string, brand: string, subCat: string) {
+    const catSlug = cat.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
+    const brandSlug = brand.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
+    if (brand && subCat) {
+      const subSlug = subCat.toLowerCase().replace(/\s+&\s+/g, "-").replace(/\s+/g, "-").replace(/[^\w-]/g, "");
+      return `/products/${catSlug}/${brandSlug}/${subSlug}`;
+    } else if (brand) {
+      return `/products/${catSlug}/${brandSlug}`;
+    }
+    return `/products/${catSlug}`;
+  }
+
   function setField(key: string, value: any) {
-    setForm(prev => ({ ...prev, [key]: value }));
+    setForm(prev => {
+      const next = { ...prev, [key]: value };
+      if (key === "category" || key === "brand" || key === "brandSubCategory") {
+        next.brandSubCategoryLink = autoGenerateLink(
+          key === "category" ? value : next.category,
+          key === "brand" ? value : next.brand,
+          key === "brandSubCategory" ? value : next.brandSubCategory
+        );
+      }
+      return next;
+    });
   }
 
   function handleTitleChange(val: string) {
@@ -80,12 +133,6 @@ export function ProductManagement() {
 
   function handleSubCategoryChange(val: string) {
     setField("brandSubCategory", val);
-    const cat = form.category;
-    const brand = form.brand.toLowerCase();
-    if (cat === "Access Control" && brand === "honeywell") {
-      const slug = val.toLowerCase().replace(/\s+&\s+/g, "-").replace(/\s+/g, "-").replace(/[^\w-]/g, "");
-      setField("brandSubCategoryLink", `/products/access-control/honeywell/${slug}`);
-    }
   }
 
   function openCreate() {
@@ -105,8 +152,11 @@ export function ProductManagement() {
   // ─── Save ───────────────────────────────────────────────────
 
   async function handleSave() {
-    if (!form.productId || !form.title || !form.category || !form.brand) {
-      toast.error("Product ID, Title, Category and Brand are required.");
+    const catHasBrands = (brands[form.category] || []).length > 0;
+    if (!form.productId || !form.title || !form.category || (catHasBrands && !form.brand)) {
+      toast.error(catHasBrands && !form.brand
+        ? "Product ID, Title, Category and Brand are required."
+        : "Product ID, Title and Category are required.");
       return;
     }
     setSaving(true);
@@ -172,13 +222,22 @@ export function ProductManagement() {
             Add, edit, and remove products across all categories. Changes reflect immediately on the website.
           </p>
         </div>
-        <button
-          onClick={openCreate}
-          className="flex items-center gap-2 px-5 py-3 bg-[#C3110C] text-white text-sm font-bold rounded-lg hover:bg-[#a80f0b] transition-all shadow-lg shadow-[#C3110C]/30 hover:scale-[1.02] active:scale-95"
-        >
-          <Plus size={16} />
-          Add New Product
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowTaxonomyManager(true)}
+            className="flex items-center gap-2 px-4 py-3 bg-white text-gray-600 text-sm font-bold rounded-lg border border-gray-200 hover:border-[#C3110C]/30 hover:text-[#C3110C] transition-all shadow-sm hover:shadow"
+          >
+            <Layers size={16} />
+            Manage Categories
+          </button>
+          <button
+            onClick={openCreate}
+            className="flex items-center gap-2 px-5 py-3 bg-[#C3110C] text-white text-sm font-bold rounded-lg hover:bg-[#a80f0b] transition-all shadow-lg shadow-[#C3110C]/30 hover:scale-[1.02] active:scale-95"
+          >
+            <Plus size={16} />
+            Add New Product
+          </button>
+        </div>
       </div>
 
       <FilterBar
@@ -190,6 +249,9 @@ export function ProductManagement() {
         onBrandChange={v => { setFilterBrand(v); setFilterSubCategory(""); }}
         filterSubCategory={filterSubCategory}
         onSubCategoryChange={setFilterSubCategory}
+        categories={categories}
+        brands={brands}
+        subCategories={subCategories}
         loading={loading}
         totalCount={filtered.length}
       />
@@ -216,8 +278,17 @@ export function ProductManagement() {
           onSubCategoryChange={handleSubCategoryChange}
           onClose={closeForm}
           onSave={handleSave}
+          categories={categories}
+          brands={brands}
+          subCategories={subCategories}
         />
       )}
+
+      <TaxonomyManager
+        open={showTaxonomyManager}
+        onClose={() => setShowTaxonomyManager(false)}
+        onChanged={() => { loadTaxonomy(); loadProducts(); }}
+      />
 
       {deleteTarget && (
         <DeleteConfirmModal

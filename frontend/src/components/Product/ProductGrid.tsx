@@ -25,12 +25,16 @@ export function ProductGrid({ categories }: ProductGridProps) {
                                 className="group flex flex-col h-full bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-[0_2px_10px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:border-[#1A3263]/20 transition-all duration-500 hover:-translate-y-1"
                             >
                                 {/* Image */}
-                                <div className="relative aspect-[16/9] overflow-hidden">
-                                    <img
-                                        src={cat.image}
-                                        alt={cat.title}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    />
+                                <div className="relative aspect-[16/9] overflow-hidden bg-gray-100 flex items-center justify-center">
+                                    {cat.image ? (
+                                        <img
+                                            src={cat.image}
+                                            alt={cat.title}
+                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                        />
+                                    ) : (
+                                        <cat.icon className="w-16 h-16 text-gray-300" />
+                                    )}
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#1A3263]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                 </div>
 

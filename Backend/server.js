@@ -15,6 +15,7 @@ import productRoutes from "./routes/product.js";
 import visitorRoutes from "./routes/visitor.js";
 import activityRoutes from "./routes/activity.js";
 import chatRoutes from "./routes/chat.js";
+import taxonomyRoutes from "./routes/taxonomy.js";
 import { sendTelegramNotification } from "./utils/telegram.js";
 import Message from "./model/message.js";
 
@@ -89,6 +90,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/visitors", visitorRoutes);
 app.use("/api/activity", activityRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/taxonomy", taxonomyRoutes);
 
 // ✅ EMAIL TRANSPORT
 const transporter = nodemailer.createTransport({

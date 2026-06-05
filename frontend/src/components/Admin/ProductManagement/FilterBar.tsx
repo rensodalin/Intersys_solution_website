@@ -1,5 +1,4 @@
-import { Search, X, Layers } from "lucide-react";
-import { CATEGORIES, BRANDS, SUBCATEGORIES } from "./constants";
+import { Search, X } from "lucide-react";
 
 interface FilterBarProps {
   search: string;
@@ -10,6 +9,9 @@ interface FilterBarProps {
   onBrandChange: (val: string) => void;
   filterSubCategory: string;
   onSubCategoryChange: (val: string) => void;
+  categories: string[];
+  brands: Record<string, string[]>;
+  subCategories: Record<string, Record<string, string[]>>;
   loading: boolean;
   totalCount: number;
 }
@@ -19,6 +21,7 @@ export function FilterBar({
   filterCategory, onCategoryChange,
   filterBrand, onBrandChange,
   filterSubCategory, onSubCategoryChange,
+  categories, brands, subCategories,
   loading, totalCount,
 }: FilterBarProps) {
   return (
@@ -48,12 +51,12 @@ export function FilterBar({
         className="px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 transition"
       >
         <option value="">All Categories</option>
-        {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+        {categories.map(c => <option key={c} value={c}>{c}</option>)}
       </select>
 
       <select
         value={filterBrand}
-        disabled={!filterCategory || (BRANDS[filterCategory] || []).length === 0}
+        disabled={!filterCategory || (brands[filterCategory] || []).length === 0}
         onChange={e => {
           onBrandChange(e.target.value);
           onSubCategoryChange("");
@@ -61,17 +64,17 @@ export function FilterBar({
         className="px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 disabled:opacity-50 disabled:cursor-not-allowed transition"
       >
         <option value="">All Brands</option>
-        {filterCategory && (BRANDS[filterCategory] || []).map(b => <option key={b} value={b}>{b}</option>)}
+        {filterCategory && (brands[filterCategory] || []).map(b => <option key={b} value={b}>{b}</option>)}
       </select>
 
       <select
         value={filterSubCategory}
-        disabled={!filterCategory || !filterBrand || (SUBCATEGORIES[filterCategory]?.[filterBrand] || []).length === 0}
+        disabled={!filterCategory || !filterBrand || (subCategories[filterCategory]?.[filterBrand] || []).length === 0}
         onChange={e => onSubCategoryChange(e.target.value)}
         className="px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 disabled:opacity-50 disabled:cursor-not-allowed transition"
       >
         <option value="">All Subcategories</option>
-        {filterCategory && filterBrand && (SUBCATEGORIES[filterCategory]?.[filterBrand] || []).map(s => <option key={s} value={s}>{s}</option>)}
+        {filterCategory && filterBrand && (subCategories[filterCategory]?.[filterBrand] || []).map(s => <option key={s} value={s}>{s}</option>)}
       </select>
 
       <span className="text-xs text-gray-400 font-medium ml-auto">
