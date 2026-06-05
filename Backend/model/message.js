@@ -5,7 +5,7 @@ const messageSchema = new mongoose.Schema({
     name: { type: String, required: true },
     subject: { type: String, default: "" },
     content: { type: String, required: true },
-    source: { type: String, enum: ["contact", "quote", "reply"], required: true },
+    source: { type: String, enum: ["contact", "quote", "reply", "client-reply", "chat"], required: true },
     sourceId: { type: mongoose.Schema.Types.ObjectId, default: null },
     isFromAdmin: { type: Boolean, default: false },
     read: { type: Boolean, default: false }

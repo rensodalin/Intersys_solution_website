@@ -360,6 +360,75 @@ router.post("/reply", isAdmin, async (req, res) => {
     }
 });
 
+router.get("/check-conversation/:email", async (req, res) => {
+    try {
+        const email = req.params.email;
+        const [contactCount, quoteCount, messageCount] = await Promise.all([
+            Contact.countDocuments({ email }),
+            Quote.countDocuments({ email }),
+            Message.countDocuments({ email })
+        ]);
+        const exists = contactCount > 0 || quoteCount > 0 || messageCount > 0;
+        res.json({ success: true, exists });
+    } catch (error) {
+        res.status(500).json({ success: false, exists: false });
+    }
+});
+
+router.post("/client-message", async (req, res) => {
+    try {
+        const { email, name, content, subject } = req.body;
+        if (!email || !content || !name) {
+            return res.status(400).json({ success: false, error: "Email, name, and content are required" });
+        }
+
+        const message = new Message({
+            email,
+            name,
+            subject: subject || "Follow-up message",
+            content,
+            source: "client-reply",
+            isFromAdmin: false,
+            read: false
+        });
+        await message.save();
+
+        // Notify admin by email
+        try {
+            const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASS,
+                },
+            });
+            await transporter.sendMail({
+                from: `"Intersys Chat" <${process.env.EMAIL_USER}>`,
+                to: process.env.EMAIL_USER,
+                replyTo: email,
+                subject: `New Follow-up Message from ${name}`,
+                html: `
+                    <div style="font-family:sans-serif;max-width:600px;margin:auto;border:1px solid #eee;padding:20px;">
+                        <h2 style="color:#C3110C;">New Follow-up Message</h2>
+                        <p><b>Name:</b> ${name}</p>
+                        <p><b>Email:</b> ${email}</p>
+                        <hr style="border:0;border-top:1px solid #eee;margin:15px 0;">
+                        <p style="white-space:pre-wrap;background:#f9f9f9;padding:15px;border-radius:8px;">${content}</p>
+                        <p style="font-size:12px;color:#9ca3af;">View in admin dashboard to reply.</p>
+                    </div>
+                `,
+            });
+        } catch (emailErr) {
+            console.error("Failed to send follow-up notification email:", emailErr);
+        }
+
+        res.json({ success: true, data: message });
+    } catch (error) {
+        console.error("Failed to save client message:", error);
+        res.status(500).json({ success: false, error: "Failed to save message" });
+    }
+});
+
 router.put("/:id/read", isAdmin, async (req, res) => {
     try {
         await Message.findByIdAndUpdate(req.params.id, { read: true });

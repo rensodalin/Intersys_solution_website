@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils";
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isReturning, setIsReturning] = useState(false);
+  const [checkingEmail, setCheckingEmail] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -32,6 +34,31 @@ export function ChatWidget() {
     }
   }, [user]);
 
+  // Check if the email belongs to an existing conversation
+  const checkExistingConversation = React.useCallback(async (email: string) => {
+    if (!email || !email.includes("@")) {
+      setIsReturning(false);
+      return;
+    }
+    setCheckingEmail(true);
+    try {
+      const res = await fetch(`${baseUrl}/api/chat/check-conversation/${encodeURIComponent(email)}`);
+      const json = await res.json();
+      setIsReturning(json.exists);
+    } catch {
+      setIsReturning(false);
+    } finally {
+      setCheckingEmail(false);
+    }
+  }, [baseUrl]);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      if (formData.email) checkExistingConversation(formData.email);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [formData.email, checkExistingConversation]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
@@ -41,21 +68,28 @@ export function ChatWidget() {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch(`${baseUrl}/api/contact`, {
+      const endpoint = isReturning
+        ? `${baseUrl}/api/chat/client-message`
+        : `${baseUrl}/api/contact`;
+
+      const body = isReturning
+        ? { name: formData.name, email: formData.email, content: formData.message }
+        : { ...formData, contactMethod: "Chat Widget", city: "N/A", country: "N/A" };
+
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          contactMethod: "Chat Widget",
-          city: "N/A",
-          country: "N/A"
-        })
+        body: JSON.stringify(body)
       });
 
       const data = await response.json();
       if (data.success) {
-        toast.success("Message sent successfully! We'll get back to you soon.");
+        toast.success(isReturning
+          ? "Follow-up sent! We'll get back to you soon."
+          : "Message sent successfully! We'll get back to you soon."
+        );
         setFormData({ name: "", email: "", message: "" });
+        setIsReturning(false);
         setIsOpen(false);
       } else {
         toast.error(data.error || "Failed to send message.");
@@ -119,6 +153,16 @@ export function ChatWidget() {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   />
                 </div>
+
+                {(isReturning || checkingEmail) && (
+                  <div className={`flex items-center gap-1.5 px-2 py-1.5 rounded-sm text-[10px] font-medium ${checkingEmail ? "bg-gray-50 text-gray-400" : "bg-blue-50 text-blue-700"}`}>
+                    {checkingEmail ? (
+                      <>Checking...</>
+                    ) : (
+                      <><MessageCircle size={10} /> Continuing existing conversation — your message will be added as a follow-up.</>
+                    )}
+                  </div>
+                )}
 
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1.5">Message <span className="text-[#C3110C]">*</span></label>

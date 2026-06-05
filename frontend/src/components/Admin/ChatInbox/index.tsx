@@ -58,7 +58,7 @@ export function ChatInbox() {
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [sending, setSending] = useState(false);
   const [search, setSearch] = useState("");
-  const [filterTab, setFilterTab] = useState<"all" | "email" | "phone" | "quote">("all");
+  const [filterTab, setFilterTab] = useState<"all" | "contact" | "chat" | "quote">("all");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const fetchConversations = async () => {
@@ -154,9 +154,8 @@ export function ChatInbox() {
   }, [messages]);
 
   const filteredConversations = conversations.filter(c => {
-    const pref = (c.prefers || "").toLowerCase();
-    if (filterTab === "email" && (c.lastSource !== "contact" || !pref.includes("email"))) return false;
-    if (filterTab === "phone" && (c.lastSource !== "contact" || !pref.includes("phone"))) return false;
+    if (filterTab === "contact" && c.lastSource !== "contact") return false;
+    if (filterTab === "chat" && c.lastSource !== "chat") return false;
     if (filterTab === "quote" && c.lastSource !== "quote") return false;
     if (!search) return true;
     const q = search.toLowerCase();
@@ -196,7 +195,7 @@ export function ChatInbox() {
             />
           </div>
           <div className="flex gap-1 mt-2">
-            {(["all", "email", "phone", "quote"] as const).map(tab => (
+            {(["all", "contact", "chat", "quote"] as const).map(tab => (
               <button
                 key={tab}
                 onClick={() => setFilterTab(tab)}
@@ -253,6 +252,8 @@ export function ChatInbox() {
                     <div className="flex items-center gap-1 mt-0.5">
                       {conv.lastSource === "quote" ? (
                         <FileText size={10} className="text-[#0D7C5E]" />
+                      ) : conv.lastSource === "client-reply" || conv.lastSource === "chat" ? (
+                        <MessageSquare size={10} className="text-[#8B5CF6]" />
                       ) : (
                         <Mail size={10} className="text-[#1B7B9E]" />
                       )}
@@ -279,8 +280,10 @@ export function ChatInbox() {
               <div>
                 <h3 className="text-sm font-bold text-gray-900">{selectedConv.name}</h3>
                 <div className="flex items-center gap-3 text-[10px] text-gray-400">
-                  <span className="flex items-center gap-1"><Mail size={10} />{selectedConv.email}</span>
-                  <span className="flex items-center gap-1"><MessageSquare size={10} />{selectedConv.count} messages</span>
+                  <span className="flex items-center gap-1">
+                    {selectedConv.lastSource === "quote" ? <FileText size={10} /> : selectedConv.lastSource === "client-reply" || selectedConv.lastSource === "chat" ? <MessageSquare size={10} /> : <Mail size={10} />}
+                    {selectedConv.email}
+                  </span>
                 </div>
               </div>
             </div>
@@ -307,6 +310,10 @@ export function ChatInbox() {
                           {msg.source === "quote" ? (
                             <span className="text-[9px] font-bold text-[#0D7C5E] uppercase flex items-center gap-0.5">
                               <FileText size={10} /> Quote Request
+                            </span>
+                          ) : msg.source === "client-reply" || msg.source === "chat" ? (
+                            <span className="text-[9px] font-bold text-[#8B5CF6] uppercase flex items-center gap-0.5">
+                              <MessageSquare size={10} /> Follow-up
                             </span>
                           ) : (
                             <span className="text-[9px] font-bold text-[#1B7B9E] uppercase flex items-center gap-0.5">

@@ -36,7 +36,7 @@ export interface ChatMessage {
   otherBms?: string;
   products?: ProductRow[];
   solutionCategories?: string[];
-  source: "contact" | "quote" | "reply";
+  source: "contact" | "quote" | "reply" | "client-reply" | "chat";
   sourceId: string | null;
   isFromAdmin: boolean;
   read: boolean;
