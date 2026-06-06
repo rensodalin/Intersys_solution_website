@@ -4,8 +4,10 @@ import { fetchProducts } from "@/utils/productApi";
 import { fetchTaxonomy } from "@/utils/taxonomyApi";
 import { ProductSort, SortOption } from "@/components/Product/ProductSort";
 import { ProductHero } from "@/components/Product/ProductHero";
+import { ProductCardGrid } from "@/components/Product/ProductCardGrid";
 import { Container } from "@/components/Common/Container";
 import { Package } from "lucide-react";
+import { toSlug } from "@/lib/utils";
 
 export const Route = createFileRoute("/products/$slug/$brand/")({
   head: ({ params }) => ({
@@ -31,16 +33,10 @@ function useNames(slug: string, brand: string): [string, string] {
   const [brandName, setBrandName] = useState(slugToTitle(brand));
   useEffect(() => {
     fetchTaxonomy().then(data => {
-      const cat = data.find(t => {
-        const s = t.category.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
-        return s === slug;
-      });
+      const cat = data.find(t => toSlug(t.category) === slug);
       if (cat) {
         setCatName(cat.category);
-        const b = cat.brands.find(b => {
-          const s = b.name.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
-          return s === brand;
-        });
+        const b = cat.brands.find(b => toSlug(b.name) === brand);
         if (b) setBrandName(b.name);
       }
     }).catch(() => {});
@@ -72,13 +68,17 @@ function BrandProductsPage() {
       .catch(() => {});
   }, []);
 
+  // Only show products without a specific subcategory here.
+  // Subcategory-specific products appear on their own subcategory page.
   const mapped = useMemo(() =>
-    apiProducts.map(p => ({
-      id: p.productId,
-      title: p.title,
-      image: p.mainImage,
-      description: p.description,
-    })), [apiProducts]);
+    apiProducts
+      .filter(p => !p.brandSubCategory)
+      .map(p => ({
+        id: p.productId,
+        title: p.title,
+        image: p.mainImage,
+        description: p.description,
+      })), [apiProducts]);
 
   const sortedProducts = useMemo(() => {
     const products = [...mapped];
@@ -136,35 +136,11 @@ function BrandProductsPage() {
             totalProducts={mapped.length}
           />
           {sortedProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-              {sortedProducts.map(p => (
-                <Link
-                  key={p.id}
-                  to={`/products/detail/${p.id}`}
-                  className="group flex flex-col bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg hover:border-[#1A3263]/20 transition-all duration-500 hover:-translate-y-1"
-                >
-                  <div className="aspect-[4/3] bg-gray-50 flex items-center justify-center p-6">
-                    {p.image ? (
-                      <img src={p.image} alt={p.title} className="w-full h-full object-contain mix-blend-multiply" />
-                    ) : (
-                      <Package size={40} className="text-gray-200" />
-                    )}
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-sm font-bold text-[#1A3263] group-hover:text-[#C3110C] transition-colors line-clamp-2">
-                      {p.title}
-                    </h3>
-                    {p.description && (
-                      <p className="text-xs text-gray-500 mt-1 line-clamp-2">{p.description}</p>
-                    )}
-                  </div>
-                </Link>
-              ))}
-            </div>
+            <ProductCardGrid products={sortedProducts} />
           ) : (
             <div className="text-center py-20 text-gray-400 text-sm flex flex-col items-center gap-4">
               <Package size={48} className="text-gray-200" />
-              <p>No {brandName} products in this category yet.</p>
+              <p>No general {brandName} products — all products are organized under subcategories.</p>
               <Link to={`/products/${slug}`} className="text-[#C3110C] hover:underline text-xs font-bold">
                 View all {categoryName} products
               </Link>

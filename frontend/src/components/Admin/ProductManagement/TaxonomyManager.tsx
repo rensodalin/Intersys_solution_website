@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { X, Plus, Pencil, Trash2, ChevronRight, ChevronDown, FolderOpen, Tag, Layers, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { fetchTaxonomy, addCategory, renameCategory, deleteCategory, addBrand, renameBrand, deleteBrand, addSubCategory, renameSubCategory, deleteSubCategory } from "@/utils/taxonomyApi";
+import type { TaxonomyCategory, TaxonomySubCategory } from "@/utils/taxonomyApi";
 import { refreshTaxonomyCache } from "@/hooks/useTaxonomy";
-import type { TaxonomyCategory, TaxonomyBrand } from "@/utils/taxonomyApi";
 
 interface TaxonomyManagerProps {
   open: boolean;
@@ -15,14 +15,127 @@ type EditingItem = {
   type: "category" | "brand" | "subcategory";
   category?: string;
   brand?: string;
+  parentPath?: string;
   currentName: string;
 } | null;
+
+function SubCategoryNode({
+  items, category, brand, parentPath,
+  addingTo, setAddingTo, newName, setNewName,
+  editing, setEditing, saving, handleAdd, handleDelete, handleRename
+}: {
+  items: TaxonomySubCategory[];
+  category: string;
+  brand: string;
+  parentPath: string;
+  addingTo: { type: string; category?: string; brand?: string; parentPath?: string } | null;
+  setAddingTo: (v: any) => void;
+  newName: string;
+  setNewName: (v: string) => void;
+  editing: EditingItem;
+  setEditing: (v: EditingItem) => void;
+  saving: boolean;
+  handleAdd: () => void;
+  handleDelete: (type: "category" | "brand" | "subcategory", category?: string, brand?: string, name?: string, parentPath?: string) => void;
+  handleRename: () => void;
+}) {
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+
+  const toggle = (name: string) => setExpanded(p => ({ ...p, [name]: !p[name] }));
+
+  return (
+    <div className="flex flex-col gap-1">
+      {items.length === 0 && !parentPath && (
+        <p className="text-[10px] text-gray-400 italic py-1">No subcategories yet.</p>
+      )}
+      {items.map(sc => {
+        const currentPath = parentPath ? `${parentPath}/${sc.name}` : sc.name;
+        const hasChildren = sc.children && sc.children.length > 0;
+        const isAddingHere = addingTo?.type === "subcategory" &&
+          addingTo.category === category &&
+          addingTo.brand === brand &&
+          addingTo.parentPath === currentPath;
+
+        return (
+          <div key={sc.name}>
+            <div className="group flex items-center gap-1 bg-white border border-gray-200 rounded-md px-2 py-1">
+              {hasChildren || sc.children?.length > 0 ? (
+                <button onClick={() => toggle(sc.name)} className="p-0.5 cursor-pointer">
+                  {expanded[sc.name] ? <ChevronDown size={10} className="text-gray-400" /> : <ChevronRight size={10} className="text-gray-400" />}
+                </button>
+              ) : (
+                <span className="w-4" />
+              )}
+              <Layers size={10} className="text-gray-400 shrink-0" />
+              <span className="text-[10px] text-gray-600 font-medium flex-1">{sc.name}</span>
+              <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition">
+                <button onClick={() => setAddingTo({ type: "subcategory", category, brand, parentPath: currentPath })}
+                  className="p-0.5 rounded text-gray-300 hover:text-green-600 cursor-pointer" title="Add child">
+                  <Plus size={8} />
+                </button>
+                <button onClick={() => setEditing({ type: "subcategory", category, brand, parentPath, currentName: sc.name })}
+                  className="p-0.5 rounded text-gray-300 hover:text-blue-600 cursor-pointer" title="Rename">
+                  <Pencil size={8} />
+                </button>
+                <button onClick={() => handleDelete("subcategory", category, brand, sc.name, parentPath)}
+                  className="p-0.5 rounded text-gray-300 hover:text-red-600 cursor-pointer" title="Delete">
+                  <Trash2 size={8} />
+                </button>
+              </div>
+            </div>
+
+            {isAddingHere && (
+              <div className="ml-4 mt-1 mb-1 flex items-center gap-1">
+                <input value={newName} onChange={e => setNewName(e.target.value)}
+                  placeholder="Child name..."
+                  className="flex-1 px-1.5 py-0.5 text-[10px] border border-green-200 rounded focus:outline-none focus:border-green-500"
+                  onKeyDown={e => { if (e.key === "Enter") handleAdd(); if (e.key === "Escape") setAddingTo(null); }}
+                  autoFocus />
+                <button onClick={handleAdd} disabled={saving || !newName.trim()}
+                  className="px-1.5 py-0.5 text-[9px] font-bold bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50 cursor-pointer">Add</button>
+                <button onClick={() => setAddingTo(null)}
+                  className="p-0.5 text-gray-400 hover:text-gray-600 cursor-pointer"><X size={10} /></button>
+              </div>
+            )}
+
+            {(expanded[sc.name] || isAddingHere) && (sc.children && sc.children.length > 0 ? (
+              <div className="ml-4 mt-1 mb-1">
+                <SubCategoryNode
+                  items={sc.children}
+                  category={category}
+                  brand={brand}
+                  parentPath={currentPath}
+                  addingTo={addingTo}
+                  setAddingTo={setAddingTo}
+                  newName={newName}
+                  setNewName={setNewName}
+                  editing={editing}
+                  setEditing={setEditing}
+                  saving={saving}
+                  handleAdd={handleAdd}
+                  handleDelete={handleDelete}
+                  handleRename={handleRename}
+                />
+              </div>
+            ) : (
+              expanded[sc.name] && (
+                <div className="ml-4 mt-1 mb-1">
+                  <p className="text-[9px] text-gray-400 italic">No children yet.</p>
+                </div>
+              )
+            ))}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerProps) {
   const [data, setData] = useState<TaxonomyCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
-  const [addingTo, setAddingTo] = useState<{ type: "category" | "brand" | "subcategory"; category?: string; brand?: string } | null>(null);
+  const [addingTo, setAddingTo] = useState<{ type: "category" | "brand" | "subcategory"; category?: string; brand?: string; parentPath?: string } | null>(null);
   const [newName, setNewName] = useState("");
   const [saving, setSaving] = useState(false);
   const [editing, setEditing] = useState<EditingItem>(null);
@@ -54,7 +167,7 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
       } else if (addingTo?.type === "brand" && addingTo.category) {
         await addBrand(addingTo.category, newName.trim());
       } else if (addingTo?.type === "subcategory" && addingTo.category && addingTo.brand) {
-        await addSubCategory(addingTo.category, addingTo.brand, newName.trim());
+        await addSubCategory(addingTo.category, addingTo.brand, newName.trim(), addingTo.parentPath || "");
       }
       setNewName("");
       setAddingTo(null);
@@ -77,7 +190,7 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
       } else if (editing.type === "brand" && editing.category) {
         await renameBrand(editing.category, editing.currentName, editName.trim());
       } else if (editing.type === "subcategory" && editing.category && editing.brand) {
-        await renameSubCategory(editing.category, editing.brand, editing.currentName, editName.trim());
+        await renameSubCategory(editing.category, editing.brand, editing.currentName, editName.trim(), editing.parentPath || "");
       }
       setEditing(null);
       setEditName("");
@@ -91,7 +204,7 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
     }
   };
 
-  const handleDelete = async (type: "category" | "brand" | "subcategory", category?: string, brand?: string, name?: string) => {
+  const handleDelete = async (type: "category" | "brand" | "subcategory", category?: string, brand?: string, name?: string, parentPath?: string) => {
     const label = type === "category" ? "category" : type === "brand" ? "brand" : "subcategory";
     if (!confirm(`Delete ${label} "${name}"? This cannot be undone.`)) return;
     setSaving(true);
@@ -101,7 +214,7 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
       } else if (type === "brand" && category && name) {
         await deleteBrand(category, name);
       } else if (type === "subcategory" && category && brand && name) {
-        await deleteSubCategory(category, brand, name);
+        await deleteSubCategory(category, brand, name, parentPath || "");
       }
       await load();
       onChanged();
@@ -189,7 +302,7 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
                                 <span className="text-[9px] text-gray-400">({br.subCategories.length} subcategories)</span>
                               </button>
                               <div className="flex items-center gap-1">
-                                <button onClick={() => setAddingTo({ type: "subcategory", category: cat.category, brand: br.name })}
+                                <button onClick={() => setAddingTo({ type: "subcategory", category: cat.category, brand: br.name, parentPath: "" })}
                                   className="p-1 rounded hover:bg-gray-200 text-gray-400 hover:text-green-600 transition cursor-pointer" title="Add subcategory">
                                   <Plus size={10} />
                                 </button>
@@ -206,7 +319,7 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
 
                             {expanded[`${cat.category}:${br.name}`] && (
                               <div className="bg-gray-50/50 px-10 py-2">
-                                {addingTo?.type === "subcategory" && addingTo.category === cat.category && addingTo.brand === br.name && (
+                                {addingTo?.type === "subcategory" && addingTo.category === cat.category && addingTo.brand === br.name && addingTo.parentPath === "" && (
                                   <div className="mb-2 flex items-center gap-2">
                                     <input value={newName} onChange={e => setNewName(e.target.value)}
                                       placeholder="Subcategory name..."
@@ -215,31 +328,27 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
                                       autoFocus />
                                     <button onClick={handleAdd} disabled={saving || !newName.trim()}
                                       className="px-2 py-1 text-[10px] font-bold bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50 cursor-pointer">Add</button>
-                                    <button onClick={() => { setAddingTo(null); setNewName(""); }}
+                                    <button onClick={() => setAddingTo(null)}
                                       className="p-1 text-gray-400 hover:text-gray-600 cursor-pointer"><X size={12} /></button>
                                   </div>
                                 )}
 
-                                {br.subCategories.length === 0 ? (
-                                  <p className="text-[10px] text-gray-400 italic py-1">No subcategories yet.</p>
-                                ) : (
-                                  <div className="flex flex-wrap gap-1.5">
-                                    {br.subCategories.map(sc => (
-                                      <div key={sc} className="group flex items-center gap-1 bg-white border border-gray-200 rounded-md px-2 py-1">
-                                        <Layers size={10} className="text-gray-400" />
-                                        <span className="text-[10px] text-gray-600 font-medium">{sc}</span>
-                                        <button onClick={() => { setEditing({ type: "subcategory", category: cat.category, brand: br.name, currentName: sc }); setEditName(sc); }}
-                                          className="p-0.5 rounded text-gray-300 hover:text-blue-600 opacity-0 group-hover:opacity-100 transition cursor-pointer">
-                                          <Pencil size={8} />
-                                        </button>
-                                        <button onClick={() => handleDelete("subcategory", cat.category, br.name, sc)}
-                                          className="p-0.5 rounded text-gray-300 hover:text-red-600 opacity-0 group-hover:opacity-100 transition cursor-pointer">
-                                          <Trash2 size={8} />
-                                        </button>
-                                      </div>
-                                    ))}
-                                  </div>
-                                )}
+                                <SubCategoryNode
+                                  items={br.subCategories}
+                                  category={cat.category}
+                                  brand={br.name}
+                                  parentPath=""
+                                  addingTo={addingTo}
+                                  setAddingTo={setAddingTo}
+                                  newName={newName}
+                                  setNewName={setNewName}
+                                  editing={editing}
+                                  setEditing={setEditing}
+                                  saving={saving}
+                                  handleAdd={handleAdd}
+                                  handleDelete={handleDelete}
+                                  handleRename={handleRename}
+                                />
                               </div>
                             )}
                           </div>
@@ -281,7 +390,7 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
               <input value={editName} onChange={e => setEditName(e.target.value)}
                 placeholder="New name..."
                 className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 mb-3"
-                onKeyDown={e => { if (e.key === "Enter") handleRename(); if (e.key === "Escape") { setEditing(null); } }}
+                onKeyDown={e => { if (e.key === "Enter") handleRename(); if (e.key === "Escape") setEditing(null); }}
                 autoFocus />
               <div className="flex justify-end gap-2">
                 <button onClick={() => setEditing(null)}

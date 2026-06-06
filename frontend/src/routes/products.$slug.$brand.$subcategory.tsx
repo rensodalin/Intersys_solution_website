@@ -9,13 +9,13 @@ import { Container } from "@/components/Common/Container";
 import { Package } from "lucide-react";
 import { toSlug } from "@/lib/utils";
 
-export const Route = createFileRoute("/products/$slug/")({
+export const Route = createFileRoute("/products/$slug/$brand/$subcategory")({
   head: ({ params }) => ({
     meta: [
-      { title: `${slugToTitle(params.slug)} — Intersys Solutions` },
+      { title: `${slugToTitle(params.subcategory)} — ${slugToTitle(params.brand)} — Intersys Solutions` },
     ],
   }),
-  component: CategoryProductsPage,
+  component: SubcategoryProductsPage,
 });
 
 function slugToTitle(slug: string): string {
@@ -28,20 +28,42 @@ function slugToTitle(slug: string): string {
     .join(" ");
 }
 
-function useCategoryName(slug: string): string {
-  const [name, setName] = useState(slugToTitle(slug));
+function useNames(slug: string, brand: string, subcategory: string): [string, string, string] {
+  const [catName, setCatName] = useState(slugToTitle(slug));
+  const [brandName, setBrandName] = useState(slugToTitle(brand));
+  const [subName, setSubName] = useState(slugToTitle(subcategory));
   useEffect(() => {
     fetchTaxonomy().then(data => {
-      const found = data.find(t => toSlug(t.category) === slug);
-      if (found) setName(found.category);
+      const cat = data.find(t => toSlug(t.category) === slug);
+      if (cat) {
+        setCatName(cat.category);
+        const b = cat.brands.find(b => toSlug(b.name) === brand);
+        if (b) {
+          setBrandName(b.name);
+          const flatSubs = flattenSubCategories(b.subCategories || []);
+          const matched = flatSubs.find(s => toSlug(s) === subcategory);
+          if (matched) setSubName(matched);
+        }
+      }
     }).catch(() => {});
-  }, [slug]);
-  return name;
+  }, [slug, brand, subcategory]);
+  return [catName, brandName, subName];
 }
 
-function CategoryProductsPage() {
-  const { slug } = Route.useParams();
-  const categoryName = useCategoryName(slug);
+function flattenSubCategories(items: any[]): string[] {
+  const result: string[] = [];
+  for (const item of items) {
+    result.push(item.name || item);
+    if (item.children && item.children.length > 0) {
+      result.push(...flattenSubCategories(item.children));
+    }
+  }
+  return result;
+}
+
+function SubcategoryProductsPage() {
+  const { slug, brand, subcategory } = Route.useParams();
+  const [categoryName, brandName, subcategoryName] = useNames(slug, brand, subcategory);
   const [currentSort, setCurrentSort] = useState<SortOption>("name-asc");
   const [apiProducts, setApiProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,11 +71,11 @@ function CategoryProductsPage() {
 
   useEffect(() => {
     setLoading(true);
-    fetchProducts(categoryName)
+    fetchProducts(categoryName, brandName, subcategoryName)
       .then(data => setApiProducts(data))
       .catch(() => setApiProducts([]))
       .finally(() => setLoading(false));
-  }, [categoryName]);
+  }, [categoryName, brandName, subcategoryName]);
 
   const [popularity, setPopularity] = useState<Record<string, number>>({});
   useEffect(() => {
@@ -63,17 +85,13 @@ function CategoryProductsPage() {
       .catch(() => {});
   }, []);
 
-  // Only show products without a brand here.
-  // Branded products appear on their brand page; subcategorized ones on their subcategory page.
   const mapped = useMemo(() =>
-    apiProducts
-      .filter(p => !p.brand)
-      .map(p => ({
-        id: p.productId,
-        title: p.title,
-        image: p.mainImage,
-        description: p.description,
-      })), [apiProducts]);
+    apiProducts.map(p => ({
+      id: p.productId,
+      title: p.title,
+      image: p.mainImage,
+      description: p.description,
+    })), [apiProducts]);
 
   const sortedProducts = useMemo(() => {
     const products = [...mapped];
@@ -92,12 +110,14 @@ function CategoryProductsPage() {
     return (
       <div className="bg-white min-h-screen">
         <ProductHero
-          title={categoryName}
-          subtitle={`Explore our range of ${categoryName.toLowerCase()} solutions.`}
+          title={subcategoryName}
+          subtitle={`Browse our ${subcategoryName.toLowerCase()} products.`}
           breadcrumbs={[
             { name: "Home", href: "/" },
             { name: "Products", href: "/products" },
             { name: categoryName, href: `/products/${slug}` },
+            { name: brandName, href: `/products/${slug}/${brand}` },
+            { name: subcategoryName, href: `/products/${slug}/${brand}/${subcategory}` },
           ]}
         />
         <section className="py-14 md:py-16 px-8">
@@ -109,42 +129,17 @@ function CategoryProductsPage() {
     );
   }
 
-  if (!loading && mapped.length === 0) {
-    return (
-      <div className="bg-white min-h-screen">
-        <ProductHero
-          title={categoryName}
-          subtitle={`Explore our range of ${categoryName.toLowerCase()} solutions.`}
-          breadcrumbs={[
-            { name: "Home", href: "/" },
-            { name: "Products", href: "/products" },
-            { name: categoryName, href: `/products/${slug}` },
-          ]}
-        />
-        <section className="py-14 md:py-16 px-8">
-          <Container>
-            <div className="text-center py-20 text-gray-400 text-sm flex flex-col items-center gap-4">
-              <Package size={48} className="text-gray-200" />
-              <p>No general products — browse by brand or subcategory.</p>
-              <Link to="/products" className="text-[#C3110C] hover:underline text-xs font-bold">
-                Browse all categories
-              </Link>
-            </div>
-          </Container>
-        </section>
-      </div>
-    );
-  }
-
   return (
     <div className="bg-white min-h-screen">
       <ProductHero
-        title={categoryName}
-        subtitle={`Explore our range of ${categoryName.toLowerCase()} solutions.`}
+        title={subcategoryName}
+        subtitle={`Browse our ${subcategoryName.toLowerCase()} products.`}
         breadcrumbs={[
           { name: "Home", href: "/" },
           { name: "Products", href: "/products" },
           { name: categoryName, href: `/products/${slug}` },
+          { name: brandName, href: `/products/${slug}/${brand}` },
+          { name: subcategoryName, href: `/products/${slug}/${brand}/${subcategory}` },
         ]}
       />
 
@@ -158,7 +153,13 @@ function CategoryProductsPage() {
           {sortedProducts.length > 0 ? (
             <ProductCardGrid products={sortedProducts} />
           ) : (
-            <div className="text-center py-20 text-gray-400 text-sm">No general products — browse by brand or subcategory.</div>
+            <div className="text-center py-20 text-gray-400 text-sm flex flex-col items-center gap-4">
+              <Package size={48} className="text-gray-200" />
+              <p>No {subcategoryName} products yet.</p>
+              <Link to={`/products/${slug}/${brand}`} className="text-[#C3110C] hover:underline text-xs font-bold">
+                View all {brandName} products
+              </Link>
+            </div>
           )}
         </Container>
       </section>

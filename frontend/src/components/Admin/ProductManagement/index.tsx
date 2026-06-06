@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Plus, Layers } from "lucide-react";
 import { fetchProducts, addProduct, updateProduct, deleteProduct } from "@/utils/productApi";
-import { fetchTaxonomy } from "@/utils/taxonomyApi";
+import { fetchTaxonomy, flattenTree } from "@/utils/taxonomyApi";
 import type { TaxonomyCategory } from "@/utils/taxonomyApi";
 import { toast } from "sonner";
 import type { ApiProduct } from "./types";
@@ -31,7 +31,7 @@ export function ProductManagement() {
       brands[t.category] = t.brands.map(b => b.name);
       subCategories[t.category] = {};
       for (const b of t.brands) {
-        subCategories[t.category][b.name] = b.subCategories;
+        subCategories[t.category][b.name] = flattenTree(b.subCategories || []);
       }
     }
   } else {
@@ -104,7 +104,12 @@ export function ProductManagement() {
     const catSlug = cat.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
     const brandSlug = brand.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
     if (brand && subCat) {
-      const subSlug = subCat.toLowerCase().replace(/\s+&\s+/g, "-").replace(/\s+/g, "-").replace(/[^\w-]/g, "");
+      const subSlug = subCat
+        .toLowerCase()
+        .replace(/\s+&\s+/g, "-")
+        .replace(/\s+/g, "-")
+        .replace(/\/+/g, "-")
+        .replace(/[^\w-]/g, "");
       return `/products/${catSlug}/${brandSlug}/${subSlug}`;
     } else if (brand) {
       return `/products/${catSlug}/${brandSlug}`;

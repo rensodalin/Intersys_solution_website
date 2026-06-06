@@ -335,7 +335,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                     exit={{ opacity: 0, x: -10 }}
                     className="space-y-2"
                   >
-                    <div className="text-gray-500 text-[14px]  font-light leading-7">
+                    <div className="text-gray-500 text-[13px] font-light leading-6">
                       {product.longDescription}
                     </div>
                   </motion.div>

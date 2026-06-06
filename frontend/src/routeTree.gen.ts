@@ -61,6 +61,7 @@ import { Route as ProductsAccessControlHoneywellCredentialsRouteImport } from '.
 import { Route as ProductsAccessControlHoneywellControlPanelsRouteImport } from './routes/products.access-control.honeywell.control-panels'
 import { Route as ProductsAccessControlHoneywellControlPanelKitsRouteImport } from './routes/products.access-control.honeywell.control-panel-kits'
 import { Route as ProductsAccessControlHoneywellAccessoriesRouteImport } from './routes/products.access-control.honeywell.accessories'
+import { Route as ProductsSlugBrandSubcategoryRouteImport } from './routes/products.$slug.$brand.$subcategory'
 
 const WhyChooseRoute = WhyChooseRouteImport.update({
   id: '/why-choose',
@@ -338,6 +339,12 @@ const ProductsAccessControlHoneywellAccessoriesRoute =
     path: '/access-control/honeywell/accessories',
     getParentRoute: () => ProductsRoute,
   } as any)
+const ProductsSlugBrandSubcategoryRoute =
+  ProductsSlugBrandSubcategoryRouteImport.update({
+    id: '/$slug/$brand/$subcategory',
+    path: '/$slug/$brand/$subcategory',
+    getParentRoute: () => ProductsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -379,6 +386,7 @@ export interface FileRoutesByFullPath {
   '/products/access-control/': typeof ProductsAccessControlIndexRoute
   '/products/building-management/': typeof ProductsBuildingManagementIndexRoute
   '/products/surveillance/': typeof ProductsSurveillanceIndexRoute
+  '/products/$slug/$brand/$subcategory': typeof ProductsSlugBrandSubcategoryRoute
   '/products/access-control/honeywell/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
   '/products/access-control/honeywell/control-panel-kits': typeof ProductsAccessControlHoneywellControlPanelKitsRoute
   '/products/access-control/honeywell/control-panels': typeof ProductsAccessControlHoneywellControlPanelsRoute
@@ -431,6 +439,7 @@ export interface FileRoutesByTo {
   '/products/access-control': typeof ProductsAccessControlIndexRoute
   '/products/building-management': typeof ProductsBuildingManagementIndexRoute
   '/products/surveillance': typeof ProductsSurveillanceIndexRoute
+  '/products/$slug/$brand/$subcategory': typeof ProductsSlugBrandSubcategoryRoute
   '/products/access-control/honeywell/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
   '/products/access-control/honeywell/control-panel-kits': typeof ProductsAccessControlHoneywellControlPanelKitsRoute
   '/products/access-control/honeywell/control-panels': typeof ProductsAccessControlHoneywellControlPanelsRoute
@@ -486,6 +495,7 @@ export interface FileRoutesById {
   '/products/access-control/': typeof ProductsAccessControlIndexRoute
   '/products/building-management/': typeof ProductsBuildingManagementIndexRoute
   '/products/surveillance/': typeof ProductsSurveillanceIndexRoute
+  '/products/$slug/$brand/$subcategory': typeof ProductsSlugBrandSubcategoryRoute
   '/products/access-control/honeywell/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
   '/products/access-control/honeywell/control-panel-kits': typeof ProductsAccessControlHoneywellControlPanelKitsRoute
   '/products/access-control/honeywell/control-panels': typeof ProductsAccessControlHoneywellControlPanelsRoute
@@ -542,6 +552,7 @@ export interface FileRouteTypes {
     | '/products/access-control/'
     | '/products/building-management/'
     | '/products/surveillance/'
+    | '/products/$slug/$brand/$subcategory'
     | '/products/access-control/honeywell/accessories'
     | '/products/access-control/honeywell/control-panel-kits'
     | '/products/access-control/honeywell/control-panels'
@@ -594,6 +605,7 @@ export interface FileRouteTypes {
     | '/products/access-control'
     | '/products/building-management'
     | '/products/surveillance'
+    | '/products/$slug/$brand/$subcategory'
     | '/products/access-control/honeywell/accessories'
     | '/products/access-control/honeywell/control-panel-kits'
     | '/products/access-control/honeywell/control-panels'
@@ -648,6 +660,7 @@ export interface FileRouteTypes {
     | '/products/access-control/'
     | '/products/building-management/'
     | '/products/surveillance/'
+    | '/products/$slug/$brand/$subcategory'
     | '/products/access-control/honeywell/accessories'
     | '/products/access-control/honeywell/control-panel-kits'
     | '/products/access-control/honeywell/control-panels'
@@ -1063,6 +1076,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsAccessControlHoneywellAccessoriesRouteImport
       parentRoute: typeof ProductsRoute
     }
+    '/products/$slug/$brand/$subcategory': {
+      id: '/products/$slug/$brand/$subcategory'
+      path: '/$slug/$brand/$subcategory'
+      fullPath: '/products/$slug/$brand/$subcategory'
+      preLoaderRoute: typeof ProductsSlugBrandSubcategoryRouteImport
+      parentRoute: typeof ProductsRoute
+    }
   }
 }
 
@@ -1073,6 +1093,7 @@ interface ProductsRouteChildren {
   ProductsAccessControlIndexRoute: typeof ProductsAccessControlIndexRoute
   ProductsBuildingManagementIndexRoute: typeof ProductsBuildingManagementIndexRoute
   ProductsSurveillanceIndexRoute: typeof ProductsSurveillanceIndexRoute
+  ProductsSlugBrandSubcategoryRoute: typeof ProductsSlugBrandSubcategoryRoute
   ProductsAccessControlHoneywellAccessoriesRoute: typeof ProductsAccessControlHoneywellAccessoriesRoute
   ProductsAccessControlHoneywellControlPanelKitsRoute: typeof ProductsAccessControlHoneywellControlPanelKitsRoute
   ProductsAccessControlHoneywellControlPanelsRoute: typeof ProductsAccessControlHoneywellControlPanelsRoute
@@ -1095,6 +1116,7 @@ const ProductsRouteChildren: ProductsRouteChildren = {
   ProductsAccessControlIndexRoute: ProductsAccessControlIndexRoute,
   ProductsBuildingManagementIndexRoute: ProductsBuildingManagementIndexRoute,
   ProductsSurveillanceIndexRoute: ProductsSurveillanceIndexRoute,
+  ProductsSlugBrandSubcategoryRoute: ProductsSlugBrandSubcategoryRoute,
   ProductsAccessControlHoneywellAccessoriesRoute:
     ProductsAccessControlHoneywellAccessoriesRoute,
   ProductsAccessControlHoneywellControlPanelKitsRoute:

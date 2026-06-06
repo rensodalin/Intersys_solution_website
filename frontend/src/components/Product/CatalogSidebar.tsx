@@ -25,7 +25,8 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { useInquiry } from "@/context/InquiryContext";
 import { useTaxonomy } from "@/hooks/useTaxonomy";
-import { cn } from "@/lib/utils";
+import type { TaxonomySubCategory } from "@/utils/taxonomyApi";
+import { cn, toSlug } from "@/lib/utils";
 import logoImg from "@/assets/logo.avif";
 
 interface NavDataItem {
@@ -105,6 +106,79 @@ const NAVIGATION_DATA: NavDataItem[] = [
 
 import { searchProducts, initSearchIndex, SearchResult } from "@/utils/productSearch";
 
+function TreeViewNode({
+    node, depth, isSearching, expandedSections, isPathActive, toggleSection
+}: {
+    node: NavDataSubItem;
+    depth: number;
+    isSearching: boolean;
+    expandedSections: string[];
+    isPathActive: (link: string) => boolean;
+    toggleSection: (label: string) => void;
+}) {
+    const hasChildren = Array.isArray(node.sub) && node.sub.length > 0;
+    const isExpanded = isSearching || expandedSections.includes(node.label);
+    const Icon = (node as any).icon || (depth === 1 ? ShieldCheck : undefined);
+
+    const fontSize = depth === 1 ? "text-[13px]" : depth === 2 ? "text-xs" : "text-[11px]";
+    const fontWeight = depth <= 2 ? "font-semibold" : "font-medium";
+    const linkColor = (link: string) => isPathActive(link) ? "text-[#FC3B1F]" : "text-gray-500 group-hover:text-[#1A3263]";
+    const padding = depth === 1 ? "py-2 px-3" : "py-1.5 px-3";
+    const border = depth >= 2 ? `border-l ${depth === 2 ? "border-gray-200/80" : "border-[#FC3B1F]/20"} ml-${depth >= 3 ? 3 : 4}` : "";
+    const chevronSize = depth === 1 ? 13 : 11;
+
+    return (
+        <div className="space-y-1">
+            <div className={`flex items-center justify-between group ${padding} rounded-lg hover:bg-white/60 transition-all duration-200`}>
+                <div className="flex items-center gap-2.5 flex-1">
+                    {Icon && <Icon size={14} className="text-gray-400 group-hover:text-[#1A3263] transition-colors shrink-0" />}
+                    {node.link && !hasChildren ? (
+                        <Link
+                            to={node.link}
+                            className={`${fontSize} ${fontWeight} transition-colors flex-1 hover:underline ${linkColor(node.link)}`}
+                        >
+                            {node.label}
+                        </Link>
+                    ) : (
+                        <span
+                            onClick={hasChildren ? (e) => { e.preventDefault(); e.stopPropagation(); toggleSection(node.label); } : undefined}
+                            className={`${fontSize} ${fontWeight} transition-colors flex-1 ${hasChildren ? "cursor-pointer hover:text-[#1A3263]" : "text-gray-500"} ${node.link && !hasChildren && isPathActive(node.link) ? "text-[#FC3B1F]" : "text-gray-500"}`}
+                        >
+                            {node.label}
+                        </span>
+                    )}
+                </div>
+                {hasChildren && (
+                    <div
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(node.label); }}
+                        className="p-1 cursor-pointer rounded-md hover:bg-gray-200 transition-colors"
+                    >
+                        <ChevronDown size={chevronSize} className={cn("text-gray-400 transition-transform", isExpanded ? "rotate-180" : "")} />
+                    </div>
+                )}
+            </div>
+
+            {hasChildren && isExpanded && (
+                <div className="overflow-hidden">
+                    <div className={`pl-${depth <= 1 ? 6 : 4} space-y-1 ${depth >= 2 ? border : ""} ${depth >= 2 ? "pt-1 pb-1" : "pt-2 pb-3"}`}>
+                        {node.sub!.map((child, idx) => (
+                            <TreeViewNode
+                                key={`${child.label}-${idx}`}
+                                node={child}
+                                depth={depth + 1}
+                                isSearching={isSearching}
+                                expandedSections={expandedSections}
+                                isPathActive={isPathActive}
+                                toggleSection={toggleSection}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
 export function CatalogSidebar({ 
     activeCategory: propActiveCategory,
     isDesktopOpen = true,
@@ -114,30 +188,57 @@ export function CatalogSidebar({
     const navigate = useNavigate();
     const { taxonomy } = useTaxonomy();
 
-    // Merge any admin-created categories into NAVIGATION_DATA
+    const CATEGORY_ICONS: Record<string, LucideIcon> = {
+        "access control": ShieldCheck,
+        "surveillance": Video,
+        "building management": Cpu,
+        "integrated systems": Settings,
+        "audio visual": Volume2,
+        "fire systems": Flame,
+    };
+
+    function subCatToNav(sc: TaxonomySubCategory, categorySlug: string, brandSlug: string, parentSlugs: string[] = []): NavDataSubItem {
+        const slug = toSlug(sc.name);
+        const allSlugs = [...parentSlugs, slug];
+        const link = `/products/${categorySlug}/${brandSlug}/${allSlugs.join("/")}`;
+        return {
+            label: sc.name,
+            link,
+            sub: sc.children && sc.children.length > 0
+                ? sc.children.map(c => subCatToNav(c, categorySlug, brandSlug, allSlugs))
+                : undefined,
+        };
+    }
+
+    // Build navigation entirely from live taxonomy; fall back to hardcoded data when API is unavailable
     const navData = useMemo(() => {
-        const existingIds = new Set(NAVIGATION_DATA.map(n => n.id));
-        const extra: NavDataItem[] = [];
-        for (const t of taxonomy) {
-            const id = t.category.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
-            if (!existingIds.has(id)) {
-                const slug = t.category.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
-                const brands = t.brands || [];
-                const hasSub = brands.length > 0;
-                extra.push({
-                    id,
-                    label: t.category,
-                    icon: Package,
-                    link: `/products/${slug}`,
-                    sub: hasSub ? brands.map(b => ({
-                        label: b.name,
-                        link: `/products/${slug}/${b.name.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "")}`,
-                    })) : undefined,
-                });
-                existingIds.add(id);
-            }
-        }
-        return [...NAVIGATION_DATA, ...extra];
+        if (taxonomy.length === 0) return NAVIGATION_DATA;
+
+        return taxonomy.map(t => {
+            const slug = toSlug(t.category);
+            const iconKey = Object.keys(CATEGORY_ICONS).find(k => t.category.toLowerCase().includes(k));
+            const icon = iconKey ? CATEGORY_ICONS[iconKey] : Package;
+
+            const brands = (t.brands || []).map(b => {
+                const brandSlug = toSlug(b.name);
+                const subItems = (b.subCategories || []).map(sc =>
+                    subCatToNav(sc, slug, brandSlug)
+                );
+                return {
+                    label: b.name,
+                    link: `/products/${slug}/${brandSlug}`,
+                    sub: subItems.length > 0 ? subItems : undefined,
+                } as NavDataSubItem;
+            });
+
+            return {
+                id: slug,
+                label: t.category,
+                icon,
+                link: `/products/${slug}`,
+                sub: brands.length > 0 ? brands : undefined,
+            };
+        });
     }, [taxonomy]);
 
     // Track scroll to match Navbar's dynamic height
@@ -155,15 +256,16 @@ export function CatalogSidebar({
     const searchParams = new URLSearchParams(location.search);
     const activeFrom = searchParams.get("from");
 
-    // Auto-detect active category from URL or 'from' param
-    const activeCategory = propActiveCategory || (
-        (location.pathname.includes("/access-control") || (activeFrom && activeFrom.includes("/access-control"))) ? "access-control" :
-            (location.pathname.includes("/building-management") || (activeFrom && activeFrom.includes("/building-management"))) ? "building-management" :
-                (location.pathname.includes("/integrated-systems") || (activeFrom && activeFrom.includes("/integrated-systems"))) ? "integrated-systems" :
-                    (location.pathname.includes("/surveillance") || (activeFrom && activeFrom.includes("/surveillance"))) ? "surveillance" :
-                        (location.pathname.includes("/audio-visual") || (activeFrom && activeFrom.includes("/audio-visual"))) ? "audio-visual" :
-                            (location.pathname.includes("/fire-systems") || (activeFrom && activeFrom.includes("/fire-systems"))) ? "fire-systems" : undefined
-    );
+    // Auto-detect active category from URL or 'from' param (dynamic)
+    const activeCategory = useMemo(() => {
+        if (propActiveCategory) return propActiveCategory;
+        const path = activeFrom || location.pathname;
+        const parts = path.split("/").filter(Boolean);
+        if (parts[0] === "products" && parts[1]) {
+            return parts[1];
+        }
+        return undefined;
+    }, [location.pathname, activeFrom, propActiveCategory]);
 
     const [expandedSections, setExpandedSections] = useState<string[]>(activeCategory ? [activeCategory] : []);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -186,21 +288,27 @@ export function CatalogSidebar({
         }
     }, [searchQuery]);
 
-    // Auto-expand sections based on URL or search 'from' parameter
+    // Auto-expand sections based on URL or search 'from' parameter (dynamic)
     React.useEffect(() => {
-        const sections: string[] = [];
         const path = activeFrom || location.pathname;
+        const parts = path.split("/").filter(Boolean);
+        const sections: string[] = [];
 
-        if (path.includes("/access-control")) {
-            sections.push("access-control");
-            if (path.includes("/honeywell")) sections.push("Honeywell Systems");
-            if (path.includes("/salto")) sections.push("SALTO Solutions");
+        if (parts[0] === "products" && parts[1]) {
+            sections.push(parts[1]);
+            if (parts[2]) {
+                const cat = taxonomy.find(t => toSlug(t.category) === parts[1]);
+                if (cat) {
+                    const brand = cat.brands.find(b => toSlug(b.name) === parts[2]);
+                    if (brand) sections.push(brand.name);
+                }
+                // Fallback for hardcoded brand names when taxonomy is empty
+                if (taxonomy.length === 0) {
+                    if (parts[2] === "honeywell") sections.push("Honeywell Systems");
+                    if (parts[2] === "salto") sections.push("SALTO Solutions");
+                }
+            }
         }
-        if (path.includes("/building-management")) sections.push("building-management");
-        if (path.includes("/integrated-systems")) sections.push("integrated-systems");
-        if (path.includes("/surveillance")) sections.push("surveillance");
-        if (path.includes("/audio-visual")) sections.push("audio-visual");
-        if (path.includes("/fire-systems")) sections.push("fire-systems");
 
         if (sections.length > 0) {
             setExpandedSections(prev => {
@@ -211,7 +319,7 @@ export function CatalogSidebar({
                 return newSections;
             });
         }
-    }, [location.pathname]);
+    }, [location.pathname, taxonomy]);
 
 
     const isPathActive = (link?: string) => {
@@ -342,11 +450,14 @@ export function CatalogSidebar({
                                         />;
                                     })()}
 
-                                    <span className={cn(
-                                        "flex-1 text-left tracking-tight relative z-10",
-                                        item.link && "hover:underline"
-                                    )}>
-                                        {item.link ? (
+                                    <span
+                                        className={cn(
+                                            "flex-1 text-left tracking-tight relative z-10",
+                                            item.sub ? "cursor-pointer" : (item.link && "hover:underline")
+                                        )}
+                                        onClick={item.sub ? (e) => { e.preventDefault(); e.stopPropagation(); toggleSection(item.id); } : undefined}
+                                    >
+                                        {item.link && !item.sub ? (
                                             <Link to={item.link} className="block w-full">{item.label}</Link>
                                         ) : item.label}
                                     </span>
@@ -371,120 +482,17 @@ export function CatalogSidebar({
                             {item.sub && isExpanded && (
                                 <div className="overflow-hidden">
                                     <div className="pl-6 space-y-1 pt-2 pb-3">
-                                        {item.sub.map((subItem: any, idx: number) => {
-                                            const SubIcon = subItem.icon || ShieldCheck;
-                                            return (
-                                                <div key={idx} className="space-y-1">
-                                                    <div className="flex items-center justify-between group py-2 px-3 rounded-lg hover:bg-white/60 transition-all duration-200">
-                                                        <div className="flex items-center gap-2.5 flex-1">
-                                                            <SubIcon size={14} className="text-gray-400 group-hover:text-[#1A3263] transition-colors" />
-                                                            {subItem.link && !Array.isArray(subItem.sub) ? (
-                                                                 <Link
-                                                                     to={subItem.link}
-                                                                     className={cn(
-                                                                         "text-[13px] font-semibold transition-colors flex-1 hover:underline",
-                                                                         isPathActive(subItem.link) ? "text-[#FC3B1F]" : "text-gray-500 group-hover:text-[#1A3263]"
-                                                                     )}
-                                                                 >
-                                                                     {subItem.label}
-                                                                 </Link>
-                                                             ) : (
-                                                                 <span
-                                                                     onClick={Array.isArray(subItem.sub) ? (e) => { e.preventDefault(); e.stopPropagation(); toggleSection(subItem.label); } : undefined}
-                                                                     className={cn(
-                                                                         "text-[13px] font-semibold transition-colors flex-1",
-                                                                         Array.isArray(subItem.sub) ? "cursor-pointer hover:text-[#1A3263]" : "text-gray-500",
-                                                                         isPathActive(subItem.link) && !Array.isArray(subItem.sub) ? "text-[#FC3B1F]" : "text-gray-500"
-                                                                     )}
-                                                                 >
-                                                                     {subItem.label}
-                                                                 </span>
-                                                             )}
-                                                        </div>
-                                                        {Array.isArray(subItem.sub) && (
-                                                            <div
-                                                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(subItem.label); }}
-                                                                className="p-1 cursor-pointer rounded-md hover:bg-gray-200 transition-colors"
-                                                            >
-                                                                <ChevronDown size={13} className={cn("text-gray-400 transition-transform", (searchQuery ? true : expandedSections.includes(subItem.label)) ? "rotate-180" : "")} />
-                                                            </div>
-                                                        )}
-                                                    </div>
-
-                                                    {Array.isArray(subItem.sub) && (searchQuery ? true : expandedSections.includes(subItem.label)) && (
-                                                        <div className="overflow-hidden">
-                                                            <div className="pl-6 space-y-1 border-l border-gray-200/80 ml-4 pt-1 pb-1">
-                                                                {subItem.sub.map((l3: any, l3idx: number) => {
-                                                                    const isL3String = typeof l3 === "string";
-                                                                    const l3Label = isL3String ? l3 : l3.label;
-                                                                    const l3Link = isL3String ? undefined : l3.link;
-
-                                                                    return (
-                                                                        <div key={l3idx} className="space-y-1">
-                                                                            <div className="flex items-center justify-between group py-1.5 px-3 rounded-md hover:bg-white/40 transition-all duration-200">
-                                                                                {l3Link ? (
-                                                                                    <Link
-                                                                                        to={l3Link}
-                                                                                        className={cn(
-                                                                                            "text-xs font-semibold transition-colors flex-1 block",
-                                                                                            isPathActive(l3Link) ? "text-[#FC3B1F]" : "text-gray-500 group-hover:text-[#1A3263]"
-                                                                                        )}
-                                                                                    >
-                                                                                        {l3Label}
-                                                                                    </Link>
-                                                                                ) : (
-                                                                                    <span className="text-xs text-gray-400 font-medium group-hover:text-[#1A3263] transition-colors cursor-pointer">
-                                                                                        {l3Label}
-                                                                                    </span>
-                                                                                )}
-                                                                                {!isL3String && Array.isArray(l3.sub) && (
-                                                                                    <div
-                                                                                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(l3Label); }}
-                                                                                        className="p-1 cursor-pointer rounded-md hover:bg-gray-200 transition-colors"
-                                                                                    >
-                                                                                        <ChevronDown size={11} className={cn("text-gray-300 transition-transform", (searchQuery ? true : expandedSections.includes(l3Label)) ? "rotate-180" : "")} />
-                                                                                    </div>
-                                                                                )}
-                                                                            </div>
-
-                                                                            {!isL3String && Array.isArray(l3.sub) && (searchQuery ? true : expandedSections.includes(l3Label)) && (
-                                                                                <div className="overflow-hidden">
-                                                                                    <div className="pl-4 space-y-1 border-l-2 border-[#FC3B1F]/20 ml-4 pt-1 mb-2">
-                                                                                        {l3.sub.map((l4: any, l4idx: number) => {
-                                                                                            const isL4String = typeof l4 === "string";
-                                                                                            const l4Label = isL4String ? l4 : l4.label;
-                                                                                            const l4Link = isL4String ? undefined : l4.link;
-
-                                                                                            return (
-                                                                                                <div key={l4idx}>
-                                                                                                    {l4Link ? (
-                                                                                                        <Link
-                                                                                                            to={l4Link}
-                                                                                                            activeProps={{ className: "!text-[#FC3B1F]" }}
-                                                                                                            className="block text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#1A3263] hover:bg-white/50 rounded-md transition-all duration-200 font-medium"
-                                                                                                        >
-                                                                                                            {l4Label}
-                                                                                                        </Link>
-                                                                                                    ) : (
-                                                                                                        <div className="text-[11px] py-1.5 px-3 text-gray-400 hover:text-[#1A3263] cursor-pointer hover:bg-white/50 rounded-md transition-all duration-200 font-medium">
-                                                                                                            {l4Label}
-                                                                                                        </div>
-                                                                                                    )}
-                                                                                                </div>
-                                                                                            );
-                                                                                        })}
-                                                                                    </div>
-                                                                                </div>
-                                                                            )}
-                                                                        </div>
-                                                                    );
-                                                                })}
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            );
-                                        })}
+                                        {item.sub.map((subItem, idx) => (
+                                            <TreeViewNode
+                                                key={`${subItem.label}-${idx}`}
+                                                node={subItem}
+                                                depth={1}
+                                                isSearching={!!searchQuery}
+                                                expandedSections={expandedSections}
+                                                isPathActive={isPathActive}
+                                                toggleSection={toggleSection}
+                                            />
+                                        ))}
                                     </div>
                                 </div>
                             )}

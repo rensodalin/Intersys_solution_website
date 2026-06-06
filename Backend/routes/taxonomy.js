@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import Taxonomy from "../model/taxonomy.js";
 
 const router = express.Router();
@@ -10,57 +11,205 @@ const isAdmin = (req, res, next) => {
     return res.status(403).json({ success: false, error: "Access denied" });
 };
 
-const DEFAULT_DATA = [
+// ── Tree helpers ──────────────────────────────────────────────
+
+function parsePath(p) {
+    return p ? p.split("/").map(s => s.trim()).filter(Boolean) : [];
+}
+
+function navigate(parentArray, pathParts) {
+    let arr = parentArray;
+    for (const part of pathParts) {
+        const found = arr.find(c => c.name === part);
+        if (!found) return null;
+        arr = found.children || [];
+    }
+    return arr; // the array where we should add/find/remove
+}
+
+function addToTree(parentArray, pathParts, newNode) {
+    const arr = navigate(parentArray, pathParts);
+    if (!arr) return false;
+    if (arr.some(c => c.name === newNode.name)) return false;
+    if (!newNode.children) newNode.children = [];
+    arr.push(newNode);
+    return true;
+}
+
+function removeFromTree(parentArray, pathParts) {
+    if (pathParts.length === 0) return false;
+    const name = pathParts[pathParts.length - 1];
+    const parentArr = navigate(parentArray, pathParts.slice(0, -1));
+    if (!parentArr) return false;
+    const idx = parentArr.findIndex(c => c.name === name);
+    if (idx === -1) return false;
+    parentArr.splice(idx, 1);
+    return true;
+}
+
+function renameInTree(parentArray, pathParts, newName) {
+    if (pathParts.length === 0) return false;
+    const name = pathParts[pathParts.length - 1];
+    const parentArr = navigate(parentArray, pathParts.slice(0, -1));
+    if (!parentArr) return false;
+    const node = parentArr.find(c => c.name === name);
+    if (!node) return false;
+    if (parentArr.some(c => c.name === newName && c !== node)) return false;
+    node.name = newName;
+    return true;
+}
+
+function flattenTree(arr, prefix = "") {
+    const result = [];
+    for (const item of arr) {
+        const path = prefix ? `${prefix}/${item.name}` : item.name;
+        result.push(path);
+        if (item.children && item.children.length > 0) {
+            result.push(...flattenTree(item.children, path));
+        }
+    }
+    return result;
+}
+
+// ── Seed data ─────────────────────────────────────────────────
+
+const DEFAULT_SEED = [
     {
         category: "Access Control",
         brands: [
-            { name: "Honeywell", subCategories: ["Control Panels", "Control Panel Kits", "Readers", "Credentials", "Software", "Accessories", "Lobby Kiosks", "System Agreements & Upgrades", "Door Hardware"] },
-            { name: "SALTO", subCategories: ["Electronic Locks", "Online Systems", "Offline Systems", "Mobile & Cloud"] }
+            { name: "Honeywell", subCategories: [
+                { name: "Control Panels", children: [] },
+                { name: "Control Panel Kits", children: [] },
+                { name: "Readers", children: [] },
+                { name: "Credentials", children: [] },
+                { name: "Accessories", children: [] },
+                { name: "Lobby Kiosks", children: [] },
+                { name: "System Agreements & Upgrades", children: [] },
+                { name: "Door Hardware", children: [] },
+            ]},
+            { name: "SALTO", subCategories: [
+                { name: "Electronic Locks", children: [] },
+                { name: "Online Systems", children: [] },
+                { name: "Offline Systems", children: [] },
+                { name: "Mobile & Cloud", children: [] },
+            ]},
         ]
     },
     {
         category: "Surveillance (CCTV)",
         brands: [
-            { name: "Intersys", subCategories: ["IP Cameras", "Analog Cameras", "NVR/DVR", "Accessories"] },
-            { name: "Hikvision", subCategories: ["IP Cameras", "NVR/DVR", "Accessories"] },
-            { name: "Dahua", subCategories: ["IP Cameras", "NVR/DVR", "Accessories"] },
-            { name: "Axis", subCategories: ["IP Cameras", "Accessories"] }
+            { name: "Intersys", subCategories: [
+                { name: "IP Cameras", children: [] },
+                { name: "Analog Cameras", children: [] },
+                { name: "NVR/DVR", children: [] },
+                { name: "Accessories", children: [] },
+            ]},
+            { name: "Hikvision", subCategories: [
+                { name: "IP Cameras", children: [] },
+                { name: "NVR/DVR", children: [] },
+                { name: "Accessories", children: [] },
+            ]},
+            { name: "Dahua", subCategories: [
+                { name: "IP Cameras", children: [] },
+                { name: "NVR/DVR", children: [] },
+                { name: "Accessories", children: [] },
+            ]},
+            { name: "Axis", subCategories: [
+                { name: "IP Cameras", children: [] },
+                { name: "Accessories", children: [] },
+            ]},
         ]
     },
     {
         category: "Building Management",
         brands: [
-            { name: "Schneider Electric", subCategories: ["Field Devices", "Controllers", "Software", "Networking"] },
-            { name: "Siemens", subCategories: ["Field Devices", "Controllers", "Software"] },
-            { name: "Johnson Controls", subCategories: ["Field Devices", "Controllers"] },
-            { name: "Other", subCategories: ["General"] }
+            { name: "Schneider Electric", subCategories: [
+                { name: "Field Devices", children: [] },
+                { name: "Controllers", children: [] },
+                { name: "Software", children: [] },
+                { name: "Networking", children: [] },
+            ]},
+            { name: "Siemens", subCategories: [
+                { name: "Field Devices", children: [] },
+                { name: "Controllers", children: [] },
+                { name: "Software", children: [] },
+            ]},
+            { name: "Johnson Controls", subCategories: [
+                { name: "Field Devices", children: [] },
+                { name: "Controllers", children: [] },
+            ]},
+            { name: "Other", subCategories: [
+                { name: "General", children: [] },
+            ]},
         ]
     },
-    {
-        category: "Integrated Systems",
-        brands: []
-    },
-    {
-        category: "Audio Visual",
-        brands: []
-    },
-    {
-        category: "Fire Systems",
-        brands: []
-    },
-    {
-        category: "Leak Detection",
-        brands: []
-    }
+    { category: "Integrated Systems", brands: [] },
+    { category: "Audio Visual", brands: [] },
+    { category: "Fire Systems", brands: [] },
+    { category: "Leak Detection", brands: [] },
 ];
+
+function toSeedFormat(data) {
+    return data.map(cat => ({
+        category: cat.category,
+        brands: cat.brands.map(b => ({
+            name: b.name,
+            subCategories: convertSubCategories(b.subCategories)
+        }))
+    }));
+}
+
+function convertSubCategories(scList) {
+    return scList.map(sc => {
+        if (typeof sc === "string") {
+            return { name: sc, children: [] };
+        }
+        return {
+            name: sc.name,
+            children: sc.children ? convertSubCategories(sc.children) : []
+        };
+    });
+}
+
+async function migrateTreeFormat() {
+    const db = mongoose.connection.db;
+    if (!db) return;
+    const docs = await db.collection("taxonomies").find({
+        "brands.subCategories": { $exists: true }
+    }).toArray();
+    let migrated = 0;
+    for (const doc of docs) {
+        let changed = false;
+        for (const brand of doc.brands) {
+            if (brand.subCategories && brand.subCategories.length > 0 && typeof brand.subCategories[0] === "string") {
+                brand.subCategories = brand.subCategories.map(s => ({ name: s, children: [] }));
+                changed = true;
+            }
+        }
+        if (changed) {
+            await db.collection("taxonomies").updateOne(
+                { _id: doc._id },
+                { $set: { brands: doc.brands } }
+            );
+            migrated++;
+        }
+    }
+    if (migrated > 0) {
+        console.log(`✅ Migrated ${migrated} taxonomy documents to tree format`);
+    }
+}
 
 async function ensureSeeded() {
     const count = await Taxonomy.countDocuments();
     if (count === 0) {
-        await Taxonomy.insertMany(DEFAULT_DATA);
+        await Taxonomy.insertMany(DEFAULT_SEED);
         console.log("✅ Taxonomy seeded with default data");
+    } else {
+        await migrateTreeFormat();
     }
 }
+
+// ── Routes ───────────────────────────────────────────────────
 
 router.get("/", async (req, res) => {
     try {
@@ -71,6 +220,8 @@ router.get("/", async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 });
+
+// ── Category CRUD ────────────────────────────────────────────
 
 router.post("/category", isAdmin, async (req, res) => {
     try {
@@ -112,6 +263,8 @@ router.delete("/category/:name", isAdmin, async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 });
+
+// ── Brand CRUD ────────────────────────────────────────────────
 
 router.post("/category/:name/brand", isAdmin, async (req, res) => {
     try {
@@ -156,16 +309,24 @@ router.delete("/category/:name/brand/:brandName", isAdmin, async (req, res) => {
     }
 });
 
+// ── SubCategory CRUD (with parentPath for unlimited nesting) ──
+
 router.post("/category/:name/brand/:brandName/subcategory", isAdmin, async (req, res) => {
     try {
-        const { subCategory } = req.body;
+        const { subCategory, parentPath } = req.body;
         if (!subCategory) return res.status(400).json({ success: false, error: "Subcategory name is required" });
         const doc = await Taxonomy.findOne({ category: req.params.name });
         if (!doc) return res.status(404).json({ success: false, error: "Category not found" });
         const brand = doc.brands.find(b => b.name === req.params.brandName);
         if (!brand) return res.status(404).json({ success: false, error: "Brand not found" });
-        if (brand.subCategories.includes(subCategory)) return res.status(400).json({ success: false, error: "Subcategory already exists" });
-        brand.subCategories.push(subCategory);
+
+        const pathParts = parsePath(parentPath || "");
+        const arr = pathParts.length === 0 ? brand.subCategories : navigate(brand.subCategories, pathParts);
+        if (!arr) return res.status(404).json({ success: false, error: "Parent not found" });
+        if (arr.some(c => c.name === subCategory)) return res.status(400).json({ success: false, error: "Subcategory already exists at this level" });
+
+        arr.push({ name: subCategory, children: [] });
+        doc.markModified("brands");
         await doc.save();
         res.status(201).json({ success: true, data: doc });
     } catch (error) {
@@ -175,15 +336,23 @@ router.post("/category/:name/brand/:brandName/subcategory", isAdmin, async (req,
 
 router.put("/category/:name/brand/:brandName/subcategory/:subName", isAdmin, async (req, res) => {
     try {
-        const { subCategory: newName } = req.body;
+        const { subCategory: newName, parentPath } = req.body;
         if (!newName) return res.status(400).json({ success: false, error: "New subcategory name is required" });
         const doc = await Taxonomy.findOne({ category: req.params.name });
         if (!doc) return res.status(404).json({ success: false, error: "Category not found" });
         const brand = doc.brands.find(b => b.name === req.params.brandName);
         if (!brand) return res.status(404).json({ success: false, error: "Brand not found" });
-        const idx = brand.subCategories.indexOf(req.params.subName);
+
+        const pathParts = parsePath(parentPath || "");
+        const parentArr = pathParts.length === 0 ? brand.subCategories : navigate(brand.subCategories, pathParts);
+        if (!parentArr) return res.status(404).json({ success: false, error: "Parent not found" });
+
+        const idx = parentArr.findIndex(c => c.name === req.params.subName);
         if (idx === -1) return res.status(404).json({ success: false, error: "Subcategory not found" });
-        brand.subCategories[idx] = newName;
+        if (parentArr.some((c, i) => c.name === newName && i !== idx)) return res.status(400).json({ success: false, error: "Subcategory already exists at this level" });
+
+        parentArr[idx].name = newName;
+        doc.markModified("brands");
         await doc.save();
         res.json({ success: true, data: doc });
     } catch (error) {
@@ -197,9 +366,34 @@ router.delete("/category/:name/brand/:brandName/subcategory/:subName", isAdmin, 
         if (!doc) return res.status(404).json({ success: false, error: "Category not found" });
         const brand = doc.brands.find(b => b.name === req.params.brandName);
         if (!brand) return res.status(404).json({ success: false, error: "Brand not found" });
-        brand.subCategories = brand.subCategories.filter(s => s !== req.params.subName);
+
+        const parentPath = req.query.parentPath || "";
+        const pathParts = parsePath(parentPath);
+        const parentArr = pathParts.length === 0 ? brand.subCategories : navigate(brand.subCategories, pathParts);
+        if (!parentArr) return res.status(404).json({ success: false, error: "Parent not found" });
+
+        const idx = parentArr.findIndex(c => c.name === req.params.subName);
+        if (idx === -1) return res.status(404).json({ success: false, error: "Subcategory not found" });
+
+        parentArr.splice(idx, 1);
+        doc.markModified("brands");
         await doc.save();
         res.json({ success: true, data: doc });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// ── Utility: flattened subcategories for product form dropdowns ──
+
+router.get("/category/:name/brand/:brandName/subcategories/flat", async (req, res) => {
+    try {
+        const doc = await Taxonomy.findOne({ category: req.params.name }).lean();
+        if (!doc) return res.status(404).json({ success: false, error: "Category not found" });
+        const brand = doc.brands.find(b => b.name === req.params.brandName);
+        if (!brand) return res.status(404).json({ success: false, error: "Brand not found" });
+        const flat = flattenTree(brand.subCategories);
+        res.json({ success: true, data: flat });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }

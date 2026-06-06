@@ -18,6 +18,7 @@ import { ProductGrid } from "@/components/Product/ProductGrid";
 import { ProductCategory } from "@/components/Product/types";
 import { CatalogSidebar } from "@/components/Product/CatalogSidebar";
 import { Footer } from "@/components/Layout/Footer";
+import { toSlug } from "@/lib/utils";
 
 export const Route = createFileRoute("/products/")({
   head: () => ({
@@ -33,7 +34,7 @@ export const Route = createFileRoute("/products/")({
   component: ProductsPage,
 });
 
-const HARDCODED_CATEGORIES: ProductCategory[] = [
+const FALLBACK_CATEGORIES: ProductCategory[] = [
   {
     title: "Access Control",
     desc: "Secure biometric and card-based entry systems designed for enterprise-grade facility protection.",
@@ -82,27 +83,32 @@ const HARDCODED_CATEGORIES: ProductCategory[] = [
   }
 ];
 
+const CATEGORY_META: Record<string, Partial<ProductCategory>> = {};
+for (const c of FALLBACK_CATEGORIES) {
+  CATEGORY_META[c.title.toLowerCase()] = { desc: c.desc, image: c.image, icon: c.icon };
+}
+
 function buildCategories(taxonomy: Awaited<ReturnType<typeof fetchTaxonomy>>): ProductCategory[] {
-  const hardcodedTitles = new Set(HARDCODED_CATEGORIES.map(c => c.title));
-  const extra: ProductCategory[] = [];
-  for (const t of taxonomy) {
-    if (!hardcodedTitles.has(t.category)) {
-      const slug = t.category.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
-      extra.push({
-        title: t.category,
-        desc: `Explore our range of ${t.category.toLowerCase()} solutions.`,
-        image: "",
-        icon: Package,
-        buttonText: "View Products",
-        link: `/products/${slug}`,
-      });
-    }
-  }
-  return [...HARDCODED_CATEGORIES, ...extra];
+  if (taxonomy.length === 0) return FALLBACK_CATEGORIES;
+
+  return taxonomy.map(t => {
+    const slug = toSlug(t.category);
+    const meta = CATEGORY_META[t.category.toLowerCase()] || CATEGORY_META[t.category.toLowerCase().replace(/\(.*\)/, "").trim()];
+    return {
+      title: t.category,
+      desc: meta?.desc || `Explore our range of ${t.category.toLowerCase()} solutions.`,
+      image: meta?.image || "",
+      icon: meta?.icon || Package,
+      buttonText: "View Products",
+      link: t.category.toLowerCase().includes("integrated") || t.category.toLowerCase().includes("audio visual") || t.category.toLowerCase().includes("fire systems")
+        ? `/services`
+        : `/products/${slug}`,
+    };
+  });
 }
 
 function ProductsPage() {
-  const [categories, setCategories] = useState<ProductCategory[]>(HARDCODED_CATEGORIES);
+  const [categories, setCategories] = useState<ProductCategory[]>(FALLBACK_CATEGORIES);
 
   useEffect(() => {
     fetchTaxonomy().then(data => {
