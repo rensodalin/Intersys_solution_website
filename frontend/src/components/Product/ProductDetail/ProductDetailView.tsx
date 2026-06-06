@@ -335,9 +335,9 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                     exit={{ opacity: 0, x: -10 }}
                     className="space-y-2"
                   >
-                    <div className="text-gray-500 text-[13px] font-light leading-6">
-                      {product.longDescription}
-                    </div>
+                    <div className="text-gray-500 text-[13px] font-light leading-6 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-1 [&_li]:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-700 [&_br]:mb-1"
+                      dangerouslySetInnerHTML={{ __html: (product.longDescription || "").replace(/\n/g, "<br>") }}
+                    />
                   </motion.div>
                 ) : (
                   <motion.div

@@ -118,63 +118,117 @@ function TreeViewNode({
 }) {
     const hasChildren = Array.isArray(node.sub) && node.sub.length > 0;
     const isExpanded = isSearching || expandedSections.includes(node.label);
-    const Icon = (node as any).icon || (depth === 1 ? ShieldCheck : undefined);
+    const active = node.link && !hasChildren && isPathActive(node.link);
 
-    const fontSize = depth === 1 ? "text-[13px]" : depth === 2 ? "text-xs" : "text-[11px]";
+    const fontSize = depth === 1 ? "text-[13px]" : "text-[12px]";
     const fontWeight = depth <= 2 ? "font-semibold" : "font-medium";
-    const linkColor = (link: string) => isPathActive(link) ? "text-[#FC3B1F]" : "text-gray-500 group-hover:text-[#1A3263]";
-    const padding = depth === 1 ? "py-2 px-3" : "py-1.5 px-3";
-    const border = depth >= 2 ? `border-l ${depth === 2 ? "border-gray-200/80" : "border-[#FC3B1F]/20"} ml-${depth >= 3 ? 3 : 4}` : "";
-    const chevronSize = depth === 1 ? 13 : 11;
+    const padding = depth === 1 ? "py-1.5" : "py-1.5";
+    const chevronSize = depth <= 2 ? 11 : 10;
+    const isLeaf = !hasChildren && node.link;
 
     return (
-        <div className="space-y-1">
-            <div className={`flex items-center justify-between group ${padding} rounded-lg hover:bg-white/60 transition-all duration-200`}>
-                <div className="flex items-center gap-2.5 flex-1">
-                    {Icon && <Icon size={14} className="text-gray-400 group-hover:text-[#1A3263] transition-colors shrink-0" />}
-                    {node.link && !hasChildren ? (
-                        <Link
-                            to={node.link}
-                            className={`${fontSize} ${fontWeight} transition-colors flex-1 hover:underline ${linkColor(node.link)}`}
+        <div>
+            <div className="group relative">
+                {/* Left accent bar — appears on hover */}
+                <div className={cn(
+                    "absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 rounded-full transition-all duration-200",
+                    active
+                        ? "w-0.5 h-4 bg-[#FC3B1F]"
+                        : "group-hover:w-0.5 group-hover:h-4 group-hover:bg-[#FC3B1F]/60"
+                )} />
+
+                <div className={cn(
+                    "flex items-center justify-between pl-5 pr-2",
+                    padding,
+                    "transition-all duration-150",
+                    active
+                        ? "text-[#FC3B1F]"
+                        : "text-gray-500 hover:text-[#FC3B1F]"
+                )}>
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                        {/* Bullet dot for leaf items at deeper levels */}
+                        {isLeaf && depth >= 2 && (
+                            <span className={cn(
+                                "w-1 h-1 rounded-full shrink-0 transition-colors duration-150",
+                                active ? "bg-[#FC3B1F]" : "bg-gray-300 group-hover:bg-[#FC3B1F]/60"
+                            )} />
+                        )}
+
+                        {isLeaf ? (
+                            <Link
+                                to={node.link}
+                                className={cn(
+                                    fontSize, fontWeight,
+                                    "transition-all flex-1 truncate",
+                                    "border-b border-transparent group-hover:border-[#FC3B1F]/40",
+                                    active ? "text-[#FC3B1F]" : "text-gray-500"
+                                )}
+                            >
+                                {node.label}
+                            </Link>
+                        ) : (
+                            <span
+                                onClick={hasChildren ? (e) => { e.preventDefault(); e.stopPropagation(); toggleSection(node.label); } : undefined}
+                                className={cn(
+                                    fontSize, fontWeight,
+                                    "transition-colors flex-1 truncate",
+                                    hasChildren ? "cursor-pointer" : "",
+                                )}
+                            >
+                                {node.label}
+                            </span>
+                        )}
+                    </div>
+
+                    {hasChildren && (
+                        <div
+                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(node.label); }}
+                            className="p-0.5 cursor-pointer rounded transition-colors shrink-0 group/chev"
                         >
-                            {node.label}
-                        </Link>
-                    ) : (
-                        <span
-                            onClick={hasChildren ? (e) => { e.preventDefault(); e.stopPropagation(); toggleSection(node.label); } : undefined}
-                            className={`${fontSize} ${fontWeight} transition-colors flex-1 ${hasChildren ? "cursor-pointer hover:text-[#1A3263]" : "text-gray-500"} ${node.link && !hasChildren && isPathActive(node.link) ? "text-[#FC3B1F]" : "text-gray-500"}`}
-                        >
-                            {node.label}
-                        </span>
+                            <ChevronDown size={chevronSize} className={cn(
+                                "text-gray-400 transition-all duration-200",
+                                "group-hover/chev:text-[#FC3B1F]",
+                                isExpanded ? "rotate-180" : ""
+                            )} />
+                        </div>
                     )}
                 </div>
-                {hasChildren && (
-                    <div
-                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(node.label); }}
-                        className="p-1 cursor-pointer rounded-md hover:bg-gray-200 transition-colors"
-                    >
-                        <ChevronDown size={chevronSize} className={cn("text-gray-400 transition-transform", isExpanded ? "rotate-180" : "")} />
-                    </div>
-                )}
             </div>
 
-            {hasChildren && isExpanded && (
-                <div className="overflow-hidden">
-                    <div className={`pl-${depth <= 1 ? 6 : 4} space-y-1 ${depth >= 2 ? border : ""} ${depth >= 2 ? "pt-1 pb-1" : "pt-2 pb-3"}`}>
-                        {node.sub!.map((child, idx) => (
-                            <TreeViewNode
-                                key={`${child.label}-${idx}`}
-                                node={child}
-                                depth={depth + 1}
-                                isSearching={isSearching}
-                                expandedSections={expandedSections}
-                                isPathActive={isPathActive}
-                                toggleSection={toggleSection}
-                            />
-                        ))}
-                    </div>
-                </div>
-            )}
+            <AnimatePresence initial={false}>
+                {hasChildren && isExpanded && (
+                    <motion.div
+                        key="children"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                    >
+                            <div className="ml-4 pl-4 border-l border-gray-200/60">
+                                <div className="space-y-1 pt-1 pb-2">
+                                {node.sub!.map((child, idx) => (
+                                    <motion.div
+                                        key={`${child.label}-${idx}`}
+                                        initial={{ opacity: 0, x: -8 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ duration: 0.2, delay: idx * 0.03 }}
+                                    >
+                                        <TreeViewNode
+                                            node={child}
+                                            depth={depth + 1}
+                                            isSearching={isSearching}
+                                            expandedSections={expandedSections}
+                                            isPathActive={isPathActive}
+                                            toggleSection={toggleSection}
+                                        />
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
@@ -422,80 +476,67 @@ export function CatalogSidebar({
             </AnimatePresence>
 
             {/* ── SCROLLABLE LIST ── */}
-            <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar scroll-smooth min-h-0">
+            <div className="flex-1 overflow-y-auto py-2 px-2 border-b border-gray-200 custom-scrollbar scroll-smooth min-h-0">
                 {navData.map((item) => {
                     const isActive = isPathActive(item.link) || activeCategory === item.id;
                     const isExpanded = searchQuery ? true : expandedSections.includes(item.id);
                     return (
-                        <div key={item.id} className="space-y-0.5">
-                            <div className="relative">
-                                <div
-                                    className={cn(
-                                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 group relative overflow-hidden",
-                                        isActive
-                                            ? "text-[#FC3B1F] bg-[#FC3B1F]/5 hover:text-white hover:shadow-md"
-                                            : "text-gray-600 hover:text-white hover:shadow-md"
-                                    )}
-                                >
-                                    <div className="absolute inset-0 bg-gradient-to-r from-[#1A3263] to-[#2A4B8D] opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+                        <div key={item.id} className="border-t border-gray-200">
+                            <div
+                                onClick={item.sub ? (e) => { e.preventDefault(); e.stopPropagation(); toggleSection(item.id); } : undefined}
+                                className={cn(
+                                    "flex items-center gap-2 px-3 py-2 rounded text-sm font-semibold transition-colors duration-150 cursor-pointer",
+                                    isActive
+                                        ? "text-[#FC3B1F]"
+                                        : "text-gray-600 hover:text-[#FC3B1F]"
+                                )}
+                            >
+                                <span className="flex-1 truncate">
+                                    {item.link && !item.sub ? (
+                                        <Link to={item.link} className="block w-full">{item.label}</Link>
+                                    ) : item.label}
+                                </span>
 
-                                    {(() => {
-                                        const Icon = item.icon;
-                                        return <Icon
-                                            size={18}
-                                            className={cn(
-                                                "shrink-0 transition-colors duration-300",
-                                                isActive ? "text-[#FC3B1F] group-hover:text-white" : "text-gray-400 group-hover:text-white"
-                                            )}
-                                        />;
-                                    })()}
-
-                                    <span
-                                        className={cn(
-                                            "flex-1 text-left tracking-tight relative z-10",
-                                            item.sub ? "cursor-pointer" : (item.link && "hover:underline")
-                                        )}
-                                        onClick={item.sub ? (e) => { e.preventDefault(); e.stopPropagation(); toggleSection(item.id); } : undefined}
-                                    >
-                                        {item.link && !item.sub ? (
-                                            <Link to={item.link} className="block w-full">{item.label}</Link>
-                                        ) : item.label}
-                                    </span>
-
-                                    {item.sub && (
-                                        <div
-                                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(item.id); }}
-                                            className="p-1 cursor-pointer relative z-10 flex items-center justify-center rounded-md hover:bg-black/10 transition-colors"
-                                        >
-                                            <ChevronDown
-                                                size={14}
-                                                className={cn(
-                                                    "transition-transform duration-300",
-                                                    isExpanded ? "rotate-180" : ""
-                                                )}
-                                            />
-                                        </div>
-                                    )}
-                                </div>
+                                {item.sub && (
+                                    <ChevronDown
+                                        size={13}
+                                        className={cn("shrink-0 transition-transform duration-150", isActive ? "text-white/70" : "text-gray-400", isExpanded ? "rotate-180" : "")}
+                                    />
+                                )}
                             </div>
 
-                            {item.sub && isExpanded && (
-                                <div className="overflow-hidden">
-                                    <div className="pl-6 space-y-1 pt-2 pb-3">
-                                        {item.sub.map((subItem, idx) => (
-                                            <TreeViewNode
-                                                key={`${subItem.label}-${idx}`}
-                                                node={subItem}
-                                                depth={1}
-                                                isSearching={!!searchQuery}
-                                                expandedSections={expandedSections}
-                                                isPathActive={isPathActive}
-                                                toggleSection={toggleSection}
-                                            />
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
+                            <AnimatePresence initial={false}>
+                                {item.sub && isExpanded && (
+                                    <motion.div
+                                        key="subitems"
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: "auto" }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="ml-3 pl-3 border-l border-gray-200/70 pt-1.5 pb-1.5 space-y-0.5">
+                                            {item.sub.map((subItem, idx) => (
+                                                <motion.div
+                                                    key={`${subItem.label}-${idx}`}
+                                                    initial={{ opacity: 0, x: -8 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ duration: 0.2, delay: idx * 0.03 }}
+                                                >
+                                                    <TreeViewNode
+                                                        node={subItem}
+                                                        depth={1}
+                                                        isSearching={!!searchQuery}
+                                                        expandedSections={expandedSections}
+                                                        isPathActive={isPathActive}
+                                                        toggleSection={toggleSection}
+                                                    />
+                                                </motion.div>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     );
                 })}

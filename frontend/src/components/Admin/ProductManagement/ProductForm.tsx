@@ -162,10 +162,10 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
               </div>
 
               <div>
-                <label className="block text-[12px] font-black text-gray-500  mb-1.5">Long Description</label>
-                <textarea value={form.longDescription} onChange={e => onFieldChange("longDescription", e.target.value)} rows={4}
+                <label className="block text-[12px] font-black text-gray-500  mb-1.5">Long Description <span className="text-gray-300 font-normal">(HTML supported — use &lt;ul&gt;&lt;li&gt;, &lt;br&gt;, &lt;strong&gt;, etc.)</span></label>
+                <textarea value={form.longDescription} onChange={e => onFieldChange("longDescription", e.target.value)} rows={8}
                   placeholder="Full detailed description shown on the product detail page..."
-                  className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg resize-none focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition" />
+                  className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg resize-y focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition font-mono text-[13px]" />
               </div>
             </div>
           )}
