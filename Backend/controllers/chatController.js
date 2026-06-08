@@ -48,7 +48,7 @@ export const getConversations = async (req, res) => {
           prefers: c.contactMethod || "", lastMessage: c.message || "(no message)",
           lastDate: c.createdAt, lastSource: "contact", count: 0,
           unreadCount: unreadMap[email] || 0, hasContact: true, hasQuote: false,
-          city: c.city || "", country: c.country || ""
+
         };
       } else {
         if (byEmail[email]) byEmail[email].hasContact = true;
