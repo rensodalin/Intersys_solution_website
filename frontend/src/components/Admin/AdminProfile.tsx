@@ -162,8 +162,8 @@ export function AdminProfile() {
             <div>
               <p className="text-sm font-bold text-gray-900">{user?.name || "Admin"}</p>
               <div className="flex items-center gap-1.5 mt-0.5">
-                <ShieldCheck size={11} className="text-[#C3110C]" />
-                <span className="text-[10px] font-bold text-[#C3110C] uppercase tracking-wider">Administrator</span>
+
+                <span className="text-[10px] font-bold text-[#C3110C] tracking-wider">Administrator</span>
               </div>
               <p className="text-[10px] text-gray-400 mt-0.5">Click the camera icon to change your avatar</p>
             </div>
