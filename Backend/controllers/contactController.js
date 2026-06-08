@@ -69,3 +69,13 @@ export const submitContact = async (req, res) => {
     res.status(500).json({ success: false, error: "Failed to process request", details: error.message });
   }
 };
+
+export const getContacts = async (req, res) => {
+  try {
+    const contacts = await Contact.find({}).sort({ createdAt: -1 }).lean();
+    res.json({ success: true, data: contacts });
+  } catch (error) {
+    console.error("Failed to fetch contacts:", error);
+    res.status(500).json({ success: false, error: "Failed to fetch contacts" });
+  }
+};

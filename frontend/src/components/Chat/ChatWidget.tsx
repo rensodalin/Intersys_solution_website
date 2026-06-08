@@ -117,7 +117,7 @@ export function ChatWidget() {
 
       const body = isReturning
         ? { name: formData.name, email: formData.email, content: formData.message }
-        : { ...formData, contactMethod: "Chat Widget", city: "N/A", country: "N/A" };
+        : { ...formData, contactMethod: "Chat Widget" };
 
       const response = await fetch(endpoint, {
         method: "POST",

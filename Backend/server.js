@@ -15,7 +15,8 @@ import visitorRoutes from "./routes/visitor.js";
 import activityRoutes from "./routes/activity.js";
 import chatRoutes from "./routes/chat.js";
 import taxonomyRoutes from "./routes/taxonomy.js";
-import { submitContact } from "./controllers/contactController.js";
+import { submitContact, getContacts } from "./controllers/contactController.js";
+import { isAdmin } from "./middleware/auth.js";
 
 dotenv.config();
 
@@ -76,6 +77,7 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/taxonomy", taxonomyRoutes);
 
 app.post("/api/contact", submitContact);
+app.get("/api/contacts", isAdmin, getContacts);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

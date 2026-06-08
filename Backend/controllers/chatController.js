@@ -47,9 +47,13 @@ export const getConversations = async (req, res) => {
           _id: email, email, name: c.name || email, phone: c.phone || "", hasPhone,
           prefers: c.contactMethod || "", lastMessage: c.message || "(no message)",
           lastDate: c.createdAt, lastSource: "contact", count: 0,
-          unreadCount: unreadMap[email] || 0
+          unreadCount: unreadMap[email] || 0, hasContact: true, hasQuote: false,
+          city: c.city || "", country: c.country || ""
         };
-      } else if (!byEmail[email].phone && c.phone) {
+      } else {
+        if (byEmail[email]) byEmail[email].hasContact = true;
+      }
+      if (!byEmail[email].phone && c.phone) {
         byEmail[email].phone = c.phone;
         byEmail[email].hasPhone = true;
       }
@@ -64,9 +68,12 @@ export const getConversations = async (req, res) => {
           _id: email, email, name: q.name || email, phone: qPhone,
           hasPhone: !!(qPhone.trim()), prefers: q.contactMethod || "",
           lastMessage: msg, lastDate: q.createdAt, lastSource: "quote", count: 0,
-          unreadCount: unreadMap[email] || 0
+          unreadCount: unreadMap[email] || 0, hasContact: false, hasQuote: true
         };
-      } else if (!byEmail[email].phone && qPhone) {
+      } else {
+        if (byEmail[email]) byEmail[email].hasQuote = true;
+      }
+      if (!byEmail[email].phone && qPhone) {
         byEmail[email].phone = qPhone;
         byEmail[email].hasPhone = true;
       }
@@ -81,7 +88,14 @@ export const getConversations = async (req, res) => {
           _id: email, email, name: m.name || email,
           lastMessage: m.content || "(no message)", lastDate: m.createdAt,
           lastSource: source, count: 0,
-          unreadCount: unreadMap[email] || 0
+          unreadCount: unreadMap[email] || 0,
+          hasContact: byEmail[email]?.hasContact === true,
+          hasQuote: byEmail[email]?.hasQuote === true,
+          phone: byEmail[email]?.phone || "",
+          hasPhone: !!(byEmail[email]?.phone || "").trim(),
+          prefers: byEmail[email]?.prefers || "",
+          city: byEmail[email]?.city || "",
+          country: byEmail[email]?.country || ""
         };
       }
     }
