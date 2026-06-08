@@ -26,6 +26,7 @@ export function ChatWidget() {
   const [conversationName, setConversationName] = useState("");
   const [newMessage, setNewMessage] = useState("");
   const [sendingMsg, setSendingMsg] = useState(false);
+  const [loadingConv, setLoadingConv] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -52,6 +53,14 @@ export function ChatWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  useEffect(() => {
+    if (!isOpen || view !== "conversation" || !conversationEmail) return;
+    const interval = setInterval(() => {
+      fetchServerMessages(conversationEmail);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isOpen, view, conversationEmail]);
+
   const checkExistingConversation = useCallback(async (email: string) => {
     if (!email || !email.includes("@")) {
       setIsReturning(false);
@@ -76,17 +85,23 @@ export function ChatWidget() {
     return () => clearTimeout(timer);
   }, [formData.email, checkExistingConversation]);
 
-  const addBotReply = (isNewUser: boolean) => {
-    const botMsg: LocalMessage = {
-      id: `bot-${Date.now()}`,
-      content: isNewUser
-        ? "Hi 👋 Welcome to our website! How can I help you today?\nPlease wait a moment while our support team gets back to you."
-        : "Hi 👋 Welcome back! How can I help you today?\nPlease wait a moment while our support team gets back to you.",
-      isFromAdmin: true,
-      name: "Intersys Bot",
-      createdAt: new Date()
-    };
-    setMessages((prev) => [...prev, botMsg]);
+  const fetchServerMessages = async (email: string) => {
+    try {
+      const res = await fetch(`${baseUrl}/api/chat/public-messages/${encodeURIComponent(email)}`);
+      const json = await res.json();
+      if (json.success) {
+        const serverMsgs: LocalMessage[] = json.data.map((m: any) => ({
+          id: m._id,
+          content: m.content,
+          isFromAdmin: m.isFromAdmin,
+          name: m.name,
+          createdAt: new Date(m.createdAt)
+        }));
+        setMessages(serverMsgs);
+      }
+    } catch (err) {
+      console.error("Failed to fetch messages:", err);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -114,22 +129,12 @@ export function ChatWidget() {
 
       const data = await response.json();
       if (data.success) {
-        const userMsg: LocalMessage = {
-          id: `user-${Date.now()}`,
-          content: formData.message,
-          isFromAdmin: false,
-          name: formData.name,
-          createdAt: new Date()
-        };
-
         setConversationEmail(formData.email);
         setConversationName(formData.name);
-        setMessages([userMsg]);
         setView("conversation");
         setFormData({ name: formData.name, email: formData.email, message: "" });
         setIsReturning(false);
-
-        setTimeout(() => addBotReply(!isReturning), 600);
+        setTimeout(() => fetchServerMessages(formData.email), 500);
       } else {
         toast.error(data.error || "Failed to send message.");
       }
@@ -147,15 +152,6 @@ export function ChatWidget() {
     const text = newMessage.trim();
     setNewMessage("");
     try {
-      const userMsg: LocalMessage = {
-        id: `user-${Date.now()}`,
-        content: text,
-        isFromAdmin: false,
-        name: conversationName,
-        createdAt: new Date()
-      };
-      setMessages((prev) => [...prev, userMsg]);
-
       const res = await fetch(`${baseUrl}/api/chat/client-message`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -167,7 +163,7 @@ export function ChatWidget() {
       });
       const data = await res.json();
       if (data.success) {
-        setTimeout(() => addBotReply(false), 600);
+        setTimeout(() => fetchServerMessages(conversationEmail), 500);
       } else {
         toast.error(data.error || "Failed to send message.");
       }
@@ -181,6 +177,10 @@ export function ChatWidget() {
 
   const handleOpen = () => {
     setIsOpen(true);
+    if (conversationEmail) {
+      setLoadingConv(true);
+      fetchServerMessages(conversationEmail).finally(() => setLoadingConv(false));
+    }
   };
 
   const handleClose = () => {
@@ -293,7 +293,11 @@ export function ChatWidget() {
             ) : (
               <div className="flex-1 flex flex-col min-h-0" style={{ maxHeight: "400px" }}>
                 <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-gray-50/50">
-                  {messages.length === 0 ? (
+                  {loadingConv ? (
+                    <div className="flex justify-center py-8">
+                      <Loader2 className="animate-spin text-[#C3110C]" size={20} />
+                    </div>
+                  ) : messages.length === 0 ? (
                     <div className="text-center py-8 text-xs text-gray-400">No messages yet</div>
                   ) : (
                     messages.map((msg) => (

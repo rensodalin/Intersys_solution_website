@@ -60,6 +60,14 @@ export function ChatInbox() {
   const [search, setSearch] = useState("");
   const [filterTab, setFilterTab] = useState<"all" | "contact" | "chat" | "quote">("all");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollOnNextMessages = useRef(false);
+  const prevConversationsRef = useRef<Conversation[]>([]);
+  const selectedEmailRef = useRef<string | null>(null);
+  const firstPollDone = useRef(false);
+
+  useEffect(() => {
+    selectedEmailRef.current = selectedEmail;
+  }, [selectedEmail]);
 
   const fetchConversations = async () => {
     setLoading(true);
@@ -97,6 +105,7 @@ export function ChatInbox() {
   };
 
   const handleSelectConversation = async (email: string) => {
+    scrollOnNextMessages.current = true;
     setSelectedEmail(email);
     setReplyText("");
     setReplyingTo(null);
@@ -133,8 +142,8 @@ export function ChatInbox() {
         toast.success("Reply sent");
         setReplyText("");
         setReplyingTo(null);
+        scrollOnNextMessages.current = true;
         await fetchMessages(selectedEmail);
-        await fetchConversations();
       } else {
         toast.error(json.error || "Failed to send reply");
       }
@@ -150,7 +159,67 @@ export function ChatInbox() {
   }, []);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch(`${baseUrl}/api/chat/conversations`, { credentials: "include" });
+        const json = await res.json();
+        if (!json.success) return;
+
+        const prev = prevConversationsRef.current;
+        const curr: Conversation[] = json.data;
+
+        if (!firstPollDone.current) {
+          firstPollDone.current = true;
+          prevConversationsRef.current = curr;
+          setConversations(curr);
+          const email = selectedEmailRef.current;
+          if (email) {
+            try {
+              const r2 = await fetch(`${baseUrl}/api/chat/conversations/${encodeURIComponent(email)}`, { credentials: "include" });
+              const j2 = await r2.json();
+              if (j2.success) setMessages(j2.data);
+            } catch {}
+          }
+          return;
+        }
+
+        for (const c of curr) {
+          const old = prev.find(p => p.email === c.email);
+          if (c.email === selectedEmailRef.current) continue;
+          if (!old) {
+            toast(`New message from ${c.name}`, { icon: "💬" });
+          } else if ((c.unreadCount || 0) > (old.unreadCount || 0)) {
+            toast(`New message from ${c.name}`, { icon: "💬" });
+          }
+        }
+
+        setConversations(curr);
+        prevConversationsRef.current = curr;
+
+        const email = selectedEmailRef.current;
+        if (email) {
+          const conv = curr.find(c => c.email === email);
+          if (conv) {
+            try {
+              const r2 = await fetch(`${baseUrl}/api/chat/conversations/${encodeURIComponent(email)}`, { credentials: "include" });
+              const j2 = await r2.json();
+              if (j2.success) setMessages(j2.data);
+            } catch {}
+          }
+        }
+      } catch {
+        // Silently fail
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (scrollOnNextMessages.current && messages.length > 0) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      scrollOnNextMessages.current = false;
+    }
   }, [messages]);
 
   const filteredConversations = conversations.filter(c => {

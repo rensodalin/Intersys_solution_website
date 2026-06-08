@@ -272,6 +272,22 @@ export const checkConversation = async (req, res) => {
   }
 };
 
+export const getPublicMessages = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const messages = await Message.find({ email }).sort({ createdAt: 1 }).lean();
+    const mapped = messages.map(m => ({
+      _id: m._id.toString(), email: m.email, name: m.name,
+      content: m.content, source: m.source,
+      isFromAdmin: m.isFromAdmin, createdAt: m.createdAt
+    }));
+    res.json({ success: true, data: mapped });
+  } catch (error) {
+    console.error("Failed to fetch public messages:", error);
+    res.status(500).json({ success: false, error: "Failed to fetch messages" });
+  }
+};
+
 export const clientMessage = async (req, res) => {
   try {
     const { email, name, content, subject } = req.body;
@@ -295,18 +311,6 @@ export const clientMessage = async (req, res) => {
       });
     } catch (emailErr) {
       console.error("Failed to send follow-up notification email:", emailErr);
-    }
-
-    try {
-      const botMessage = new Message({
-        email, name: "Intersys Bot",
-        subject: "Welcome to Intersys Solutions",
-        content: `Hi 👋 Welcome back! How can I help you today?\nPlease wait a moment while our support team gets back to you.`,
-        source: "reply", isFromAdmin: true, read: true
-      });
-      await botMessage.save();
-    } catch (botErr) {
-      console.error("Failed to save bot welcome message:", botErr);
     }
 
     res.json({ success: true, data: message });

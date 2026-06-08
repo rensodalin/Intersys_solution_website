@@ -10,6 +10,7 @@ router.get("/conversations", isAdmin, chatController.getConversations);
 router.get("/conversations/:email", isAdmin, chatController.getConversationDetail);
 router.post("/reply", isAdmin, chatController.reply);
 router.get("/check-conversation/:email", chatController.checkConversation);
+router.get("/public-messages/:email", chatController.getPublicMessages);
 router.post("/client-message", chatController.clientMessage);
 router.put("/:id/read", isAdmin, chatController.markRead);
 router.put("/conversations/:email/read", isAdmin, chatController.markConversationRead);
