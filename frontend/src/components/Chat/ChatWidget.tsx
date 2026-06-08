@@ -111,18 +111,14 @@ export function ChatWidget() {
 
     setIsSubmitting(true);
     try {
-      const endpoint = isReturning
-        ? `${baseUrl}/api/chat/client-message`
-        : `${baseUrl}/api/contact`;
-
-      const body = isReturning
-        ? { name: formData.name, email: formData.email, content: formData.message }
-        : { ...formData, contactMethod: "Chat Widget" };
-
-      const response = await fetch(endpoint, {
+      const response = await fetch(`${baseUrl}/api/chat/client-message`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          content: formData.message,
+        }),
       });
 
       const data = await response.json();

@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { QuoteRequest } from "./types";
+import { QuoteRequest, ContactItem } from "./types";
 
 const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
 
@@ -15,6 +15,17 @@ export async function fetchQuotes(startDate?: string, endDate?: string): Promise
     return data.data || [];
   }
   throw new Error(data.error || "Failed to fetch quotes");
+}
+
+export async function fetchContacts(): Promise<ContactItem[]> {
+  const response = await fetch(`${baseUrl}/api/contacts`, {
+    credentials: "include",
+  });
+  const data = await response.json();
+  if (data.success) {
+    return data.data || [];
+  }
+  throw new Error(data.error || "Failed to fetch contacts");
 }
 
 export async function updateQuoteStatus(

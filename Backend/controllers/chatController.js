@@ -24,9 +24,7 @@ export const testTelegram = async (req, res) => {
 
 export const getConversations = async (req, res) => {
   try {
-    const [contacts, quotes, messages, unreadGroups] = await Promise.all([
-      Contact.find({}).sort({ createdAt: -1 }).lean(),
-      Quote.find({}).sort({ createdAt: -1 }).lean(),
+    const [messages, unreadGroups] = await Promise.all([
       Message.find({}).sort({ createdAt: -1 }).lean(),
       Message.aggregate([
         { $match: { isFromAdmin: false, read: false } },
@@ -39,64 +37,31 @@ export const getConversations = async (req, res) => {
 
     const byEmail = {};
 
-    for (const c of contacts) {
-      const email = (c.email || "").trim() || "unknown";
-      const hasPhone = !!(c.phone || "").trim();
-      if (!byEmail[email] || new Date(c.createdAt) > new Date(byEmail[email].lastDate)) {
-        byEmail[email] = {
-          _id: email, email, name: c.name || email, phone: c.phone || "", hasPhone,
-          prefers: c.contactMethod || "", lastMessage: c.message || "(no message)",
-          lastDate: c.createdAt, lastSource: "contact", count: 0,
-          unreadCount: unreadMap[email] || 0, hasContact: true, hasQuote: false,
-
-        };
-      } else {
-        if (byEmail[email]) byEmail[email].hasContact = true;
-      }
-      if (!byEmail[email].phone && c.phone) {
-        byEmail[email].phone = c.phone;
-        byEmail[email].hasPhone = true;
-      }
-    }
-
-    for (const q of quotes) {
-      const email = (q.email || "").trim() || "unknown";
-      const msg = `Quote request from ${q.name} at ${q.company}`;
-      const qPhone = q.phone || "";
-      if (!byEmail[email] || new Date(q.createdAt) > new Date(byEmail[email].lastDate)) {
-        byEmail[email] = {
-          _id: email, email, name: q.name || email, phone: qPhone,
-          hasPhone: !!(qPhone.trim()), prefers: q.contactMethod || "",
-          lastMessage: msg, lastDate: q.createdAt, lastSource: "quote", count: 0,
-          unreadCount: unreadMap[email] || 0, hasContact: false, hasQuote: true
-        };
-      } else {
-        if (byEmail[email]) byEmail[email].hasQuote = true;
-      }
-      if (!byEmail[email].phone && qPhone) {
-        byEmail[email].phone = qPhone;
-        byEmail[email].hasPhone = true;
-      }
-    }
-
     for (const m of messages) {
       const email = (m.email || "").trim() || "unknown";
       let source = m.source || "reply";
       if (source === "client-reply") source = "chat";
+      if (source === "reply") source = "chat";
+      const isContact = source === "contact";
+      const isQuote = source === "quote";
       if (!byEmail[email] || new Date(m.createdAt) > new Date(byEmail[email].lastDate)) {
         byEmail[email] = {
           _id: email, email, name: m.name || email,
           lastMessage: m.content || "(no message)", lastDate: m.createdAt,
           lastSource: source, count: 0,
           unreadCount: unreadMap[email] || 0,
-          hasContact: byEmail[email]?.hasContact === true,
-          hasQuote: byEmail[email]?.hasQuote === true,
-          phone: byEmail[email]?.phone || "",
-          hasPhone: !!(byEmail[email]?.phone || "").trim(),
-          prefers: byEmail[email]?.prefers || "",
-          city: byEmail[email]?.city || "",
-          country: byEmail[email]?.country || ""
+          hasContact: isContact,
+          hasQuote: isQuote,
+          phone: "",
+          hasPhone: false,
+          prefers: "",
+          city: "",
+          country: ""
         };
+      } else {
+        const existing = byEmail[email];
+        if (isContact) existing.hasContact = true;
+        if (isQuote) existing.hasQuote = true;
       }
     }
 

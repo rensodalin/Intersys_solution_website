@@ -2,9 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-import { QuoteRequest } from "@/components/Admin/types";
+import { QuoteRequest, ContactItem } from "@/components/Admin/types";
 import {
   fetchQuotes as fetchQuotesApi,
+  fetchContacts,
   updateQuoteStatus,
   deleteQuote,
   exportQuotesToCSV,
@@ -41,6 +42,7 @@ import { ProductManagement } from "@/components/Admin/ProductManagement";
 import { PosterManagement } from "@/components/Admin/PosterManagement";
 import { InsightManagement } from "@/components/Admin/InsightManagement";
 import { ChatInbox } from "@/components/Admin/ChatInbox";
+import { ContactsList } from "@/components/Admin/ContactsList";
 import { AdminProfile } from "@/components/Admin/AdminProfile";
 import type { DateRange } from "react-day-picker";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
@@ -64,6 +66,8 @@ function AdminDashboardPage() {
   const isAuthChecking = useSelector((state: RootState) => state.auth.isAuthChecking);
 
   const [quotes, setQuotes] = useState<QuoteRequest[]>([]);
+  const [contacts, setContacts] = useState<ContactItem[]>([]);
+  const [contactsLoading, setContactsLoading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selectedTab, setSelectedTab] = useState<"All" | "Pending" | "In Progress" | "Completed">("All");
   const [searchTerm, setSearchTerm] = useState("");
@@ -72,7 +76,7 @@ function AdminDashboardPage() {
   const [selectedQuote, setSelectedQuote] = useState<QuoteRequest | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<"dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "chat" | "reports" | "settings">("dashboard");
+  const [activeSection, setActiveSection] = useState<"dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "chat" | "contacts" | "reports" | "settings">("dashboard");
 
   const itemsPerPage = 5;
 
@@ -114,6 +118,24 @@ function AdminDashboardPage() {
       loadQuotes();
     }
   }, [user]);
+
+  const loadContacts = async () => {
+    setContactsLoading(true);
+    try {
+      const data = await fetchContacts();
+      setContacts(data);
+    } catch (err) {
+      console.error("Error fetching contacts:", err);
+    } finally {
+      setContactsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user && user.isAdmin && activeSection === "contacts") {
+      loadContacts();
+    }
+  }, [user, activeSection]);
 
   const handleStatusChange = async (
     quote: QuoteRequest,
@@ -240,8 +262,8 @@ function AdminDashboardPage() {
           userName={user.name}
           userRole={user.role}
           avatar={user.avatar}
-          loading={loading}
-          onRefresh={activeSection === "dashboard" ? () => window.location.reload() : activeSection === "quotes" ? () => { const sd = quoteDateRange?.from ? toDateString(quoteDateRange.from) : undefined; const ed = quoteDateRange?.to ? toDateString(quoteDateRange.to) : quoteDateRange?.from ? toDateString(quoteDateRange.from) : undefined; loadQuotes(sd, ed); } : loadQuotes}
+          loading={activeSection === "contacts" ? contactsLoading : loading}
+          onRefresh={activeSection === "dashboard" ? () => window.location.reload() : activeSection === "quotes" ? () => { const sd = quoteDateRange?.from ? toDateString(quoteDateRange.from) : undefined; const ed = quoteDateRange?.to ? toDateString(quoteDateRange.to) : quoteDateRange?.from ? toDateString(quoteDateRange.from) : undefined; loadQuotes(sd, ed); } : activeSection === "contacts" ? loadContacts : loadQuotes}
         />
 
         <main className="flex-1 p-8 space-y-8 overflow-y-auto">
@@ -251,6 +273,14 @@ function AdminDashboardPage() {
           {activeSection === "posters" && <PosterManagement />}
           {activeSection === "insights" && <InsightManagement />}
           {activeSection === "chat" && <ChatInbox />}
+
+          {activeSection === "contacts" && (
+            <ContactsList
+              contacts={contacts}
+              loading={contactsLoading}
+              onRefresh={loadContacts}
+            />
+          )}
 
           {activeSection === "quotes" && (
             <>
@@ -307,7 +337,7 @@ function AdminDashboardPage() {
             </div>
           )}
 
-          {activeSection !== "dashboard" && activeSection !== "quotes" && activeSection !== "analytics" && activeSection !== "products" && activeSection !== "posters" && activeSection !== "insights" && activeSection !== "chat" && activeSection !== "settings" && (
+          {activeSection !== "dashboard" && activeSection !== "quotes" && activeSection !== "analytics" && activeSection !== "products" && activeSection !== "posters" && activeSection !== "insights" && activeSection !== "chat" && activeSection !== "contacts" && activeSection !== "settings" && (
             <div className="flex flex-col items-center justify-center py-20 text-center bg-white rounded-xl border border-gray-150 shadow-sm p-8">
               <span className="text-4xl">🛠️</span>
               <h2 className="text-xl font-black text-gray-800 mt-4 capitalize">{activeSection} Section</h2>

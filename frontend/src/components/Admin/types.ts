@@ -13,6 +13,19 @@ export interface QuoteUser {
   email?: string;
 }
 
+export interface ContactItem {
+  _id: string;
+  name: string;
+  email?: string;
+  phone?: string;
+  contactMethod?: string;
+  city?: string;
+  country?: string;
+  message: string;
+  status: "new" | "read" | "replied";
+  createdAt: string;
+}
+
 export interface QuoteRequest {
   _id: string;
   solutionCategories: string[];

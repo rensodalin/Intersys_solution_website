@@ -11,6 +11,7 @@ import {
   MessageSquare,
   FileCheck,
   Settings,
+  PhoneCall,
 } from "lucide-react";
 
 const avatarColors = [
@@ -29,12 +30,12 @@ function getAvatarColor(name: string) {
 
 interface SidebarProps {
   userName: string;
-  activeSection: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "chat" | "reports" | "settings";
-  onSectionChange: (section: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "chat" | "reports" | "settings") => void;
+  activeSection: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "chat" | "contacts" | "reports" | "settings";
+  onSectionChange: (section: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "chat" | "contacts" | "reports" | "settings") => void;
 }
 
 export function Sidebar({ userName, activeSection, onSectionChange }: SidebarProps) {
-  const getButtonClass = (section: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "chat" | "reports" | "settings") => {
+  const getButtonClass = (section: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "chat" | "contacts" | "reports" | "settings") => {
     const baseClass = "w-full flex items-center gap-3 px-4 py-3 text-sm transition cursor-pointer rounded-sm";
     if (activeSection === section) {
       return `${baseClass} font-bold bg-[#C3110C] text-white shadow-lg shadow-[#C3110C]/20`;
@@ -118,6 +119,14 @@ export function Sidebar({ userName, activeSection, onSectionChange }: SidebarPro
           >
             <MessageSquare size={18} />
             <span>Inbox</span>
+          </button>
+
+          <button
+            onClick={() => onSectionChange("contacts")}
+            className={getButtonClass("contacts")}
+          >
+            <PhoneCall size={18} />
+            <span>Contacts</span>
           </button>
 
           {/* <button 
