@@ -13,6 +13,8 @@ import {
   MapPin,
   Globe,
   Building2,
+  Briefcase,
+  Layers,
   SendHorizontal,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -881,100 +883,164 @@ export function ChatInbox() {
       }
 
       const q = selectedQuote;
+      const totalPrice = (q.products || []).reduce((sum, p) => sum + (parseInt(p.qty || "0") * p.price), 0);
+      const quoteId = `QR-${q._id.substring(q._id.length - 5).toUpperCase()}`;
+
       return (
         <div className="flex-1 flex flex-col">
-          <div className="px-6 py-4 border-b border-gray-150 bg-white flex items-start gap-3">
+          <div className="px-6 py-4 border-b border-gray-150 bg-gradient-to-r from-[#081F3D] to-[#0D2B5E] flex items-start gap-3">
             <div
-              className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs text-white flex-shrink-0 mt-0.5"
+              className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-white flex-shrink-0 mt-0.5 ring-2 ring-white/20"
               style={{ backgroundColor: getAvatarColor(q.name) }}
             >
               {getInitials(q.name)}
             </div>
             <div className="min-w-0 flex-1">
-              <h3 className="text-sm font-bold text-gray-900">{q.name}</h3>
-              <div className="flex items-center gap-2 text-[10px] text-gray-400">
-                <Building2 size={10} className="text-[#0D7C5E]" />
-                <span className="font-bold text-[#0D7C5E]">{q.company}</span>
-                <span>— {q.title}</span>
-              </div>
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-[11px]">
-                <span className="flex items-center gap-1 text-gray-600">
-                  <Mail size={11} className="text-gray-400" />
-                  <a href={`mailto:${q.email}`} className="hover:text-[#C3110C] underline">{q.email}</a>
-                </span>
-                {q.phone && (
-                  <span className="flex items-center gap-1 text-gray-600">
-                    <Phone size={11} className="text-gray-400" />
-                    <a href={`tel:${q.phone}`} className="hover:text-[#C3110C]">{q.phone}</a>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-bold text-white">{q.name}</h3>
+                  <div className="flex items-center gap-2 text-[10px] text-blue-200">
+                    <Building2 size={10} />
+                    <span className="font-semibold">{q.company}</span>
+                    {q.title && <span>— {q.title}</span>}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="text-[9px] text-blue-300 block">{quoteId}</span>
+                  <span className={`inline-block mt-1 font-bold px-2 py-0.5 rounded-sm text-[9px] ${
+                    q.status === "Completed" ? "bg-green-500/20 text-green-300"
+                    : q.status === "In Progress" ? "bg-blue-500/20 text-blue-300"
+                    : "bg-gray-500/20 text-gray-300"
+                  }`}>
+                    {q.status}
                   </span>
-                )}
-                {(q.city || q.country) && (
-                  <span className="flex items-center gap-1 text-gray-500">
-                    <MapPin size={11} className="text-gray-400" />
-                    {[q.address, q.city, q.country].filter(Boolean).join(", ")}
-                  </span>
-                )}
-                <span className={`font-bold px-1.5 py-0.5 rounded-sm text-[9px] ${
-                  q.status === "Completed" ? "bg-green-50 text-green-700"
-                  : q.status === "In Progress" ? "bg-blue-50 text-blue-700"
-                  : "bg-gray-100 text-gray-600"
-                }`}>
-                  {q.status}
-                </span>
+                </div>
               </div>
-              <p className="text-[10px] text-gray-400 mt-1">{new Date(q.createdAt).toLocaleString()}</p>
+              <p className="text-[9px] text-blue-300 mt-1">{new Date(q.createdAt).toLocaleString()}</p>
             </div>
           </div>
-          <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
-            {q.solutionCategories && q.solutionCategories.length > 0 && (
-              <div>
-                <h4 className="text-[10px] font-bold text-gray-500 mb-1.5">Solutions</h4>
-                <div className="flex flex-wrap gap-1">
-                  {q.solutionCategories.map((cat, i) => (
-                    <span key={i} className="bg-[#081F3D]/5 text-[#081F3D] text-[10px] font-bold px-2 py-1 rounded-sm">{cat}</span>
-                  ))}
+
+          <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5">
+            {/* Contact & Company Info */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-white border border-gray-100 rounded-sm p-3.5 shadow-sm">
+                <h4 className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-2">Contact</h4>
+                <div className="space-y-2">
+                  <a href={`mailto:${q.email}`} className="flex items-center gap-2 text-xs text-[#C3110C] hover:underline">
+                    <Mail size={12} className="text-gray-400 flex-shrink-0" />
+                    {q.email}
+                  </a>
+                  {q.phone && (
+                    <a href={`tel:${q.phone}`} className="flex items-center gap-2 text-xs text-gray-700 hover:text-[#C3110C]">
+                      <Phone size={12} className="text-gray-400 flex-shrink-0" />
+                      {q.phone}
+                    </a>
+                  )}
+                  {(q.city || q.country) && (
+                    <span className="flex items-center gap-2 text-xs text-gray-500">
+                      <MapPin size={12} className="text-gray-400 flex-shrink-0" />
+                      {[q.address, q.city, q.country].filter(Boolean).join(", ")}
+                    </span>
+                  )}
                 </div>
               </div>
-            )}
-
-            {q.bmsSystem && (
-              <div>
-                <h4 className="text-[10px] font-bold text-gray-500 mb-1">BMS System</h4>
-                <p className="text-xs font-medium text-gray-800">{q.bmsSystem}</p>
+              <div className="bg-white border border-gray-100 rounded-sm p-3.5 shadow-sm">
+                <h4 className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-2">Company</h4>
+                <div className="space-y-2">
+                  <span className="flex items-center gap-2 text-xs text-gray-800">
+                    <Building2 size={12} className="text-gray-400 flex-shrink-0" />
+                    <span className="font-semibold">{q.company}</span>
+                  </span>
+                  {q.companyType && (
+                    <span className="flex items-center gap-2 text-xs text-gray-500">
+                      <Briefcase size={12} className="text-gray-400 flex-shrink-0" />
+                      {q.companyType}
+                    </span>
+                  )}
+                  {q.bmsSystem && (
+                    <span className="flex items-center gap-2 text-xs text-gray-500">
+                      <Layers size={12} className="text-gray-400 flex-shrink-0" />
+                      {q.bmsSystem}
+                    </span>
+                  )}
+                </div>
               </div>
-            )}
+            </div>
 
+            {/* Solutions & Sections */}
+            <div className="flex gap-4">
+              {q.solutionCategories && q.solutionCategories.length > 0 && (
+                <div className="flex-1 bg-white border border-gray-100 rounded-sm p-3.5 shadow-sm">
+                  <h4 className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-2">Solutions ({q.solutionCategories.length})</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {q.solutionCategories.map((cat, i) => (
+                      <span key={i} className="bg-[#081F3D]/5 text-[#081F3D] text-[10px] font-semibold px-2 py-1 rounded-sm">{cat}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {q.sections && q.sections.length > 0 && (
+                <div className="flex-1 bg-white border border-gray-100 rounded-sm p-3.5 shadow-sm">
+                  <h4 className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-2">Sections ({q.sections.length})</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {q.sections.map((s, i) => (
+                      <span key={i} className="bg-blue-50 text-blue-700 text-[10px] font-semibold px-2 py-1 rounded-sm">{s}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Additional Details */}
             {q.otherBms && (
-              <div>
-                <h4 className="text-[10px] font-bold text-gray-500 mb-1">Additional Details</h4>
-                <p className="text-xs text-gray-600 bg-gray-50 rounded-sm px-3 py-2 whitespace-pre-wrap">{q.otherBms}</p>
+              <div className="bg-white border border-gray-100 rounded-sm p-3.5 shadow-sm">
+                <h4 className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-2">Additional Details</h4>
+                <p className="text-xs text-gray-600 leading-relaxed whitespace-pre-wrap">{q.otherBms}</p>
               </div>
             )}
 
+            {/* Products Table */}
             {q.products && q.products.length > 0 && (
-              <div>
-                <h4 className="text-[10px] font-bold text-gray-500 mb-1.5">Products ({q.products.length})</h4>
-                <div className="space-y-1.5">
-                  {q.products.map((p, i) => (
-                    <div key={i} className="flex items-center gap-3 text-xs bg-gray-50/50 rounded-sm px-3 py-2">
-                      <span className="font-bold text-red-600">{p.qty}x</span>
-                      <span className="font-bold text-[#081F3D]">{p.productNo}</span>
-                      <span className="text-gray-500 truncate flex-1">{p.description}</span>
-                      <span className="text-gray-400 text-[10px] hidden sm:inline">{p.application}</span>
-                      <span className="font-bold text-gray-900">${p.price.toFixed(2)}</span>
-                    </div>
-                  ))}
+              <div className="bg-white border border-gray-100 rounded-sm shadow-sm overflow-hidden">
+                <div className="px-3.5 py-3 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between">
+                  <h4 className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Products ({q.products.length})</h4>
+                  <span className="text-[10px] font-bold text-gray-700">Total: ${totalPrice.toFixed(2)}</span>
                 </div>
-              </div>
-            )}
-
-            {q.sections && q.sections.length > 0 && (
-              <div>
-                <h4 className="text-[10px] font-bold text-gray-500 mb-1.5">Sections</h4>
-                <div className="flex flex-wrap gap-1">
-                  {q.sections.map((s, i) => (
-                    <span key={i} className="bg-blue-50 text-blue-700 text-[10px] font-bold px-2 py-1 rounded-sm">{s}</span>
-                  ))}
+                <div className="overflow-x-auto">
+                  <table className="w-full text-[11px]">
+                    <thead>
+                      <tr className="border-b border-gray-100 bg-gray-50/30">
+                        <th className="text-left px-3.5 py-2 font-bold text-gray-400 uppercase tracking-wider text-[9px]">Qty</th>
+                        <th className="text-left px-3.5 py-2 font-bold text-gray-400 uppercase tracking-wider text-[9px]">Part No.</th>
+                        <th className="text-left px-3.5 py-2 font-bold text-gray-400 uppercase tracking-wider text-[9px]">Description</th>
+                        <th className="text-left px-3.5 py-2 font-bold text-gray-400 uppercase tracking-wider text-[9px] hidden sm:table-cell">Application</th>
+                        <th className="text-right px-3.5 py-2 font-bold text-gray-400 uppercase tracking-wider text-[9px]">Unit Price</th>
+                        <th className="text-right px-3.5 py-2 font-bold text-gray-400 uppercase tracking-wider text-[9px]">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {q.products.map((p, i) => (
+                        <tr key={i} className="border-b border-gray-50 hover:bg-gray-50/50 transition">
+                          <td className="px-3.5 py-2.5 font-bold text-[#C3110C]">{p.qty}x</td>
+                          <td className="px-3.5 py-2.5 font-bold text-[#081F3D]">{p.productNo}</td>
+                          <td className="px-3.5 py-2.5 text-gray-600">{p.description}</td>
+                          <td className="px-3.5 py-2.5 text-gray-400 text-[10px] hidden sm:table-cell">{p.application}</td>
+                          <td className="px-3.5 py-2.5 text-right font-medium text-gray-700">${p.price.toFixed(2)}</td>
+                          <td className="px-3.5 py-2.5 text-right font-bold text-gray-900">${(parseInt(p.qty || "0") * p.price).toFixed(2)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    <tfoot>
+                      <tr className="bg-gray-50/80">
+                        <td colSpan={4} className="px-3.5 py-3 text-right font-bold text-gray-600 text-[10px] uppercase tracking-wider">
+                          Grand Total
+                        </td>
+                        <td colSpan={2} className="px-3.5 py-3 text-right font-bold text-gray-900 text-sm">
+                          ${totalPrice.toFixed(2)}
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
                 </div>
               </div>
             )}
