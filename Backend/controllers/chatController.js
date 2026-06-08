@@ -1,7 +1,6 @@
 import Message from "../model/message.js";
 import Contact from "../model/contact.js";
 import Quote from "../model/quote.js";
-import transporter from "../config/email.js";
 
 export const debug = async (req, res) => {
   try {
@@ -152,7 +151,7 @@ export const reply = async (req, res) => {
     }
 
     const message = new Message({
-      email, name: "Admin", subject: subject || "Conversation with Intersys Solutions",
+      email, name: name || email, subject: subject || "Conversation with Intersys Solutions",
       content, source: "reply", isFromAdmin: true, read: true
     });
     await message.save();
@@ -163,7 +162,6 @@ export const reply = async (req, res) => {
     ]);
 
     const adminName = req.user.name || "Admin";
-    sendReplyEmail(email, name || email, message.subject, content, adminName, { contacts, quotes });
 
     res.json({ success: true, data: message });
   } catch (error) {
@@ -171,91 +169,6 @@ export const reply = async (req, res) => {
     res.status(500).json({ success: false, error: "Failed to send reply" });
   }
 };
-
-async function sendReplyEmail(userEmail, userName, subject, replyContent, adminName, context) {
-  try {
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) return;
-
-    let detailsHtml = "";
-
-    if (context && context.quotes && context.quotes.length > 0) {
-      const q = context.quotes[0];
-      const productsHtml = (q.products || []).map(p => `
-        <tr>
-          <td style="padding: 8px 12px; border: 1px solid #e5e7eb; text-align:center; font-size:13px;">${p.qty}x</td>
-          <td style="padding: 8px 12px; border: 1px solid #e5e7eb; font-size:13px; font-weight:600; color:#C3110C;">${p.productNo}</td>
-          <td style="padding: 8px 12px; border: 1px solid #e5e7eb; font-size:13px;">${p.description}</td>
-          <td style="padding: 8px 12px; border: 1px solid #e5e7eb; font-size:13px; color:#6b7280;">${p.application}</td>
-          <td style="padding: 8px 12px; border: 1px solid #e5e7eb; font-size:13px; text-align:right; font-weight:600;">$${(p.price || 0).toFixed(2)}</td>
-        </tr>
-      `).join("");
-
-      detailsHtml = `
-        <div style="background:#f8fafc; border:1px solid #e5e7eb; border-radius:6px; padding:20px; margin:15px 0;">
-          <h3 style="margin:0 0 12px 0; font-size:15px; color:#081F3D;">📋 Quote Request Summary</h3>
-          <table style="width:100%; border-collapse:collapse; font-size:13px;">
-            <tr><td style="padding:4px 0; color:#6b7280; width:120px;">Name:</td><td style="padding:4px 0; font-weight:600;">${q.name}</td></tr>
-            <tr><td style="padding:4px 0; color:#6b7280;">Company:</td><td style="padding:4px 0; font-weight:600;">${q.company}</td></tr>
-            <tr><td style="padding:4px 0; color:#6b7280;">Email:</td><td style="padding:4px 0;">${q.email}</td></tr>
-            <tr><td style="padding:4px 0; color:#6b7280;">Phone:</td><td style="padding:4px 0;">${q.phone}</td></tr>
-            <tr><td style="padding:4px 0; color:#6b7280;">Preferred:</td><td style="padding:4px 0;">${q.contactMethod || "—"}</td></tr>
-            <tr><td style="padding:4px 0; color:#6b7280;">Address:</td><td style="padding:4px 0;">${q.address}, ${q.city || ""}, ${q.country || ""}</td></tr>
-            <tr><td style="padding:4px 0; color:#6b7280;">Platform:</td><td style="padding:4px 0;">${q.bmsSystem || "—"}</td></tr>
-          </table>
-          ${(q.products || []).length > 0 ? `<h4 style="margin:15px 0 8px 0; font-size:13px; color:#374151;">Requested Products</h4><table style="width:100%; border-collapse:collapse; font-size:12px;"><thead><tr style="background:#e5e7eb;"><th style="padding:8px 12px; border:1px solid #d1d5db; text-align:center;">Qty</th><th style="padding:8px 12px; border:1px solid #d1d5db; text-align:left;">Part Code</th><th style="padding:8px 12px; border:1px solid #d1d5db; text-align:left;">Product</th><th style="padding:8px 12px; border:1px solid #d1d5db; text-align:left;">Spec</th><th style="padding:8px 12px; border:1px solid #d1d5db; text-align:right;">Price</th></tr></thead><tbody>${productsHtml}</tbody></table>` : ""}
-          ${q.otherBms ? `<div style="margin-top:12px; padding:12px; background:#fff; border:1px solid #e5e7eb; border-radius:4px; font-size:12px; color:#6b7280; white-space:pre-wrap;">${q.otherBms}</div>` : ""}
-        </div>
-      `;
-    } else if (context && context.contacts && context.contacts.length > 0) {
-      const c = context.contacts[0];
-      detailsHtml = `
-        <div style="background:#f8fafc; border:1px solid #e5e7eb; border-radius:6px; padding:20px; margin:15px 0;">
-          <h3 style="margin:0 0 12px 0; font-size:15px; color:#081F3D;">📩 Contact Request Summary</h3>
-          <table style="width:100%; border-collapse:collapse; font-size:13px;">
-            <tr><td style="padding:4px 0; color:#6b7280; width:120px;">Name:</td><td style="padding:4px 0; font-weight:600;">${c.name}</td></tr>
-            <tr><td style="padding:4px 0; color:#6b7280;">Email:</td><td style="padding:4px 0;">${c.email || "—"}</td></tr>
-            <tr><td style="padding:4px 0; color:#6b7280;">Phone:</td><td style="padding:4px 0;">${c.phone || "—"}</td></tr>
-            <tr><td style="padding:4px 0; color:#6b7280;">Preferred Contact:</td><td style="padding:4px 0; font-weight:600;">${c.contactMethod || "Not specified"}</td></tr>
-            <tr><td style="padding:4px 0; color:#6b7280;">Location:</td><td style="padding:4px 0;">${[c.city, c.country].filter(Boolean).join(", ") || "—"}</td></tr>
-          </table>
-          <div style="margin-top:12px; padding:12px; background:#fff; border:1px solid #e5e7eb; border-radius:4px; font-size:12px; color:#6b7280;">
-            <strong style="color:#374151;">Original Message:</strong>
-            <div style="margin-top:6px; white-space:pre-wrap;">${c.message}</div>
-          </div>
-        </div>
-      `;
-    }
-
-    const fullHtml = `
-      <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 640px; margin: auto; background: #fff;">
-        <div style="background: #081F3D; padding: 24px 30px; text-align:center;">
-          <img src="https://static.wixstatic.com/media/3d5958_de5e6808f56c48b48bdf976b6224847c~mv2.png/v1/crop/x_0,y_0,w_3932,h_1626/fill/w_248,h_90,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/new%20Logo.png" alt="Intersys Solutions" style="max-width:180px; height:auto; display:block; margin:0 auto;" />
-          <p style="color: rgba(255,255,255,0.6); margin:4px 0 0 0; font-size:11px;">Building Management & Security Systems</p>
-        </div>
-        <div style="padding: 30px;">
-          <p style="font-size:14px; color:#374151;">Dear <b>${userName}</b>,</p>
-          ${detailsHtml}
-          <div style="background: #f9f9f9; border-left: 4px solid #C3110C; padding: 15px 20px; margin: 15px 0; border-radius: 0 4px 4px 0;">
-            <p style="margin:0 0 6px 0; font-size:11px; color:#C3110C; font-weight:700; text-transform:uppercase;">Our Response</p>
-            <div style="font-size:14px; color:#374151; line-height:1.6; white-space:pre-wrap;">${replyContent}</div>
-          </div>
-          <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 20px 0;" />
-          <p style="font-size:12px; color:#6b7280; line-height:1.6;">Best regards,<br/><b style="color:#C3110C;">${adminName}</b><br/><span style="color:#9ca3af;">Intersys Solutions</span><br/><span style="color:#9ca3af;">Phone: +855 12 345 678</span></p>
-        </div>
-        <div style="background: #f3f4f6; padding: 12px 30px; text-align:center; font-size:10px; color:#9ca3af;">This email was sent in response to your inquiry. Please reply directly if you have further questions.</div>
-      </div>
-    `;
-
-    await transporter.sendMail({
-      from: `"Intersys Solutions" <${process.env.EMAIL_USER}>`,
-      to: userEmail,
-      subject: `Re: ${subject}`,
-      html: fullHtml,
-    });
-  } catch (err) {
-    console.error("Failed to send reply email:", err);
-  }
-}
 
 export const checkConversation = async (req, res) => {
   try {
@@ -300,18 +213,6 @@ export const clientMessage = async (req, res) => {
       content, source: "client-reply", isFromAdmin: false, read: false
     });
     await message.save();
-
-    try {
-      await transporter.sendMail({
-        from: `"Intersys Chat" <${process.env.EMAIL_USER}>`,
-        to: process.env.EMAIL_USER,
-        replyTo: email,
-        subject: `New Follow-up Message from ${name}`,
-        html: `<div style="font-family:sans-serif;max-width:600px;margin:auto;border:1px solid #eee;padding:20px;"><h2 style="color:#C3110C;">New Follow-up Message</h2><p><b>Name:</b> ${name}</p><p><b>Email:</b> ${email}</p><hr style="border:0;border-top:1px solid #eee;margin:15px 0;"><p style="white-space:pre-wrap;background:#f9f9f9;padding:15px;border-radius:8px;">${content}</p><p style="font-size:12px;color:#9ca3af;">View in admin dashboard to reply.</p></div>`,
-      });
-    } catch (emailErr) {
-      console.error("Failed to send follow-up notification email:", emailErr);
-    }
 
     res.json({ success: true, data: message });
   } catch (error) {

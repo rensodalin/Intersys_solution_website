@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { MessageCircle, X, Send, ChevronLeft, Loader2 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { toast } from "sonner";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useLocation } from "@tanstack/react-router";
@@ -107,7 +106,6 @@ export function ChatWidget() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
-      toast.error("Please fill in all required fields.");
       return;
     }
 
@@ -135,12 +133,9 @@ export function ChatWidget() {
         setFormData({ name: formData.name, email: formData.email, message: "" });
         setIsReturning(false);
         setTimeout(() => fetchServerMessages(formData.email), 500);
-      } else {
-        toast.error(data.error || "Failed to send message.");
       }
     } catch (err) {
       console.error("Chat Widget Submit Error:", err);
-      toast.error("Network error. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -164,12 +159,9 @@ export function ChatWidget() {
       const data = await res.json();
       if (data.success) {
         setTimeout(() => fetchServerMessages(conversationEmail), 500);
-      } else {
-        toast.error(data.error || "Failed to send message.");
       }
     } catch (err) {
       console.error("Failed to send follow-up:", err);
-      toast.error("Network error. Please try again.");
     } finally {
       setSendingMsg(false);
     }
@@ -311,7 +303,7 @@ export function ChatWidget() {
                         >
                           <p className="whitespace-pre-wrap leading-relaxed">{msg.content}</p>
                           <p className={`text-[9px] mt-1 ${msg.isFromAdmin ? "text-gray-500" : "text-red-200"}`}>
-                            {msg.isFromAdmin ? msg.name : "You"} · {formatTime(msg.createdAt)}
+                            {msg.isFromAdmin ? "Admin" : "You"} · {formatTime(msg.createdAt)}
                           </p>
                         </div>
                       </div>

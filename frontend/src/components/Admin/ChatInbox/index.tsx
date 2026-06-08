@@ -183,16 +183,6 @@ export function ChatInbox() {
           return;
         }
 
-        for (const c of curr) {
-          const old = prev.find(p => p.email === c.email);
-          if (c.email === selectedEmailRef.current) continue;
-          if (!old) {
-            toast(`New message from ${c.name}`, { icon: "💬" });
-          } else if ((c.unreadCount || 0) > (old.unreadCount || 0)) {
-            toast(`New message from ${c.name}`, { icon: "💬" });
-          }
-        }
-
         setConversations(curr);
         prevConversationsRef.current = curr;
 
