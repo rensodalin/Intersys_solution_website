@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "start:cluster": "pm2 start ecosystem.config.cjs",
     "stop": "pm2 stop intersys-backend",
     "logs": "pm2 logs intersys-backend"
@@ -24,6 +24,7 @@
     "mongoose": "^9.6.1",
     "multer": "^2.1.1",
     "nodemailer": "^8.0.7",
+    "nodemon": "^3.1.14",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "socket.io": "^4.8.3",

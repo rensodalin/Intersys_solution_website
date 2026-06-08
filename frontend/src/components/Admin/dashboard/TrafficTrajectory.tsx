@@ -25,7 +25,7 @@ export function TrafficTrajectory() {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`${baseUrl}/api/visitors/trend`);
+        const res = await fetch(`${baseUrl}/api/visitors/trend`, { credentials: "include" });
         const json = await res.json();
         if (!cancelled) {
           if (json.success) {

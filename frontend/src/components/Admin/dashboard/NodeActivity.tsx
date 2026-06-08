@@ -48,7 +48,7 @@ export function NodeActivity() {
     setLoading(true);
     try {
       const url = all ? `${baseUrl}/api/activity` : `${baseUrl}/api/activity?limit=4`;
-      const res = await fetch(url);
+      const res = await fetch(url, { credentials: "include" });
       const json = await res.json();
       if (json.success) {
         setActivities(json.data as ActivityItem[]);

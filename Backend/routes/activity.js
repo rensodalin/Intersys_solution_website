@@ -1,67 +1,9 @@
 import express from "express";
-import Quote from "../model/quote.js";
-import Contact from "../model/contact.js";
-import User from "../model/user.js";
+import { isAdmin } from "../middleware/auth.js";
+import * as activityController from "../controllers/activityController.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-    try {
-        const [recentQuotes, recentContacts, recentUsers] = await Promise.all([
-            Quote.find().sort({ createdAt: -1 }).limit(5),
-            Contact.find().sort({ createdAt: -1 }).limit(5),
-            User.find().sort({ createdAt: -1 }).select("name email role createdAt avatar").limit(5),
-        ]);
-
-        const activities = [];
-
-        recentQuotes.forEach((q) => {
-            const date = new Date(q.createdAt);
-            const name = q.name || "Client";
-            const company = q.company || "Intersys Client";
-            const isApproved = q.status === "Completed";
-            activities.push({
-                id: `quote-${q._id}`,
-                type: isApproved ? "success" : "info",
-                title: isApproved ? `Quote #${q._id.toString().slice(-4).toUpperCase()} Approved` : "New Quote Request",
-                description: isApproved ? `${company} - Phase 1` : `${name} from ${company}`,
-                timestamp: date,
-            });
-        });
-
-        recentContacts.forEach((c) => {
-            const date = new Date(c.createdAt);
-            activities.push({
-                id: `contact-${c._id}`,
-                type: "primary",
-                title: "New Client Message",
-                description: `Inquiry regarding ${(c.message || "").substring(0, 25)}...`,
-                timestamp: date,
-            });
-        });
-
-        recentUsers.forEach((u) => {
-            const date = new Date(u.createdAt);
-            const roleStr = u.role ? u.role.charAt(0).toUpperCase() + u.role.slice(1) : "Member";
-            const roleType = (u.role || "member").toLowerCase();
-            activities.push({
-                id: `user-${u._id}`,
-                type: roleType,
-                title: `${roleStr} Onboarded`,
-                description: `${u.name} joined the Website`,
-                timestamp: date,
-            });
-        });
-
-        activities.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-
-        const limit = req.query.limit ? parseInt(req.query.limit) : null;
-
-        res.json({ success: true, data: limit ? activities.slice(0, limit) : activities });
-    } catch (err) {
-        console.error("Activity feed error:", err);
-        res.status(500).json({ success: false, message: err.message });
-    }
-});
+router.get("/", isAdmin, activityController.getFeed);
 
 export default router;
