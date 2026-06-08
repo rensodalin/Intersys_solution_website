@@ -152,7 +152,7 @@ export const reply = async (req, res) => {
     }
 
     const message = new Message({
-      email, name: name || email, subject: subject || "Conversation with Intersys Solutions",
+      email, name: "Admin", subject: subject || "Conversation with Intersys Solutions",
       content, source: "reply", isFromAdmin: true, read: true
     });
     await message.save();
