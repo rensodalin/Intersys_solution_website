@@ -150,7 +150,7 @@ export function Sidebar({ userName, activeSection, onSectionChange }: SidebarPro
             </div>
           </div>
           <Link
-            to="/my-account"
+            to="/"
             className="text-[10px] font-bold text-red-500 hover:text-red-400"
           >
             Exit

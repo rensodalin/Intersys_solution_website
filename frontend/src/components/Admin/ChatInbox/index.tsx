@@ -155,7 +155,7 @@ export function ChatInbox() {
 
   const filteredConversations = conversations.filter(c => {
     if (filterTab === "contact" && c.lastSource !== "contact") return false;
-    if (filterTab === "chat" && c.lastSource !== "chat") return false;
+    if (filterTab === "chat" && !["chat", "client-reply", "reply"].includes(c.lastSource)) return false;
     if (filterTab === "quote" && c.lastSource !== "quote") return false;
     if (!search) return true;
     const q = search.toLowerCase();
@@ -250,13 +250,13 @@ export function ChatInbox() {
                       <span className="text-[11px] text-gray-500 truncate">{conv.lastMessage}</span>
                     </div>
                     <div className="flex items-center gap-1 mt-0.5">
-                      {conv.lastSource === "quote" ? (
-                        <FileText size={10} className="text-[#0D7C5E]" />
-                      ) : conv.lastSource === "client-reply" || conv.lastSource === "chat" ? (
-                        <MessageSquare size={10} className="text-[#8B5CF6]" />
-                      ) : (
-                        <Mail size={10} className="text-[#1B7B9E]" />
-                      )}
+      {conv.lastSource === "quote" ? (
+        <FileText size={10} className="text-[#0D7C5E]" />
+      ) : ["client-reply", "chat", "reply"].includes(conv.lastSource) ? (
+        <MessageSquare size={10} className="text-[#8B5CF6]" />
+      ) : (
+        <Mail size={10} className="text-[#1B7B9E]" />
+      )}
                       <span className="text-[9px] text-gray-400">{conv.email}</span>
                     </div>
                   </div>
@@ -281,7 +281,7 @@ export function ChatInbox() {
                 <h3 className="text-sm font-bold text-gray-900">{selectedConv.name}</h3>
                 <div className="flex items-center gap-3 text-[10px] text-gray-400">
                   <span className="flex items-center gap-1">
-                    {selectedConv.lastSource === "quote" ? <FileText size={10} /> : selectedConv.lastSource === "client-reply" || selectedConv.lastSource === "chat" ? <MessageSquare size={10} /> : <Mail size={10} />}
+                    {selectedConv.lastSource === "quote" ? <FileText size={10} /> : ["client-reply", "chat", "reply"].includes(selectedConv.lastSource) ? <MessageSquare size={10} /> : <Mail size={10} />}
                     {selectedConv.email}
                   </span>
                 </div>

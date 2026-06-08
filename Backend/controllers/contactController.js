@@ -25,6 +25,18 @@ export const submitContact = async (req, res) => {
       console.error("Failed to create chat message for contact:", chatErr);
     }
 
+    try {
+      const botMessage = new Message({
+        email: email || "unknown@intersys.com", name: "Intersys Bot",
+        subject: "Welcome to Intersys Solutions",
+        content: `Hi 👋 Welcome to our website! How can I help you today?\nPlease wait a moment while our support team gets back to you.`,
+        source: "reply", isFromAdmin: true, read: true
+      });
+      await botMessage.save();
+    } catch (botErr) {
+      console.error("Failed to save bot welcome message:", botErr);
+    }
+
     await transporter.sendMail({
       from: `"Contact Form" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,

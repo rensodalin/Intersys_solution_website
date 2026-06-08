@@ -75,11 +75,13 @@ export const getConversations = async (req, res) => {
 
     for (const m of messages) {
       const email = (m.email || "").trim() || "unknown";
+      let source = m.source || "reply";
+      if (source === "client-reply") source = "chat";
       if (!byEmail[email] || new Date(m.createdAt) > new Date(byEmail[email].lastDate)) {
         byEmail[email] = {
           _id: email, email, name: m.name || email,
           lastMessage: m.content || "(no message)", lastDate: m.createdAt,
-          lastSource: m.source || "reply", count: 0,
+          lastSource: source, count: 0,
           unreadCount: unreadMap[email] || 0
         };
       }
@@ -293,6 +295,18 @@ export const clientMessage = async (req, res) => {
       });
     } catch (emailErr) {
       console.error("Failed to send follow-up notification email:", emailErr);
+    }
+
+    try {
+      const botMessage = new Message({
+        email, name: "Intersys Bot",
+        subject: "Welcome to Intersys Solutions",
+        content: `Hi 👋 Welcome back! How can I help you today?\nPlease wait a moment while our support team gets back to you.`,
+        source: "reply", isFromAdmin: true, read: true
+      });
+      await botMessage.save();
+    } catch (botErr) {
+      console.error("Failed to save bot welcome message:", botErr);
     }
 
     res.json({ success: true, data: message });

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { MessageCircle, X, Send } from "lucide-react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { MessageCircle, X, Send, ChevronLeft, Loader2 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
@@ -7,11 +7,25 @@ import { RootState } from "@/store";
 import { useLocation } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 
+interface LocalMessage {
+  id: string;
+  content: string;
+  isFromAdmin: boolean;
+  name: string;
+  createdAt: Date;
+}
+
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isReturning, setIsReturning] = useState(false);
   const [checkingEmail, setCheckingEmail] = useState(false);
+  const [view, setView] = useState<"form" | "conversation">("form");
+  const [messages, setMessages] = useState<LocalMessage[]>([]);
+  const [conversationEmail, setConversationEmail] = useState<string | null>(null);
+  const [conversationName, setConversationName] = useState("");
+  const [newMessage, setNewMessage] = useState("");
+  const [sendingMsg, setSendingMsg] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,9 +36,9 @@ export function ChatWidget() {
   const location = useLocation();
   const isProductPage = location.pathname.startsWith("/products");
   const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-fill if user is logged in
-  React.useEffect(() => {
+  useEffect(() => {
     if (user && !formData.name) {
       setFormData((prev) => ({
         ...prev,
@@ -34,8 +48,11 @@ export function ChatWidget() {
     }
   }, [user]);
 
-  // Check if the email belongs to an existing conversation
-  const checkExistingConversation = React.useCallback(async (email: string) => {
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const checkExistingConversation = useCallback(async (email: string) => {
     if (!email || !email.includes("@")) {
       setIsReturning(false);
       return;
@@ -52,12 +69,25 @@ export function ChatWidget() {
     }
   }, [baseUrl]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       if (formData.email) checkExistingConversation(formData.email);
     }, 500);
     return () => clearTimeout(timer);
   }, [formData.email, checkExistingConversation]);
+
+  const addBotReply = (isNewUser: boolean) => {
+    const botMsg: LocalMessage = {
+      id: `bot-${Date.now()}`,
+      content: isNewUser
+        ? "Hi 👋 Welcome to our website! How can I help you today?\nPlease wait a moment while our support team gets back to you."
+        : "Hi 👋 Welcome back! How can I help you today?\nPlease wait a moment while our support team gets back to you.",
+      isFromAdmin: true,
+      name: "Intersys Bot",
+      createdAt: new Date()
+    };
+    setMessages((prev) => [...prev, botMsg]);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,13 +114,22 @@ export function ChatWidget() {
 
       const data = await response.json();
       if (data.success) {
-        toast.success(isReturning
-          ? "Follow-up sent! We'll get back to you soon."
-          : "Message sent successfully! We'll get back to you soon."
-        );
-        setFormData({ name: "", email: "", message: "" });
+        const userMsg: LocalMessage = {
+          id: `user-${Date.now()}`,
+          content: formData.message,
+          isFromAdmin: false,
+          name: formData.name,
+          createdAt: new Date()
+        };
+
+        setConversationEmail(formData.email);
+        setConversationName(formData.name);
+        setMessages([userMsg]);
+        setView("conversation");
+        setFormData({ name: formData.name, email: formData.email, message: "" });
         setIsReturning(false);
-        setIsOpen(false);
+
+        setTimeout(() => addBotReply(!isReturning), 600);
       } else {
         toast.error(data.error || "Failed to send message.");
       }
@@ -101,6 +140,61 @@ export function ChatWidget() {
       setIsSubmitting(false);
     }
   };
+
+  const handleSendMessage = async () => {
+    if (!newMessage.trim() || !conversationEmail || sendingMsg) return;
+    setSendingMsg(true);
+    const text = newMessage.trim();
+    setNewMessage("");
+    try {
+      const userMsg: LocalMessage = {
+        id: `user-${Date.now()}`,
+        content: text,
+        isFromAdmin: false,
+        name: conversationName,
+        createdAt: new Date()
+      };
+      setMessages((prev) => [...prev, userMsg]);
+
+      const res = await fetch(`${baseUrl}/api/chat/client-message`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: conversationName,
+          email: conversationEmail,
+          content: text
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setTimeout(() => addBotReply(false), 600);
+      } else {
+        toast.error(data.error || "Failed to send message.");
+      }
+    } catch (err) {
+      console.error("Failed to send follow-up:", err);
+      toast.error("Network error. Please try again.");
+    } finally {
+      setSendingMsg(false);
+    }
+  };
+
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setView(conversationEmail ? "conversation" : "form");
+  };
+
+  const handleBack = () => {
+    setView("form");
+  };
+
+  function formatTime(date: Date) {
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  }
 
   return (
     <div className={cn("fixed bottom-6 z-50", isProductPage ? "left-[312px]" : "left-6")}>
@@ -113,86 +207,152 @@ export function ChatWidget() {
             transition={{ duration: 0.2 }}
             className="absolute bottom-16 left-0 w-[340px] bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-100 flex flex-col"
           >
-            {/* Header */}
             <div className="bg-[#081F3D] text-white p-4 flex justify-between items-center">
-              <div>
-                <h3 className="font-bold text-sm">Contact Support</h3>
-                <p className="text-xs text-gray-400 mt-0.5">Leave us a message</p>
+              <div className="flex items-center gap-2 min-w-0">
+                {view === "conversation" && (
+                  <button onClick={handleBack} className="text-gray-400 hover:text-white transition-colors cursor-pointer flex-shrink-0">
+                    <ChevronLeft size={18} />
+                  </button>
+                )}
+                <div className="min-w-0">
+                  <h3 className="font-bold text-sm truncate">
+                    {view === "conversation" ? conversationName : "Contact Support"}
+                  </h3>
+                  <p className="text-xs text-gray-400 mt-0.5 truncate">
+                    {view === "conversation" ? conversationEmail : "Leave us a message"}
+                  </p>
+                </div>
               </div>
               <button
-                onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+                onClick={handleClose}
+                className="text-gray-400 hover:text-white transition-colors cursor-pointer flex-shrink-0"
               >
                 <X size={20} />
               </button>
             </div>
 
-            {/* Body */}
-            <div className="p-5 bg-white">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Name <span className="text-[#C3110C]">*</span></label>
+            {view === "form" ? (
+              <div className="p-5 bg-white">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1.5">Name <span className="text-[#C3110C]">*</span></label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="John Doe"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm outline-none focus:border-[#C3110C] transition-colors"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1.5">Email <span className="text-[#C3110C]">*</span></label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="john@example.com"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm outline-none focus:border-[#C3110C] transition-colors"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    />
+                  </div>
+
+                  {(isReturning || checkingEmail) && (
+                    <div className={`flex items-center gap-1.5 px-2 py-1.5 rounded-sm text-[10px] font-medium ${checkingEmail ? "bg-gray-50 text-gray-400" : "bg-blue-50 text-blue-700"}`}>
+                      {checkingEmail ? (
+                        <>Checking...</>
+                      ) : (
+                        <><MessageCircle size={10} /> Continuing existing conversation — your message will be added as a follow-up.</>
+                      )}
+                    </div>
+                  )}
+
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1.5">Message <span className="text-[#C3110C]">*</span></label>
+                    <textarea
+                      required
+                      rows={4}
+                      placeholder="How can we help you today?"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm outline-none focus:border-[#C3110C] transition-colors resize-none"
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-[#C3110C] text-white font-bold text-sm py-2.5 rounded-sm hover:bg-red-700 transition-colors flex justify-center items-center gap-2 disabled:opacity-70 cursor-pointer"
+                  >
+                    {isSubmitting ? "Sending..." : "Send Message"}
+                    {!isSubmitting && <Send size={14} />}
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <div className="flex-1 flex flex-col min-h-0" style={{ maxHeight: "400px" }}>
+                <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-gray-50/50">
+                  {messages.length === 0 ? (
+                    <div className="text-center py-8 text-xs text-gray-400">No messages yet</div>
+                  ) : (
+                    messages.map((msg) => (
+                      <div key={msg.id} className={`flex ${msg.isFromAdmin ? "justify-start" : "justify-end"}`}>
+                        <div
+                          className={`max-w-[85%] rounded-lg px-3 py-2 text-xs ${
+                            msg.isFromAdmin
+                              ? "bg-gray-200 text-gray-800 rounded-bl-none"
+                              : "bg-[#C3110C] text-white rounded-br-none"
+                          }`}
+                        >
+                          <p className="whitespace-pre-wrap leading-relaxed">{msg.content}</p>
+                          <p className={`text-[9px] mt-1 ${msg.isFromAdmin ? "text-gray-500" : "text-red-200"}`}>
+                            {msg.isFromAdmin ? msg.name : "You"} · {formatTime(msg.createdAt)}
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                  {sendingMsg && (
+                    <div className="flex justify-start">
+                      <div className="bg-gray-200 rounded-lg px-3 py-2 rounded-bl-none">
+                        <Loader2 size={14} className="animate-spin text-gray-500" />
+                      </div>
+                    </div>
+                  )}
+                  <div ref={messagesEndRef} />
+                </div>
+
+                <div className="px-4 py-3 border-t border-gray-150 bg-white flex items-center gap-2">
                   <input
                     type="text"
-                    required
-                    placeholder="John Doe"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm outline-none focus:border-[#C3110C] transition-colors"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="Type a message..."
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSendMessage();
+                      }
+                    }}
+                    className="flex-1 px-3 py-2 text-xs border border-gray-200 rounded-sm outline-none focus:border-[#C3110C] transition-colors"
                   />
+                  <button
+                    onClick={handleSendMessage}
+                    disabled={!newMessage.trim() || sendingMsg}
+                    className="p-2 bg-[#C3110C] text-white rounded-sm hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed transition cursor-pointer"
+                  >
+                    <Send size={14} />
+                  </button>
                 </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Email <span className="text-[#C3110C]">*</span></label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="john@example.com"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm outline-none focus:border-[#C3110C] transition-colors"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  />
-                </div>
-
-                {(isReturning || checkingEmail) && (
-                  <div className={`flex items-center gap-1.5 px-2 py-1.5 rounded-sm text-[10px] font-medium ${checkingEmail ? "bg-gray-50 text-gray-400" : "bg-blue-50 text-blue-700"}`}>
-                    {checkingEmail ? (
-                      <>Checking...</>
-                    ) : (
-                      <><MessageCircle size={10} /> Continuing existing conversation — your message will be added as a follow-up.</>
-                    )}
-                  </div>
-                )}
-
-                <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Message <span className="text-[#C3110C]">*</span></label>
-                  <textarea
-                    required
-                    rows={4}
-                    placeholder="How can we help you today?"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm outline-none focus:border-[#C3110C] transition-colors resize-none"
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-[#C3110C] text-white font-bold text-sm py-2.5 rounded-sm hover:bg-red-700 transition-colors flex justify-center items-center gap-2 disabled:opacity-70 cursor-pointer"
-                >
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                  {!isSubmitting && <Send size={14} />}
-                </button>
-              </form>
-            </div>
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Floating Button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={isOpen ? handleClose : handleOpen}
         className="w-14 h-14 bg-[#111FA2] hover:bg-[#D62828] text-white rounded-full shadow-xl flex items-center justify-center transition-all hover:scale-105 active:scale-95 z-50"
       >
         <AnimatePresence mode="wait">
