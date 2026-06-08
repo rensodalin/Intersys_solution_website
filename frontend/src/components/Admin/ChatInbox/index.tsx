@@ -171,7 +171,7 @@ export function ChatInbox() {
 
   useEffect(() => {
     if (scrollOnNextMessages.current && messages.length > 0) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
       scrollOnNextMessages.current = false;
     }
   }, [messages]);

@@ -84,6 +84,16 @@ export function ChatWidget() {
     return () => clearTimeout(timer);
   }, [formData.email, checkExistingConversation]);
 
+  useEffect(() => {
+    if (isReturning && formData.email) {
+      setConversationEmail(formData.email);
+      setConversationName(formData.name || formData.email);
+      setView("conversation");
+      setIsReturning(false);
+      fetchServerMessages(formData.email);
+    }
+  }, [isReturning]);
+
   const fetchServerMessages = async (email: string) => {
     try {
       const res = await fetch(`${baseUrl}/api/chat/public-messages/${encodeURIComponent(email)}`);
