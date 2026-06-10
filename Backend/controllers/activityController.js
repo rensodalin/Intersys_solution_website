@@ -1,6 +1,7 @@
 import Quote from "../model/quote.js";
 import Contact from "../model/contact.js";
 import User from "../model/user.js";
+import Message from "../model/message.js";
 
 export const getFeed = async (req, res) => {
   try {
@@ -46,6 +47,56 @@ export const getFeed = async (req, res) => {
     res.json({ success: true, data: limit ? activities.slice(0, limit) : activities });
   } catch (err) {
     console.error("Activity feed error:", err);
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+export const getNotifications = async (req, res) => {
+  try {
+    const [unreadMessages, pendingQuotes, recentContacts, recentQuotes] = await Promise.all([
+      Message.countDocuments({ isFromAdmin: false, read: false }),
+      Quote.countDocuments({ status: "Pending" }),
+      Contact.find().sort({ createdAt: -1 }).limit(5).lean(),
+      Quote.find({ status: "Pending" }).sort({ createdAt: -1 }).limit(5).lean(),
+    ]);
+
+    const items = [];
+
+    recentContacts.forEach(c => {
+      items.push({
+        id: `contact-${c._id}`,
+        type: "contact",
+        title: "New Contact Message",
+        description: `${c.name}: ${(c.message || "").substring(0, 40)}${c.message?.length > 40 ? "..." : ""}`,
+        section: "contacts",
+        createdAt: c.createdAt,
+      });
+    });
+
+    recentQuotes.forEach(q => {
+      items.push({
+        id: `quote-${q._id}`,
+        type: "quote",
+        title: "Pending Quote Request",
+        description: `${q.name} from ${q.company || "N/A"}`,
+        section: "quotes",
+        createdAt: q.createdAt,
+      });
+    });
+
+    items.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+    res.json({
+      success: true,
+      data: {
+        totalUnread: unreadMessages + pendingQuotes + recentContacts.length,
+        unreadMessages,
+        pendingQuotes,
+        recentItems: items.slice(0, 10),
+      },
+    });
+  } catch (err) {
+    console.error("Notifications error:", err);
     res.status(500).json({ success: false, message: err.message });
   }
 };
