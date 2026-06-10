@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import cleanroom from "@/assets/hospital.jpg"
+import cleanroom1 from "@/assets/healthcare.jpg"
 import { Container } from "@/components/Common/Container";
+import route from "@/assets/routing.jpg"
 import { CtaBand } from "@/components/Common/CtaBand";
 import {
     Tv,
@@ -631,13 +634,13 @@ function AudioVisualPage() {
 
                             <div className="space-y-4">
                                 <img
-                                    src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=800&auto=format&fit=crop"
+                                    src={cleanroom}
                                     className="w-full h-44 object-cover"
                                     alt="Office 1"
                                 />
 
                                 <img
-                                    src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop"
+                                    src={cleanroom1}
                                     className="w-full h-44 object-cover"
                                     alt="Office 2"
                                 />
