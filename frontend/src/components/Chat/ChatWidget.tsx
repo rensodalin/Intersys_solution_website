@@ -12,6 +12,7 @@ interface LocalMessage {
   isFromAdmin: boolean;
   name: string;
   createdAt: Date;
+  attachment?: { url: string; name: string } | null;
 }
 
 export function ChatWidget() {
@@ -104,7 +105,8 @@ export function ChatWidget() {
           content: m.content,
           isFromAdmin: m.isFromAdmin,
           name: m.name,
-          createdAt: new Date(m.createdAt)
+          createdAt: new Date(m.createdAt),
+          attachment: m.attachment || null
         }));
         setMessages(serverMsgs);
       }
@@ -307,7 +309,17 @@ export function ChatWidget() {
                               : "bg-[#C3110C] text-white rounded-br-none"
                           }`}
                         >
-                          <p className="whitespace-pre-wrap leading-relaxed">{msg.content}</p>
+                          <p className="whitespace-pre-wrap leading-relaxed">
+                            {msg.content}
+                            {msg.attachment && (
+                              <>{" "}<a
+                                href={`${baseUrl}${msg.attachment.url}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`underline font-semibold ${msg.isFromAdmin ? "text-gray-600" : "text-red-200"}`}
+                              >{msg.attachment.name}</a></>
+                            )}
+                          </p>
                           <p className={`text-[9px] mt-1 ${msg.isFromAdmin ? "text-gray-500" : "text-red-200"}`}>
                             {msg.isFromAdmin ? "Admin" : "You"} · {formatTime(msg.createdAt)}
                           </p>

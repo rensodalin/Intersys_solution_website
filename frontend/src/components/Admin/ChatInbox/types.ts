@@ -57,6 +57,13 @@ export interface QuoteItem {
   createdAt: string;
 }
 
+export interface FileAttachment {
+  url: string;
+  name: string;
+  size: number;
+  type: string;
+}
+
 export interface ChatMessage {
   _id: string;
   email: string;
@@ -78,4 +85,5 @@ export interface ChatMessage {
   isFromAdmin: boolean;
   read: boolean;
   createdAt: string;
+  attachment?: FileAttachment | null;
 }

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MessageSquare, Search, Send, Reply, Loader2, RefreshCw, Inbox } from "lucide-react";
+import { MessageSquare, Search, Send, Reply, Loader2, RefreshCw, Inbox, Paperclip, FileText, X } from "lucide-react";
 import { toast } from "sonner";
 import { Conversation, ChatMessage } from "./types";
 
@@ -46,6 +46,9 @@ export function ChatInbox() {
   const [loading, setLoading] = useState(false);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [sending, setSending] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const selectedEmailRef = useRef<string | null>(null);
 
@@ -93,6 +96,7 @@ export function ChatInbox() {
     setSelectedEmail(email);
     setReplyText("");
     setReplyingTo(null);
+    setSelectedFile(null);
     await fetchMessages(email);
     await markConversationRead(email);
     setConversations(prev => prev.map(c =>
@@ -135,6 +139,40 @@ export function ChatInbox() {
       toast.error("Failed to send reply");
     } finally {
       setSending(false);
+    }
+  };
+
+  const handleFileUpload = async () => {
+    if (!selectedFile || !selectedEmail) return;
+    setUploading(true);
+    try {
+      const conv = conversations.find(c => c.email === selectedEmail);
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      formData.append("email", selectedEmail);
+      formData.append("name", conv?.name || selectedEmail);
+      if (replyText.trim()) {
+        formData.append("content", replyText.trim());
+      }
+      const res = await fetch(`${baseUrl}/api/chat/upload`, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
+      const json = await res.json();
+      if (json.success) {
+        toast.success("File sent");
+        setSelectedFile(null);
+        setReplyText("");
+        scrollOnNextMessages.current = true;
+        await fetchMessages(selectedEmail);
+      } else {
+        toast.error(json.error || "Failed to upload file");
+      }
+    } catch {
+      toast.error("Failed to upload file");
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -311,7 +349,19 @@ export function ChatInbox() {
                       }`}
                     >
                       <div className="px-3 py-3">
-                        <p className="text-xs whitespace-pre-wrap leading-relaxed">{msg.content}</p>
+                        <p className="text-xs whitespace-pre-wrap leading-relaxed">
+                          {msg.content}
+                          {msg.attachment && (
+                            <>
+                              {" "}<a
+                                href={`${baseUrl}${msg.attachment.url}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`underline font-semibold ${msg.isFromAdmin ? "text-red-200" : "text-blue-600"}`}
+                              >{msg.attachment.name}</a>
+                            </>
+                          )}
+                        </p>
                       </div>
                       <div className="flex items-center justify-between px-3 pb-3">
                         <p className={`text-[9px] ${msg.isFromAdmin ? "text-red-200" : "text-gray-400"}`}>
@@ -354,30 +404,86 @@ export function ChatInbox() {
                   </button>
                 </div>
               )}
-              <div className="flex items-end gap-3">
+              {selectedFile && (
+                <div className="flex items-center justify-between bg-gray-100 rounded-sm px-3 py-2 mb-2 text-xs text-gray-600">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <FileText size={12} className="text-[#C3110C] flex-shrink-0" />
+                    <span className="truncate">{selectedFile.name}</span>
+                    <span className="text-[10px] text-gray-400 flex-shrink-0">
+                      ({(selectedFile.size / 1024).toFixed(1)} KB)
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setSelectedFile(null)}
+                    className="text-gray-400 hover:text-[#C3110C] ml-2 flex-shrink-0 cursor-pointer"
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+              )}
+              <div className="flex items-end gap-2">
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploading}
+                  className="px-3 py-2.5 text-gray-400 hover:text-[#C3110C] hover:bg-gray-100 rounded-sm transition cursor-pointer disabled:opacity-40"
+                  title="Attach file"
+                >
+                  <Paperclip size={16} />
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  className="hidden"
+                  onChange={e => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      if (file.size > 10 * 1024 * 1024) {
+                        toast.error("File size must be under 10MB");
+                        return;
+                      }
+                      setSelectedFile(file);
+                    }
+                    e.target.value = "";
+                  }}
+                />
                 <div className="flex-1">
                   <textarea
                     value={replyText}
                     onChange={e => setReplyText(e.target.value)}
-                    placeholder={replyingTo ? "Type your reply..." : "Type your reply..."}
+                    placeholder={selectedFile ? "Add a message (optional)..." : "Type your reply..."}
                     rows={2}
                     onKeyDown={e => {
                       if (e.key === "Enter" && !e.shiftKey) {
                         e.preventDefault();
-                        handleSendReply();
+                        if (selectedFile) {
+                          handleFileUpload();
+                        } else if (replyText.trim()) {
+                          handleSendReply();
+                        }
                       }
                     }}
                     className="w-full px-4 py-2.5 text-xs border border-gray-200 rounded-sm outline-none focus:border-[#C3110C] resize-none bg-gray-50"
                   />
                 </div>
-                <button
-                  onClick={handleSendReply}
-                  disabled={!replyText.trim() || sending}
-                  className="px-5 py-2.5 bg-[#C3110C] text-white text-xs font-bold rounded-sm hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center gap-2 cursor-pointer"
-                >
-                  {sending ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
-                  Send
-                </button>
+                {selectedFile ? (
+                  <button
+                    onClick={handleFileUpload}
+                    disabled={uploading}
+                    className="px-5 py-2.5 bg-[#C3110C] text-white text-xs font-bold rounded-sm hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center gap-2 cursor-pointer"
+                  >
+                    {uploading ? <Loader2 size={14} className="animate-spin" /> : <Paperclip size={14} />}
+                    Send File
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleSendReply}
+                    disabled={!replyText.trim() || sending}
+                    className="px-5 py-2.5 bg-[#C3110C] text-white text-xs font-bold rounded-sm hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center gap-2 cursor-pointer"
+                  >
+                    {sending ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
+                    Send
+                  </button>
+                )}
               </div>
             </div>
           </>

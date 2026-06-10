@@ -110,7 +110,8 @@ export const getConversationDetail = async (req, res) => {
     const mappedMessages = messages.map(m => ({
       _id: m._id.toString(), email: m.email, name: m.name,
       content: m.content, source: m.source,
-      isFromAdmin: m.isFromAdmin, read: m.read, createdAt: m.createdAt
+      isFromAdmin: m.isFromAdmin, read: m.read, createdAt: m.createdAt,
+      attachment: m.attachment || null
     }));
 
     const all = [...mappedContacts, ...mappedQuotes, ...mappedMessages];
@@ -171,7 +172,8 @@ export const getPublicMessages = async (req, res) => {
     const mapped = messages.map(m => ({
       _id: m._id.toString(), email: m.email, name: m.name,
       content: m.content, source: m.source,
-      isFromAdmin: m.isFromAdmin, createdAt: m.createdAt
+      isFromAdmin: m.isFromAdmin, createdAt: m.createdAt,
+      attachment: m.attachment || null
     }));
     res.json({ success: true, data: mapped });
   } catch (error) {
@@ -197,6 +199,41 @@ export const clientMessage = async (req, res) => {
   } catch (error) {
     console.error("Failed to save client message:", error);
     res.status(500).json({ success: false, error: "Failed to save message" });
+  }
+};
+
+export const uploadFile = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, error: "No file uploaded" });
+    }
+    const { email, name, content } = req.body;
+    if (!email) {
+      return res.status(400).json({ success: false, error: "Email is required" });
+    }
+
+    const fileUrl = `/uploads/chat/${req.file.filename}`;
+
+    const message = new Message({
+      email,
+      name: name || email,
+      content: content || `Sent a file: ${req.file.originalname}`,
+      source: "reply",
+      isFromAdmin: true,
+      read: true,
+      attachment: {
+        url: fileUrl,
+        name: req.file.originalname,
+        size: req.file.size,
+        type: req.file.mimetype,
+      },
+    });
+    await message.save();
+
+    res.json({ success: true, data: message });
+  } catch (error) {
+    console.error("Failed to upload file:", error);
+    res.status(500).json({ success: false, error: "Failed to upload file" });
   }
 };
 
