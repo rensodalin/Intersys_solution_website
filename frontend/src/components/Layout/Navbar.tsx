@@ -1,24 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Menu, X, User, ChevronRight, Phone, Mail, Facebook, Linkedin, ChevronDown } from "lucide-react";
+import { Menu, X, User, ChevronRight, Phone, Mail, Facebook, Linkedin, ChevronDown, Package } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn, toSlug } from "@/lib/utils";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import { initializeAuth, logoutSuccess } from "@/store/authSlice";
 import logoImg from "@/assets/logo.avif";
+import { NAVIGATION_DATA } from "@/components/shared/navigationData";
+import type { NavDataItem, NavDataSubItem } from "@/components/shared/navigationData";
+import { useTaxonomy } from "@/hooks/useTaxonomy";
+import type { TaxonomySubCategory } from "@/utils/taxonomyApi";
 
 const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
 const avatarUrl = (url?: string) => (url?.startsWith("/") ? `${baseUrl}${url}` : url);
-
-const PRODUCTS_DATA: Record<string, { href: string }> = {
-  "Access Control": { href: "/products/access-control" },
-  "Surveillance": { href: "/products/surveillance" },
-  "Integrated System": { href: "/products" },
-  "Building Management": { href: "/products/building-management" },
-  "Audio Visual": { href: "/products" },
-  "Fire System": { href: "/products" },
-};
 
 const CLIENT_CENTER_DATA = [
   { name: "Document Center", href: "/document-center" },
@@ -69,6 +64,44 @@ export function Navbar() {
   const user = useSelector((state: RootState) => state.auth.user);
 
   const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+
+  const { taxonomy } = useTaxonomy();
+
+  function subCatToNav(sc: TaxonomySubCategory, categorySlug: string, brandSlug: string, parentSlugs: string[] = []): NavDataSubItem {
+    const slug = toSlug(sc.name);
+    const allSlugs = [...parentSlugs, slug];
+    const link = `/products/${categorySlug}/${brandSlug}/${allSlugs.join("/")}`;
+    return {
+      label: sc.name,
+      link,
+      sub: sc.children && sc.children.length > 0
+        ? sc.children.map(c => subCatToNav(c, categorySlug, brandSlug, allSlugs))
+        : undefined,
+    };
+  }
+
+  const productsNavData = useMemo((): NavDataItem[] => {
+    if (taxonomy.length === 0) return NAVIGATION_DATA;
+    return taxonomy.map(t => {
+      const slug = toSlug(t.category);
+      const brands = (t.brands || []).map(b => {
+        const brandSlug = toSlug(b.name);
+        const subItems = (b.subCategories || []).map(sc => subCatToNav(sc, slug, brandSlug));
+        return {
+          label: b.name,
+          link: `/products/${slug}/${brandSlug}`,
+          sub: subItems.length > 0 ? subItems : undefined,
+        } as NavDataSubItem;
+      });
+      return {
+        id: slug,
+        label: t.category,
+        icon: Package,
+        link: `/products/${slug}`,
+        sub: brands.length > 0 ? brands : undefined,
+      } as NavDataItem;
+    });
+  }, [taxonomy]);
 
   const handleLogout = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -190,16 +223,58 @@ export function Navbar() {
 
               {showProducts && (
                 <div className="absolute top-full left-0 pt-2 w-64 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
-                  {Object.entries(PRODUCTS_DATA).map(([label, data]) => (
-                    <Link
-                      key={label}
-                      to={data.href}
-                      onClick={closeMenus}
-                      className="block px-5 py-3.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors border-b border-white/5 last:border-0"
-                    >
-                      {label}
-                    </Link>
-                  ))}
+                  {productsNavData.map((cat) => {
+                    const hasSub = cat.sub && cat.sub.length > 0;
+                    return (
+                      <div key={cat.id} className="relative group/menu">
+                        <Link
+                          to={cat.link}
+                          onClick={closeMenus}
+                          className="flex items-center justify-between px-5 py-3.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors border-b border-white/5 last:border-0"
+                        >
+                          <span>{cat.label}</span>
+                          {hasSub && <ChevronRight size={14} className="text-white/40" />}
+                        </Link>
+                        {hasSub && (
+                          <div className="absolute left-full top-0 pl-2 hidden group-hover/menu:block min-w-56">
+                            <div className="bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in duration-150">
+                              {cat.sub!.map((sub) => {
+                                const hasSubSub = sub.sub && sub.sub.length > 0;
+                                return (
+                                  <div key={sub.label} className="relative group/sub">
+                                    <Link
+                                      to={sub.link}
+                                      onClick={closeMenus}
+                                      className="flex items-center justify-between px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors border-b border-white/5 last:border-0"
+                                    >
+                                      <span>{sub.label}</span>
+                                      {hasSubSub && <ChevronRight size={14} className="text-white/40" />}
+                                    </Link>
+                                    {hasSubSub && (
+                                      <div className="absolute left-full top-0 pl-2 hidden group-hover/sub:block min-w-48">
+                                        <div className="bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in duration-150">
+                                          {sub.sub!.map((gc) => (
+                                            <Link
+                                              key={gc.label}
+                                              to={gc.link}
+                                              onClick={closeMenus}
+                                              className="block px-5 py-2.5 text-xs text-white/60 hover:text-white hover:bg-white/5 transition-colors border-b border-white/5 last:border-0"
+                                            >
+                                              {gc.label}
+                                            </Link>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -451,14 +526,14 @@ export function Navbar() {
                           exit={{ height: 0, opacity: 0 }}
                           className="overflow-hidden pl-6 pr-4 bg-black/20 rounded-sm"
                         >
-                          {Object.entries(PRODUCTS_DATA).map(([label, data]) => (
+                          {productsNavData.map((cat) => (
                             <Link
-                              key={label}
-                              to={data.href}
+                              key={cat.id}
+                              to={cat.link}
                               onClick={() => setMobileOpen(false)}
                               className="block py-2.5 text-xs text-white/70 hover:text-white transition-colors"
                             >
-                              {label}
+                              {cat.label}
                             </Link>
                           ))}
                         </motion.div>
