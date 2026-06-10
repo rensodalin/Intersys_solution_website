@@ -354,11 +354,33 @@ export function CatalogSidebar({
                 const cat = taxonomy.find(t => toSlug(t.category) === parts[1]);
                 if (cat) {
                     const brand = cat.brands.find(b => toSlug(b.name) === parts[2]);
-                    if (brand) sections.push(brand.name);
+                    if (brand) {
+                        sections.push(brand.name);
+                        if (parts[3]) {
+                            const sub = brand.subCategories.find(sc => toSlug(sc.name) === parts[3]);
+                            if (sub) sections.push(sub.name);
+                        }
+                    }
                 }
                 // Fallback for hardcoded brand names when taxonomy is empty
                 if (taxonomy.length === 0) {
-                    if (parts[2] === "honeywell") sections.push("Honeywell Systems");
+                    if (parts[2] === "honeywell") {
+                        sections.push("Honeywell Systems");
+                        if (parts[3]) {
+                            const subMap: Record<string, string> = {
+                                "control-panels": "Control Panels",
+                                "control-panel-kits": "Control Panel Kits",
+                                "readers": "Readers",
+                                "credentials": "Credentials",
+                                "accessories": "Accessories",
+                                "door-hardware": "Door Hardware",
+                                "software": "Software",
+                                "lobby-kiosks": "Lobby Kiosks",
+                                "upgrades": "System Agreements & Upgrades",
+                            };
+                            if (subMap[parts[3]]) sections.push(subMap[parts[3]]);
+                        }
+                    }
                     if (parts[2] === "salto") sections.push("SALTO Solutions");
                 }
             }

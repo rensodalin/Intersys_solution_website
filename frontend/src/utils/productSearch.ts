@@ -12,13 +12,6 @@ export interface SearchResult {
 let searchCache: SearchResult[] | null = null;
 let initPromise: Promise<void> | null = null;
 
-function categoryFromLink(category: string): string {
-    if (category.includes("Surveillance")) return "/products/surveillance";
-    if (category.includes("Building Management")) return "/products/building-management";
-    if (category.includes("Access Control")) return "/products/access-control";
-    return "/products";
-}
-
 function brandLabel(brand: string): string {
     if (brand === "Intersys") return "Surveillance";
     if (brand === "BMS") return "Building Management";
@@ -35,14 +28,21 @@ export async function initSearchIndex(): Promise<void> {
             const json = await res.json();
             if (!json.success || !json.data) return;
 
-            searchCache = json.data.map((p: any) => ({
-                id: p.productId,
-                title: p.title,
-                description: p.description || "",
-                image: p.mainImage || "",
-                brand: brandLabel(p.brand),
-                link: `/products/detail/${p.productId}?from=${categoryFromLink(p.category)}`,
-            }));
+            searchCache = json.data.map((p: any) => {
+                const fromPath = p.brandSubCategoryLink
+                    ? p.brandSubCategoryLink.split('#')[0]
+                    : p.category
+                        ? `/products/${p.category.toLowerCase().replace(/\s+/g, '-')}`
+                        : "/products";
+                return {
+                    id: p.productId,
+                    title: p.title,
+                    description: p.description || "",
+                    image: p.mainImage || "",
+                    brand: brandLabel(p.brand),
+                    link: `/products/detail/${p.productId}?from=${encodeURIComponent(fromPath)}`,
+                };
+            });
         } catch {
             searchCache = [];
         }
