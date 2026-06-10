@@ -4,20 +4,26 @@ import { Container } from "@/components/Common/Container";
 import { sectors } from "@/components/Homepage/JourneySection";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import datacenter from "@/assets/datacenter.png";
+import education from "@/assets/education.jpg";
+import healthcare from "@/assets/healthcare.jpg";
+import hospital from "@/assets/hospital.jpg";
+import commercial from "@/assets/commercial.jpg";
 
 export const Route = createFileRoute("/sectors")({
   component: SectorsPage,
 });
 
 const sectorImages = [
-  "https://plus.unsplash.com/premium_photo-1740363268539-cd9093c3b5d1?q=80&w=1170&auto=format&fit=crop",
+  datacenter,
   "https://images.unsplash.com/photo-1710149459994-480e2b5c3b16?q=80&w=1197&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1695774165691-8a01a6045952?q=80&w=1169&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1645504635513-4cedb9d5ffb2?q=80&w=1170&auto=format&fit=crop",
+  education,
+  commercial,
   "https://images.unsplash.com/photo-1697057406467-60340e993e6e?q=80&w=687&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1561101904-da649fcbf03f?q=80&w=687&auto=format&fit=crop",
-  "https://plus.unsplash.com/premium_photo-1682130157004-057c137d96d5?q=80&w=1332&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=800&auto=format&fit=crop",
+  hospital,
+  healthcare,
+
 ];
 
 function SectorsPage() {
@@ -25,7 +31,7 @@ function SectorsPage() {
     <div className="bg-white min-h-screen">
 
       {/* ─── HERO ─── */}
-      <section className="relative h-[75vh] min-h-[400px] overflow-hidden flex items-center">
+      <section className="relative h-[60vh] min-h-[400px] overflow-hidden flex items-center">
         <div className="absolute inset-0 z-0">
           <img
             src="https://www.intersys-solutions.com/website_asset/specialize.jpg"
@@ -45,27 +51,21 @@ function SectorsPage() {
               transition={{ duration: 0.8, delay: 0.1 }}
               className="space-y-2"
             >
-              <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight pt-30">
+              <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight pt-20">
                 We Specialize in
               </h1>
 
-              <h2 className="text-5xl md:text-6xl font-bold leading-tight tracking-tight">
+              <h2 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">
                 <span className="text-[#FC3B1F]">Project</span>
               </h2>
             </motion.div>
 
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="origin-left h-px w-24 bg-white/20"
-            />
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-white/50 text-base md:text-lg leading-relaxed max-w-lg"
+              className="text-white/50 text-base md:text-md leading-relaxed max-w-lg"
             >
               Delivering innovative, high-quality systems tailored to modern infrastructure demands — from smart cities to healthcare facilities.
             </motion.p>

@@ -11,6 +11,7 @@ import {
     UserSection,
     CompanySection,
 } from "./QuoteFormComponents";
+import { useTaxonomy } from "@/hooks/useTaxonomy";
 
 import engineerImg from "@/assets/enginner.png";
 import team1 from "@/assets/team/picture on QR cord/Frame 3.png";
@@ -59,6 +60,37 @@ export function QuoteForm() {
 
     const [submitStatus, setSubmitStatus] = React.useState<"success" | "error" | null>(null);
 
+    const { taxonomy } = useTaxonomy();
+
+    const liveCategories = React.useMemo(() => {
+        if (taxonomy.length === 0) return [
+            "Building Management Systems (BMS)",
+            "Access Control Systems",
+            "Surveillance (CCTV) Systems",
+            "Fire Alarm & Safety Systems",
+            "Audio Visual (AV) Solutions",
+            "Integrated Building Systems"
+        ];
+        return taxonomy.map(t => t.category);
+    }, [taxonomy]);
+
+    const liveSections = React.useMemo(() => {
+        if (taxonomy.length === 0) return [
+            "Controllers & Control Panels",
+            "Software & Platforms",
+            "Field Devices & Sensors",
+            "Cameras & Surveillance Devices",
+            "Fire Detection Devices",
+            "Access Control Devices",
+            "Audio Visual Equipment",
+            "Networking & Communication Devices",
+            "Power Supplies & Accessories"
+        ];
+        const brands = new Set<string>();
+        taxonomy.forEach(t => (t.brands || []).forEach(b => brands.add(b.name)));
+        return Array.from(brands).sort();
+    }, [taxonomy]);
+
     // Auto-populate form when inquiry items change
     React.useEffect(() => {
         if (items.length > 0) {
@@ -78,80 +110,21 @@ export function QuoteForm() {
             const detectedSections: string[] = [];
 
             items.forEach(item => {
-                const title = item.title.toUpperCase();
+                const category = item.category;
                 const brand = item.brand;
 
-                // Category Mapping - Access Control is the primary category for these brands
-                if (item.category === "Access Control" || brand === "Salto" || brand === "Honeywell") {
-                    if (!detectedCategories.includes("Access Control Systems")) {
-                        detectedCategories.push("Access Control Systems");
+                if (category) {
+                    const exact = liveCategories.find(c => c === category);
+                    if (exact) {
+                        if (!detectedCategories.includes(exact)) detectedCategories.push(exact);
+                    } else {
+                        const partial = liveCategories.find(c => c.toLowerCase().includes(category.toLowerCase()));
+                        if (partial && !detectedCategories.includes(partial)) detectedCategories.push(partial);
                     }
                 }
 
-                // Section Mapping based on keywords
-                // 1. Readers / Locks / Cylinders (Devices)
-                if (
-                    title.includes("READER") ||
-                    title.includes("KEYPAD") ||
-                    title.includes("LOCK") ||
-                    title.includes("CYLINDER") ||
-                    title.includes("PADLOCK") ||
-                    title.includes("XS4") ||
-                    title.includes("NEO") ||
-                    title.includes("ÆLEMENT") ||
-                    title.includes("FUSION") ||
-                    title.includes("CREDENTIAL") ||
-                    title.includes("FOB") ||
-                    title.includes("CARD")
-                ) {
-                    if (!detectedSections.includes("Access Control Devices")) {
-                        detectedSections.push("Access Control Devices");
-                    }
-                }
-
-                // 2. Controllers / Panels
-                if (
-                    title.includes("CONTROLLER") ||
-                    title.includes("PANEL") ||
-                    title.includes("KIT") ||
-                    title.includes("BOARD") ||
-                    title.includes("IQ3") ||
-                    title.includes("GATEWAY") ||
-                    title.includes("NODE") ||
-                    title.includes("UBOX")
-                ) {
-                    if (!detectedSections.includes("Controllers & Control Panels")) {
-                        detectedSections.push("Controllers & Control Panels");
-                    }
-                }
-
-                // 3. Software
-                if (
-                    title.includes("SOFTWARE") ||
-                    title.includes("PRO-WATCH") ||
-                    title.includes("WIN-PAK") ||
-                    title.includes("MANAGEMENT") ||
-                    title.includes("SUITE") ||
-                    title.includes("PLATFORM") ||
-                    title.includes("SERVER")
-                ) {
-                    if (!detectedSections.includes("Software & Platforms")) {
-                        detectedSections.push("Software & Platforms");
-                    }
-                }
-
-                // 4. Power & Accessories
-                if (
-                    title.includes("POWER SUPPLY") ||
-                    title.includes("CABLE") ||
-                    title.includes("HOUSING") ||
-                    title.includes("ENCLOSURE") ||
-                    title.includes("CONVERTER") ||
-                    title.includes("BATTERY")
-                ) {
-                    if (!detectedSections.includes("Power Supplies & Accessories")) {
-                        detectedSections.push("Power Supplies & Accessories");
-                    }
+                if (brand && liveSections.includes(brand)) {
+                    if (!detectedSections.includes(brand)) detectedSections.push(brand);
                 }
             });
 
@@ -327,6 +300,8 @@ export function QuoteForm() {
                                 errors={errors}
                                 watch={watch}
                                 setValue={setValue}
+                                categories={liveCategories}
+                                sections={liveSections}
                             />
                             <CompanySection register={register} errors={errors} />
 

@@ -18,7 +18,7 @@ import {
     BadgeCheck,
     Package
 } from "lucide-react";
-import { QuoteFormValues, productSections, companyTypes } from "./schema";
+import { QuoteFormValues, companyTypes } from "./schema";
 
 /* ─────────────────────────────────────────────
    INPUT FIELD
@@ -64,24 +64,17 @@ interface SectionProps {
     control?: Control<QuoteFormValues>;
     watch?: any;
     setValue?: any;
+    categories?: string[];
+    sections?: string[];
 }
 
-export function InterestedSection({ register, control, watch, errors }: SectionProps) {
+export function InterestedSection({ register, control, watch, errors, categories, sections }: SectionProps) {
     const watchedCategories = watch ? watch("solutionCategories") || [] : [];
     const watchedSections = watch ? watch("sections") || [] : [];
     const { fields, append, remove } = useFieldArray({
         control: control!,
         name: "products",
     });
-
-    const categories = [
-        "Building Management Systems (BMS)",
-        "Access Control Systems",
-        "Surveillance (CCTV) Systems",
-        "Fire Alarm & Safety Systems",
-        "Audio Visual (AV) Solutions",
-        "Integrated Building Systems"
-    ];
 
     return (
         <section className="space-y-8">
@@ -104,7 +97,14 @@ export function InterestedSection({ register, control, watch, errors }: SectionP
                         Product categories
                     </h3>
 
-                    {categories.map((text) => (
+                    {(categories || [
+                        "Building Management Systems (BMS)",
+                        "Access Control Systems",
+                        "Surveillance (CCTV) Systems",
+                        "Fire Alarm & Safety Systems",
+                        "Audio Visual (AV) Solutions",
+                        "Integrated Building Systems"
+                    ]).map((text) => (
                         <label
                             key={text}
                             className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-sm border border-gray-200 hover:border-[#162E93] transition-colors cursor-pointer"
@@ -130,7 +130,17 @@ export function InterestedSection({ register, control, watch, errors }: SectionP
                     </h3>
 
                     <div className="grid grid-cols-2 gap-3">
-                        {productSections.map((section) => (
+                        {(sections || [
+                            "Controllers & Control Panels",
+                            "Software & Platforms",
+                            "Field Devices & Sensors",
+                            "Cameras & Surveillance Devices",
+                            "Fire Detection Devices",
+                            "Access Control Devices",
+                            "Audio Visual Equipment",
+                            "Networking & Communication Devices",
+                            "Power Supplies & Accessories"
+                        ]).map((section) => (
                             <label
                                 key={section}
                                 className="flex items-center gap-3 text-[12px] font-medium text-gray-600 hover:text-[#162E93] transition-colors cursor-pointer"
