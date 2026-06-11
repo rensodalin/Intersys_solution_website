@@ -40,5 +40,5 @@ export const productSections = [
     "Power Supplies & Accessories"
 ];
 export const companyTypes = [
-    "Manufacturer", "Distributor", "Contractor", "Engineering", "Building Management"
+    "Manufacturer", "Distributor", "Contractor", "Engineering", "Building Management", "Other"
 ];

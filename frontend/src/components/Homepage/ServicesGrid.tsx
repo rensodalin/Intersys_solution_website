@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { useRouter } from "@tanstack/react-router";
 import {
@@ -19,6 +19,27 @@ import fireImg from "@/assets/fire_safety.png";
 import securityImg from "@/assets/security_access.png";
 import cctvImg from "@/assets/cctv_service.png";
 import avImg from "@/assets/av_service.png";
+
+function TypewriterText({ text, className }: { text: string; className?: string }) {
+  const [displayed, setDisplayed] = useState("");
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const done = useRef(false);
+
+  useEffect(() => {
+    if (!isInView || done.current) return;
+    done.current = true;
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      setDisplayed(text.slice(0, i));
+      if (i >= text.length) clearInterval(interval);
+    }, 60);
+    return () => clearInterval(interval);
+  }, [isInView, text]);
+
+  return <span ref={ref} className={className}>{displayed}</span>;
+}
 
 export function ServicesGrid() {
   const [expandedIds, setExpandedIds] = useState<string[]>([]);
@@ -52,7 +73,10 @@ export function ServicesGrid() {
               transition={{ delay: 0.05 }}
               className="text-3xl md:text-4xl font-bold tracking-tight text-[#0A0F1A]"
             >
-              Our <span className="text-[#DA3D20]">Solutions</span>
+              Our{" "}
+              <span className="text-[#DA3D20]">
+                <TypewriterText text="Solutions" />
+              </span>
             </motion.h2>
           </div>
 

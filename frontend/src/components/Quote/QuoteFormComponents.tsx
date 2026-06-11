@@ -315,7 +315,11 @@ export function UserSection({ register, errors }: SectionProps) {
 /* ─────────────────────────────────────────────
    COMPANY SECTION
 ──────────────────────────────────────────── */
-export function CompanySection({ register, errors }: SectionProps) {
+export function CompanySection({ register, errors, watch, setValue }: SectionProps) {
+    const watchedType = watch ? watch("companyType") : "";
+    const presetTypes = ["Manufacturer", "Distributor", "Contractor", "Engineering", "Building Management"];
+    const isOther = watchedType ? !presetTypes.includes(watchedType) : false;
+
     return (
         <section className="space-y-6 pt-6 border-t">
 
@@ -334,11 +338,35 @@ export function CompanySection({ register, errors }: SectionProps) {
                     <div className="flex flex-wrap gap-4 text-[13px] font-medium text-gray-700">
                         {companyTypes.map((type) => (
                             <label key={type} className="flex items-center gap-2 cursor-pointer hover:text-[#162E93] transition-colors">
-                                <input type="radio" value={type} {...register("companyType")} className="text-[#162E93] focus:ring-[#162E93]" />
+                                <input
+                                    type="radio"
+                                    value={type}
+                                    name="companyType"
+                                    onChange={() => {
+                                        if (type !== "Other") {
+                                            setValue?.("companyType", type);
+                                        } else {
+                                            setValue?.("companyType", "Other");
+                                        }
+                                    }}
+                                    checked={type === "Other" ? isOther : watchedType === type}
+                                    className="text-[#162E93] focus:ring-[#162E93]"
+                                />
                                 {type}
                             </label>
                         ))}
                     </div>
+
+                    {isOther && (
+                        <input
+                            placeholder="Please specify your company type"
+                            value={watchedType === "Other" ? "" : watchedType}
+                            onChange={(e) => setValue?.("companyType", e.target.value)}
+                            className="w-full px-4 py-3 rounded-sm border border-gray-200 bg-[#F8F9FA] text-[13px] text-[#0A0F1A] focus:outline-none focus:border-[#162E93] transition-colors mt-2"
+                            autoFocus
+                        />
+                    )}
+
                     {errors.companyType && <p className="text-[11px] font-bold text-[#D62828]">{errors.companyType.message as string}</p>}
                 </div>
 

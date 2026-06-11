@@ -15,7 +15,8 @@ export function PosterCarousel() {
   const [posters, setPosters] = useState<Poster[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Poster | null>(null);
-  const sliderRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const offsetRef = useRef(0);
 
   useEffect(() => {
     const fetchPosters = async () => {
@@ -36,29 +37,57 @@ export function PosterCarousel() {
   }, []);
 
   useEffect(() => {
-    const slider = sliderRef.current;
-    if (!slider || posters.length === 0) return;
+    if (posters.length === 0) return;
 
-    let scrollAmount = 0;
-    const autoScroll = () => {
-      scrollAmount += 1;
-      slider.scrollTo({ left: scrollAmount });
-      if (scrollAmount >= slider.scrollWidth / 2) {
-        scrollAmount = 0;
+    let paused = false;
+    let animId: number;
+
+    const step = () => {
+      const track = trackRef.current;
+      if (!track) { animId = requestAnimationFrame(step); return; }
+
+      if (!paused) {
+        const fullSetWidth = track.scrollWidth / 2;
+        offsetRef.current -= 0.7;
+        if (Math.abs(offsetRef.current) >= fullSetWidth) {
+          offsetRef.current = 0;
+        }
+        track.style.transform = `translateX(${offsetRef.current}px)`;
       }
+      animId = requestAnimationFrame(step);
     };
 
-    const interval = setInterval(autoScroll, 16);
-    return () => clearInterval(interval);
+    animId = requestAnimationFrame(step);
+
+    const trackEl = trackRef.current;
+    if (!trackEl) return;
+
+    const onMouseEnter = () => { paused = true; };
+    const onMouseLeave = () => { paused = false; };
+
+    trackEl.addEventListener("mouseenter", onMouseEnter);
+    trackEl.addEventListener("mouseleave", onMouseLeave);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      trackEl.removeEventListener("mouseenter", onMouseEnter);
+      trackEl.removeEventListener("mouseleave", onMouseLeave);
+    };
   }, [posters]);
 
   const scroll = (direction: "left" | "right") => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({
-        left: direction === "left" ? -500 : 500,
-        behavior: "smooth",
-      });
+    const track = trackRef.current;
+    if (!track) return;
+
+    const jump = direction === "left" ? 500 : -500;
+    offsetRef.current += jump;
+    const fullSetWidth = track.scrollWidth / 2;
+    if (Math.abs(offsetRef.current) >= fullSetWidth) {
+      offsetRef.current = 0;
     }
+    track.style.transform = `translateX(${offsetRef.current}px)`;
+    track.style.transition = "transform 0.4s ease";
+    setTimeout(() => { track.style.transition = ""; }, 400);
   };
 
   useEffect(() => {
@@ -96,7 +125,7 @@ export function PosterCarousel() {
           </button>
         </div>
 
-        <div ref={sliderRef} className="flex overflow-x-scroll whitespace-nowrap hide-scrollbar">
+        <div ref={trackRef} className="flex whitespace-nowrap">
           {[...posters, ...posters].map((post, idx) => (
             <button
               key={idx}
@@ -128,11 +157,6 @@ export function PosterCarousel() {
             </button>
           ))}
         </div>
-
-        <style>{`
-          .hide-scrollbar::-webkit-scrollbar { display: none; }
-          .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        `}</style>
       </section>
 
       {/* Modal */}

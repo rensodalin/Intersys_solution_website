@@ -68,11 +68,9 @@ export function MetricsStrip() {
 
             {/* Brush Effect */}
             <motion.div
-              initial={{ x: "-120%" }}
-              whileInView={{ x: "120%" }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-              className="absolute inset-0 z-10 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-30"
+              animate={{ x: ["-120%", "120%"] }}
+              transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity, repeatType: "loop" }}
+              className="absolute inset-0 z-10 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-30 group-hover:opacity-0 transition-opacity duration-300"
             />
           </motion.div>
 
@@ -116,11 +114,9 @@ export function MetricsStrip() {
 
               {/* Brush Effect (Original Animation) */}
               <motion.div
-                initial={{ x: "-120%" }}
-                whileInView={{ x: "120%" }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.2, ease: "easeInOut", delay: i * 0.1 }}
-                className="absolute inset-0 z-30 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-20"
+                animate={{ x: ["-120%", "120%"] }}
+                transition={{ duration: 1.2, ease: "easeInOut", delay: i * 0.1, repeat: Infinity, repeatType: "loop" }}
+                className="absolute inset-0 z-30 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-20 group-hover:opacity-0 transition-opacity duration-300"
               />
 
               {/* Left accent line */}

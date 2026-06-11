@@ -303,7 +303,7 @@ export function QuoteForm() {
                                 categories={liveCategories}
                                 sections={liveSections}
                             />
-                            <CompanySection register={register} errors={errors} />
+                            <CompanySection register={register} errors={errors} setValue={setValue} watch={watch} />
 
                             {/* submit */}
                             <div className="border-t border-gray-100 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
