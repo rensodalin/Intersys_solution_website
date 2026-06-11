@@ -393,7 +393,6 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                 <tr className="bg-[#F8F9FA] text-gray-500 text-[12px] font-bold tracking-tight border-b border-gray-100">
                   <th className="px-8 py-5">Part Code</th>
                   <th className="px-8 py-5">Detailed Specification</th>
-                  <th className="px-8 py-5 text-center">Price</th>
                   <th className="px-8 py-5 text-center">Quantity</th>
                   <th className="px-8 py-5 text-center">Action</th>
                 </tr>
@@ -406,12 +405,6 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                     </td>
                     <td className="px-8 py-8 border-b border-gray-100 text-[13px] text-gray-500 font-light whitespace-pre-line leading-relaxed">
                       {opt.specification}
-                    </td>
-
-                    <td className="px-8 py-8 border-b border-gray-100 text-center">
-                      <span className="text-[13px] font-bold text-[#1A3263]">
-                        ${(opt.price ?? 0).toFixed(2)}
-                      </span>
                     </td>
 
                     <td className="px-8 py-8 border-b border-gray-100">
