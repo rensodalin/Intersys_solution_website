@@ -15,6 +15,7 @@ export function PosterCarousel() {
   const [posters, setPosters] = useState<Poster[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Poster | null>(null);
+  const [refreshingIds, setRefreshingIds] = useState<Set<string>>(new Set());
   const trackRef = useRef<HTMLDivElement>(null);
   const offsetRef = useRef(0);
 
@@ -35,6 +36,25 @@ export function PosterCarousel() {
     };
     fetchPosters();
   }, []);
+
+  const handleImageError = async (postId: string) => {
+    if (refreshingIds.has(postId)) return;
+    setRefreshingIds(prev => new Set(prev).add(postId));
+    try {
+      const baseUrl = `http://${window.location.hostname}:1000`;
+      const res = await fetch(`${baseUrl}/api/posters/refresh-image/${postId}`, {
+        method: "POST",
+      });
+      const json = await res.json();
+      if (json.success) {
+        setPosters(prev => prev.map(p => p._id === postId ? json.data : p));
+      }
+    } catch {
+      // keep showing placeholder
+    } finally {
+      setRefreshingIds(prev => { const next = new Set(prev); next.delete(postId); return next; });
+    }
+  };
 
   useEffect(() => {
     if (posters.length === 0) return;
@@ -137,8 +157,19 @@ export function PosterCarousel() {
                   src={post.image}
                   alt={post.title || `Poster ${idx + 1}`}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  data-post-id={post._id}
                   onError={(e) => {
-                    (e.currentTarget.closest("button") as HTMLElement).style.display = "none";
+                    const img = e.currentTarget;
+                    if (img.dataset.refreshed) return;
+                    img.dataset.refreshed = "true";
+                    img.style.display = "none";
+                    const parent = img.parentElement;
+                    if (!parent) return;
+                    const fallback = document.createElement("div");
+                    fallback.className = "absolute inset-0 flex items-center justify-center bg-[#eceff3] text-gray-400 text-xs";
+                    fallback.textContent = "Refreshing...";
+                    parent.appendChild(fallback);
+                    handleImageError(post._id);
                   }}
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-500" />

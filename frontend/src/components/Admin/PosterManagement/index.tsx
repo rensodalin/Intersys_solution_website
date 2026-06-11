@@ -21,6 +21,7 @@ export function PosterManagement() {
   const [formDescription, setFormDescription] = useState("");
 
   const [formLinkedinLink, setFormLinkedinLink] = useState("");
+  const [formFacebookLink, setFormFacebookLink] = useState("");
   const [formOrder, setFormOrder] = useState(0);
 
   // Delete modal
@@ -71,6 +72,7 @@ export function PosterManagement() {
     setFormTitle("");
     setFormDescription("");
     setFormLinkedinLink("");
+    setFormFacebookLink("");
     setFormOrder(posters.length);
     setShowForm(true);
   }
@@ -82,6 +84,7 @@ export function PosterManagement() {
     setFormTitle(p.title);
     setFormDescription(p.description);
     setFormLinkedinLink(p.linkedinLink);
+    setFormFacebookLink(p.facebookLink);
     setFormOrder(p.order);
     setShowForm(true);
   }
@@ -100,6 +103,7 @@ export function PosterManagement() {
       title: formTitle,
       description: formDescription,
       linkedinLink: formLinkedinLink,
+      facebookLink: formFacebookLink,
       order: formOrder,
     };
     try {
@@ -170,7 +174,7 @@ export function PosterManagement() {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify({ image: p.image, link: p.link, title: p.title, description: p.description, linkedinLink: p.linkedinLink, order: p.order }),
+          body: JSON.stringify({ image: p.image, link: p.link, title: p.title, description: p.description, linkedinLink: p.linkedinLink, facebookLink: p.facebookLink, order: p.order }),
         })
       ));
     } catch {
@@ -214,6 +218,7 @@ export function PosterManagement() {
           formTitle={formTitle}
           formDescription={formDescription}
           formLinkedinLink={formLinkedinLink}
+          formFacebookLink={formFacebookLink}
           formOrder={formOrder}
           editingId={editingId}
           saving={saving}
@@ -223,6 +228,7 @@ export function PosterManagement() {
           onTitleChange={setFormTitle}
           onDescriptionChange={setFormDescription}
           onLinkedinLinkChange={setFormLinkedinLink}
+          onFacebookLinkChange={setFormFacebookLink}
           onOrderChange={setFormOrder}
           onSaveImageLocally={saveImageLocally}
           onClose={closeForm}

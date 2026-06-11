@@ -8,6 +8,7 @@ router.post("/save-image", isAdmin, posterController.saveImage);
 router.get("/", posterController.getAll);
 router.post("/", isAdmin, posterController.create);
 router.put("/:id", isAdmin, posterController.update);
+router.post("/refresh-image/:id", posterController.refreshImage);
 router.delete("/:id", isAdmin, posterController.remove);
 
 export default router;

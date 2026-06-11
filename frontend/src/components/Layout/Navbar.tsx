@@ -60,6 +60,7 @@ export function Navbar() {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileClientOpen, setMobileClientOpen] = useState(false);
+  
 
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -518,27 +519,27 @@ export function Navbar() {
                         className={cn("text-white/50 transition-transform duration-300", mobileProductsOpen && "rotate-180")}
                       />
                     </button>
-                    <AnimatePresence>
-                      {mobileProductsOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          className="overflow-hidden pl-6 pr-4 bg-black/20 rounded-sm"
-                        >
-                          {productsNavData.map((cat) => (
-                            <Link
-                              key={cat.id}
-                              to={cat.link}
-                              onClick={() => setMobileOpen(false)}
-                              className="block py-2.5 text-xs text-white/70 hover:text-white transition-colors"
+                        <AnimatePresence>
+                          {mobileProductsOpen && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              className="overflow-hidden pl-6 pr-4 bg-black/20 rounded-sm"
                             >
-                              {cat.label}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                              {productsNavData.map((cat) => (
+                                <Link
+                                  key={cat.id}
+                                  to={cat.link}
+                                  onClick={() => setMobileOpen(false)}
+                                  className="block py-2.5 text-xs text-white/70 hover:text-white transition-colors"
+                                >
+                                  {cat.label}
+                                </Link>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                   </div>
 
                   {/* Collapsible Client Center Accordion */}

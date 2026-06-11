@@ -7,6 +7,7 @@ interface PosterFormProps {
   formTitle: string;
   formDescription: string;
   formLinkedinLink: string;
+  formFacebookLink: string;
   formOrder: number;
   editingId: string | null;
   saving: boolean;
@@ -16,6 +17,7 @@ interface PosterFormProps {
   onTitleChange: (val: string) => void;
   onDescriptionChange: (val: string) => void;
   onLinkedinLinkChange: (val: string) => void;
+  onFacebookLinkChange: (val: string) => void;
   onOrderChange: (val: number) => void;
   onSaveImageLocally: (url: string, callback: (localUrl: string) => void) => void;
   onClose: () => void;
@@ -23,10 +25,10 @@ interface PosterFormProps {
 }
 
 export function PosterForm({
-  formImage, formLink, formTitle, formDescription, formLinkedinLink, formOrder,
+  formImage, formLink, formTitle, formDescription, formLinkedinLink, formFacebookLink, formOrder,
   editingId, saving, savingImage,
   onImageChange, onLinkChange, onTitleChange, onDescriptionChange,
-  onLinkedinLinkChange, onOrderChange,
+  onLinkedinLinkChange, onFacebookLinkChange, onOrderChange,
   onSaveImageLocally, onClose, onSave,
 }: PosterFormProps) {
   return (
@@ -97,6 +99,13 @@ export function PosterForm({
             <label className="block text-[12px] font-black text-gray-500 mb-1.5">LinkedIn Link</label>
             <input value={formLinkedinLink} onChange={e => onLinkedinLinkChange(e.target.value)}
               placeholder="https://www.linkedin.com/company/intersys-solution/"
+              className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition" />
+          </div>
+
+          <div>
+            <label className="block text-[12px] font-black text-gray-500 mb-1.5">Facebook Page Link</label>
+            <input value={formFacebookLink} onChange={e => onFacebookLinkChange(e.target.value)}
+              placeholder="https://web.facebook.com/IntersysSolutions"
               className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition" />
           </div>
 

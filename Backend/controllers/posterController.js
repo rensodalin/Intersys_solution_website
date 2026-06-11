@@ -3,23 +3,24 @@ import Poster from "../model/poster.js";
 import User from "../model/user.js";
 import transporter from "../config/email.js";
 
+async function downloadImageLocally(url, protocol, host) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Failed to fetch image: ${response.status}`);
+  const contentType = response.headers.get("content-type") || "image/jpeg";
+  const ext = contentType.split("/").pop() || "jpg";
+  const filename = `poster_${Date.now()}.${ext}`;
+  const filepath = `uploads/${filename}`;
+  const buffer = Buffer.from(await response.arrayBuffer());
+  await fs.promises.writeFile(filepath, buffer);
+  return `${protocol}://${host}/uploads/${filename}`;
+}
+
 export const saveImage = async (req, res) => {
   try {
     const { url } = req.body;
     if (!url) return res.status(400).json({ success: false, message: "URL is required" });
 
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Failed to fetch image: ${response.status}`);
-
-    const contentType = response.headers.get("content-type") || "image/jpeg";
-    const ext = contentType.split("/").pop() || "jpg";
-    const filename = `poster_${Date.now()}.${ext}`;
-    const filepath = `uploads/${filename}`;
-    const buffer = Buffer.from(await response.arrayBuffer());
-
-    await fs.promises.writeFile(filepath, buffer);
-
-    const localUrl = `${req.protocol}://${req.get("host")}/uploads/${filename}`;
+    const localUrl = await downloadImageLocally(url, req.protocol, req.get("host"));
     res.json({ success: true, url: localUrl });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -37,9 +38,16 @@ export const getAll = async (req, res) => {
 
 export const create = async (req, res) => {
   try {
-    const { image, link, title, description, facebookLink, linkedinLink, order } = req.body;
+    let { image, link, title, description, facebookLink, linkedinLink, order } = req.body;
     if (!image) {
       return res.status(400).json({ success: false, message: "image is required." });
+    }
+
+    // Auto-save external image locally so it never expires
+    if (!image.startsWith(req.protocol)) {
+      try {
+        image = await downloadImageLocally(image, req.protocol, req.get("host"));
+      } catch (_) { /* keep original URL if download fails */ }
     }
 
     const poster = new Poster({
@@ -95,7 +103,15 @@ export const create = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const { image, link, title, description, facebookLink, linkedinLink, order } = req.body;
+    let { image, link, title, description, facebookLink, linkedinLink, order } = req.body;
+
+    // Auto-save external image locally so it never expires
+    if (image && !image.startsWith(req.protocol)) {
+      try {
+        image = await downloadImageLocally(image, req.protocol, req.get("host"));
+      } catch (_) { /* keep original URL if download fails */ }
+    }
+
     const poster = await Poster.findByIdAndUpdate(
       req.params.id,
       { image, link, title, description, facebookLink, linkedinLink, order },
@@ -104,6 +120,21 @@ export const update = async (req, res) => {
     if (!poster) {
       return res.status(404).json({ success: false, message: "Poster not found" });
     }
+    res.json({ success: true, data: poster });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+export const refreshImage = async (req, res) => {
+  try {
+    const poster = await Poster.findById(req.params.id);
+    if (!poster) {
+      return res.status(404).json({ success: false, message: "Poster not found" });
+    }
+    const localUrl = await downloadImageLocally(poster.image, req.protocol, req.get("host"));
+    poster.image = localUrl;
+    await poster.save();
     res.json({ success: true, data: poster });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
