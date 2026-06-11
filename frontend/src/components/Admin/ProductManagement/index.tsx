@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import type { ApiProduct } from "./types";
 import { BLANK_FORM } from "./types";
 import { productToForm, toSlug } from "./utils";
-import { ITEMS_PER_PAGE, CATEGORIES as FALLBACK_CATEGORIES, BRANDS as FALLBACK_BRANDS, SUBCATEGORIES as FALLBACK_SUBCATEGORIES } from "./constants";
+import { ITEMS_PER_PAGE, CATEGORIES as FALLBACK_CATEGORIES, SUBCATEGORIES as FALLBACK_SUBCATEGORIES } from "./constants";
 import { FilterBar } from "./FilterBar";
 import { ProductTable } from "./ProductTable";
 import { ProductForm } from "./ProductForm";
@@ -24,25 +24,18 @@ export function ProductManagement() {
   const [showTaxonomyManager, setShowTaxonomyManager] = useState(false);
 
   const categories = taxonomy.length > 0 ? taxonomy.map(t => t.category) : FALLBACK_CATEGORIES;
-  const brands: Record<string, string[]> = {};
-  const subCategories: Record<string, Record<string, string[]>> = {};
+  const subCategories: Record<string, string[]> = {};
   if (taxonomy.length > 0) {
     for (const t of taxonomy) {
-      brands[t.category] = t.brands.map(b => b.name);
-      subCategories[t.category] = {};
-      for (const b of t.brands) {
-        subCategories[t.category][b.name] = flattenTree(b.subCategories || []);
-      }
+      subCategories[t.category] = flattenTree(t.subCategories || []);
     }
   } else {
-    Object.assign(brands, FALLBACK_BRANDS);
     Object.assign(subCategories, FALLBACK_SUBCATEGORIES);
   }
 
   // Filters
   const [search, setSearch] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
-  const [filterBrand, setFilterBrand] = useState("");
   const [filterSubCategory, setFilterSubCategory] = useState("");
 
   // Pagination
@@ -71,7 +64,7 @@ export function ProductManagement() {
     try {
       const data = await fetchProducts(
         filterCategory || undefined,
-        filterBrand || undefined,
+        undefined,
         filterSubCategory || undefined
       );
       setProducts(data);
@@ -81,7 +74,7 @@ export function ProductManagement() {
     } finally {
       setLoading(false);
     }
-  }, [filterCategory, filterBrand, filterSubCategory]);
+  }, [filterCategory, filterSubCategory]);
 
   useEffect(() => { loadTaxonomy(); }, [loadTaxonomy]);
   useEffect(() => { loadProducts(); }, [loadProducts]);
@@ -100,19 +93,16 @@ export function ProductManagement() {
 
   // ─── Form Handlers ──────────────────────────────────────────
 
-  function autoGenerateLink(cat: string, brand: string, subCat: string) {
+  function autoGenerateLink(cat: string, subCat: string) {
     const catSlug = cat.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
-    const brandSlug = brand.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
-    if (brand && subCat) {
+    if (subCat) {
       const subSlug = subCat
         .toLowerCase()
         .replace(/\s+&\s+/g, "-")
         .replace(/\s+/g, "-")
         .replace(/\/+/g, "-")
         .replace(/[^\w-]/g, "");
-      return `/products/${catSlug}/${brandSlug}/${subSlug}`;
-    } else if (brand) {
-      return `/products/${catSlug}/${brandSlug}`;
+      return `/products/${catSlug}/${subSlug}`;
     }
     return `/products/${catSlug}`;
   }
@@ -120,10 +110,9 @@ export function ProductManagement() {
   function setField(key: string, value: any) {
     setForm(prev => {
       const next = { ...prev, [key]: value };
-      if (key === "category" || key === "brand" || key === "brandSubCategory") {
+      if (key === "category" || key === "brandSubCategory") {
         next.brandSubCategoryLink = autoGenerateLink(
           key === "category" ? value : next.category,
-          key === "brand" ? value : next.brand,
           key === "brandSubCategory" ? value : next.brandSubCategory
         );
       }
@@ -157,11 +146,8 @@ export function ProductManagement() {
   // ─── Save ───────────────────────────────────────────────────
 
   async function handleSave() {
-    const catHasBrands = (brands[form.category] || []).length > 0;
-    if (!form.productId || !form.title || !form.category || (catHasBrands && !form.brand)) {
-      toast.error(catHasBrands && !form.brand
-        ? "Product ID, Title, Category and Brand are required."
-        : "Product ID, Title and Category are required.");
+    if (!form.productId || !form.title || !form.category) {
+      toast.error("Product ID, Title and Category are required.");
       return;
     }
     setSaving(true);
@@ -249,13 +235,10 @@ export function ProductManagement() {
         search={search}
         onSearchChange={v => { setSearch(v); setPage(1); }}
         filterCategory={filterCategory}
-        onCategoryChange={v => { setFilterCategory(v); setFilterBrand(""); setFilterSubCategory(""); }}
-        filterBrand={filterBrand}
-        onBrandChange={v => { setFilterBrand(v); setFilterSubCategory(""); }}
+        onCategoryChange={v => { setFilterCategory(v); setFilterSubCategory(""); }}
         filterSubCategory={filterSubCategory}
         onSubCategoryChange={setFilterSubCategory}
         categories={categories}
-        brands={brands}
         subCategories={subCategories}
         loading={loading}
         totalCount={filtered.length}
@@ -284,7 +267,6 @@ export function ProductManagement() {
           onClose={closeForm}
           onSave={handleSave}
           categories={categories}
-          brands={brands}
           subCategories={subCategories}
         />
       )}

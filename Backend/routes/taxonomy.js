@@ -8,12 +8,8 @@ router.get("/", taxonomyController.getAll);
 router.post("/category", isAdmin, taxonomyController.createCategory);
 router.put("/category/:name", isAdmin, taxonomyController.updateCategory);
 router.delete("/category/:name", isAdmin, taxonomyController.deleteCategory);
-router.post("/category/:name/brand", isAdmin, taxonomyController.createBrand);
-router.put("/category/:name/brand/:brandName", isAdmin, taxonomyController.updateBrand);
-router.delete("/category/:name/brand/:brandName", isAdmin, taxonomyController.deleteBrand);
-router.post("/category/:name/brand/:brandName/subcategory", isAdmin, taxonomyController.createSubcategory);
-router.put("/category/:name/brand/:brandName/subcategory/:subName", isAdmin, taxonomyController.updateSubcategory);
-router.delete("/category/:name/brand/:brandName/subcategory/:subName", isAdmin, taxonomyController.deleteSubcategory);
-router.get("/category/:name/brand/:brandName/subcategories/flat", taxonomyController.getFlatSubcategories);
+router.post("/category/:name/subcategory", isAdmin, taxonomyController.createSubcategory);
+router.put("/category/:name/subcategory/:subName", isAdmin, taxonomyController.updateSubcategory);
+router.delete("/category/:name/subcategory/:subName", isAdmin, taxonomyController.deleteSubcategory);
 
 export default router;

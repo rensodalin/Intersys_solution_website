@@ -5,13 +5,10 @@ interface FilterBarProps {
   onSearchChange: (val: string) => void;
   filterCategory: string;
   onCategoryChange: (val: string) => void;
-  filterBrand: string;
-  onBrandChange: (val: string) => void;
   filterSubCategory: string;
   onSubCategoryChange: (val: string) => void;
   categories: string[];
-  brands: Record<string, string[]>;
-  subCategories: Record<string, Record<string, string[]>>;
+  subCategories: Record<string, string[]>;
   loading: boolean;
   totalCount: number;
 }
@@ -19,9 +16,8 @@ interface FilterBarProps {
 export function FilterBar({
   search, onSearchChange,
   filterCategory, onCategoryChange,
-  filterBrand, onBrandChange,
   filterSubCategory, onSubCategoryChange,
-  categories, brands, subCategories,
+  categories, subCategories,
   loading, totalCount,
 }: FilterBarProps) {
   return (
@@ -45,7 +41,6 @@ export function FilterBar({
         value={filterCategory}
         onChange={e => {
           onCategoryChange(e.target.value);
-          onBrandChange("");
           onSubCategoryChange("");
         }}
         className="px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 transition"
@@ -55,26 +50,13 @@ export function FilterBar({
       </select>
 
       <select
-        value={filterBrand}
-        disabled={!filterCategory || (brands[filterCategory] || []).length === 0}
-        onChange={e => {
-          onBrandChange(e.target.value);
-          onSubCategoryChange("");
-        }}
-        className="px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 disabled:opacity-50 disabled:cursor-not-allowed transition"
-      >
-        <option value="">All Brands</option>
-        {filterCategory && (brands[filterCategory] || []).map(b => <option key={b} value={b}>{b}</option>)}
-      </select>
-
-      <select
         value={filterSubCategory}
-        disabled={!filterCategory || !filterBrand || (subCategories[filterCategory]?.[filterBrand] || []).length === 0}
+        disabled={!filterCategory || (subCategories[filterCategory] || []).length === 0}
         onChange={e => onSubCategoryChange(e.target.value)}
         className="px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 disabled:opacity-50 disabled:cursor-not-allowed transition"
       >
         <option value="">All Subcategories</option>
-        {filterCategory && filterBrand && (subCategories[filterCategory]?.[filterBrand] || []).map(s => <option key={s} value={s}>{s}</option>)}
+        {filterCategory && (subCategories[filterCategory] || []).map(s => <option key={s} value={s}>{s}</option>)}
       </select>
 
       <span className="text-xs text-gray-400 font-medium ml-auto">

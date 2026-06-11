@@ -86,9 +86,7 @@ export function QuoteForm() {
             "Networking & Communication Devices",
             "Power Supplies & Accessories"
         ];
-        const brands = new Set<string>();
-        taxonomy.forEach(t => (t.brands || []).forEach(b => brands.add(b.name)));
-        return Array.from(brands).sort();
+        return [];
     }, [taxonomy]);
 
     // Auto-populate form when inquiry items change

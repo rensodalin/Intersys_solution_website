@@ -8,14 +8,15 @@ import { Container } from "@/components/Common/Container";
 import { Package } from "lucide-react";
 import { toSlug } from "@/lib/utils";
 import { motion } from "framer-motion";
+import type { TaxonomySubCategory } from "@/utils/taxonomyApi";
 
-export const Route = createFileRoute("/products/$slug/")({
+export const Route = createFileRoute("/products/$slug/$subcategory")({
   head: ({ params }) => ({
     meta: [
-      { title: `${slugToTitle(params.slug)} — Intersys Solutions` },
+      { title: `${slugToTitle(params.subcategory)} — ${slugToTitle(params.slug)} — Intersys Solutions` },
     ],
   }),
-  component: CategoryProductsPage,
+  component: SubcategoryProductsPage,
 });
 
 function slugToTitle(slug: string): string {
@@ -28,12 +29,24 @@ function slugToTitle(slug: string): string {
     .join(" ");
 }
 
-function CategoryProductsPage() {
-  const { slug } = Route.useParams();
+function findSubcategory(items: TaxonomySubCategory[], slug: string): TaxonomySubCategory | null {
+  for (const item of items) {
+    if (toSlug(item.name) === slug) return item;
+    if (item.children?.length) {
+      const found = findSubcategory(item.children, slug);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+function SubcategoryProductsPage() {
+  const { slug, subcategory } = Route.useParams();
   const { taxonomy } = useTaxonomy();
   const category = taxonomy.find(t => toSlug(t.category) === slug);
   const categoryName = category?.category || slugToTitle(slug);
-  const subCategories = category?.subCategories || [];
+  const subData = category ? findSubcategory(category.subCategories || [], subcategory) : null;
+  const subcategoryName = subData?.title || subData?.name || slugToTitle(subcategory);
 
   const [currentSort, setCurrentSort] = useState<SortOption>("name-asc");
   const [apiProducts, setApiProducts] = useState<any[]>([]);
@@ -42,11 +55,11 @@ function CategoryProductsPage() {
 
   useEffect(() => {
     setLoading(true);
-    fetchProducts(categoryName)
+    fetchProducts(categoryName, undefined, subcategoryName)
       .then(data => setApiProducts(data))
       .catch(() => setApiProducts([]))
       .finally(() => setLoading(false));
-  }, [categoryName]);
+  }, [categoryName, subcategoryName]);
 
   const [popularity, setPopularity] = useState<Record<string, number>>({});
   useEffect(() => {
@@ -57,14 +70,12 @@ function CategoryProductsPage() {
   }, []);
 
   const mapped = useMemo(() =>
-    apiProducts
-      .filter(p => !p.brand)
-      .map(p => ({
-        id: p.productId,
-        title: p.title,
-        image: p.mainImage,
-        description: p.description,
-      })), [apiProducts]);
+    apiProducts.map(p => ({
+      id: p.productId,
+      title: p.title,
+      image: p.mainImage,
+      description: p.description,
+    })), [apiProducts]);
 
   const sortedProducts = useMemo(() => {
     const products = [...mapped];
@@ -83,12 +94,27 @@ function CategoryProductsPage() {
     { name: "Home", href: "/" },
     { name: "Products", href: "/products" },
     { name: categoryName, href: `/products/${slug}` },
+    { name: subcategoryName, href: `/products/${slug}/${subcategory}` },
   ];
 
-  function renderHero(title: string, subtitle?: string) {
-    return (
-      <section className="bg-white border-b border-gray-200/50">
-        <div className="bg-[#F8F9FA] pt-28 md:pt-32 pb-10 px-8">
+  return (
+    <div className="bg-white min-h-screen">
+      <section className="relative w-full overflow-hidden bg-white">
+        {subData?.heroImage && (
+          <div className="w-full relative h-[180px] md:h-[220px] overflow-hidden pt-24 md:pt-28">
+            <motion.img
+              initial={{ scale: 1.1, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              src={subData.heroImage}
+              alt={subcategoryName}
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-white/20" />
+          </div>
+        )}
+
+        <div className="bg-[#F8F9FA] pt-28 md:pt-32 pb-10 px-8 border-b border-gray-200/50">
           <Container>
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
               <nav className="flex items-center gap-2 mb-4 flex-wrap">
@@ -110,83 +136,23 @@ function CategoryProductsPage() {
                   </div>
                 ))}
               </nav>
-              <h1 className="text-xl md:text-2xl font-bold text-[#1A3263] tracking-tight mb-3">{title}</h1>
-              {subtitle && <p className="text-gray-500 text-sm md:text-[15px] leading-relaxed max-w-2xl">{subtitle}</p>}
+              <h1 className="text-xl md:text-2xl font-bold text-[#1A3263] tracking-tight mb-3">
+                {subcategoryName}
+              </h1>
+              {subData?.description && (
+                <p className="text-gray-500 text-sm md:text-[15px] leading-relaxed max-w-2xl">
+                  {subData.description}
+                </p>
+              )}
             </motion.div>
           </Container>
         </div>
       </section>
-    );
-  }
-
-  function flattenSubs(items: any[]): any[] {
-    const result: any[] = [];
-    for (const item of items) {
-      result.push(item);
-      if (item.children?.length) result.push(...flattenSubs(item.children));
-    }
-    return result;
-  }
-
-  const allSubs = flattenSubs(subCategories);
-
-  return (
-    <div className="bg-white min-h-screen">
-      {renderHero(
-        categoryName,
-        allSubs.length > 0
-          ? `Browse our ${categoryName.toLowerCase()} solutions by category.`
-          : `Explore our range of ${categoryName.toLowerCase()} solutions.`
-      )}
-
-      {allSubs.length > 0 && (
-        <section className="py-10 px-8 border-b border-gray-100">
-          <Container>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {allSubs.map(sub => {
-                const subSlug = toSlug(sub.name);
-                return (
-                  <Link key={sub.name}
-                    to={`/products/${slug}/${subSlug}`}
-                    className="group block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md hover:border-gray-300 transition-all"
-                  >
-                    {sub.image ? (
-                      <div className="h-36 overflow-hidden">
-                        <img src={sub.image} alt={sub.title || sub.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                      </div>
-                    ) : (
-                      <div className="h-36 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                        <Package size={36} className="text-gray-200" />
-                      </div>
-                    )}
-                    <div className="p-4">
-                      <h3 className="text-sm font-bold text-gray-900 group-hover:text-[#C3110C] transition-colors">
-                        {sub.title || sub.name}
-                      </h3>
-                      {sub.description && (
-                        <p className="text-xs text-gray-500 mt-1 line-clamp-2">{sub.description}</p>
-                      )}
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </Container>
-        </section>
-      )}
 
       <section className="py-14 md:py-16 px-8">
         <Container>
           {loading ? (
             <div className="text-center py-20 text-gray-400 text-sm">Loading products...</div>
-          ) : mapped.length === 0 && subCategories.length === 0 ? (
-            <div className="text-center py-20 text-gray-400 text-sm flex flex-col items-center gap-4">
-              <Package size={48} className="text-gray-200" />
-              <p>No products yet in this category.</p>
-              <Link to="/products" className="text-[#C3110C] hover:underline text-xs font-bold">
-                Browse all categories
-              </Link>
-            </div>
           ) : (
             <>
               <ProductSort
@@ -197,7 +163,13 @@ function CategoryProductsPage() {
               {sortedProducts.length > 0 ? (
                 <ProductCardGrid products={sortedProducts} />
               ) : (
-                <div className="text-center py-20 text-gray-400 text-sm">Browse subcategories above to find products.</div>
+                <div className="text-center py-20 text-gray-400 text-sm flex flex-col items-center gap-4">
+                  <Package size={48} className="text-gray-200" />
+                  <p>No {subcategoryName} products yet.</p>
+                  <Link to={`/products/${slug}`} className="text-[#C3110C] hover:underline text-xs font-bold">
+                    View all {categoryName} products
+                  </Link>
+                </div>
               )}
             </>
           )}

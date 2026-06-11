@@ -15,7 +15,7 @@ const documentSchema = new mongoose.Schema({
 const productSchema = new mongoose.Schema({
     productId: { type: String, required: true, unique: true },
     category: { type: String, required: true },
-    brand: { type: String, required: true },
+    brand: { type: String, default: "" },
     title: { type: String, required: true },
     description: { type: String },
     mainImage: { type: String },

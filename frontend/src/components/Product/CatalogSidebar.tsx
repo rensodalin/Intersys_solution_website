@@ -184,15 +184,15 @@ export function CatalogSidebar({
         "fire systems": Flame,
     };
 
-    function subCatToNav(sc: TaxonomySubCategory, categorySlug: string, brandSlug: string, parentSlugs: string[] = []): NavDataSubItem {
+    function subCatToNav(sc: TaxonomySubCategory, categorySlug: string, parentSlugs: string[] = []): NavDataSubItem {
         const slug = toSlug(sc.name);
         const allSlugs = [...parentSlugs, slug];
-        const link = `/products/${categorySlug}/${brandSlug}/${allSlugs.join("/")}`;
+        const link = `/products/${categorySlug}/${allSlugs.join("/")}`;
         return {
             label: sc.name,
             link,
             sub: sc.children && sc.children.length > 0
-                ? sc.children.map(c => subCatToNav(c, categorySlug, brandSlug, allSlugs))
+                ? sc.children.map(c => subCatToNav(c, categorySlug, allSlugs))
                 : undefined,
         };
     }
@@ -206,24 +206,16 @@ export function CatalogSidebar({
             const iconKey = Object.keys(CATEGORY_ICONS).find(k => t.category.toLowerCase().includes(k));
             const icon = iconKey ? CATEGORY_ICONS[iconKey] : Package;
 
-            const brands = (t.brands || []).map(b => {
-                const brandSlug = toSlug(b.name);
-                const subItems = (b.subCategories || []).map(sc =>
-                    subCatToNav(sc, slug, brandSlug)
-                );
-                return {
-                    label: b.name,
-                    link: `/products/${slug}/${brandSlug}`,
-                    sub: subItems.length > 0 ? subItems : undefined,
-                } as NavDataSubItem;
-            });
+            const subItems = (t.subCategories || []).map(sc =>
+                subCatToNav(sc, slug)
+            );
 
             return {
                 id: slug,
                 label: t.category,
                 icon,
                 link: `/products/${slug}`,
-                sub: brands.length > 0 ? brands : undefined,
+                sub: subItems.length > 0 ? subItems : undefined,
             };
         });
     }, [taxonomy]);
@@ -286,16 +278,10 @@ export function CatalogSidebar({
             if (parts[2]) {
                 const cat = taxonomy.find(t => toSlug(t.category) === parts[1]);
                 if (cat) {
-                    const brand = cat.brands.find(b => toSlug(b.name) === parts[2]);
-                    if (brand) {
-                        sections.push(brand.name);
-                        if (parts[3]) {
-                            const sub = brand.subCategories.find(sc => toSlug(sc.name) === parts[3]);
-                            if (sub) sections.push(sub.name);
-                        }
-                    }
+                    const sub = cat.subCategories.find(sc => toSlug(sc.name) === parts[2]);
+                    if (sub) sections.push(sub.name);
                 }
-                // Fallback for hardcoded brand names when taxonomy is empty
+                // Fallback for hardcoded subcategory names when taxonomy is empty
                 if (taxonomy.length === 0) {
                     if (parts[2] === "honeywell") {
                         sections.push("Honeywell Systems");

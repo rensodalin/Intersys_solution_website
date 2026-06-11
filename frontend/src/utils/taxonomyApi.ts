@@ -2,22 +2,18 @@ const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
 
 export interface TaxonomySubCategory {
   name: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  heroImage?: string;
   children: TaxonomySubCategory[];
-}
-
-export interface TaxonomyBrand {
-  _id?: string;
-  name: string;
-  subCategories: TaxonomySubCategory[];
 }
 
 export interface TaxonomyCategory {
   _id?: string;
   category: string;
-  brands: TaxonomyBrand[];
+  subCategories: TaxonomySubCategory[];
 }
-
-// ── Flatten tree to path strings ──────────────────────────────
 
 export function flattenTree(arr: TaxonomySubCategory[], prefix = ""): string[] {
   const result: string[] = [];
@@ -30,8 +26,6 @@ export function flattenTree(arr: TaxonomySubCategory[], prefix = ""): string[] {
   }
   return result;
 }
-
-// ── API calls ─────────────────────────────────────────────────
 
 export async function fetchTaxonomy(): Promise<TaxonomyCategory[]> {
   const res = await fetch(`${baseUrl}/api/taxonomy`, { credentials: "include" });
@@ -73,68 +67,35 @@ export async function deleteCategory(name: string): Promise<void> {
   if (!json.success) throw new Error(json.error || "Failed to delete category");
 }
 
-export async function addBrand(category: string, brandName: string): Promise<TaxonomyCategory> {
-  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(category)}/brand`, {
+export async function addSubCategory(category: string, subCategory: string, parentPath = "", title = "", description = "", image = "", heroImage = ""): Promise<TaxonomyCategory> {
+  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(category)}/subcategory`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify({ name: brandName }),
-  });
-  const json = await res.json();
-  if (!json.success) throw new Error(json.error || "Failed to add brand");
-  return json.data;
-}
-
-export async function renameBrand(category: string, oldBrandName: string, newBrandName: string): Promise<TaxonomyCategory> {
-  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(category)}/brand/${encodeURIComponent(oldBrandName)}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify({ name: newBrandName }),
-  });
-  const json = await res.json();
-  if (!json.success) throw new Error(json.error || "Failed to rename brand");
-  return json.data;
-}
-
-export async function deleteBrand(category: string, brandName: string): Promise<void> {
-  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(category)}/brand/${encodeURIComponent(brandName)}`, {
-    method: "DELETE",
-    credentials: "include",
-  });
-  const json = await res.json();
-  if (!json.success) throw new Error(json.error || "Failed to delete brand");
-}
-
-export async function addSubCategory(category: string, brandName: string, subCategory: string, parentPath = ""): Promise<TaxonomyCategory> {
-  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(category)}/brand/${encodeURIComponent(brandName)}/subcategory`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify({ subCategory, parentPath }),
+    body: JSON.stringify({ subCategory, parentPath, title, description, image, heroImage }),
   });
   const json = await res.json();
   if (!json.success) throw new Error(json.error || "Failed to add subcategory");
   return json.data;
 }
 
-export async function renameSubCategory(category: string, brandName: string, oldSubName: string, newSubName: string, parentPath = ""): Promise<TaxonomyCategory> {
-  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(category)}/brand/${encodeURIComponent(brandName)}/subcategory/${encodeURIComponent(oldSubName)}`, {
+export async function renameSubCategory(category: string, oldSubName: string, newSubName: string, parentPath = "", title?: string, description?: string, image?: string, heroImage?: string): Promise<TaxonomyCategory> {
+  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(category)}/subcategory/${encodeURIComponent(oldSubName)}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify({ subCategory: newSubName, parentPath }),
+    body: JSON.stringify({ subCategory: newSubName, parentPath, title, description, image, heroImage }),
   });
   const json = await res.json();
   if (!json.success) throw new Error(json.error || "Failed to rename subcategory");
   return json.data;
 }
 
-export async function deleteSubCategory(category: string, brandName: string, subName: string, parentPath = ""): Promise<void> {
+export async function deleteSubCategory(category: string, subName: string, parentPath = ""): Promise<void> {
   const params = new URLSearchParams();
   if (parentPath) params.set("parentPath", parentPath);
   const qs = params.toString() ? `?${params.toString()}` : "";
-  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(category)}/brand/${encodeURIComponent(brandName)}/subcategory/${encodeURIComponent(subName)}${qs}`, {
+  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(category)}/subcategory/${encodeURIComponent(subName)}${qs}`, {
     method: "DELETE",
     credentials: "include",
   });

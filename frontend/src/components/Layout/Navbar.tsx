@@ -68,15 +68,15 @@ export function Navbar() {
 
   const { taxonomy } = useTaxonomy();
 
-  function subCatToNav(sc: TaxonomySubCategory, categorySlug: string, brandSlug: string, parentSlugs: string[] = []): NavDataSubItem {
+  function subCatToNav(sc: TaxonomySubCategory, categorySlug: string, parentSlugs: string[] = []): NavDataSubItem {
     const slug = toSlug(sc.name);
     const allSlugs = [...parentSlugs, slug];
-    const link = `/products/${categorySlug}/${brandSlug}/${allSlugs.join("/")}`;
+    const link = `/products/${categorySlug}/${allSlugs.join("/")}`;
     return {
       label: sc.name,
       link,
       sub: sc.children && sc.children.length > 0
-        ? sc.children.map(c => subCatToNav(c, categorySlug, brandSlug, allSlugs))
+        ? sc.children.map(c => subCatToNav(c, categorySlug, allSlugs))
         : undefined,
     };
   }
@@ -85,21 +85,13 @@ export function Navbar() {
     if (taxonomy.length === 0) return NAVIGATION_DATA;
     return taxonomy.map(t => {
       const slug = toSlug(t.category);
-      const brands = (t.brands || []).map(b => {
-        const brandSlug = toSlug(b.name);
-        const subItems = (b.subCategories || []).map(sc => subCatToNav(sc, slug, brandSlug));
-        return {
-          label: b.name,
-          link: `/products/${slug}/${brandSlug}`,
-          sub: subItems.length > 0 ? subItems : undefined,
-        } as NavDataSubItem;
-      });
+      const subItems = (t.subCategories || []).map(sc => subCatToNav(sc, slug));
       return {
         id: slug,
         label: t.category,
         icon: Package,
         link: `/products/${slug}`,
-        sub: brands.length > 0 ? brands : undefined,
+        sub: subItems.length > 0 ? subItems : undefined,
       } as NavDataItem;
     });
   }, [taxonomy]);
