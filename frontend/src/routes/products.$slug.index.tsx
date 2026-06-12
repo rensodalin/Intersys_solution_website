@@ -119,40 +119,30 @@ function CategoryProductsPage() {
     );
   }
 
-  function flattenSubs(items: any[]): any[] {
-    const result: any[] = [];
-    for (const item of items) {
-      result.push(item);
-      if (item.children?.length) result.push(...flattenSubs(item.children));
-    }
-    return result;
-  }
-
-  const allSubs = flattenSubs(subCategories);
-
   return (
     <div className="bg-white min-h-screen">
       {renderHero(
         categoryName,
-        allSubs.length > 0
+        subCategories.length > 0
           ? `Browse our ${categoryName.toLowerCase()} solutions by category.`
           : `Explore our range of ${categoryName.toLowerCase()} solutions.`
       )}
 
-      {allSubs.length > 0 && (
+      {subCategories.length > 0 && (
         <section className="py-10 px-8 border-b border-gray-100">
           <Container>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {allSubs.map(sub => {
+              {subCategories.map(sub => {
                 const subSlug = toSlug(sub.name);
+                const linkTo = `/products/${slug}/${subSlug}`;
                 return (
                   <Link key={sub.name}
-                    to={`/products/${slug}/${subSlug}`}
+                    to={linkTo}
                     className="group block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md hover:border-gray-300 transition-all"
                   >
                     {sub.image ? (
-                      <div className="h-36 overflow-hidden">
-                        <img src={sub.image} alt={sub.title || sub.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <div className="h-36 flex items-center justify-center bg-gray-50">
+                        <img src={sub.image} alt={sub.title || sub.name} className="max-h-full max-w-full object-contain p-2 group-hover:scale-105 transition-transform duration-500" />
                       </div>
                     ) : (
                       <div className="h-36 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">

@@ -49,6 +49,7 @@ import { Route as ProductsAccessControlIndexRouteImport } from './routes/product
 import { Route as ProductsSlugIndexRouteImport } from './routes/products.$slug.index'
 import { Route as ProductsDetailProductIdRouteImport } from './routes/products.detail.$productId'
 import { Route as ProductsSlugSubcategoryRouteImport } from './routes/products.$slug.$subcategory'
+import { Route as ProductsSlugSplatRouteImport } from './routes/products.$slug.$'
 import { Route as ProductsAccessControlSaltoIndexRouteImport } from './routes/products.access-control.salto.index'
 import { Route as ProductsAccessControlHoneywellIndexRouteImport } from './routes/products.access-control.honeywell.index'
 import { Route as ProductsAccessControlSaltoProductIdRouteImport } from './routes/products.access-control.salto.$productId'
@@ -266,6 +267,11 @@ const ProductsSlugSubcategoryRoute = ProductsSlugSubcategoryRouteImport.update({
   path: '/$slug/$subcategory',
   getParentRoute: () => ProductsRoute,
 } as any)
+const ProductsSlugSplatRoute = ProductsSlugSplatRouteImport.update({
+  id: '/$slug/$',
+  path: '/$slug/$',
+  getParentRoute: () => ProductsRoute,
+} as any)
 const ProductsAccessControlSaltoIndexRoute =
   ProductsAccessControlSaltoIndexRouteImport.update({
     id: '/access-control/salto/',
@@ -374,6 +380,7 @@ export interface FileRoutesByFullPath {
   '/insights/': typeof InsightsIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/sectors/': typeof SectorsIndexRoute
+  '/products/$slug/$': typeof ProductsSlugSplatRoute
   '/products/$slug/$subcategory': typeof ProductsSlugSubcategoryRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
   '/products/$slug/': typeof ProductsSlugIndexRoute
@@ -426,6 +433,7 @@ export interface FileRoutesByTo {
   '/insights': typeof InsightsIndexRoute
   '/products': typeof ProductsIndexRoute
   '/sectors': typeof SectorsIndexRoute
+  '/products/$slug/$': typeof ProductsSlugSplatRoute
   '/products/$slug/$subcategory': typeof ProductsSlugSubcategoryRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
   '/products/$slug': typeof ProductsSlugIndexRoute
@@ -481,6 +489,7 @@ export interface FileRoutesById {
   '/insights/': typeof InsightsIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/sectors/': typeof SectorsIndexRoute
+  '/products/$slug/$': typeof ProductsSlugSplatRoute
   '/products/$slug/$subcategory': typeof ProductsSlugSubcategoryRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
   '/products/$slug/': typeof ProductsSlugIndexRoute
@@ -537,6 +546,7 @@ export interface FileRouteTypes {
     | '/insights/'
     | '/products/'
     | '/sectors/'
+    | '/products/$slug/$'
     | '/products/$slug/$subcategory'
     | '/products/detail/$productId'
     | '/products/$slug/'
@@ -589,6 +599,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/products'
     | '/sectors'
+    | '/products/$slug/$'
     | '/products/$slug/$subcategory'
     | '/products/detail/$productId'
     | '/products/$slug'
@@ -643,6 +654,7 @@ export interface FileRouteTypes {
     | '/insights/'
     | '/products/'
     | '/sectors/'
+    | '/products/$slug/$'
     | '/products/$slug/$subcategory'
     | '/products/detail/$productId'
     | '/products/$slug/'
@@ -979,6 +991,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsSlugSubcategoryRouteImport
       parentRoute: typeof ProductsRoute
     }
+    '/products/$slug/$': {
+      id: '/products/$slug/$'
+      path: '/$slug/$'
+      fullPath: '/products/$slug/$'
+      preLoaderRoute: typeof ProductsSlugSplatRouteImport
+      parentRoute: typeof ProductsRoute
+    }
     '/products/access-control/salto/': {
       id: '/products/access-control/salto/'
       path: '/access-control/salto'
@@ -1068,6 +1087,7 @@ declare module '@tanstack/react-router' {
 
 interface ProductsRouteChildren {
   ProductsIndexRoute: typeof ProductsIndexRoute
+  ProductsSlugSplatRoute: typeof ProductsSlugSplatRoute
   ProductsSlugSubcategoryRoute: typeof ProductsSlugSubcategoryRoute
   ProductsDetailProductIdRoute: typeof ProductsDetailProductIdRoute
   ProductsSlugIndexRoute: typeof ProductsSlugIndexRoute
@@ -1090,6 +1110,7 @@ interface ProductsRouteChildren {
 
 const ProductsRouteChildren: ProductsRouteChildren = {
   ProductsIndexRoute: ProductsIndexRoute,
+  ProductsSlugSplatRoute: ProductsSlugSplatRoute,
   ProductsSlugSubcategoryRoute: ProductsSlugSubcategoryRoute,
   ProductsDetailProductIdRoute: ProductsDetailProductIdRoute,
   ProductsSlugIndexRoute: ProductsSlugIndexRoute,

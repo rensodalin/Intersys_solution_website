@@ -5,18 +5,25 @@ import { useTaxonomy } from "@/hooks/useTaxonomy";
 import { ProductSort, SortOption } from "@/components/Product/ProductSort";
 import { ProductCardGrid } from "@/components/Product/ProductCardGrid";
 import { Container } from "@/components/Common/Container";
-import { Package, ChevronRight } from "lucide-react";
+import { Package } from "lucide-react";
 import { toSlug } from "@/lib/utils";
 import { motion } from "framer-motion";
 import type { TaxonomySubCategory } from "@/utils/taxonomyApi";
 
-export const Route = createFileRoute("/products/$slug/$subcategory")({
+function buildPageTitle(slug: string, splat: string): string {
+  const parts = splat.split("/").filter(Boolean).map(slugToTitle);
+  const subName = parts[parts.length - 1] || "";
+  const catName = slugToTitle(slug);
+  return subName ? `${subName} — ${catName} — Intersys Solutions` : `${catName} — Intersys Solutions`;
+}
+
+export const Route = createFileRoute("/products/$slug/$")({
   head: ({ params }) => ({
     meta: [
-      { title: `${slugToTitle(params.subcategory)} — ${slugToTitle(params.slug)} — Intersys Solutions` },
+      { title: buildPageTitle(params.slug, params._splat || "") },
     ],
   }),
-  component: SubcategoryProductsPage,
+  component: DeepSubcategoryPage,
 });
 
 function slugToTitle(slug: string): string {
@@ -29,25 +36,54 @@ function slugToTitle(slug: string): string {
     .join(" ");
 }
 
-function findSubcategoryWithPath(items: TaxonomySubCategory[], slug: string): { node: TaxonomySubCategory; path: string } | null {
-  for (const item of items) {
-    if (toSlug(item.name) === slug) return { node: item, path: item.name };
-    if (item.children?.length) {
-      const found = findSubcategoryWithPath(item.children, slug);
-      if (found) return { node: found.node, path: `${item.name}/${found.path}` };
-    }
+function findSubcategoryByPath(items: TaxonomySubCategory[], slugs: string[]): { node: TaxonomySubCategory; path: string } | null {
+  let current: TaxonomySubCategory | null = null;
+  let arr = items;
+  const nameParts: string[] = [];
+  for (const slug of slugs) {
+    const found = arr.find(item => toSlug(item.name) === slug);
+    if (!found) return null;
+    current = found;
+    nameParts.push(found.name);
+    arr = found.children || [];
   }
-  return null;
+  return { node: current, path: nameParts.join("/") };
 }
 
-function SubcategoryProductsPage() {
-  const { slug, subcategory } = Route.useParams();
+function buildBreadcrumbs(slug: string, categoryName: string, subSlugs: string[], subData: TaxonomySubCategory | null) {
+  const trail = [
+    { name: "Home", href: "/" as const },
+    { name: "Products", href: "/products" as const },
+    { name: categoryName, href: `/products/${slug}` },
+  ];
+  let accumulated = "";
+  for (let i = 0; i < subSlugs.length; i++) {
+    accumulated = accumulated ? `${accumulated}/${subSlugs[i]}` : subSlugs[i];
+    const name = subData && i === subSlugs.length - 1
+      ? (subData.title || subData.name || slugToTitle(subSlugs[i]))
+      : slugToTitle(subSlugs[i]);
+    trail.push({
+      name,
+      href: `/products/${slug}/${accumulated}`,
+    });
+  }
+  return trail;
+}
+
+function DeepSubcategoryPage() {
+  const { slug, _splat } = Route.useParams();
+  const splatPath = _splat || "";
+  const subSlugs = splatPath.split("/").filter(Boolean);
+
   const { taxonomy } = useTaxonomy();
   const category = taxonomy.find(t => toSlug(t.category) === slug);
   const categoryName = category?.category || slugToTitle(slug);
-  const found = category ? findSubcategoryWithPath(category.subCategories || [], subcategory) : null;
+
+  const found = category && subSlugs.length > 0
+    ? findSubcategoryByPath(category.subCategories || [], subSlugs)
+    : null;
   const subData = found?.node || null;
-  const subcategoryName = subData?.title || subData?.name || slugToTitle(subcategory);
+  const subcategoryName = subData?.title || subData?.name || (subSlugs.length > 0 ? slugToTitle(subSlugs[subSlugs.length - 1]) : "");
   const brandSubCategoryPath = found?.path || subcategoryName;
   const childSubCategories = subData?.children || [];
 
@@ -93,17 +129,7 @@ function SubcategoryProductsPage() {
     }
   }, [currentSort, popularity, mapped]);
 
-  const breadcrumbs = (() => {
-    const trail = [
-      { name: "Home", href: "/" as const },
-      { name: "Products", href: "/products" as const },
-      { name: categoryName, href: `/products/${slug}` },
-    ];
-    if (subcategoryName) {
-      trail.push({ name: subcategoryName, href: `/products/${slug}/${subcategory}` });
-    }
-    return trail;
-  })();
+  const breadcrumbs = buildBreadcrumbs(slug, categoryName, subSlugs, subData);
 
   return (
     <div className="bg-white min-h-screen">
@@ -164,7 +190,8 @@ function SubcategoryProductsPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {childSubCategories.map(child => {
                 const childSlug = toSlug(child.name);
-                const childLink = `/products/${slug}/${subcategory}/${childSlug}`;
+                const deeperPath = [...subSlugs, childSlug].join("/");
+                const childLink = `/products/${slug}/${deeperPath}`;
                 return (
                   <Link key={child.name}
                     to={childLink}
