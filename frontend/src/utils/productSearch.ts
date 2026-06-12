@@ -6,6 +6,8 @@ export interface SearchResult {
     description: string;
     image: string;
     brand: string;
+    partCodes: string[];
+    matchedPartCodes: string[];
     link: string;
 }
 
@@ -34,12 +36,15 @@ export async function initSearchIndex(): Promise<void> {
                     : p.category
                         ? `/products/${p.category.toLowerCase().replace(/\s+/g, '-')}`
                         : "/products";
+                const partCodes = (p.options || []).map((o: any) => o.partCode).filter(Boolean);
                 return {
                     id: p.productId,
                     title: p.title,
                     description: p.description || "",
                     image: p.mainImage || "",
                     brand: brandLabel(p.brand),
+                    partCodes,
+                    matchedPartCodes: [],
                     link: `/products/detail/${p.productId}?from=${encodeURIComponent(fromPath)}`,
                 };
             });
@@ -52,13 +57,19 @@ export async function initSearchIndex(): Promise<void> {
 }
 
 export const searchProducts = (query: string): SearchResult[] => {
-    if (!query || query.length < 2) return [];
+    if (!query || query.length < 1) return [];
     const products = searchCache || [];
     const lowerQuery = query.toLowerCase();
 
     return products.filter(p =>
         p.title.toLowerCase().includes(lowerQuery) ||
         p.description.toLowerCase().includes(lowerQuery) ||
-        p.brand.toLowerCase().includes(lowerQuery)
-    ).slice(0, 8);
+        p.brand.toLowerCase().includes(lowerQuery) ||
+        p.partCodes.some(code => code.toLowerCase().includes(lowerQuery))
+    ).slice(0, 8).map(p => ({
+        ...p,
+        matchedPartCodes: p.partCodes.filter(code =>
+            code.toLowerCase().includes(lowerQuery)
+        ),
+    }));
 };

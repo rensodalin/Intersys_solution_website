@@ -259,7 +259,7 @@ export function CatalogSidebar({
 
     // Handle Search
     React.useEffect(() => {
-        if (searchQuery.length >= 2) {
+        if (searchQuery.length >= 1) {
             const results = searchProducts(searchQuery);
             setSearchResults(results);
         } else {
@@ -374,7 +374,7 @@ export function CatalogSidebar({
 
             {/* ── SEARCH RESULTS ── */}
             <AnimatePresence>
-                {searchQuery.length >= 2 && (
+                {searchQuery.length >= 1 && (
                     <motion.div 
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
@@ -401,6 +401,13 @@ export function CatalogSidebar({
                                             <div className="flex-1 min-w-0">
                                                 <div className="text-[12px] font-bold text-[#1A3263] truncate group-hover:text-[#FC3B1F] transition-colors">{result.title}</div>
                                                 <div className="text-[10px] text-gray-400 font-medium">{result.brand}</div>
+                                                {result.matchedPartCodes.length > 0 && (
+                                                    <div className="flex flex-wrap gap-1 mt-0.5">
+                                                        {result.matchedPartCodes.map((code, i) => (
+                                                            <span key={i} className="text-[9px] bg-orange-100 text-orange-700 font-mono px-1 rounded">{code}</span>
+                                                        ))}
+                                                    </div>
+                                                )}
                                             </div>
                                             <ChevronRight size={12} className="text-gray-300 group-hover:text-[#FC3B1F] transition-colors" />
                                         </Link>
