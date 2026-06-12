@@ -3,6 +3,7 @@ import { ProductDetailView, ProductData } from "@/components/Product/ProductDeta
 import { ArrowLeft } from "lucide-react";
 import { Container } from "@/components/Common/Container";
 import { useState, useEffect } from "react";
+import { useTaxonomy } from "@/hooks/useTaxonomy";
 
 // Import all product data for lookup
 import {
@@ -39,6 +40,7 @@ export const Route = createFileRoute("/products/detail/$productId")({
 function ProductDetailPage() {
   const { productId } = Route.useParams();
   const { from } = Route.useSearch();
+  useTaxonomy();
 
   const [productData, setProductData] = useState<ProductData | null>(null);
   const [loading, setLoading] = useState(true);

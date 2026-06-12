@@ -5,6 +5,7 @@ import { RootState } from "@/store";
 export interface InquiryItem {
   id: string;
   category: string;
+  subcategory?: string;
   title: string;
   image: string;
   partCode: string;

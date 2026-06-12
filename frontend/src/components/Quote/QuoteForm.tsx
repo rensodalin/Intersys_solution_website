@@ -12,6 +12,7 @@ import {
     CompanySection,
 } from "./QuoteFormComponents";
 import { useTaxonomy } from "@/hooks/useTaxonomy";
+import type { TaxonomySubCategory } from "@/utils/taxonomyApi";
 
 import engineerImg from "@/assets/enginner.png";
 import team1 from "@/assets/team/picture on QR cord/Frame 3.png";
@@ -30,6 +31,15 @@ const stats = [
     { value: "100+", label: "Projects" },
 ];
 
+function findSubcategoryInTree(items: TaxonomySubCategory[], target: string): string | undefined {
+    for (const item of items) {
+        if (item.name.toLowerCase() === target.toLowerCase()) return item.name;
+        const child = findSubcategoryInTree(item.children || [], target);
+        if (child) return child;
+    }
+    return undefined;
+}
+
 const formSections = [
     { id: 1, label: "Your Interests" },
     { id: 2, label: "Personal Info" },
@@ -39,11 +49,14 @@ const formSections = [
 export function QuoteForm() {
     const navigate = useNavigate();
     const { items, removeItem, updateQty, clearInquiry } = useInquiry();
+    const { taxonomy } = useTaxonomy();
+
     const {
         register,
         control,
         handleSubmit,
         setValue,
+        getValues,
         watch,
         formState: { errors, isSubmitting },
         reset,
@@ -59,8 +72,6 @@ export function QuoteForm() {
     });
 
     const [submitStatus, setSubmitStatus] = React.useState<"success" | "error" | null>(null);
-
-    const { taxonomy } = useTaxonomy();
 
     const liveCategories = React.useMemo(() => {
         if (taxonomy.length === 0) return [
@@ -86,54 +97,117 @@ export function QuoteForm() {
             "Networking & Communication Devices",
             "Power Supplies & Accessories"
         ];
-        return [];
-    }, [taxonomy]);
-
-    // Auto-populate form when inquiry items change
-    React.useEffect(() => {
-        if (items.length > 0) {
-            // Map items to form products
-            const formProducts = items.map(item => ({
-                qty: item.qty.toString(),
-                productNo: item.partCode,
-                description: item.title,
-                application: item.specification,
-            }));
-
-            // Set the products array
-            setValue("products", formProducts, { shouldDirty: true });
-
-            // Auto-tick categories and sections
-            const detectedCategories: string[] = [];
-            const detectedSections: string[] = [];
-
-            items.forEach(item => {
-                const category = item.category;
-                const brand = item.brand;
-
-                if (category) {
-                    const exact = liveCategories.find(c => c === category);
-                    if (exact) {
-                        if (!detectedCategories.includes(exact)) detectedCategories.push(exact);
-                    } else {
-                        const partial = liveCategories.find(c => c.toLowerCase().includes(category.toLowerCase()));
-                        if (partial && !detectedCategories.includes(partial)) detectedCategories.push(partial);
-                    }
-                }
-
-                if (brand && liveSections.includes(brand)) {
-                    if (!detectedSections.includes(brand)) detectedSections.push(brand);
+        const set = new Set<string>();
+        taxonomy.forEach(cat => {
+            cat.subCategories?.forEach(sub => {
+                if (sub.name) set.add(sub.name);
+                if (sub.children?.length) {
+                    const collect = (children: typeof sub.children) => {
+                        children.forEach(c => {
+                            if (c.name) set.add(c.name);
+                            if (c.children?.length) collect(c.children);
+                        });
+                    };
+                    collect(sub.children);
                 }
             });
+        });
+        return Array.from(set);
+    }, [taxonomy]);
 
-            if (detectedCategories.length > 0) {
-                setValue("solutionCategories", detectedCategories, { shouldDirty: true, shouldValidate: true });
+    // Detect sections from inquiry items using current taxonomy/liveSections
+    const detectSections = React.useCallback((): string[] => {
+        const detected: string[] = [];
+        if (items.length === 0) return detected;
+
+        items.forEach(item => {
+            let subcategory = item.subcategory;
+
+            if (!subcategory) {
+                const catTax = taxonomy.find(t =>
+                    t.category === item.category ||
+                    item.category?.toLowerCase().includes(t.category.toLowerCase())
+                );
+                if (catTax?.subCategories) {
+                    subcategory = catTax.subCategories.find(s =>
+                        item.title?.toLowerCase().includes(s.name.toLowerCase())
+                    )?.name;
+                }
             }
-            if (detectedSections.length > 0) {
-                setValue("sections", detectedSections, { shouldDirty: true, shouldValidate: true });
+
+            if (subcategory) {
+                const exact = liveSections.find(s => s === subcategory);
+                if (exact) {
+                    if (!detected.includes(exact)) detected.push(exact);
+                } else {
+                    const partial = liveSections.find(s => s.toLowerCase().includes(subcategory.toLowerCase()));
+                    if (partial && !detected.includes(partial)) detected.push(partial);
+                }
+            }
+
+            // Fallback: search taxonomy tree directly
+            if (subcategory && !detected.some(s => s.toLowerCase() === subcategory.toLowerCase()) && taxonomy.length > 0) {
+                for (const cat of taxonomy) {
+                    const found = findSubcategoryInTree(cat.subCategories || [], subcategory);
+                    if (found && !detected.includes(found)) { detected.push(found); break; }
+                }
+            }
+
+            if (!subcategory && item.brand) {
+                const brandName = item.brand;
+                const brandSection = liveSections.find(s => s.toLowerCase().includes(brandName.toLowerCase()));
+                if (brandSection && !detected.includes(brandSection)) detected.push(brandSection);
+            }
+        });
+
+        return detected;
+    }, [items, taxonomy, liveSections]);
+
+    // Populate form from inquiry items
+    React.useLayoutEffect(() => {
+        if (items.length === 0) return;
+
+        // Categories
+        const cats: string[] = [];
+        items.forEach(item => {
+            if (item.category) {
+                const exact = liveCategories.find(c => c === item.category);
+                if (exact) { if (!cats.includes(exact)) cats.push(exact); }
+                else {
+                    const p = liveCategories.find(c => c.toLowerCase().includes(item.category.toLowerCase()));
+                    if (p && !cats.includes(p)) cats.push(p);
+                }
+            }
+        });
+        setValue("solutionCategories", cats, { shouldDirty: true });
+
+        // Sections
+        const secs = detectSections();
+        if (secs.length > 0) {
+            setValue("sections", secs, { shouldDirty: true });
+        }
+
+        // Products
+        setValue("products", items.map(i => ({
+            qty: i.qty.toString(),
+            productNo: i.partCode,
+            description: i.title,
+            application: i.specification,
+        })), { shouldDirty: true });
+    }, [items, liveCategories, detectSections, setValue]);
+
+    // When taxonomy finally loads asynchronously, re-sync sections
+    React.useEffect(() => {
+        if (items.length === 0 || taxonomy.length === 0) return;
+        const secs = detectSections();
+        if (secs.length > 0) {
+            const current = getValues("sections") || [];
+            const merged = [...new Set([...current, ...secs])];
+            if (merged.length !== current.length || merged.some((s, i) => s !== current[i])) {
+                setValue("sections", merged, { shouldDirty: true });
             }
         }
-    }, [items, setValue]);
+    }, [taxonomy, detectSections, setValue, getValues, items.length]);
 
     const onSubmit = async (data: QuoteFormValues) => {
         setSubmitStatus(null);

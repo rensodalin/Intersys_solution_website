@@ -139,11 +139,26 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
     if (error) setError(null);
   };
 
+  const deriveSubcategory = (): string | undefined => {
+    if (product.brandSubCategory && product.brandSubCategory !== "General") return product.brandSubCategory;
+    if (!returnPath) return undefined;
+    const path = returnPath.replace(/^\/products\//, '');
+    const segments = path.split('/').filter(Boolean);
+    if (segments.length >= 2) {
+      return segments.slice(1)
+        .map(seg => seg.split('-').filter(Boolean).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '))
+        .join('/');
+    }
+    return undefined;
+  };
+
   const handleAddToInquiry = () => {
     if (inquiryCount === 0) {
       setError("Please select at least one product quantity to proceed.");
       return;
     }
+
+    const subcategory = deriveSubcategory();
 
     // Add each product with qty > 0 to the global inquiry
     product.options.forEach(opt => {
@@ -152,6 +167,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
         addItem({
           id: product.id,
           category: product.category,
+          subcategory,
           title: product.title,
           image: product.mainImage,
           partCode: opt.partCode,

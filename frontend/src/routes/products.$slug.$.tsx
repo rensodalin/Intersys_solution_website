@@ -47,6 +47,7 @@ function findSubcategoryByPath(items: TaxonomySubCategory[], slugs: string[]): {
     nameParts.push(found.name);
     arr = found.children || [];
   }
+  if (!current) return null;
   return { node: current, path: nameParts.join("/") };
 }
 

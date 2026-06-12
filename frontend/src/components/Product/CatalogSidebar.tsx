@@ -51,7 +51,7 @@ function TreeViewNode({
 }) {
     const hasChildren = Array.isArray(node.sub) && node.sub.length > 0;
     const isExpanded = isSearching || expandedSections.includes(node.label);
-    const active = node.link && !hasChildren && isPathActive(node.link);
+    const active = node.link && isPathActive(node.link);
 
     const fontSize = depth === 1 ? "text-[13px]" : "text-[12px]";
     const fontWeight = depth <= 2 ? "font-semibold" : "font-medium";
@@ -100,16 +100,18 @@ function TreeViewNode({
                                 {node.label}
                             </Link>
                         ) : (
-                            <span
-                                onClick={hasChildren ? (e) => { e.preventDefault(); e.stopPropagation(); toggleSection(node.label); } : undefined}
+                            <Link
+                                to={node.link}
+                                onClick={(e) => { e.stopPropagation(); }}
                                 className={cn(
                                     fontSize, fontWeight,
-                                    "transition-colors flex-1 truncate",
-                                    hasChildren ? "cursor-pointer" : "",
+                                    "transition-colors flex-1 truncate cursor-pointer",
+                                    "border-b border-transparent group-hover:border-[#FC3B1F]/40",
+                                    active ? "text-[#FC3B1F]" : "text-gray-500"
                                 )}
                             >
                                 {node.label}
-                            </span>
+                            </Link>
                         )}
                     </div>
 
@@ -431,25 +433,27 @@ export function CatalogSidebar({
                     return (
                         <div key={item.id} className="border-t border-gray-200">
                             <div
-                                onClick={item.sub ? (e) => { e.preventDefault(); e.stopPropagation(); toggleSection(item.id); } : undefined}
                                 className={cn(
-                                    "flex items-center gap-2 px-3 py-2 rounded text-sm font-semibold transition-colors duration-150 cursor-pointer",
+                                    "flex items-center gap-2 px-3 py-2 rounded text-sm font-semibold transition-colors duration-150",
                                     isActive
                                         ? "text-[#FC3B1F]"
                                         : "text-gray-600 hover:text-[#FC3B1F]"
                                 )}
                             >
                                 <span className="flex-1 truncate">
-                                    {item.link && !item.sub ? (
-                                        <Link to={item.link} className="block w-full">{item.label}</Link>
-                                    ) : item.label}
+                                    <Link to={item.link} className="block w-full">{item.label}</Link>
                                 </span>
 
                                 {item.sub && (
-                                    <ChevronDown
-                                        size={13}
-                                        className={cn("shrink-0 transition-transform duration-150", isActive ? "text-white/70" : "text-gray-400", isExpanded ? "rotate-180" : "")}
-                                    />
+                                    <div
+                                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleSection(item.id); }}
+                                        className="p-1 cursor-pointer rounded hover:bg-gray-100 transition-colors shrink-0"
+                                    >
+                                        <ChevronDown
+                                            size={13}
+                                            className={cn("shrink-0 transition-transform duration-150", isActive ? "text-white/70" : "text-gray-400", isExpanded ? "rotate-180" : "")}
+                                        />
+                                    </div>
                                 )}
                             </div>
 
