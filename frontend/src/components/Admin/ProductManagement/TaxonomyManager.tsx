@@ -25,7 +25,7 @@ type EditingItem = {
 function SubCategoryNode({
   items, category, parentPath,
   addingTo, setAddingTo, newName, setNewName,
-  addTitle, setAddTitle, addDescription, setAddDescription, addImage, setAddImage, addHeroImage, setAddHeroImage,
+  addDescription, setAddDescription, addImage, setAddImage,
   editing, setEditing, saving, handleAdd, handleDelete, handleRename,
   setEditName, setEditTitle, setEditDescription, setEditImage, setEditHeroImage
 }: {
@@ -36,14 +36,10 @@ function SubCategoryNode({
   setAddingTo: (v: any) => void;
   newName: string;
   setNewName: (v: string) => void;
-  addTitle: string;
-  setAddTitle: (v: string) => void;
   addDescription: string;
   setAddDescription: (v: string) => void;
   addImage: string;
   setAddImage: (v: string) => void;
-  addHeroImage: string;
-  setAddHeroImage: (v: string) => void;
   editing: EditingItem;
   setEditing: (v: EditingItem) => void;
   saving: boolean;
@@ -107,9 +103,6 @@ function SubCategoryNode({
                   className="w-full px-1.5 py-1 text-[10px] border border-green-200 rounded focus:outline-none focus:border-green-500"
                   onKeyDown={e => { if (e.key === "Enter") handleAdd(); if (e.key === "Escape") setAddingTo(null); }}
                   autoFocus />
-                <input value={addTitle} onChange={e => setAddTitle(e.target.value)}
-                  placeholder="Hero title (optional)"
-                  className="w-full px-1.5 py-1 text-[10px] border border-green-200 rounded focus:outline-none focus:border-green-500" />
                 <textarea value={addDescription} onChange={e => setAddDescription(e.target.value)}
                   placeholder="Description (optional)"
                   rows={1}
@@ -117,13 +110,10 @@ function SubCategoryNode({
                 <input value={addImage} onChange={e => setAddImage(e.target.value)}
                   placeholder="Card image URL (optional)"
                   className="w-full px-1.5 py-1 text-[10px] border border-green-200 rounded focus:outline-none focus:border-green-500" />
-                <input value={addHeroImage} onChange={e => setAddHeroImage(e.target.value)}
-                  placeholder="Hero banner URL (optional)"
-                  className="w-full px-1.5 py-1 text-[10px] border border-green-200 rounded focus:outline-none focus:border-green-500" />
                 <div className="flex items-center gap-1 pt-0.5">
                   <button onClick={handleAdd} disabled={saving || !newName.trim()}
                     className="px-2 py-0.5 text-[9px] font-bold bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50 cursor-pointer">Add</button>
-                  <button onClick={() => { setAddingTo(null); setAddTitle(""); setAddDescription(""); setAddImage(""); setAddHeroImage(""); }}
+                  <button onClick={() => { setAddingTo(null); setAddDescription(""); setAddImage(""); }}
                     className="px-2 py-0.5 text-[9px] font-medium text-gray-500 hover:text-gray-700 cursor-pointer">Cancel</button>
                 </div>
               </div>
@@ -139,14 +129,10 @@ function SubCategoryNode({
                   setAddingTo={setAddingTo}
                   newName={newName}
                   setNewName={setNewName}
-                  addTitle={addTitle}
-                  setAddTitle={setAddTitle}
                   addDescription={addDescription}
                   setAddDescription={setAddDescription}
                   addImage={addImage}
                   setAddImage={setAddImage}
-                  addHeroImage={addHeroImage}
-                  setAddHeroImage={setAddHeroImage}
                   editing={editing}
                   setEditing={setEditing}
                   saving={saving}
@@ -180,10 +166,8 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [addingTo, setAddingTo] = useState<{ type: "category" | "subcategory"; category?: string; parentPath?: string } | null>(null);
   const [newName, setNewName] = useState("");
-  const [addTitle, setAddTitle] = useState("");
   const [addDescription, setAddDescription] = useState("");
   const [addImage, setAddImage] = useState("");
-  const [addHeroImage, setAddHeroImage] = useState("");
   const [saving, setSaving] = useState(false);
   const [editing, setEditing] = useState<EditingItem>(null);
   const [editName, setEditName] = useState("");
@@ -216,13 +200,11 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
       if (addingTo?.type === "category") {
         await addCategory(newName.trim());
       } else if (addingTo?.type === "subcategory" && addingTo.category) {
-        await addSubCategory(addingTo.category, newName.trim(), addingTo.parentPath || "", addTitle, addDescription, addImage, addHeroImage);
+        await addSubCategory(addingTo.category, newName.trim(), addingTo.parentPath || "", "", addDescription, addImage, "");
       }
       setNewName("");
-      setAddTitle("");
       setAddDescription("");
       setAddImage("");
-      setAddHeroImage("");
       setAddingTo(null);
       await load();
       onChanged();
@@ -335,9 +317,6 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
                             className="w-full px-2 py-1.5 text-xs border border-green-200 rounded focus:outline-none focus:border-green-500"
                             onKeyDown={e => { if (e.key === "Enter") handleAdd(); if (e.key === "Escape") setAddingTo(null); }}
                             autoFocus />
-                          <input value={addTitle} onChange={e => setAddTitle(e.target.value)}
-                            placeholder="Hero title (optional)"
-                            className="w-full px-2 py-1.5 text-xs border border-green-200 rounded focus:outline-none focus:border-green-500" />
                           <textarea value={addDescription} onChange={e => setAddDescription(e.target.value)}
                             placeholder="Description (optional)"
                             rows={2}
@@ -345,19 +324,10 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
                           <input value={addImage} onChange={e => setAddImage(e.target.value)}
                             placeholder="Card image URL (optional)"
                             className="w-full px-2 py-1.5 text-xs border border-green-200 rounded focus:outline-none focus:border-green-500" />
-                          <input value={addHeroImage} onChange={e => setAddHeroImage(e.target.value)}
-                            placeholder="Hero banner URL (optional)"
-                            className="w-full px-2 py-1.5 text-xs border border-green-200 rounded focus:outline-none focus:border-green-500" />
-                          {addHeroImage && (
-                            <div className="h-12 rounded border border-green-200 overflow-hidden bg-white">
-                              <img src={addHeroImage} alt="" className="w-full h-full object-cover"
-                                onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
-                            </div>
-                          )}
                           <div className="flex items-center gap-2 pt-1">
                             <button onClick={handleAdd} disabled={saving || !newName.trim()}
                               className="px-3 py-1.5 text-[10px] font-bold bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50 cursor-pointer">Add Subcategory</button>
-                            <button onClick={() => { setAddingTo(null); setAddTitle(""); setAddDescription(""); setAddImage(""); setAddHeroImage(""); }}
+                            <button onClick={() => { setAddingTo(null); setAddDescription(""); setAddImage(""); }}
                               className="px-3 py-1.5 text-[10px] font-medium text-gray-500 hover:text-gray-700 cursor-pointer">Cancel</button>
                           </div>
                         </div>
@@ -375,14 +345,10 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
                             setAddingTo={setAddingTo}
                             newName={newName}
                             setNewName={setNewName}
-                            addTitle={addTitle}
-                            setAddTitle={setAddTitle}
                             addDescription={addDescription}
                             setAddDescription={setAddDescription}
                             addImage={addImage}
                             setAddImage={setAddImage}
-                            addHeroImage={addHeroImage}
-                            setAddHeroImage={setAddHeroImage}
                             editing={editing}
                             setEditing={setEditing}
                             saving={saving}
