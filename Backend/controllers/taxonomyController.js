@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Taxonomy from "../model/taxonomy.js";
+import Product from "../model/product.js";
 
 function parsePath(p) {
   return p ? p.split("/").map(s => s.trim()).filter(Boolean) : [];
@@ -71,10 +72,14 @@ async function migrateTreeFormat() {
 }
 
 async function ensureSeeded() {
-  const count = await Taxonomy.countDocuments();
-  if (count === 0) {
-    await Taxonomy.insertMany(DEFAULT_SEED);
-    console.log("✅ Taxonomy seeded with default data");
+  const seededDoc = await Taxonomy.findOne({ category: "__seeded__" });
+  if (!seededDoc) {
+    const count = await Taxonomy.countDocuments();
+    if (count === 0) {
+      await Taxonomy.insertMany(DEFAULT_SEED);
+      console.log("✅ Taxonomy seeded with default data");
+    }
+    await Taxonomy.create({ category: "__seeded__", subCategories: [] });
   } else {
     await migrateTreeFormat();
   }
@@ -83,7 +88,7 @@ async function ensureSeeded() {
 export const getAll = async (req, res) => {
   try {
     await ensureSeeded();
-    const data = await Taxonomy.find({}).sort({ category: 1 }).lean();
+    const data = await Taxonomy.find({ category: { $ne: "__seeded__" } }).sort({ category: 1 }).lean();
     res.json({ success: true, data });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -121,6 +126,10 @@ export const deleteCategory = async (req, res) => {
   try {
     const doc = await Taxonomy.findOneAndDelete({ category: req.params.name });
     if (!doc) return res.status(404).json({ success: false, error: "Category not found" });
+
+    // Also delete all products associated with this category
+    await Product.deleteMany({ category: req.params.name });
+
     res.json({ success: true, data: doc });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -192,6 +201,14 @@ export const deleteSubcategory = async (req, res) => {
     parentArr.splice(idx, 1);
     doc.markModified("subCategories");
     await doc.save();
+
+    // Also delete all products associated with this subcategory
+    const subNamePattern = new RegExp(`(^|/)${req.params.subName}$`);
+    await Product.deleteMany({
+      category: req.params.name,
+      brandSubCategory: { $regex: subNamePattern }
+    });
+
     res.json({ success: true, data: doc });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });

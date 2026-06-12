@@ -33,7 +33,10 @@ export function useTaxonomy() {
       return;
     }
     if (!cachePromise) {
-      cachePromise = fetchTaxonomy().catch(() => []);
+      cachePromise = fetchTaxonomy().catch((err) => {
+        console.error("useTaxonomy: Failed to fetch taxonomy:", err);
+        return [];
+      });
     }
     cachePromise.then(data => {
       cached = data;

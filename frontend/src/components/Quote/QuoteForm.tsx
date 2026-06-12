@@ -136,20 +136,33 @@ export function QuoteForm() {
             }
 
             if (subcategory) {
-                const exact = liveSections.find(s => s === subcategory);
-                if (exact) {
-                    if (!detected.includes(exact)) detected.push(exact);
-                } else {
-                    const partial = liveSections.find(s => s.toLowerCase().includes(subcategory.toLowerCase()));
-                    if (partial && !detected.includes(partial)) detected.push(partial);
+                const subParts = subcategory.split('/').map(x => x.trim()).filter(Boolean);
+                const lastPart = subParts[subParts.length - 1];
+                if (lastPart) {
+                    const lastPartLower = lastPart.toLowerCase();
+                    const matchedSection = liveSections.find(s => {
+                        const sLower = s.toLowerCase();
+                        return (
+                            sLower === lastPartLower ||
+                            sLower.includes(lastPartLower) ||
+                            lastPartLower.includes(sLower)
+                        );
+                    });
+                    if (matchedSection && !detected.includes(matchedSection)) {
+                        detected.push(matchedSection);
+                    }
                 }
             }
 
             // Fallback: search taxonomy tree directly
-            if (subcategory && !detected.some(s => s.toLowerCase() === subcategory.toLowerCase()) && taxonomy.length > 0) {
-                for (const cat of taxonomy) {
-                    const found = findSubcategoryInTree(cat.subCategories || [], subcategory);
-                    if (found && !detected.includes(found)) { detected.push(found); break; }
+            if (subcategory && taxonomy.length > 0) {
+                const subParts = subcategory.split('/').map(x => x.trim()).filter(Boolean);
+                const lastPart = subParts[subParts.length - 1];
+                if (lastPart && !detected.some(s => s.toLowerCase() === lastPart.toLowerCase())) {
+                    for (const cat of taxonomy) {
+                        const found = findSubcategoryInTree(cat.subCategories || [], lastPart);
+                        if (found && !detected.includes(found)) { detected.push(found); break; }
+                    }
                 }
             }
 
