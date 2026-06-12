@@ -21,7 +21,7 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
   const availableSubCategories = subCategories[form.category] || [];
 
   function addOption() {
-    onFieldChange("options", [...form.options, { partCode: "", specification: "", price: 0, qty: 0 }]);
+    onFieldChange("options", [...form.options, { partCode: "", specification: "", qty: 0 }]);
   }
   function updateOption(i: number, key: keyof ProductOption, value: any) {
     const opts = [...form.options];
@@ -205,7 +205,7 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
               )}
               {form.options.map((opt, i) => (
                 <div key={i} className="grid grid-cols-12 gap-2 items-start p-3 bg-gray-50 rounded-lg border border-gray-100">
-                  <div className="col-span-3">
+                  <div className="col-span-4">
                     <label className="block text-[9px] font-black text-gray-400  mb-1">Part Code *</label>
                     <input value={opt.partCode} onChange={e => updateOption(i, "partCode", e.target.value)}
                       placeholder="PW7000" className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded font-mono focus:outline-none focus:border-[#C3110C]/50 transition" />
@@ -214,11 +214,6 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
                     <label className="block text-[9px] font-black text-gray-400  mb-1">Specification</label>
                     <input value={opt.specification} onChange={e => updateOption(i, "specification", e.target.value)}
                       placeholder="Standard Configuration" className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded focus:outline-none focus:border-[#C3110C]/50 transition" />
-                  </div>
-                  <div className="col-span-1">
-                    <label className="block text-[9px] font-black text-gray-400  mb-1">Price</label>
-                    <input type="number" value={opt.price} onChange={e => updateOption(i, "price", parseFloat(e.target.value) || 0)}
-                      className="w-full px-2 py-1.5 text-xs border border-gray-200 rounded focus:outline-none focus:border-[#C3110C]/50 transition" />
                   </div>
                   <div className="col-span-1">
                     <label className="block text-[9px] font-black text-gray-400  mb-1">Qty</label>

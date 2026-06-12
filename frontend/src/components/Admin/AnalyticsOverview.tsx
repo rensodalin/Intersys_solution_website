@@ -2,20 +2,12 @@ import { useEffect, useState } from "react";
 import { AnalyticsStats } from "./analytic/types";
 import { fetchAnalyticsStats } from "./analytic/api";
 import { fetchQuotes } from "./api";
+import { fetchProducts } from "@/utils/productApi";
 import { VisitorTrajectoryChart } from "./analytic/VisitorTrajectoryChart";
 import { GlobalPresenceCard } from "./analytic/GlobalPresenceCard";
 import { SystemPopularity } from "./analytic/SystemPopularity";
 import { InterfaceDynamicsCard } from "./analytic/InterfaceDynamicsCard";
 import { PopularProductsCard } from "./analytic/PopularProductsCard";
-import {
-  honeywellMainProducts, honeywellAccessories, honeywellCredentials,
-  honeywellReaders, honeywellSoftware, honeywellControlPanels,
-  honeywellControlPanelKits, honeywellKiosks, honeywellUpgrades,
-  honeywellDoorHardware,
-} from "@/components/Product/AccessControl/Honeywell/data";
-import { saltoProducts } from "@/components/Product/AccessControl/Salto/data";
-import { bmsProducts } from "@/components/Product/BuildingManagement/data";
-import { surveillanceProducts } from "@/components/Product/Surveillance/data";
 
 export function AnalyticsOverview() {
   const [stats, setStats] = useState<AnalyticsStats | null>(null);
@@ -23,6 +15,7 @@ export function AnalyticsOverview() {
   const [timeframe, setTimeframe] = useState<"24h" | "7d" | "30d">("24h");
   const [lastUpdate, setLastUpdate] = useState<string>("");
   const [allQuotes, setAllQuotes] = useState<any[]>([]);
+  const [productImageMap, setProductImageMap] = useState<Record<string, string>>({});
 
   const fetchAnalytics = async () => {
     setLoading(true);
@@ -52,6 +45,21 @@ export function AnalyticsOverview() {
     fetchAllQuotesData();
   }, []);
 
+  // Build image map from API products (includes admin-added products)
+  useEffect(() => {
+    fetchProducts()
+      .then(apiProducts => {
+        const map: Record<string, string> = {};
+        apiProducts.forEach(p => {
+          if (p.title && p.mainImage) map[p.title.toLowerCase()] = p.mainImage;
+        });
+        setProductImageMap(map);
+      })
+      .catch(() => {
+        // API unavailable – image map stays empty, images simply won't show
+      });
+  }, []);
+
   const productCounts: Record<string, number> = {};
   allQuotes.forEach((q: any) => {
     (q.products || []).forEach((p: any) => {
@@ -63,17 +71,6 @@ export function AnalyticsOverview() {
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => b.count - a.count)
     .slice(0, 5);
-
-  const productImageMap: Record<string, string> = {};
-  const allProducts = [
-    ...honeywellMainProducts, ...honeywellAccessories, ...honeywellCredentials,
-    ...honeywellReaders, ...honeywellSoftware, ...honeywellControlPanels,
-    ...honeywellControlPanelKits, ...honeywellKiosks, ...honeywellUpgrades,
-    ...honeywellDoorHardware,
-    ...saltoProducts.flatMap((p: any) => [p, ...(p.subProducts || [])]),
-    ...bmsProducts, ...surveillanceProducts,
-  ];
-  allProducts.forEach((p: any) => { if (p.title) productImageMap[p.title.toLowerCase()] = p.image; });
 
   const getProductImage = (name: string) => {
     const key = name.toLowerCase();

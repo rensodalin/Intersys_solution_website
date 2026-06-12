@@ -47,7 +47,6 @@ export function ProductTable({ loading, paged, filtered, page, totalPages, searc
             <tr className="bg-gray-50 border-b border-gray-100">
               <th className="text-left text-[11px] font-black text-gray-400  px-4 py-3">Product</th>
               <th className="text-left text-[11px] font-black text-gray-400  px-4 py-3">Category</th>
-              <th className="text-left text-[11px] font-black text-gray-400  px-4 py-3">Brand</th>
               <th className="text-left text-[11px] font-black text-gray-400  px-4 py-3">Subcategory</th>
               <th className="text-left text-[11px] font-black text-gray-400  px-4 py-3">Options</th>
               <th className="text-right text-[11px] font-black text-gray-400  px-4 py-3">Actions</th>
@@ -74,9 +73,6 @@ export function ProductTable({ loading, paged, filtered, page, totalPages, searc
                     <Layers size={10} />
                     {p.category}
                   </span>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-xs font-semibold text-gray-700">{p.brand}</span>
                 </td>
                 <td className="px-4 py-3">
                   <span className="text-xs text-gray-500">{p.brandSubCategory || <span className="text-gray-300 italic">—</span>}</span>

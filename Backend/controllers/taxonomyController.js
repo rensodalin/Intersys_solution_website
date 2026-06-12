@@ -97,12 +97,12 @@ export const getAll = async (req, res) => {
 
 export const createCategory = async (req, res) => {
   try {
-    const { category } = req.body;
+    const { category, image } = req.body;
     if (!category) return res.status(400).json({ success: false, error: "Category name is required" });
     await ensureSeeded();
     const exists = await Taxonomy.findOne({ category });
     if (exists) return res.status(400).json({ success: false, error: "Category already exists" });
-    const doc = await Taxonomy.create({ category, subCategories: [] });
+    const doc = await Taxonomy.create({ category, image: image || "", subCategories: [] });
     res.status(201).json({ success: true, data: doc });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -112,9 +112,12 @@ export const createCategory = async (req, res) => {
 export const updateCategory = async (req, res) => {
   try {
     const { name } = req.params;
-    const { category: newName } = req.body;
-    if (!newName) return res.status(400).json({ success: false, error: "New category name is required" });
-    const doc = await Taxonomy.findOneAndUpdate({ category: name }, { category: newName }, { new: true });
+    const updateFields = {};
+    const { category: newName, image } = req.body;
+    if (newName) updateFields.category = newName;
+    if (image !== undefined) updateFields.image = image;
+    if (Object.keys(updateFields).length === 0) return res.status(400).json({ success: false, error: "No fields to update" });
+    const doc = await Taxonomy.findOneAndUpdate({ category: name }, updateFields, { new: true });
     if (!doc) return res.status(404).json({ success: false, error: "Category not found" });
     res.json({ success: true, data: doc });
   } catch (error) {

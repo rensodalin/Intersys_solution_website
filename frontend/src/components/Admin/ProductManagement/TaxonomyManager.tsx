@@ -168,6 +168,7 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
   const [newName, setNewName] = useState("");
   const [addDescription, setAddDescription] = useState("");
   const [addImage, setAddImage] = useState("");
+  const [addCategoryImage, setAddCategoryImage] = useState("");
   const [saving, setSaving] = useState(false);
   const [editing, setEditing] = useState<EditingItem>(null);
   const [editName, setEditName] = useState("");
@@ -198,13 +199,14 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
     setSaving(true);
     try {
       if (addingTo?.type === "category") {
-        await addCategory(newName.trim());
+        await addCategory(newName.trim(), addCategoryImage);
       } else if (addingTo?.type === "subcategory" && addingTo.category) {
         await addSubCategory(addingTo.category, newName.trim(), addingTo.parentPath || "", "", addDescription, addImage, "");
       }
       setNewName("");
       setAddDescription("");
       setAddImage("");
+      setAddCategoryImage("");
       setAddingTo(null);
       await load();
       onChanged();
@@ -221,7 +223,7 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
     setSaving(true);
     try {
       if (editing.type === "category") {
-        await renameCategory(editing.currentName, editName.trim());
+        await renameCategory(editing.currentName, editName.trim(), editImage || undefined);
       } else if (editing.type === "subcategory" && editing.category) {
         await renameSubCategory(editing.category, editing.currentName, editName.trim(), editing.parentPath || "", editTitle, editDescription, editImage, editHeroImage);
       }
@@ -297,8 +299,8 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
                         className="p-1.5 rounded-lg hover:bg-white text-gray-400 hover:text-green-600 transition cursor-pointer" title="Add subcategory">
                         <Plus size={12} />
                       </button>
-                      <button onClick={() => { setEditing({ type: "category", currentName: cat.category }); setEditName(cat.category); setEditTitle(""); setEditDescription(""); setEditImage(""); setEditHeroImage(""); }}
-                        className="p-1.5 rounded-lg hover:bg-white text-gray-400 hover:text-blue-600 transition cursor-pointer" title="Rename">
+                      <button onClick={() => { setEditing({ type: "category", currentName: cat.category, image: cat.image }); setEditName(cat.category); setEditTitle(""); setEditDescription(""); setEditImage(cat.image || ""); setEditHeroImage(""); }}
+                        className="p-1.5 rounded-lg hover:bg-white text-gray-400 hover:text-blue-600 transition cursor-pointer" title="Edit">
                         <Pencil size={12} />
                       </button>
                       <button onClick={() => handleDelete("category", undefined, cat.category)}
@@ -369,16 +371,27 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
               ))}
 
               {addingTo?.type === "category" && (
-                <div className="border border-dashed border-green-300 rounded-xl p-3 bg-green-50 flex items-center gap-2">
+                <div className="border border-dashed border-green-300 rounded-xl p-3 bg-green-50 space-y-2">
                   <input value={newName} onChange={e => setNewName(e.target.value)}
                     placeholder="Category name..."
-                    className="flex-1 px-2 py-1.5 text-sm border border-green-200 rounded focus:outline-none focus:border-green-500"
+                    className="w-full px-2 py-1.5 text-sm border border-green-200 rounded focus:outline-none focus:border-green-500"
                     onKeyDown={e => { if (e.key === "Enter") handleAdd(); if (e.key === "Escape") setAddingTo(null); }}
                     autoFocus />
-                  <button onClick={handleAdd} disabled={saving || !newName.trim()}
-                    className="px-3 py-1.5 text-xs font-bold bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 cursor-pointer">Add</button>
-                  <button onClick={() => { setAddingTo(null); setNewName(""); }}
-                    className="p-1.5 text-gray-400 hover:text-gray-600 cursor-pointer"><X size={14} /></button>
+                  <input value={addCategoryImage} onChange={e => setAddCategoryImage(e.target.value)}
+                    placeholder="Image URL (optional)"
+                    className="w-full px-2 py-1.5 text-sm border border-green-200 rounded focus:outline-none focus:border-green-500" />
+                  {addCategoryImage && (
+                    <div className="h-16 rounded border border-green-200 overflow-hidden bg-white">
+                      <img src={addCategoryImage} alt="" className="w-full h-full object-contain"
+                        onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2">
+                    <button onClick={handleAdd} disabled={saving || !newName.trim()}
+                      className="px-3 py-1.5 text-xs font-bold bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 cursor-pointer">Add</button>
+                    <button onClick={() => { setAddingTo(null); setNewName(""); setAddCategoryImage(""); }}
+                      className="p-1.5 text-gray-400 hover:text-gray-600 cursor-pointer"><X size={14} /></button>
+                  </div>
                 </div>
               )}
 
@@ -407,6 +420,21 @@ export function TaxonomyManager({ open, onClose, onChanged }: TaxonomyManagerPro
                     onKeyDown={e => { if (e.key === "Enter") handleRename(); if (e.key === "Escape") setEditing(null); }}
                     autoFocus />
                 </div>
+
+                {editing.type === "category" && (
+                  <div>
+                    <label className="block text-[10px] font-bold text-gray-500 mb-1">Image URL</label>
+                    <input value={editImage} onChange={e => setEditImage(e.target.value)}
+                      placeholder="https://example.com/category.jpg"
+                      className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50" />
+                    {editImage && (
+                      <div className="mt-1.5 h-16 rounded border border-gray-200 overflow-hidden bg-gray-50">
+                        <img src={editImage} alt="" className="w-full h-full object-contain"
+                          onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {editing.type === "subcategory" && (
                   <>

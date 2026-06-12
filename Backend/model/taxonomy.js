@@ -11,6 +11,7 @@ const subCategorySchema = new mongoose.Schema({
 
 const taxonomySchema = new mongoose.Schema({
     category: { type: String, required: true, unique: true },
+    image: { type: String, default: "" },
     subCategories: [subCategorySchema]
 }, { timestamps: true });
 

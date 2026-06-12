@@ -12,6 +12,7 @@ export interface TaxonomySubCategory {
 export interface TaxonomyCategory {
   _id?: string;
   category: string;
+  image?: string;
   subCategories: TaxonomySubCategory[];
 }
 
@@ -34,24 +35,26 @@ export async function fetchTaxonomy(): Promise<TaxonomyCategory[]> {
   return json.data;
 }
 
-export async function addCategory(category: string): Promise<TaxonomyCategory> {
+export async function addCategory(category: string, image = ""): Promise<TaxonomyCategory> {
   const res = await fetch(`${baseUrl}/api/taxonomy/category`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify({ category }),
+    body: JSON.stringify({ category, image }),
   });
   const json = await res.json();
   if (!json.success) throw new Error(json.error || "Failed to add category");
   return json.data;
 }
 
-export async function renameCategory(oldName: string, newName: string): Promise<TaxonomyCategory> {
+export async function renameCategory(oldName: string, newName: string, image?: string): Promise<TaxonomyCategory> {
+  const body: Record<string, string> = { category: newName };
+  if (image !== undefined) body.image = image;
   const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(oldName)}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify({ category: newName }),
+    body: JSON.stringify(body),
   });
   const json = await res.json();
   if (!json.success) throw new Error(json.error || "Failed to rename category");

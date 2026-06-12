@@ -5,7 +5,6 @@ export type { ApiProduct };
 export interface ProductOption {
   partCode: string;
   specification: string;
-  price: number;
   qty: number;
 }
 
