@@ -173,7 +173,8 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
           partCode: opt.partCode,
           specification: opt.specification,
           qty: qty,
-          brand: product.brand
+          brand: product.brand,
+          returnPath: returnPath,
         });
       }
     });

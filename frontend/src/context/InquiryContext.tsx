@@ -12,6 +12,7 @@ export interface InquiryItem {
   specification: string;
   qty: number;
   brand?: string;
+  returnPath?: string;
 }
 
 interface InquiryContextType {
