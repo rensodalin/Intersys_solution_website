@@ -12,6 +12,7 @@ import {
   FileCheck,
   Settings,
   PhoneCall,
+  Lightbulb,
 } from "lucide-react";
 
 const avatarColors = [
@@ -30,12 +31,12 @@ function getAvatarColor(name: string) {
 
 interface SidebarProps {
   userName: string;
-  activeSection: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "chat" | "contacts" | "reports" | "settings";
-  onSectionChange: (section: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "chat" | "contacts" | "reports" | "settings") => void;
+  activeSection: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "technicaltips" | "chat" | "contacts" | "reports" | "settings";
+  onSectionChange: (section: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "technicaltips" | "chat" | "contacts" | "reports" | "settings") => void;
 }
 
 export function Sidebar({ userName, activeSection, onSectionChange }: SidebarProps) {
-  const getButtonClass = (section: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "chat" | "contacts" | "reports" | "settings") => {
+  const getButtonClass = (section: "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "technicaltips" | "chat" | "contacts" | "reports" | "settings") => {
     const baseClass = "w-full flex items-center gap-3 px-4 py-3 text-sm transition cursor-pointer rounded-sm";
     if (activeSection === section) {
       return `${baseClass} font-bold bg-[#C3110C] text-white shadow-lg shadow-[#C3110C]/20`;
@@ -111,6 +112,14 @@ export function Sidebar({ userName, activeSection, onSectionChange }: SidebarPro
           >
             <Newspaper size={18} />
             <span>Insights</span>
+          </button>
+
+          <button
+            onClick={() => onSectionChange("technicaltips")}
+            className={getButtonClass("technicaltips")}
+          >
+            <Lightbulb size={18} />
+            <span>Technical Tips</span>
           </button>
 
           <button

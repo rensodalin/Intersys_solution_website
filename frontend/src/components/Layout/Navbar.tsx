@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import { initializeAuth, logoutSuccess } from "@/store/authSlice";
 import logoImg from "@/assets/logo.avif";
-import { NAVIGATION_DATA } from "@/components/shared/navigationData";
 import type { NavDataItem, NavDataSubItem } from "@/components/shared/navigationData";
 import { useTaxonomy } from "@/hooks/useTaxonomy";
 import type { TaxonomySubCategory } from "@/utils/taxonomyApi";
@@ -82,7 +81,6 @@ export function Navbar() {
   }
 
   const productsNavData = useMemo((): NavDataItem[] => {
-    if (taxonomy.length === 0) return NAVIGATION_DATA;
     return taxonomy.map(t => {
       const slug = toSlug(t.category);
       const subItems = (t.subCategories || []).map(sc => subCatToNav(sc, slug));
@@ -200,6 +198,7 @@ export function Navbar() {
             </div>
 
             {/* PRODUCTS CATEGORY */}
+            {productsNavData.length > 0 && (
             <div
               className="relative h-full flex items-center"
               onMouseEnter={() => setShowProducts(true)}
@@ -271,6 +270,7 @@ export function Navbar() {
                 </div>
               )}
             </div>
+            )}
 
             {/* CLIENT CENTER */}
             <div className="relative h-full flex items-center" onMouseEnter={() => setActiveSupport("client")} onMouseLeave={closeMenus}>

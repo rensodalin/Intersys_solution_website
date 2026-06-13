@@ -15,6 +15,7 @@ import visitorRoutes from "./routes/visitor.js";
 import activityRoutes from "./routes/activity.js";
 import chatRoutes from "./routes/chat.js";
 import taxonomyRoutes from "./routes/taxonomy.js";
+import technicalTipRoutes from "./routes/technicalTips.js";
 import { submitContact, getContacts, deleteContact } from "./controllers/contactController.js";
 import { isAdmin } from "./middleware/auth.js";
 
@@ -75,6 +76,7 @@ app.use("/api/visitors", visitorRoutes);
 app.use("/api/activity", activityRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/taxonomy", taxonomyRoutes);
+app.use("/api/technical-tips", technicalTipRoutes);
 
 app.post("/api/contact", submitContact);
 app.get("/api/contacts", isAdmin, getContacts);
