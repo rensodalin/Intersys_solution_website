@@ -164,7 +164,7 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
             {/* Text */}
             <div className="mb-6">
               <p className="text-gray-200 text-sm mb-2 tracking-wide">
-                Scan the QR code below or
+                Scan the QR code below to contact us or
               </p>
 
               <Link

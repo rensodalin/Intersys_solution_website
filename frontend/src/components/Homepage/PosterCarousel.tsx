@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, X, ExternalLink } from "lucide-react";
+import environment from "@/enviroment/enviroment";
 
 interface Poster {
   _id: string;
@@ -18,12 +19,12 @@ export function PosterCarousel() {
   const [refreshingIds, setRefreshingIds] = useState<Set<string>>(new Set());
   const trackRef = useRef<HTMLDivElement>(null);
   const offsetRef = useRef(0);
-
+  const baseUrl = environment;
   useEffect(() => {
     const fetchPosters = async () => {
       try {
-        const baseUrl = `http://${window.location.hostname}:1000`;
-        const res = await fetch(`${baseUrl}/api/posters`);
+        const res = await fetch(`${baseUrl}/posters`);
+
         const data = await res.json();
         if (data.success) {
           setPosters(data.data);
@@ -41,8 +42,7 @@ export function PosterCarousel() {
     if (refreshingIds.has(postId)) return;
     setRefreshingIds(prev => new Set(prev).add(postId));
     try {
-      const baseUrl = `http://${window.location.hostname}:1000`;
-      const res = await fetch(`${baseUrl}/api/posters/refresh-image/${postId}`, {
+      const res = await fetch(`${baseUrl}/posters/refresh-image/${postId}`, {
         method: "POST",
       });
       const json = await res.json();
@@ -51,6 +51,7 @@ export function PosterCarousel() {
       }
     } catch {
       // keep showing placeholder
+
     } finally {
       setRefreshingIds(prev => { const next = new Set(prev); next.delete(postId); return next; });
     }

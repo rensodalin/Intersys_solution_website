@@ -27,7 +27,6 @@ import { useTaxonomy } from "@/hooks/useTaxonomy";
 import type { TaxonomySubCategory } from "@/utils/taxonomyApi";
 import { cn, toSlug } from "@/lib/utils";
 import logoImg from "@/assets/logo.avif";
-import { NAVIGATION_DATA } from "@/components/shared/navigationData";
 import type { NavDataItem, NavDataSubItem } from "@/components/shared/navigationData";
 
 interface CatalogSidebarProps {
@@ -199,10 +198,7 @@ export function CatalogSidebar({
         };
     }
 
-    // Build navigation entirely from live taxonomy; fall back to hardcoded data when API is unavailable
     const navData = useMemo(() => {
-        if (taxonomy.length === 0) return NAVIGATION_DATA;
-
         return taxonomy.map(t => {
             const slug = toSlug(t.category);
             const iconKey = Object.keys(CATEGORY_ICONS).find(k => t.category.toLowerCase().includes(k));

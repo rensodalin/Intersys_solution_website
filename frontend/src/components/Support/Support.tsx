@@ -11,16 +11,10 @@ interface SupportMember {
 
 const techSupport: SupportMember[] = [
   {
-    name: "Jawhar Ayadi",
-    email: "jayadi@aetherial.com",
-    phone: "+1 (555) 201-4412",
-    position: "Applications Engineer",
-  },
-  {
-    name: "Mohamed Asif",
-    email: "masif@aetherial.com",
-    phone: "+1 (555) 884-2190",
-    position: "Manager, Technical Design & Pre-Sales",
+    name: "Sochet Chun",
+    email: "sochet@intersys-solutions.com",
+    phone: "077 602 334",
+    position: "Technical Support Engineer",
   },
 ];
 
@@ -82,6 +76,8 @@ function SupportSection({
                     <div className="space-y-2">
                       <a
                         href={`mailto:${member.email}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-sm font-medium text-[#2F2FE4] bg-[#1A3263]/5 border border-[#1A3263]/10 px-3 py-2 hover:bg-[#C3110C] hover:text-white hover:border-[#C3110C] transition-all duration-300 cursor-pointer"
                       >
                         <Mail className="w-4 h-4" />
@@ -89,7 +85,9 @@ function SupportSection({
                       </a>
 
                       <a
-                        href={`tel:${member.phone}`}
+                        href="https://t.me/chun_sochet"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-sm font-medium text-[#1A3263] bg-[#1A3263]/5 border border-[#1A3263]/10 px-3 py-2 hover:bg-[#C3110C] hover:text-white hover:border-[#C3110C] transition-all duration-300 cursor-pointer"
                       >
                         <Phone className="w-4 h-4" />
