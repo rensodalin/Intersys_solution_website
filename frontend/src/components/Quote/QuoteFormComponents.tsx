@@ -233,6 +233,8 @@ export function InterestedSection({ register, control, watch, errors, categories
                             productNo: "",
                             description: "",
                             application: "",
+                            productId: "",
+                            product: "",
                         })
                     }
                     className="text-sm font-medium text-red-600 flex items-center gap-2"

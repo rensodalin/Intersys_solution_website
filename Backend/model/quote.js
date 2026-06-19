@@ -1,17 +1,9 @@
 import mongoose from "mongoose";
 
-const productRowSchema = new mongoose.Schema({
-    qty: { type: String, required: true },
-    productNo: { type: String, required: true },
-    description: { type: String, required: true },
-    application: { type: String, required: true },
-    price: { type: Number, default: 0 }
-});
-
 const quoteSchema = new mongoose.Schema({
     solutionCategories: [{ type: String }],
-    products: [productRowSchema],
     sections: [{ type: String }],
+    products: [{ type: mongoose.Schema.Types.ObjectId, ref: "QuoteItem" }],
     name: { type: String, required: true },
     company: { type: String, required: true },
     title: { type: String, required: true },

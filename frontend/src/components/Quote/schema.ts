@@ -5,6 +5,8 @@ export const productRowSchema = z.object({
     productNo: z.string().min(1, "Product No required"),
     description: z.string().min(1, "Description required"),
     application: z.string().min(1, "Application required"),
+    productId: z.string().optional(),
+    product: z.string().optional(),
 });
 
 export const quoteSchema = z.object({

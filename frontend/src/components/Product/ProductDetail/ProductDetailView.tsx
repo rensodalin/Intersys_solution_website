@@ -30,6 +30,7 @@ export interface ProductOption {
 }
 
 export interface ProductData {
+  _id: string;
   id: string;
   category: string;
   brand: string;
@@ -165,6 +166,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
       const qty = quantities[opt.partCode];
       if (qty > 0) {
         addItem({
+          _id: product._id,
           id: product.id,
           category: product.category,
           subcategory,

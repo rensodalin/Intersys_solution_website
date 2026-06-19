@@ -1,5 +1,8 @@
 import Product from "../model/product.js";
-import Quote from "../model/quote.js";
+import ProductOption from "../model/productOption.js";
+import ProductDocument from "../model/productDocument.js";
+import QuoteItem from "../model/quoteItem.js";
+import Category from "../model/category.js";
 
 export const getAll = async (req, res) => {
   try {
@@ -9,7 +12,12 @@ export const getAll = async (req, res) => {
     if (brand) filter.brand = brand;
     if (brandSubCategory) filter.brandSubCategory = brandSubCategory;
 
-    const products = await Product.find(filter).sort({ createdAt: -1 }).lean();
+    const products = await Product.find(filter)
+      .populate("options")
+      .populate("documents")
+      .sort({ createdAt: -1 })
+      .lean();
+
     const formattedProducts = products.map(product => ({
       ...product, optionsCount: product.options?.length || 0
     }));
@@ -23,7 +31,9 @@ export const getAll = async (req, res) => {
 
 export const getById = async (req, res) => {
   try {
-    const product = await Product.findOne({ productId: req.params.productId });
+    const product = await Product.findOne({ productId: req.params.productId })
+      .populate("options")
+      .populate("documents");
     if (!product) {
       return res.status(404).json({ success: false, error: "Product not found" });
     }
@@ -35,9 +45,47 @@ export const getById = async (req, res) => {
 
 export const create = async (req, res) => {
   try {
-    const newProduct = new Product(req.body);
+    const { options, documents, ...productData } = req.body;
+
+    if (productData.category) {
+      const cat = await Category.findOne({ name: productData.category });
+      if (cat) productData.categoryRef = cat._id;
+    }
+
+    const newProduct = new Product(productData);
     await newProduct.save();
-    res.status(201).json({ success: true, data: newProduct });
+
+    if (options && options.length > 0) {
+      const optionDocs = options.map(opt => ({
+        productId: newProduct._id,
+        partCode: opt.partCode,
+        specification: opt.specification,
+        price: opt.price || 0,
+        qty: opt.qty || 0
+      }));
+      const savedOptions = await ProductOption.insertMany(optionDocs);
+      newProduct.options = savedOptions.map(o => o._id);
+    }
+
+    if (documents && documents.length > 0) {
+      const documentDocs = documents.map(doc => ({
+        productId: newProduct._id,
+        name: doc.name,
+        url: doc.url
+      }));
+      const savedDocs = await ProductDocument.insertMany(documentDocs);
+      newProduct.documents = savedDocs.map(d => d._id);
+    }
+
+    if (options?.length > 0 || documents?.length > 0) {
+      await newProduct.save();
+    }
+
+    const populated = await Product.findById(newProduct._id)
+      .populate("options")
+      .populate("documents");
+
+    res.status(201).json({ success: true, data: populated });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -45,14 +93,57 @@ export const create = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const product = await Product.findOneAndUpdate(
-      { productId: req.params.productId },
-      req.body,
-      { new: true, runValidators: true }
-    );
-    if (!product) {
+    const { options, documents, ...productData } = req.body;
+    const existing = await Product.findOne({ productId: req.params.productId });
+    if (!existing) {
       return res.status(404).json({ success: false, error: "Product not found" });
     }
+
+    if (productData.category) {
+      const cat = await Category.findOne({ name: productData.category });
+      if (cat) productData.categoryRef = cat._id;
+    }
+
+    if (options !== undefined) {
+      await ProductOption.deleteMany({ productId: existing._id });
+      if (options.length > 0) {
+        const optionDocs = options.map(opt => ({
+          productId: existing._id,
+          partCode: opt.partCode,
+          specification: opt.specification,
+          price: opt.price || 0,
+          qty: opt.qty || 0
+        }));
+        const savedOptions = await ProductOption.insertMany(optionDocs);
+        productData.options = savedOptions.map(o => o._id);
+      } else {
+        productData.options = [];
+      }
+    }
+
+    if (documents !== undefined) {
+      await ProductDocument.deleteMany({ productId: existing._id });
+      if (documents.length > 0) {
+        const documentDocs = documents.map(doc => ({
+          productId: existing._id,
+          name: doc.name,
+          url: doc.url
+        }));
+        const savedDocs = await ProductDocument.insertMany(documentDocs);
+        productData.documents = savedDocs.map(d => d._id);
+      } else {
+        productData.documents = [];
+      }
+    }
+
+    const product = await Product.findOneAndUpdate(
+      { productId: req.params.productId },
+      productData,
+      { new: true, runValidators: true }
+    )
+      .populate("options")
+      .populate("documents");
+
     res.status(200).json({ success: true, data: product });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -65,6 +156,10 @@ export const remove = async (req, res) => {
     if (!product) {
       return res.status(404).json({ success: false, error: "Product not found" });
     }
+    await Promise.all([
+      ProductOption.deleteMany({ productId: product._id }),
+      ProductDocument.deleteMany({ productId: product._id })
+    ]);
     res.status(200).json({ success: true, message: "Product deleted successfully" });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -73,13 +168,11 @@ export const remove = async (req, res) => {
 
 export const getPopularity = async (req, res) => {
   try {
-    const quotes = await Quote.find({}).lean();
+    const items = await QuoteItem.find({}).populate("product").lean();
     const counts = {};
-    quotes.forEach(quote => {
-      (quote.products || []).forEach(p => {
-        const key = p.description || p.productNo;
-        if (key) counts[key] = (counts[key] || 0) + 1;
-      });
+    items.forEach(item => {
+      const key = item.description || item.productNo;
+      if (key) counts[key] = (counts[key] || 0) + 1;
     });
     res.status(200).json({ success: true, data: counts });
   } catch (error) {

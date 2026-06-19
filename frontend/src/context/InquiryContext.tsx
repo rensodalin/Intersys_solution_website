@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
 export interface InquiryItem {
+  _id?: string;
   id: string;
   category: string;
   subcategory?: string;

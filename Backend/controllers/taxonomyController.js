@@ -1,95 +1,90 @@
-import mongoose from "mongoose";
-import Taxonomy from "../model/taxonomy.js";
+import Category from "../model/category.js";
 import Product from "../model/product.js";
 
-function parsePath(p) {
-  return p ? p.split("/").map(s => s.trim()).filter(Boolean) : [];
-}
-
-function navigate(parentArray, pathParts) {
-  let arr = parentArray;
-  for (const part of pathParts) {
-    const found = arr.find(c => c.name === part);
-    if (!found) return null;
-    arr = found.children || [];
-  }
-  return arr;
-}
-
 const DEFAULT_SEED = [
-  {
-    category: "Access Control",
-    subCategories: [
-      { name: "Control Panels", children: [] }, { name: "Control Panel Kits", children: [] },
-      { name: "Readers", children: [] }, { name: "Credentials", children: [] },
-      { name: "Accessories", children: [] }, { name: "Lobby Kiosks", children: [] },
-      { name: "System Agreements & Upgrades", children: [] }, { name: "Door Hardware", children: [] },
-    ]
-  },
-  {
-    category: "Surveillance (CCTV)",
-    subCategories: [
-      { name: "IP Cameras", children: [] }, { name: "Analog Cameras", children: [] },
-      { name: "NVR/DVR", children: [] }, { name: "Accessories", children: [] },
-    ]
-  },
-  {
-    category: "Building Management",
-    subCategories: [
-      { name: "Field Devices", children: [] }, { name: "Controllers", children: [] },
-      { name: "Software", children: [] }, { name: "Networking", children: [] },
-    ]
-  },
-  { category: "Integrated Systems", subCategories: [] },
-  { category: "Audio Visual", subCategories: [] },
-  { category: "Fire Systems", subCategories: [] },
-  { category: "Leak Detection", subCategories: [] },
+  { name: "Access Control", children: [
+    { name: "Control Panels" }, { name: "Control Panel Kits" },
+    { name: "Readers" }, { name: "Credentials" },
+    { name: "Accessories" }, { name: "Lobby Kiosks" },
+    { name: "System Agreements & Upgrades" }, { name: "Door Hardware" },
+  ]},
+  { name: "Surveillance (CCTV)", children: [
+    { name: "IP Cameras" }, { name: "Analog Cameras" },
+    { name: "NVR/DVR" }, { name: "Accessories" },
+  ]},
+  { name: "Building Management", children: [
+    { name: "Field Devices" }, { name: "Controllers" },
+    { name: "Software" }, { name: "Networking" },
+  ]},
+  { name: "Integrated Systems" },
+  { name: "Audio Visual" },
+  { name: "Fire Systems" },
+  { name: "Leak Detection" },
 ];
 
-async function migrateTreeFormat() {
-  const db = mongoose.connection.db;
-  if (!db) return;
-  const docs = await db.collection("taxonomies").find({ subCategories: { $exists: false }, brands: { $exists: true } }).toArray();
-  let migrated = 0;
-  for (const doc of docs) {
-    const flatSubs = [];
-    for (const brand of (doc.brands || [])) {
-      for (const sub of (brand.subCategories || [])) {
-        if (!flatSubs.find(s => s.name === sub.name)) {
-          flatSubs.push(sub);
-        }
-      }
-    }
-    if (flatSubs.length > 0) {
-      await db.collection("taxonomies").updateOne({ _id: doc._id }, { $set: { subCategories: flatSubs }, $unset: { brands: "" } });
-      migrated++;
-    } else {
-      await db.collection("taxonomies").updateOne({ _id: doc._id }, { $set: { subCategories: [] }, $unset: { brands: "" } });
-      migrated++;
+async function ensureSeeded() {
+  const count = await Category.countDocuments({ parent: null });
+  if (count > 0) return;
+
+  for (const root of DEFAULT_SEED) {
+    const { children, ...rootData } = root;
+    const parent = await Category.create(rootData);
+    for (const child of (children || [])) {
+      await Category.create({ ...child, parent: parent._id });
     }
   }
-  if (migrated > 0) console.log(`✅ Migrated ${migrated} taxonomy documents to brandless format`);
+  console.log("✅ Taxonomy seeded with default data");
 }
 
-async function ensureSeeded() {
-  const seededDoc = await Taxonomy.findOne({ category: "__seeded__" });
-  if (!seededDoc) {
-    const count = await Taxonomy.countDocuments();
-    if (count === 0) {
-      await Taxonomy.insertMany(DEFAULT_SEED);
-      console.log("✅ Taxonomy seeded with default data");
+function buildTree(categories) {
+  const map = {};
+  const roots = [];
+
+  categories.forEach(c => {
+    map[c._id] = { ...c, subCategories: [] };
+  });
+
+  categories.forEach(c => {
+    if (c.parent && map[c.parent]) {
+      map[c.parent].subCategories.push(map[c._id]);
+    } else if (!c.parent) {
+      roots.push(map[c._id]);
     }
-    await Taxonomy.create({ category: "__seeded__", subCategories: [] });
-  } else {
-    await migrateTreeFormat();
-  }
+  });
+
+  return roots.map(root => ({
+    _id: root._id,
+    category: root.name,
+    image: root.image || "",
+    subCategories: root.subCategories.map(buildSubTree)
+  }));
+}
+
+function buildSubTree(node) {
+  return {
+    name: node.name,
+    title: node.label || "",
+    description: node.description || "",
+    image: node.image || "",
+    heroImage: node.heroImage || "",
+    children: (node.subCategories || []).map(buildSubTree)
+  };
+}
+
+function getNodePath(node, pathParts) {
+  if (pathParts.length === 0) return node;
+  const [head, ...rest] = pathParts;
+  const child = (node.subCategories || []).find(c => c.name === head);
+  if (!child) return null;
+  return getNodePath(child, rest);
 }
 
 export const getAll = async (req, res) => {
   try {
     await ensureSeeded();
-    const data = await Taxonomy.find({ category: { $ne: "__seeded__" } }).sort({ category: 1 }).lean();
-    res.json({ success: true, data });
+    const all = await Category.find({}).sort({ order: 1, name: 1 }).lean();
+    const tree = buildTree(all);
+    res.json({ success: true, data: tree });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -100,9 +95,11 @@ export const createCategory = async (req, res) => {
     const { category, image } = req.body;
     if (!category) return res.status(400).json({ success: false, error: "Category name is required" });
     await ensureSeeded();
-    const exists = await Taxonomy.findOne({ category });
+
+    const exists = await Category.findOne({ name: category, parent: null });
     if (exists) return res.status(400).json({ success: false, error: "Category already exists" });
-    const doc = await Taxonomy.create({ category, image: image || "", subCategories: [] });
+
+    const doc = await Category.create({ name: category, image: image || "" });
     res.status(201).json({ success: true, data: doc });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -112,14 +109,26 @@ export const createCategory = async (req, res) => {
 export const updateCategory = async (req, res) => {
   try {
     const { name } = req.params;
-    const updateFields = {};
     const { category: newName, image } = req.body;
-    if (newName) updateFields.category = newName;
-    if (image !== undefined) updateFields.image = image;
-    if (Object.keys(updateFields).length === 0) return res.status(400).json({ success: false, error: "No fields to update" });
-    const doc = await Taxonomy.findOneAndUpdate({ category: name }, updateFields, { new: true });
+
+    const doc = await Category.findOne({ name, parent: null });
     if (!doc) return res.status(404).json({ success: false, error: "Category not found" });
-    res.json({ success: true, data: doc });
+
+    if (newName) doc.name = newName;
+    if (image !== undefined) doc.image = image;
+    await doc.save();
+
+    if (newName && newName !== name) {
+      await Product.updateMany(
+        { categoryRef: doc._id },
+        { $set: { category: newName } }
+      );
+    }
+
+    const all = await Category.find({}).sort({ order: 1, name: 1 }).lean();
+    const tree = buildTree(all);
+    const updated = tree.find(t => t._id.equals(doc._id) || t.category === (newName || name));
+    res.json({ success: true, data: updated || doc });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -127,34 +136,57 @@ export const updateCategory = async (req, res) => {
 
 export const deleteCategory = async (req, res) => {
   try {
-    const doc = await Taxonomy.findOneAndDelete({ category: req.params.name });
-    if (!doc) return res.status(404).json({ success: false, error: "Category not found" });
+    const root = await Category.findOne({ name: req.params.name, parent: null });
+    if (!root) return res.status(404).json({ success: false, error: "Category not found" });
 
-    // Also delete all products associated with this category
-    await Product.deleteMany({ category: req.params.name });
+    await Category.deleteMany({
+      $or: [{ _id: root._id }, { parent: root._id }]
+    });
 
-    res.json({ success: true, data: doc });
+    await Product.deleteMany({ categoryRef: root._id });
+
+    res.json({ success: true, data: root });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
 };
 
+function parsePath(p) {
+  return p ? p.split("/").map(s => s.trim()).filter(Boolean) : [];
+}
+
 export const createSubcategory = async (req, res) => {
   try {
     const { subCategory, parentPath, title, description, image, heroImage } = req.body;
     if (!subCategory) return res.status(400).json({ success: false, error: "Subcategory name is required" });
-    const doc = await Taxonomy.findOne({ category: req.params.name });
-    if (!doc) return res.status(404).json({ success: false, error: "Category not found" });
+
+    const root = await Category.findOne({ name: req.params.name, parent: null });
+    if (!root) return res.status(404).json({ success: false, error: "Category not found" });
 
     const pathParts = parsePath(parentPath || "");
-    const arr = pathParts.length === 0 ? doc.subCategories : navigate(doc.subCategories, pathParts);
-    if (!arr) return res.status(404).json({ success: false, error: "Parent not found" });
-    if (arr.some(c => c.name === subCategory)) return res.status(400).json({ success: false, error: "Subcategory already exists at this level" });
+    let parent = root;
 
-    arr.push({ name: subCategory, title: title || "", description: description || "", image: image || "", heroImage: heroImage || "", children: [] });
-    doc.markModified("subCategories");
-    await doc.save();
-    res.status(201).json({ success: true, data: doc });
+    for (const part of pathParts) {
+      const child = await Category.findOne({ name: part, parent: parent._id });
+      if (!child) return res.status(404).json({ success: false, error: `Parent "${part}" not found in path` });
+      parent = child;
+    }
+
+    const exists = await Category.findOne({ name: subCategory, parent: parent._id });
+    if (exists) return res.status(400).json({ success: false, error: "Subcategory already exists at this level" });
+
+    await Category.create({
+      name: subCategory,
+      label: title || "",
+      description: description || "",
+      image: image || "",
+      heroImage: heroImage || "",
+      parent: parent._id
+    });
+
+    const all = await Category.find({}).sort({ order: 1, name: 1 }).lean();
+    const tree = buildTree(all);
+    res.status(201).json({ success: true, data: tree.find(t => t._id.equals(root._id)) });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -163,26 +195,36 @@ export const createSubcategory = async (req, res) => {
 export const updateSubcategory = async (req, res) => {
   try {
     const { subCategory: newName, parentPath, title, description, image, heroImage } = req.body;
-    const doc = await Taxonomy.findOne({ category: req.params.name });
-    if (!doc) return res.status(404).json({ success: false, error: "Category not found" });
+
+    const root = await Category.findOne({ name: req.params.name, parent: null });
+    if (!root) return res.status(404).json({ success: false, error: "Category not found" });
 
     const pathParts = parsePath(parentPath || "");
-    const parentArr = pathParts.length === 0 ? doc.subCategories : navigate(doc.subCategories, pathParts);
-    if (!parentArr) return res.status(404).json({ success: false, error: "Parent not found" });
+    let parent = root;
 
-    const idx = parentArr.findIndex(c => c.name === req.params.subName);
-    if (idx === -1) return res.status(404).json({ success: false, error: "Subcategory not found" });
-    if (newName && newName !== req.params.subName && parentArr.some((c, i) => c.name === newName && i !== idx))
-      return res.status(400).json({ success: false, error: "Subcategory already exists at this level" });
+    for (const part of pathParts) {
+      const child = await Category.findOne({ name: part, parent: parent._id });
+      if (!child) return res.status(404).json({ success: false, error: "Parent not found" });
+      parent = child;
+    }
 
-    if (newName) parentArr[idx].name = newName;
-    if (title !== undefined) parentArr[idx].title = title;
-    if (description !== undefined) parentArr[idx].description = description;
-    if (image !== undefined) parentArr[idx].image = image;
-    if (heroImage !== undefined) parentArr[idx].heroImage = heroImage;
-    doc.markModified("subCategories");
+    const doc = await Category.findOne({ name: req.params.subName, parent: parent._id });
+    if (!doc) return res.status(404).json({ success: false, error: "Subcategory not found" });
+
+    if (newName && newName !== req.params.subName) {
+      const dup = await Category.findOne({ name: newName, parent: parent._id });
+      if (dup) return res.status(400).json({ success: false, error: "Subcategory already exists at this level" });
+      doc.name = newName;
+    }
+    if (title !== undefined) doc.label = title;
+    if (description !== undefined) doc.description = description;
+    if (image !== undefined) doc.image = image;
+    if (heroImage !== undefined) doc.heroImage = heroImage;
     await doc.save();
-    res.json({ success: true, data: doc });
+
+    const all = await Category.find({}).sort({ order: 1, name: 1 }).lean();
+    const tree = buildTree(all);
+    res.json({ success: true, data: tree.find(t => t._id.equals(root._id)) });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -190,27 +232,39 @@ export const updateSubcategory = async (req, res) => {
 
 export const deleteSubcategory = async (req, res) => {
   try {
-    const doc = await Taxonomy.findOne({ category: req.params.name });
-    if (!doc) return res.status(404).json({ success: false, error: "Category not found" });
+    const root = await Category.findOne({ name: req.params.name, parent: null });
+    if (!root) return res.status(404).json({ success: false, error: "Category not found" });
 
     const parentPath = req.query.parentPath || "";
     const pathParts = parsePath(parentPath);
-    const parentArr = pathParts.length === 0 ? doc.subCategories : navigate(doc.subCategories, pathParts);
-    if (!parentArr) return res.status(404).json({ success: false, error: "Parent not found" });
+    let parent = root;
 
-    const idx = parentArr.findIndex(c => c.name === req.params.subName);
-    if (idx === -1) return res.status(404).json({ success: false, error: "Subcategory not found" });
+    for (const part of pathParts) {
+      const child = await Category.findOne({ name: part, parent: parent._id });
+      if (!child) return res.status(404).json({ success: false, error: "Parent not found" });
+      parent = child;
+    }
 
-    parentArr.splice(idx, 1);
-    doc.markModified("subCategories");
-    await doc.save();
+    const doc = await Category.findOne({ name: req.params.subName, parent: parent._id });
+    if (!doc) return res.status(404).json({ success: false, error: "Subcategory not found" });
 
-    // Also delete all products associated with this subcategory
-    const subNamePattern = new RegExp(`(^|/)${req.params.subName}$`);
-    await Product.deleteMany({
-      category: req.params.name,
-      brandSubCategory: { $regex: subNamePattern }
+    const allDescendants = await Category.find({
+      $or: [{ _id: doc._id }, { parent: doc._id }]
     });
+    const idsToDelete = allDescendants.map(d => d._id);
+
+    const subTreeRoots = allDescendants.filter(d => d._id.equals(doc._id) || d.parent.equals(doc._id));
+    const subNames = subTreeRoots.map(d => d.name);
+
+    await Category.deleteMany({ _id: { $in: idsToDelete } });
+
+    if (subNames.length > 0) {
+      const subNamePattern = new RegExp(`(^|/)(${subNames.join("|")})$`);
+      await Product.deleteMany({
+        category: req.params.name,
+        brandSubCategory: { $regex: subNamePattern }
+      });
+    }
 
     res.json({ success: true, data: doc });
   } catch (error) {

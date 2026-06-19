@@ -56,11 +56,6 @@ const userSchema = new mongoose.Schema({
     lastLogin: {
         type: Date,
     },
-    downloadedPdfs: [{
-        title: { type: String, required: true },
-        url: { type: String, required: true },
-        downloadedAt: { type: Date, default: Date.now }
-    }]
 }, { timestamps: true });
 
 // Hash password before saving

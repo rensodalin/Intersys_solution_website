@@ -1,20 +1,9 @@
 import mongoose from "mongoose";
 
-const productOptionSchema = new mongoose.Schema({
-    partCode: { type: String, required: true },
-    specification: { type: String },
-    price: { type: Number, default: 0 },
-    qty: { type: Number, default: 0 }
-});
-
-const documentSchema = new mongoose.Schema({
-    name: { type: String },
-    url: { type: String }
-});
-
 const productSchema = new mongoose.Schema({
     productId: { type: String, required: true, unique: true },
     category: { type: String, required: true },
+    categoryRef: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
     brand: { type: String, default: "" },
     title: { type: String, required: true },
     description: { type: String },
@@ -23,8 +12,8 @@ const productSchema = new mongoose.Schema({
     brandSubCategory: { type: String },
     brandSubCategoryLink: { type: String },
     longDescription: { type: String },
-    options: [productOptionSchema],
-    documents: [documentSchema],
+    options: [{ type: mongoose.Schema.Types.ObjectId, ref: "ProductOption" }],
+    documents: [{ type: mongoose.Schema.Types.ObjectId, ref: "ProductDocument" }],
     createdAt: { type: Date, default: Date.now }
 });
 

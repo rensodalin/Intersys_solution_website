@@ -1,5 +1,6 @@
 import passport from "passport";
 import User from "../model/user.js";
+import DownloadedPdf from "../model/downloadedPdf.js";
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "6LfwwfssAAAAAABLeDbe3IaO5dr0BHeFfozkcW-1";
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@intersys.com";
@@ -118,6 +119,9 @@ export const login = async (req, res, next) => {
     user.lastLogin = new Date();
     await user.save();
 
+    const downloadedPdfs = await DownloadedPdf.find({ userId: user._id })
+      .sort({ downloadedAt: -1 }).lean();
+
     req.logIn(user, (err) => {
       if (err) {
         console.error("Passport Login Error:", err);
@@ -132,7 +136,7 @@ export const login = async (req, res, next) => {
           gender: user.gender, country: user.country,
           role: user.role, isAdmin: user.email === ADMIN_EMAIL,
           newsletter: user.newsletter, receiveUpdates: user.receiveUpdates,
-          downloadedPdfs: user.downloadedPdfs
+          downloadedPdfs
         }
       });
     });
@@ -195,12 +199,14 @@ export const logout = (req, res) => {
   });
 };
 
-export const getUser = (req, res) => {
+export const getUser = async (req, res) => {
   if (req.user) {
     const user = req.user.toObject ? req.user.toObject() : req.user;
     const { password, __v, ...safeUser } = user;
     safeUser.isAdmin = user.email === ADMIN_EMAIL;
-    res.json({ success: true, user: { ...safeUser, id: user._id } });
+    const downloadedPdfs = await DownloadedPdf.find({ userId: user._id })
+      .sort({ downloadedAt: -1 }).lean();
+    res.json({ success: true, user: { ...safeUser, id: user._id, downloadedPdfs } });
   } else {
     res.status(401).json({ success: false, message: "Not authenticated" });
   }
@@ -297,14 +303,12 @@ export const recordDownload = async (req, res) => {
     if (!title || !url) {
       return res.status(400).json({ success: false, message: "Title and URL are required" });
     }
-    const user = await User.findById(req.user._id);
-    if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
-    }
-    user.downloadedPdfs = user.downloadedPdfs || [];
-    user.downloadedPdfs.push({ title, url, downloadedAt: new Date() });
-    await user.save();
-    res.json({ success: true, downloadedPdfs: user.downloadedPdfs });
+    const pdf = new DownloadedPdf({ userId: req.user._id, title, url });
+    await pdf.save();
+
+    const downloadedPdfs = await DownloadedPdf.find({ userId: req.user._id })
+      .sort({ downloadedAt: -1 }).lean();
+    res.json({ success: true, downloadedPdfs });
   } catch (error) {
     console.error("Record Download Error:", error);
     res.status(500).json({ success: false, message: "Internal server error", error: error.message });

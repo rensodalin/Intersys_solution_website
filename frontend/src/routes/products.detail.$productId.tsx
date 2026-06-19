@@ -58,6 +58,7 @@ function ProductDetailPage() {
           const item = result.data;
           // Map to ProductData expected format
           const mapped: ProductData = {
+            _id: item._id,
             id: item.productId,
             category: item.category,
             brand: item.brand,

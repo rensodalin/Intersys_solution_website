@@ -64,7 +64,7 @@ export function QuoteForm() {
         resolver: zodResolver(quoteSchema),
         defaultValues: {
             solutionCategories: [],
-            products: [{ qty: "", productNo: "", description: "", application: "" }],
+            products: [{ qty: "", productNo: "", description: "", application: "", productId: "", product: "" }],
             contactMethod: "Either",
             newsletter: "No",
             sections: [],
@@ -206,6 +206,8 @@ export function QuoteForm() {
             productNo: i.partCode,
             description: i.title,
             application: i.specification,
+            productId: i.id,
+            product: i._id || "",
         })), { shouldDirty: true });
     }, [items, liveCategories, detectSections, setValue]);
 

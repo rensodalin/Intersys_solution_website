@@ -1,4 +1,7 @@
+import mongoose from "mongoose";
 import Quote from "../model/quote.js";
+import QuoteItem from "../model/quoteItem.js";
+import DownloadedPdf from "../model/downloadedPdf.js";
 import Contact from "../model/contact.js";
 import User from "../model/user.js";
 import Message from "../model/message.js";
@@ -10,9 +13,27 @@ export const create = async (req, res) => {
     const quoteData = req.body;
     const newQuote = new Quote({
       ...quoteData,
+      products: [],
       userId: req.user ? req.user._id : null
     });
     await newQuote.save();
+
+    const productRows = quoteData.products || [];
+    if (productRows.length > 0) {
+      const quoteItems = productRows.map(p => ({
+        quoteId: newQuote._id,
+        product: mongoose.Types.ObjectId.isValid(p.product) ? p.product : null,
+        productId: p.productId || "",
+        qty: p.qty,
+        productNo: p.productNo,
+        description: p.description,
+        application: p.application,
+        price: p.price || 0
+      }));
+      const savedItems = await QuoteItem.insertMany(quoteItems);
+      newQuote.products = savedItems.map(item => item._id);
+      await newQuote.save();
+    }
 
     try {
       const productSummary = (quoteData.products || []).map(p => `${p.qty}x ${p.productNo}`).join(", ");
@@ -111,7 +132,10 @@ export const getUserQuotes = async (req, res) => {
         { email: req.user.email }
       ]
     };
-    const quotes = await Quote.find(filter).sort({ createdAt: -1 });
+    const quotes = await Quote.find(filter).populate({
+      path: "products",
+      populate: { path: "product" }
+    }).sort({ createdAt: -1 });
     res.status(200).json({ success: true, data: quotes });
   } catch (error) {
     console.error("Failed to fetch quotes:", error);
@@ -153,12 +177,17 @@ export const getAdminStats = async (req, res) => {
       createdAt: { $gte: actStart, $lte: actEnd }, userId: { $ne: null }
     })).filter(id => id != null);
 
+    const downloadUserIds = await DownloadedPdf.distinct("userId", {
+      downloadedAt: { $gte: actStart, $lte: actEnd }
+    });
     const activeConditions = [
       { lastLogin: { $gte: actStart, $lte: actEnd } },
-      { "downloadedPdfs.downloadedAt": { $gte: actStart, $lte: actEnd } },
     ];
     if (quoteUserIds.length > 0) {
       activeConditions.push({ _id: { $in: quoteUserIds } });
+    }
+    if (downloadUserIds.length > 0) {
+      activeConditions.push({ _id: { $in: downloadUserIds } });
     }
     const activeUsers = await User.countDocuments({ $or: activeConditions });
 
@@ -244,7 +273,10 @@ export const getAllAdmin = async (req, res) => {
       if (req.query.startDate) filter.createdAt.$gte = new Date(req.query.startDate + "T00:00:00.000Z");
       if (req.query.endDate) filter.createdAt.$lte = new Date(req.query.endDate + "T23:59:59.999Z");
     }
-    const quotes = await Quote.find(filter).populate("userId", "name avatar email").sort({ createdAt: -1 });
+    const quotes = await Quote.find(filter).populate("userId", "name avatar email").populate({
+      path: "products",
+      populate: { path: "product" }
+    }).sort({ createdAt: -1 });
     res.status(200).json({ success: true, data: quotes });
   } catch (error) {
     console.error("Failed to fetch admin quotes:", error);
@@ -275,6 +307,7 @@ export const remove = async (req, res) => {
     if (!quote) {
       return res.status(404).json({ success: false, error: "Quote not found" });
     }
+    await QuoteItem.deleteMany({ quoteId: quote._id });
     res.status(200).json({ success: true, message: "Quote request deleted successfully" });
   } catch (error) {
     console.error("Failed to delete quote:", error);
