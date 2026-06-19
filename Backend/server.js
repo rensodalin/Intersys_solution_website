@@ -1,10 +1,15 @@
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 import cors from "cors";
 import dotenv from "dotenv";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import passport from "./passportsetup/passportSetup.js";
 import connectDB from "./conn/conn.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import authRoutes from "./auth/auth.js";
 import insightsRoutes from "./routes/insights.js";
 import projectRoutes from "./routes/project.js";
@@ -59,7 +64,7 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24,
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    sameSite: "lax",
   },
 }));
 
@@ -81,6 +86,14 @@ app.use("/api/technical-tips", technicalTipRoutes);
 app.post("/api/contact", submitContact);
 app.get("/api/contacts", isAdmin, getContacts);
 app.delete("/api/contacts/:id", isAdmin, deleteContact);
+
+if (process.env.NODE_ENV === "production") {
+  const frontendDist = path.join(__dirname, "../frontend/dist");
+  app.use(express.static(frontendDist));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(frontendDist, "index.html"));
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

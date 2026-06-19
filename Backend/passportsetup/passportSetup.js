@@ -20,32 +20,34 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
+const GOOGLE_CALLBACK_URL = process.env.GOOGLE_CALLBACK_URL
+    || (process.env.NODE_ENV === "production"
+        ? "https://intersys-solution-website.onrender.com/auth/google/callback"
+        : "http://localhost:1000/auth/google/callback");
+
 passport.use(
     new GoogleStrategy(
         {
             clientID: process.env.CLIENT_ID.trim(),
             clientSecret: process.env.CLIENT_SECRET.trim(),
-            callbackURL: process.env.NODE_ENV === "production"
-                ? "https://intersys-solution-website.onrender.com/auth/google/callback"
-                : "http://localhost:1000/auth/google/callback",
+            callbackURL: GOOGLE_CALLBACK_URL,
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
                 console.log("Google Profile Received:", profile.id, profile.displayName);
-                // Check if user already exists in DB
                 let user = await User.findOne({ googleId: profile.id });
 
                 if (user) {
-                    // User exists, update lastLogin and return user
                     user.lastLogin = new Date();
                     await user.save();
                     user.isAdmin = user.email === ADMIN_EMAIL;
                     done(null, user);
                 } else {
-                    // Create a new user
                     user = await User.create({
                         googleId: profile.id,
                         name: profile.displayName,
+                        firstName: profile.name?.givenName || profile.displayName.split(" ")[0],
+                        lastName: profile.name?.familyName || profile.displayName.split(" ").slice(1).join(" ") || "",
                         email: profile.emails?.[0]?.value || "",
                         avatar: profile.photos?.[0]?.value || "",
                         lastLogin: new Date(),

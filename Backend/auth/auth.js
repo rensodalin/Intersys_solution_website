@@ -38,7 +38,7 @@ router.post("/login", authController.login);
 router.get("/google", authController.googleAuth, passport.authenticate("google", { scope: ["profile", "email"] }));
 router.get("/google/callback", authController.googleCallback);
 router.all("/logout", isAuthenticated, authController.logout);
-router.get("/user", isAuthenticated, authController.getUser);
+router.get("/user", authController.getUser);
 router.put("/user/update", isAuthenticated, authController.updateUser);
 router.post("/user/avatar", isAuthenticated, uploadAvatar.single("avatar"), authController.uploadAvatar);
 router.post("/user/download", isAuthenticated, authController.recordDownload);

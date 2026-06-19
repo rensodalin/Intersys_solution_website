@@ -155,7 +155,7 @@ export const googleAuth = (req, res, next) => {
 
 export const googleCallback = (req, res, next) => {
   passport.authenticate("google", (err, user, info) => {
-    const defaultRedirect = "http://localhost:5173/";
+    const defaultRedirect = process.env.FRONTEND_URL || "http://localhost:5173/";
     const redirectTo = req.session.redirectTo || defaultRedirect;
     delete req.session.redirectTo;
 
@@ -191,8 +191,9 @@ export const logout = (req, res) => {
       if (destroyErr) {
         console.error("Session destroy error during logout:", destroyErr);
       }
+      const isSecure = process.env.NODE_ENV === "production";
       res.clearCookie("connect.sid", {
-        path: "/", httpOnly: true, secure: true, sameSite: "none"
+        path: "/", httpOnly: true, secure: isSecure, sameSite: isSecure ? "none" : "lax"
       });
       return res.json({ success: true, message: "Logged out successfully" });
     });
@@ -208,7 +209,7 @@ export const getUser = async (req, res) => {
       .sort({ downloadedAt: -1 }).lean();
     res.json({ success: true, user: { ...safeUser, id: user._id, downloadedPdfs } });
   } else {
-    res.status(401).json({ success: false, message: "Not authenticated" });
+    res.json({ success: false, user: null });
   }
 };
 
