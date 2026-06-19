@@ -9,8 +9,9 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { countries } from "@/components/MyAccount/countries";
+import environment from "@/enviroment/enviroment";
 
-const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+const baseUrl = environment;
 
 export function AdminProfile() {
   const dispatch = useDispatch();

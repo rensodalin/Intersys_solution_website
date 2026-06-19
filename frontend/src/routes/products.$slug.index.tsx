@@ -1,3 +1,4 @@
+import environment from "@/enviroment/enviroment";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo, useEffect } from "react";
 import { fetchProducts } from "@/utils/productApi";
@@ -38,7 +39,7 @@ function CategoryProductsPage() {
   const [currentSort, setCurrentSort] = useState<SortOption>("name-asc");
   const [apiProducts, setApiProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+  const baseUrl = environment;
 
   useEffect(() => {
     setLoading(true);

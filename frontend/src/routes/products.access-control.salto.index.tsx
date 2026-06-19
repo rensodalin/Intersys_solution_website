@@ -1,3 +1,4 @@
+import environment from "@/enviroment/enviroment";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo, useEffect } from "react";
 import { ProductSort, SortOption } from "@/components/Product/ProductSort";
@@ -26,7 +27,7 @@ function SaltoProductsPage() {
     const [currentSort, setCurrentSort] = useState<SortOption>("name-asc");
     const [popularity, setPopularity] = useState<Record<string, number>>({});
 
-    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+    const baseUrl = environment;
 
     useEffect(() => {
         fetch(`${baseUrl}/api/products/popularity/list`, { credentials: "include" })

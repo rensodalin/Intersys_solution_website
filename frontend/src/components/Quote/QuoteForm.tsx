@@ -12,6 +12,7 @@ import {
     CompanySection,
 } from "./QuoteFormComponents";
 import { useTaxonomy } from "@/hooks/useTaxonomy";
+import environment from "@/enviroment/enviroment";
 import type { TaxonomySubCategory } from "@/utils/taxonomyApi";
 
 import engineerImg from "@/assets/enginner.png";
@@ -227,7 +228,7 @@ export function QuoteForm() {
     const onSubmit = async (data: QuoteFormValues) => {
         setSubmitStatus(null);
         try {
-            const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+            const baseUrl = environment;
             const response = await fetch(`${baseUrl}/api/quotes`, {
                 method: "POST",
                 headers: {

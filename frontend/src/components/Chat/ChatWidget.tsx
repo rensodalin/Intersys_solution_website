@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useLocation } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import environment from "@/enviroment/enviroment";
 
 interface LocalMessage {
   id: string;
@@ -36,7 +37,7 @@ export function ChatWidget() {
   const user = useSelector((state: RootState) => state.auth.user);
   const location = useLocation();
   const isProductPage = location.pathname.startsWith("/products");
-  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+  const baseUrl = environment;
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

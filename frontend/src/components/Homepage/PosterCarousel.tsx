@@ -23,7 +23,7 @@ export function PosterCarousel() {
   useEffect(() => {
     const fetchPosters = async () => {
       try {
-        const res = await fetch(`${baseUrl}/posters`);
+        const res = await fetch(`${baseUrl}/api/posters`);
 
         const data = await res.json();
         if (data.success) {
@@ -42,7 +42,7 @@ export function PosterCarousel() {
     if (refreshingIds.has(postId)) return;
     setRefreshingIds(prev => new Set(prev).add(postId));
     try {
-      const res = await fetch(`${baseUrl}/posters/refresh-image/${postId}`, {
+      const res = await fetch(`${baseUrl}/api/posters/refresh-image/${postId}`, {
         method: "POST",
       });
       const json = await res.json();

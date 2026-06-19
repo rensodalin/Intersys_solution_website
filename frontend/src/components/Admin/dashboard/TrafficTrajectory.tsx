@@ -11,7 +11,9 @@ interface VisitorTrend {
   monthly: TrendPoint[];
 }
 
-const baseUrl = `http://${window.location.hostname}:1000`;
+import environment from "@/enviroment/enviroment";
+
+const baseUrl = environment;
 
 export function TrafficTrajectory() {
   const [timeframe, setTimeframe] = useState<"week" | "month">("week");

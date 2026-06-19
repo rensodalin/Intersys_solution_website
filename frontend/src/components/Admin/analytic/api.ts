@@ -1,4 +1,6 @@
-const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+import environment from "@/enviroment/enviroment";
+
+const baseUrl = environment;
 
 export async function fetchAnalyticsStats() {
   const response = await fetch(`${baseUrl}/api/quotes/admin-analytics`, {

@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Mail, Phone, MapPin, MessageSquare, Eye, Loader2, Inbox, ChevronLeft, Trash2 } from "lucide-react";
 import { ContactItem } from "./types";
 import { toast } from "sonner";
+import environment from "@/enviroment/enviroment";
 
-const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+const baseUrl = environment;
 
 interface ContactsListProps {
   contacts: ContactItem[];

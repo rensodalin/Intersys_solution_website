@@ -2,8 +2,9 @@ import { toast } from "sonner";
 import { loginSuccess, logoutSuccess } from "@/store/authSlice";
 import type { Dispatch } from "@reduxjs/toolkit";
 import type { DetailsForm } from "./types";
+import environment from "@/enviroment/enviroment";
 
-const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+const baseUrl = environment;
 
 export async function fetchProfile(dispatch: Dispatch) {
   const response = await fetch(`${baseUrl}/auth/user`, { credentials: "include" });
@@ -25,18 +26,15 @@ export async function fetchQuotes() {
 
 export async function logoutUser(dispatch: Dispatch, navigate: (opts: { to: string }) => void) {
   try {
-    const response = await fetch(`${baseUrl}/auth/logout`, {
+    await fetch(`${baseUrl}/auth/logout`, {
       method: "POST",
       credentials: "include",
     });
-    const data = await response.json();
-    if (data.success) {
-      dispatch(logoutSuccess());
-      toast.success("Logged out successfully");
-    }
   } catch {
-    dispatch(logoutSuccess());
+    // ignore server errors
   }
+  dispatch(logoutSuccess());
+  toast.success("Logged out successfully");
   navigate({ to: "/" });
 }
 

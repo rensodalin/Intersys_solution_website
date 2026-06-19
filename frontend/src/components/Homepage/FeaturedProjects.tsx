@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
+import environment from "@/enviroment/enviroment";
 
 interface Project {
   _id: string;
@@ -18,7 +19,7 @@ export function FeaturedProjects() {
   useEffect(() => {
     const fetchProjectsAndInsights = async () => {
       try {
-        const baseUrl = `http://${window.location.hostname}:1000`;
+        const baseUrl = environment;
         
         // Fetch both Projects and Insights
         const [projRes, insRes] = await Promise.all([

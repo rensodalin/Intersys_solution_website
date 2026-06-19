@@ -1,3 +1,4 @@
+import environment from "@/enviroment/enviroment";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useMemo, useEffect } from "react";
 import { ProductSort, SortOption } from "@/components/Product/ProductSort";
@@ -28,7 +29,7 @@ function HoneywellUpgradesPage() {
     const [apiProducts, setApiProducts] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+    const baseUrl = environment;
 
     useEffect(() => {
         fetchProducts("Access Control", "Honeywell", "Upgrades")

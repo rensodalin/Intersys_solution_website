@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Bell, RefreshCw } from "lucide-react";
+import environment from "@/enviroment/enviroment";
 
 interface NotificationItem {
   id: string;
@@ -26,7 +27,7 @@ interface HeaderProps {
   onSectionChange?: (section: string) => void;
 }
 
-const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+const baseUrl = environment;
 
 export function Header({ userName, userRole = "Administrator", avatar, loading, onRefresh, onSectionChange }: HeaderProps) {
   const avatarSrc = avatar?.startsWith("/") ? `${baseUrl}${avatar}` : avatar;

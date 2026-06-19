@@ -10,8 +10,9 @@ import logoImg from "@/assets/logo.avif";
 import type { NavDataItem, NavDataSubItem } from "@/components/shared/navigationData";
 import { useTaxonomy } from "@/hooks/useTaxonomy";
 import type { TaxonomySubCategory } from "@/utils/taxonomyApi";
+import environment from "@/enviroment/enviroment";
 
-const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+const baseUrl = environment;
 const avatarUrl = (url?: string) => (url?.startsWith("/") ? `${baseUrl}${url}` : url);
 
 const CLIENT_CENTER_DATA = [
@@ -63,8 +64,6 @@ export function Navbar() {
 
   const user = useSelector((state: RootState) => state.auth.user);
 
-  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
-
   const { taxonomy } = useTaxonomy();
 
   function subCatToNav(sc: TaxonomySubCategory, categorySlug: string, parentSlugs: string[] = []): NavDataSubItem {
@@ -97,19 +96,14 @@ export function Navbar() {
   const handleLogout = async (e: React.MouseEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${baseUrl}/auth/logout`, {
+      await fetch(`${baseUrl}/auth/logout`, {
         method: "POST",
         credentials: "include"
       });
-      const data = await response.json();
-      if (data.success) {
-        dispatch(logoutSuccess());
-      }
     } catch (err) {
       console.error("Logout failed:", err);
-      // Safe local reset regardless of network errors to prevent stale UI state
-      dispatch(logoutSuccess());
     }
+    dispatch(logoutSuccess());
   };
 
   useEffect(() => {

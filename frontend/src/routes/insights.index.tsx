@@ -1,3 +1,4 @@
+import environment from "@/enviroment/enviroment";
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowUpRight, Calendar, User, Tag, Loader2 } from 'lucide-react'
@@ -14,7 +15,7 @@ function InsightsPage() {
   useEffect(() => {
     const fetchInsights = async () => {
       try {
-        const baseUrl = `http://${window.location.hostname}:1000`;
+        const baseUrl = environment;
         const res = await fetch(`${baseUrl}/api/insights`);
         const data = await res.json();
         if (data.success) {

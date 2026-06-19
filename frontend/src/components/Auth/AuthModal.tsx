@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "@/store/authSlice";
 import { useNavigate } from "@tanstack/react-router";
+import environment from "@/enviroment/enviroment";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 import { toast } from "sonner";
@@ -90,7 +91,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         };
 
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+      const baseUrl = environment;
       const response = await fetch(`${baseUrl}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -155,7 +156,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   };
 
   const handleSocialLogin = (provider: "google" | "facebook") => {
-    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+    const baseUrl = environment;
     const currentUrl = window.location.href;
     window.location.href = `${baseUrl}/auth/${provider}?redirect=${encodeURIComponent(currentUrl)}`;
   };

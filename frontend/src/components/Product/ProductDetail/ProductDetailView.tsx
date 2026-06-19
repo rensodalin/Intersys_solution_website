@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/Common/Container";
+import environment from "@/enviroment/enviroment";
 import {
   ChevronRight,
   Download,
@@ -82,7 +83,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [pendingDocUrl, setPendingDocUrl] = useState<string | null>(null);
 
-  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+  const baseUrl = environment;
 
   const trackPdfDownload = async (title: string, url: string) => {
     if (!user) return;

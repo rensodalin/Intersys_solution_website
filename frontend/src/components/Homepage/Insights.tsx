@@ -4,6 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
+import environment from "@/enviroment/enviroment";
 
 export function Insights() {
   const [dynamicInsights, setDynamicInsights] = useState<any[]>([]);
@@ -12,7 +13,7 @@ export function Insights() {
   useEffect(() => {
     const fetchInsights = async () => {
       try {
-        const baseUrl = `http://${window.location.hostname}:1000`;
+        const baseUrl = environment;
         const res = await fetch(`${baseUrl}/api/insights`);
         const data = await res.json();
         if (data.success) {

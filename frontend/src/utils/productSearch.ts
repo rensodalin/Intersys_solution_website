@@ -1,4 +1,6 @@
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:1000";
+import environment from "@/enviroment/enviroment";
+
+const BASE_URL = environment;
 
 export interface SearchResult {
     id: string;

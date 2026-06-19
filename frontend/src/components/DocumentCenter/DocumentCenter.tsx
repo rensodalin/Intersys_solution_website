@@ -4,6 +4,7 @@ import { Search, Download, ArrowUpRight, FileText } from "lucide-react";
 import { Container } from "@/components/Common/Container";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import environment from "@/enviroment/enviroment";
 
 const categories = [
     "All",
@@ -65,7 +66,7 @@ export function DocumentCenter() {
     const [query, setQuery] = useState("");
 
     const user = useSelector((state: RootState) => state.auth.user);
-    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+    const baseUrl = environment;
 
     const trackPdfDownload = async (title: string, url: string) => {
         if (!user || url === "#") return;

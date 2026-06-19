@@ -1,3 +1,4 @@
+import environment from "@/enviroment/enviroment";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ProductDetailView, ProductData } from "@/components/Product/ProductDetail/ProductDetailView";
 import { ArrowLeft } from "lucide-react";
@@ -50,7 +51,7 @@ function ProductDetailPage() {
     const fetchProduct = async () => {
       setLoading(true);
       try {
-        const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+        const baseUrl = environment;
         const response = await fetch(`${baseUrl}/api/products/${productId}`);
         const result = await response.json();
 

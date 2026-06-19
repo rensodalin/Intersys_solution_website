@@ -1,3 +1,5 @@
+import environment from "@/enviroment/enviroment";
+
 export interface Poster {
   _id: string;
   image: string;
@@ -9,4 +11,4 @@ export interface Poster {
   order: number;
 }
 
-export const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:1000";
+export const BASE_URL = environment;

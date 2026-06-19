@@ -95,4 +95,6 @@ export function toSlug(title: string) {
   return title.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "");
 }
 
-export const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:1000";
+import environment from "@/enviroment/enviroment";
+
+export const BASE_URL = environment;

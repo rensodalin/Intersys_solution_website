@@ -1,3 +1,4 @@
+import environment from "@/enviroment/enviroment";
 import { Outlet, Link, createRootRoute, HeadContent, Scripts, useLocation } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { Navbar } from "@/components/Layout/Navbar";
@@ -90,7 +91,7 @@ function RootComponent() {
       sessionId = crypto.randomUUID();
       localStorage.setItem("visitorSessionId", sessionId);
     }
-    const baseUrl = `http://${window.location.hostname}:1000`;
+    const baseUrl = environment;
     fetch(`${baseUrl}/api/visitors/track`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

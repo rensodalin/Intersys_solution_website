@@ -1,7 +1,8 @@
 import { toast } from "sonner";
 import { QuoteRequest, ContactItem } from "./types";
+import environment from "@/enviroment/enviroment";
 
-const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+const baseUrl = environment;
 
 export async function fetchQuotes(startDate?: string, endDate?: string): Promise<QuoteRequest[]> {
   const params = new URLSearchParams();

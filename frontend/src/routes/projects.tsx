@@ -1,3 +1,4 @@
+import environment from "@/enviroment/enviroment";
 import { useState, useMemo, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { CtaBand } from "@/components/Common/CtaBand";
@@ -33,7 +34,7 @@ function ProjectsPage() {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const baseUrl = `http://${window.location.hostname}:1000`;
+                const baseUrl = environment;
 
                 // Fetch both Projects and Insights
                 const [projRes, insRes] = await Promise.all([

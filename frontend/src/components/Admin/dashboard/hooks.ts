@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { DashboardStats } from "./types";
+import environment from "@/enviroment/enviroment";
 
-const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+const baseUrl = environment;
 
 export function useDashboardStats() {
   const [stats, setStats] = useState<DashboardStats | null>(null);

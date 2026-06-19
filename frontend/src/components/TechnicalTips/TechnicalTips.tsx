@@ -12,6 +12,7 @@ import {
     Layers,
 } from "lucide-react";
 import { Container } from "@/components/Common/Container";
+import environment from "@/enviroment/enviroment";
 
 const categoryIcons: Record<string, { icon: any; color: string }> = {
     "Building Management": { icon: Building2, color: "#0E7490" },
@@ -33,7 +34,7 @@ interface Tip {
 
 export function TechnicalTips() {
     const user = useSelector((state: RootState) => state.auth.user);
-    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+    const baseUrl = environment;
     const [tips, setTips] = useState<Tip[]>([]);
     const [loading, setLoading] = useState(true);
 

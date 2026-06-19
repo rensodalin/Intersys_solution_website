@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { MessageSquare, Search, Send, Reply, Loader2, RefreshCw, Inbox, Paperclip, FileText, X } from "lucide-react";
 import { toast } from "sonner";
 import { Conversation, ChatMessage } from "./types";
+import environment from "@/enviroment/enviroment";
 
-const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:1000";
+const baseUrl = environment;
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr);

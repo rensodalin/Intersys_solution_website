@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { CheckCircle, AlertTriangle, Mail, UserPlus, RefreshCw } from "lucide-react";
+import environment from "@/enviroment/enviroment";
 
 interface ActivityItem {
   id: string;
@@ -9,7 +10,7 @@ interface ActivityItem {
   timestamp: string;
 }
 
-const baseUrl = `http://${window.location.hostname}:1000`;
+const baseUrl = environment;
 
 const activityColors: Record<string, { bg: string; text: string }> = {
   success: { bg: "bg-[#0D7C5E]/10", text: "text-[#0D7C5E]" },

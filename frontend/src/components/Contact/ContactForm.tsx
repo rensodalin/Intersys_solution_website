@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
+import environment from "@/enviroment/enviroment";
 
 interface FormInputProps {
   label: string;
@@ -62,7 +63,7 @@ export function ContactForm() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const baseUrl = `http://${window.location.hostname}:1000`;
+      const baseUrl = environment;
       const res = await fetch(`${baseUrl}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

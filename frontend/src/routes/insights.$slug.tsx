@@ -1,3 +1,4 @@
+import environment from "@/enviroment/enviroment";
 import { useEffect, useState } from "react";
 import { createFileRoute } from '@tanstack/react-router'
 import { InsightsDetail } from "../components/Insights/InsightsDetail";
@@ -15,7 +16,7 @@ function InsightDetailRoute() {
   useEffect(() => {
     const fetchInsight = async () => {
       try {
-        const baseUrl = `http://${window.location.hostname}:1000`;
+        const baseUrl = environment;
         const res = await fetch(`${baseUrl}/api/insights/${slug}`);
         const data = await res.json();
         if (data.success) {

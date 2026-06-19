@@ -25,7 +25,9 @@ passport.use(
         {
             clientID: process.env.CLIENT_ID.trim(),
             clientSecret: process.env.CLIENT_SECRET.trim(),
-            callbackURL: "http://localhost:1000/auth/google/callback",
+            callbackURL: process.env.NODE_ENV === "production"
+                ? "https://intersys-solution-website.onrender.com/auth/google/callback"
+                : "http://localhost:1000/auth/google/callback",
         },
         async (accessToken, refreshToken, profile, done) => {
             try {

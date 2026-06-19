@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { initializeAuth } from "@/store/authSlice";
+import environment from "@/enviroment/enviroment";
 
 interface AuthInitializerProps {
   children: React.ReactNode;
@@ -14,8 +15,7 @@ export function AuthInitializer({ children }: AuthInitializerProps) {
   );
 
   useEffect(() => {
-    const baseUrl =
-      import.meta.env.VITE_API_URL || "http://localhost:1000";
+    const baseUrl = environment;
 
     fetch(`${baseUrl}/auth/user`, {
       credentials: "include",

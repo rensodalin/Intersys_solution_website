@@ -1,3 +1,5 @@
+import environment from "@/enviroment/enviroment";
+
 export interface TechnicalTip {
   _id: string;
   title: string;
@@ -52,4 +54,4 @@ export function formToPayload(f: TechnicalTipFormData): Record<string, any> {
   };
 }
 
-export const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:1000";
+export const BASE_URL = environment;
