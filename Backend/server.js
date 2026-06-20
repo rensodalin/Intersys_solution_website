@@ -28,6 +28,9 @@ dotenv.config();
 
 const app = express();
 
+// Trust the reverse proxy (Render, Heroku, etc.) to allow secure session cookies
+app.set("trust proxy", 1);
+
 connectDB();
 
 const allowedOrigins = [
