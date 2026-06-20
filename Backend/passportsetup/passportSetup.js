@@ -22,7 +22,7 @@ passport.deserializeUser(async (id, done) => {
 
 const GOOGLE_CALLBACK_URL = process.env.GOOGLE_CALLBACK_URL
     || (process.env.NODE_ENV === "production"
-        ? "https://intersys-solution-website.onrender.com/auth/google/callback"
+        ? "https://intersys-solution-website-3.onrender.com/auth/google/callback"
         : "http://localhost:1000/auth/google/callback");
 
 passport.use(
