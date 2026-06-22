@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Loader2, ChevronRight } from "lucide-react";
-import ReCAPTCHA from "react-google-recaptcha";
 
 interface RegisterFormProps {
-  onSubmit: (e: React.FormEvent, token: string) => void;
+  onSubmit: (e: React.FormEvent) => void;
   loading: boolean;
   formData: any;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
@@ -18,8 +17,6 @@ export function RegisterForm({
   passwordError,
 }: RegisterFormProps) {
   const [showPassword, setShowPassword] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const [captchaError, setCaptchaError] = useState(false);
 
   const countries = ["Cambodia", "South Korea", "Singapore", "Vietnam", "Japan", "USA", "other"];
 
@@ -34,20 +31,9 @@ export function RegisterForm({
     "Other",
   ];
 
-  const handleCaptchaChange = (token: string | null) => {
-    setRecaptchaToken(token);
-    if (token) {
-      setCaptchaError(false);
-    }
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!recaptchaToken) {
-      setCaptchaError(true);
-      return;
-    }
-    onSubmit(e, recaptchaToken);
+    onSubmit(e);
   };
 
   return (
@@ -230,19 +216,6 @@ export function RegisterForm({
           )}
         </div>
 
-      </div>
-
-      {/* Google reCAPTCHA Widget */}
-      <div className="flex flex-col gap-2">
-        <ReCAPTCHA
-          sitekey="6LfwwfssAAAAAFFeHYr5s8LX5Iwsb1TbjhqmnVAR"
-          onChange={handleCaptchaChange}
-        />
-        {captchaError && (
-          <p className="text-xs text-red-500 font-medium">
-            Please verify you're not a robot
-          </p>
-        )}
       </div>
 
       {/* Submit */}

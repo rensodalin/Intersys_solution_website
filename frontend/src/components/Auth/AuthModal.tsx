@@ -46,7 +46,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     if (name === "password" && passwordError) setPasswordError(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent, recaptchaToken: string) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setPasswordError(null);
@@ -77,7 +77,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
     const endpoint = activeTab === "login" ? "/auth/login" : "/auth/register";
     const payload = activeTab === "login" 
-      ? { email: formData.email, password: formData.password, recaptchaToken }
+      ? { email: formData.email, password: formData.password }
       : { 
           firstName: formData.firstName, 
           lastName: formData.lastName, 
@@ -87,7 +87,6 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           gender: formData.gender,
           country: formData.country,
           role: formData.role,
-          recaptchaToken
         };
 
     try {

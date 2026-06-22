@@ -1,26 +1,6 @@
 import Category from "../model/category.js";
 import Product from "../model/product.js";
 
-const DEFAULT_SEED = [
-  { name: "Access Control", children: [
-    { name: "Control Panels" }, { name: "Control Panel Kits" },
-    { name: "Readers" }, { name: "Credentials" },
-    { name: "Accessories" }, { name: "Lobby Kiosks" },
-    { name: "System Agreements & Upgrades" }, { name: "Door Hardware" },
-  ]},
-  { name: "Surveillance (CCTV)", children: [
-    { name: "IP Cameras" }, { name: "Analog Cameras" },
-    { name: "NVR/DVR" }, { name: "Accessories" },
-  ]},
-  { name: "Building Management", children: [
-    { name: "Field Devices" }, { name: "Controllers" },
-    { name: "Software" }, { name: "Networking" },
-  ]},
-  { name: "Integrated Systems" },
-  { name: "Audio Visual" },
-  { name: "Fire Systems" },
-  { name: "Leak Detection" },
-];
 
 async function ensureSeeded() {
   const count = await Category.countDocuments({ parent: null });

@@ -2,7 +2,6 @@ import passport from "passport";
 import User from "../model/user.js";
 import DownloadedPdf from "../model/downloadedPdf.js";
 
-const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "6LfwwfssAAAAAABLeDbe3IaO5dr0BHeFfozkcW-1";
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@intersys.com";
 
 const VALID_COUNTRIES = [
@@ -23,22 +22,6 @@ const VALID_COUNTRIES = [
   "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zimbabwe"
 ];
 
-async function verifyRecaptcha(token) {
-  if (!token) return false;
-  try {
-    const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `secret=${RECAPTCHA_SECRET_KEY}&response=${token}`
-    });
-    const data = await response.json();
-    return data.success;
-  } catch (err) {
-    console.error("reCAPTCHA verification error:", err);
-    return false;
-  }
-}
-
 function isStrongPassword(password) {
   return password.length >= 8 &&
     /[A-Z]/.test(password) &&
@@ -49,12 +32,7 @@ function isStrongPassword(password) {
 
 export const register = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, phone, gender, country, role, recaptchaToken } = req.body;
-
-    const isHuman = await verifyRecaptcha(recaptchaToken);
-    if (!isHuman) {
-      return res.status(400).json({ success: false, message: "reCAPTCHA verification failed. Please try again." });
-    }
+    const { firstName, lastName, email, password, phone, gender, country, role } = req.body;
 
     if (!firstName || !firstName.trim()) return res.status(400).json({ success: false, message: "First name is required" });
     if (!lastName || !lastName.trim()) return res.status(400).json({ success: false, message: "Last name is required" });
@@ -95,12 +73,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res, next) => {
   try {
-    const { email, password, recaptchaToken } = req.body;
-
-    const isHuman = await verifyRecaptcha(recaptchaToken);
-    if (!isHuman) {
-      return res.status(400).json({ success: false, message: "reCAPTCHA verification failed. Please try again." });
-    }
+    const { email, password } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({ success: false, message: "Email and password are required" });

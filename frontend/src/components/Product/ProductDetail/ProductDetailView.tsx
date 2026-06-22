@@ -47,29 +47,8 @@ export interface ProductData {
 }
 
 // ─── MOCK DATA ───
-const MOCK_PRODUCT: ProductData = {
-  id: "honeywell-accessories-1",
-  category: "Access Control",
-  brand: "Honeywell",
-  title: "Honeywell Accessories",
-  description: "Industrial-grade peripherals and support components designed for seamless system integration.",
-  mainImage: "https://cdn11.bigcommerce.com/s-71kr5fhb2y/images/stencil/850x850/products/60031/475339/2cd6841c-c2c9-4f59-8190-c27021245a4e__91383.1769976010.jpg?c=1",
-  thumbnails: [
-    "https://cdn11.bigcommerce.com/s-71kr5fhb2y/images/stencil/850x850/products/60031/475339/2cd6841c-c2c9-4f59-8190-c27021245a4e__91383.1769976010.jpg?c=1",
-    "https://vectorenergy.com/wp-content/uploads/2023/03/D2_H100.jpg",
-  ],
-  longDescription: "The XS4 ONE is an all-in-one smart lock that brings together the latest in electronic security with the physical endurance required for high-traffic environments. Its modular design allows it to be fitted to any door, with multiple handle and cover plate options.\n\nPowered by four AA batteries, it delivers up to 40,000 operations on a single set. The integrated reader uses a high-density security matrix to prevent unauthorized data cloning.",
-  options: [
-    { partCode: "TNAPA20AB", specification: "Brushed Steel (AISI 304) \nRFID / BLE / NFC ENABLED", price: 145.00, qty: 1 },
-    { partCode: "TNAPA20AM", specification: "Matte Black Chrome \nRFID / BLE / NFC ENABLED", price: 165.00, qty: 0 },
-    { partCode: "TNAPA2AV", specification: "Polished White \nSTANDARD SECURITY PROFILE", price: 125.00, qty: 1 },
-  ],
-  documents: [
-    { name: "Submittal", url: "#" },
-    { name: "BACnet® Installation Instructions", url: "#" },
-    { name: "Modbus Installation Instructions", url: "#" },
-  ]
-};
+
+
 
 export function ProductDetailView({ product, returnPath }: { product: ProductData, returnPath?: string }) {
   const navigate = useNavigate();

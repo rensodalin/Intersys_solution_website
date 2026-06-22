@@ -38,7 +38,7 @@ export async function fetchTaxonomy(): Promise<TaxonomyCategory[]> {
 }
 
 export async function addCategory(category: string, image = ""): Promise<TaxonomyCategory> {
-  const res = await fetch(`${baseUrl}/taxonomy/category`, {
+  const res = await fetch(`${baseUrl}/api/taxonomy/category`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -52,7 +52,7 @@ export async function addCategory(category: string, image = ""): Promise<Taxonom
 export async function renameCategory(oldName: string, newName: string, image?: string): Promise<TaxonomyCategory> {
   const body: Record<string, string> = { category: newName };
   if (image !== undefined) body.image = image;
-  const res = await fetch(`${baseUrl}/taxonomy/category/${encodeURIComponent(oldName)}`, {
+  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(oldName)}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -64,7 +64,7 @@ export async function renameCategory(oldName: string, newName: string, image?: s
 }
 
 export async function deleteCategory(name: string): Promise<void> {
-  const res = await fetch(`${baseUrl}/taxonomy/category/${encodeURIComponent(name)}`, {
+  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(name)}`, {
     method: "DELETE",
     credentials: "include",
   });
@@ -73,7 +73,7 @@ export async function deleteCategory(name: string): Promise<void> {
 }
 
 export async function addSubCategory(category: string, subCategory: string, parentPath = "", title = "", description = "", image = "", heroImage = ""): Promise<TaxonomyCategory> {
-  const res = await fetch(`${baseUrl}/taxonomy/category/${encodeURIComponent(category)}/subcategory`, {
+  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(category)}/subcategory`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -85,7 +85,7 @@ export async function addSubCategory(category: string, subCategory: string, pare
 }
 
 export async function renameSubCategory(category: string, oldSubName: string, newSubName: string, parentPath = "", title?: string, description?: string, image?: string, heroImage?: string): Promise<TaxonomyCategory> {
-  const res = await fetch(`${baseUrl}/taxonomy/category/${encodeURIComponent(category)}/subcategory/${encodeURIComponent(oldSubName)}`, {
+  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(category)}/subcategory/${encodeURIComponent(oldSubName)}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -100,7 +100,7 @@ export async function deleteSubCategory(category: string, subName: string, paren
   const params = new URLSearchParams();
   if (parentPath) params.set("parentPath", parentPath);
   const qs = params.toString() ? `?${params.toString()}` : "";
-  const res = await fetch(`${baseUrl}/taxonomy/category/${encodeURIComponent(category)}/subcategory/${encodeURIComponent(subName)}${qs}`, {
+  const res = await fetch(`${baseUrl}/api/taxonomy/category/${encodeURIComponent(category)}/subcategory/${encodeURIComponent(subName)}${qs}`, {
     method: "DELETE",
     credentials: "include",
   });
