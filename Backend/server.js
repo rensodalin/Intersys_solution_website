@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -52,7 +53,10 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-app.use('/uploads', express.static('uploads'));
+const uploadsDir = path.join(__dirname, 'uploads');
+const avatarsDir = path.join(uploadsDir, 'avatars');
+fs.mkdirSync(avatarsDir, { recursive: true });
+app.use('/uploads', express.static(uploadsDir));
 
 app.use(session({
   secret: process.env.SESSION_SECRET || "intersys_super_secret",
