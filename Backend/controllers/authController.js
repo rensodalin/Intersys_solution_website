@@ -1,6 +1,8 @@
 import passport from "passport";
+import fs from "fs";
 import User from "../model/user.js";
 import DownloadedPdf from "../model/downloadedPdf.js";
+import { uploadToHostinger } from "../utils/uploadToHostinger.js";
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@intersys.com";
 
@@ -254,7 +256,16 @@ export const uploadAvatar = async (req, res) => {
     if (!req.file) {
       return res.status(400).json({ success: false, message: "No image file provided" });
     }
-    const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+
+    const localPath = req.file.path;
+    let avatarUrl = `/uploads/avatars/${req.file.filename}`;
+
+    const hostingerUrl = await uploadToHostinger(localPath, req.file.filename);
+    if (hostingerUrl) {
+      avatarUrl = hostingerUrl;
+      fs.unlink(localPath, () => {});
+    }
+
     const user = await User.findByIdAndUpdate(req.user._id, { avatar: avatarUrl }, { new: true });
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
