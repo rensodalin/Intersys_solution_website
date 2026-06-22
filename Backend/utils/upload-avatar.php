@@ -20,10 +20,14 @@ if (!isset($_FILES["file"]) || $_FILES["file"]["error"] !== UPLOAD_ERR_OK) {
     exit;
 }
 
-$allowed = ["image/jpeg", "image/png", "image/gif", "image/webp"];
-if (!in_array($_FILES["file"]["type"], $allowed)) {
+$allowedMime = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+$allowedExt = ["jpg", "jpeg", "png", "gif", "webp"];
+$fileType = $_FILES["file"]["type"];
+$fileExt = strtolower(pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
+
+if (!in_array($fileType, $allowedMime) && !in_array($fileExt, $allowedExt)) {
     http_response_code(400);
-    echo json_encode(["success" => false, "message" => "Invalid file type"]);
+    echo json_encode(["success" => false, "message" => "Invalid file type: $fileType"]);
     exit;
 }
 

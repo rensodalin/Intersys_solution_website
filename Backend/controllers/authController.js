@@ -263,6 +263,7 @@ export const uploadAvatar = async (req, res) => {
     try {
       const hostingerUrl = await uploadToHostinger(localPath, req.file.filename);
       if (hostingerUrl) {
+        console.log("Avatar uploaded to Hostinger:", hostingerUrl);
         avatarUrl = hostingerUrl;
         fs.unlink(localPath, () => {});
       }
