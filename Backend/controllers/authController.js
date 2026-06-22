@@ -260,10 +260,14 @@ export const uploadAvatar = async (req, res) => {
     const localPath = req.file.path;
     let avatarUrl = `/uploads/avatars/${req.file.filename}`;
 
-    const hostingerUrl = await uploadToHostinger(localPath, req.file.filename);
-    if (hostingerUrl) {
-      avatarUrl = hostingerUrl;
-      fs.unlink(localPath, () => {});
+    try {
+      const hostingerUrl = await uploadToHostinger(localPath, req.file.filename);
+      if (hostingerUrl) {
+        avatarUrl = hostingerUrl;
+        fs.unlink(localPath, () => {});
+      }
+    } catch (err) {
+      console.error("Hostinger upload error (non-blocking):", err);
     }
 
     const user = await User.findByIdAndUpdate(req.user._id, { avatar: avatarUrl }, { new: true });
