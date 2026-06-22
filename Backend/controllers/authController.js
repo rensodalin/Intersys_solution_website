@@ -259,6 +259,11 @@ export const uploadAvatar = async (req, res) => {
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
+
+    req.login(user, (err) => {
+      if (err) console.error("Error updating passport session after avatar upload:", err);
+    });
+
     const userObj = user.toObject ? user.toObject() : user;
     userObj.isAdmin = user.email === ADMIN_EMAIL;
     res.json({ success: true, avatar: avatarUrl, user: userObj });
