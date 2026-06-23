@@ -24,6 +24,7 @@ import taxonomyRoutes from "./routes/taxonomy.js";
 import technicalTipRoutes from "./routes/technicalTips.js";
 import { submitContact, getContacts, deleteContact } from "./controllers/contactController.js";
 import { isAdmin } from "./middleware/auth.js";
+import User from "./model/user.js";
 
 dotenv.config();
 
@@ -93,6 +94,23 @@ app.use("/api/technical-tips", technicalTipRoutes);
 app.post("/api/contact", submitContact);
 app.get("/api/contacts", isAdmin, getContacts);
 app.delete("/api/contacts/:id", isAdmin, deleteContact);
+
+// Fix existing absolute avatar URLs stored from Hostinger FTP
+app.post("/api/migrate-avatars", isAdmin, async (req, res) => {
+  try {
+    const users = await User.find({ avatar: /^https?:\/\/intersys-solution\.com\/uploads\/avatars\// });
+    let updated = 0;
+    for (const user of users) {
+      const relativePath = user.avatar.replace(/^https?:\/\/intersys-solution\.com/, "");
+      user.avatar = relativePath;
+      await user.save();
+      updated++;
+    }
+    res.json({ success: true, message: `Migrated ${updated} avatar URLs from absolute to relative` });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
 
 if (process.env.NODE_ENV === "production") {
   const frontendDist = path.join(__dirname, "../frontend/dist");

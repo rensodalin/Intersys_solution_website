@@ -268,45 +268,71 @@ export const updateUser = async (req, res) => {
 
 export const uploadAvatar = async (req, res) => {
   if (!req.user) {
+    console.log("[uploadAvatar] Attempted upload without authenticated user session");
     return res.status(401).json({ success: false, message: "Not authenticated" });
   }
   try {
     if (!req.file) {
+      console.log("[uploadAvatar] No file found in req.file");
       return res.status(400).json({ success: false, message: "No image file provided" });
     }
+
+    console.log("[uploadAvatar] Received uploaded file details:", {
+      fieldname: req.file.fieldname,
+      originalname: req.file.originalname,
+      encoding: req.file.encoding,
+      mimetype: req.file.mimetype,
+      destination: req.file.destination,
+      filename: req.file.filename,
+      path: req.file.path,
+      size: req.file.size
+    });
 
     const localPath = req.file.path;
     let avatarUrl = `/uploads/avatars/${req.file.filename}`;
 
     try {
+      console.log("[uploadAvatar] Uploading avatar to Hostinger via FTP...");
       const hostingerUrl = await uploadToHostinger(localPath, req.file.filename);
       if (hostingerUrl) {
-        console.log("Avatar uploaded to Hostinger:", hostingerUrl);
+        console.log("[uploadAvatar] Avatar uploaded to Hostinger successfully:", hostingerUrl);
         avatarUrl = hostingerUrl;
-        fs.unlink(localPath, () => {});
+        // Clean up local temp file since the image is safely hosted on Hostinger
+        fs.unlink(localPath, (err) => {
+          if (err) console.error("[uploadAvatar] Failed to delete local temp file:", err);
+          else console.log("[uploadAvatar] Deleted local temp file:", localPath);
+        });
+      } else {
+        console.log("[uploadAvatar] Hostinger upload did not return URL. Falling back to local disk storage:", avatarUrl);
       }
     } catch (err) {
-      console.error("Hostinger upload error (non-blocking):", err);
+      console.error("[uploadAvatar] Hostinger upload error (falling back to local disk storage):", err);
     }
 
-    const user = await User.findByIdAndUpdate(req.user._id, { avatar: avatarUrl }, { returnDocument: 'after' });
+    console.log("[uploadAvatar] Saving avatarUrl in MongoDB for user ID:", req.user._id);
+    const user = await User.findById(req.user._id);
     if (!user) {
+      console.log("[uploadAvatar] User not found in database for ID:", req.user._id);
       return res.status(404).json({ success: false, message: "User not found" });
     }
+    user.avatar = avatarUrl;
+    await user.save();
+    console.log("[uploadAvatar] User saved. New updatedAt timestamp:", user.updatedAt);
 
     const userObj = user.toObject ? user.toObject() : user;
     userObj.isAdmin = user.email === ADMIN_EMAIL;
 
     req.login(user, (err) => {
       if (err) {
-        console.error("Error updating passport session after avatar upload:", err);
+        console.error("[uploadAvatar] Error updating passport session:", err);
         return res.status(500).json({ success: false, message: "Failed to update session" });
       }
       req.session.save((saveErr) => {
         if (saveErr) {
-          console.error("Session Save Error after avatar upload:", saveErr);
+          console.error("[uploadAvatar] Session Save Error:", saveErr);
           return res.status(500).json({ success: false, message: "Failed to save updated session" });
         }
+        console.log("[uploadAvatar] Session successfully saved in MongoDB. Sending response.");
         res.json({ success: true, avatar: avatarUrl, user: userObj });
       });
     });

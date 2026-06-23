@@ -19,6 +19,7 @@ export function AdminProfile() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [avatarVersion, setAvatarVersion] = useState(Date.now());
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -50,6 +51,11 @@ export function AdminProfile() {
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    console.log("Selected file for avatar upload:", {
+      name: file.name,
+      size: `${(file.size / 1024).toFixed(2)} KB`,
+      type: file.type
+    });
     if (!["image/jpeg", "image/png", "image/gif", "image/webp"].includes(file.type)) {
       return toast.error("Only JPG, PNG, GIF, or WebP images are allowed");
     }
@@ -60,17 +66,21 @@ export function AdminProfile() {
     try {
       const formData = new FormData();
       formData.append("avatar", file);
+      console.log("Uploading avatar to:", `${baseUrl}/auth/user/avatar`);
       const res = await fetch(`${baseUrl}/auth/user/avatar`, {
         method: "POST", body: formData, credentials: "include",
       });
       const data = await res.json();
+      console.log("Avatar upload API response data:", data);
       if (data.success) {
         dispatch(loginSuccess(data.user));
+        setAvatarVersion(Date.now());
         toast.success("Avatar updated successfully");
       } else {
         toast.error(data.message || "Failed to upload avatar");
       }
-    } catch {
+    } catch (err) {
+      console.error("Avatar upload fetch failed:", err);
       toast.error("An error occurred while uploading");
     } finally {
       setUploading(false);
@@ -123,8 +133,13 @@ export function AdminProfile() {
     }
   };
 
-  const cacheBuster = user?.avatar?.startsWith("/") && user?.updatedAt ? `?t=${user.updatedAt}` : "";
+  const cacheBuster = user?.avatar?.startsWith("/") ? `?t=${avatarVersion}` : "";
   const avatarSrc = user?.avatar ? (user.avatar.startsWith("/") ? `${baseUrl}${user.avatar}${cacheBuster}` : user.avatar) : null;
+  console.log("AdminProfile avatarSrc computed:", {
+    rawAvatar: user?.avatar,
+    cacheBuster,
+    computedSrc: avatarSrc
+  });
   const initials = user?.name
     ? user.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)
     : "AD";
@@ -148,7 +163,7 @@ export function AdminProfile() {
           <div className="flex items-center gap-5">
             <div className="relative">
               {avatarSrc ? (
-                <img src={avatarSrc} alt={user?.name || "Admin"} className="w-16 h-16 rounded-full object-cover border-2 border-gray-100" />
+                <img src={avatarSrc} alt={user?.name || "Admin"} className="w-16 h-16 rounded-full object-cover border-2 border-gray-100" referrerPolicy="no-referrer" />
               ) : (
                 <div className="w-16 h-16 rounded-full bg-[#081F3D] flex items-center justify-center text-white text-lg font-bold border-2 border-gray-100">
                   {initials}
