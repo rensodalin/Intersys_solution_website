@@ -239,6 +239,8 @@ function SocialIconBottom({ icon, href }: { icon: React.ReactNode; href: string 
   return (
     <a
       href={href}
+      target="_blank"
+      rel="noopener noreferrer"
       className="text-white/60 hover:text-white transition-all duration-300 transform hover:scale-110"
     >
       {icon}
