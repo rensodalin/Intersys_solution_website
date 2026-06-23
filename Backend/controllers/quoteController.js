@@ -290,7 +290,7 @@ export const updateStatus = async (req, res) => {
     if (!status || !["Pending", "In Progress", "Completed"].includes(status)) {
       return res.status(400).json({ success: false, error: "Invalid status value" });
     }
-    const quote = await Quote.findByIdAndUpdate(req.params.id, { status }, { new: true });
+    const quote = await Quote.findByIdAndUpdate(req.params.id, { status }, { returnDocument: 'after' });
     if (!quote) {
       return res.status(404).json({ success: false, error: "Quote not found" });
     }

@@ -1,34 +1,40 @@
 import fs from "fs";
-import ftp from "basic-ftp";
 import path from "path";
 
-export async function uploadToHostinger(localFilePath, filename) {
-  const host = process.env.FTP_HOST;
-  if (!host) return null;
+const MIME_MAP = {
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".gif": "image/gif",
+  ".webp": "image/webp",
+};
 
-  const client = new ftp.Client();
-  client.ftp.verbose = false;
+export async function uploadToHostingeri(localFilePath, filename) {
+  const uploadUrl = process.env.HOSTINGER_UPLOAD_URL;
+  if (!uploadUrl) return null;
 
   try {
-    await client.access({
-      host,
-      user: process.env.FTP_USER,
-      password: process.env.FTP_PASSWORD,
-      port: parseInt(process.env.FTP_PORT || "21"),
-      secure: process.env.FTP_SECURE === "true",
-    });
+    const fileBuffer = fs.readFileSync(localFilePath);
+    const ext = path.extname(filename).toLowerCase();
+    const mime = MIME_MAP[ext] || "application/octet-stream";
 
-    const remoteDir = process.env.FTP_REMOTE_DIR || "/public_html/uploads/avatars";
-    await client.ensureDir(remoteDir);
-    await client.uploadFrom(localFilePath, filename);
+    const file = new File([fileBuffer], filename, { type: mime });
+    const formData = new FormData();
+    formData.append("file", file);
 
-    const publicUrl = `${process.env.FTP_PUBLIC_URL || "https://intersys-solution.com"}/uploads/avatars/${filename}`;
-    console.log("Avatar uploaded to Hostinger via FTP:", publicUrl);
-    return publicUrl;
+    const res = await fetch(uploadUrl, { method: "POST", body: formData });
+    const text = await res.text();
+
+    if (!res.ok) {
+      console.error("Hostinger upload failed:", res.status, text);
+      return null;
+    }
+
+    const data = JSON.parse(text);
+    console.log("Hostinger upload response:", data);
+    return data.success ? data.url : null;
   } catch (err) {
-    console.error("FTP upload error:", err);
+    console.error("Hostinger upload error:", err);
     return null;
-  } finally {
-    client.close();
   }
 }

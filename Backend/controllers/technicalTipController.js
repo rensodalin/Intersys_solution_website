@@ -23,7 +23,7 @@ export const create = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const tip = await TechnicalTip.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    const tip = await TechnicalTip.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after', runValidators: true });
     if (!tip) {
       return res.status(404).json({ success: false, message: "Technical tip not found" });
     }

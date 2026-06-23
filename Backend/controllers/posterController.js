@@ -115,7 +115,7 @@ export const update = async (req, res) => {
     const poster = await Poster.findByIdAndUpdate(
       req.params.id,
       { image, link, title, description, facebookLink, linkedinLink, order },
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     );
     if (!poster) {
       return res.status(404).json({ success: false, message: "Poster not found" });

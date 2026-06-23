@@ -36,7 +36,7 @@ export const create = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const insight = await Insight.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    const insight = await Insight.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after', runValidators: true });
     if (!insight) {
       return res.status(404).json({ success: false, message: "Insight not found" });
     }

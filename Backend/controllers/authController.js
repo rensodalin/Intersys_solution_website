@@ -271,7 +271,7 @@ export const uploadAvatar = async (req, res) => {
       console.error("Hostinger upload error (non-blocking):", err);
     }
 
-    const user = await User.findByIdAndUpdate(req.user._id, { avatar: avatarUrl }, { new: true });
+    const user = await User.findByIdAndUpdate(req.user._id, { avatar: avatarUrl }, { returnDocument: 'after' });
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }

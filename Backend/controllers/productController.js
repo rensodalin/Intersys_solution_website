@@ -139,7 +139,7 @@ export const update = async (req, res) => {
     const product = await Product.findOneAndUpdate(
       { productId: req.params.productId },
       productData,
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     )
       .populate("options")
       .populate("documents");
