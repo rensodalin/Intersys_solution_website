@@ -30,7 +30,7 @@ dotenv.config();
 const app = express();
 
 // Trust the reverse proxy (Render, Heroku, etc.) to allow secure session cookies
-app.set("trust proxy", 1);
+app.set("trust proxy", true);
 
 connectDB();
 
@@ -70,8 +70,8 @@ app.use(session({
   cookie: {
     maxAge: 1000 * 60 * 60 * 24,
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: process.env.NODE_ENV === "production" || process.env.RENDER === "true",
+    sameSite: (process.env.NODE_ENV === "production" || process.env.RENDER === "true") ? "none" : "lax",
   },
 }));
 

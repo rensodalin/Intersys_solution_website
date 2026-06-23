@@ -154,6 +154,7 @@ export function Header({ userName, userRole = "Administrator", avatar, avatarUpd
             src={avatarSrc || `https://ui-avatars.com/api/?name=${userName}`}
             alt={userName}
             className="w-8 h-8 rounded-full border border-gray-100 shadow-sm object-cover"
+            referrerPolicy="no-referrer"
           />
         </button>
       </div>

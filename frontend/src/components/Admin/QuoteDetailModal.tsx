@@ -63,6 +63,7 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
                         src={avatarUrl}
                         alt={quote.name}
                         className="w-10 h-10 rounded-full object-cover border border-gray-200"
+                        referrerPolicy="no-referrer"
                       />
                     ) : (
                       <div className="w-10 h-10 rounded-full bg-[#081F3D] flex items-center justify-center text-white text-sm font-bold">

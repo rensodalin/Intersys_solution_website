@@ -31,6 +31,7 @@ passport.use(
             clientID: process.env.CLIENT_ID.trim(),
             clientSecret: process.env.CLIENT_SECRET.trim(),
             callbackURL: GOOGLE_CALLBACK_URL,
+            proxy: true,
         },
         async (accessToken, refreshToken, profile, done) => {
             try {

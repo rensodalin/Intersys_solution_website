@@ -102,17 +102,24 @@ export const login = async (req, res, next) => {
         console.error("Passport Login Error:", err);
         return next(err);
       }
-      return res.json({
-        success: true,
-        user: {
-          id: user._id, name: user.name, email: user.email,
-          firstName: user.firstName, lastName: user.lastName,
-          avatar: user.avatar, phone: user.phone,
-          gender: user.gender, country: user.country,
-          role: user.role, isAdmin: user.email === ADMIN_EMAIL,
-          newsletter: user.newsletter, receiveUpdates: user.receiveUpdates,
-          downloadedPdfs
+      // Save session explicitly to avoid session race conditions
+      req.session.save((saveErr) => {
+        if (saveErr) {
+          console.error("Session Save Error:", saveErr);
+          return next(saveErr);
         }
+        return res.json({
+          success: true,
+          user: {
+            id: user._id, name: user.name, email: user.email,
+            firstName: user.firstName, lastName: user.lastName,
+            avatar: user.avatar, phone: user.phone,
+            gender: user.gender, country: user.country,
+            role: user.role, isAdmin: user.email === ADMIN_EMAIL,
+            newsletter: user.newsletter, receiveUpdates: user.receiveUpdates,
+            downloadedPdfs
+          }
+        });
       });
     });
   } catch (error) {
@@ -146,12 +153,19 @@ export const googleCallback = (req, res, next) => {
         console.error("Session Login Error:", err);
         return res.redirect(`${defaultRedirect}?error=session_error`);
       }
-      res.status(200).send(`<!DOCTYPE html>
+      // Save session explicitly before redirecting to prevent race condition in DB session storage
+      req.session.save((saveErr) => {
+        if (saveErr) {
+          console.error("Session Save Error:", saveErr);
+          return res.redirect(`${defaultRedirect}?error=session_save_error`);
+        }
+        res.status(200).send(`<!DOCTYPE html>
 <html><head>
 <meta http-equiv="refresh" content="0;url=${redirectTo}">
 </head><body>
 <script>window.location.replace("${redirectTo}");</script>
 </body></html>`);
+      });
     });
   })(req, res, next);
 };
@@ -243,7 +257,13 @@ export const updateUser = async (req, res) => {
         console.error("Error updating passport session:", err);
         return res.status(500).json({ success: false, message: "Profile saved but session update failed" });
       }
-      res.json({ success: true, message: "Profile updated successfully", user: updatedUser });
+      req.session.save((saveErr) => {
+        if (saveErr) {
+          console.error("Session Save Error after update:", saveErr);
+          return res.status(500).json({ success: false, message: "Profile saved but session save failed" });
+        }
+        res.json({ success: true, message: "Profile updated successfully", user: updatedUser });
+      });
     });
   } catch (error) {
     console.error("Update User Error:", error);
@@ -287,7 +307,13 @@ export const uploadAvatar = async (req, res) => {
         console.error("Error updating passport session after avatar upload:", err);
         return res.status(500).json({ success: false, message: "Failed to update session" });
       }
-      res.json({ success: true, avatar: avatarUrl, user: userObj });
+      req.session.save((saveErr) => {
+        if (saveErr) {
+          console.error("Session Save Error after avatar upload:", saveErr);
+          return res.status(500).json({ success: false, message: "Failed to save updated session" });
+        }
+        res.json({ success: true, avatar: avatarUrl, user: userObj });
+      });
     });
   } catch (error) {
     console.error("Avatar Upload Error:", error);

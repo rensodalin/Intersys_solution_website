@@ -113,6 +113,7 @@ export function QuoteTable({ quotes, loading, onViewDetails, onStatusChange, onD
                         src={quote.userId.avatar.startsWith("/") ? `${baseUrl}${quote.userId.avatar}` : quote.userId.avatar}
                         alt={quote.name}
                         className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
                       />
                     ) : (
                       getInitials(quote.name)
