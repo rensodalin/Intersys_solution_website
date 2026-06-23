@@ -11,7 +11,7 @@ const insights = [
     desc: "Preserving the soul of architectural history while injecting the intelligence of the future.",
     category: "Education",
     date: "May 15, 2024",
-    image: ["https://scontent.fpnh11-2.fna.fbcdn.net/v/t39.30808-6/518020119_122178815888549695_5897795005240926512_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHfRrkil6c3dRfEc7Vb5oRVqNNcSG-cwTCo01xIb5zBMMUWRYSjJT-NqVe55_-cbA7G-KArOtpd9niekJcOYTGH&_nc_ohc=Xm_EK6Vkz2cQ7kNvwHYXq3l&_nc_oc=Adpy4fWT5GHbfCJH-wIwzOWL5O63IC-5RbVOQzz25CEGvYeAb70i_kg46z_K9Bord9Q&_nc_zt=23&_nc_ht=scontent.fpnh11-2.fna&_nc_gid=BXKUCoCCzvgnYppt7niYcg&_nc_ss=7b2a8&oh=00_Af6CDrFo0LQW8qCR_ETvlJwv9HXTadzGAAGEqa_6xUmJFQ&oe=6A1B45D3"],
+    image: ["https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1400&auto=format&fit=crop"],
     client: "Heritage Cambodia",
     location: "Siem Reap, Cambodia",
     scope: ["Building Mangement System", "Fire Alarm System"],
@@ -23,7 +23,7 @@ const insights = [
     section1SubImage: "https://intersys-solutions.com/website_asset/herington1_bms.jpg ",
     articleTitle1: "Fire Alarm System",
     articleContent1: "Testing fire alarm system . ",
-    articleBannerImage: "https://scontent.fpnh11-1.fna.fbcdn.net/v/t39.30808-6/545342748_1325179616283868_6944832809084786074_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGKC3oyOuSzVjhRTKu4wjx8dIWnJdIzhUt0hacl0jOFSw6bXcBDrBUIGGJXnnMNecdVk4kX-AQDWUyCRHE4hv1A&_nc_ohc=9fyaayOQ190Q7kNvwHSmudW&_nc_oc=Adoq4uAoya45KHW3MsEKLuLEhDMAPLIYQaxXJhu97btQ2A-d4qXvhkOg08ZEhXbrfhQ&_nc_zt=23&_nc_ht=scontent.fpnh11-1.fna&_nc_gid=DO2zNP5YrDkZV2KEqMG5ig&_nc_ss=7b2a8&oh=00_Af5WJVqR5xKE63WCTRGf5SnNff5Q7VJ2NxAYmS_RFshx7g&oe=6A1B36A8",
+    articleBannerImage: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1400&auto=format&fit=crop",
     articleTitle2: "Integrating Structural Intelligence",
     articleContent2: "When the HVAC system communicates directly with the building's structural sensors, the result is a symbiotic environment.",
     galleryImages: [

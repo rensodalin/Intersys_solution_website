@@ -14,6 +14,7 @@ export interface UserState {
   isAdmin?: boolean;
   newsletter?: boolean;
   receiveUpdates?: boolean;
+  updatedAt?: string;
   downloadedPdfs?: Array<{
     title: string;
     url: string;

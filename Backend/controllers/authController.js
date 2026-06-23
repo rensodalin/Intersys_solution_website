@@ -235,13 +235,16 @@ export const updateUser = async (req, res) => {
 
     await user.save();
 
-    req.login(user, (err) => {
-      if (err) console.error("Error updating passport session:", err);
-    });
-
     const updatedUser = user.toObject ? user.toObject() : user;
     updatedUser.isAdmin = user.email === ADMIN_EMAIL;
-    res.json({ success: true, message: "Profile updated successfully", user: updatedUser });
+
+    req.login(user, (err) => {
+      if (err) {
+        console.error("Error updating passport session:", err);
+        return res.status(500).json({ success: false, message: "Profile saved but session update failed" });
+      }
+      res.json({ success: true, message: "Profile updated successfully", user: updatedUser });
+    });
   } catch (error) {
     console.error("Update User Error:", error);
     res.status(500).json({ success: false, message: "Internal server error", error: error.message });
@@ -276,13 +279,16 @@ export const uploadAvatar = async (req, res) => {
       return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    req.login(user, (err) => {
-      if (err) console.error("Error updating passport session after avatar upload:", err);
-    });
-
     const userObj = user.toObject ? user.toObject() : user;
     userObj.isAdmin = user.email === ADMIN_EMAIL;
-    res.json({ success: true, avatar: avatarUrl, user: userObj });
+
+    req.login(user, (err) => {
+      if (err) {
+        console.error("Error updating passport session after avatar upload:", err);
+        return res.status(500).json({ success: false, message: "Failed to update session" });
+      }
+      res.json({ success: true, avatar: avatarUrl, user: userObj });
+    });
   } catch (error) {
     console.error("Avatar Upload Error:", error);
     res.status(500).json({ success: false, message: "Failed to upload avatar", error: error.message });

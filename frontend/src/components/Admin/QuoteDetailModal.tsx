@@ -11,6 +11,9 @@ import {
 } from "lucide-react";
 import { QuoteRequest } from "./types";
 import { exportQuoteToPDF } from "./exportQuotePDF";
+import environment from "@/enviroment/enviroment";
+
+const baseUrl = environment;
 
 interface QuoteDetailModalProps {
   quote: QuoteRequest;
@@ -49,10 +52,11 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
               <div className="space-y-2 text-xs text-gray-700">
                 <div className="flex items-center gap-3 pb-2">
                   {(() => {
-                    const avatarUrl =
+                    const raw =
                       typeof quote.userId === "object" && quote.userId?.avatar
                         ? quote.userId.avatar
                         : null;
+                    const avatarUrl = raw?.startsWith("/") ? `${baseUrl}${raw}` : raw;
                     const initial = quote.name?.charAt(0)?.toUpperCase() || "?";
                     return avatarUrl ? (
                       <img

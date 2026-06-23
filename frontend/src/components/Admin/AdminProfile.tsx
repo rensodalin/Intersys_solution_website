@@ -123,7 +123,8 @@ export function AdminProfile() {
     }
   };
 
-  const avatarSrc = user?.avatar ? (user.avatar.startsWith("/") ? `${baseUrl}${user.avatar}` : user.avatar) : null;
+  const cacheBuster = user?.avatar?.startsWith("/") && user?.updatedAt ? `?t=${user.updatedAt}` : "";
+  const avatarSrc = user?.avatar ? (user.avatar.startsWith("/") ? `${baseUrl}${user.avatar}${cacheBuster}` : user.avatar) : null;
   const initials = user?.name
     ? user.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)
     : "AD";

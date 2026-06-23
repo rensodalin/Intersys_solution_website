@@ -22,6 +22,7 @@ interface HeaderProps {
   userName: string;
   userRole?: string;
   avatar?: string;
+  avatarUpdatedAt?: string;
   loading: boolean;
   onRefresh: () => void;
   onSectionChange?: (section: string) => void;
@@ -29,8 +30,9 @@ interface HeaderProps {
 
 const baseUrl = environment;
 
-export function Header({ userName, userRole = "Administrator", avatar, loading, onRefresh, onSectionChange }: HeaderProps) {
-  const avatarSrc = avatar?.startsWith("/") ? `${baseUrl}${avatar}` : avatar;
+export function Header({ userName, userRole = "Administrator", avatar, avatarUpdatedAt, loading, onRefresh, onSectionChange }: HeaderProps) {
+  const cacheBuster = avatar?.startsWith("/") && avatarUpdatedAt ? `?t=${avatarUpdatedAt}` : "";
+  const avatarSrc = avatar?.startsWith("/") ? `${baseUrl}${avatar}${cacheBuster}` : avatar;
   const [notifData, setNotifData] = useState<NotificationData | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

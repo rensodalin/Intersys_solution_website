@@ -1,0 +1,187 @@
+@startuml
+!theme plain
+
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+
+skinparam rectangle {
+    BackgroundColor #E8F5E9
+    BorderColor #2E7D32
+    FontColor #1B5E20
+    FontSize 11
+    Shadowing yes
+    RoundCorner 0
+}
+
+skinparam interface {
+    BackgroundColor #DAE8FC
+    BorderColor #6C8EBF
+    FontColor #1A237E
+    FontSize 10
+    Shadowing no
+}
+
+skinparam database {
+    BackgroundColor #FFF8E1
+    BorderColor #F57F17
+    FontColor #4E342E
+    FontSize 10
+    Shadowing no
+}
+
+skinparam arrow {
+    Color #1565C0
+    FontColor #1565C0
+    FontSize 9
+}
+
+title <size:18><b>DFD Level 1 — Intersys Solution Website</b></size>
+
+' ============================================================================
+' EXTERNAL ENTITIES (rectangle)
+' ============================================================================
+
+rectangle "User\n(Client / Visitor)" as User
+rectangle "Admin\n(System Manager)" as Admin
+rectangle "Google\nOAuth API" as Google
+rectangle "Gmail\nSMTP Server" as Gmail
+rectangle "Telegram\nBot API" as Telegram
+
+' ============================================================================
+' PROCESSES (interface = circle/ellipse for DFD)
+' ============================================================================
+
+interface "P1\nHandle\nAuthentication" as P1
+interface "P2\nManage\nProduct\nCatalog" as P2
+interface "P3\nHandle\nQuote\nRequests" as P3
+interface "P4\nHandle\nContact\nForms" as P4
+interface "P5\nHandle\nChat /\nMessages" as P5
+interface "P6\nManage\nContent" as P6
+interface "P7\nAdmin\nOperations" as P7
+interface "P8\nTrack\nAnalytics" as P8
+
+' ============================================================================
+' DATA STORES (database)
+' ============================================================================
+
+database "D1\nUsers" as D1
+database "D2\nProducts" as D2
+database "D3\nTaxonomy" as D3
+database "D4\nQuotes" as D4
+database "D5\nContacts" as D5
+database "D6\nMessages" as D6
+database "D7\nInsights" as D7
+database "D8\nProjects" as D8
+database "D9\nPosters" as D9
+database "D10\nTech Tips" as D10
+database "D11\nVisitors" as D11
+database "D12\nActivities" as D12
+database "D13\nSessions" as D13
+
+' ============================================================================
+' DATA FLOWS — User
+' ============================================================================
+
+User --> P1 : "login credentials,\nregistration data"
+P1 --> User : "auth result,\nuser profile"
+
+User --> P2 : "browse/search\nrequest"
+P2 --> User : "product list,\ndetail, taxonomy"
+
+User --> P3 : "quote request\n(products, qty, info)"
+P3 --> User : "quote confirmation,\nstatus updates"
+
+User --> P4 : "contact form\n(name, email, msg)"
+
+User --> P5 : "chat messages"
+P5 --> User : "admin replies"
+
+User --> P6 : "view content\n(insights, projects,\ntech tips)"
+P6 --> User : "content pages,\nPDF downloads"
+
+User --> P8 : "page visits"
+
+' ============================================================================
+' DATA FLOWS — Admin
+' ============================================================================
+
+Admin --> P1 : "admin\nlogin"
+Admin --> P5 : "admin\nreplies"
+Admin --> P7 : "CRUD commands,\ndashboard views"
+P7 --> Admin : "dashboard data,\nCRUD results"
+P7 --> P8 : "view\nanalytics"
+P8 --> P7 : "analytics\ndata"
+
+' ============================================================================
+' DATA FLOWS — P1 Authentication
+' ============================================================================
+
+P1 --> D1 : "create / update\nuser"
+D1 --> P1 : "user\ndata"
+P1 --> D13 : "create\nsession"
+P1 --> Google : "OAuth\nrequest"
+Google --> P1 : "OAuth callback,\nprofile data"
+
+' ============================================================================
+' DATA FLOWS — P2 Product Catalog
+' ============================================================================
+
+P2 --> D2 : "CRUD\nproduct"
+D2 --> P2 : "product\ndata"
+P2 --> D3 : "CRUD\ntaxonomy"
+D3 --> P2 : "taxonomy\ndata"
+
+' ============================================================================
+' DATA FLOWS — P3 Quotes
+' ============================================================================
+
+P3 --> D4 : "create / update\nquote"
+D4 --> P3 : "quote\ndata"
+P3 --> Gmail : "quote\nemail"
+P3 --> Telegram : "new quote\nnotification"
+
+' ============================================================================
+' DATA FLOWS — P4 Contacts
+' ============================================================================
+
+P4 --> D5 : "save\ncontact"
+P4 --> Gmail : "contact\nemail"
+P4 --> Telegram : "new contact\nnotification"
+
+' ============================================================================
+' DATA FLOWS — P5 Chat
+' ============================================================================
+
+P5 --> D6 : "save\nmessage"
+D6 --> P5 : "message\nhistory"
+
+' ============================================================================
+' DATA FLOWS — P6 Content
+' ============================================================================
+
+P6 --> D7 : "CRUD\ninsight"
+D7 --> P6 : "insight\ndata"
+P6 --> D8 : "CRUD\nproject"
+D8 --> P6 : "project\ndata"
+P6 --> D9 : "CRUD\nposter"
+D9 --> P6 : "poster\ndata"
+P6 --> D10 : "CRUD\ntech tip"
+D10 --> P6 : "tech tip\ndata"
+
+' ============================================================================
+' DATA FLOWS — P7 Admin Operations
+' ============================================================================
+
+P7 --> D1 : "manage\nusers"
+P7 --> D2 : "manage\nproducts"
+P7 --> D4 : "manage\nquotes"
+P7 --> D5 : "manage\ncontacts"
+
+' ============================================================================
+' DATA FLOWS — P8 Analytics
+' ============================================================================
+
+P8 --> D11 : "log visit"
+P8 --> D12 : "log\nactivity"
+
+@enduml

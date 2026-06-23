@@ -1,6 +1,9 @@
 import { Eye, Trash2, FileText, Loader2, FileDown } from "lucide-react";
 import { QuoteRequest } from "./types";
 import { exportQuoteToPDF } from "./exportQuotePDF";
+import environment from "@/enviroment/enviroment";
+
+const baseUrl = environment;
 
 interface QuoteTableProps {
   quotes: QuoteRequest[];
@@ -107,7 +110,7 @@ export function QuoteTable({ quotes, loading, onViewDetails, onStatusChange, onD
                   >
                     {quote.userId && typeof quote.userId === "object" && quote.userId.avatar ? (
                       <img
-                        src={quote.userId.avatar}
+                        src={quote.userId.avatar.startsWith("/") ? `${baseUrl}${quote.userId.avatar}` : quote.userId.avatar}
                         alt={quote.name}
                         className="w-full h-full object-cover"
                       />

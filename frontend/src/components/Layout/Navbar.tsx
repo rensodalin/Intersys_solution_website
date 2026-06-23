@@ -13,7 +13,11 @@ import type { TaxonomySubCategory } from "@/utils/taxonomyApi";
 import environment from "@/enviroment/enviroment";
 
 const baseUrl = environment;
-const avatarUrl = (url?: string) => (url?.startsWith("/") ? `${baseUrl}${url}` : url);
+const avatarUrl = (url?: string, updatedAt?: string) => {
+  if (!url?.startsWith("/")) return url;
+  const buster = updatedAt ? `?t=${updatedAt}` : "";
+  return `${baseUrl}${url}${buster}`;
+};
 
 const CLIENT_CENTER_DATA = [
   { name: "Document Center", href: "/document-center" },
@@ -345,10 +349,10 @@ export function Navbar() {
             <div className="flex items-center gap-3">
               <Link to={user.isAdmin ? "/admin" : "/my-account"} className="flex items-center gap-2 group">
                 <img 
-                  src={avatarUrl(user.avatar) || "https://ui-avatars.com/api/?name=" + user.name} 
-                  alt={user.name} 
-                  className="w-8 h-8 rounded-full border border-white/20 shadow-md group-hover:border-red-500 transition-colors" 
-                  referrerPolicy="no-referrer" 
+src={avatarUrl(user.avatar, user?.updatedAt) || "https://ui-avatars.com/api/?name=" + user.name}
+              alt={user.name}
+              className="w-8 h-8 rounded-full border border-white/20 shadow-md group-hover:border-red-500 transition-colors"
+              referrerPolicy="no-referrer"
                 />
                 <span className={cn("text-xs font-semibold hidden md:inline group-hover:text-red-500 transition-colors", loginClass)}>
                   {user.firstName || user.name.split(" ")[0]}
@@ -404,9 +408,9 @@ export function Navbar() {
                       className="flex items-center gap-3 flex-1"
                     >
                       <img
-                        src={avatarUrl(user.avatar) || "https://ui-avatars.com/api/?name=" + user.name}
-                        alt={user.name}
-                        className="w-10 h-10 rounded-full border border-white/20"
+src={avatarUrl(user.avatar, user?.updatedAt) || "https://ui-avatars.com/api/?name=" + user.name}
+                            alt={user.name}
+                            className="w-10 h-10 rounded-full border border-white/20"
                       />
                       <div className="text-left">
                         <span className="text-sm font-bold text-white hover:text-red-500 transition-colors block">
