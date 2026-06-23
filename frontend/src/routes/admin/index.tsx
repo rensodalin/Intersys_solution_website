@@ -263,6 +263,7 @@ function AdminDashboardPage() {
           userName={user.name}
           userRole={user.role}
           avatar={user.avatar}
+          avatarUpdatedAt={user.updatedAt}
           loading={activeSection === "contacts" ? contactsLoading : loading}
           onRefresh={activeSection === "dashboard" ? () => window.location.reload() : activeSection === "quotes" ? () => { const sd = quoteDateRange?.from ? toDateString(quoteDateRange.from) : undefined; const ed = quoteDateRange?.to ? toDateString(quoteDateRange.to) : quoteDateRange?.from ? toDateString(quoteDateRange.from) : undefined; loadQuotes(sd, ed); } : activeSection === "contacts" ? loadContacts : loadQuotes}
           onSectionChange={(s) => setActiveSection(s as typeof activeSection)}
