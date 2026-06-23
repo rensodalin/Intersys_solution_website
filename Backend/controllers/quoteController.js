@@ -93,28 +93,36 @@ export const create = async (req, res) => {
       </div>
     `;
 
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-      try {
-        await transporter.sendMail({
-          from: `"Quote Request" <${process.env.EMAIL_USER}>`,
-          to: process.env.EMAIL_USER,
-          replyTo: quoteData.email,
-          subject: `New Quote Request - ${quoteData.company}`,
-          html: emailContent,
-        });
-      } catch (emailError) {
-        console.error("Failed to send notification email, but quote was saved:", emailError);
-      }
-    }
-
-    const productList = (quoteData.products || []).map(p =>
-      `${p.qty}x <b>${p.productNo}</b> — ${p.description} (${p.application})`
-    ).join("\n");
-    await sendTelegramNotification(
-      `<b>📋 New Quote Request</b>\n\n<b>Name:</b> ${quoteData.name}\n<b>Company:</b> ${quoteData.company}\n<b>Title:</b> ${quoteData.title || "—"}\n<b>Email:</b> ${quoteData.email}\n<b>Phone:</b> ${quoteData.phone}\n<b>Contact Method:</b> ${quoteData.contactMethod || "Not specified"}\n<b>Company Type:</b> ${quoteData.companyType || "—"}\n<b>Address:</b> ${fullAddress || "—"}\n\n${categoriesList ? `<b>Categories:</b> ${categoriesList}\n\n` : ""}${sectionsList ? `<b>Sections:</b> ${sectionsList}\n\n` : ""}<b>Products:</b>\n${productList || "None"}\n\n<b>Platform:</b> ${quoteData.bmsSystem || "—"}\n\n<b>Details:</b>\n${(quoteData.otherBms || "").slice(0, 500)}`
-    );
-
     res.status(201).json({ success: true, message: "Quote request submitted successfully." });
+
+    process.nextTick(async () => {
+      if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+        try {
+          await transporter.sendMail({
+            from: `"Quote Request" <${process.env.EMAIL_USER}>`,
+            to: process.env.EMAIL_USER,
+            replyTo: quoteData.email,
+            subject: `New Quote Request - ${quoteData.company}`,
+            html: emailContent,
+          });
+        } catch (emailError) {
+          console.error("Failed to send notification email, but quote was saved:", emailError);
+        }
+      }
+    });
+
+    process.nextTick(async () => {
+      try {
+        const productList = (quoteData.products || []).map(p =>
+          `${p.qty}x <b>${p.productNo}</b> — ${p.description} (${p.application})`
+        ).join("\n");
+        await sendTelegramNotification(
+          `<b>📋 New Quote Request</b>\n\n<b>Name:</b> ${quoteData.name}\n<b>Company:</b> ${quoteData.company}\n<b>Title:</b> ${quoteData.title || "—"}\n<b>Email:</b> ${quoteData.email}\n<b>Phone:</b> ${quoteData.phone}\n<b>Contact Method:</b> ${quoteData.contactMethod || "Not specified"}\n<b>Company Type:</b> ${quoteData.companyType || "—"}\n<b>Address:</b> ${fullAddress || "—"}\n\n${categoriesList ? `<b>Categories:</b> ${categoriesList}\n\n` : ""}${sectionsList ? `<b>Sections:</b> ${sectionsList}\n\n` : ""}<b>Products:</b>\n${productList || "None"}\n\n<b>Platform:</b> ${quoteData.bmsSystem || "—"}\n\n<b>Details:</b>\n${(quoteData.otherBms || "").slice(0, 500)}`
+        );
+      } catch (teleErr) {
+        console.error("Failed to send telegram notification:", teleErr);
+      }
+    });
   } catch (error) {
     console.error("Error submitting quote:", error);
     res.status(500).json({ success: false, error: "Failed to submit quote request" });
