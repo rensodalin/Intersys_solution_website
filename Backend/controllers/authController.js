@@ -159,12 +159,7 @@ export const googleCallback = (req, res, next) => {
           console.error("Session Save Error:", saveErr);
           return res.redirect(`${defaultRedirect}?error=session_save_error`);
         }
-        res.status(200).send(`<!DOCTYPE html>
-<html><head>
-<meta http-equiv="refresh" content="0;url=${redirectTo}">
-</head><body>
-<script>window.location.replace("${redirectTo}");</script>
-</body></html>`);
+        res.redirect(redirectTo);
       });
     });
   })(req, res, next);
