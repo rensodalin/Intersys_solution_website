@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Download, ArrowUpRight, FileText } from "lucide-react";
 import { Container } from "@/components/Common/Container";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import environment from "@/enviroment/enviroment";
+import companyImg from "@/assets/company.png";
+import { AuthModal } from "@/components/Auth/AuthModal";
 
 const categories = [
     "All",
@@ -64,9 +66,25 @@ const documents = [
 export function DocumentCenter() {
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [query, setQuery] = useState("");
+    const [showAuthModal, setShowAuthModal] = useState(false);
+    const [pendingUrl, setPendingUrl] = useState<string | null>(null);
 
     const user = useSelector((state: RootState) => state.auth.user);
     const baseUrl = environment;
+
+    const requireAuth = useCallback((url: string) => {
+        if (user) {
+            window.open(url, "_blank", "noopener,noreferrer");
+            return;
+        }
+        setPendingUrl(url);
+        setShowAuthModal(true);
+    }, [user]);
+
+    const handleAuthClose = useCallback(() => {
+        setShowAuthModal(false);
+        setPendingUrl(null);
+    }, []);
 
     const trackPdfDownload = async (title: string, url: string) => {
         if (!user || url === "#") return;
@@ -164,21 +182,22 @@ export function DocumentCenter() {
                     <div className="col-span-12 lg:col-span-3 py-8 pl-8 flex flex-col justify-between">
 
                         <img
-                            src="/src/assets/company.png"
+                            src={companyImg}
                             alt="Corporate Profile"
                             className="w-full h-32 lg:h-full object-cover"
                         />
 
-                        <a
-                            href="/documents/project-references-bms.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={() => trackPdfDownload("Intersys Systems - Corporate Overview", "/documents/project-references-bms.pdf")}
-                            className="mt-4 flex items-center justify-between bg-[#D62828] text-white text-[11px] font-bold px-5 py-3 hover:bg-[#111FA2] transition outline-none"
+                        <button
+                            onClick={() => {
+                                const url = "/documents/project-references-bms.pdf";
+                                requireAuth(url);
+                                if (user) trackPdfDownload("Intersys Systems - Corporate Overview", url);
+                            }}
+                            className="mt-4 flex items-center justify-between bg-[#D62828] text-white text-[11px] font-bold px-5 py-3 hover:bg-[#111FA2] transition outline-none w-full"
                         >
                             Download
                             <Download size={13} />
-                        </a>
+                        </button>
 
                     </div>
 
@@ -252,15 +271,16 @@ export function DocumentCenter() {
                                 </div>
 
                                 <div className="col-span-1 flex justify-end">
-                                    <a
-                                        href={doc.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        onClick={() => trackPdfDownload(doc.title, doc.url)}
-                                        className="w-8 h-8 border flex items-center justify-center hover:border-[#D62828] hover:text-[#D62828] transition-colors"
+                                    <button
+                                        onClick={() => {
+                                            if (doc.url === "#") return;
+                                            requireAuth(doc.url);
+                                            if (user) trackPdfDownload(doc.title, doc.url);
+                                        }}
+                                        className="w-8 h-8 border flex items-center justify-center hover:border-[#D62828] hover:text-[#D62828] transition-colors cursor-pointer"
                                     >
                                         <Download size={13} />
-                                    </a>
+                                    </button>
                                 </div>
 
                             </motion.div>
@@ -270,6 +290,8 @@ export function DocumentCenter() {
                 </div>
 
             </Container>
+
+            <AuthModal isOpen={showAuthModal} onClose={handleAuthClose} />
         </div>
     );
 }
