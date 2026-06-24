@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import img from "../assets/BMS/IMG_20260425_124911.jpg";
-
+import img1 from "../assets/roomcontrol/01-LEFT VIEW.jpg"
+import img2 from "../assets/roomcontrol/IMG_20260609_112422.jpg"
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import {
@@ -328,33 +329,33 @@ function AccessControlPage() {
                             {
                                 category: "Small to Medium",
                                 items: [
-                                    { title: "Small commercial buildings", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop" },
-                                    { title: "Retail shops", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=800&auto=format&fit=crop" },
-                                    { title: "Clinics", img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=800&auto=format&fit=crop" }
+                                    { title: "Small commercial buildings", img: img1 },
+                                    { title: "Retail shops", img: "https://i.pinimg.com/736x/5c/5f/48/5c5f48f4bf3ad0fb562ecac0e823ee9a.jpg" },
+                                    { title: "Clinics", img: img2 }
                                 ]
                             },
                             {
                                 category: "Single to Multiple Small Sites",
                                 items: [
-                                    { title: "School campuses", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop" },
-                                    { title: "Healthcare facilities", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop" },
-                                    { title: "Multi-site offices", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" }
+                                    { title: "School campuses", img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1440,h=810,fit=crop/Lzi7Kc37p5yx1TGl/dji_0535-Bsruilm7touVQEv8.JPG" },
+                                    { title: "Healthcare facilities", img: "https://images.unsplash.com/photo-1710074213379-2a9c2653046a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                                    { title: "Multi-site offices", img: "https://plus.unsplash.com/premium_photo-1661964473096-90ef8ca12e5d?q=80&w=1330&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }
                                 ]
                             },
                             {
                                 category: "High Density",
                                 items: [
-                                    { title: "Universities", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop" },
-                                    { title: "Office towers", img: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?q=80&w=800&auto=format&fit=crop" },
-                                    { title: "Hotels & hospitals", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop" }
+                                    { title: "Universities", img: "https://images.unsplash.com/photo-1606761568499-6d2451b23c66?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                                    { title: "Office towers", img: "https://plus.unsplash.com/premium_photo-1661963301560-ac8e44ff1875?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                                    { title: "Hotels & hospitals", img: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?q=80&w=1228&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }
                                 ]
                             },
                             {
                                 category: "Large Enterprise",
                                 items: [
-                                    { title: "Airports & data centers", img: "https://images.unsplash.com/photo-1542382257-80dedb725088?q=80&w=800&auto=format&fit=crop" },
-                                    { title: "Industrial parks", img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop" },
-                                    { title: "Smart cities", img: "https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=800&auto=format&fit=crop" }
+                                    { title: "Airports & data centers", img: "https://i.pinimg.com/736x/f1/bd/37/f1bd376119c9634e1be1f3f733263c64.jpg" },
+                                    { title: "Industrial parks", img: "https://i.pinimg.com/736x/5d/6e/dc/5d6edc6e5a619463f3ecfdaf766509f9.jpg" },
+                                    { title: "Smart cities", img: "https://i.pinimg.com/1200x/41/48/66/4148663120513c4ee603f8b9077fbd0c.jpg" }
                                 ]
                             }
                         ].map((tier, i) => (
