@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Mail, Phone, MapPin, MessageSquare, Eye, Loader2, Inbox, ChevronLeft, Trash2 } from "lucide-react";
 import { ContactItem } from "./types";
 import { toast } from "sonner";
@@ -10,6 +10,8 @@ interface ContactsListProps {
   contacts: ContactItem[];
   loading: boolean;
   onRefresh: () => void;
+  highlightContactId?: string | null;
+  onHighlightConsumed?: () => void;
 }
 
 function formatDate(dateStr: string) {
@@ -115,9 +117,19 @@ function ContactDetail({ contact, onBack }: { contact: ContactItem; onBack: () =
   );
 }
 
-export function ContactsList({ contacts, loading, onRefresh }: ContactsListProps) {
+export function ContactsList({ contacts, loading, onRefresh, highlightContactId, onHighlightConsumed }: ContactsListProps) {
   const [selectedContact, setSelectedContact] = useState<ContactItem | null>(null);
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    if (highlightContactId) {
+      const contact = contacts.find(c => c._id === highlightContactId);
+      if (contact) {
+        setSelectedContact(contact);
+        onHighlightConsumed?.();
+      }
+    }
+  }, [highlightContactId, contacts]);
 
   const handleDelete = async (id: string) => {
     try {

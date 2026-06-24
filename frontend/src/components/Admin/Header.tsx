@@ -26,11 +26,12 @@ interface HeaderProps {
   loading: boolean;
   onRefresh: () => void;
   onSectionChange?: (section: string) => void;
+  onNotificationClick?: (section: string, type: string, id: string) => void;
 }
 
 const baseUrl = environment;
 
-export function Header({ userName, userRole = "Administrator", avatar, avatarUpdatedAt, loading, onRefresh, onSectionChange }: HeaderProps) {
+export function Header({ userName, userRole = "Administrator", avatar, avatarUpdatedAt, loading, onRefresh, onSectionChange, onNotificationClick }: HeaderProps) {
   const cacheBuster = avatar?.startsWith("/") && avatarUpdatedAt ? `?t=${avatarUpdatedAt}` : "";
   const avatarSrc = avatar?.startsWith("/") ? `${baseUrl}${avatar}${cacheBuster}` : avatar;
   const [notifData, setNotifData] = useState<NotificationData | null>(null);
@@ -119,7 +120,15 @@ export function Header({ userName, userRole = "Administrator", avatar, avatarUpd
                   notifData?.recentItems.map((item) => (
                     <button
                       key={item.id}
-                      onClick={() => { onSectionChange?.(item.section); setShowDropdown(false); }}
+                      onClick={() => {
+                        const realId = item.id.replace(/^(contact|quote)-/, "");
+                        if (onNotificationClick) {
+                          onNotificationClick(item.section, item.type, realId);
+                        } else {
+                          onSectionChange?.(item.section);
+                        }
+                        setShowDropdown(false);
+                      }}
                       className="w-full text-left px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition cursor-pointer"
                     >
                       <div className="flex items-start gap-2">

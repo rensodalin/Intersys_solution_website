@@ -9,6 +9,7 @@ import {
   updateQuoteStatus,
   deleteQuote,
   exportQuotesToCSV,
+  markContactRead,
 } from "@/components/Admin/api";
 import { LoadingState } from "@/components/Admin/LoadingState";
 import { AccessDenied } from "@/components/Admin/AccessDenied";
@@ -78,6 +79,20 @@ function AdminDashboardPage() {
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<"dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "technicaltips" | "chat" | "contacts" | "reports" | "settings">("dashboard");
+  const [highlightContactId, setHighlightContactId] = useState<string | null>(null);
+
+  const handleNotificationClick = (section: string, type: string, id: string) => {
+    setActiveSection(section as typeof activeSection);
+    if (type === "quote") {
+      updateQuoteStatus(id, "In Progress");
+      setQuotes(prev => prev.map(q => q._id === id ? { ...q, status: "In Progress" } : q));
+      const quote = quotes.find(q => q._id === id);
+      if (quote) setSelectedQuote({ ...quote, status: "In Progress" });
+    } else if (type === "contact") {
+      markContactRead(id);
+      setHighlightContactId(id);
+    }
+  };
 
   const itemsPerPage = 5;
 
@@ -267,6 +282,7 @@ function AdminDashboardPage() {
           loading={activeSection === "contacts" ? contactsLoading : loading}
           onRefresh={activeSection === "dashboard" ? () => window.location.reload() : activeSection === "quotes" ? () => { const sd = quoteDateRange?.from ? toDateString(quoteDateRange.from) : undefined; const ed = quoteDateRange?.to ? toDateString(quoteDateRange.to) : quoteDateRange?.from ? toDateString(quoteDateRange.from) : undefined; loadQuotes(sd, ed); } : activeSection === "contacts" ? loadContacts : loadQuotes}
           onSectionChange={(s) => setActiveSection(s as typeof activeSection)}
+          onNotificationClick={handleNotificationClick}
         />
 
         <main className="flex-1 p-8 space-y-8 overflow-y-auto">
@@ -283,6 +299,8 @@ function AdminDashboardPage() {
               contacts={contacts}
               loading={contactsLoading}
               onRefresh={loadContacts}
+              highlightContactId={highlightContactId}
+              onHighlightConsumed={() => setHighlightContactId(null)}
             />
           )}
 

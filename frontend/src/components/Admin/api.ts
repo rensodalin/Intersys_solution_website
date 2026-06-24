@@ -47,6 +47,13 @@ export async function updateQuoteStatus(
   throw new Error(data.error || "Failed to update status");
 }
 
+export async function markContactRead(id: string): Promise<void> {
+  await fetch(`${baseUrl}/api/contacts/${id}/read`, {
+    method: "PUT",
+    credentials: "include",
+  });
+}
+
 export async function deleteQuote(id: string): Promise<void> {
   const response = await fetch(`${baseUrl}/api/quotes/${id}`, {
     method: "DELETE",

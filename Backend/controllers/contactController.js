@@ -82,6 +82,20 @@ export const submitContact = async (req, res) => {
   }
 };
 
+export const markContactRead = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const contact = await Contact.findByIdAndUpdate(id, { status: "read" }, { new: true });
+    if (!contact) {
+      return res.status(404).json({ success: false, error: "Contact not found" });
+    }
+    res.json({ success: true, data: contact });
+  } catch (error) {
+    console.error("Failed to mark contact as read:", error);
+    res.status(500).json({ success: false, error: "Failed to mark contact as read" });
+  }
+};
+
 export const getContacts = async (req, res) => {
   try {
     const contacts = await Contact.find({}).sort({ createdAt: -1 }).lean();

@@ -49,11 +49,6 @@ export function FeaturedNode({ stats }: FeaturedNodeProps) {
             <p className="text-xs font-bold text-emerald-400">{completionRate}%</p>
             <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Completion</p>
           </div>
-          <div className="w-px h-6 bg-slate-700" />
-          <div>
-            <p className="text-xs font-bold text-sky-400">{stats?.activeUsers ?? 0}</p>
-            <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Active Users</p>
-          </div>
           {category && (
             <>
               <div className="w-px h-6 bg-slate-700" />

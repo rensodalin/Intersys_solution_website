@@ -22,7 +22,7 @@ import activityRoutes from "./routes/activity.js";
 import chatRoutes from "./routes/chat.js";
 import taxonomyRoutes from "./routes/taxonomy.js";
 import technicalTipRoutes from "./routes/technicalTips.js";
-import { submitContact, getContacts, deleteContact } from "./controllers/contactController.js";
+import { submitContact, getContacts, deleteContact, markContactRead } from "./controllers/contactController.js";
 import { isAdmin } from "./middleware/auth.js";
 import User from "./model/user.js";
 
@@ -93,6 +93,7 @@ app.use("/api/technical-tips", technicalTipRoutes);
 
 app.post("/api/contact", submitContact);
 app.get("/api/contacts", isAdmin, getContacts);
+app.put("/api/contacts/:id/read", isAdmin, markContactRead);
 app.delete("/api/contacts/:id", isAdmin, deleteContact);
 
 // Fix existing absolute avatar URLs stored from Hostinger FTP
