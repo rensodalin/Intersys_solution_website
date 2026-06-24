@@ -88,12 +88,12 @@ function LeakDetectionPage() {
         <div className="bg-[#FDFDFD] overflow-hidden scroll-smooth selection:bg-red-500 selection:text-white">
 
             {/* ─── HERO SECTION ─── */}
-            <section className="relative h-[90vh] min-h-[680px] flex items-center overflow-hidden bg-[#0A0F1A]">
+            <section className="relative h-[60vh] min-h-[550px] flex items-center overflow-hidden bg-[#0A0F1A]">
 
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://plus.unsplash.com/premium_photo-1661921394349-9e3f394d80da?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx8fHx8fHx8fA%3D%3D"
+                        src="https://images.unsplash.com/photo-1669920282670-d2e1f59e7aff?q=80&w=1142&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Leak Detection"
                         className="w-full h-full object-cover"
                     />
@@ -106,7 +106,7 @@ function LeakDetectionPage() {
                 {/* BACK BUTTON */}
                 <button
                     onClick={() => router.history.back()}
-                    className="absolute top-8 left-8 z-20 flex items-center gap-2 text-white/80 hover:text-white transition pt-37 px-15"
+                    className="absolute top-1 left-8 z-20 flex items-center gap-2 text-white/80 hover:text-white transition pt-37 px-15"
                 >
                     <div className="w-9 h-9  flex items-center justify-center">
                         <ArrowLeft size={16} />

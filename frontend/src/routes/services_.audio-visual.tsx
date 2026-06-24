@@ -4,6 +4,7 @@ import cleanroom from "@/assets/hospital.jpg"
 import cleanroom1 from "@/assets/healthcare.jpg"
 import { Container } from "@/components/Common/Container";
 import route from "@/assets/routing.jpg"
+import avHero from "@/assets/roomcontrol/1755959738voice_evacuationy-removebg-preview.png"
 import { CtaBand } from "@/components/Common/CtaBand";
 import {
     Tv,
@@ -31,33 +32,55 @@ function AudioVisualPage() {
     return (
         <div className="bg-white overflow-hidden scroll-smooth">
 
-            {/* ─── HERO SECTION ─── */}
-            <section className="relative h-[65vh] min-h-[450px] flex items-center pt-19">
-                <div className="absolute inset-0 z-0">
-                    <img
-                        src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2069&auto=format&fit=crop"
-                        alt="AV Solutions Hero"
-                        className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
-                </div>
+            {/* ─── HERO ─── */}
+            <section className="relative min-h-[70vh] flex items-center pt-19 bg-black overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/70 z-0" />
 
-                <Container className="relative z-10 text-white">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="max-w-3xl"
-                    >
-                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
-                            Delivering Advanced <br />
-                            <span className="text-red-500">Audio Visual</span> Solutions
-                        </h1>
-                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
-                            Transform your spaces with cutting-edge technology that enhances communication, collaboration, and engagement.
-                        </p>
+                <Container className="relative z-10">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-                    </motion.div>
+                        {/* Left Content */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8 }}
+                            className="text-white max-w-3xl"
+                        >
+                            <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                                Delivering Advanced <br />
+                                <span className="text-red-500">Audio Visual</span> Solutions
+                            </h1>
+
+                            <p className="text-base text-white/70 max-w-2xl leading-relaxed">
+                                Transform your spaces with cutting-edge technology that enhances communication, collaboration, and engagement.
+                            </p>
+
+                            <div className="flex flex-wrap gap-4 pt-6">
+                                {["Video Conferencing", "Digital Signage", "Sound Systems"].map((tag) => (
+                                    <span
+                                        key={tag}
+                                        className="px-4 py-1.5 border border-white/30 text-white/80 text-sm rounded-md backdrop-blur-sm"
+                                    >
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        </motion.div>
+
+                        {/* Right Image */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="flex justify-center"
+                        >
+                            <img
+                                src={avHero}
+                                alt="AV Solutions Overview"
+                                className="w-full max-w-2xl object-contain"
+                            />
+                        </motion.div>
+                    </div>
                 </Container>
             </section>
 
@@ -114,7 +137,7 @@ function AudioVisualPage() {
                             <div className="absolute -top-5 -left-5 w-full h-full border border-gray-200 z-0" />
 
                             <img
-                                src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=2070&auto=format&fit=crop"
+                                src="https://images.unsplash.com/photo-1567345429765-76ad9337eaae?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                                 alt="Integrated AV Solutions"
                                 className="relative z-10 w-full h-[500px] object-cover shadow-lg"
                             />
@@ -343,7 +366,7 @@ function AudioVisualPage() {
                             {
                                 title: "Smart Hardware",
                                 desc: "AI-assisted cameras and professional-grade audio systems.",
-                                img: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=800&auto=format&fit=crop"
+                                img: "https://images.unsplash.com/photo-1588902493662-2bf3c6a47ccc?q=80&w=1173&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                             }
                         ].map((item, i) => (
                             <div

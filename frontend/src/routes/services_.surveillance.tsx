@@ -27,24 +27,13 @@ function SurveillancePage() {
             <section className="relative h-[70vh] min-h-[500px] flex items-center pt-18">
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=2000"
+                        src="https://images.unsplash.com/photo-1529265895721-65945a176cff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Cityscape"
                         className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
                 </div>
 
-                {/* ─── BACK BUTTON ─── */}
-                <button
-                    onClick={() => router.history.back()}
-                    className="absolute top-50 left-23 z-20 flex items-center gap-2 text-black hover:text-black/60 transition-colors duration-200 group"
-                >
-                    <ArrowLeft
-                        size={18}
-                        className="group-hover:-translate-x-1 transition-transform duration-200"
-                    />
-                    <span className="text-sm font-medium">Back</span>
-                </button>
 
                 <Container className="relative z-10">
                     <motion.div

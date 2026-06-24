@@ -1,6 +1,9 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
+import img1 from "../assets/roomcontrol/image copy 11.png"
+import img2 from "../assets/roomcontrol/image copy 12.png"
+import img3 from "../assets/roomcontrol/image copy 13.png"
 import {
     Wind,
     ShieldCheck,
@@ -25,7 +28,7 @@ function VesdaPage() {
 
             {/* ───────────────── HERO ───────────────── */}
             {/* ───────────────── HERO ───────────────── */}
-            <section className="relative min-h-[650px] flex items-center bg-[#0F1720]">
+            <section className="relative min-h-[540px] flex items-center bg-[#0F1720]">
 
                 {/* Background */}
                 <div className="absolute inset-0">
@@ -42,7 +45,7 @@ function VesdaPage() {
 
                 <button
                     onClick={() => router.history.back()}
-                    className="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group pt-37 px-15"
+                    className="absolute top-1 left-6 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group pt-37 px-15"
                 >
                     <div className="w-9 h-9 flex items-center justify-center group-hover:border-white/40 transition">
                         <ArrowLeft
@@ -67,7 +70,7 @@ function VesdaPage() {
 
                         </div>
 
-                        <h1 className="text-4xl md:text-5xl font-bold text-white leading-[1.1] tracking-tight pt-20">
+                        <h1 className="text-4xl md:text-5xl font-bold text-white leading-[1.1] tracking-tight pt-10">
                             <span className="text-red-600">
                                 VESDA
                             </span>
@@ -223,7 +226,7 @@ function VesdaPage() {
                             {[
                                 {
                                     title: "Data Centers",
-                                    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop"
+                                    image: img3
                                 },
                                 {
                                     title: "Telecommunication Rooms",
@@ -231,11 +234,11 @@ function VesdaPage() {
                                 },
                                 {
                                     title: "Healthcare Facilities",
-                                    image: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?q=80&w=1200&auto=format&fit=crop"
+                                    image: img2
                                 },
                                 {
                                     title: "Industrial Facilities",
-                                    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop"
+                                    image: img1
                                 }
                             ].map((item, i) => (
                                 <div

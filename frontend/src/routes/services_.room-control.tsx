@@ -1,5 +1,6 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import roomcontrol1 from "@/assets/roomcontrol/image copy 9.png"
 import { Container } from "@/components/Common/Container";
 import {
     ArrowLeft,
@@ -32,10 +33,10 @@ function RoomControlPage() {
         <div className="bg-[#FDFDFD] overflow-hidden scroll-smooth selection:bg-red-500 selection:text-white">
 
             {/* ─── HERO SECTION ─── */}
-            <section className="relative h-[80vh] min-h-[600px] flex items-center pt-24 overflow-hidden bg-[#0A0F1A]">
+            <section className="relative h-[80vh] min-h-[550px] flex items-center pt-24 overflow-hidden bg-[#0A0F1A]">
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://plus.unsplash.com/premium_photo-1764687672666-f8693f96d8db?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        src="https://honeywell.scene7.com/is/image/honeywell/ba-hospitality-in-ems-tstat-hero-2880x1440-overlay:5-2-hero"
                         alt="Room Control Unit Hero"
                         className="w-full h-full object-cover opacity-40 scale-105"
                     />

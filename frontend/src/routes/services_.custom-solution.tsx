@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import roomcontrol from "@/assets/roomcontrol/image.png"
 import { Container } from "@/components/Common/Container";
 import {
     Zap,
@@ -38,7 +39,7 @@ function CustomSolutionPage() {
             <section className="relative h-[65vh] min-h-[450px] flex items-center pt-7">
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=2000"
+                        src="https://buildings.honeywell.com/content/dam/hbtbt/en/images/horizontal/centraline-hotel-lobby-2880x1440.jpg"
                         alt="Custom Engineering"
                         className="w-full h-full object-cover"
                     />
@@ -158,37 +159,37 @@ function CustomSolutionPage() {
                             {
                                 title: "Intrusion Alarm Systems",
                                 desc: "Protect your property with advanced motion sensors, door/window contacts, and integrated alarm notifications.",
-                                img: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=800",
+                                img: "https://tiimg.tistatic.com/fp/1/001/452/honeywell-intrusion-alarm-panel-790.jpg",
                                 href: "/services/intrusion-system"
                             },
                             {
                                 title: "Car Parking Systems",
                                 desc: "Streamlined vehicle access control, automated payment solutions, and real-time occupancy monitoring.",
-                                img: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&q=80&w=800",
+                                img: "https://www.honeywellbuildings.in/uploads/bms/category/1604003816pms_prdct.png",
                                 href: "/services/car-parking"
                             },
                             {
                                 title: "Public Address Systems",
                                 desc: "Reliable audio solutions for announcements and emergency broadcasts across facilities.",
-                                img: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=800",
+                                img: "https://www.honeywellbuildings.in/uploads/pava/category/1755959738voice_evacuationy.jpg",
                                 href: "/services/public-address"
                             },
                             {
                                 title: "Room Control Unit",
                                 desc: "Intelligent in-room control for lighting, HVAC, and access management.",
-                                img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=800",
+                                img: roomcontrol,
                                 href: "/services/room-control"
                             },
                             {
                                 title: "Leak Detection System",
                                 desc: "Early detection systems to prevent costly damage and operational downtime.",
-                                img: "https://www.airbestpractices.com/sites/default/files/Figure%201_18_0.jpg",
+                                img: "https://images.unsplash.com/photo-1669920282670-d2e1f59e7aff?q=80&w=1142&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                                 href: "/services/leak-detection"
                             },
                             {
                                 title: "VESDA Systems",
                                 desc: "Highly sensitive smoke detection technology for mission-critical environments.",
-                                img: "https://www.suppressionsystems.com/wp-content/uploads/sites/4/2021/04/VESDA-Family-1000x720-1.jpg",
+                                img: "https://buildings.honeywell.com/content/dam/hbtbt/en/images/horizontal/products-fire-xtralis-2880x1440.jpg",
                                 href: "/services/vesda"
                             }
                         ].map((eco, i) => (
