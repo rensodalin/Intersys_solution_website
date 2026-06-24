@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { Zap, Globe, Cpu, CheckCircle2, ArrowLeft } from "lucide-react";
-import img from '@/assets/roomcontrol/6307a5cc5b22084cd2443e05DISTRIBUTOR_OF_HONEYWELL_2MMP_IP_CCTV_CAMERA_BULLET_DOME_MAIN_SUPPLIER_IN_DELHI_GURGAON_MUMBAI_CHENNAI_BANGALORE_KOLKATA-removebg-preview.png'
+import img from "@/assets/roomcontrol/ChatGPT Image Jun 24, 2026, 11_04_18 AM.png";
 export const Route = createFileRoute("/services_/surveillance")({
     head: () => ({
         meta: [
@@ -27,7 +27,7 @@ function SurveillancePage() {
             <section className="relative h-[70vh] min-h-[500px] flex items-center pt-18">
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="https://images.unsplash.com/photo-1529058890700-d85d58cf46b1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        src={img}
                         alt="Cityscape"
                         className="w-full h-full object-cover"
                     />

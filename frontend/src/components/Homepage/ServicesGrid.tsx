@@ -132,7 +132,7 @@ export function ServicesGrid() {
             icon={Video}
             title="CCTV Surveillance"
             desc="Ensure constant vigilance and monitoring with our Surveillance (CCTV) solutions, providing comprehensive coverage and real-time visual insights for enhanced security."
-            img={cctvImg}
+            img="https://digits-home.com/wp-content/uploads/2026/03/honeywell_top_1.jpg"
             className="lg:col-span-2"
             isExpanded={expandedIds.includes("cctv")}
             onToggle={() => toggleExpand("cctv")}
@@ -240,7 +240,7 @@ function ServiceCard({
           <img
             src={img}
             alt={title}
-            className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1A]/90 via-[#0A0F1A]/40 to-transparent" />
           <div className="relative z-10 p-8 mt-auto">
