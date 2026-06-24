@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight } from "lucide-react";
+import { X } from "lucide-react";
 import logoImg from "@/assets/logo.avif";
-import heroImg from "@/assets/Hero.png";
 import { Link } from "@tanstack/react-router";
+import heroImg from '@/assets/roomcontrol/ChatGPT_Image_Jun_24__2026__10_12_23_AM-removebg-preview.png';
 
 interface PromotionOverlayProps {
   isOpen: boolean;
@@ -16,114 +16,96 @@ export function PromotionOverlay({
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden"
-        >
+        <div className="fixed inset-0 z-[9998] overflow-y-auto">
           {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0 bg-black/45"
             onClick={onClose}
           />
 
-          {/* Modal Content */}
+          {/* Slide-in Panel from left */}
           <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative w-full h-full md:w-[95%] md:h-[85%] max-w-6xl bg-white rounded-none md:rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl"
+            initial={{ x: "-100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 350 }}
+            className="relative z-[9999] w-full max-w-[420px] h-full bg-[#F8F6F0] shadow-xl overflow-hidden flex flex-col"
           >
-            {/* Close Button */}
+            {/* Close button - Top Left to avoid ribbon conflict */}
             <button
               onClick={onClose}
-              className="absolute top-6 right-6 z-50 p-2 rounded-md bg-black/10 hover:bg-black/20 text-gray-800 transition-colors"
+              className="absolute top-4 left-4 z-[99] p-1.5 rounded-full bg-white/80 hover:bg-white text-gray-700 hover:text-black border border-black/[0.05] shadow-sm backdrop-blur-md transition-all duration-200"
+              aria-label="Close promotion"
             >
-              <X className="w-6 h-6" />
+              <X className="w-4 h-4" />
             </button>
 
-            {/* Left Side */}
-            <div className="relative w-full h-[40%] md:h-full md:w-[65%] overflow-hidden bg-[#f0f2f5]">
-              <div className="absolute inset-0 opacity-40">
-                <img
-                  src={heroImg}
-                  alt="Background"
-                  className="w-full h-full object-cover grayscale"
-                />
-              </div>
-
-              <div className="absolute inset-0 bg-gradient-to-tr from-white/80 via-white/40 to-transparent z-10" />
-
-              <div className="relative z-20 h-full p-12 flex flex-col justify-between">
-                <div>
-                  <img
-                    src={logoImg}
-                    alt="Logo"
-                    className="h-10 w-auto mb-12"
-                  />
-
-                  <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#1A3263] leading-tight max-w-md">
-                    Engineering <br />
-                    the Future <br />
-                    in Cambodia
-                  </h2>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="px-8 py-3 bg-white/50 backdrop-blur-md rounded-sm text-sm font-bold text-[#1A3263] border border-white">
-                    Since 2015
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Image */}
-              <div className="hidden lg:block absolute -right-20 top-1/2 -translate-y-1/2 w-[400px] pointer-events-none">
-                <motion.div
-                  animate={{ y: [0, -15, 0] }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="relative"
-                >
-                  <div className="bg-white p-2 rounded-md shadow-2xl border border-gray-100 rotate-12">
-                    <img
-                      src="https://plus.unsplash.com/premium_photo-1685148902867-0d917a4d2a67?q=80&w=1332&auto=format&fit=crop"
-                      alt="Building"
-                    />
-                  </div>
-                </motion.div>
+            {/* Ribbon at very top */}
+            <div className="absolute top-0 right-0 overflow-hidden w-28 h-28 pointer-events-none z-20">
+              <div className="bg-[#D4FF00] text-black text-[10px] font-black tracking-widest py-1.5 w-40 text-center absolute top-5 -right-9 rotate-45 uppercase shadow-sm">
+                SINCE 2015
               </div>
             </div>
 
-            {/* Right Side */}
-            <div className="w-full h-[60%] md:h-full md:w-[35%] bg-white p-12 flex flex-col justify-center relative">
-              <div className="space-y-8">
-                <h3 className="text-4xl font-bold text-[#1A3263] tracking-tighter leading-tight">
-                  Ready to transform <br /> your building?
-                </h3>
+            {/* Logo at the very top */}
+            <div className="px-8 pt-6 pb-2">
+              <img
+                src={logoImg}
+                alt="Intersys Solutions"
+                className="h-8 w-auto"
+              />
+            </div>
 
-                <p className="text-gray-500 text-base leading-relaxed">
-                  Join hundreds of businesses optimizing their operations with
-                  Intersys Solutions. Our engineers are ready to design your
-                  custom roadmap.
-                </p>
+            {/* Top section - Mockup Image with lime circle */}
+            <div className="relative w-full h-[280px] flex items-center justify-center overflow-hidden">
+              {/* Lime Circle */}
+              <div
+                className="absolute w-[220px] h-[220px] bg-[#D4FF00] rounded-full top-[52%] left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse"
+                style={{ animationDuration: '8s' }}
+              />
 
-                <Link
-                  to="/contact"
-                  onClick={onClose}
-                  className="w-full bg-[#C3110C] text-white py-5 rounded-sm font-bold text-sm normal-case flex items-center justify-center gap-3 hover:bg-[#1A3263] transition-all duration-500 group shadow-xl shadow-[#C3110C]/20"
-                >
-                  Get a Free Consultation
+              {/* Devices mockup */}
+              <img
+                src={heroImg}
+                alt="Mockup devices"
+                className="relative z-10 w-[80%] h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-500 ease-out"
+              />
 
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </div>
+            </div>
+
+            {/* Bottom section - Content */}
+            <div className="p-8 pt-4 pb-8 flex flex-col">
+              {/* Title */}
+              <h2 className="text-[34px] md:text-[38px] font-extrabold text-[#1A3263] leading-[1.1] tracking-tight">
+                Engineering <br />
+                the Future
+              </h2>
+
+              {/* Subheading */}
+              <p className="text-[#1A3263] text-sm font-semibold mt-2.5">
+                Intersys's custom building solutions, engineering Cambodia's future.
+              </p>
+
+              {/* Description */}
+              <p className="text-gray-500 text-xs md:text-sm mt-3 leading-relaxed">
+                Ready to transform your building? Join hundreds of businesses optimizing their operations with Intersys Solutions. Our engineers are ready to design your custom roadmap.
+              </p>
+
+              {/* CTA Button */}
+              <Link
+                to="/contact"
+                onClick={onClose}
+                className="inline-flex items-center gap-2 bg-[#C3110C] hover:bg-[#1A3263] text-white px-7 py-3 mt-6 text-xs font-bold transition-all duration-300 shadow-md shadow-[#C3110C]/20 hover:shadow-lg self-start"
+              >
+                Get a Free Consultation &rarr;
+              </Link>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );
