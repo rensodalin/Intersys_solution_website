@@ -196,22 +196,22 @@ export function Navbar() {
             </div>
 
             {/* PRODUCTS CATEGORY */}
-            {productsNavData.length > 0 && (
             <div
               className="relative h-full flex items-center"
               onMouseEnter={() => setShowProducts(true)}
               onMouseLeave={closeMenus}
             >
-              <div
+              <Link
+                to="/products"
                 className={cn(
-                  "relative h-full flex items-center text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center cursor-pointer",
+                  "relative h-full flex items-center text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center",
                   location.pathname.startsWith("/products") ? "text-red-500 after:scale-x-100" : navItemClass
                 )}
               >
                 Products
-              </div>
+              </Link>
 
-              {showProducts && (
+              {showProducts && productsNavData.length > 0 && (
                 <div className="absolute top-full left-0 pt-2 w-64 bg-[#1A3263] border border-white/10 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
                   {productsNavData.map((cat) => {
                     const hasSub = cat.sub && cat.sub.length > 0;
@@ -268,7 +268,6 @@ export function Navbar() {
                 </div>
               )}
             </div>
-            )}
 
             {/* CLIENT CENTER */}
             <div className="relative h-full flex items-center" onMouseEnter={() => setActiveSupport("client")} onMouseLeave={closeMenus}>
