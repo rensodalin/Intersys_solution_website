@@ -53,12 +53,18 @@ export const getFeed = async (req, res) => {
 
 export const getNotifications = async (req, res) => {
   try {
-    const [unreadMessages, pendingQuotes, recentContacts, recentQuotes] = await Promise.all([
-      Message.countDocuments({ isFromAdmin: false, read: false }),
-      Quote.countDocuments({ status: "Pending" }),
-      Contact.find().sort({ createdAt: -1 }).limit(5).lean(),
-      Quote.find({ status: "Pending" }).sort({ createdAt: -1 }).limit(5).lean(),
+    const now = new Date();
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    const [unreadMessages, pendingQuotes, unreadContacts, recentContacts, recentQuotes] = await Promise.all([
+      Message.countDocuments({ isFromAdmin: false, read: false, createdAt: { $gte: startOfToday } }),
+      Quote.countDocuments({ status: "Pending", createdAt: { $gte: startOfToday } }),
+      Contact.countDocuments({ status: "new", createdAt: { $gte: startOfToday } }),
+      Contact.find({ status: "new", createdAt: { $gte: startOfToday } }).sort({ createdAt: -1 }).limit(5).lean(),
+      Quote.find({ status: "Pending", createdAt: { $gte: startOfToday } }).sort({ createdAt: -1 }).limit(5).lean(),
     ]);
+
+    const totalUnread = unreadContacts;
 
     const items = [];
 
@@ -89,7 +95,7 @@ export const getNotifications = async (req, res) => {
     res.json({
       success: true,
       data: {
-        totalUnread: unreadMessages + pendingQuotes + recentContacts.length,
+        totalUnread,
         unreadMessages,
         pendingQuotes,
         recentItems: items.slice(0, 10),
@@ -97,6 +103,31 @@ export const getNotifications = async (req, res) => {
     });
   } catch (err) {
     console.error("Notifications error:", err);
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+export const markNotificationRead = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [type, actualId] = id.split("-");
+    if (!type || !actualId) {
+      return res.status(400).json({ success: false, message: "Invalid notification id format" });
+    }
+
+    switch (type) {
+      case "contact":
+        await Contact.findByIdAndUpdate(actualId, { status: "read" });
+        break;
+      case "quote":
+        break;
+      default:
+        return res.status(400).json({ success: false, message: "Unknown notification type" });
+    }
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Mark notification read error:", err);
     res.status(500).json({ success: false, message: err.message });
   }
 };

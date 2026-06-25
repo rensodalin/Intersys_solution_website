@@ -27,7 +27,7 @@ export function FilterBar({
         <input
           value={search}
           onChange={e => { onSearchChange(e.target.value); }}
-          placeholder="Search by title, ID, or brand..."
+          placeholder="Search by name or partcode..."
           className="w-full pl-9 pr-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition"
         />
         {search && (

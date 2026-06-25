@@ -55,7 +55,7 @@ export function VisitorTrajectoryChart({ timeframe, onTimeframeChange }: Visitor
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
               <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: "#94A3B8", fontSize: 10, fontWeight: 700 }} />
               <YAxis tickLine={false} axisLine={false} tick={{ fill: "#94A3B8", fontSize: 10, fontWeight: 700 }} />
-              <Tooltip cursor={{ fill: "transparent" }} contentStyle={{ background: "#0F172A", border: "none", borderRadius: "8px", color: "#fff", fontSize: "11px", fontWeight: "bold" }} />
+              <Tooltip cursor={{ fill: "transparent" }} contentStyle={{ background: "#0F172A", border: "none", borderRadius: "6px" }} itemStyle={{ color: "#FFFFFF", fontSize: 11, fontWeight: 700 }} labelStyle={{ color: "#FFFFFF", fontSize: 11, fontWeight: 700 }} />
               <Bar dataKey="value" radius={[2, 2, 0, 0]} maxBarSize={36}>
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.value >= peakThreshold ? "#C3110C" : "#E2E8F0"} />

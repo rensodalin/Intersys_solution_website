@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MessageSquare, Search, Send, Reply, Loader2, RefreshCw, Inbox, Paperclip, FileText, X } from "lucide-react";
+import { MessageSquare, Search, Send, Reply, Loader2, RefreshCw, Inbox, Paperclip, FileText, X, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Conversation, ChatMessage } from "./types";
 import environment from "@/enviroment/enviroment";
@@ -215,6 +215,30 @@ export function ChatInbox() {
     }
   }, [messages]);
 
+  const handleDeleteConversation = async (email: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!window.confirm("Delete this entire conversation? This cannot be undone.")) return;
+    try {
+      const res = await fetch(`${baseUrl}/api/chat/conversations/${encodeURIComponent(email)}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      const json = await res.json();
+      if (json.success) {
+        toast.success("Conversation deleted");
+        if (selectedEmail === email) {
+          setSelectedEmail(null);
+          setMessages([]);
+        }
+        setConversations(prev => prev.filter(c => c.email !== email));
+      } else {
+        toast.error(json.error || "Failed to delete conversation");
+      }
+    } catch {
+      toast.error("Failed to delete conversation");
+    }
+  };
+
   const filteredConversations = conversations
     .filter(c => ["chat", "client-reply"].includes(c.lastSource))
     .filter(c => {
@@ -273,9 +297,9 @@ export function ChatInbox() {
               <button
                 key={conv._id}
                 onClick={() => handleSelectConversation(conv.email)}
-                className={`w-full text-left px-4 py-3 border-b border-gray-100 hover:bg-white transition cursor-pointer ${selectedEmail === conv.email ? "bg-white shadow-sm" : ""}`}
+                className={`w-full text-left px-4 py-3 border-b border-gray-100 hover:bg-white transition cursor-pointer group ${selectedEmail === conv.email ? "bg-white shadow-sm" : ""}`}
               >
-                <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-3">
                   <div
                     className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs text-white flex-shrink-0"
                     style={{ backgroundColor: getAvatarColor(conv.name) }}
@@ -300,6 +324,13 @@ export function ChatInbox() {
                       <span className="text-[9px] text-gray-400">{conv.email}</span>
                     </div>
                   </div>
+                  <button
+                    onClick={(e) => handleDeleteConversation(conv.email, e)}
+                    className="p-1 text-gray-300 hover:text-red-600 opacity-0 group-hover:opacity-100 transition cursor-pointer flex-shrink-0 mt-1"
+                    title="Delete conversation"
+                  >
+                    <Trash2 size={13} />
+                  </button>
                 </div>
               </button>
             ))

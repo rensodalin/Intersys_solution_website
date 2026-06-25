@@ -34,6 +34,7 @@ router.get("/public-messages/:email", chatController.getPublicMessages);
 router.post("/client-message", chatController.clientMessage);
 router.put("/:id/read", isAdmin, chatController.markRead);
 router.put("/conversations/:email/read", isAdmin, chatController.markConversationRead);
+router.delete("/conversations/:email", isAdmin, chatController.deleteConversation);
 router.post("/migrate", isAdmin, chatController.migrate);
 
 export default router;

@@ -260,6 +260,17 @@ export const markConversationRead = async (req, res) => {
   }
 };
 
+export const deleteConversation = async (req, res) => {
+  try {
+    const email = req.params.email;
+    await Message.deleteMany({ email });
+    res.json({ success: true, message: "Conversation deleted" });
+  } catch (error) {
+    console.error("Failed to delete conversation:", error);
+    res.status(500).json({ success: false, error: "Failed to delete conversation" });
+  }
+};
+
 export const migrate = async (req, res) => {
   try {
     const [contacts, quotes] = await Promise.all([

@@ -120,6 +120,9 @@ function ContactDetail({ contact, onBack }: { contact: ContactItem; onBack: () =
 export function ContactsList({ contacts, loading, onRefresh, highlightContactId, onHighlightConsumed }: ContactsListProps) {
   const [selectedContact, setSelectedContact] = useState<ContactItem | null>(null);
   const [search, setSearch] = useState("");
+  const [filterMonth, setFilterMonth] = useState<string>("");
+  const [filterYear, setFilterYear] = useState<string>("");
+  const [filterDay, setFilterDay] = useState<string>("");
 
   useEffect(() => {
     if (highlightContactId) {
@@ -130,6 +133,8 @@ export function ContactsList({ contacts, loading, onRefresh, highlightContactId,
       }
     }
   }, [highlightContactId, contacts]);
+
+  const years = [...new Set(contacts.map(c => new Date(c.createdAt).getFullYear()))].sort((a, b) => b - a);
 
   const handleDelete = async (id: string) => {
     try {
@@ -150,7 +155,29 @@ export function ContactsList({ contacts, loading, onRefresh, highlightContactId,
     }
   };
 
+  const daysInMonth = filterMonth && filterYear
+    ? new Date(Number(filterYear), Number(filterMonth), 0).getDate()
+    : 31;
+
+  const clearDateFilter = () => {
+    setFilterMonth("");
+    setFilterYear("");
+    setFilterDay("");
+  };
+
   const filtered = contacts.filter(c => {
+    if (filterYear) {
+      const year = new Date(c.createdAt).getFullYear().toString();
+      if (year !== filterYear) return false;
+    }
+    if (filterMonth) {
+      const month = (new Date(c.createdAt).getMonth() + 1).toString();
+      if (month !== filterMonth) return false;
+    }
+    if (filterDay) {
+      const day = new Date(c.createdAt).getDate().toString();
+      if (day !== filterDay) return false;
+    }
     if (!search) return true;
     const q = search.toLowerCase();
     return (
@@ -166,18 +193,69 @@ export function ContactsList({ contacts, loading, onRefresh, highlightContactId,
 
   return (
     <div className="bg-white rounded-xl border border-gray-150 shadow-sm">
-      <div className="px-6 py-4 border-b border-gray-150 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h2 className="text-sm font-black text-[#081F3D]">Contact Submissions</h2>
-          <span className="bg-[#081F3D]/10 text-[#081F3D] text-[10px] font-bold px-2 py-0.5 rounded-sm">{contacts.length}</span>
+      <div className="px-6 py-4 border-b border-gray-150">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-3">
+            <h2 className="text-sm font-black text-[#081F3D]">Contact Submissions</h2>
+            <span className="bg-[#081F3D]/10 text-[#081F3D] text-[10px] font-bold px-2 py-0.5 rounded-sm">{contacts.length}</span>
+          </div>
+          <input
+            type="text"
+            placeholder="Search by name, email, or phone..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="w-64 pl-3 pr-3 py-2 text-xs border border-gray-200 rounded-sm outline-none focus:border-[#C3110C]"
+          />
         </div>
-        <input
-          type="text"
-          placeholder="Search by name, email, or phone..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          className="w-64 pl-3 pr-3 py-2 text-xs border border-gray-200 rounded-sm outline-none focus:border-[#C3110C]"
-        />
+        <div className="flex items-center gap-2">
+          <select
+            value={filterMonth}
+            onChange={e => setFilterMonth(e.target.value)}
+            className="text-xs border border-gray-200 rounded-sm px-3 py-1.5 outline-none focus:border-[#C3110C] bg-white text-gray-700"
+          >
+            <option value="">All Months</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+          <select
+            value={filterYear}
+            onChange={e => { setFilterYear(e.target.value); setFilterDay(""); }}
+            className="text-xs border border-gray-200 rounded-sm px-3 py-1.5 outline-none focus:border-[#C3110C] bg-white text-gray-700"
+          >
+            <option value="">All Years</option>
+            {years.map(y => (
+              <option key={y} value={y}>{y}</option>
+            ))}
+          </select>
+          <select
+            value={filterDay}
+            onChange={e => setFilterDay(e.target.value)}
+            className="text-xs border border-gray-200 rounded-sm px-3 py-1.5 outline-none focus:border-[#C3110C] bg-white text-gray-700"
+          >
+            <option value="">All Days</option>
+            {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(d => (
+              <option key={d} value={d}>{d}</option>
+            ))}
+          </select>
+          {(filterMonth || filterYear || filterDay) && (
+            <button
+              onClick={clearDateFilter}
+              className="text-xs text-[#C3110C] hover:underline font-medium cursor-pointer"
+            >
+              Clear filters
+            </button>
+          )}
+        </div>
       </div>
 
       {loading ? (
@@ -190,7 +268,7 @@ export function ContactsList({ contacts, loading, onRefresh, highlightContactId,
           <Inbox className="mx-auto text-gray-300 mb-4" size={48} />
           <p className="text-gray-500 font-semibold text-sm">No contact submissions found</p>
           <p className="text-gray-400 text-xs mt-1">
-            {search ? "No results matching your search." : "Contact form submissions will appear here."}
+            {search || filterMonth || filterYear || filterDay ? "No results matching your filters." : "Contact form submissions will appear here."}
           </p>
         </div>
       ) : (

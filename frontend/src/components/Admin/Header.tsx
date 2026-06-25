@@ -43,7 +43,7 @@ export function Header({ userName, userRole = "Administrator", avatar, avatarUpd
       const res = await fetch(`${baseUrl}/api/activity/notifications`, { credentials: "include" });
       const json = await res.json();
       if (json.success) setNotifData(json.data);
-    } catch {}
+    } catch { }
   };
 
   useEffect(() => {
@@ -63,6 +63,26 @@ export function Header({ userName, userRole = "Administrator", avatar, avatarUpd
   }, []);
 
   const notifCount = notifData?.totalUnread || 0;
+
+  const markRead = (itemId: string) => {
+    const [type, actualId] = itemId.split("-");
+    if (type === "contact") {
+      fetch(`${baseUrl}/api/contacts/${actualId}/read`, {
+        method: "PUT",
+        credentials: "include",
+      }).then(r => { if (!r.ok) console.error("markRead failed:", r.status, r.statusText); })
+        .catch(e => console.error("markRead error:", e));
+    }
+
+    setNotifData((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        totalUnread: Math.max(0, prev.totalUnread - 1),
+        recentItems: prev.recentItems.filter((item) => item.id !== itemId),
+      };
+    });
+  };
 
   const getTypeIcon = (type: string) => {
     switch (type) {
@@ -122,6 +142,7 @@ export function Header({ userName, userRole = "Administrator", avatar, avatarUpd
                       key={item.id}
                       onClick={() => {
                         const realId = item.id.replace(/^(contact|quote)-/, "");
+                        markRead(item.id);
                         if (onNotificationClick) {
                           onNotificationClick(item.section, item.type, realId);
                         } else {
@@ -129,7 +150,7 @@ export function Header({ userName, userRole = "Administrator", avatar, avatarUpd
                         }
                         setShowDropdown(false);
                       }}
-                      className="w-full text-left px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition cursor-pointer"
+                      className="w-full text-left px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition cursor-pointer group"
                     >
                       <div className="flex items-start gap-2">
                         <span className="text-xs mt-0.5">{getTypeIcon(item.type)}</span>
@@ -137,6 +158,12 @@ export function Header({ userName, userRole = "Administrator", avatar, avatarUpd
                           <p className="text-[11px] font-bold text-gray-800">{item.title}</p>
                           <p className="text-[10px] text-gray-500 truncate mt-0.5">{item.description}</p>
                         </div>
+                        <span
+                          onClick={(e) => { e.stopPropagation(); markRead(item.id); }}
+                          className="text-[9px] text-gray-400 hover:text-[#C3110C] font-semibold mt-0.5 opacity-0 group-hover:opacity-100 transition shrink-0 cursor-pointer"
+                        >
+                          Mark
+                        </span>
                       </div>
                     </button>
                   ))

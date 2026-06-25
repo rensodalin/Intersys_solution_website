@@ -84,10 +84,8 @@ function AdminDashboardPage() {
   const handleNotificationClick = (section: string, type: string, id: string) => {
     setActiveSection(section as typeof activeSection);
     if (type === "quote") {
-      updateQuoteStatus(id, "In Progress");
-      setQuotes(prev => prev.map(q => q._id === id ? { ...q, status: "In Progress" } : q));
       const quote = quotes.find(q => q._id === id);
-      if (quote) setSelectedQuote({ ...quote, status: "In Progress" });
+      if (quote) setSelectedQuote(quote);
     } else if (type === "contact") {
       markContactRead(id);
       setHighlightContactId(id);

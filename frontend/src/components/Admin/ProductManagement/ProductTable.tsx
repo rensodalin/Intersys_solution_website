@@ -14,6 +14,16 @@ interface ProductTableProps {
   onDelete: (p: ApiProduct) => void;
 }
 
+function highlight(text: string, query: string) {
+  if (!query) return text;
+  const parts = text.split(new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi"));
+  return parts.map((part, i) =>
+    part.toLowerCase() === query.toLowerCase()
+      ? <mark key={i} className="bg-yellow-200 text-gray-900 rounded px-0.5">{part}</mark>
+      : part
+  );
+}
+
 export function ProductTable({ loading, paged, filtered, page, totalPages, search, onPageChange, onEdit, onDelete }: ProductTableProps) {
   if (loading) {
     return (
@@ -63,8 +73,17 @@ export function ProductTable({ loading, paged, filtered, page, totalPages, searc
                         : <Package size={16} className="text-gray-300" />}
                     </div>
                     <div className="min-w-0">
-                      <p className="font-bold text-gray-800 truncate max-w-[200px]">{p.title}</p>
-                      <p className="text-[10px] text-gray-400 font-mono">{p.productId}</p>
+                      <p className="font-bold text-gray-800 truncate max-w-[200px]">{highlight(p.title, search)}</p>
+                      <p className="text-[10px] text-gray-400 font-mono">{highlight(p.productId, search)}</p>
+                      {search && (p.options || []).some(o => o.partCode.toLowerCase().includes(search.toLowerCase())) && (
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {p.options!.filter(o => o.partCode.toLowerCase().includes(search.toLowerCase())).map(o => (
+                            <span key={o.partCode} className="text-[10px] font-mono bg-yellow-100 text-gray-700 px-1.5 py-0.5 rounded">
+                              {highlight(o.partCode, search)}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </td>

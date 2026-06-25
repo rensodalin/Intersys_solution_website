@@ -85,7 +85,8 @@ export function ProductManagement() {
     !search ||
     p.title.toLowerCase().includes(search.toLowerCase()) ||
     p.productId.toLowerCase().includes(search.toLowerCase()) ||
-    (p.brand || "").toLowerCase().includes(search.toLowerCase())
+    (p.brand || "").toLowerCase().includes(search.toLowerCase()) ||
+    (p.options || []).some(o => o.partCode.toLowerCase().includes(search.toLowerCase()))
   );
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));

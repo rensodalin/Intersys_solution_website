@@ -85,11 +85,11 @@ export const submitContact = async (req, res) => {
 export const markContactRead = async (req, res) => {
   try {
     const { id } = req.params;
-    const contact = await Contact.findByIdAndUpdate(id, { status: "read" }, { new: true });
-    if (!contact) {
+    const result = await Contact.updateOne({ _id: id }, { status: "read" });
+    if (result.matchedCount === 0) {
       return res.status(404).json({ success: false, error: "Contact not found" });
     }
-    res.json({ success: true, data: contact });
+    res.json({ success: true });
   } catch (error) {
     console.error("Failed to mark contact as read:", error);
     res.status(500).json({ success: false, error: "Failed to mark contact as read" });
