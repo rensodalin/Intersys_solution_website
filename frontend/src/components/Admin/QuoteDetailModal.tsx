@@ -194,7 +194,6 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
                     <th className="px-4 py-2.5 pl-6">Part Code</th>
                     <th className="px-4 py-2.5">Product Name</th>
                     <th className="px-4 py-2.5">Detail Specification</th>
-                    <th className="px-4 py-2.5 text-center">Price</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -211,9 +210,6 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
                       </td>
                       <td className="px-4 py-2.5 font-medium text-gray-800">{prod.description}</td>
                       <td className="px-4 py-2.5 text-gray-500">{prod.application}</td>
-                      <td className="px-4 py-2.5 text-center font-bold text-gray-900">
-                        ${(prod.price ?? 0).toFixed(2)}
-                      </td>
                     </tr>
                   ))}
                 </tbody>

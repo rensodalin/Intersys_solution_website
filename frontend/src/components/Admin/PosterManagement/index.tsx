@@ -28,28 +28,6 @@ export function PosterManagement() {
   const [deleteTarget, setDeleteTarget] = useState<Poster | null>(null);
   const [deleting, setDeleting] = useState(false);
 
-  // Local image saving
-  const [savingImage, setSavingImage] = useState(false);
-
-  async function saveImageLocally(url: string, callback: (localUrl: string) => void) {
-    setSavingImage(true);
-    try {
-      const res = await fetch(`${BASE_URL}/api/posters/save-image`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
-      });
-      const json = await res.json();
-      if (!json.success) throw new Error(json.message);
-      callback(json.url);
-      toast.success("Image saved locally!");
-    } catch (e: any) {
-      toast.error(e.message || "Failed to save image");
-    } finally {
-      setSavingImage(false);
-    }
-  }
-
   const loadPosters = useCallback(async () => {
     setLoading(true);
     try {
@@ -222,7 +200,6 @@ export function PosterManagement() {
           formOrder={formOrder}
           editingId={editingId}
           saving={saving}
-          savingImage={savingImage}
           onImageChange={setFormImage}
           onLinkChange={setFormLink}
           onTitleChange={setFormTitle}
@@ -230,7 +207,6 @@ export function PosterManagement() {
           onLinkedinLinkChange={setFormLinkedinLink}
           onFacebookLinkChange={setFormFacebookLink}
           onOrderChange={setFormOrder}
-          onSaveImageLocally={saveImageLocally}
           onClose={closeForm}
           onSave={handleSave}
         />

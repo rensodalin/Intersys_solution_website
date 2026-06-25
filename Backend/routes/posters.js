@@ -4,7 +4,7 @@ import * as posterController from "../controllers/posterController.js";
 
 const router = express.Router();
 
-router.post("/save-image", isAdmin, posterController.saveImage);
+
 router.get("/", posterController.getAll);
 router.post("/", isAdmin, posterController.create);
 router.put("/:id", isAdmin, posterController.update);

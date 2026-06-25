@@ -1,5 +1,4 @@
-import { X, Loader2, Download } from "lucide-react";
-import { BASE_URL } from "./types";
+import { X, Loader2 } from "lucide-react";
 
 interface PosterFormProps {
   formImage: string;
@@ -11,7 +10,6 @@ interface PosterFormProps {
   formOrder: number;
   editingId: string | null;
   saving: boolean;
-  savingImage: boolean;
   onImageChange: (val: string) => void;
   onLinkChange: (val: string) => void;
   onTitleChange: (val: string) => void;
@@ -19,17 +17,16 @@ interface PosterFormProps {
   onLinkedinLinkChange: (val: string) => void;
   onFacebookLinkChange: (val: string) => void;
   onOrderChange: (val: number) => void;
-  onSaveImageLocally: (url: string, callback: (localUrl: string) => void) => void;
   onClose: () => void;
   onSave: () => void;
 }
 
 export function PosterForm({
   formImage, formLink, formTitle, formDescription, formLinkedinLink, formFacebookLink, formOrder,
-  editingId, saving, savingImage,
+  editingId, saving,
   onImageChange, onLinkChange, onTitleChange, onDescriptionChange,
   onLinkedinLinkChange, onFacebookLinkChange, onOrderChange,
-  onSaveImageLocally, onClose, onSave,
+  onClose, onSave,
 }: PosterFormProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
@@ -51,20 +48,9 @@ export function PosterForm({
         <div className="overflow-y-auto flex-1 px-6 py-5 space-y-4">
           <div>
             <label className="block text-[12px] font-black text-gray-500 mb-1.5">Image URL *</label>
-            <div className="flex gap-2">
               <input value={formImage} onChange={e => onImageChange(e.target.value)}
-                placeholder="https://scontent.fpnh..."
-                className="flex-1 px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition" />
-              <button
-                onClick={() => onSaveImageLocally(formImage, (url) => onImageChange(url))}
-                disabled={!formImage || savingImage}
-                className="flex items-center gap-1.5 px-3 py-2.5 text-xs font-bold text-[#C3110C] border border-[#C3110C]/30 rounded-lg hover:bg-[#C3110C]/5 disabled:opacity-50 transition flex-shrink-0"
-                title="Download and serve locally"
-              >
-                {savingImage ? <Loader2 size={12} className="animate-spin" /> : <Download size={12} />}
-                Local
-              </button>
-            </div>
+                placeholder="https://..."
+                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 transition" />
             {formImage && (
               <div className="mt-3 w-32 h-32 rounded-lg border border-gray-200 overflow-hidden bg-gray-50">
                 <img src={formImage} alt="preview" className="w-full h-full object-contain p-2"
