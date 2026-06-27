@@ -17,6 +17,10 @@ export default defineConfig({
       "/auth": "http://localhost:1000",
       "/api": "http://localhost:1000",
       "/uploads": "http://localhost:1000",
+      "/socket.io": {
+        target: "http://localhost:1000",
+        ws: true,
+      },
     },
   },
 });

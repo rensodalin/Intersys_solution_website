@@ -3,6 +3,7 @@ import { MessageSquare, Search, Send, Reply, Loader2, RefreshCw, Inbox, Papercli
 import { toast } from "sonner";
 import { Conversation, ChatMessage } from "./types";
 import environment from "@/enviroment/enviroment";
+import { getSocket } from "@/lib/socket";
 
 const baseUrl = environment;
 
@@ -185,27 +186,25 @@ export function ChatInbox() {
     setReplyingTo(null);
   }, []);
 
+  // Real-time updates via Socket.IO
   useEffect(() => {
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(`${baseUrl}/api/chat/conversations`, { credentials: "include" });
-        const json = await res.json();
-        if (!json.success) return;
-        setConversations(json.data);
+    const socket = getSocket();
+    socket.emit("join-admin");
 
-        const email = selectedEmailRef.current;
-        if (email) {
-          const conv = json.data.find((c: Conversation) => c.email === email);
-          if (conv) {
-            const r2 = await fetch(`${baseUrl}/api/chat/conversations/${encodeURIComponent(email)}`, { credentials: "include" });
-            const j2 = await r2.json();
-            if (j2.success) setMessages(j2.data);
-          }
-        }
-      } catch {}
-    }, 5000);
+    const handleNotification = async () => {
+      fetchConversations();
+      const email = selectedEmailRef.current;
+      if (email) {
+        try {
+          const res = await fetch(`${baseUrl}/api/chat/conversations/${encodeURIComponent(email)}`, { credentials: "include" });
+          const json = await res.json();
+          if (json.success) setMessages(json.data);
+        } catch {}
+      }
+    };
 
-    return () => clearInterval(interval);
+    socket.on("admin-notification", handleNotification);
+    return () => { socket.off("admin-notification", handleNotification); };
   }, []);
 
   useEffect(() => {

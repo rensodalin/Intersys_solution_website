@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import fs from "fs";
+import { createServer } from "http";
 import { fileURLToPath } from "url";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -8,6 +9,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import passport from "./passportsetup/passportSetup.js";
 import connectDB from "./conn/conn.js";
+import { initSocket } from "./socket/socket.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -122,6 +124,8 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+const httpServer = createServer(app);
+initSocket(httpServer);
+httpServer.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

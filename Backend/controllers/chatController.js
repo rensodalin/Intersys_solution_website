@@ -1,6 +1,7 @@
 import Message from "../model/message.js";
 import Contact from "../model/contact.js";
 import Quote from "../model/quote.js";
+import { getIO } from "../socket/socket.js";
 
 export const debug = async (req, res) => {
   try {
@@ -136,6 +137,13 @@ export const reply = async (req, res) => {
     });
     await message.save();
 
+    try {
+      const io = getIO();
+      io.to(email).emit("new-message", message);
+    } catch (e) {
+      console.error("[socket] Failed to emit admin reply:", e.message);
+    }
+
     const [contacts, quotes] = await Promise.all([
       Contact.find({ email }).sort({ createdAt: -1 }).limit(1).lean(),
       Quote.find({ email }).sort({ createdAt: -1 }).limit(1).lean()
@@ -195,6 +203,14 @@ export const clientMessage = async (req, res) => {
     });
     await message.save();
 
+    try {
+      const io = getIO();
+      io.to(email).emit("new-message", message);
+      io.to("admin").emit("admin-notification", { email, name, content, createdAt: message.createdAt });
+    } catch (e) {
+      console.error("[socket] Failed to emit client message:", e.message);
+    }
+
     res.json({ success: true, data: message });
   } catch (error) {
     console.error("Failed to save client message:", error);
@@ -229,6 +245,13 @@ export const uploadFile = async (req, res) => {
       },
     });
     await message.save();
+
+    try {
+      const io = getIO();
+      io.to(email).emit("new-message", message);
+    } catch (e) {
+      console.error("[socket] Failed to emit file upload:", e.message);
+    }
 
     res.json({ success: true, data: message });
   } catch (error) {

@@ -6,6 +6,7 @@ import { RootState } from "@/store";
 import { useLocation } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import environment from "@/enviroment/enviroment";
+import { getSocket } from "@/lib/socket";
 
 interface LocalMessage {
   id: string;
@@ -54,13 +55,27 @@ export function ChatWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Real-time messages via Socket.IO
   useEffect(() => {
-    if (!isOpen || view !== "conversation" || !conversationEmail) return;
-    const interval = setInterval(() => {
-      fetchServerMessages(conversationEmail);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [isOpen, view, conversationEmail]);
+    if (!conversationEmail) return;
+    const socket = getSocket();
+    socket.emit("join-conversation", conversationEmail);
+    const handler = (msg: any) => {
+      setMessages(prev => {
+        if (prev.some(m => m.id === msg._id)) return prev;
+        return [...prev, {
+          id: msg._id,
+          content: msg.content,
+          isFromAdmin: msg.isFromAdmin,
+          name: msg.name,
+          createdAt: new Date(msg.createdAt),
+          attachment: msg.attachment || null,
+        }];
+      });
+    };
+    socket.on("new-message", handler);
+    return () => { socket.off("new-message", handler); };
+  }, [conversationEmail]);
 
   const checkExistingConversation = useCallback(async (email: string) => {
     if (!email || !email.includes("@")) {
@@ -141,7 +156,7 @@ export function ChatWidget() {
         setView("conversation");
         setFormData({ name: formData.name, email: formData.email, message: "" });
         setIsReturning(false);
-        setTimeout(() => fetchServerMessages(formData.email), 500);
+        fetchServerMessages(formData.email);
       }
     } catch (err) {
       console.error("Chat Widget Submit Error:", err);
@@ -167,7 +182,7 @@ export function ChatWidget() {
       });
       const data = await res.json();
       if (data.success) {
-        setTimeout(() => fetchServerMessages(conversationEmail), 500);
+        fetchServerMessages(conversationEmail);
       }
     } catch (err) {
       console.error("Failed to send follow-up:", err);
