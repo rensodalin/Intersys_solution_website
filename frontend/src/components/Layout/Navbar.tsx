@@ -1,5 +1,5 @@
-import { useEffect, useState, useMemo } from "react";
-import { Link, useLocation } from "@tanstack/react-router";
+import { useEffect, useState, useMemo, useRef } from "react";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { Menu, X, User, ChevronRight, Phone, Mail, Facebook, Linkedin, ChevronDown, Package } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn, toSlug } from "@/lib/utils";
@@ -42,6 +42,7 @@ const SERVICES_DATA = [
 export function Navbar() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const lightPages = ["/products", "/services/public-address"];
   const isLightPage = lightPages.some(path => location.pathname.startsWith(path));
   const isDarkNavPage = ["/document-center", "/my-account"].some(path => location.pathname.startsWith(path));
@@ -130,6 +131,9 @@ export function Navbar() {
         setShowLoginDropdown(false);
         setLoginEmail("");
         setLoginPassword("");
+        if (data.user.isAdmin) {
+          navigate({ to: "/admin" });
+        }
       } else if (data.googleOnly) {
         setLoginGoogleOnly(data.message || "This email uses Google sign-in.");
         setLoginError("");
@@ -149,6 +153,14 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const prevUser = useRef(user);
+  useEffect(() => {
+    if (!prevUser.current && user?.isAdmin) {
+      navigate({ to: "/admin" });
+    }
+    prevUser.current = user;
+  }, [user]);
 
   const closeMenus = () => {
     setShowProducts(false);
