@@ -1,5 +1,6 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as LocalStrategy } from "passport-local";
 import User from "../model/user.js";
 import dotenv from "dotenv";
 
@@ -80,6 +81,34 @@ passport.use(
             }
         }
     )
+);
+
+passport.use(
+  new LocalStrategy(
+    { usernameField: "email" },
+    async (email, password, done) => {
+      try {
+        const user = await User.findOne({ email: email.toLowerCase().trim() });
+        if (!user) {
+          return done(null, false, { message: "Invalid email or password" });
+        }
+        if (!user.password) {
+          return done(null, false, { message: "This email uses Google sign-in. Continue with Google to sign in.", googleOnly: true });
+        }
+        const isMatch = await user.comparePassword(password);
+        if (!isMatch) {
+          return done(null, false, { message: "Invalid email or password" });
+        }
+        user.lastLogin = new Date();
+        await user.save();
+        user.isAdmin = user.email === ADMIN_EMAIL;
+        return done(null, user);
+      } catch (error) {
+        console.error("Local Auth Error:", error);
+        return done(error, null);
+      }
+    }
+  )
 );
 
 export default passport;

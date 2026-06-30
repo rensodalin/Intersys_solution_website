@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import { loginSuccess } from "@/store/authSlice";
-import { Loader2, CheckCircle, X } from "lucide-react";
+import { Loader2, CheckCircle, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "@tanstack/react-router";
@@ -33,6 +33,10 @@ export function CompleteProfileModal() {
   const [lastName, setLastName] = useState("");
   const [role, setRole] = useState("");
   const [newsletter, setNewsletter] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (isAuthChecking) return;
@@ -43,8 +47,24 @@ export function CompleteProfileModal() {
     }
   }, [user, isAuthChecking]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    if (!firstName.trim() || !lastName.trim()) {
+      toast.error("First and last name are required");
+      return;
+    }
+    if (!role) {
+      toast.error("Please select your role");
+      return;
+    }
+    if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -52,7 +72,7 @@ export function CompleteProfileModal() {
       const res = await fetch(`${baseUrl}/auth/profile/complete`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, lastName, role, newsletter }),
+        body: JSON.stringify({ firstName, lastName, role, newsletter, password }),
         credentials: "include",
       });
       const data = await res.json();
@@ -85,104 +105,124 @@ export function CompleteProfileModal() {
   return (
     <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-[10001] flex items-center justify-center p-4 md:p-6 overflow-hidden">
+        <>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/70 backdrop-blur-[6px]"
+            className="fixed inset-0 z-[10000] bg-black/70 backdrop-blur-[6px]"
           />
-
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="relative w-full max-w-md bg-white rounded-sm shadow-2xl overflow-hidden flex flex-col max-h-[90vh] z-[10002]"
+            className="fixed inset-0 z-[10001] flex items-center justify-center p-4"
           >
-            <div className="flex justify-center pt-10 pb-2">
-              <img src={logoImg} alt="Intersys Logo" className="h-12 object-contain" />
-            </div>
-
-            <div className="flex items-center justify-between px-8 pt-7 pb-4 border-b border-gray-100">
-              <h2 className="text-lg font-semibold text-gray-900">Complete Your Profile</h2>
-              <button
-                onClick={() => setOpen(false)}
-                className="p-2 rounded-full hover:bg-gray-100"
-              >
-                <X size={20} className="text-gray-400 hover:text-black" />
-              </button>
-            </div>
-
-            <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-8 py-6 space-y-5 hide-scrollbar">
-              <p className="text-sm text-gray-500">
-                Just a few more details to get you started.
-              </p>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1.5">First Name</label>
-                  <input
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-md focus:border-black focus:ring-2 focus:ring-black/5 outline-none transition-all"
-                    placeholder="John"
-                  />
+            <div className="w-full max-w-md bg-white rounded-sm shadow-2xl overflow-hidden">
+              <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-gray-100">
+                <div className="flex-1" />
+                <div className="flex flex-col items-center gap-1">
+                  <img src={logoImg} alt="Intersys" className="h-10 w-auto" />
+                  <p className="text-xs font-semibold text-gray-500 tracking-wide">COMPLETE YOUR PROFILE</p>
+                  <p className="text-[11px] text-gray-400">Fill in your details to get started</p>
                 </div>
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1.5">Last Name</label>
+                <div className="flex-1" />
+              </div>
+
+              <div className="px-6 py-5 max-h-[70vh] overflow-y-auto space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-gray-600">First Name *</label>
+                    <input
+                      type="text"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm focus:border-black focus:ring-1 focus:ring-black/10 outline-none transition-all"
+                      placeholder="First name"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-gray-600">Last Name *</label>
+                    <input
+                      type="text"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm focus:border-black focus:ring-1 focus:ring-black/10 outline-none transition-all"
+                      placeholder="Last name"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-gray-600">Role *</label>
+                  <select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm focus:border-black focus:ring-1 focus:ring-black/10 outline-none transition-all bg-white"
+                  >
+                    {ROLES.map((r) => (
+                      <option key={r.value} value={r.value}>{r.label}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-gray-600">Password *</label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => { setPassword(e.target.value); setPasswordError(""); }}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm focus:border-black focus:ring-1 focus:ring-black/10 outline-none transition-all pr-10"
+                      placeholder="At least 6 characters"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600"
+                    >
+                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={confirmPassword}
+                      onChange={(e) => { setConfirmPassword(e.target.value); setPasswordError(""); }}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-sm focus:border-black focus:ring-1 focus:ring-black/10 outline-none transition-all pr-10 mt-2"
+                      placeholder="Re-enter password"
+                    />
+                  </div>
+                  {passwordError && <p className="text-[11px] text-red-600">{passwordError}</p>}
+                </div>
+
+                <div className="flex items-start gap-3 pt-1">
                   <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-md focus:border-black focus:ring-2 focus:ring-black/5 outline-none transition-all"
-                    placeholder="Doe"
+                    type="checkbox"
+                    id="newsletter"
+                    checked={newsletter}
+                    onChange={(e) => setNewsletter(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 border-gray-300 rounded-sm text-black focus:ring-black"
                   />
+                  <label htmlFor="newsletter" className="text-sm text-gray-500 leading-relaxed">
+                    Subscribe to our newsletter for product updates, industry insights, and special offers.
+                  </label>
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1.5">Role</label>
-                <select
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-md focus:border-black focus:ring-2 focus:ring-black/5 outline-none transition-all bg-white"
+              <div className="px-6 pb-5">
+                <button
+                  onClick={handleSubmit}
+                  disabled={loading}
+                  className="w-full bg-black text-white text-sm font-medium py-2.5 rounded-sm hover:bg-gray-800 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  {ROLES.map((r) => (
-                    <option key={r.value} value={r.value}>{r.label}</option>
-                  ))}
-                </select>
+                  {loading && <Loader2 size={14} className="animate-spin" />}
+                  {loading ? "Saving..." : "Complete Profile"}
+                </button>
               </div>
-
-              <div className="flex items-start gap-3 pt-2">
-                <input
-                  type="checkbox"
-                  id="newsletter"
-                  checked={newsletter}
-                  onChange={(e) => setNewsletter(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 border-gray-300 rounded-sm text-black focus:ring-black"
-                />
-                <label htmlFor="newsletter" className="text-sm text-gray-600 leading-relaxed">
-                  Subscribe to our newsletter for product updates, industry insights, and special offers.
-                </label>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading || !firstName.trim() || !role}
-                className="w-full bg-black text-white font-medium py-3 rounded-md hover:bg-gray-800 transition-all text-sm tracking-wide flex items-center justify-center gap-2 disabled:opacity-50"
-              >
-                {loading && <Loader2 size={16} className="animate-spin" />}
-                {loading ? "Saving..." : "Complete Profile"}
-              </button>
-            </form>
+            </div>
           </motion.div>
-
-          <style>{`
-            .hide-scrollbar::-webkit-scrollbar { display: none; }
-            .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-          `}</style>
-        </div>
+        </>
       )}
     </AnimatePresence>
   );

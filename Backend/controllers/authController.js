@@ -30,7 +30,7 @@ export const completeProfile = async (req, res) => {
     return res.status(401).json({ success: false, message: "Not authenticated" });
   }
   try {
-    const { firstName, lastName, role, company, phone, newsletter, receiveUpdates } = req.body;
+    const { firstName, lastName, role, company, phone, newsletter, receiveUpdates, password } = req.body;
 
     const user = await User.findById(req.user._id);
     if (!user) {
@@ -49,6 +49,11 @@ export const completeProfile = async (req, res) => {
     if (phone !== undefined) user.phone = phone;
     if (typeof newsletter !== "undefined") user.newsletter = newsletter;
     if (typeof receiveUpdates !== "undefined") user.receiveUpdates = receiveUpdates;
+    if (!password || password.trim().length < 6) {
+      return res.status(400).json({ success: false, message: "Password must be at least 6 characters" });
+    }
+    user.password = password;
+    user.authProvider = "local";
 
     user.profileCompleted = true;
     await user.save();
@@ -73,6 +78,37 @@ export const completeProfile = async (req, res) => {
     console.error("Complete Profile Error:", error);
     res.status(500).json({ success: false, message: "Internal server error", error: error.message });
   }
+};
+
+export const login = (req, res, next) => {
+  passport.authenticate("local", async (err, user, info) => {
+    if (err) {
+      console.error("Login Error:", err);
+      return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+    if (!user) {
+      if (info?.googleOnly) {
+        return res.status(401).json({ success: false, googleOnly: true, message: info.message });
+      }
+      return res.status(401).json({ success: false, message: info?.message || "Invalid credentials" });
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        console.error("Login session error:", err);
+        return res.status(500).json({ success: false, message: "Login failed" });
+      }
+      req.session.save((saveErr) => {
+        if (saveErr) {
+          console.error("Session Save Error after login:", saveErr);
+          return res.status(500).json({ success: false, message: "Session save failed" });
+        }
+        const userObj = user.toObject ? user.toObject() : user;
+        const { password, __v, ...safeUser } = userObj;
+        safeUser.isAdmin = user.email === ADMIN_EMAIL;
+        res.json({ success: true, message: "Login successful", user: safeUser });
+      });
+    });
+  })(req, res, next);
 };
 
 export const googleAuth = (req, res, next) => {
