@@ -5,6 +5,7 @@ import DownloadedPdf from "../model/downloadedPdf.js";
 import { uploadToHostinger } from "../utils/uploadToHostinger.js";
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@intersys.com";
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
 
 const VALID_COUNTRIES = [
   "Afghanistan", "Albania", "Algeria", "Argentina", "Australia", "Austria", "Azerbaijan",
@@ -24,106 +25,52 @@ const VALID_COUNTRIES = [
   "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zimbabwe"
 ];
 
-function isStrongPassword(password) {
-  return password.length >= 8 &&
-    /[A-Z]/.test(password) &&
-    /[a-z]/.test(password) &&
-    /[0-9]/.test(password) &&
-    /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
-}
-
-export const register = async (req, res) => {
-  try {
-    const { firstName, lastName, email, password, phone, gender, country, role } = req.body;
-
-    if (!firstName || !firstName.trim()) return res.status(400).json({ success: false, message: "First name is required" });
-    if (!lastName || !lastName.trim()) return res.status(400).json({ success: false, message: "Last name is required" });
-    if (!email || !email.trim()) return res.status(400).json({ success: false, message: "Email is required" });
-    if (!password) return res.status(400).json({ success: false, message: "Password is required" });
-    if (!phone || !phone.trim()) return res.status(400).json({ success: false, message: "Phone number is required" });
-    if (!gender) return res.status(400).json({ success: false, message: "Gender is required" });
-    if (!country || !country.trim()) return res.status(400).json({ success: false, message: "Country is required" });
-    if (!VALID_COUNTRIES.includes(country.trim())) return res.status(400).json({ success: false, message: "Please select a valid country" });
-
-    if (!isStrongPassword(password)) {
-      return res.status(400).json({
-        success: false,
-        message: "Please choose a stronger password. Try a mix of letters, numbers, and symbols."
-      });
-    }
-
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ success: false, message: "User already exists with this email" });
-    }
-
-    const newUser = new User({
-      firstName, lastName,
-      name: `${firstName} ${lastName}`.trim(),
-      email, password, phone,
-      gender: gender || undefined,
-      country, role: role || undefined,
-      isAdmin: false
-    });
-    await newUser.save();
-    res.status(201).json({ success: true, message: "Registration successful" });
-  } catch (error) {
-    console.error("Registration Error Details:", error);
-    res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+export const completeProfile = async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ success: false, message: "Not authenticated" });
   }
-};
-
-export const login = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { firstName, lastName, role, company, phone, newsletter, receiveUpdates } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({ success: false, message: "Email and password are required" });
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    const user = await User.findOne({ email });
-    if (!user || !user.password) {
-      return res.status(401).json({ success: false, message: "Invalid email or password" });
+    if (user.profileCompleted) {
+      return res.status(400).json({ success: false, message: "Profile already completed" });
     }
 
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-      return res.status(401).json({ success: false, message: "Invalid email or password" });
-    }
+    if (firstName && firstName.trim()) user.firstName = firstName.trim();
+    if (lastName && lastName.trim()) user.lastName = lastName.trim();
+    if (firstName || lastName) user.name = `${user.firstName || ""} ${user.lastName || ""}`.trim();
+    if (role) user.role = role;
+    if (company !== undefined) user.company = company;
+    if (phone !== undefined) user.phone = phone;
+    if (typeof newsletter !== "undefined") user.newsletter = newsletter;
+    if (typeof receiveUpdates !== "undefined") user.receiveUpdates = receiveUpdates;
 
-    user.lastLogin = new Date();
+    user.profileCompleted = true;
     await user.save();
 
-    const downloadedPdfs = await DownloadedPdf.find({ userId: user._id })
-      .sort({ downloadedAt: -1 }).lean();
+    const updatedUser = user.toObject ? user.toObject() : user;
+    updatedUser.isAdmin = user.email === ADMIN_EMAIL;
 
-    req.logIn(user, (err) => {
+    req.login(user, (err) => {
       if (err) {
-        console.error("Passport Login Error:", err);
-        return next(err);
+        console.error("Error updating passport session:", err);
+        return res.status(500).json({ success: false, message: "Profile saved but session update failed" });
       }
-      // Save session explicitly to avoid session race conditions
       req.session.save((saveErr) => {
         if (saveErr) {
-          console.error("Session Save Error:", saveErr);
-          return next(saveErr);
+          console.error("Session Save Error after profile complete:", saveErr);
+          return res.status(500).json({ success: false, message: "Profile saved but session save failed" });
         }
-        return res.json({
-          success: true,
-          user: {
-            id: user._id, name: user.name, email: user.email,
-            firstName: user.firstName, lastName: user.lastName,
-            avatar: user.avatar, phone: user.phone,
-            gender: user.gender, country: user.country,
-            role: user.role, isAdmin: user.email === ADMIN_EMAIL,
-            newsletter: user.newsletter, receiveUpdates: user.receiveUpdates,
-            downloadedPdfs
-          }
-        });
+        res.json({ success: true, message: "Profile completed successfully", user: updatedUser });
       });
     });
   } catch (error) {
-    console.error("Login Error Details:", error);
+    console.error("Complete Profile Error:", error);
     res.status(500).json({ success: false, message: "Internal server error", error: error.message });
   }
 };
@@ -135,29 +82,33 @@ export const googleAuth = (req, res, next) => {
   next();
 };
 
+const getFrontendUrl = () => {
+  const url = process.env.FRONTEND_URL || "http://localhost:5173";
+  return url.endsWith("/") ? url : url + "/";
+};
+
 export const googleCallback = (req, res, next) => {
   passport.authenticate("google", (err, user, info) => {
-    const defaultRedirect = process.env.FRONTEND_URL || "http://localhost:5173/";
-    const redirectTo = req.session.redirectTo || defaultRedirect;
+    const baseUrl = getFrontendUrl();
+    const redirectTo = req.session.redirectTo || baseUrl;
     delete req.session.redirectTo;
 
     if (err) {
       console.error("Google Auth Error:", err);
-      return res.redirect(`${defaultRedirect}?error=auth_failed`);
+      return res.redirect(`${baseUrl}?error=auth_failed`);
     }
     if (!user) {
-      return res.redirect(`${defaultRedirect}?error=user_not_found`);
+      return res.redirect(`${baseUrl}?error=user_not_found`);
     }
     req.logIn(user, (err) => {
       if (err) {
         console.error("Session Login Error:", err);
-        return res.redirect(`${defaultRedirect}?error=session_error`);
+        return res.redirect(`${baseUrl}?error=session_error`);
       }
-      // Save session explicitly before redirecting to prevent race condition in DB session storage
       req.session.save((saveErr) => {
         if (saveErr) {
           console.error("Session Save Error:", saveErr);
-          return res.redirect(`${defaultRedirect}?error=session_save_error`);
+          return res.redirect(`${baseUrl}?error=session_save_error`);
         }
         res.redirect(redirectTo);
       });
@@ -191,7 +142,7 @@ export const getUser = async (req, res) => {
     safeUser.isAdmin = user.email === ADMIN_EMAIL;
     const downloadedPdfs = await DownloadedPdf.find({ userId: user._id })
       .sort({ downloadedAt: -1 }).lean();
-    res.json({ success: true, user: { ...safeUser, id: user._id, downloadedPdfs } });
+    res.json({ success: true, user: { ...safeUser, id: user._id, profileCompleted: user.profileCompleted, company: user.company, downloadedPdfs } });
   } else {
     res.json({ success: false, user: null });
   }
@@ -202,7 +153,7 @@ export const updateUser = async (req, res) => {
     return res.status(401).json({ success: false, message: "Not authenticated" });
   }
   try {
-    const { firstName, lastName, phone, country, role, password, currentPassword, newsletter, receiveUpdates } = req.body;
+    const { firstName, lastName, gender, phone, country, role, password, currentPassword, newsletter, receiveUpdates } = req.body;
     const user = await User.findById(req.user._id);
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
@@ -211,6 +162,7 @@ export const updateUser = async (req, res) => {
     if (firstName) user.firstName = firstName;
     if (lastName) user.lastName = lastName;
     if (firstName || lastName) user.name = `${firstName || user.firstName} ${lastName || user.lastName}`.trim();
+    if (gender) user.gender = gender;
     if (phone !== undefined && phone !== null) user.phone = phone || user.phone;
     if (country) {
       if (!VALID_COUNTRIES.includes(country.trim())) {
@@ -233,11 +185,6 @@ export const updateUser = async (req, res) => {
         if (!isMatch) {
           return res.status(400).json({ success: false, message: "Current password is incorrect. Please try again." });
         }
-      }
-      if (!isStrongPassword(password)) {
-        return res.status(400).json({
-          success: false, message: "Please choose a stronger password. Try a mix of letters, numbers, and symbols."
-        });
       }
       user.password = password;
     }

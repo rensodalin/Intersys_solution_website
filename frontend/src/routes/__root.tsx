@@ -7,6 +7,7 @@ import { ScrollControls } from "@/components/Common/ScrollControls";
 
 import { ChatWidget } from "@/components/Chat/ChatWidget";
 import { Toaster } from "sonner";
+import { CompleteProfileModal } from "@/components/Auth/CompleteProfileModal";
 
 import appCss from "../styles.css?url";
 
@@ -119,6 +120,7 @@ function RootComponent() {
       <ScrollControls />
       <ChatWidget />
       {!isProductsPage && <Footer />}
+      <CompleteProfileModal />
       <Toaster position="top-center" richColors />
     </>
   );

@@ -33,8 +33,7 @@ const uploadAvatar = multer({
 
 const router = express.Router();
 
-router.post("/register", authController.register);
-router.post("/login", authController.login);
+router.post("/profile/complete", authController.completeProfile);
 router.get("/google", authController.googleAuth, passport.authenticate("google", { scope: ["profile", "email"] }));
 router.get("/google/callback", authController.googleCallback);
 router.all("/logout", isAuthenticated, authController.logout);

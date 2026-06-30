@@ -92,6 +92,23 @@ export function AccountDetailsTab({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
+            <label className="block text-xs text-gray-400 mb-2">Gender</label>
+            <div className="flex items-center gap-6 h-[42px] px-3 border border-gray-200 rounded-sm">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="gender" value="male"
+                  checked={form.gender === "male"} onChange={onFieldChange}
+                  className="accent-red-600" />
+                <span className="text-sm text-gray-700">Male</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="gender" value="female"
+                  checked={form.gender === "female"} onChange={onFieldChange}
+                  className="accent-red-600" />
+                <span className="text-sm text-gray-700">Female</span>
+              </label>
+            </div>
+          </div>
+          <div>
             <label className="block text-xs text-gray-400 mb-2">Professional Role</label>
             <div className="relative">
               <Briefcase className="absolute left-3 top-3 text-gray-400" size={16} />

@@ -16,6 +16,7 @@ export interface QuoteItem {
 export interface DetailsForm {
   firstName: string;
   lastName: string;
+  gender: string;
   phone: string;
   country: string;
   role: string;

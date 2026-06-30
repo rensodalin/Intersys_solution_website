@@ -12,6 +12,8 @@ export interface UserState {
   country?: string;
   role?: string;
   isAdmin?: boolean;
+  profileCompleted?: boolean;
+  company?: string;
   newsletter?: boolean;
   receiveUpdates?: boolean;
   updatedAt?: string;

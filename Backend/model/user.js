@@ -7,6 +7,21 @@ const userSchema = new mongoose.Schema({
         unique: true,
         sparse: true // Allows multiple null/missing values
     },
+    authProvider: {
+        type: String,
+        enum: ["local", "google"],
+        default: "local"
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
+    verificationToken: {
+        type: String,
+    },
+    verificationCode: {
+        type: String,
+    },
     firstName: {
         type: String,
     },
@@ -44,6 +59,13 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: String
+    },
+    profileCompleted: {
+        type: Boolean,
+        default: false
+    },
+    company: {
+        type: String,
     },
     newsletter: {
         type: Boolean,

@@ -40,7 +40,7 @@ function MyAccountPage() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
 
   const [detailsForm, setDetailsForm] = useState<DetailsForm>({
-    firstName: "", lastName: "", phone: "", country: "Cambodia", role: "",
+    firstName: "", lastName: "", gender: "", phone: "", country: "Cambodia", role: "",
     newsletter: false, receiveUpdates: false,
     currentPassword: "", password: "", confirmPassword: "",
   });
@@ -51,9 +51,18 @@ function MyAccountPage() {
     if (u) {
       setDetailsForm({
         firstName: u.firstName || "", lastName: u.lastName || "",
-        phone: u.phone || "", country: u.country || "Cambodia",
+        gender: u.gender || "", phone: u.phone || "", country: u.country || "Cambodia",
         role: u.role || "", newsletter: u.newsletter || false,
         receiveUpdates: u.receiveUpdates || false,
+        currentPassword: "", password: "", confirmPassword: "",
+      });
+    } else if (user) {
+      setDetailsForm({
+        firstName: user.firstName || "", lastName: user.lastName || "",
+        gender: user.gender || "", phone: user.phone || "",
+        country: user.country || "Cambodia",
+        role: user.role || "", newsletter: user.newsletter || false,
+        receiveUpdates: user.receiveUpdates || false,
         currentPassword: "", password: "", confirmPassword: "",
       });
     }
@@ -108,7 +117,7 @@ function MyAccountPage() {
     );
   }
 
-  if (!user) {
+  if (!user && !loadingProfile) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center bg-[#081F3D]/5 pt-20 px-6">
         <Container className="max-w-md bg-white p-10 rounded-sm shadow-2xl border border-gray-100 text-center">

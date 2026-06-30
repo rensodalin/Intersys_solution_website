@@ -37,6 +37,7 @@ passport.use(
             try {
                 console.log("Google Profile Received:", profile.id, profile.displayName);
                 let user = await User.findOne({ googleId: profile.id });
+                const email = profile.emails?.[0]?.value || "";
 
                 if (user) {
                     user.lastLogin = new Date();
@@ -44,15 +45,32 @@ passport.use(
                     user.isAdmin = user.email === ADMIN_EMAIL;
                     done(null, user);
                 } else {
-                    user = await User.create({
-                        googleId: profile.id,
-                        name: profile.displayName,
-                        firstName: profile.name?.givenName || profile.displayName.split(" ")[0],
-                        lastName: profile.name?.familyName || profile.displayName.split(" ").slice(1).join(" ") || "",
-                        email: profile.emails?.[0]?.value || "",
-                        avatar: profile.photos?.[0]?.value || "",
-                        lastLogin: new Date(),
-                    });
+                    user = await User.findOne({ email });
+
+                    if (user) {
+                        user.googleId = profile.id;
+                        user.authProvider = "google";
+                        user.isVerified = true;
+                        user.name = profile.displayName;
+                        user.firstName = profile.name?.givenName || profile.displayName.split(" ")[0];
+                        user.lastName = profile.name?.familyName || profile.displayName.split(" ").slice(1).join(" ") || "";
+                        user.avatar = profile.photos?.[0]?.value || user.avatar;
+                        user.lastLogin = new Date();
+                        await user.save();
+                    } else {
+                        user = await User.create({
+                            googleId: profile.id,
+                            authProvider: "google",
+                            isVerified: true,
+                            profileCompleted: false,
+                            name: profile.displayName,
+                            firstName: profile.name?.givenName || profile.displayName.split(" ")[0],
+                            lastName: profile.name?.familyName || profile.displayName.split(" ").slice(1).join(" ") || "",
+                            email,
+                            avatar: profile.photos?.[0]?.value || "",
+                            lastLogin: new Date(),
+                        });
+                    }
                     user.isAdmin = user.email === ADMIN_EMAIL;
                     done(null, user);
                 }

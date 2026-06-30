@@ -13,7 +13,6 @@ export async function fetchProfile(dispatch: Dispatch) {
     dispatch(loginSuccess(data.user));
     return data.user;
   }
-  dispatch(logoutSuccess());
   return null;
 }
 
@@ -33,9 +32,7 @@ export async function logoutUser(dispatch: Dispatch, navigate: (opts: { to: stri
   } catch {
     // ignore server errors
   }
-  dispatch(logoutSuccess());
-  toast.success("Logged out successfully");
-  navigate({ to: "/" });
+  window.location.href = "/";
 }
 
 export async function downloadFile(url: string, title: string) {
@@ -85,6 +82,7 @@ export async function saveProfile(dispatch: Dispatch, form: DetailsForm) {
       body: JSON.stringify({
         firstName: form.firstName,
         lastName: form.lastName,
+        gender: form.gender || undefined,
         phone: form.phone || undefined,
         country: form.country || undefined,
         role: form.role || undefined,
