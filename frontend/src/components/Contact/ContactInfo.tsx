@@ -60,7 +60,6 @@ function ContactCard({
           }
 
           const isEmail = href.startsWith("mailto:");
-          const isTel = href.startsWith("tel:");
 
           return (
             <a
@@ -106,7 +105,7 @@ export function ContactInfo() {
             title="Call Us"
             description="Speak directly with our support team."
             lines={["(+855) 077 602 334", "(+855) 023 900 888"]}
-            hrefs={["tel:+855077602334", "tel:+85523900888"]}
+            hrefs={["https://t.me/chun_sochet", "https://t.me/chun_sochet"]}
             delay={0.2}
           />
 

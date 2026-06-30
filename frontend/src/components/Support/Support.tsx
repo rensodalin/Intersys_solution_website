@@ -140,7 +140,7 @@ export function Support() {
                 Technical Support
               </span>
               <br />
-              <span className="text-red-300">
+              <span className="text-[#C3110C]">
                 & Customer Service
               </span>
             </h1>
