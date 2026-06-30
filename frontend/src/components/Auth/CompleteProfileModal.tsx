@@ -40,7 +40,7 @@ export function CompleteProfileModal() {
 
   useEffect(() => {
     if (isAuthChecking) return;
-    if (user && !user.profileCompleted) {
+    if (user && !user.profileCompleted && !user.isAdmin) {
       setFirstName(user.firstName || "");
       setLastName(user.lastName || "");
       setOpen(true);
