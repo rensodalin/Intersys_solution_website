@@ -6,6 +6,7 @@ const router = express.Router();
 
 
 router.get("/", posterController.getAll);
+router.get("/image/:id", posterController.getImage);
 router.post("/", isAdmin, posterController.create);
 router.put("/:id", isAdmin, posterController.update);
 router.post("/refresh-image/:id", posterController.refreshImage);

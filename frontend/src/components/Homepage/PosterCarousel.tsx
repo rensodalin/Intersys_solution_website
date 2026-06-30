@@ -159,10 +159,16 @@ export function PosterCarousel() {
                   alt={post.title || `Poster ${idx + 1}`}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   data-post-id={post._id}
+                  data-fallback={`${baseUrl}/api/posters/image/${post._id}`}
                   onError={(e) => {
                     const img = e.currentTarget;
                     if (img.dataset.refreshed) return;
                     img.dataset.refreshed = "true";
+                    const fallbackUrl = img.dataset.fallback;
+                    if (fallbackUrl && img.src !== fallbackUrl) {
+                      img.src = fallbackUrl;
+                      return;
+                    }
                     img.style.display = "none";
                     const parent = img.parentElement;
                     if (!parent) return;
@@ -208,7 +214,13 @@ export function PosterCarousel() {
                 alt={selected.title || "Poster"}
                 className="w-full h-auto max-h-[70vh] object-contain rounded-sm shadow-sm"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
+                  const img = e.currentTarget;
+                  if (img.dataset.fallbackUsed) {
+                    img.style.display = "none";
+                    return;
+                  }
+                  img.dataset.fallbackUsed = "true";
+                  img.src = `${baseUrl}/api/posters/image/${selected._id}`;
                 }}
               />
               {/* Gradient overlay on mobile for readability */}

@@ -1,6 +1,72 @@
 import Poster from "../model/poster.js";
 import User from "../model/user.js";
 import transporter from "../config/email.js";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const downloadImageLocally = async (imageUrl, protocol, host) => {
+  const https = await import("https");
+  const http = await import("http");
+  const { randomBytes } = await import("crypto");
+
+  const urlObj = new URL(imageUrl);
+  const ext = path.extname(urlObj.pathname) || ".jpg";
+  const filename = `poster_${randomBytes(8).toString("hex")}${ext}`;
+  const uploadsDir = path.join(__dirname, "../uploads/posters");
+  fs.mkdirSync(uploadsDir, { recursive: true });
+  const filePath = path.join(uploadsDir, filename);
+
+  const httpModule = urlObj.protocol === "https:" ? https : http;
+
+  return new Promise((resolve, reject) => {
+    httpModule.get(imageUrl, { headers: { "User-Agent": "Mozilla/5.0" } }, (response) => {
+      if (response.statusCode !== 200) {
+        response.resume();
+        return reject(new Error(`Failed to fetch: ${response.statusCode}`));
+      }
+      const fileStream = fs.createWriteStream(filePath);
+      response.pipe(fileStream);
+      fileStream.on("finish", () => {
+        fileStream.close();
+        const localUrl = `${protocol}://${host}/uploads/posters/${filename}`;
+        resolve(localUrl);
+      });
+      fileStream.on("error", (err) => {
+        fs.unlink(filePath, () => {});
+        reject(err);
+      });
+    }).on("error", reject);
+  });
+};
+
+export const getImage = async (req, res) => {
+  try {
+    const poster = await Poster.findById(req.params.id);
+    if (!poster) {
+      return res.status(404).json({ success: false, message: "Poster not found" });
+    }
+    const https = await import("https");
+    const http = await import("http");
+    const urlObj = new URL(poster.image);
+    const httpModule = urlObj.protocol === "https:" ? https : http;
+    httpModule.get(poster.image, { headers: { "User-Agent": "Mozilla/5.0" } }, (proxyRes) => {
+      if (proxyRes.statusCode !== 200) {
+        return res.status(502).json({ success: false, message: "Failed to fetch image" });
+      }
+      res.setHeader("Content-Type", proxyRes.headers["content-type"] || "image/jpeg");
+      res.setHeader("Cache-Control", "public, max-age=86400");
+      proxyRes.pipe(res);
+    }).on("error", (err) => {
+      res.status(502).json({ success: false, message: "Image proxy error" });
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
 
 export const getAll = async (req, res) => {
   try {
