@@ -12,7 +12,7 @@ interface ProductFormProps {
   onClose: () => void;
   onSave: () => void;
   categories: string[];
-  subCategories: Record<string, string[]>;
+  subCategories: Record<string, { name: string; path: string }[]>;
 }
 
 export function ProductForm({ form, editingId, saving, onFieldChange, onTitleChange, onSubCategoryChange, onClose, onSave, categories, subCategories }: ProductFormProps) {
@@ -122,7 +122,9 @@ export function ProductForm({ form, editingId, saving, onFieldChange, onTitleCha
                     disabled={!form.category || availableSubCategories.length === 0}
                     className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 focus:ring-1 focus:ring-[#C3110C]/20 disabled:opacity-50 transition">
                     <option value="">None</option>
-                    {availableSubCategories.map(s => <option key={s} value={s}>{s}</option>)}
+                    {availableSubCategories.map(s => (
+                      <option key={s.path} value={s.name}>{s.path}</option>
+                    ))}
                   </select>
                 </div>
                 )}

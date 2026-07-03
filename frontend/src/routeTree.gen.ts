@@ -43,15 +43,10 @@ import { Route as ServicesAudioVisualRouteImport } from './routes/services_.audi
 import { Route as ServicesAccessControlRouteImport } from './routes/services_.access-control'
 import { Route as SectorsSectorIdRouteImport } from './routes/sectors.$sectorId'
 import { Route as InsightsSlugRouteImport } from './routes/insights.$slug'
-import { Route as ProductsSurveillanceIndexRouteImport } from './routes/products.surveillance.index'
-import { Route as ProductsBuildingManagementIndexRouteImport } from './routes/products.building-management.index'
-import { Route as ProductsAccessControlIndexRouteImport } from './routes/products.access-control.index'
 import { Route as ProductsSlugIndexRouteImport } from './routes/products.$slug.index'
 import { Route as ProductsDetailProductIdRouteImport } from './routes/products.detail.$productId'
 import { Route as ProductsSlugSubcategoryRouteImport } from './routes/products.$slug.$subcategory'
 import { Route as ProductsSlugSplatRouteImport } from './routes/products.$slug.$'
-import { Route as ProductsAccessControlSaltoIndexRouteImport } from './routes/products.access-control.salto.index'
-import { Route as ProductsAccessControlHoneywellIndexRouteImport } from './routes/products.access-control.honeywell.index'
 import { Route as ProductsAccessControlSaltoProductIdRouteImport } from './routes/products.access-control.salto.$productId'
 import { Route as ProductsAccessControlHoneywellUpgradesRouteImport } from './routes/products.access-control.honeywell.upgrades'
 import { Route as ProductsAccessControlHoneywellSoftwareRouteImport } from './routes/products.access-control.honeywell.software'
@@ -234,24 +229,6 @@ const InsightsSlugRoute = InsightsSlugRouteImport.update({
   path: '/insights/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProductsSurveillanceIndexRoute =
-  ProductsSurveillanceIndexRouteImport.update({
-    id: '/surveillance/',
-    path: '/surveillance/',
-    getParentRoute: () => ProductsRoute,
-  } as any)
-const ProductsBuildingManagementIndexRoute =
-  ProductsBuildingManagementIndexRouteImport.update({
-    id: '/building-management/',
-    path: '/building-management/',
-    getParentRoute: () => ProductsRoute,
-  } as any)
-const ProductsAccessControlIndexRoute =
-  ProductsAccessControlIndexRouteImport.update({
-    id: '/access-control/',
-    path: '/access-control/',
-    getParentRoute: () => ProductsRoute,
-  } as any)
 const ProductsSlugIndexRoute = ProductsSlugIndexRouteImport.update({
   id: '/$slug/',
   path: '/$slug/',
@@ -272,18 +249,6 @@ const ProductsSlugSplatRoute = ProductsSlugSplatRouteImport.update({
   path: '/$slug/$',
   getParentRoute: () => ProductsRoute,
 } as any)
-const ProductsAccessControlSaltoIndexRoute =
-  ProductsAccessControlSaltoIndexRouteImport.update({
-    id: '/access-control/salto/',
-    path: '/access-control/salto/',
-    getParentRoute: () => ProductsRoute,
-  } as any)
-const ProductsAccessControlHoneywellIndexRoute =
-  ProductsAccessControlHoneywellIndexRouteImport.update({
-    id: '/access-control/honeywell/',
-    path: '/access-control/honeywell/',
-    getParentRoute: () => ProductsRoute,
-  } as any)
 const ProductsAccessControlSaltoProductIdRoute =
   ProductsAccessControlSaltoProductIdRouteImport.update({
     id: '/access-control/salto/$productId',
@@ -384,9 +349,6 @@ export interface FileRoutesByFullPath {
   '/products/$slug/$subcategory': typeof ProductsSlugSubcategoryRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
   '/products/$slug/': typeof ProductsSlugIndexRoute
-  '/products/access-control/': typeof ProductsAccessControlIndexRoute
-  '/products/building-management/': typeof ProductsBuildingManagementIndexRoute
-  '/products/surveillance/': typeof ProductsSurveillanceIndexRoute
   '/products/access-control/honeywell/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
   '/products/access-control/honeywell/control-panel-kits': typeof ProductsAccessControlHoneywellControlPanelKitsRoute
   '/products/access-control/honeywell/control-panels': typeof ProductsAccessControlHoneywellControlPanelsRoute
@@ -397,8 +359,6 @@ export interface FileRoutesByFullPath {
   '/products/access-control/honeywell/software': typeof ProductsAccessControlHoneywellSoftwareRoute
   '/products/access-control/honeywell/upgrades': typeof ProductsAccessControlHoneywellUpgradesRoute
   '/products/access-control/salto/$productId': typeof ProductsAccessControlSaltoProductIdRoute
-  '/products/access-control/honeywell/': typeof ProductsAccessControlHoneywellIndexRoute
-  '/products/access-control/salto/': typeof ProductsAccessControlSaltoIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -437,9 +397,6 @@ export interface FileRoutesByTo {
   '/products/$slug/$subcategory': typeof ProductsSlugSubcategoryRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
   '/products/$slug': typeof ProductsSlugIndexRoute
-  '/products/access-control': typeof ProductsAccessControlIndexRoute
-  '/products/building-management': typeof ProductsBuildingManagementIndexRoute
-  '/products/surveillance': typeof ProductsSurveillanceIndexRoute
   '/products/access-control/honeywell/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
   '/products/access-control/honeywell/control-panel-kits': typeof ProductsAccessControlHoneywellControlPanelKitsRoute
   '/products/access-control/honeywell/control-panels': typeof ProductsAccessControlHoneywellControlPanelsRoute
@@ -450,8 +407,6 @@ export interface FileRoutesByTo {
   '/products/access-control/honeywell/software': typeof ProductsAccessControlHoneywellSoftwareRoute
   '/products/access-control/honeywell/upgrades': typeof ProductsAccessControlHoneywellUpgradesRoute
   '/products/access-control/salto/$productId': typeof ProductsAccessControlSaltoProductIdRoute
-  '/products/access-control/honeywell': typeof ProductsAccessControlHoneywellIndexRoute
-  '/products/access-control/salto': typeof ProductsAccessControlSaltoIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -493,9 +448,6 @@ export interface FileRoutesById {
   '/products/$slug/$subcategory': typeof ProductsSlugSubcategoryRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
   '/products/$slug/': typeof ProductsSlugIndexRoute
-  '/products/access-control/': typeof ProductsAccessControlIndexRoute
-  '/products/building-management/': typeof ProductsBuildingManagementIndexRoute
-  '/products/surveillance/': typeof ProductsSurveillanceIndexRoute
   '/products/access-control/honeywell/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
   '/products/access-control/honeywell/control-panel-kits': typeof ProductsAccessControlHoneywellControlPanelKitsRoute
   '/products/access-control/honeywell/control-panels': typeof ProductsAccessControlHoneywellControlPanelsRoute
@@ -506,8 +458,6 @@ export interface FileRoutesById {
   '/products/access-control/honeywell/software': typeof ProductsAccessControlHoneywellSoftwareRoute
   '/products/access-control/honeywell/upgrades': typeof ProductsAccessControlHoneywellUpgradesRoute
   '/products/access-control/salto/$productId': typeof ProductsAccessControlSaltoProductIdRoute
-  '/products/access-control/honeywell/': typeof ProductsAccessControlHoneywellIndexRoute
-  '/products/access-control/salto/': typeof ProductsAccessControlSaltoIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -550,9 +500,6 @@ export interface FileRouteTypes {
     | '/products/$slug/$subcategory'
     | '/products/detail/$productId'
     | '/products/$slug/'
-    | '/products/access-control/'
-    | '/products/building-management/'
-    | '/products/surveillance/'
     | '/products/access-control/honeywell/accessories'
     | '/products/access-control/honeywell/control-panel-kits'
     | '/products/access-control/honeywell/control-panels'
@@ -563,8 +510,6 @@ export interface FileRouteTypes {
     | '/products/access-control/honeywell/software'
     | '/products/access-control/honeywell/upgrades'
     | '/products/access-control/salto/$productId'
-    | '/products/access-control/honeywell/'
-    | '/products/access-control/salto/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -603,9 +548,6 @@ export interface FileRouteTypes {
     | '/products/$slug/$subcategory'
     | '/products/detail/$productId'
     | '/products/$slug'
-    | '/products/access-control'
-    | '/products/building-management'
-    | '/products/surveillance'
     | '/products/access-control/honeywell/accessories'
     | '/products/access-control/honeywell/control-panel-kits'
     | '/products/access-control/honeywell/control-panels'
@@ -616,8 +558,6 @@ export interface FileRouteTypes {
     | '/products/access-control/honeywell/software'
     | '/products/access-control/honeywell/upgrades'
     | '/products/access-control/salto/$productId'
-    | '/products/access-control/honeywell'
-    | '/products/access-control/salto'
   id:
     | '__root__'
     | '/'
@@ -658,9 +598,6 @@ export interface FileRouteTypes {
     | '/products/$slug/$subcategory'
     | '/products/detail/$productId'
     | '/products/$slug/'
-    | '/products/access-control/'
-    | '/products/building-management/'
-    | '/products/surveillance/'
     | '/products/access-control/honeywell/accessories'
     | '/products/access-control/honeywell/control-panel-kits'
     | '/products/access-control/honeywell/control-panels'
@@ -671,8 +608,6 @@ export interface FileRouteTypes {
     | '/products/access-control/honeywell/software'
     | '/products/access-control/honeywell/upgrades'
     | '/products/access-control/salto/$productId'
-    | '/products/access-control/honeywell/'
-    | '/products/access-control/salto/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -949,27 +884,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InsightsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/products/surveillance/': {
-      id: '/products/surveillance/'
-      path: '/surveillance'
-      fullPath: '/products/surveillance/'
-      preLoaderRoute: typeof ProductsSurveillanceIndexRouteImport
-      parentRoute: typeof ProductsRoute
-    }
-    '/products/building-management/': {
-      id: '/products/building-management/'
-      path: '/building-management'
-      fullPath: '/products/building-management/'
-      preLoaderRoute: typeof ProductsBuildingManagementIndexRouteImport
-      parentRoute: typeof ProductsRoute
-    }
-    '/products/access-control/': {
-      id: '/products/access-control/'
-      path: '/access-control'
-      fullPath: '/products/access-control/'
-      preLoaderRoute: typeof ProductsAccessControlIndexRouteImport
-      parentRoute: typeof ProductsRoute
-    }
     '/products/$slug/': {
       id: '/products/$slug/'
       path: '/$slug'
@@ -996,20 +910,6 @@ declare module '@tanstack/react-router' {
       path: '/$slug/$'
       fullPath: '/products/$slug/$'
       preLoaderRoute: typeof ProductsSlugSplatRouteImport
-      parentRoute: typeof ProductsRoute
-    }
-    '/products/access-control/salto/': {
-      id: '/products/access-control/salto/'
-      path: '/access-control/salto'
-      fullPath: '/products/access-control/salto/'
-      preLoaderRoute: typeof ProductsAccessControlSaltoIndexRouteImport
-      parentRoute: typeof ProductsRoute
-    }
-    '/products/access-control/honeywell/': {
-      id: '/products/access-control/honeywell/'
-      path: '/access-control/honeywell'
-      fullPath: '/products/access-control/honeywell/'
-      preLoaderRoute: typeof ProductsAccessControlHoneywellIndexRouteImport
       parentRoute: typeof ProductsRoute
     }
     '/products/access-control/salto/$productId': {
@@ -1091,9 +991,6 @@ interface ProductsRouteChildren {
   ProductsSlugSubcategoryRoute: typeof ProductsSlugSubcategoryRoute
   ProductsDetailProductIdRoute: typeof ProductsDetailProductIdRoute
   ProductsSlugIndexRoute: typeof ProductsSlugIndexRoute
-  ProductsAccessControlIndexRoute: typeof ProductsAccessControlIndexRoute
-  ProductsBuildingManagementIndexRoute: typeof ProductsBuildingManagementIndexRoute
-  ProductsSurveillanceIndexRoute: typeof ProductsSurveillanceIndexRoute
   ProductsAccessControlHoneywellAccessoriesRoute: typeof ProductsAccessControlHoneywellAccessoriesRoute
   ProductsAccessControlHoneywellControlPanelKitsRoute: typeof ProductsAccessControlHoneywellControlPanelKitsRoute
   ProductsAccessControlHoneywellControlPanelsRoute: typeof ProductsAccessControlHoneywellControlPanelsRoute
@@ -1104,8 +1001,6 @@ interface ProductsRouteChildren {
   ProductsAccessControlHoneywellSoftwareRoute: typeof ProductsAccessControlHoneywellSoftwareRoute
   ProductsAccessControlHoneywellUpgradesRoute: typeof ProductsAccessControlHoneywellUpgradesRoute
   ProductsAccessControlSaltoProductIdRoute: typeof ProductsAccessControlSaltoProductIdRoute
-  ProductsAccessControlHoneywellIndexRoute: typeof ProductsAccessControlHoneywellIndexRoute
-  ProductsAccessControlSaltoIndexRoute: typeof ProductsAccessControlSaltoIndexRoute
 }
 
 const ProductsRouteChildren: ProductsRouteChildren = {
@@ -1114,9 +1009,6 @@ const ProductsRouteChildren: ProductsRouteChildren = {
   ProductsSlugSubcategoryRoute: ProductsSlugSubcategoryRoute,
   ProductsDetailProductIdRoute: ProductsDetailProductIdRoute,
   ProductsSlugIndexRoute: ProductsSlugIndexRoute,
-  ProductsAccessControlIndexRoute: ProductsAccessControlIndexRoute,
-  ProductsBuildingManagementIndexRoute: ProductsBuildingManagementIndexRoute,
-  ProductsSurveillanceIndexRoute: ProductsSurveillanceIndexRoute,
   ProductsAccessControlHoneywellAccessoriesRoute:
     ProductsAccessControlHoneywellAccessoriesRoute,
   ProductsAccessControlHoneywellControlPanelKitsRoute:
@@ -1137,9 +1029,6 @@ const ProductsRouteChildren: ProductsRouteChildren = {
     ProductsAccessControlHoneywellUpgradesRoute,
   ProductsAccessControlSaltoProductIdRoute:
     ProductsAccessControlSaltoProductIdRoute,
-  ProductsAccessControlHoneywellIndexRoute:
-    ProductsAccessControlHoneywellIndexRoute,
-  ProductsAccessControlSaltoIndexRoute: ProductsAccessControlSaltoIndexRoute,
 }
 
 const ProductsRouteWithChildren = ProductsRoute._addFileChildren(

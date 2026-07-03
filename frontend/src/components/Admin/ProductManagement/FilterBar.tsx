@@ -8,7 +8,7 @@ interface FilterBarProps {
   filterSubCategory: string;
   onSubCategoryChange: (val: string) => void;
   categories: string[];
-  subCategories: Record<string, string[]>;
+  subCategories: Record<string, { name: string; path: string }[]>;
   loading: boolean;
   totalCount: number;
 }
@@ -56,7 +56,9 @@ export function FilterBar({
         className="px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#C3110C]/50 disabled:opacity-50 disabled:cursor-not-allowed transition"
       >
         <option value="">All Subcategories</option>
-        {filterCategory && (subCategories[filterCategory] || []).map(s => <option key={s} value={s}>{s}</option>)}
+        {filterCategory && (subCategories[filterCategory] || []).map(s => (
+          <option key={s.path} value={s.name}>{s.path}</option>
+        ))}
       </select>
 
       <span className="text-xs text-gray-400 font-medium ml-auto">

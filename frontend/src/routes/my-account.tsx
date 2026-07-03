@@ -117,7 +117,7 @@ function MyAccountPage() {
     );
   }
 
-  if (!user && !loadingProfile) {
+  if (!user) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center bg-[#081F3D]/5 pt-20 px-6">
         <Container className="max-w-md bg-white p-10 rounded-sm shadow-2xl border border-gray-100 text-center">

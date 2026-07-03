@@ -96,7 +96,7 @@ function DeepSubcategoryPage() {
 
   useEffect(() => {
     setLoading(true);
-    fetchProducts(categoryName, undefined, brandSubCategoryPath)
+    fetchProducts(categoryName, undefined, subcategoryName)
       .then(data => setApiProducts(data))
       .catch(() => setApiProducts([]))
       .finally(() => setLoading(false));

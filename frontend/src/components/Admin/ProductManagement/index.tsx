@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { Plus, Layers } from "lucide-react";
 import { fetchProducts, addProduct, updateProduct, deleteProduct } from "@/utils/productApi";
-import { fetchTaxonomy, flattenTree } from "@/utils/taxonomyApi";
-import type { TaxonomyCategory } from "@/utils/taxonomyApi";
+import { fetchTaxonomy } from "@/utils/taxonomyApi";
+import type { TaxonomyCategory, TaxonomySubCategory } from "@/utils/taxonomyApi";
 import { toast } from "sonner";
 import type { ApiProduct } from "./types";
 import { BLANK_FORM } from "./types";
@@ -14,6 +14,23 @@ import { ProductForm } from "./ProductForm";
 import { DeleteConfirmModal } from "./DeleteConfirmModal";
 import { TaxonomyManager } from "./TaxonomyManager";
 
+interface FlattenedSubCategory {
+  name: string;
+  path: string;
+}
+
+function flattenTaxonomy(arr: TaxonomySubCategory[], prefix = ""): FlattenedSubCategory[] {
+  const result: FlattenedSubCategory[] = [];
+  for (const item of arr) {
+    const path = prefix ? `${prefix}/${item.name}` : item.name;
+    result.push({ name: item.name, path });
+    if (item.children && item.children.length > 0) {
+      result.push(...flattenTaxonomy(item.children, path));
+    }
+  }
+  return result;
+}
+
 export function ProductManagement() {
   const [products, setProducts] = useState<ApiProduct[]>([]);
   const [loading, setLoading] = useState(true);
@@ -24,13 +41,15 @@ export function ProductManagement() {
   const [showTaxonomyManager, setShowTaxonomyManager] = useState(false);
 
   const categories = taxonomy.length > 0 ? taxonomy.map(t => t.category) : FALLBACK_CATEGORIES;
-  const subCategories: Record<string, string[]> = {};
+  const subCategories: Record<string, FlattenedSubCategory[]> = {};
   if (taxonomy.length > 0) {
     for (const t of taxonomy) {
-      subCategories[t.category] = flattenTree(t.subCategories || []);
+      subCategories[t.category] = flattenTaxonomy(t.subCategories || []);
     }
   } else {
-    Object.assign(subCategories, FALLBACK_SUBCATEGORIES);
+    for (const [cat, subs] of Object.entries(FALLBACK_SUBCATEGORIES)) {
+      subCategories[cat] = subs.map(s => ({ name: s, path: s }));
+    }
   }
 
   // Filters
@@ -94,15 +113,20 @@ export function ProductManagement() {
 
   // ─── Form Handlers ──────────────────────────────────────────
 
-  function autoGenerateLink(cat: string, subCat: string) {
+  function autoGenerateLink(cat: string, subCatPath: string) {
     const catSlug = cat.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "");
-    if (subCat) {
-      const subSlug = subCat
-        .toLowerCase()
-        .replace(/\s+&\s+/g, "-")
-        .replace(/\s+/g, "-")
-        .replace(/\/+/g, "-")
-        .replace(/[^\w-]/g, "");
+    if (subCatPath) {
+      const subSlug = subCatPath
+        .split("/")
+        .map(part =>
+          part
+            .trim()
+            .toLowerCase()
+            .replace(/\s+&\s+/g, "-")
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]/g, "")
+        )
+        .join("/");
       return `/products/${catSlug}/${subSlug}`;
     }
     return `/products/${catSlug}`;
@@ -112,10 +136,13 @@ export function ProductManagement() {
     setForm(prev => {
       const next = { ...prev, [key]: value };
       if (key === "category" || key === "brandSubCategory") {
-        next.brandSubCategoryLink = autoGenerateLink(
-          key === "category" ? value : next.category,
-          key === "brandSubCategory" ? value : next.brandSubCategory
-        );
+        const cat = key === "category" ? value : next.category;
+        const subCat = key === "brandSubCategory" ? value : next.brandSubCategory;
+        const availSubs = subCategories[cat] || [];
+        const found = availSubs.find(s => s.name === subCat);
+        const subCatPath = found ? found.path : subCat;
+
+        next.brandSubCategoryLink = autoGenerateLink(cat, subCatPath);
       }
       return next;
     });

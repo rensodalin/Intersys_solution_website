@@ -137,6 +137,7 @@ function ProductDetailPage() {
           }
 
           const mappedFallback: ProductData = {
+            _id: "",
             id: productId,
             category: allSalto.some(p => p.id === productId) ? "Access Control" :
               bmsProducts.some(p => p.id === productId) ? "Building Management" :
