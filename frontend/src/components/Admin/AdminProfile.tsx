@@ -145,7 +145,7 @@ export function AdminProfile() {
     : "AD";
 
   return (
-    <div className="max-w-3xl">
+    <div className="max-w-3xl mx-auto">
       <div className="mb-8">
         <h2 className="text-xl font-black text-gray-900 tracking-tight">Admin Profile</h2>
         <p className="text-xs text-gray-400 mt-1 font-medium">Manage your account information and security settings</p>

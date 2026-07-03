@@ -84,6 +84,7 @@ function RootComponent() {
   const location = useLocation();
   const isProductsPage = location.pathname.startsWith("/products");
   const isAdminPage = location.pathname.startsWith("/admin");
+  const isProductDetailPage = location.pathname.startsWith("/products/detail/");
 
   // Track page visits
   useEffect(() => {
@@ -117,7 +118,7 @@ function RootComponent() {
       <main>
         <Outlet />
       </main>
-      <ScrollControls />
+      {!isProductDetailPage && <ScrollControls />}
       <ChatWidget />
       {!isProductsPage && <Footer />}
       <CompleteProfileModal />

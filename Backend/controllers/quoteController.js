@@ -35,19 +35,6 @@ export const create = async (req, res) => {
       await newQuote.save();
     }
 
-    try {
-      const productSummary = (quoteData.products || []).map(p => `${p.qty}x ${p.productNo}`).join(", ");
-      const chatMsg = new Message({
-        email: quoteData.email, name: quoteData.name,
-        subject: `Quote Request - ${quoteData.company}`,
-        content: `Quote request from ${quoteData.name} at ${quoteData.company}.\n\nProducts: ${productSummary || "None"}\n\nDetails: ${quoteData.otherBms || ""}`,
-        source: "quote", sourceId: newQuote._id, isFromAdmin: false, read: false
-      });
-      await chatMsg.save();
-    } catch (chatErr) {
-      console.error("Failed to create chat message for quote:", chatErr);
-    }
-
     const productsEmailHtml = (quoteData.products || []).map(p => `
       <tr>
         <td style="padding:8px 12px; border:1px solid #e5e7eb; text-align:center; font-size:13px;">${p.qty}x</td>

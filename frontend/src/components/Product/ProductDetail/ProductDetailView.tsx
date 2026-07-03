@@ -58,6 +58,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
   const [selectedImage, setSelectedImage] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
+
   const user = useSelector((state: RootState) => state.auth.user);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [pendingDocUrl, setPendingDocUrl] = useState<string | null>(null);
@@ -162,6 +163,31 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
     });
 
     // Navigate to request quote page
+    navigate({ to: "/request-quote" });
+  };
+
+  const handleQuickAdd = (opt: ProductOption) => {
+    if (quantities[opt.partCode] === 0) {
+      setError("Please increase quantity before adding to inquiry.");
+      return;
+    }
+
+    const subcategory = deriveSubcategory();
+
+    addItem({
+      _id: product._id,
+      id: product.id,
+      category: product.category,
+      subcategory,
+      title: product.title,
+      image: product.mainImage,
+      partCode: opt.partCode,
+      specification: opt.specification,
+      qty: quantities[opt.partCode],
+      brand: product.brand,
+      returnPath: returnPath,
+    });
+
     navigate({ to: "/request-quote" });
   };
 
@@ -426,7 +452,10 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                       </div>
                     </td>
                     <td className="px-8 py-8 border-b border-gray-100 text-center">
-                      <button className="text-gray-200 hover:text-[#C3110C] transition-all transform hover:scale-110">
+                      <button
+                        onClick={() => handleQuickAdd(opt)}
+                        className="text-gray-200 hover:text-[#C3110C] transition-all transform hover:scale-110 cursor-pointer"
+                      >
                         <ShoppingCart size={20} className={cn(quantities[opt.partCode] > 0 && "text-[#C3110C]")} />
                       </button>
                     </td>
@@ -437,22 +466,28 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
           </div>
         </div>
 
-        {/* ─── INQUIRY ACTION BUTTON (Under Table) ─── */}
+        {/* ─── INQUIRY ACTION BUTTON ─── */}
         <div className="flex flex-col items-end mb-24">
-          <button
-            onClick={handleAddToInquiry}
-            className="bg-[#162E93] hover:bg-[#0E1E61] text-white px-10 py-4 rounded-sm shadow-xl flex items-center gap-4 group transition-all transform hover:-translate-y-1"
-          >
-            <div className="relative">
-              <ShoppingCart size={20} />
-              {inquiryCount > 0 && (
-                <span className="absolute -top-3 -right-3 w-5 h-5 bg-[#C3110C] text-[10px] flex items-center justify-center rounded-full border-2 border-[#162E93] font-bold">
-                  {inquiryCount}
-                </span>
-              )}
-            </div>
-            <span className=" text-[15px]">Add to inquiry</span>
-          </button>
+          <AnimatePresence>
+            {inquiryCount > 0 && (
+              <motion.button
+                key="floating-btn"
+                onClick={handleAddToInquiry}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
+                className="fixed bottom-6 right-6 z-50 bg-[#162E93] hover:bg-[#0E1E61] text-white px-6 py-3 rounded-sm shadow-2xl flex items-center gap-3 transition-all"
+              >
+                <div className="relative">
+                  <ShoppingCart size={18} />
+                  <span className="absolute -top-2.5 -right-2.5 w-4 h-4 bg-[#C3110C] text-[9px] flex items-center justify-center rounded-full border-2 border-white font-bold">
+                    {inquiryCount}
+                  </span>
+                </div>
+                <span className="text-sm font-bold">Add to inquiry</span>
+              </motion.button>
+            )}
+          </AnimatePresence>
 
           {error && (
             <motion.p
@@ -465,7 +500,6 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
           )}
         </div>
       </Container>
-
       <AuthModal
         isOpen={isAuthOpen}
         onClose={() => {

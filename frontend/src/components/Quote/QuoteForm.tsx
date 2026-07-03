@@ -10,10 +10,13 @@ import {
     InterestedSection,
     UserSection,
     CompanySection,
+    jobTitles,
 } from "./QuoteFormComponents";
 import { useTaxonomy } from "@/hooks/useTaxonomy";
 import environment from "@/enviroment/enviroment";
 import type { TaxonomySubCategory } from "@/utils/taxonomyApi";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 import engineerImg from "@/assets/enginner.png";
 import team1 from "@/assets/team/picture on QR cord/Frame 3.png";
@@ -72,6 +75,7 @@ export function QuoteForm() {
         },
     });
 
+    const user = useSelector((state: RootState) => state.auth.user);
     const [submitStatus, setSubmitStatus] = React.useState<"success" | "error" | null>(null);
 
     const liveCategories = React.useMemo(() => {
@@ -211,6 +215,18 @@ export function QuoteForm() {
             product: i._id || "",
         })), { shouldDirty: true });
     }, [items, liveCategories, detectSections, setValue]);
+
+    // Auto-fill user info from registered account
+    React.useLayoutEffect(() => {
+        if (!user) return;
+        if (user.name) setValue("name", user.name, { shouldDirty: false });
+        if (user.email) setValue("email", user.email, { shouldDirty: false });
+        if (user.phone) setValue("phone", user.phone, { shouldDirty: false });
+        if (user.role) {
+            const matched = jobTitles.find(j => j.toLowerCase() === user.role?.toLowerCase());
+            setValue("title", matched || user.role, { shouldDirty: false });
+        }
+    }, [user, setValue]);
 
     // When taxonomy finally loads asynchronously, re-sync sections
     React.useEffect(() => {

@@ -23,7 +23,7 @@ import { QuoteFormValues, companyTypes } from "./schema";
 /* ─────────────────────────────────────────────
    INPUT FIELD
 ──────────────────────────────────────────── */
-const jobTitles = [
+export const jobTitles = [
     "Engineer",
     "Project Manager",
     "Architect",
