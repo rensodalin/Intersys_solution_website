@@ -21,7 +21,7 @@ export async function uploadToHostinger(localFilePath, filename) {
     await client.ensureDir(remoteDir);
     await client.uploadFrom(localFilePath, filename);
 
-    const baseUrl = process.env.FTP_PUBLIC_URL || "https://intersys-solution.com";
+    const baseUrl = process.env.FTP_PUBLIC_URL || "https://intersys-solutions.com.kh";
     const publicUrl = `${baseUrl}/${remoteDir}/${filename}`;
     console.log("Avatar uploaded to Hostinger via FTP:", publicUrl);
     return publicUrl;
