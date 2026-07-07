@@ -17,9 +17,9 @@ export function ProjectFilters({
     setViewMode,
 }: ProjectFiltersProps) {
     return (
-        <section className="pb-14">
+        <section className="pb-10 md:pb-14">
             <Container>
-                <div className="flex flex-col items-center gap-8">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
 
                     {/* CATEGORY FILTERS */}
                     <div className="flex flex-wrap justify-center gap-1">
@@ -31,7 +31,7 @@ export function ProjectFilters({
                                     key={cat}
                                     onClick={() => setActiveTab(cat)}
                                     className={`
-                                        relative px-5 py-2 text-[14px] font-medium transition-all duration-300
+                                        relative px-3 md:px-5 py-1.5 md:py-2 text-[12px] md:text-[14px] font-medium transition-all duration-300
                                         ${active
                                             ? "text-[#D62828]"
                                             : "text-gray-400 hover:text-white"
@@ -57,7 +57,7 @@ export function ProjectFilters({
                         <button
                             onClick={() => setViewMode("grid")}
                             className={`
-                                flex items-center gap-2 px-4 py-2 rounded-sm text-sm font-medium transition-all
+                                flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-sm text-xs md:text-sm font-medium transition-all
                                 ${viewMode === "grid"
                                     ? "bg-[#D62828] text-white shadow-lg shadow-[#D62828]/20"
                                     : "text-gray-500 hover:text-white"
@@ -71,7 +71,7 @@ export function ProjectFilters({
                         <button
                             onClick={() => setViewMode("full")}
                             className={`
-                                flex items-center gap-2 px-4 py-2 rounded-sm text-sm font-medium transition-all
+                                flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-sm text-xs md:text-sm font-medium transition-all
                                 ${viewMode === "full"
                                     ? "bg-[#D62828] text-white shadow-lg shadow-[#D62828]/20"
                                     : "text-gray-500 hover:text-white"

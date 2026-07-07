@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import Product from "./model/product.js";
 import ProductOption from "./model/productOption.js";
 import ProductDocument from "./model/productDocument.js";
+import Category from "./model/category.js";
 
 dotenv.config();
 
@@ -1413,7 +1414,7 @@ const MOCK_PRODUCTS = [
                 "qty": 0
             },
             {
-                "partCode": "IQV-MNTS",
+                "partCode": "IQV-MNT5",
                 "specification": "IQVISION maintenance upgrade additional 5 years",
                 "price": 0,
                 "qty": 0
@@ -1754,52 +1755,805 @@ const MOCK_PRODUCTS = [
             }
         ],
         _documents: []
+    },
+    {
+        "productId": "INNCOM-S563-EV564-INNTOUCH-DND-MUR-CONTROLS",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM S563 / EV564 INNtouch DND and MUR Controls",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "The INNCOM INNtouch guestroom annunciation system is a two-component solution that provides guests with a convenient way to communicate privacy and room service preferences. The system includes the EV564 Guestroom Annunciator and DND/MUR Control and the S563 Corridor Annunciator and Doorbell Control. Together they provide Do Not Disturb (Privacy), Make Up Room indication, and doorbell functionality while supporting integration with the INNCOM Integrated Room Automation System.",
+        _options: [
+            {
+                "partCode": "EV564",
+                "specification": "Guestroom Annunciator and DND / MUR Control",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "S563",
+                "specification": "Corridor Annunciator and Doorbell Control",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "GS564",
+                "specification": "Corridor Annunciator and Doorbell Control",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "GS564",
+                "specification": "Guestroom Annunciator and DND / MUR Control",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-DD1",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "DD15 Daikin VRV Interface Module",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "Honeywell INNCOM DD15 interface module providing direct digital integration between INNCOM room automation systems and Daikin VRV indoor units.",
+        _options: [
+            {
+                "partCode": "62-1465",
+                "specification": "",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "32315379",
+                "specification": "",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-MINI-PIR-MOTION-SENSOR",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM Mini PIR Motion Sensor",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "The Honeywell INNCOM Mini Passive Infrared (PIR) Motion Sensor is a recessed ceiling-mounted occupancy sensor designed to enhance guestroom energy management. Used with a door contact device, room controller, and communication network, it accurately detects room occupancy to improve HVAC efficiency, lighting control, security, and overall guest comfort.",
+        _options: [
+            {
+                "partCode": "04-1068.MI",
+                "specification": "Mini PIR Motion Sensor | Recessed ceiling-mounted occupancy sensor | Part Number: PIR2036.EP | 8-16VDC operating voltage (12VDC nominal) | Typical current consumption 15mA @ 12VDC | Detection range 0.5-12m (1.64-40ft) | Maximum coverage 8 × 8m (26 × 26ft) | 120° detection angle | Quad-element pyro-sensor | Spectral detection 6-14µm | Alternate polarity signal processing | Power-up delay 2 minutes | Sensor output time 3 seconds | Selectable N.C. or N.O. dry relay contact with 10Ω current limiting resistor | Output rating 50VDC / 0.5A maximum | Operating temperature 10°C to 55°C | Relative humidity 95% non-condensing | Dimensions 54 × 40mm | Weight 30g | Indoor use only",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-MOTION-SENSORS",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM Motion Sensors",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "Honeywell INNCOM Motion Sensors are passive infrared (PIR) occupancy sensors designed to provide intelligent occupancy detection for INNCOM Energy Management Systems (EMS). Available in wired and wireless models with wall-mounted, flush ceiling-mounted, recessed ceiling-mounted, and battery-powered options, these sensors help maximize guestroom energy savings, improve HVAC efficiency, enhance lighting control, and integrate with the INNCOM Deep Mesh Network and INNcontrol EMS software.",
+        _options: [
+            {
+                "partCode": "K04-1067.H",
+                "specification": "K594W Wall Mounted Motion Sensor | Wired PIR occupancy sensor | Dimensions: 105 × 61 × 44 mm | Input voltage: 9-15VDC | Alarm indication LED: 2.4 seconds | Selectable event counter: 2 or 4 pulse | Normally-closed tamper contacts rated ≤100mA, 25VDC, 2.5W | Operating temperature: 0°C to 49°C | RFI immunity",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "04-1068.MI",
+                "specification": "Mini PIR Motion Sensor (Recessed Ceiling Mounted) | Dimensions: 54 × 40 mm | Operating voltage: 8-16VDC (12VDC nominal) | Current consumption: 15mA typical @12VDC | Lens: 36 beams, 120° coverage, maximum coverage 8 × 8 m | Quad-element pyro sensor | Spectral detection: 6-14 µm | Alternate polarity signal processing | Detection range: 8 m @25°C | Selectable single or dual polarity pulse counting | Sensor output time: 3 seconds | Selectable N.C. or N.O. relay dry contact with 10Ω current limiting resistor | Output contact rating: 50VDC, 0.5A maximum | Walk-test LED after power-up delay | Operating temperature: 10°C to 55°C | Relative humidity: 95% non-condensing | Weight: 30 g",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "PIR2036.EP",
+                "specification": "Mini PIR Motion Sensor | Alternate model designation for the recessed ceiling-mounted Mini PIR | Same specifications as part number 04-1068.MI",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-595-WHUS.P",
+                "specification": "K595.RF Battery Powered Motion Sensor | White | Mounts in a single US gang box | Dimensions: 119 × 74 × 7.4 mm | RF data rate: 250 kbps | SMT antenna | Indoor range: 21 m (70 ft) | Outdoor line-of-sight range: 165 m (540 ft) | Transmit power: 1mW (+0dBm) | Receive sensitivity: -94.6dBm | 2.4GHz | AES-128 encryption | IEEE 802.15.4 | Channels 11-26 | FCC and CE Mark",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-595-BKUS.P",
+                "specification": "K595.RF Battery Powered Motion Sensor | Black | Same specifications as 201-595-WHUS.P",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-595-LAUS.P",
+                "specification": "K595.RF Battery Powered Motion Sensor | Light Almond | Same specifications as 201-595-WHUS.P",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-595-XXUS.P",
+                "specification": "K595.RF Battery Powered Motion Sensor | Custom finish | Same specifications as 201-595-WHUS.P",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "04-1068.AEI",
+                "specification": "K594C Flush Ceiling Mounted Motion Sensor | Wired PIR occupancy sensor | Dimensions: 25 × 86 mm | Input voltage: 8-16VDC | Maximum current drain: 15mA | Lens: 24 Fresnel beams, 24 + 14 curtain beams | Maximum coverage: 11 × 11 m (36 × 36 ft), 113° | Relay contact: 28VDC, 0.1A | Event counter: Normal response or 2 pulse within 10 seconds | Normally-closed tamper contacts rated 50mA @12VDC | Operating temperature: -10°C to 55°C | Storage temperature: -20°C to 60°C",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "01-9912-RFWH.P",
+                "specification": "K594.RF Battery Powered Motion Sensor | White | Dimensions: 89 × 89 × 64 mm | RF data rate: 250 kbps | SMT antenna | Indoor range: 21 m (70 ft) | Outdoor line-of-sight range: 165 m (540 ft) | Transmit power: 1mW (+0dBm) | Receive sensitivity: -94.6dBm | 2.4GHz | AES-128 encryption | IEEE 802.15.4 | Input voltage: 9-16VDC | Maximum current drain: 9mA @12VDC | FCC Part 15B Listed",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "01-9912-RFBK.P",
+                "specification": "K594.RF Battery Powered Motion Sensor | Black | Same specifications as 01-9912-RFWH.P",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "01-9912-RFLA.P",
+                "specification": "K594.RF Battery Powered Motion Sensor | Light Almond | Same specifications as 01-9912-RFWH.P",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "01-9912-RFXX.P",
+                "specification": "K594.RF Battery Powered Motion Sensor | Custom finish | Same specifications as 01-9912-RFWH.P",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-PC50X-DALI-MODULE",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM PC50X DALI Module",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "The Honeywell INNCOM PC50X DALI Module is a Digital Addressable Lighting Interface (DALI) controller designed for hospitality applications. It provides granular lighting control, tunable white color temperature (DALI Type 8 Tc), scene management, energy-saving automation, and integration with the INNCOM INNcontrol™ Energy Management System (EMS). The module supports wired and wireless installation, Zigbee®, Bluetooth® Low Energy, Deep Mesh networking, and DALI lighting systems for centralized monitoring and intelligent guestroom lighting control.",
+        _options: [
+            {
+                "partCode": "PC50X",
+                "specification": "DALI Lighting Control Module | DALI Type 8 Tc (Tunable White Color Temperature) | Supports up to 16 lighting scenes and groups | Auto-on when guests enter and auto-off when room is empty | Restores previous lighting state after guest return or power outage | Very low dimming below 10% (driver/ballast dependent) | Supports incandescent, fluorescent, and LED lighting | Wired or wireless installation | Supports daisy-chain wiring | Zigbee® and Bluetooth® Low Energy configuration | DALI connector: 2-pin terminal block | DALI data rate: 1200bps | Isolation: 1500VDC (DALI-SELV) | INNCOM S5Bus: 2550bps, 50ft range, 20 nodes maximum | Zigbee RF: 100ft range, 19dBm (FCC), 9dBm (CE), -95.6dBm receive sensitivity, 2.4GHz IEEE 802.15.4, channels 11-26 | Bluetooth® Low Energy 5.0: 50ft range, 8dBm max output power, receive sensitivity -95dBm (1 Mbps), -92dBm (2 Mbps), -103dBm (125 kbps) | RS485: 250kbps Deep Mesh protocol, A/B/Ground, supports Multi-Point, Daisy-Chain, Tree and Star topologies, maximum 32 devices | I/O: 2 software-configurable digital TTL inputs/outputs and 1 open-collector relay output | Power input: 12VDC | Maximum current: 100mA | Operating temperature: 0°C to 50°C | Storage temperature: -20°C to 70°C | Humidity: 10-90% RH non-condensing | Indoor use only | Certifications: IEC 61347-2-11, EN 61547, EN 55015, EN 301489, EN 300328",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-B578-R-EDGE-ROUTER",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM B578.R Edge Router",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "The Honeywell INNCOM B578.R Edge Router provides secure RF-to-Ethernet communication between INNCOM RF Room Gateway devices installed in guestrooms and the INNCOM Deep Mesh Server. Designed for hospitality applications, the B578.R supports Deep Mesh networking, end-to-end AES-128 encrypted communication, UDP packet transport, and Power over Ethernet (PoE) applications. It is optimized for buildings where RF communication is limited, such as concrete construction, and integrates with the INNCOM Room Automation System and INNcontrol 3 software.",
+        _options: [
+            {
+                "partCode": "B578.R",
+                "specification": "Edge Router | RF-to-Ethernet protocol converter | Deep Mesh Network gateway | Supports one router per guestroom | Wall, ceiling, standard 2-gang ring, or DIN rail mounting | Supports Power over Ethernet (PoE) applications | RF data rate: 250kbps | Indoor RF range: 100 ft | Transmit power: 50mW (+17dBm) | Receive sensitivity: -94.6dBm | Frequency band: 2.4GHz | AES-128 encryption | IEEE 802.15.4 protocol | Zigbee channels 11-26 (preferred: 15, 20, 25, 26) | Supports up to 50 in-room devices | Supply voltage: 12VDC | Current consumption: 200mA peak, 100mA RMS | Operating temperature: 0°C to 40°C | Dimensions: 4.75 × 4.9 × 0.8 in | Network connection: 10/100 Mbps Ethernet | Supported IP protocols: UDP, ICMP, DHCP | FCC Part 15, CE Mark ETSI, RoHS | Indoor use only",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-CHM-S-ELECTRONIC-DOOR-CHIME",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM CHM-S Electronic Door Chime",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "The Honeywell INNCOM CHM-S Electronic Door Chime is part of the Integrated Room Automation System (IRAS). It works with INNCOM System-5 (S5 bus) guestroom controls to provide an audible doorbell notification for hospitality guestrooms.",
+        _options: [
+            {
+                "partCode": "04-1038",
+                "specification": "Electronic Door Chime | Input voltage: 12VDC | Speaker: 1.0W, 8 Ohms | Dimensions: 70 × 119 × 54 mm (2.75 × 4.68 × 2.125 in) | Indoor use only",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-D454-F-2-CHANNEL-AC-FET-DIMMER",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM D454-F 2-Channel AC FET Dimmer",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "The Honeywell INNCOM D454-F is a 2-channel AC FET dimmer designed for the INNCOM In-Room Automation System (IRAS). It provides intelligent dimming control for incandescent, halogen, LED, and CFL lighting while integrating with INNCOM MODEVA, EVORA, Elements, and Designer Series room automation platforms. The D454-F also supports occupancy sensing, third-party switch interfaces, lighting scenes, and S5bus communication for seamless guestroom lighting automation.",
+        _options: [
+            {
+                "partCode": "D454-F",
+                "specification": "2-Channel AC FET Dimmer | Input voltage: 100-240VAC | Current consumption: Typical 100mA | S5bus communication | 2 open-collector digital outputs | 3 dry-contact digital inputs (0-5VDC) | Diagnostic and channel status LEDs | Dimensions: 157.2 × 86.6 × 57 mm | 35 mm DIN rail mountable | Operating temperature: 0°C to 40°C | Humidity: 0-90% RH non-condensing | Supports incandescent, halogen, LED, CFL, resistive, and electronic ballast loads | Dual 800W total output or 550W single-channel dimming | FCC, UL, CE, RoHS compliant | Indoor use only",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-E7-THERMOSTAT",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM E7 Thermostat",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "The Honeywell INNCOM e7 Thermostat is a smart guestroom thermostat designed for hospitality applications. It provides temperature and humidity control, built-in occupancy detection, and serves as the central hub for the INNCOM room automation platform. The e7 supports standalone or networked energy management, integrates with INNcontrol software and third-party hotel systems, and is compatible with a wide range of HVAC configurations.",
+        _options: [
+            {
+                "partCode": "201-528-24-BK*",
+                "specification": "24VAC Thermostat | Black Onyx",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-528-24-WH*",
+                "specification": "24VAC Thermostat | Ice White",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-528-100-BK*",
+                "specification": "100-277VAC Thermostat | Black Onyx",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-528-100-WH*",
+                "specification": "100-277VAC Thermostat | Ice White",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "203-528-100-BK",
+                "specification": "100-277VAC Thermostat Installation Kit | Black Onyx",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "203-528-100-WH",
+                "specification": "100-277VAC Thermostat Installation Kit | Ice White",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "203-528-24-BK",
+                "specification": "24VAC Thermostat Installation Kit | Black Onyx",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "203-528-24-WH",
+                "specification": "24VAC Thermostat Installation Kit | Ice White",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "32324212-001",
+                "specification": "Thermostat Screw Kit Assembly",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "62-1464.R",
+                "specification": "Thermostat 24VAC Harness",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "04-1096.FL",
+                "specification": "e7 Remote Thermistor",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-503",
+                "specification": "PC-503 Configuration Tool for engINN",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "203-250",
+                "specification": "RS485 DM485 Communication Module",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "62-1455",
+                "specification": "Thermostat 100-277VAC Harness",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-E7W-WIRELESS-EMS-THERMOSTAT",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM E7W Wireless EMS Thermostat",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "The Honeywell INNCOM e7w Wireless EMS Thermostat is a battery-powered thermostat designed for hospitality energy management systems. It provides wireless temperature and humidity control, built-in occupancy detection, and seamless integration with the INNCOM Integrated Room Automation System (IRAS). The e7w supports standalone or networked EMS applications and works with INNcontrol software to optimize guest comfort and energy efficiency.",
+        _options: [
+            {
+                "partCode": "201-528-6V-BK**",
+                "specification": "6V Wireless Thermostat | Black Onyx",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-528-6V-WH**",
+                "specification": "6V Wireless Thermostat | Ice White",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-528-24-BK",
+                "specification": "24VAC Thermostat | Black Onyx",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-528-24-WH",
+                "specification": "24VAC Thermostat | Ice White",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-528-100-BK",
+                "specification": "100-277VAC Thermostat | Black Onyx",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-528-100-WH",
+                "specification": "100-277VAC Thermostat | Ice White",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "PC502***",
+                "specification": "Protocol Converter",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "X47.L.P",
+                "specification": "24VAC Relay Module",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "X47.H.P",
+                "specification": "100-277VAC Relay Module",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "S541.RF",
+                "specification": "Wireless Door Switch / Transmitter",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "04-1096.FL",
+                "specification": "Remote Thermistor",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-503",
+                "specification": "PC-503 Configuration Tool for engINN",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "203-250",
+                "specification": "RS485 DM485 Communication Module",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "32324212-001",
+                "specification": "Thermostat Screw Kit Assembly",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "62-1455",
+                "specification": "Thermostat 100-277VAC Harness",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "62-1464",
+                "specification": "Thermostat 24VAC Harness",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-E528-E529-EMS-THERMOSTATS",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM E528 & E529 EMS Thermostats",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "The INNCOM e528 and e529 are e-Series hospitality EMS thermostats designed for scalable guestroom automation and energy management. The e528 supports line-voltage or low-voltage operation with built-in relays, while the e529 is a battery-powered wireless version. Both models function as standalone thermostats, in-room EMS devices, or networked IoT hubs integrated with INNCOM INNcontrol. They support optional occupancy sensing, RF communication, humidity sensing, ecoMODE energy-saving control, and integration with door locks and third-party systems for advanced energy optimization and guest comfort control.",
+        _options: [
+            {
+                "partCode": "e528",
+                "specification": "EMS Thermostat (Line Voltage / Low Voltage / Built-in Relay Versions)",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "e529",
+                "specification": "Battery Powered Wireless EMS Thermostat (4x AA batteries)",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-L510-LAMP-CONTROLLER",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM L510 Lamp Controller",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "RF DeepMesh lamp controller designed for hospitality applications supporting incandescent, CFL, and LED loads with relay, TRIAC, or FET dimming control. Supports integration with INNCOM EMS and room automation systems.",
+        _options: [
+            {
+                "partCode": "201-7050",
+                "specification": "Relay Actuator RF Lamp Controller | 120-240VAC | 500W tungsten/ELV | 250VA electronic ballast | 1/10 HP motor | 4.1A resistive/general purpose load | IEEE 802.15.4 DeepMesh RF | 2405-2480MHz | 120-240VAC power input",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-7051",
+                "specification": "TRIAC Dimmer RF Lamp Controller | 120VAC | 650W tungsten/ELV | 250VA electronic ballast | 1/10 HP motor | 2.9A resistive/general purpose load | IEEE 802.15.4 DeepMesh RF | 2405-2480MHz | dimming control for incandescent, CFL, LED lamps",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-7052",
+                "specification": "FET Dimmer RF Lamp Controller | 120VAC | 350W tungsten/ELV | 250VA electronic ballast | 2.9A resistive/general purpose load | IEEE 802.15.4 DeepMesh RF | 2405-2480MHz | smooth dimming control for LED, CFL, incandescent lamps",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-PC-503-COMMISSIONING-TOOL",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM PC-503 Commissioning Tool",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "USB-based RF commissioning tool used with INNTOOL/EngINN application for installation and configuration of INNCOM devices. Provides RF-only communication and USB power interface with Tx/Rx LED indicators.",
+        _options: [
+            {
+                "partCode": "201.503",
+                "specification": "PC-503 Commissioning Tool | RF-only device | 2.4GHz IEEE 802.15.4 | 250kbps data rate | 70ft indoor range | +5dBm transmit power | -95dBm receive sensitivity | AES-128 encryption | USB 5V input power | Tx/Rx LED status indicators | 0–40°C operating temperature",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-POWER-SUPPLIES",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM Power Supplies",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "Power supplies for INNCOM room automation and EMS systems.",
+        _options: [
+            {
+                "partCode": "PS563",
+                "specification": "40VA NEMA transformer that powers 24V–277VAC circuits in HVAC systems",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "PS564.DIN",
+                "specification": "Universal input, 12VDC 1A output, DIN rail mountable enclosure with three (3) S5Bus connectors",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "PS564 SMPS",
+                "specification": "Compact, universal input 12VDC output power supply",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "PS565",
+                "specification": "Universal input 12VDC, 1A SMPS. This power supply uses a standard 110V outlet and provides two (2) 12VDC outputs",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "PS567 MEANWELL DR-30-12",
+                "specification": "Meanwell DR-30-12 power supply used for applications which require up to 2A DC output. DIN rail mountable enclosure",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "PS576",
+                "specification": "12 VDC, 4 amp power supply for the B576",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-RELAYS-CONTROLLERS",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM Relays & Controllers",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "INNCOM relays and controllers extend the Integrated Room Automation System (IRAS) by activating HVAC, lighting, drapes, and IoT devices.",
+        _options: [
+            {
+                "partCode": "X05R",
+                "specification": "Equipped with eight 15A relays to switch motor, pump, heater, tungsten, incandescent and fluorescent loads. Wired S5 bus communication",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "X05W",
+                "specification": "Controls Williams FCU from INNCOM thermostat by modulating cooling, heating and fan motors. Includes switched relay output for heat. Wired S5 bus communication",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "X06",
+                "specification": "Provides 1–5 relay outputs for HVAC, PTAC, FCU, lighting and drape control. Includes 12VDC 400mA power supply and S5 bus communication",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "X06.DIN",
+                "specification": "DIN rail mountable universal relay pack for HVAC, PTAC, FCU, lighting and drape control applications. Wired S5 bus communication",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "X45RA",
+                "specification": "Integrates lighting and guest room controls including 0–10V fluorescent ballasts, LED lights, occupancy detection and guest annunciation. Wired S5 bus communication",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "X47",
+                "specification": "Provides 5 relay outputs for FCU and light-duty applications. Supports S5 bus or RF (with PC502). Available in 24VAC or 100–277VAC models",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
+    },
+    {
+        "productId": "INNCOM-E527-THERMOSTAT",
+        "category": "Room Control Unit(RCU)",
+        "brand": "Honeywell",
+        "title": "INNCOM E527 Thermostat",
+        "mainImage": "",
+        "thumbnails": [],
+        "brandSubCategory": "INNCOM(Controller + Sensor)",
+        "brandSubCategoryLink": "/products/room-control-unit-rcu/inncom-controller-+-sensor",
+        "longDescription": "The INNCOM E527 is a low-voltage EMS thermostat designed for hospitality energy management systems. It provides intelligent HVAC control with optional PIR occupancy detection, door/window sensor integration, and humidity sensing. The E527 optimizes guestroom comfort while reducing HVAC energy consumption through occupancy-based setback control and integration with INNCOM INNcontrol software and Deep Mesh networking.",
+        _options: [
+            {
+                "partCode": "PC502",
+                "specification": "Protocol Converter",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "X47.L.P",
+                "specification": "24VAC Relay Module",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "S541.RF",
+                "specification": "Wireless Door Switch / Transmitter",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "04-1096",
+                "specification": "Remote Thermistor",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "201-503",
+                "specification": "PC-503 Configuration Tool used with engINN",
+                "price": 0,
+                "qty": 0
+            },
+            {
+                "partCode": "203-250",
+                "specification": "RS485 DM485 Communication Module",
+                "price": 0,
+                "qty": 0
+            }
+        ],
+        _documents: []
     }
 ];
+
+async function seedTaxonomy() {
+  const existing = await Category.countDocuments({ parent: null });
+  if (existing > 0) {
+    console.log("Taxonomy already seeded, skipping...");
+    return;
+  }
+
+  const taxData = [
+    {
+        "name": "Building Management",
+        "children": [
+            {
+                "name": "BMS Controller",
+                "children": [
+                    {
+                        "name": "DDC Controller"
+                    },
+                    {
+                        "name": "Network Controller"
+                    }
+                ]
+            },
+            {
+                "name": "BMS Field Device"
+            },
+            {
+                "name": "BMS Management Software"
+            }
+        ]
+    },
+    {
+        "name": "Room Control Unit(RCU)",
+        "children": [
+            {
+                "name": "INNCOM(Controller + Sensor)",
+                "label": "INNCOM (Controller + Sensor)"
+            }
+        ]
+    }
+];
+
+  for (const root of taxData) {
+    const { children, ...rootData } = root;
+    const parent = await Category.create(rootData);
+    for (const child of (children || [])) {
+      const { children: grandChildren, ...childData } = child;
+      const childDoc = await Category.create({ ...childData, parent: parent._id });
+      for (const gc of (grandChildren || [])) {
+        await Category.create({ ...gc, parent: childDoc._id });
+      }
+    }
+  }
+  console.log("Taxonomy seeded successfully.");
+}
 
 const seedDB = async () => {
     try {
         await mongoose.connect(process.env.URI);
         console.log("MongoDB Connected for seeding Products...");
 
-        await Promise.all([
-            Product.deleteMany({}),
-            ProductOption.deleteMany({}),
-            ProductDocument.deleteMany({})
-        ]);
-        console.log("Old data cleared.");
+        await seedTaxonomy();
 
         for (const item of MOCK_PRODUCTS) {
             const { _options, _documents, ...productData } = item;
 
-            const product = await Product.create(productData);
+            // Upsert by productId to preserve admin-uploaded images and options/documents
+            const existing = await Product.findOne({ productId: productData.productId });
+            if (existing) {
+                // Only update fields that came from the seed, preserve images and existing options/documents
+                const updateData = { ...productData };
+                if (existing.mainImage) delete updateData.mainImage;
+                if (existing.thumbnails && existing.thumbnails.length > 0) delete updateData.thumbnails;
+                await Product.updateOne(
+                    { productId: productData.productId },
+                    { $set: updateData }
+                );
+                console.log(`Updated existing product: ${productData.productId} (preserved image & options)`);
 
-            if (_options && _options.length > 0) {
-                const opts = _options.map(opt => ({
-                    productId: product._id,
-                    partCode: opt.partCode,
-                    specification: opt.specification,
-                    price: opt.price || 0,
-                    qty: opt.qty || 0
-                }));
-                const saved = await ProductOption.insertMany(opts);
-                product.options = saved.map(o => o._id);
+                // Do NOT replace options or documents for existing products
+            } else {
+                const product = await Product.create(productData);
+
+                if (_options && _options.length > 0) {
+                    const opts = _options.map(opt => ({
+                        productId: product._id,
+                        partCode: opt.partCode,
+                        specification: opt.specification,
+                        price: opt.price || 0,
+                        qty: opt.qty || 0
+                    }));
+                    const saved = await ProductOption.insertMany(opts);
+                    product.options = saved.map(o => o._id);
+                }
+
+                if (_documents && _documents.length > 0) {
+                    const docs = _documents.map(d => ({
+                        productId: product._id,
+                        name: d.name,
+                        url: d.url
+                    }));
+                    const saved = await ProductDocument.insertMany(docs);
+                    product.documents = saved.map(d => d._id);
+                }
+
+                await product.save();
+                console.log(`Created new product: ${productData.productId}`);
             }
-
-            if (_documents && _documents.length > 0) {
-                const docs = _documents.map(d => ({
-                    productId: product._id,
-                    name: d.name,
-                    url: d.url
-                }));
-                const saved = await ProductDocument.insertMany(docs);
-                product.documents = saved.map(d => d._id);
-            }
-
-            await product.save();
         }
 
-        console.log(`${MOCK_PRODUCTS.length} products seeded successfully!`);
+        console.log(`Products seeded successfully!`);
         process.exit();
     } catch (error) {
         console.error("Error seeding products:", error);

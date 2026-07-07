@@ -24,7 +24,7 @@ function SurveillancePage() {
         <div className="bg-white overflow-hidden">
 
             {/* HERO SECTION */}
-            <section className="relative h-[70vh] min-h-[500px] flex items-center pt-18">
+            <section className="relative h-[60vh] md:h-[70vh] min-h-[400px] md:min-h-[500px] flex items-center pt-28 md:pt-32 pb-12 md:pb-16">
                 <div className="absolute inset-0 z-0">
                     <img
                         src={img}
@@ -41,11 +41,11 @@ function SurveillancePage() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
                         className="max-w-2xl text-white"
-                    ><h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                    ><h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-4 md:mb-6">
                             Smarter Business.<br />
                             <span className="text-red-500">Safer Environments.</span>
                         </h1>
-                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
+                        <p className="text-sm md:text-base text-white/70 max-w-2xl leading-relaxed">
                             Intersys Solutions Co., Ltd delivers comprehensive cloud solutions and CCTV surveillance systems designed to meet the evolving needs of modern businesses.
                             <br /><br />
                             Our integrated approach combines virtual desktops with real-time intelligent monitoring to ensure round-the-clock security and peak productivity.

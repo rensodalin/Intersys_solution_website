@@ -58,9 +58,7 @@ function CategoryProductsPage() {
   }, []);
 
   const mapped = useMemo(() =>
-    apiProducts
-      .filter(p => !p.brand)
-      .map(p => ({
+    apiProducts.map(p => ({
         id: p.productId,
         title: p.title,
         image: p.mainImage,
@@ -132,7 +130,7 @@ function CategoryProductsPage() {
       {subCategories.length > 0 && (
         <section className="py-10 px-8 border-b border-gray-100">
           <Container>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
               {subCategories.map(sub => {
                 const subSlug = toSlug(sub.name);
                 const linkTo = `/products/${slug}/${subSlug}`;
@@ -142,15 +140,15 @@ function CategoryProductsPage() {
                     className="group block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md hover:border-gray-300 transition-all"
                   >
                     {sub.image ? (
-                      <div className="h-36 flex items-center justify-center bg-gray-50">
+                      <div className="h-44 md:h-36 flex items-center justify-center bg-gray-50">
                         <img src={sub.image} alt={sub.title || sub.name} className="max-h-full max-w-full object-contain p-2 group-hover:scale-105 transition-transform duration-500" />
                       </div>
                     ) : (
-                      <div className="h-36 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                      <div className="h-44 md:h-36 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
                         <Package size={36} className="text-gray-200" />
                       </div>
                     )}
-                    <div className="p-4">
+                    <div className="p-4 md:p-4">
                       <h3 className="text-sm font-bold text-gray-900 group-hover:text-[#C3110C] transition-colors">
                         {sub.title || sub.name}
                       </h3>

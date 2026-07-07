@@ -36,12 +36,12 @@ export function AboutEvolution() {
     <section className="relative py-20 text-white overflow-hidden">
       {/* Background Image with Overlay */}
       <div
-        className="absolute inset-0 bg-cover bg-fixed bg-center z-0"
+        className="absolute inset-0 bg-cover bg-center z-0 md:bg-fixed"
         style={{
           backgroundImage: `url(${aboutImage})`,
         }}
       >
-        <div className="absolute inset-0 bg-[#05080F]/60 backdrop-blur-[0.5px]" />
+        <div className="absolute inset-0 bg-[#05080F]/60" />
       </div>
 
       <Container className="relative z-10">
@@ -58,11 +58,11 @@ export function AboutEvolution() {
           </motion.div>
         </div>
 
-        <div className="relative max-w-5xl mx-auto">
+        <div className="relative max-w-5xl mx-auto px-4 md:px-0">
           {/* Timeline Line */}
           <div className="absolute top-[16px] left-0 w-full h-px bg-white/10 hidden md:block" />
 
-          <div className="grid md:grid-cols-4 gap-8 relative z-10">
+          <div className="grid md:grid-cols-4 gap-6 md:gap-8 relative z-10">
             {evolution.map((item, i) => (
               <motion.div
                 key={item.year}
@@ -94,7 +94,7 @@ export function AboutEvolution() {
                   <h4 className="text-lg font-bold mb-2 group-hover:text-red-500 transition-colors">
                     {item.title}
                   </h4>
-                  <p className="text-gray-400 text-[13px] leading-relaxed max-w-[220px] mx-auto md:mx-0 group-hover:text-gray-200 transition-colors">
+                  <p className="text-gray-400 text-[13px] leading-relaxed max-w-[280px] md:max-w-[220px] mx-auto md:mx-0 group-hover:text-gray-200 transition-colors">
                     {item.desc}
                   </p>
                 </div>

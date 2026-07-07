@@ -4,14 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import environment from "@/enviroment/enviroment";
 import {
-  ChevronRight,
-  Download,
   ShoppingCart,
-  Minus,
-  Plus,
-  Info,
-  CheckCircle2,
-  FileText,
   ArrowLeft
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -53,10 +46,9 @@ export interface ProductData {
 export function ProductDetailView({ product, returnPath }: { product: ProductData, returnPath?: string }) {
   const navigate = useNavigate();
   // Initialize quantities from global inquiry context if items already exist
-  const { addItem, items } = useInquiry();
+  const { addItem } = useInquiry();
   const [activeTab, setActiveTab] = useState<"description" | "documents">("description");
   const [selectedImage, setSelectedImage] = useState(0);
-  const [error, setError] = useState<string | null>(null);
 
 
   const user = useSelector((state: RootState) => state.auth.user);
@@ -101,26 +93,6 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
     }
   }, [user, pendingDocUrl]);
 
-  const [quantities, setQuantities] = useState<Record<string, number>>(() => {
-    const initial: Record<string, number> = {};
-    product.options.forEach(opt => {
-      // Check if this specific partCode is already in the inquiry
-      const existingItem = items.find(item => item.partCode === opt.partCode);
-      initial[opt.partCode] = existingItem ? existingItem.qty : 0;
-    });
-    return initial;
-  });
-
-  const inquiryCount = Object.values(quantities).reduce((acc, val) => acc + val, 0);
-
-  const handleQtyChange = (code: string, delta: number) => {
-    setQuantities(prev => ({
-      ...prev,
-      [code]: Math.max(0, (prev[code] || 0) + delta)
-    }));
-    if (error) setError(null);
-  };
-
   const deriveSubcategory = (): string | undefined => {
     if (product.brandSubCategory && product.brandSubCategory !== "General") return product.brandSubCategory;
     if (!returnPath) return undefined;
@@ -134,44 +106,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
     return undefined;
   };
 
-  const handleAddToInquiry = () => {
-    if (inquiryCount === 0) {
-      setError("Please select at least one product quantity to proceed.");
-      return;
-    }
-
-    const subcategory = deriveSubcategory();
-
-    // Add each product with qty > 0 to the global inquiry
-    product.options.forEach(opt => {
-      const qty = quantities[opt.partCode];
-      if (qty > 0) {
-        addItem({
-          _id: product._id,
-          id: product.id,
-          category: product.category,
-          subcategory,
-          title: product.title,
-          image: product.mainImage,
-          partCode: opt.partCode,
-          specification: opt.specification,
-          qty: qty,
-          brand: product.brand,
-          returnPath: returnPath,
-        });
-      }
-    });
-
-    // Navigate to request quote page
-    navigate({ to: "/request-quote" });
-  };
-
   const handleQuickAdd = (opt: ProductOption) => {
-    if (quantities[opt.partCode] === 0) {
-      setError("Please increase quantity before adding to inquiry.");
-      return;
-    }
-
     const subcategory = deriveSubcategory();
 
     addItem({
@@ -183,7 +118,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
       image: product.mainImage,
       partCode: opt.partCode,
       specification: opt.specification,
-      qty: quantities[opt.partCode],
+      qty: 1,
       brand: product.brand,
       returnPath: returnPath,
     });
@@ -191,48 +126,63 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
     navigate({ to: "/request-quote" });
   };
 
-  // Build breadcrumbs properly for all product types
+  const slugToTitle = (slug: string): string => {
+    return slug
+      .split("-")
+      .filter(Boolean)
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  };
+
+  // Build breadcrumbs from the returnPath (the category page URL the user came from)
   const buildBreadcrumbs = () => {
     const crumbs: { name: string; href: string }[] = [
       { name: "Home", href: "/" },
       { name: "Products", href: "/products" },
     ];
 
-    if (product.category === "Building Management") {
-      crumbs.push({ name: "Building Management", href: "/products/building-management" });
-    } else if (product.category === "Surveillance (CCTV)") {
-      crumbs.push({ name: "Surveillance (CCTV)", href: "/products/surveillance" });
+    if (returnPath && returnPath.startsWith("/products/")) {
+      // Parse the full URL path to get each hierarchy level
+      const path = returnPath.replace(/^\/products\//, "").split("?")[0];
+      const segments = path.split("/").filter(Boolean);
+      let accumulated = "/products";
+
+      for (let i = 0; i < segments.length; i++) {
+        accumulated = `${accumulated}/${segments[i]}`;
+        crumbs.push({ name: slugToTitle(segments[i]), href: accumulated });
+      }
     } else {
-      // Access Control
-      crumbs.push({ name: "Access Control", href: "/products/access-control" });
+      // Fallback when no returnPath: use flat product fields
+      if (product.category === "Building Management") {
+        crumbs.push({ name: "Building Management", href: "/products/building-management" });
+      } else if (product.category === "Surveillance (CCTV)") {
+        crumbs.push({ name: "Surveillance (CCTV)", href: "/products/surveillance" });
+      } else {
+        crumbs.push({ name: "Access Control", href: "/products/access-control" });
 
-      if (product.brand === "Salto") {
-        crumbs.push({ name: "Salto", href: "/products/access-control/salto" });
-
-        // If returnPath points to a Salto sub-category page, derive the name from saltoProducts
-        if (returnPath && returnPath.startsWith("/products/access-control/salto/")) {
-          const saltoParentId = returnPath
-            .replace("/products/access-control/salto/", "")
-            .split("?")[0]
-            .split("/")[0];
-          const parentCategory = saltoProducts.find((p) => p.id === saltoParentId);
-          const subCatName = parentCategory?.title || product.brandSubCategory;
-          if (subCatName) {
-            crumbs.push({ name: subCatName, href: returnPath });
+        if (product.brand === "Salto") {
+          crumbs.push({ name: "Salto", href: "/products/access-control/salto" });
+          if (returnPath && returnPath.startsWith("/products/access-control/salto/")) {
+            const saltoParentId = returnPath
+              .replace("/products/access-control/salto/", "")
+              .split("?")[0]
+              .split("/")[0];
+            const parentCategory = saltoProducts.find((p) => p.id === saltoParentId);
+            const subCatName = parentCategory?.title || product.brandSubCategory;
+            if (subCatName) crumbs.push({ name: subCatName, href: returnPath });
+          } else if (product.brandSubCategory) {
+            crumbs.push({ name: product.brandSubCategory, href: product.brandSubCategoryLink || "#" });
           }
-        } else if (product.brandSubCategory) {
-          crumbs.push({ name: product.brandSubCategory, href: product.brandSubCategoryLink || "#" });
-        }
-
-      } else if (product.brand === "Honeywell") {
-        crumbs.push({ name: "Honeywell", href: "/products/access-control/honeywell" });
-        if (product.brandSubCategory) {
-          crumbs.push({ name: product.brandSubCategory, href: product.brandSubCategoryLink || "#" });
-        }
-      } else if (product.brand) {
-        crumbs.push({ name: product.brand, href: "#" });
-        if (product.brandSubCategory) {
-          crumbs.push({ name: product.brandSubCategory, href: product.brandSubCategoryLink || "#" });
+        } else if (product.brand === "Honeywell") {
+          crumbs.push({ name: "Honeywell", href: "/products/access-control/honeywell" });
+          if (product.brandSubCategory) {
+            crumbs.push({ name: product.brandSubCategory, href: product.brandSubCategoryLink || "#" });
+          }
+        } else if (product.brand) {
+          crumbs.push({ name: product.brand, href: "#" });
+          if (product.brandSubCategory) {
+            crumbs.push({ name: product.brandSubCategory, href: product.brandSubCategoryLink || "#" });
+          }
         }
       }
     }
@@ -408,97 +358,47 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
         </div>
 
         {/* ─── PRODUCT OPTIONS TABLE ─── */}
-        <div className="mb-8">
-          <div className="bg-[#1A3263] text-white px-8 py-5 rounded-t-sm font-semibold text-sm ">
-            Product Options & Specifications
-          </div>
-          <div className="overflow-x-auto border-x border-b border-gray-100">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-[#F8F9FA] text-gray-500 text-[12px] font-bold tracking-tight border-b border-gray-100">
+        {product.options.length > 0 && (
+          <div className="mb-8">
+            <div className="bg-[#1A3263] text-white px-8 py-5 rounded-t-sm font-semibold text-sm ">
+              Product Options & Specifications
+            </div>
+            <div className="overflow-x-auto border-x border-b border-gray-100">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-[#F8F9FA] text-gray-500 text-[12px] font-bold tracking-tight border-b border-gray-100">
                   <th className="px-8 py-5">Part Code</th>
                   <th className="px-8 py-5">Detailed Specification</th>
-                  <th className="px-8 py-5 text-center">Quantity</th>
                   <th className="px-8 py-5 text-center">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {product.options.map((opt, i) => (
-                  <tr key={opt.partCode} className="group hover:bg-[#FBFBFC] transition-colors">
-                    <td className="px-8 py-8 border-b border-gray-100 text-[13px] font-bold text-[#1A3263]">
-                      {opt.partCode}
-                    </td>
-                    <td className="px-8 py-8 border-b border-gray-100 text-[13px] text-gray-500 font-light whitespace-pre-line leading-relaxed">
-                      {opt.specification}
-                    </td>
-
-                    <td className="px-8 py-8 border-b border-gray-100">
-                      <div className="flex items-center justify-center gap-4 bg-white rounded-sm py-2 px-3 w-fit mx-auto border border-gray-200 shadow-sm">
-                        <button
-                          onClick={() => handleQtyChange(opt.partCode, -1)}
-                          className="text-gray-400 hover:text-[#C3110C] transition-colors"
-                        >
-                          <Minus size={12} />
-                        </button>
-                        <span className="text-[13px] font-bold text-[#1A3263] min-w-[24px] text-center">
-                          {quantities[opt.partCode]}
-                        </span>
-                        <button
-                          onClick={() => handleQtyChange(opt.partCode, 1)}
-                          className="text-gray-400 hover:text-[#C3110C] transition-colors"
-                        >
-                          <Plus size={12} />
-                        </button>
-                      </div>
-                    </td>
-                    <td className="px-8 py-8 border-b border-gray-100 text-center">
-                      <button
-                        onClick={() => handleQuickAdd(opt)}
-                        className="text-gray-200 hover:text-[#C3110C] transition-all transform hover:scale-110 cursor-pointer"
-                      >
-                        <ShoppingCart size={20} className={cn(quantities[opt.partCode] > 0 && "text-[#C3110C]")} />
-                      </button>
-                    </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {product.options.map((opt, i) => (
+                    <tr key={opt.partCode} className="group hover:bg-[#FBFBFC] transition-colors">
+                      <td className="px-8 py-8 border-b border-gray-100 text-[13px] font-bold text-[#1A3263]">
+                        {opt.partCode}
+                      </td>
+                      <td className="px-8 py-8 border-b border-gray-100 text-[13px] text-gray-500 font-light whitespace-pre-line leading-relaxed">
+                        {opt.specification}
+                      </td>
+
+                      <td className="px-8 py-8 border-b border-gray-100 text-center">
+                        <button
+                          onClick={() => handleQuickAdd(opt)}
+                          className="text-gray-200 hover:text-[#C3110C] transition-all transform hover:scale-110 cursor-pointer"
+                        >
+                          <ShoppingCart size={20} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* ─── INQUIRY ACTION BUTTON ─── */}
-        <div className="flex flex-col items-end mb-24">
-          <AnimatePresence>
-            {inquiryCount > 0 && (
-              <motion.button
-                key="floating-btn"
-                onClick={handleAddToInquiry}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                className="fixed bottom-6 right-6 z-50 bg-[#162E93] hover:bg-[#0E1E61] text-white px-6 py-3 rounded-sm shadow-2xl flex items-center gap-3 transition-all"
-              >
-                <div className="relative">
-                  <ShoppingCart size={18} />
-                  <span className="absolute -top-2.5 -right-2.5 w-4 h-4 bg-[#C3110C] text-[9px] flex items-center justify-center rounded-full border-2 border-white font-bold">
-                    {inquiryCount}
-                  </span>
-                </div>
-                <span className="text-sm font-bold">Add to inquiry</span>
-              </motion.button>
-            )}
-          </AnimatePresence>
 
-          {error && (
-            <motion.p
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-[#D62828] text-sm font-bold mt-3"
-            >
-              {error}
-            </motion.p>
-          )}
-        </div>
       </Container>
       <AuthModal
         isOpen={isAuthOpen}

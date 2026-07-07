@@ -27,12 +27,12 @@ function FireAlarmPage() {
         <div className="bg-white overflow-hidden scroll-smooth">
 
             {/* ─── HERO ─── */}
-            <section className="relative min-h-[85vh] flex items-center pt-19 bg-black overflow-hidden">
+            <section className="relative min-h-[70vh] md:min-h-[85vh] flex items-center pt-28 md:pt-32 pb-12 md:pb-16 bg-black overflow-hidden">
                 {/* Optional dark overlay background */}
                 <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/70 z-0" />
 
                 <Container className="relative z-10">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                    <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
 
                         {/* Left Content */}
                         <motion.div
@@ -41,23 +41,23 @@ function FireAlarmPage() {
                             transition={{ duration: 0.8 }}
                             className="text-white max-w-3xl"
                         >
-                            <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-4 md:mb-6">
                                 Intelligent <br />
                                 <span className="text-red-500">Fire Safety</span> Solutions
                             </h1>
 
-                            <p className="text-base text-white/70 max-w-2xl leading-relaxed">
+                            <p className="text-sm md:text-base text-white/70 max-w-2xl leading-relaxed">
                                 At Intersys Solutions Co., Ltd, we specialize in delivering intelligent fire alarm systems
                                 designed to protect lives, assets, and infrastructure. As an authorized Honeywell Engineering
                                 System Distributor, we offer trusted global brands like NOTIFIER, ESSER, and System Sensor
                                 by Honeywell — bringing proven global technology to your local projects.
                             </p>
 
-                            <div className="flex flex-wrap gap-4 pt-6">
+                            <div className="flex flex-wrap gap-3 md:gap-4 pt-4 md:pt-6">
                                 {["Early Detection", "Fast Response", "System Integration"].map((tag) => (
                                     <span
                                         key={tag}
-                                        className="px-4 py-1.5 border border-white/30 text-white/80 text-sm rounded-md backdrop-blur-sm"
+                                        className="px-3 md:px-4 py-1.5 border border-white/30 text-white/80 text-xs md:text-sm rounded-md backdrop-blur-sm"
                                     >
                                         {tag}
                                     </span>
@@ -75,7 +75,7 @@ function FireAlarmPage() {
                             <img
                                 src="https://www.intersys-solutions.com/website_asset/fire-alarm-new.png"
                                 alt="Fire Safety Diagram"
-                                className="w-full max-w-2xl object-contain"
+                                className="w-full max-w-md md:max-w-2xl object-contain"
                             />
                         </motion.div>
                     </div>
@@ -148,7 +148,7 @@ function FireAlarmPage() {
                             viewport={{ once: true }}
                             className="space-y-8"
                         >
-                            <h2 className="text-4xl md:text-5xl font-bold leading-tight">Unified Systems Integration</h2>
+                            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight">Unified Systems Integration</h2>
                             <p className="text-white/60 text-md leading-relaxed font-light">
                                 We integrate Honeywell's world-class fire safety technologies — NOTIFIER, ESSER, and
                                 System Sensor — to deliver reliable protection fully compliant with international standards.
@@ -191,7 +191,7 @@ function FireAlarmPage() {
             <section className="py-24 bg-white">
                 <Container>
                     <div className="text-center mb-16 space-y-4">
-                        <h2 className="text-4xl font-bold text-[#1A3263]">Fire Alarm Systems</h2>
+                        <h2 className="text-2xl md:text-4xl font-bold text-[#1A3263]">Fire Alarm Systems</h2>
                         <p className="text-gray-500 max-w-2xl mx-auto">
                             Advanced protection for your safety — engineered to detect, respond, and integrate seamlessly.
                         </p>
@@ -239,7 +239,7 @@ function FireAlarmPage() {
 
                     {/* HEADER */}
                     <div className="text-center mb-14 space-y-4">
-                        <h2 className="text-4xl font-bold text-[#1A3263]">
+                        <h2 className="text-2xl md:text-4xl font-bold text-[#1A3263]">
                             Advanced Fire Safety Systems
                         </h2>
 

@@ -81,14 +81,14 @@ export function TechnicalTips() {
                 <div className="absolute inset-0 bg-black/55" />
             </div>
 
-            <Container className="py-24">
-                <div className="max-w-4xl mx-auto text-center mb-20">
+            <Container className="py-16 md:py-24">
+                <div className="max-w-4xl mx-auto text-center mb-12 md:mb-20">
                     {/* TITLE */}
-                    <h1 className="text-4xl font-bold text-gray-900 mb-6 font-display tracking-tight">
+                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6 font-display tracking-tight">
                         Technical Tips
                     </h1>
 
-                    <p className="text-gray-500 text-lg leading-relaxed">
+                    <p className="text-gray-500 text-base md:text-lg leading-relaxed">
                         Browse technical insights and practical solutions for different systems,
                         from building management to integrated technologies.
                     </p>
@@ -101,7 +101,7 @@ export function TechnicalTips() {
                             <div className="animate-spin w-8 h-8 border-2 border-[#C3110C] border-t-transparent rounded-full" />
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-16">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-12 md:gap-y-16">
 
                             {allCategories.map((cat, idx) => {
                                 const catTips = grouped[cat] || [];
@@ -109,7 +109,7 @@ export function TechnicalTips() {
                                 const IconComponent = meta.icon;
 
                                 return (
-                                    <div key={idx} className="flex gap-5">
+                                    <div key={idx} className="flex flex-col md:flex-row items-center md:items-start gap-5 text-center md:text-left">
 
                                         {/* ICON */}
                                         <div className="pt-1">
@@ -121,7 +121,7 @@ export function TechnicalTips() {
                                         </div>
 
                                         {/* TEXT */}
-                                        <div className="flex-1">
+                                        <div>
                                             <h2 className="text-sm font-semibold text-gray-700 mb-3">
                                                 {cat}
                                             </h2>

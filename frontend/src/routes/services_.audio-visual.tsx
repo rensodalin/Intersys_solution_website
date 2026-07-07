@@ -33,11 +33,11 @@ function AudioVisualPage() {
         <div className="bg-white overflow-hidden scroll-smooth">
 
             {/* ─── HERO ─── */}
-            <section className="relative min-h-[70vh] flex items-center pt-19 bg-black overflow-hidden">
+            <section className="relative min-h-[70vh] md:min-h-[70vh] flex items-center pt-28 md:pt-32 pb-12 md:pb-16 bg-black overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/70 z-0" />
 
                 <Container className="relative z-10">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                    <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
 
                         {/* Left Content */}
                         <motion.div
@@ -46,20 +46,20 @@ function AudioVisualPage() {
                             transition={{ duration: 0.8 }}
                             className="text-white max-w-3xl"
                         >
-                            <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-4 md:mb-6">
                                 Delivering Advanced <br />
                                 <span className="text-red-500">Audio Visual</span> Solutions
                             </h1>
 
-                            <p className="text-base text-white/70 max-w-2xl leading-relaxed">
+                            <p className="text-sm md:text-base text-white/70 max-w-2xl leading-relaxed">
                                 Transform your spaces with cutting-edge technology that enhances communication, collaboration, and engagement.
                             </p>
 
-                            <div className="flex flex-wrap gap-4 pt-6">
+                            <div className="flex flex-wrap gap-3 md:gap-4 pt-4 md:pt-6">
                                 {["Video Conferencing", "Digital Signage", "Sound Systems"].map((tag) => (
                                     <span
                                         key={tag}
-                                        className="px-4 py-1.5 border border-white/30 text-white/80 text-sm rounded-md backdrop-blur-sm"
+                                        className="px-3 md:px-4 py-1.5 border border-white/30 text-white/80 text-xs md:text-sm rounded-md backdrop-blur-sm"
                                     >
                                         {tag}
                                     </span>
@@ -77,7 +77,7 @@ function AudioVisualPage() {
                             <img
                                 src={avHero}
                                 alt="AV Solutions Overview"
-                                className="w-full max-w-2xl object-contain"
+                                className="w-full max-w-md md:max-w-2xl object-contain"
                             />
                         </motion.div>
                     </div>
@@ -407,7 +407,7 @@ function AudioVisualPage() {
             <section className="py-28 bg-white overflow-hidden">
                 <Container>
 
-                    <div className="grid lg:grid-cols-2 gap-20 items-center">
+                    <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
 
                         {/* LEFT CONTENT */}
                         <div className="space-y-10 order-2 lg:order-1">
@@ -415,12 +415,12 @@ function AudioVisualPage() {
                             <div className="flex items-center gap-4 text-red-600">
                                 <Smartphone size={32} />
 
-                                <h2 className="text-4xl font-bold text-[#1A3263]">
+                                <h2 className="text-3xl md:text-4xl font-bold text-[#1A3263]">
                                     AV Control Systems
                                 </h2>
                             </div>
 
-                            <p className="text-gray-500 text-lg leading-relaxed">
+                            <p className="text-gray-500 text-base md:text-lg leading-relaxed">
                                 Centralized room automation for non-technical users.
                             </p>
 
@@ -447,13 +447,13 @@ function AudioVisualPage() {
                         </div>
 
                         {/* RIGHT IMAGE STACK (IMPROVED PROPORTION + LESS CHAOS) */}
-                        <div className="relative h-[520px] order-1 lg:order-2">
+                        <div className="relative h-[300px] sm:h-[400px] md:h-[520px] order-1 lg:order-2">
 
                             {/* BACK */}
                             <motion.div
                                 initial={{ opacity: 0, x: 20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
-                                className="absolute top-6 right-0 w-[60%] z-10"
+                                className="absolute top-4 md:top-6 right-0 w-[65%] md:w-[60%] z-10"
                             >
                                 <img
                                     src="https://static.wixstatic.com/media/3d5958_a6d3328aaa8746199fc7f724a1b3f56a~mv2.png"
@@ -467,7 +467,7 @@ function AudioVisualPage() {
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 transition={{ delay: 0.15 }}
-                                className="absolute bottom-14 left-0 w-[52%] z-20"
+                                className="absolute bottom-10 md:bottom-14 left-0 w-[58%] md:w-[52%] z-20"
                             >
                                 <img
                                     src="https://static.wixstatic.com/media/3d5958_54289234ca7b41cfadbf00febe6062b3~mv2.png"
@@ -481,7 +481,7 @@ function AudioVisualPage() {
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: 0.25 }}
-                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] z-30"
+                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[45%] md:w-[40%] z-30"
                             >
                                 <img
                                     src="https://static.wixstatic.com/media/3d5958_851a4d48191e40efa210cc48b2ee2a00~mv2.png"
@@ -495,7 +495,7 @@ function AudioVisualPage() {
                                 initial={{ opacity: 0, y: 15 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.35 }}
-                                className="absolute bottom-0 right-8 w-[35%] z-40"
+                                className="absolute bottom-0 right-4 md:right-8 w-[40%] md:w-[35%] z-40"
                             >
                                 <img
                                     src="https://static.wixstatic.com/media/3d5958_f86f36bb65154e92b0053607453bc657~mv2.png"

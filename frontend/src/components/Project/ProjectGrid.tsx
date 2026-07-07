@@ -80,7 +80,7 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
                                         duration: 0.65,
                                         ease: [0.25, 0.1, 0.25, 1],
                                     }}
-                                    className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center group cursor-default"
+                                    className="grid md:grid-cols-2 gap-8 md:gap-10 lg:gap-16 items-center group cursor-default"
                                 >
 
                                     {/* IMAGE */}
@@ -93,7 +93,7 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
                                             <img
                                                 src={p.image}
                                                 alt={p.title}
-                                                className="w-full h-[460px] object-cover transition-transform duration-700 ease-out"
+                                                className="w-full h-[280px] md:h-[460px] object-cover transition-transform duration-700 ease-out"
                                             />
 
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
@@ -115,18 +115,18 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
                                         </span>
 
                                         {/* title */}
-                                        <h2 className="text-2xl md:text-4xl leading-tight font-bold text-white mb-5">
+                                        <h2 className="text-xl md:text-4xl leading-tight font-bold text-white mb-4 md:mb-5">
                                             {p.title}
                                         </h2>
 
                                         {/* accent line */}
                                         <div
-                                            className={`w-10 h-0.5 bg-[#D62828] mb-5 ${isReversed ? "md:self-end" : ""
+                                            className={`w-10 h-0.5 bg-[#D62828] mb-4 md:mb-5 ${isReversed ? "md:self-end" : ""
                                                 }`}
                                         />
 
                                         {/* client & location */}
-                                        <div className={`flex flex-col gap-1 mb-6 text-[13px] ${isReversed ? "md:items-end" : ""}`}>
+                                        <div className={`flex flex-col gap-1 mb-4 md:mb-6 text-[13px] ${isReversed ? "md:items-end" : ""}`}>
                                             {p.client && (
                                                 <p className="text-white/80">
                                                     <span className="text-gray-500 font-medium">Client:</span> {p.client}
@@ -140,7 +140,7 @@ export function ProjectGrid({ projects, viewMode }: ProjectGridProps) {
                                         </div>
 
                                         {/* DESCRIPTION */}
-                                        <p className="text-gray-400 leading-relaxed text-[15px] max-w-md mb-8">
+                                        <p className="text-gray-400 leading-relaxed text-[14px] md:text-[15px] max-w-md mb-6 md:mb-8">
                                             {p.desc}
                                         </p>
 

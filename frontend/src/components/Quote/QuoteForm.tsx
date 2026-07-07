@@ -283,18 +283,18 @@ export function QuoteForm() {
                     <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1A]/80 via-[#0A0F1A]/60 to-[#0A0F1A]" />
                 </div>
 
-                <div className="max-w-7xl mx-auto px-6 pt-35 pb-48 relative z-10">
+                <div className="max-w-7xl mx-auto px-4 md:px-6 pt-28 md:pt-35 pb-32 md:pb-48 relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 24 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         className="max-w-3xl"
                     >
-                        <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight mb-6 font-display">
+                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4 md:mb-6 font-display">
                             Request a<br />
                             <span className="text-red-600">Custom Quote</span>
                         </h1>
-                        <p className="text-gray-300 text-lg leading-relaxed max-w-xl">
+                        <p className="text-gray-300 text-sm md:text-lg leading-relaxed max-w-xl">
                             Tell us your requirements and our engineering team will design a
                             tailored solution with accurate costing and technical expertise.
                         </p>
@@ -303,7 +303,7 @@ export function QuoteForm() {
             </div>
 
             {/* ── BODY: STICKY SIDEBAR + FORM ── */}
-            <div className="max-w-7xl mx-auto px-4 lg:px-8 -mt-32 relative z-20 pb-24">
+            <div className="max-w-7xl mx-auto px-4 lg:px-8 -mt-16 md:-mt-32 relative z-20 pb-16 md:pb-24">
                 <div className="flex flex-col lg:flex-row gap-6 items-start">
 
                     {/* ── STICKY SIDEBAR ── */}
@@ -314,7 +314,7 @@ export function QuoteForm() {
                             initial={{ opacity: 0, x: -24 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="bg-white rounded-sm border border-gray-200 shadow-sm p-6"
+                            className="bg-white rounded-sm border border-gray-200 shadow-sm p-4 md:p-6"
                         >
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-md font-bold text-[#1A3263]">Selected Products</h3>
@@ -326,26 +326,26 @@ export function QuoteForm() {
                             <div className="space-y-5 max-h-[450px] overflow-y-auto pr-2 custom-scrollbar">
                                 {items.length > 0 ? (
                                     items.map((item: any) => (
-                                        <div key={item.partCode} className="flex gap-4 group items-center py-2">
+                                        <div key={item.partCode} className="flex gap-3 group items-center py-2">
                                             <Link
                                                 to={`/products/detail/${item.id}`}
-                                                className="w-14 h-14 bg-[#F8F9FA] rounded-sm flex items-center justify-center p-2 shrink-0 border border-gray-200 hover:border-[#162E93] transition-all cursor-pointer"
+                                                className="w-12 h-12 md:w-14 md:h-14 bg-[#F8F9FA] rounded-sm flex items-center justify-center p-2 shrink-0 border border-gray-200 hover:border-[#162E93] transition-all cursor-pointer"
                                             >
                                                 <img src={item.image} className="w-full h-full object-contain mix-blend-multiply" />
                                             </Link>
                                             <div className="flex-1 min-w-0">
                                                 <Link to={`/products/detail/${item.id}`} className="hover:underline">
-                                                    <p className="text-sm font-bold text-gray-800 truncate leading-tight">{item.title}</p>
+                                                    <p className="text-xs md:text-sm font-bold text-gray-800 truncate leading-tight">{item.title}</p>
                                                 </Link>
-                                                <p className="text-[12px] text-gray-400 truncate mt-0.5">{item.partCode}</p>
-                                                <p className="text-[12px] text-[#D62828] font-bold mt-1">Qty: {item.qty}</p>
+                                                <p className="text-[11px] md:text-[12px] text-gray-400 truncate mt-0.5">{item.partCode}</p>
+                                                <p className="text-[11px] md:text-[12px] text-[#D62828] font-bold mt-1">Qty: {item.qty}</p>
                                             </div>
                                             <button
                                                 onClick={() => removeItem(item.partCode)}
-                                                className="p-2 text-gray-300 hover:text-[#D62828] hover:bg-red-50 rounded-lg transition-all"
+                                                className="p-2 text-gray-300 hover:text-[#D62828] hover:bg-red-50 rounded-lg transition-all shrink-0"
                                                 title="Remove product"
                                             >
-                                                <Trash2 size={18} />
+                                                <Trash2 size={16} />
                                             </button>
                                         </div>
                                     ))
@@ -387,10 +387,10 @@ export function QuoteForm() {
                         className="flex-1 bg-white rounded-sm shadow-sm border border-gray-200 overflow-hidden"
                     >
                         {/* form header */}
-                        <div className="border-b border-gray-100 px-8 md:px-12 py-5 flex items-center justify-between">
+                        <div className="border-b border-gray-100 px-6 md:px-12 py-5 flex items-center justify-between">
                             <div>
-                                <h2 className="text-base font-bold text-[#1A3263]">Quote Request Form</h2>
-                                <p className="text-xs text-gray-400 mt-0.5">All fields marked are required</p>
+                                <h2 className="text-sm md:text-base font-bold text-[#1A3263]">Quote Request Form</h2>
+                                <p className="text-[11px] md:text-xs text-gray-400 mt-0.5">All fields marked are required</p>
                             </div>
                             <div className="hidden md:flex items-center gap-2">
                                 {formSections.map((s, i) => (
@@ -406,7 +406,7 @@ export function QuoteForm() {
                             </div>
                         </div>
 
-                        <form onSubmit={handleSubmit(onSubmit)} className="p-8 md:p-12 space-y-14">
+                        <form onSubmit={handleSubmit(onSubmit)} className="p-6 md:p-12 space-y-10 md:space-y-14">
                             <UserSection register={register} errors={errors} />
                             <InterestedSection
                                 register={register}
@@ -420,8 +420,8 @@ export function QuoteForm() {
                             <CompanySection register={register} errors={errors} setValue={setValue} watch={watch} />
 
                             {/* submit */}
-                            <div className="border-t border-gray-100 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-                                <div className="flex items-center gap-5 text-xs text-gray-400">
+                            <div className="border-t border-gray-100 pt-6 md:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 md:gap-6">
+                                <div className="flex flex-col md:flex-row items-center gap-3 md:gap-5 text-[11px] md:text-xs text-gray-400">
                                     <span className="flex items-center gap-1.5">
                                         <Shield className="w-3.5 h-3.5 text-gray-300" />
                                         Secure & Confidential
@@ -431,11 +431,11 @@ export function QuoteForm() {
                                         Response in 1–2 business days
                                     </span>
                                 </div>
-                                <div className="flex flex-col items-end">
+                                <div className="flex flex-col items-center md:items-end w-full md:w-auto">
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="group inline-flex items-center gap-3 px-10 py-4 rounded-sm bg-[#162E93] text-white text-[14px] font-bold hover:bg-[#0E1E61] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                                        className="group inline-flex items-center gap-3 px-8 md:px-10 py-3 md:py-4 rounded-sm bg-[#162E93] text-white text-[13px] md:text-[14px] font-bold hover:bg-[#0E1E61] transition-colors disabled:opacity-60 disabled:cursor-not-allowed w-full md:w-auto justify-center"
                                     >
                                         {isSubmitting ? (
                                             <>

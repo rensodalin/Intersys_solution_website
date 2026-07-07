@@ -119,10 +119,10 @@ export function DocumentCenter() {
             <Container>
 
                 {/* TITLE */}
-                <div className="border-b-2 border-[#0A0F1A] py-16 pt-40 grid grid-cols-12 gap-4">
+                <div className="border-b-2 border-[#0A0F1A] py-10 md:py-16 pt-28 md:pt-40 grid grid-cols-12 gap-4">
 
                     <div className="col-span-12 lg:col-span-8">
-                        <h1 className="text-2xl lg:text-[45px] text-[#111FA2] font-extrabold  tracking-tight">
+                        <h1 className="text-3xl md:text-[45px] text-[#111FA2] font-extrabold tracking-tight">
                             Document
                             <br />
                             <span className="text-[#D62828]">Center</span>
@@ -137,14 +137,14 @@ export function DocumentCenter() {
 
                         <div className="flex gap-8">
                             <div>
-                                <p className="text-3xl font-bold text-[#0A0F1A]">05</p>
+                                <p className="text-2xl md:text-3xl font-bold text-[#0A0F1A]">05</p>
                                 <p className="text-[11px] text-gray-400">
                                     Total Files
                                 </p>
                             </div>
                             <div className="w-px bg-gray-300" />
                             <div>
-                                <p className="text-3xl font-bold text-[#0A0F1A]">04</p>
+                                <p className="text-2xl md:text-3xl font-bold text-[#0A0F1A]">04</p>
                                 <p className="text-[11px] text-gray-400">
                                     Categories
                                 </p>
@@ -157,19 +157,19 @@ export function DocumentCenter() {
                 {/* PINNED */}
                 <div className="border-b border-gray-300 grid grid-cols-12">
 
-                    <div className="col-span-12 lg:col-span-2 border-r border-gray-300 py-8 pr-6 flex flex-col justify-between">
+                    <div className="col-span-12 lg:col-span-2 border-b lg:border-b-0 lg:border-r border-gray-300 py-6 lg:py-8 px-6 lg:pr-6 flex flex-col justify-between">
                         <span className="text-[11px] text-[#D62828] font-bold">
                             Featured
                         </span>
                     </div>
 
-                    <div className="col-span-12 lg:col-span-7 py-8 px-8 border-r border-gray-300">
+                    <div className="col-span-12 lg:col-span-7 py-6 lg:py-8 px-6 lg:px-8 border-b lg:border-b-0 lg:border-r border-gray-300">
 
                         <p className="text-[11px] text-gray-400 mb-4">
                             Corporate Profile
                         </p>
 
-                        <h2 className="text-2xl font-bold text-[#0A0F1A] leading-tight tracking-tight mb-3">
+                        <h2 className="text-xl md:text-2xl font-bold text-[#0A0F1A] leading-tight tracking-tight mb-3">
                             Intersys Systems — Corporate Overview
                         </h2>
 
@@ -179,7 +179,7 @@ export function DocumentCenter() {
 
                     </div>
 
-                    <div className="col-span-12 lg:col-span-3 py-8 pl-8 flex flex-col justify-between">
+                    <div className="col-span-12 lg:col-span-3 py-6 lg:py-8 px-6 lg:pl-8 flex flex-col justify-between">
 
                         <img
                             src={companyImg}
@@ -221,13 +221,13 @@ export function DocumentCenter() {
                         ))}
                     </div>
 
-                    <div className="relative">
+                    <div className="relative w-full md:w-auto">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
                         <input
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             placeholder="Search..."
-                            className="pl-9 pr-4 py-2 border border-gray-300 text-xs w-56 focus:outline-none"
+                            className="pl-9 pr-4 py-2 border border-gray-300 text-xs w-full md:w-56 focus:outline-none"
                         />
                     </div>
 
@@ -248,7 +248,7 @@ export function DocumentCenter() {
                                     {doc.no}
                                 </div>
 
-                                <div className="col-span-11 md:col-span-5">
+                                <div className="col-span-9 md:col-span-5">
                                     <h3 className="text-sm font-bold text-[#0A0F1A] mb-1">
                                         {doc.title}
                                     </h3>
@@ -270,7 +270,7 @@ export function DocumentCenter() {
                                     {doc.size}
                                 </div>
 
-                                <div className="col-span-1 flex justify-end">
+                                <div className="col-span-2 md:col-span-1 flex justify-end items-start">
                                     <button
                                         onClick={() => {
                                             if (doc.url === "#") return;

@@ -44,8 +44,8 @@ export const InputField = React.forwardRef(
             <input
                 ref={ref}
                 {...props}
-                className={`w-full px-4 py-3 rounded-sm border ${error ? "border-[#D62828] bg-red-50" : "border-gray-200"
-                    } bg-[#F8F9FA] text-[13px] text-[#0A0F1A] focus:outline-none focus:border-[#162E93] transition-colors`}
+                className={`w-full px-3 md:px-4 py-2.5 md:py-3 rounded-sm border ${error ? "border-[#D62828] bg-red-50" : "border-gray-200"
+                    } bg-[#F8F9FA] text-[12px] md:text-[13px] text-[#0A0F1A] focus:outline-none focus:border-[#162E93] transition-colors`}
             />
 
             {error && <p className="text-[11px] font-bold text-[#D62828]">{error}</p>}
@@ -77,20 +77,20 @@ export function InterestedSection({ register, control, watch, errors, categories
     });
 
     return (
-        <section className="space-y-8">
+        <section className="space-y-6 md:space-y-8">
 
             {/* HEADER */}
-            <div className="border-l-4 border-[#162E93] pl-4 mb-8">
-                <h2 className="text-lg font-bold text-[#1A3263]">
+            <div className="border-l-4 border-[#162E93] pl-4 mb-4 md:mb-8">
+                <h2 className="text-base md:text-lg font-bold text-[#1A3263]">
                     Your Requirements
                 </h2>
-                <p className="text-xs text-gray-500 mt-1 font-light">
+                <p className="text-[11px] md:text-xs text-gray-500 mt-1 font-light">
                     Select product categories, sections, or specific items you need
                 </p>
             </div>
 
             {/* CATEGORIES */}
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8">
 
                 <div className="space-y-4">
                     <h3 className="text-[14px] font-bold text-[#1A3263] border-b border-gray-100 pb-2">
@@ -107,9 +107,9 @@ export function InterestedSection({ register, control, watch, errors, categories
                     ]).map((text) => (
                         <label
                             key={text}
-                            className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-sm border border-gray-200 hover:border-[#162E93] transition-colors cursor-pointer"
-                        >
-                            <span className="text-[#0A0F1A] text-[13px] font-medium">
+                                    className="flex items-center justify-between p-2.5 md:p-3 bg-[#F8F9FA] rounded-sm border border-gray-200 hover:border-[#162E93] transition-colors cursor-pointer"
+                                >
+                                    <span className="text-[#0A0F1A] text-[12px] md:text-[13px] font-medium">
                                 {text}
                             </span>
                             <input
@@ -129,7 +129,7 @@ export function InterestedSection({ register, control, watch, errors, categories
                         Product sections
                     </h3>
 
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {(sections || [
                             "Controllers & Control Panels",
                             "Software & Platforms",
@@ -173,50 +173,50 @@ export function InterestedSection({ register, control, watch, errors, categories
 
                 <div className="overflow-x-auto border border-gray-200 rounded-sm">
                     <table className="w-full text-sm">
-                        <thead className="bg-[#F8F9FA] text-[12px] font-bold text-gray-600 border-b border-gray-200">
+                        <thead className="bg-[#F8F9FA] text-[11px] md:text-[12px] font-bold text-gray-600 border-b border-gray-200">
                             <tr>
-                                <th className="p-4 text-left">Qty</th>
-                                <th className="p-4 text-left">Product</th>
-                                <th className="p-4 text-left">Description</th>
-                                <th className="p-4 text-left">Application</th>
-                                <th className="p-4" />
+                                <th className="p-2 md:p-4 text-left">Qty</th>
+                                <th className="p-2 md:p-4 text-left">Product</th>
+                                <th className="p-2 md:p-4 text-left">Description</th>
+                                <th className="p-2 md:p-4 text-left">Application</th>
+                                <th className="p-2 md:p-4" />
                             </tr>
                         </thead>
 
                         <tbody>
                             {fields.map((field, index) => (
                                 <tr key={field.id} className="border-b border-gray-100 last:border-0 hover:bg-[#FBFBFC] transition-colors">
-                                    <td className="p-3">
+                                    <td className="p-1.5 md:p-3">
                                         <input
                                             {...register(`products.${index}.qty`)}
-                                            className={`w-full p-2 border rounded-sm text-[13px] focus:outline-none ${errors.products?.[index]?.qty ? "border-[#D62828] bg-red-50" : "border-gray-200 bg-white focus:border-[#162E93]"}`}
+                                            className={`w-full p-1.5 md:p-2 border rounded-sm text-[12px] md:text-[13px] focus:outline-none ${errors.products?.[index]?.qty ? "border-[#D62828] bg-red-50" : "border-gray-200 bg-white focus:border-[#162E93]"}`}
                                         />
                                     </td>
-                                    <td className="p-3">
+                                    <td className="p-1.5 md:p-3">
                                         <input
                                             {...register(`products.${index}.productNo`)}
-                                            className={`w-full p-2 border rounded-sm text-[13px] focus:outline-none ${errors.products?.[index]?.productNo ? "border-[#D62828] bg-red-50" : "border-gray-200 bg-white focus:border-[#162E93]"}`}
+                                            className={`w-full p-1.5 md:p-2 border rounded-sm text-[12px] md:text-[13px] focus:outline-none ${errors.products?.[index]?.productNo ? "border-[#D62828] bg-red-50" : "border-gray-200 bg-white focus:border-[#162E93]"}`}
                                         />
                                     </td>
-                                    <td className="p-3">
+                                    <td className="p-1.5 md:p-3">
                                         <input
                                             {...register(`products.${index}.description`)}
-                                            className={`w-full p-2 border rounded-sm text-[13px] focus:outline-none ${errors.products?.[index]?.description ? "border-[#D62828] bg-red-50" : "border-gray-200 bg-white focus:border-[#162E93]"}`}
+                                            className={`w-full p-1.5 md:p-2 border rounded-sm text-[12px] md:text-[13px] focus:outline-none ${errors.products?.[index]?.description ? "border-[#D62828] bg-red-50" : "border-gray-200 bg-white focus:border-[#162E93]"}`}
                                         />
                                     </td>
-                                    <td className="p-3">
+                                    <td className="p-1.5 md:p-3">
                                         <input
                                             {...register(`products.${index}.application`)}
-                                            className={`w-full p-2 border rounded-sm text-[13px] focus:outline-none ${errors.products?.[index]?.application ? "border-[#D62828] bg-red-50" : "border-gray-200 bg-white focus:border-[#162E93]"}`}
+                                            className={`w-full p-1.5 md:p-2 border rounded-sm text-[12px] md:text-[13px] focus:outline-none ${errors.products?.[index]?.application ? "border-[#D62828] bg-red-50" : "border-gray-200 bg-white focus:border-[#162E93]"}`}
                                         />
                                     </td>
-                                    <td className="p-3 text-center">
+                                    <td className="p-1.5 md:p-3 text-center">
                                         <button
                                             type="button"
                                             onClick={() => remove(index)}
                                             className="text-gray-300 hover:text-[#D62828] transition-colors"
                                         >
-                                            <Trash2 size={16} />
+                                            <Trash2 size={14} />
                                         </button>
                                     </td>
                                 </tr>
@@ -251,28 +251,28 @@ export function InterestedSection({ register, control, watch, errors, categories
 ──────────────────────────────────────────── */
 export function UserSection({ register, errors }: SectionProps) {
     return (
-        <section className="space-y-6 pt-6 border-t">
+        <section className="space-y-5 md:space-y-6 pt-5 md:pt-6 border-t">
 
-            <div className="border-l-4 border-[#162E93] pl-4 mb-8">
-                <h2 className="text-lg font-bold text-[#1A3263]">
+            <div className="border-l-4 border-[#162E93] pl-4 mb-4 md:mb-8">
+                <h2 className="text-base md:text-lg font-bold text-[#1A3263]">
                     Contact Information
                 </h2>
-                <p className="text-xs text-gray-500 mt-1 font-light">
+                <p className="text-[11px] md:text-xs text-gray-500 mt-1 font-light">
                     So our team can get back to you quickly
                 </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                 <InputField label="Full Name" {...register("name")} error={errors.name?.message} />
                 <InputField label="Company Name" {...register("company")} error={errors.company?.message} />
 
                 <div className="space-y-2">
-                    <label className="text-[13px] font-semibold text-gray-700">
+                    <label className="text-[12px] md:text-[13px] font-semibold text-gray-700">
                         Job Title
                     </label>
                     <select
                         {...register("title")}
-                        className={`w-full px-4 py-3 rounded-sm border appearance-none text-[13px] focus:outline-none transition-colors ${errors.title ? "border-[#D62828] bg-red-50 text-red-900" : "border-gray-200 bg-[#F8F9FA] text-[#0A0F1A] focus:border-[#162E93]"}`}
+                        className={`w-full px-3 md:px-4 py-2.5 md:py-3 rounded-sm border appearance-none text-[12px] md:text-[13px] focus:outline-none transition-colors ${errors.title ? "border-[#D62828] bg-red-50 text-red-900" : "border-gray-200 bg-[#F8F9FA] text-[#0A0F1A] focus:border-[#162E93]"}`}
                     >
                         <option value="">Select your role</option>
                         {jobTitles.map((job) => (
@@ -289,14 +289,14 @@ export function UserSection({ register, errors }: SectionProps) {
                 <InputField label="Location" {...register("address")} error={errors.address?.message} />
 
                 <div className="space-y-2">
-                    <label className="text-[13px] font-semibold text-gray-700">
+                    <label className="text-[12px] md:text-[13px] font-semibold text-gray-700">
                         Preferred Contact Method
                     </label>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-2 md:gap-3">
                         {["Email", "Phone", "Either"].map((method) => (
                             <label
                                 key={method}
-                                className="flex items-center gap-2 px-4 py-2.5 rounded-sm border border-gray-200 bg-[#F8F9FA] text-[13px] font-medium text-gray-700 hover:border-[#162E93] transition-colors cursor-pointer has-checked:bg-[#162E93] has-checked:text-white has-checked:border-[#162E93]"
+                                className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-sm border border-gray-200 bg-[#F8F9FA] text-[12px] md:text-[13px] font-medium text-gray-700 hover:border-[#162E93] transition-colors cursor-pointer has-checked:bg-[#162E93] has-checked:text-white has-checked:border-[#162E93]"
                             >
                                 <input
                                     type="radio"
@@ -323,21 +323,21 @@ export function CompanySection({ register, errors, watch, setValue }: SectionPro
     const isOther = watchedType ? !presetTypes.includes(watchedType) : false;
 
     return (
-        <section className="space-y-6 pt-6 border-t">
+        <section className="space-y-5 md:space-y-6 pt-5 md:pt-6 border-t">
 
-            <div className="border-l-4 border-[#162E93] pl-4 mb-8">
-                <h2 className="text-lg font-bold text-[#1A3263]">
+            <div className="border-l-4 border-[#162E93] pl-4 mb-4 md:mb-8">
+                <h2 className="text-base md:text-lg font-bold text-[#1A3263]">
                     Company Information
                 </h2>
-                <p className="text-xs text-gray-500 mt-1 font-light">
+                <p className="text-[11px] md:text-xs text-gray-500 mt-1 font-light">
                     Helps us recommend the most suitable solution
                 </p>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-5 md:space-y-6">
 
                 <div className="flex flex-col gap-2">
-                    <div className="flex flex-wrap gap-4 text-[13px] font-medium text-gray-700">
+                    <div className="flex flex-wrap gap-3 md:gap-4 text-[12px] md:text-[13px] font-medium text-gray-700">
                         {companyTypes.map((type) => (
                             <label key={type} className="flex items-center gap-2 cursor-pointer hover:text-[#162E93] transition-colors">
                                 <input
@@ -364,7 +364,7 @@ export function CompanySection({ register, errors, watch, setValue }: SectionPro
                             placeholder="Please specify your company type"
                             value={watchedType === "Other" ? "" : watchedType}
                             onChange={(e) => setValue?.("companyType", e.target.value)}
-                            className="w-full px-4 py-3 rounded-sm border border-gray-200 bg-[#F8F9FA] text-[13px] text-[#0A0F1A] focus:outline-none focus:border-[#162E93] transition-colors mt-2"
+                            className="w-full px-3 md:px-4 py-2.5 md:py-3 rounded-sm border border-gray-200 bg-[#F8F9FA] text-[12px] md:text-[13px] text-[#0A0F1A] focus:outline-none focus:border-[#162E93] transition-colors mt-2"
                             autoFocus
                         />
                     )}
@@ -381,7 +381,7 @@ export function CompanySection({ register, errors, watch, setValue }: SectionPro
                 <textarea
                     {...register("otherBms")}
                     placeholder="Tell us anything else relevant to your project..."
-                    className="w-full px-4 py-3 rounded-sm border border-gray-200 bg-[#F8F9FA] text-[13px] text-[#0A0F1A] focus:outline-none focus:border-[#162E93] transition-colors min-h-[120px]"
+                    className="w-full px-3 md:px-4 py-2.5 md:py-3 rounded-sm border border-gray-200 bg-[#F8F9FA] text-[12px] md:text-[13px] text-[#0A0F1A] focus:outline-none focus:border-[#162E93] transition-colors min-h-[80px] md:min-h-[120px]"
                 />
             </div>
         </section>
