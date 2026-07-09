@@ -114,6 +114,7 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
                     Current System / Platform: <b className="text-gray-900">{quote.bmsSystem}</b>
                   </span>
                 </p>
+
                 <div className="flex items-center gap-2">
                   <span className="font-medium text-gray-400">Prefer Contact:</span>
                   <span className="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-sm">
@@ -175,7 +176,7 @@ export function QuoteDetailModal({ quote, onClose, onStatusChange, onDelete }: Q
 
           {quote.otherBms && (
             <div className="space-y-2">
-              <h4 className="text-[13px] font-bold text-gray-400 ">Descriptions</h4>
+              <h4 className="text-[13px] font-bold text-gray-400">Message</h4>
               <p className="text-xs text-gray-700 bg-gray-50 border border-gray-100 rounded-sm p-4 leading-relaxed">
                 {quote.otherBms}
               </p>

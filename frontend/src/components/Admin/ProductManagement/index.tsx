@@ -237,9 +237,6 @@ export function ProductManagement() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black text-gray-900">Product <span className="text-[#C3110C]">Management</span></h1>
-          <p className="text-gray-500 text-xs mt-1 font-medium">
-            Add, edit, and remove products across all categories. Changes reflect immediately on the website.
-          </p>
         </div>
         <div className="flex items-center gap-2">
           <button

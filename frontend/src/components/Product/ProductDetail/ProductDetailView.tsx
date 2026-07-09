@@ -5,7 +5,9 @@ import { Container } from "@/components/Common/Container";
 import environment from "@/enviroment/enviroment";
 import {
   ShoppingCart,
-  ArrowLeft
+  ArrowLeft,
+  Plus,
+  Minus
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "@tanstack/react-router";
@@ -46,9 +48,13 @@ export interface ProductData {
 export function ProductDetailView({ product, returnPath }: { product: ProductData, returnPath?: string }) {
   const navigate = useNavigate();
   // Initialize quantities from global inquiry context if items already exist
-  const { addItem } = useInquiry();
+  const { addItems } = useInquiry();
   const [activeTab, setActiveTab] = useState<"description" | "documents">("description");
   const [selectedImage, setSelectedImage] = useState(0);
+  const [quantities, setQuantities] = useState<Record<string, number>>(() =>
+    Object.fromEntries(product.options.map(o => [o.partCode, 0]))
+  );
+  const [showPopup, setShowPopup] = useState(false);
 
 
   const user = useSelector((state: RootState) => state.auth.user);
@@ -106,24 +112,29 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
     return undefined;
   };
 
-  const handleQuickAdd = (opt: ProductOption) => {
+  const handleAddAllToInquiry = () => {
     const subcategory = deriveSubcategory();
 
-    addItem({
-      _id: product._id,
-      id: product.id,
-      category: product.category,
-      subcategory,
-      title: product.title,
-      image: product.mainImage,
-      partCode: opt.partCode,
-      specification: opt.specification,
-      qty: 1,
-      brand: product.brand,
-      returnPath: returnPath,
-    });
+    const selected = product.options
+      .map(opt => ({
+        _id: product._id,
+        id: product.id,
+        category: product.category,
+        subcategory,
+        title: product.title,
+        image: product.mainImage,
+        partCode: opt.partCode,
+        specification: opt.specification,
+        qty: quantities[opt.partCode] || 0,
+        brand: product.brand,
+        returnPath: returnPath,
+      }))
+      .filter(item => item.qty > 0);
 
-    navigate({ to: "/request-quote" });
+    if (selected.length > 0) {
+      addItems(selected);
+      navigate({ to: "/request-quote" });
+    }
   };
 
   const slugToTitle = (slug: string): string => {
@@ -360,35 +371,94 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
         {/* ─── PRODUCT OPTIONS TABLE ─── */}
         {product.options.length > 0 && (
           <div className="mb-8">
-            <div className="bg-[#1A3263] text-white px-8 py-5 rounded-t-sm font-semibold text-sm ">
+            <div className="bg-[#1A3263] text-white px-4 md:px-8 py-4 md:py-5 rounded-t-sm font-semibold text-xs md:text-sm">
               Product Options & Specifications
             </div>
-            <div className="overflow-x-auto border-x border-b border-gray-100">
+            <div className="border-x border-b border-gray-100">
               <table className="w-full text-left border-collapse">
-                <thead>
+                <thead className="hidden md:table-header-group">
                   <tr className="bg-[#F8F9FA] text-gray-500 text-[12px] font-bold tracking-tight border-b border-gray-100">
                   <th className="px-8 py-5">Part Code</th>
                   <th className="px-8 py-5">Detailed Specification</th>
-                  <th className="px-8 py-5 text-center">Action</th>
+                  <th className="px-8 py-5 text-center">Qty</th>
                   </tr>
                 </thead>
                 <tbody>
                   {product.options.map((opt, i) => (
-                    <tr key={opt.partCode} className="group hover:bg-[#FBFBFC] transition-colors">
-                      <td className="px-8 py-8 border-b border-gray-100 text-[13px] font-bold text-[#1A3263]">
-                        {opt.partCode}
+                    <tr key={opt.partCode} className="block md:table-row border-b md:border-b-0 border-gray-100 p-4 md:p-0 group hover:bg-[#FBFBFC] transition-colors">
+                      <td className="block md:table-cell px-0 md:px-8 py-1 md:py-8 text-[13px] font-bold text-[#1A3263] md:border-b md:border-gray-100">
+                        <div className="md:inline">
+                          <div className="text-[13px] font-bold text-[#1A3263]">{opt.partCode}</div>
+                          <div className="md:hidden mt-2">
+                            <span className="flex items-center border border-gray-200 rounded-sm inline-flex">
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setQuantities(prev => ({
+                                    ...prev,
+                                      [opt.partCode]: Math.max(0, (prev[opt.partCode] || 0) - 1)
+                                  }))
+                                }
+                                className="px-1.5 py-1 text-gray-400 hover:text-[#C3110C] hover:bg-gray-50 transition-colors cursor-pointer"
+                              >
+                                <Minus size={12} />
+                              </button>
+                              <span className="px-2 py-1 text-[12px] font-bold text-[#1A3263] min-w-[24px] text-center tabular-nums">
+                                {quantities[opt.partCode] || 0}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setQuantities(prev => ({
+                                    ...prev,
+                                      [opt.partCode]: (prev[opt.partCode] || 0) + 1
+                                  }));
+                                  setShowPopup(true);
+                                }}
+                                className="px-1.5 py-1 text-gray-400 hover:text-[#C3110C] hover:bg-gray-50 transition-colors cursor-pointer"
+                              >
+                                <Plus size={12} />
+                              </button>
+                            </span>
+                          </div>
+                        </div>
                       </td>
-                      <td className="px-8 py-8 border-b border-gray-100 text-[13px] text-gray-500 font-light whitespace-pre-line leading-relaxed">
+                      <td className="block md:table-cell px-0 md:px-8 py-1 md:py-8 text-[13px] text-gray-500 font-light whitespace-pre-line leading-relaxed md:border-b md:border-gray-100">
+                        <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wide md:hidden">Specification: </span>
                         {opt.specification}
                       </td>
 
-                      <td className="px-8 py-8 border-b border-gray-100 text-center">
-                        <button
-                          onClick={() => handleQuickAdd(opt)}
-                          className="text-gray-200 hover:text-[#C3110C] transition-all transform hover:scale-110 cursor-pointer"
-                        >
-                          <ShoppingCart size={20} />
-                        </button>
+                      <td className="hidden md:table-cell px-8 py-8 border-b border-gray-100 text-center">
+                        <div className="flex items-center justify-center border border-gray-200 rounded-sm inline-flex">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setQuantities(prev => ({
+                                ...prev,
+                                  [opt.partCode]: Math.max(0, (prev[opt.partCode] || 0) - 1)
+                              }))
+                            }
+                            className="px-2 py-1.5 text-gray-400 hover:text-[#C3110C] hover:bg-gray-50 transition-colors cursor-pointer"
+                          >
+                            <Minus size={14} />
+                          </button>
+                          <span className="px-3 py-1.5 text-[13px] font-bold text-[#1A3263] min-w-[28px] text-center tabular-nums">
+                            {quantities[opt.partCode] || 0}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setQuantities(prev => ({
+                                ...prev,
+                                  [opt.partCode]: (prev[opt.partCode] || 0) + 1
+                              }));
+                              setShowPopup(true);
+                            }}
+                            className="px-2 py-1.5 text-gray-400 hover:text-[#C3110C] hover:bg-gray-50 transition-colors cursor-pointer"
+                          >
+                            <Plus size={14} />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -408,6 +478,37 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
           localStorage.removeItem("pending_pdf_url");
         }}
       />
+
+      <AnimatePresence>
+        {showPopup && (() => {
+        const totalQty = product.options.reduce((sum, opt) => sum + (quantities[opt.partCode] || 0), 0);
+        if (totalQty === 0) return null;
+        return (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            className="fixed bottom-8 right-8 z-50 bg-white rounded-sm shadow-lg border border-gray-200 px-6 py-4 flex items-center gap-4"
+          >
+            <span className="text-sm text-gray-600">
+              <span className="font-bold text-[#1A3263] text-lg">{totalQty}</span> selected
+            </span>
+            <button
+              onClick={handleAddAllToInquiry}
+              className="text-[12px] font-bold text-white bg-[#C3110C] hover:bg-[#a30e0a] px-4 py-2 rounded-sm transition-colors cursor-pointer flex items-center gap-2"
+            >
+              <ShoppingCart size={15} />
+              Add to Inquiry
+            </button>
+            <button
+              onClick={() => setShowPopup(false)}
+              className="text-gray-300 hover:text-gray-600 transition-colors cursor-pointer ml-1"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+            </button>
+          </motion.div>
+        );
+      })()}
+      </AnimatePresence>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { Send, Clock, Shield, ChevronRight, Trash2, Plus } from "lucide-react";
+import { Send, Clock, Shield, ChevronRight, Trash2, Plus, Minus } from "lucide-react";
 import { quoteSchema, QuoteFormValues } from "./schema";
 import {
     InterestedSection,
@@ -338,7 +338,25 @@ export function QuoteForm() {
                                                     <p className="text-xs md:text-sm font-bold text-gray-800 truncate leading-tight">{item.title}</p>
                                                 </Link>
                                                 <p className="text-[11px] md:text-[12px] text-gray-400 truncate mt-0.5">{item.partCode}</p>
-                                                <p className="text-[11px] md:text-[12px] text-[#D62828] font-bold mt-1">Qty: {item.qty}</p>
+                                                <div className="flex items-center gap-1 mt-1">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => updateQty(item.partCode, Math.max(1, item.qty - 1))}
+                                                        className="p-0.5 text-gray-400 hover:text-[#D62828] transition-colors cursor-pointer"
+                                                    >
+                                                        <Minus size={12} />
+                                                    </button>
+                                                    <span className="text-[11px] md:text-[12px] text-[#D62828] font-bold min-w-[16px] text-center tabular-nums">
+                                                        {item.qty}
+                                                    </span>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => updateQty(item.partCode, item.qty + 1)}
+                                                        className="p-0.5 text-gray-400 hover:text-[#D62828] transition-colors cursor-pointer"
+                                                    >
+                                                        <Plus size={12} />
+                                                    </button>
+                                                </div>
                                             </div>
                                             <button
                                                 onClick={() => removeItem(item.partCode)}

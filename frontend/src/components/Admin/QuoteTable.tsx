@@ -193,8 +193,8 @@ export function QuoteTable({ quotes, loading, onViewDetails, onStatusChange, onD
                 )}
               </td>
 
-              <td className="px-6 py-4">
-                <span className="bg-gray-100 text-gray-700 text-xs font-bold px-2 py-1 rounded-sm">
+              <td className="px-6 py-4 max-w-[200px]">
+                <span className="bg-gray-100 text-gray-700 text-xs font-bold px-2 py-1 rounded-sm block truncate" title={quote.bmsSystem}>
                   {quote.bmsSystem}
                 </span>
               </td>

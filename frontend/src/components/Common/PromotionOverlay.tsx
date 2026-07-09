@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import logoImg from "@/assets/logo.avif";
 import { Link } from "@tanstack/react-router";
-import heroImg from '@/assets/roomcontrol/ChatGPT_Image_Jun_24__2026__10_12_23_AM-removebg-preview.png';
+import heroImg from '@/assets/roomcontrol/pic.png';
 
 interface PromotionOverlayProps {
   isOpen: boolean;

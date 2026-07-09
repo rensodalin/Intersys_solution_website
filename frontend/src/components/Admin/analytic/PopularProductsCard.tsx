@@ -12,8 +12,8 @@ interface PopularProductsCardProps {
 export function PopularProductsCard({ products, loading, getProductImage }: PopularProductsCardProps) {
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm">
-      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-4">
-        Popular Products
+      <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider block mb-4">
+        Top Requested Products
       </span>
       {loading ? (
         <div className="flex justify-center py-10">

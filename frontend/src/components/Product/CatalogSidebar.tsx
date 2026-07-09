@@ -557,13 +557,7 @@ export function CatalogSidebar({
                             transition={{ type: "spring", damping: 28, stiffness: 200 }}
                             className="fixed inset-y-0 left-0 w-[85%] max-w-[320px] bg-[#F1F3F5] z-[80] flex flex-col lg:hidden overflow-hidden shadow-2xl"
                         >
-                            <button
-                                onClick={() => setIsMobileOpen(false)}
-                                className="absolute top-4 right-4 w-8 h-8 bg-white rounded-lg flex items-center justify-center shadow-sm border border-gray-100 z-10 hover:bg-gray-50 transition-colors"
-                            >
-                                <X size={16} className="text-gray-600" />
-                            </button>
-                            {sidebarContentJsx}
+                                {sidebarContentJsx}
                         </motion.aside>
                     </>
                 )}

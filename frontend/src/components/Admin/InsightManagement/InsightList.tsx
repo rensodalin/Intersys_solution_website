@@ -50,7 +50,7 @@ export function InsightList({ insights, loading, onEdit, onDelete }: InsightList
                 <td className="px-4 py-3">
                   <div className="min-w-0">
                     <p className="font-bold text-gray-800 truncate max-w-[300px]">{i.title}</p>
-                    <p className="text-[10px] text-gray-400 font-mono">{i.slug}</p>
+                    <p className="text-[10px] text-gray-400 font-mono mt-1.5">{i.slug}</p>
                   </div>
                 </td>
                 <td className="px-4 py-3">

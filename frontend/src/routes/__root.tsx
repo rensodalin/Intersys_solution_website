@@ -118,7 +118,7 @@ function RootComponent() {
         <Outlet />
       </main>
       {!isProductsPage && <ScrollControls />}
-      <ChatWidget />
+      {!isProductsPage && <ChatWidget />}
       {!isProductsPage && <Footer />}
       <CompleteProfileModal />
       <Toaster position="top-center" richColors />

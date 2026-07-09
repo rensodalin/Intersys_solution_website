@@ -94,10 +94,10 @@ export function GlobalPresenceCard({ countryDistribution }: GlobalPresenceCardPr
     <div className="bg-[#040D1A] text-white p-6 rounded-xl border border-slate-800 shadow-lg flex flex-col justify-between relative overflow-hidden group">
       <div>
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-black  text-white">Global Presence</h2>
+          <h2 className="text-sm font-bold text-white">Global Presence</h2>
 
         </div>
-        <p className="text-[13px] font-black text-sky-400 mt-1">Active Connection Hubs</p>
+        <p className="text-[13px] font-medium text-sky-400 mt-1">Visitors by country</p>
 
         <div className="w-full h-36 mt-4 relative flex items-center justify-center overflow-hidden [&_svg]:max-w-full [&_svg]:max-h-full [&_path]:transition-all [&_path]:duration-500 hover:[&_path]:opacity-80">
           {mounted ? (

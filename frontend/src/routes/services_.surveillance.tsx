@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { Zap, Globe, Cpu, CheckCircle2, ArrowLeft } from "lucide-react";
-import img from "@/assets/roomcontrol/ChatGPT Image Jun 24, 2026, 11_04_18 AM.png";
+import img from "@/assets/roomcontrol/pic.png";
 export const Route = createFileRoute("/services_/surveillance")({
     head: () => ({
         meta: [

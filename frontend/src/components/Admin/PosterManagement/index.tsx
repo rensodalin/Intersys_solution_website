@@ -167,7 +167,7 @@ export function PosterManagement() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black text-gray-900">Poster <span className="text-[#C3110C]">Management</span></h1>
-          <p className="text-gray-500 text-xs mt-1 font-medium">
+          <p className="text-gray-500 text-xs mt-3 font-medium">
             Add, edit, reorder, and remove marketing posters. New posters trigger a newsletter email to subscribers.
           </p>
         </div>

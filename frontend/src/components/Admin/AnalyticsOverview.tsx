@@ -101,12 +101,10 @@ export function AnalyticsOverview() {
     <div className="space-y-8 animate-fadeIn">
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-black text-gray-900 tracking-tight">
-            Structural <span className="text-[#C3110C]">Insights</span>
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+            Analytics <span className="text-[#C3110C]">Overview</span>
           </h1>
-          <p className="text-gray-500 text-[14px] mt-1 max-w-xl font-medium leading-relaxed">
-            Real-time building system telemetry and digital visitor interaction metrics for global architectural assets.
-          </p>
+
         </div>
 
       </div>
@@ -130,16 +128,11 @@ export function AnalyticsOverview() {
         />
       </div>
 
-      <footer className="pt-8 border-t border-gray-150 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px]  text-gray-400 ">
+      <footer className="pt-8 border-t border-gray-150 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-400">
         <div className="flex flex-wrap items-center gap-4 text-center sm:text-left">
-          <span>Last Update: {lastUpdate || "Oct 24, 2023 - 14:22:01 UTC"}</span>
+          <span>Last Update: {lastUpdate || "—"}</span>
           <span className="hidden sm:inline w-1 h-1 bg-gray-200 rounded-full"></span>
-          <span>Active Nodes: 12,402 Units</span>
-        </div>
-
-        <div className="flex items-center gap-1.5 text-center sm:text-right">
-          <span>© 2023 Structural Intel — Architectural Data Systems</span>
-
+          <span>Intersys Analytics</span>
         </div>
       </footer>
     </div>

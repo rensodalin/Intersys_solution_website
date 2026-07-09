@@ -19,6 +19,7 @@ export interface InquiryItem {
 interface InquiryContextType {
   items: InquiryItem[];
   addItem: (item: InquiryItem) => void;
+  addItems: (items: InquiryItem[]) => void;
   removeItem: (partCode: string) => void;
   updateQty: (partCode: string, qty: number) => void;
   clearInquiry: () => void;
@@ -72,6 +73,21 @@ export function InquiryProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const addItems = (newItems: InquiryItem[]) => {
+    setItems(prev => {
+      const updated = [...prev];
+      newItems.forEach(item => {
+        const idx = updated.findIndex(i => i.partCode === item.partCode);
+        if (idx >= 0) {
+          updated[idx] = item;
+        } else {
+          updated.push(item);
+        }
+      });
+      return updated;
+    });
+  };
+
   const removeItem = (partCode: string) => {
     setItems(prev => prev.filter(i => i.partCode !== partCode));
   };
@@ -83,7 +99,7 @@ export function InquiryProvider({ children }: { children: ReactNode }) {
   const clearInquiry = () => setItems([]);
 
   return (
-    <InquiryContext.Provider value={{ items, addItem, removeItem, updateQty, clearInquiry }}>
+    <InquiryContext.Provider value={{ items, addItem, addItems, removeItem, updateQty, clearInquiry }}>
       {children}
     </InquiryContext.Provider>
   );

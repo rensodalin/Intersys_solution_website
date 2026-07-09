@@ -22,7 +22,7 @@ export function InterfaceDynamicsCard({ totalQuotes, totalContacts, totalUsers }
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-150 shadow-sm flex flex-col justify-between">
       <div>
-        <h2 className="text-sm font-black text-gray-900 mb-6">Interface Dynamics</h2>
+        <h2 className="text-sm font-bold text-gray-900 mb-6">Quotes vs Contacts</h2>
 
         <div className="h-44 w-full relative flex items-center justify-center">
           <ResponsiveContainer width="100%" height="100%">
@@ -41,7 +41,7 @@ export function InterfaceDynamicsCard({ totalQuotes, totalContacts, totalUsers }
         </div>
       </div>
 
-      <div className="flex items-center justify-center gap-8 text-[13px] font-black text-gray-500 mt-4">
+      <div className="flex items-center justify-center gap-8 text-[13px] font-semibold text-gray-500 mt-4">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#C3110C]"></span>
           <span>Quotes {quotesPercent}%</span>
