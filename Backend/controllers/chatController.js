@@ -151,15 +151,32 @@ export const clientMessage = async (req, res) => {
       return res.status(400).json({ success: false, error: "Email, name, and content are required" });
     }
 
+    const existingCount = await Message.countDocuments({ email, source: "client-reply" });
+    const isNewConversation = existingCount === 0;
+
     const message = new Message({
       email, name, subject: subject || "Follow-up message",
       content, source: "client-reply", isFromAdmin: false, read: false
     });
     await message.save();
 
+    let botMessage = null;
+    if (isNewConversation) {
+      botMessage = new Message({
+        email, name: "Intersys Bot",
+        subject: "Welcome to Intersys Solutions",
+        content: `Hi 👋 Welcome to our website! How can I help you today?\nPlease wait a moment while our support team gets back to you.`,
+        source: "reply", isFromAdmin: true, read: true
+      });
+      await botMessage.save();
+    }
+
     try {
       const io = getIO();
       io.to(email).emit("new-message", message);
+      if (botMessage) {
+        io.to(email).emit("new-message", botMessage);
+      }
       io.to("admin").emit("admin-notification", { email, name, content, createdAt: message.createdAt });
     } catch (e) {
       console.error("[socket] Failed to emit client message:", e.message);
