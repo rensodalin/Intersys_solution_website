@@ -158,7 +158,7 @@ function DeepSubcategoryPage() {
                   <div key={item.name} className="flex items-center gap-2">
                     <Link
                       to={item.href}
-                      className={`text-[11px] transition-colors ${
+                      className={`text-xs transition-colors ${
                         index === breadcrumbs.length - 1
                           ? "text-gray-700 pointer-events-none"
                           : "text-gray-400 hover:text-[#C3110C]"
@@ -167,16 +167,16 @@ function DeepSubcategoryPage() {
                       {item.name}
                     </Link>
                     {index < breadcrumbs.length - 1 && (
-                      <span className="text-gray-300 text-[10px]">/</span>
+                      <span className="text-gray-300 text-xs">/</span>
                     )}
                   </div>
                 ))}
               </nav>
-              <h1 className="text-xl md:text-2xl font-bold text-[#1A3263] tracking-tight mb-3">
+              <h1 className="text-xl font-bold text-[#1A3263] tracking-tight mb-3">
                 {subcategoryName}
               </h1>
               {subData?.description && (
-                <p className="text-gray-500 text-sm md:text-[15px] leading-relaxed max-w-2xl">
+                <p className="text-gray-500 text-xs md:text-sm leading-relaxed max-w-2xl">
                   {subData.description}
                 </p>
               )}

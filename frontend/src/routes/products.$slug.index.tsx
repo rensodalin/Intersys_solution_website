@@ -95,7 +95,7 @@ function CategoryProductsPage() {
                   <div key={item.name} className="flex items-center gap-2">
                     <Link
                       to={item.href}
-                      className={`text-[11px] transition-colors ${
+                      className={`text-xs transition-colors ${
                         index === breadcrumbs.length - 1
                           ? "text-gray-700 pointer-events-none"
                           : "text-gray-400 hover:text-[#C3110C]"
@@ -104,13 +104,13 @@ function CategoryProductsPage() {
                       {item.name}
                     </Link>
                     {index < breadcrumbs.length - 1 && (
-                      <span className="text-gray-300 text-[10px]">/</span>
+                      <span className="text-gray-300 text-xs">/</span>
                     )}
                   </div>
                 ))}
               </nav>
-              <h1 className="text-xl md:text-2xl font-bold text-[#1A3263] tracking-tight mb-3">{title}</h1>
-              {subtitle && <p className="text-gray-500 text-sm md:text-[15px] leading-relaxed max-w-2xl">{subtitle}</p>}
+              <h1 className="text-xl font-bold text-[#1A3263] tracking-tight mb-3">{title}</h1>
+              {subtitle && <p className="text-gray-500 text-xs md:text-sm leading-relaxed max-w-2xl">{subtitle}</p>}
             </motion.div>
           </Container>
         </div>
@@ -149,7 +149,7 @@ function CategoryProductsPage() {
                       </div>
                     )}
                     <div className="p-4 md:p-4">
-                      <h3 className="text-sm font-bold text-gray-900 group-hover:text-[#C3110C] transition-colors">
+                      <h3 className="text-base font-bold text-gray-900 group-hover:text-[#C3110C] transition-colors">
                         {sub.title || sub.name}
                       </h3>
                       {sub.description && (

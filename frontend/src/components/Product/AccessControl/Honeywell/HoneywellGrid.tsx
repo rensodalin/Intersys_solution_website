@@ -72,7 +72,7 @@ export function HoneywellGrid({ products }: HoneywellGridProps) {
 
                             {/* Content */}
                             <div className="flex flex-col px-1">
-                                <h3 className="text-[15px] md:text-base font-medium text-gray-900 group-hover:text-gray-500 transition-colors mb-1">
+                                <h3 className="text-[13px] md:text-sm font-medium text-gray-900 group-hover:text-gray-500 transition-colors mb-1">
                                     {product.title}
                                 </h3>
                                 <p className="text-gray-500 text-[13px] md:text-sm leading-relaxed line-clamp-2 md:line-clamp-1">

@@ -42,7 +42,7 @@ export function ProductGrid({ categories }: ProductGridProps) {
                                     </div>
 
                                     <div className="p-5 flex flex-col flex-grow">
-                                        <h3 className="text-base font-bold text-[#1A3263] leading-tight mb-2">
+                                        <h3 className="text-xs font-bold text-[#1A3263] leading-tight mb-2">
                                             {cat.title}
                                         </h3>
                                         <p className="text-gray-500 text-[13px] leading-relaxed flex-grow">

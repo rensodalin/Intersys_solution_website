@@ -54,7 +54,7 @@ export function BuildingManagementHero({
                                         <Link
                                             to={item.href}
                                             className={cn(
-                                                "text-[11px] transition-colors",
+                                                "text-[10px] transition-colors",
                                                 index === breadcrumbs.length - 1
                                                     ? "text-gray-700 pointer-events-none"
                                                     : "text-gray-400 hover:text-[#C3110C]"
@@ -70,13 +70,13 @@ export function BuildingManagementHero({
                             </nav>
 
                             {/* Title */}
-                            <h1 className="text-xl md:text-2xl font-bold text-[#1A3263] tracking-tight mb-3">
+                            <h1 className="text-xl font-bold text-[#1A3263] tracking-tight mb-3">
                                 {title}
                             </h1>
 
                             {/* Subtitle */}
                             {subtitle && (
-                                <p className="text-gray-500 text-sm md:text-[15px] leading-relaxed max-w-2xl">
+                                <p className="text-gray-500 text-xs md:text-sm leading-relaxed max-w-2xl">
                                     {subtitle}
                                 </p>
                             )}

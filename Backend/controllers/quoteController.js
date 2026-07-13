@@ -100,12 +100,58 @@ export const create = async (req, res) => {
 
     process.nextTick(async () => {
       try {
-        const productList = (quoteData.products || []).map(p =>
-          `${p.qty}x <b>${p.productNo}</b> — ${p.description} (${p.application})`
-        ).join("\n");
-        await sendTelegramNotification(
-          `<b>📋 New Quote Request</b>\n\n<b>Name:</b> ${quoteData.name}\n<b>Company:</b> ${quoteData.company}\n<b>Title:</b> ${quoteData.title || "—"}\n<b>Email:</b> ${quoteData.email}\n<b>Phone:</b> ${quoteData.phone}\n<b>Contact Method:</b> ${quoteData.contactMethod || "Not specified"}\n<b>Company Type:</b> ${quoteData.companyType || "—"}\n<b>Address:</b> ${fullAddress || "—"}\n\n${categoriesList ? `<b>Categories:</b> ${categoriesList}\n\n` : ""}${sectionsList ? `<b>Sections:</b> ${sectionsList}\n\n` : ""}<b>Products:</b>\n${productList || "None"}\n\n<b>Platform:</b> ${quoteData.bmsSystem || "—"}\n\n<b>Details:</b>\n${(quoteData.otherBms || "").slice(0, 500)}`
-        );
+        const productRows = (() => {
+          const items = quoteData.products || [];
+          if (items.length === 0) return "";
+          const qtyW = 4, codeW = 20, descW = 30;
+          const sep = `┌${'─'.repeat(qtyW)}┬${'─'.repeat(codeW)}┬${'─'.repeat(descW)}┐`;
+          const sep2 = `├${'─'.repeat(qtyW)}┼${'─'.repeat(codeW)}┼${'─'.repeat(descW)}┤`;
+          const sep3 = `└${'─'.repeat(qtyW)}┴${'─'.repeat(codeW)}┴${'─'.repeat(descW)}┘`;
+          const hdr = `│${'Qty'.padEnd(qtyW)}│${'Part Code'.padEnd(codeW)}│${'Description'.padEnd(descW)}│`;
+          const rows = items.map(p =>
+            `│${`${p.qty}x`.padEnd(qtyW)}│${(p.productNo || '').padEnd(codeW)}│${(p.description || '').slice(0, descW).padEnd(descW)}│`
+          ).join('\n');
+          return `<pre>${sep}\n${hdr}\n${sep2}\n${rows}\n${sep3}</pre>`;
+        })();
+
+        let msg = `<b>📋 New Quote Request</b>\n`;
+        msg += `━━━━━━━━━━━━━━━━\n`;
+        msg += `\n<b>👤 Contact</b>\n`;
+        msg += `├ Name: ${quoteData.name}\n`;
+        msg += `├ Company: ${quoteData.company}\n`;
+        msg += `├ Title: ${quoteData.title || "—"}\n`;
+        msg += `├ Email: ${quoteData.email}\n`;
+        msg += `├ Phone: ${quoteData.phone}\n`;
+        msg += `├ Method: ${quoteData.contactMethod || "—"}\n`;
+        msg += `└ Type: ${quoteData.companyType || "—"}\n`;
+        msg += `\n<b>📍 Location</b>\n`;
+        msg += `└ ${fullAddress || "—"}\n`;
+
+        if (categoriesList) {
+          msg += `\n<b>📂 Categories</b>\n`;
+          msg += `└ ${categoriesList}\n`;
+        }
+        if (sectionsList) {
+          msg += `\n<b>📑 Sections</b>\n`;
+          msg += `└ ${sectionsList}\n`;
+        }
+
+        if (quoteData.bmsSystem) {
+          msg += `\n<b>⚙️ Platform</b>\n`;
+          msg += `└ ${quoteData.bmsSystem}\n`;
+        }
+
+        if (productRows) {
+          msg += `\n<b>📦 Products</b>\n`;
+          msg += `${productRows}\n`;
+        }
+
+        if (quoteData.otherBms) {
+          msg += `\n<b>💬 Message</b>\n`;
+          msg += `└ ${(quoteData.otherBms).slice(0, 500)}\n`;
+        }
+
+        await sendTelegramNotification(msg);
       } catch (teleErr) {
         console.error("Failed to send telegram notification:", teleErr);
       }

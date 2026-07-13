@@ -237,7 +237,7 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                 ))}
               </nav>
 
-              <h1 className="text-xl md:text-xl font-bold text-[#1A3263] tracking-tight mb-4 font-display">
+              <h1 className="text-lg font-bold text-[#1A3263] tracking-tight mb-4 font-display">
                 {product.title}
               </h1>
 

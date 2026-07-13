@@ -1,5 +1,4 @@
 import Contact from "../model/contact.js";
-import Message from "../model/message.js";
 import transporter from "../config/email.js";
 import { sendTelegramNotification } from "../utils/telegram.js";
 
@@ -14,28 +13,7 @@ export const submitContact = async (req, res) => {
     const newContact = new Contact({ name, email, phone, contactMethod, city, country, message });
     await newContact.save();
 
-    try {
-      const chatMsg = new Message({
-        email: email || "unknown@intersys.com", name,
-        subject: `Contact Request - ${name}`, content: message,
-        source: "contact", sourceId: newContact._id, isFromAdmin: false, read: false
-      });
-      await chatMsg.save();
-    } catch (chatErr) {
-      console.error("Failed to create chat message for contact:", chatErr);
-    }
-
-    try {
-      const botMessage = new Message({
-        email: email || "unknown@intersys.com", name: "Intersys Bot",
-        subject: "Welcome to Intersys Solutions",
-        content: `Hi 👋 Welcome to our website! How can I help you today?\nPlease wait a moment while our support team gets back to you.`,
-        source: "reply", isFromAdmin: true, read: true
-      });
-      await botMessage.save();
-    } catch (botErr) {
-      console.error("Failed to save bot welcome message:", botErr);
-    }
+    // Removed: no longer creates chat messages for contact form submissions
 
     res.json({ success: true, message: "Message saved and sent successfully" });
 

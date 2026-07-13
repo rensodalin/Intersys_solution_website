@@ -26,9 +26,9 @@ export const testTelegram = async (req, res) => {
 export const getConversations = async (req, res) => {
   try {
     const [messages, unreadGroups] = await Promise.all([
-      Message.find({}).sort({ createdAt: -1 }).lean(),
+      Message.find({ source: "client-reply" }).sort({ createdAt: -1 }).lean(),
       Message.aggregate([
-        { $match: { isFromAdmin: false, read: false } },
+        { $match: { isFromAdmin: false, read: false, source: "client-reply" } },
         { $group: { _id: "$email", count: { $sum: 1 } } }
       ])
     ]);
@@ -40,29 +40,20 @@ export const getConversations = async (req, res) => {
 
     for (const m of messages) {
       const email = (m.email || "").trim() || "unknown";
-      let source = m.source || "reply";
-      if (source === "client-reply") source = "chat";
-      if (source === "reply") source = "chat";
-      const isContact = source === "contact";
-      const isQuote = source === "quote";
       if (!byEmail[email] || new Date(m.createdAt) > new Date(byEmail[email].lastDate)) {
         byEmail[email] = {
           _id: email, email, name: m.name || email,
           lastMessage: m.content || "(no message)", lastDate: m.createdAt,
-          lastSource: source, count: 0,
+          lastSource: "chat", count: 0,
           unreadCount: unreadMap[email] || 0,
-          hasContact: isContact,
-          hasQuote: isQuote,
+          hasContact: false,
+          hasQuote: false,
           phone: "",
           hasPhone: false,
           prefers: "",
           city: "",
           country: ""
         };
-      } else {
-        const existing = byEmail[email];
-        if (isContact) existing.hasContact = true;
-        if (isQuote) existing.hasQuote = true;
       }
     }
 
@@ -77,47 +68,19 @@ export const getConversations = async (req, res) => {
 export const getConversationDetail = async (req, res) => {
   try {
     const email = req.params.email;
-    const emailFilter = email === "unknown"
-      ? { $or: [{ email: { $exists: false } }, { email: null }, { email: "" }] }
-      : { email };
+    const messages = await Message.find({
+      email,
+      source: { $in: ["client-reply", "reply"] }
+    }).sort({ createdAt: 1 }).lean();
 
-    const [contacts, quotes, messages] = await Promise.all([
-      Contact.find(emailFilter).sort({ createdAt: 1 }).lean(),
-      Quote.find(emailFilter).sort({ createdAt: 1 }).lean(),
-      Message.find({ email }).sort({ createdAt: 1 }).lean()
-    ]);
-
-    const mappedContacts = contacts.map(c => ({
-      _id: c._id.toString(), email: c.email || email, name: c.name,
-      phone: c.phone || "", contactMethod: c.contactMethod || "",
-      city: c.city || "", country: c.country || "", content: c.message,
-      source: "contact", isFromAdmin: false, read: true, createdAt: c.createdAt
-    }));
-
-    const mappedQuotes = quotes.map(q => ({
-      _id: q._id.toString(), email: q.email, name: q.name, company: q.company || "",
-      phone: q.phone || "", contactMethod: q.contactMethod || "",
-      address: q.address || "", city: q.city || "", country: q.country || "",
-      bmsSystem: q.bmsSystem || "", otherBms: q.otherBms || "",
-      products: (q.products || []).map(p => ({
-        qty: p.qty, productNo: p.productNo, description: p.description,
-        application: p.application, price: p.price || 0
-      })),
-      solutionCategories: q.solutionCategories || [],
-      content: `Quote request from ${q.name} at ${q.company}`,
-      source: "quote", isFromAdmin: false, read: true, createdAt: q.createdAt
-    }));
-
-    const mappedMessages = messages.map(m => ({
+    const mapped = messages.map(m => ({
       _id: m._id.toString(), email: m.email, name: m.name,
       content: m.content, source: m.source,
       isFromAdmin: m.isFromAdmin, read: m.read, createdAt: m.createdAt,
       attachment: m.attachment || null
     }));
 
-    const all = [...mappedContacts, ...mappedQuotes, ...mappedMessages];
-    all.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-    res.json({ success: true, data: all });
+    res.json({ success: true, data: mapped });
   } catch (error) {
     console.error("Failed to fetch messages:", error);
     res.status(500).json({ success: false, error: "Failed to fetch messages" });
@@ -144,13 +107,6 @@ export const reply = async (req, res) => {
       console.error("[socket] Failed to emit admin reply:", e.message);
     }
 
-    const [contacts, quotes] = await Promise.all([
-      Contact.find({ email }).sort({ createdAt: -1 }).limit(1).lean(),
-      Quote.find({ email }).sort({ createdAt: -1 }).limit(1).lean()
-    ]);
-
-    const adminName = req.user.name || "Admin";
-
     res.json({ success: true, data: message });
   } catch (error) {
     console.error("Failed to send reply:", error);
@@ -161,13 +117,8 @@ export const reply = async (req, res) => {
 export const checkConversation = async (req, res) => {
   try {
     const email = req.params.email;
-    const [contactCount, quoteCount, messageCount] = await Promise.all([
-      Contact.countDocuments({ email }),
-      Quote.countDocuments({ email }),
-      Message.countDocuments({ email })
-    ]);
-    const exists = contactCount > 0 || quoteCount > 0 || messageCount > 0;
-    res.json({ success: true, exists });
+    const exists = await Message.exists({ email, source: "client-reply" });
+    res.json({ success: true, exists: !!exists });
   } catch (error) {
     res.status(500).json({ success: false, exists: false });
   }
@@ -176,7 +127,10 @@ export const checkConversation = async (req, res) => {
 export const getPublicMessages = async (req, res) => {
   try {
     const email = req.params.email;
-    const messages = await Message.find({ email }).sort({ createdAt: 1 }).lean();
+    const messages = await Message.find({
+      email,
+      source: { $in: ["client-reply", "reply"] }
+    }).sort({ createdAt: 1 }).lean();
     const mapped = messages.map(m => ({
       _id: m._id.toString(), email: m.email, name: m.name,
       content: m.content, source: m.source,

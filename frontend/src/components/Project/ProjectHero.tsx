@@ -13,7 +13,7 @@ export function ProjectHero() {
                     Our <span className="text-[#D62828]">Projects</span>
                 </motion.h1>
 
-                <p className="text-gray-400 text-sm md:text-lg max-w-2xl mx-auto leading-relaxed px-4 md:px-0">
+                <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-4 md:px-0">
                     Explore our complete portfolio of elite engineering installations and
                     integrated smart building systems across Southeast Asia.
                 </p>
