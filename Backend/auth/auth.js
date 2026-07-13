@@ -39,6 +39,18 @@ router.get("/google", authController.googleAuth, passport.authenticate("google",
 router.get("/google/callback", authController.googleCallback);
 router.all("/logout", isAuthenticated, authController.logout);
 router.get("/user", authController.getUser);
+router.get("/debug", (req, res) => {
+  res.json({
+    hasSession: !!req.session,
+    sessionID: req.sessionID,
+    session: req.session,
+    isAuthenticated: req.isAuthenticated?.(),
+    user: req.user ? { id: req.user._id, email: req.user.email, name: req.user.name } : null,
+    cookies: req.headers.cookie,
+    forwardedFor: req.headers["x-forwarded-for"],
+    forwardedProto: req.headers["x-forwarded-proto"],
+  });
+});
 router.put("/user/update", isAuthenticated, authController.updateUser);
 router.post("/user/avatar", isAuthenticated, uploadAvatar.single("avatar"), authController.uploadAvatar);
 router.post("/user/download", isAuthenticated, authController.recordDownload);
