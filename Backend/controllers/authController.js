@@ -141,13 +141,7 @@ export const googleCallback = (req, res, next) => {
         console.error("Session Login Error:", err);
         return res.redirect(`${baseUrl}?error=session_error`);
       }
-      req.session.save((saveErr) => {
-        if (saveErr) {
-          console.error("Session Save Error:", saveErr);
-          return res.redirect(`${baseUrl}?error=session_save_error`);
-        }
-        res.redirect(redirectTo);
-      });
+      res.redirect(redirectTo);
     });
   })(req, res, next);
 };

@@ -74,7 +74,7 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24,
     httpOnly: true,
     secure: process.env.NODE_ENV === "production" || process.env.RENDER === "true",
-    sameSite: (process.env.NODE_ENV === "production" || process.env.RENDER === "true") ? "none" : "lax",
+    sameSite: process.env.NODE_ENV === "production" || process.env.RENDER === "true" ? "none" : "lax",
   },
 }));
 
