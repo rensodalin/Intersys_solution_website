@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
 import { Zap, Globe, Cpu, CheckCircle2, ArrowLeft } from "lucide-react";
-import img from "@/assets/roomcontrol/pic.png";
+import img from "@/assets/roomcontrol/6307a5cc5b22084cd2443e05DISTRIBUTOR_OF_HONEYWELL_2MMP_IP_CCTV_CAMERA_BULLET_DOME_MAIN_SUPPLIER_IN_DELHI_GURGAON_MUMBAI_CHENNAI_BANGALORE_KOLKATA-removebg-preview.png";
 export const Route = createFileRoute("/services_/surveillance")({
     head: () => ({
         meta: [
@@ -24,35 +24,46 @@ function SurveillancePage() {
         <div className="bg-white overflow-hidden">
 
             {/* HERO SECTION */}
-            <section className="relative h-[60vh] md:h-[70vh] min-h-[400px] md:min-h-[500px] flex items-center pt-28 md:pt-32 pb-12 md:pb-16">
-                <div className="absolute inset-0 z-0">
-                    <img
-                        src={img}
-                        alt="Cityscape"
-                        className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
-                </div>
-
+            <section className="relative min-h-[70vh] md:min-h-[85vh] flex items-center pt-36 md:pt-40 pb-12 md:pb-16 bg-black overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/70 z-0" />
 
                 <Container className="relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="max-w-2xl text-white"
-                    ><h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-4 md:mb-6">
-                            Smarter Business.<br />
-                            <span className="text-red-500">Safer Environments.</span>
-                        </h1>
-                        <p className="text-sm md:text-base text-white/70 max-w-2xl leading-relaxed">
-                            Intersys Solutions Co., Ltd delivers comprehensive cloud solutions and CCTV surveillance systems designed to meet the evolving needs of modern businesses.
-                            <br /><br />
-                            Our integrated approach combines virtual desktops with real-time intelligent monitoring to ensure round-the-clock security and peak productivity.
-                        </p>
+                    <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
 
+                        {/* Left Content */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8 }}
+                            className="text-white max-w-3xl text-center lg:text-left"
+                        >
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-white font-display leading-[1.2] mb-4 md:mb-6">
+                                Smarter Business{" "}
+                                <span className="hidden lg:inline"><br /></span>
+                                <span className="text-red-500">Safer Environments.</span>
+                            </h1>
+                            <p className="text-sm md:text-base text-white/70 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                                Intersys Solutions Co., Ltd delivers comprehensive cloud solutions and CCTV surveillance systems designed to meet the evolving needs of modern businesses.
+                                <br /><br />
+                                Our integrated approach combines virtual desktops with real-time intelligent monitoring to ensure round-the-clock security and peak productivity.
+                            </p>
+                        </motion.div>
 
-                    </motion.div>
+                        {/* Right Image */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="flex justify-center"
+                        >
+                            <img
+                                src={img}
+                                alt="Surveillance Solutions"
+                                className="w-full max-w-sm md:max-w-lg object-contain"
+                            />
+                        </motion.div>
+
+                    </div>
                 </Container>
             </section>
 

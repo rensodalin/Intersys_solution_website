@@ -198,7 +198,10 @@ export function ChatInbox() {
         try {
           const res = await fetch(`${baseUrl}/api/chat/conversations/${encodeURIComponent(email)}`, { credentials: "include" });
           const json = await res.json();
-          if (json.success) setMessages(json.data);
+          if (json.success) {
+            scrollOnNextMessages.current = true;
+            setMessages(json.data);
+          }
         } catch {}
       }
     };

@@ -33,7 +33,7 @@ function AudioVisualPage() {
         <div className="bg-white overflow-hidden scroll-smooth">
 
             {/* ─── HERO ─── */}
-            <section className="relative min-h-[70vh] md:min-h-[70vh] flex items-center pt-28 md:pt-32 pb-12 md:pb-16 bg-black overflow-hidden">
+            <section className="relative min-h-[70vh] md:min-h-[70vh] flex items-center pt-36 md:pt-40 pb-12 md:pb-16 bg-black overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/70 z-0" />
 
                 <Container className="relative z-10">
@@ -44,18 +44,19 @@ function AudioVisualPage() {
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="text-white max-w-3xl"
+                            className="text-white max-w-3xl text-center lg:text-left"
                         >
-                            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-4 md:mb-6">
-                                Delivering Advanced <br />
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-white font-display leading-[1.2] mb-4 md:mb-6">
+                                Delivering Advanced{" "}
+                                <span className="hidden lg:inline"><br /></span>
                                 <span className="text-red-500">Audio Visual</span> Solutions
                             </h1>
 
-                            <p className="text-sm md:text-base text-white/70 max-w-2xl leading-relaxed">
+                            <p className="text-sm md:text-base text-white/70 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                                 Transform your spaces with cutting-edge technology that enhances communication, collaboration, and engagement.
                             </p>
 
-                            <div className="flex flex-wrap gap-3 md:gap-4 pt-4 md:pt-6">
+                            <div className="flex flex-wrap justify-center lg:justify-start gap-3 md:gap-4 pt-4 md:pt-6">
                                 {["Video Conferencing", "Digital Signage", "Sound Systems"].map((tag) => (
                                     <span
                                         key={tag}
@@ -91,24 +92,24 @@ function AudioVisualPage() {
                     <div className="grid lg:grid-cols-2 gap-14 items-center">
 
                         {/* LEFT CONTENT */}
-                        <div>
+                        <div className="text-center lg:text-left">
 
                             <div className="mb-8">
 
 
-                                <h2 className="text-3xl md:text-4xl font-bold text-[#1A3263] leading-tight">
+                                <h2 className="text-3xl sm:text-4xl font-bold text-[#1A3263] leading-tight">
                                     Integrated AV Solutions
                                 </h2>
                             </div>
 
-                            <p className="text-gray-600 leading-relaxed max-w-xl">
+                            <p className="text-gray-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
                                 We deliver integrated audio visual systems for meeting rooms,
                                 classrooms, auditoriums, retail environments, and control centers —
                                 designed to improve communication, presentation quality, and collaboration.
                             </p>
 
                             {/* LIST */}
-                            <div className="grid grid-cols-2 gap-y-4 gap-x-6 mt-10">
+                            <div className="grid grid-cols-2 gap-y-4 gap-x-6 mt-10 max-w-md mx-auto lg:mx-0">
 
                                 {[
                                     "Meeting Rooms",
@@ -169,12 +170,12 @@ function AudioVisualPage() {
                 <Container className="relative z-10">
 
                     {/* HEADER */}
-                    <div className="max-w-3xl mb-14">
-                        <h2 className="text-3xl md:text-4xl font-semibold text-[#1A3263] tracking-tight">
+                    <div className="max-w-3xl mb-14 text-center lg:text-left mx-auto lg:mx-0">
+                        <h2 className="text-3xl sm:text-4xl font-semibold text-[#1A3263] tracking-tight">
                             Future-Ready Innovation
                         </h2>
 
-                        <div className="w-16 h-[2px] bg-red-600 mt-4 mb-5" />
+                        <div className="w-16 h-[2px] bg-red-600 mt-4 mb-5 mx-auto lg:mx-0" />
 
                         <p className="text-gray-600 leading-relaxed">
                             As technology evolves, Intersys Solutions stays ahead by integrating modern AV and communication technologies.
@@ -241,13 +242,13 @@ function AudioVisualPage() {
             <section className="py-24 bg-white">
                 <Container>
 
-                    <div className="max-w-3xl space-y-5 mb-16">
+                    <div className="max-w-3xl space-y-5 mb-16 text-center lg:text-left mx-auto lg:mx-0">
 
-                        <h2 className="text-3xl md:text-4xl font-semibold text-[#1A3263] tracking-tight">
+                        <h2 className="text-3xl sm:text-4xl font-semibold text-[#1A3263] tracking-tight">
                             Comprehensive Services
                         </h2>
 
-                        <div className="w-14 h-[2px] bg-red-600" />
+                        <div className="w-14 h-[2px] bg-red-600 mx-auto lg:mx-0" />
 
                         <p className="text-gray-600 leading-relaxed">
                             From high-definition displays and professional sound systems to video conferencing,
@@ -255,7 +256,7 @@ function AudioVisualPage() {
                             intuitive, scalable, and built for real environments.
                         </p>
 
-                        <p className="text-gray-500 border-l-2 border-red-500 pl-4 italic leading-relaxed">
+                        <p className="text-gray-500 border-l-2 border-red-500 pl-4 italic leading-relaxed max-w-lg mx-auto lg:mx-0">
                             “We don’t just install equipment — we design environments where technology feels invisible but powerful.”
                         </p>
 
@@ -270,13 +271,13 @@ function AudioVisualPage() {
                 <Container>
 
                     {/* HEADER */}
-                    <div className="max-w-3xl mb-14 space-y-4">
+                    <div className="max-w-3xl mb-14 space-y-4 text-center lg:text-left mx-auto lg:mx-0">
 
-                        <h2 className="text-3xl md:text-4xl font-semibold text-[#1A3263] tracking-tight">
+                        <h2 className="text-3xl sm:text-4xl font-semibold text-[#1A3263] tracking-tight">
                             Our Core Expertise
                         </h2>
 
-                        <div className="w-14 h-[2px] bg-red-600" />
+                        <div className="w-14 h-[2px] bg-red-600 mx-auto lg:mx-0" />
 
                         <p className="text-gray-600">
                             Specialized engineering for complex audio, video, and control environments.
@@ -338,7 +339,7 @@ function AudioVisualPage() {
                     {/* HEADER */}
                     <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
 
-                        <h2 className="text-3xl md:text-4xl font-semibold text-[#1A3263] tracking-tight">
+                        <h2 className="text-3xl sm:text-4xl font-semibold text-[#1A3263] tracking-tight">
                             Conferencing Solutions
                         </h2>
 
@@ -410,28 +411,28 @@ function AudioVisualPage() {
                     <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
 
                         {/* LEFT CONTENT */}
-                        <div className="space-y-10 order-2 lg:order-1">
+                        <div className="space-y-10 order-2 lg:order-1 text-center lg:text-left">
 
-                            <div className="flex items-center gap-4 text-red-600">
+                            <div className="flex items-center justify-center lg:justify-start gap-4 text-red-600">
                                 <Smartphone size={32} />
 
-                                <h2 className="text-3xl md:text-4xl font-bold text-[#1A3263]">
+                                <h2 className="text-3xl sm:text-4xl font-bold text-[#1A3263]">
                                     AV Control Systems
                                 </h2>
                             </div>
 
-                            <p className="text-gray-500 text-base md:text-lg leading-relaxed">
+                            <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-md mx-auto lg:mx-0">
                                 Centralized room automation for non-technical users.
                             </p>
 
-                            <div className="space-y-4">
+                            <div className="space-y-4 max-w-xs mx-auto lg:mx-0">
 
                                 {[
                                     "One-Touch Start",
                                     "Centralized Monitoring",
                                     "Energy Efficient Automation"
                                 ].map((bullet, i) => (
-                                    <div key={i} className="flex items-center gap-4 group">
+                                    <div key={i} className="flex items-center justify-center lg:justify-start gap-4 group">
 
                                         <div className="w-2 h-2 rounded-full bg-red-600 group-hover:scale-125 transition-transform" />
 
@@ -516,7 +517,7 @@ function AudioVisualPage() {
 
                     {/* HEADER */}
                     <div className="text-center mb-20 space-y-4">
-                        <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
+                        <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight">
                             Signal Management
                         </h2>
 
@@ -526,7 +527,7 @@ function AudioVisualPage() {
                     </div>
 
                     {/* GRID */}
-                    <div className="grid lg:grid-cols-3 gap-8">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
                         {/* CARD 1 */}
                         <div className="group bg-white/5 border border-white/10 overflow-hidden
@@ -604,19 +605,19 @@ function AudioVisualPage() {
                     <div className="grid lg:grid-cols-2 gap-20 items-center">
 
                         {/* LEFT CONTENT */}
-                        <div className="space-y-12">
+                        <div className="space-y-12 text-center lg:text-left">
 
                             <div className="space-y-4">
-                                <h2 className="text-4xl font-bold text-[#1A3263] tracking-tight">
+                                <h2 className="text-3xl sm:text-4xl font-bold text-[#1A3263] tracking-tight">
                                     Room Integration
                                 </h2>
 
-                                <p className="text-gray-500 leading-relaxed max-w-md">
+                                <p className="text-gray-500 leading-relaxed max-w-md mx-auto lg:mx-0">
                                     High-reliability design that blends seamlessly into your architectural vision.
                                 </p>
                             </div>
 
-                            <div className="space-y-8">
+                            <div className="space-y-8 max-w-md mx-auto lg:mx-0">
 
                                 {[
                                     {
@@ -632,12 +633,12 @@ function AudioVisualPage() {
                                         desc: "A single intelligent interface for managing the entire environment."
                                     }
                                 ].map((item, i) => (
-                                    <div key={i} className="flex gap-5">
+                                    <div key={i} className="flex gap-5 justify-center lg:justify-start">
 
                                         {/* subtle indicator */}
                                         <div className="mt-2 w-2 h-2 bg-red-600 shrink-0" />
 
-                                        <div className="space-y-1">
+                                        <div className="space-y-1 text-left">
                                             <h4 className="font-semibold text-[#1A3263]">
                                                 {item.title}
                                             </h4>

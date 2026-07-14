@@ -67,16 +67,16 @@ function BMSPage() {
                 </div>
 
                 <Container className="relative z-10 text-white">
-                    <div className="max-w-4xl">
-                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
-                            Intelligent <br />
-
+                    <div className="max-w-4xl mx-auto lg:mx-0 text-center lg:text-left">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-white font-display leading-[1.2] mb-6">
+                            Intelligent{" "}
+                            <span className="hidden lg:inline"><br /></span>
                             <span className="text-red-500">
                                 Building Management Solutions.
                             </span>
                         </h1>
 
-                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
+                        <p className="text-base text-white/70 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                             Transform your facilities with advanced automation, safety, and efficiency
                         </p>
 

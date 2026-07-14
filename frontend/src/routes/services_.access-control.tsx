@@ -53,13 +53,14 @@ function AccessControlPage() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="max-w-3xl"
+                        className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left"
                     >
-                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
-                            Access Control <br />
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-white font-display leading-[1.2] mb-6">
+                            Access Control{" "}
+                            <span className="hidden lg:inline"><br /></span>
                             <span className="text-red-500">Systems</span>
                         </h1>
-                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
+                        <p className="text-base text-white/70 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                             Protect your business with advanced security solutions that safeguard both digital assets and physical spaces
                         </p>
                         <div className="pt-4">

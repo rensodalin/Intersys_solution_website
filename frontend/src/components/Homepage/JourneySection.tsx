@@ -57,7 +57,7 @@ export function JourneySection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-2xl md:text-3xl font-bold text-white mb-2"
+            className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2"
           >
             A journey of engineering excellence
           </motion.h2>
@@ -67,7 +67,7 @@ export function JourneySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-white/80 text-sm md:text-base"
+            className="text-white/80 text-sm md:text-base max-w-xl mx-auto"
           >
             Over 100+ projects delivered across Cambodia
           </motion.p>
@@ -79,24 +79,24 @@ export function JourneySection() {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
 
           {/* Left */}
-          <div className="lg:w-1/2">
+          <div className="lg:w-1/2 text-center lg:text-left">
 
             <div className="text-xs font-medium text-[#9B0F06] mb-3 tracking-wide">
               Our footprint
             </div>
 
-            <h3 className="text-2xl md:text-3xl font-semibold text-[#162E93] leading-snug mb-4">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#162E93] leading-snug mb-4">
               Success across integrated technology sectors
             </h3>
 
-            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
               As a system integrator in Cambodia, we deliver end-to-end solutions
               across multiple industries — from design to full deployment.
             </p>
           </div>
 
           {/* Right */}
-          <div className="lg:w-1/2">
+          <div className="lg:w-1/2 text-center lg:text-left">
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-10 mb-8">
               {sectors.map((sector) => (

@@ -81,28 +81,29 @@ export function Hero() {
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
 
       <Container className="relative z-20">
-        <div className="max-w-3xl">
+        <div className="max-w-3xl mx-auto lg:mx-0">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-6"
+            className="space-y-6 text-center lg:text-left"
           >
 
 
             {/* Smaller, Clean Heading */}
-            <h1 className="text-3xl md:text-5xl lg:text-[3rem] font-bold text-white leading-[1.2] tracking-tight">
-              Smart Building Solutions <br />
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.5rem] font-bold text-white leading-[1.2] tracking-tight">
+              Smart Building Solutions{" "}
+              <span className="hidden lg:inline"><br /></span>
               with <span className="text-[#DB1A1A]">Safer Future.</span>
             </h1>
 
             {/* Smaller Subtitle Text */}
-            <p className="max-w-xl text-sm md:text-base text-white/70 leading-relaxed font-normal min-h-[3em]">
+            <p className="max-w-xl mx-auto lg:mx-0 text-sm md:text-base text-white/70 leading-relaxed font-normal min-h-[3em]">
               {typedText}
             </p>
 
             {/* Consistent Modern Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-4">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
               <Link
                 to="/"
                 hash="solutions"

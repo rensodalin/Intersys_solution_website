@@ -36,7 +36,7 @@ function CustomSolutionPage() {
         <div className="bg-white overflow-hidden scroll-smooth">
 
             {/* ─── HERO ─── */}
-            <section className="relative h-[65vh] min-h-[450px] flex items-center pt-7">
+            <section className="relative h-[65vh] min-h-[450px] flex items-center pt-24 md:pt-28">
                 <div className="absolute inset-0 z-0">
                     <img
                         src="https://buildings.honeywell.com/content/dam/hbtbt/en/images/horizontal/centraline-hotel-lobby-2880x1440.jpg"
@@ -51,13 +51,14 @@ function CustomSolutionPage() {
                         initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="max-w-3xl"
+                        className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left"
                     >
-                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
-                            Discover <br />
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-white font-display leading-[1.2] mb-6">
+                            Discover{" "}
+                            <span className="hidden lg:inline"><br /></span>
                             <span className="text-red-500">Custom Solutions</span>
                         </h1>
-                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
+                        <p className="text-base text-white/70 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                             Empowering modern enterprises with resilient cloud solutions, airtight security protocols, and scalable infrastructure.
                         </p>
                     </motion.div>

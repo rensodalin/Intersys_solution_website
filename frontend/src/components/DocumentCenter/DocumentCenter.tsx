@@ -121,21 +121,21 @@ export function DocumentCenter() {
                 {/* TITLE */}
                 <div className="border-b-2 border-[#0A0F1A] py-10 md:py-16 pt-28 md:pt-40 grid grid-cols-12 gap-4">
 
-                    <div className="col-span-12 lg:col-span-8">
-                        <h1 className="text-3xl md:text-[45px] text-[#111FA2] font-extrabold tracking-tight">
-                            Document
-                            <br />
+                    <div className="col-span-12 lg:col-span-8 text-center lg:text-left">
+                        <h1 className="text-3xl sm:text-4xl md:text-[45px] text-[#111FA2] font-extrabold tracking-tight">
+                            Document{" "}
+                            <span className="hidden sm:inline"><br /></span>
                             <span className="text-[#D62828]">Center</span>
                         </h1>
                     </div>
 
-                    <div className="col-span-12 lg:col-span-4 flex flex-col justify-end gap-6 pb-2">
+                    <div className="col-span-12 lg:col-span-4 flex flex-col justify-end gap-6 pb-2 text-center lg:text-left">
 
-                        <p className="text-sm text-gray-500 leading-relaxed">
+                        <p className="text-sm text-gray-500 leading-relaxed max-w-md mx-auto lg:mx-0">
                             A centralized library of technical references, engineering documentation, and project insights.
                         </p>
 
-                        <div className="flex gap-8">
+                        <div className="flex gap-8 justify-center lg:justify-start">
                             <div>
                                 <p className="text-2xl md:text-3xl font-bold text-[#0A0F1A]">05</p>
                                 <p className="text-[11px] text-gray-400">
@@ -157,13 +157,13 @@ export function DocumentCenter() {
                 {/* PINNED */}
                 <div className="border-b border-gray-300 grid grid-cols-12">
 
-                    <div className="col-span-12 lg:col-span-2 border-b lg:border-b-0 lg:border-r border-gray-300 py-6 lg:py-8 px-6 lg:pr-6 flex flex-col justify-between">
+                    <div className="col-span-12 lg:col-span-2 border-b lg:border-b-0 lg:border-r border-gray-300 py-6 lg:py-8 px-6 lg:pr-6 flex flex-col justify-between items-center lg:items-start">
                         <span className="text-[11px] text-[#D62828] font-bold">
                             Featured
                         </span>
                     </div>
 
-                    <div className="col-span-12 lg:col-span-7 py-6 lg:py-8 px-6 lg:px-8 border-b lg:border-b-0 lg:border-r border-gray-300">
+                    <div className="col-span-12 lg:col-span-7 py-6 lg:py-8 px-6 lg:px-8 border-b lg:border-b-0 lg:border-r border-gray-300 text-center lg:text-left">
 
                         <p className="text-[11px] text-gray-400 mb-4">
                             Corporate Profile
@@ -184,7 +184,7 @@ export function DocumentCenter() {
                         <img
                             src={companyImg}
                             alt="Corporate Profile"
-                            className="w-full h-32 lg:h-full object-cover"
+                            className="w-full h-48 sm:h-56 md:h-64 lg:h-full object-contain lg:object-cover"
                         />
 
                         <button
@@ -193,7 +193,7 @@ export function DocumentCenter() {
                                 requireAuth(url);
                                 if (user) trackPdfDownload("Intersys Systems - Corporate Overview", url);
                             }}
-                            className="mt-4 flex items-center justify-between bg-[#D62828] text-white text-[11px] font-bold px-5 py-3 hover:bg-[#111FA2] transition outline-none w-full"
+                            className="mt-4 flex items-center justify-between bg-[#D62828] text-white text-[11px] font-bold px-5 py-3 hover:bg-[#111FA2] transition outline-none w-full max-w-xs mx-auto lg:mx-0"
                         >
                             Download
                             <Download size={13} />
@@ -206,7 +206,7 @@ export function DocumentCenter() {
                 {/* FILTER */}
                 <div className="border-b border-gray-300 py-5 flex flex-col md:flex-row justify-between gap-4">
 
-                    <div className="flex overflow-x-auto">
+                    <div className="flex overflow-x-auto mx-auto md:mx-0">
                         {categories.map((cat) => (
                             <button
                                 key={cat}
@@ -241,14 +241,14 @@ export function DocumentCenter() {
                             <motion.div
                                 key={doc.id}
                                 layout
-                                className="grid grid-cols-12 gap-4 py-6 hover:bg-white transition"
+                                className="grid grid-cols-12 gap-4 py-6 hover:bg-white transition items-center"
                             >
 
-                                <div className="col-span-1 text-[11px] font-medium text-gray-400">
+                                <div className="col-span-1 text-[11px] font-medium text-gray-400 text-center">
                                     {doc.no}
                                 </div>
 
-                                <div className="col-span-9 md:col-span-5">
+                                <div className="col-span-9 lg:col-span-5">
                                     <h3 className="text-sm font-bold text-[#0A0F1A] mb-1">
                                         {doc.title}
                                     </h3>
@@ -258,19 +258,19 @@ export function DocumentCenter() {
                                     </p>
                                 </div>
 
-                                <div className="col-span-2 hidden md:block text-[11px] text-gray-400">
+                                <div className="col-span-2 hidden lg:block text-[11px] text-gray-400">
                                     {doc.category}
                                 </div>
 
-                                <div className="col-span-2 hidden md:block text-[11px] text-gray-400">
+                                <div className="col-span-2 hidden lg:block text-[11px] text-gray-400">
                                     {doc.updated}
                                 </div>
 
-                                <div className="col-span-1 hidden md:block text-[11px] text-gray-400">
+                                <div className="col-span-1 hidden lg:block text-[11px] text-gray-400">
                                     {doc.size}
                                 </div>
 
-                                <div className="col-span-2 md:col-span-1 flex justify-end items-start">
+                                <div className="col-span-2 lg:col-span-1 flex justify-end items-start">
                                     <button
                                         onClick={() => {
                                             if (doc.url === "#") return;

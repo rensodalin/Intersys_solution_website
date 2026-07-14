@@ -39,21 +39,22 @@ function FireAlarmPage() {
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="text-white max-w-3xl"
+                            className="text-white max-w-3xl text-center lg:text-left"
                         >
-                            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-4 md:mb-6">
-                                Intelligent <br />
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-white font-display leading-[1.2] mb-4 md:mb-6">
+                                Intelligent{" "}
+                                <span className="hidden lg:inline"><br /></span>
                                 <span className="text-red-500">Fire Safety</span> Solutions
                             </h1>
 
-                            <p className="text-sm md:text-base text-white/70 max-w-2xl leading-relaxed">
+                            <p className="text-sm md:text-base text-white/70 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                                 At Intersys Solutions Co., Ltd, we specialize in delivering intelligent fire alarm systems
                                 designed to protect lives, assets, and infrastructure. As an authorized Honeywell Engineering
                                 System Distributor, we offer trusted global brands like NOTIFIER, ESSER, and System Sensor
                                 by Honeywell — bringing proven global technology to your local projects.
                             </p>
 
-                            <div className="flex flex-wrap gap-3 md:gap-4 pt-4 md:pt-6">
+                            <div className="flex flex-wrap justify-center lg:justify-start gap-3 md:gap-4 pt-4 md:pt-6">
                                 {["Early Detection", "Fast Response", "System Integration"].map((tag) => (
                                     <span
                                         key={tag}
@@ -86,8 +87,8 @@ function FireAlarmPage() {
             <section className="py-28 bg-white">
                 <Container>
                     <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                        <div className="max-w-2xl space-y-4">
-                            <h2 className="text-4xl md:text-4xl font-bold text-[#1A3263]">Optimized for Diverse Sectors</h2>
+                        <div className="max-w-2xl space-y-4 text-center lg:text-left mx-auto lg:mx-0">
+                            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A3263]">Optimized for Diverse Sectors</h2>
                             <p className="text-gray-500 text-md leading-relaxed">
                                 Every environment has a unique risk profile. Our fire alarm solutions are custom-engineered to
                                 meet international safety standards for every architectural scale — providing fast response
@@ -146,10 +147,10 @@ function FireAlarmPage() {
                             initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="space-y-8"
+                            className="space-y-8 text-center lg:text-left"
                         >
-                            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight">Unified Systems Integration</h2>
-                            <p className="text-white/60 text-md leading-relaxed font-light">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">Unified Systems Integration</h2>
+                            <p className="text-white/60 text-md leading-relaxed font-light mx-auto lg:mx-0 max-w-2xl">
                                 We integrate Honeywell's world-class fire safety technologies — NOTIFIER, ESSER, and
                                 System Sensor — to deliver reliable protection fully compliant with international standards.
                                 Our integrated approach connects fire detection with building management and security
@@ -191,12 +192,12 @@ function FireAlarmPage() {
             <section className="py-24 bg-white">
                 <Container>
                     <div className="text-center mb-16 space-y-4">
-                        <h2 className="text-2xl md:text-4xl font-bold text-[#1A3263]">Fire Alarm Systems</h2>
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1A3263]">Fire Alarm Systems</h2>
                         <p className="text-gray-500 max-w-2xl mx-auto">
                             Advanced protection for your safety — engineered to detect, respond, and integrate seamlessly.
                         </p>
                     </div>
-                    <div className="grid md:grid-cols-4 gap-8">
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         {[
                             {
                                 icon: Bell,
@@ -219,12 +220,12 @@ function FireAlarmPage() {
                                 img: "https://static.wixstatic.com/media/3d5958_fb21055f1af54a9d80929c991e66f329~mv2.png/v1/fill/w_634,h_316,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
                             }
                         ].map((strength, i) => (
-                            <div key={i} className="space-y-6">
-                                <div className="flex items-center gap-3">
-                                    <strength.icon className="text-red-600" size={24} />
+                            <div key={i} className="space-y-4">
+                                <div className="flex items-center justify-center sm:justify-start gap-3">
+                                    <strength.icon className="text-red-600 shrink-0" size={24} />
                                     <h3 className="text-xl font-bold text-[#1A3263]">{strength.title}</h3>
                                 </div>
-                                <div className="h-48 rounded-lg overflow-hidden shadow-lg">
+                                <div className="h-48 sm:h-56 rounded-lg overflow-hidden shadow-lg">
                                     <img src={strength.img} alt={strength.title} className="w-full h-full object-cover" />
                                 </div>
                             </div>
@@ -239,7 +240,7 @@ function FireAlarmPage() {
 
                     {/* HEADER */}
                     <div className="text-center mb-14 space-y-4">
-                        <h2 className="text-2xl md:text-4xl font-bold text-[#1A3263]">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1A3263]">
                             Advanced Fire Safety Systems
                         </h2>
 
@@ -322,14 +323,14 @@ function FireAlarmPage() {
                 <Container>
 
                     {/* HEADER */}
-                    <div className="max-w-4xl mb-20 space-y-5">
-                        <h2 className="text-3xl md:text-4xl font-bold text-[#1A3263] tracking-tight">
+                    <div className="max-w-4xl mb-20 space-y-5 text-center lg:text-left mx-auto lg:mx-0">
+                        <h2 className="text-3xl sm:text-4xl font-bold text-[#1A3263] tracking-tight">
                             Flexible Architecture
                         </h2>
 
-                        <div className="w-16 h-1 bg-red-600" />
+                        <div className="w-16 h-1 bg-red-600 mx-auto lg:mx-0" />
 
-                        <p className="text-gray-500 text-lg leading-relaxed max-w-2xl">
+                        <p className="text-gray-500 text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0">
                             Scalable systems designed to adapt across environments — from compact offices to complex industrial infrastructures — ensuring consistent protection at every level.
                         </p>
                     </div>
@@ -378,7 +379,7 @@ function FireAlarmPage() {
                 <Container>
                     {/* Header */}
                     <div className="text-center mb-16 space-y-4">
-                        <h2 className="text-4xl font-bold text-[#2C3947]">
+                        <h2 className="text-3xl sm:text-4xl font-bold text-[#2C3947]">
                             Smart Monitoring
                         </h2>
 
@@ -497,7 +498,7 @@ function FireAlarmPage() {
                 <Container>
                     {/* Header */}
                     <div className="text-center mb-14 space-y-3">
-                        <h2 className="text-3xl md:text-4xl font-semibold text-[#1A3263] tracking-tight">
+                        <h2 className="text-3xl sm:text-4xl font-semibold text-[#1A3263] tracking-tight">
                             High Reliability
                         </h2>
                         <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
@@ -587,7 +588,7 @@ function FireAlarmPage() {
                     <Container>
                         {/* Header */}
                         <div className="text-center mb-14 space-y-3">
-                            <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight">
+                            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight">
                                 Why Choose Us
                             </h2>
                             <p className="text-gray-300 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
@@ -663,7 +664,7 @@ function FireAlarmPage() {
             <section className="py-24 bg-[#F8F9FA]">
                 <Container>
                     <div className="text-center mb-16 space-y-4">
-                        <h2 className="text-3xl font-bold text-[#1A3263]">Trusted Partners</h2>
+                        <h2 className="text-3xl sm:text-4xl font-bold text-[#1A3263]">Trusted Partners</h2>
                         <p className="text-gray-500 text-sm max-w-xl mx-auto">
                             World-leading fire safety and intelligent detection systems for mission-critical environments.
                         </p>
