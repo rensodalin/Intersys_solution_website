@@ -248,6 +248,7 @@ export function CatalogSidebar({
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+    const [searching, setSearching] = useState(false);
     const { items } = useInquiry();
 
     // Initialize search index from API on mount
@@ -258,10 +259,14 @@ export function CatalogSidebar({
     // Handle Search
     React.useEffect(() => {
         if (searchQuery.length >= 1) {
-            const results = searchProducts(searchQuery);
-            setSearchResults(results);
+            setSearching(true);
+            searchProducts(searchQuery).then(results => {
+                setSearchResults(results);
+                setSearching(false);
+            });
         } else {
             setSearchResults([]);
+            setSearching(false);
         }
     }, [searchQuery]);
 
@@ -364,6 +369,7 @@ export function CatalogSidebar({
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={(e) => { if (e.key === "Enter" && searchResults[0]) { setSearchResults([]); navigate({ to: searchResults[0].link }); } }}
                         placeholder="Search products..."
                         className="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-4 py-2 text-[13px] text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1A3263]/20 focus:border-[#1A3263] transition-all"
                     />
@@ -372,7 +378,7 @@ export function CatalogSidebar({
 
             {/* ── SEARCH RESULTS ── */}
             <AnimatePresence>
-                {searchQuery.length >= 1 && (
+                {searchQuery.length >= 1 && (searchResults.length > 0 || searching) && (
                     <motion.div 
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
@@ -382,13 +388,16 @@ export function CatalogSidebar({
                         <div className="px-5 py-3">
                             <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Search Results ({searchResults.length})</h4>
                             <div className="space-y-2">
-                                {searchResults.length > 0 ? (
+                                {searching ? (
+                                    <div className="py-4 text-center">
+                                        <p className="text-xs text-gray-400 italic">Searching...</p>
+                                    </div>
+                                ) : searchResults.length > 0 ? (
                                     searchResults.map((result) => (
                                         <Link
                                             key={result.id}
                                             to={result.link}
                                             onClick={() => {
-                                                setSearchQuery("");
                                                 setIsMobileOpen(false);
                                             }}
                                             className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors group border border-transparent hover:border-gray-100"
@@ -517,7 +526,7 @@ export function CatalogSidebar({
                         </motion.div>
                     ) : (
                         <div className="text-center py-2">
-                            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-widest">
+                            <p className="text-xs text-gray-500 font-medium">
                                 Intersys Product Catalog
                             </p>
                         </div>

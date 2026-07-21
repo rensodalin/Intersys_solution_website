@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useRef } from "react";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-import { Menu, X, User, ChevronRight, Phone, Mail, Facebook, Linkedin, ChevronDown, Package } from "lucide-react";
+import { Menu, X, User, ChevronRight, Phone, Mail, Facebook, Linkedin, ChevronDown, Package, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn, toSlug } from "@/lib/utils";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,6 +9,7 @@ import { initializeAuth, loginSuccess, logoutSuccess } from "@/store/authSlice";
 import logoImg from "@/assets/logo.avif";
 import type { NavDataItem, NavDataSubItem } from "@/components/shared/navigationData";
 import { useTaxonomy } from "@/hooks/useTaxonomy";
+import { searchProducts, initSearchIndex } from "@/utils/productSearch";
 import type { TaxonomySubCategory } from "@/utils/taxonomyApi";
 import environment from "@/enviroment/enviroment";
 
@@ -68,6 +69,10 @@ export function Navbar() {
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [loginGoogleOnly, setLoginGoogleOnly] = useState("");
+  const [showProductSearch, setShowProductSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searching, setSearching] = useState(false);
 
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -162,6 +167,23 @@ export function Navbar() {
     prevUser.current = user;
   }, [user]);
 
+  useEffect(() => {
+    initSearchIndex();
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery.length >= 1) {
+      setSearching(true);
+      searchProducts(searchQuery).then(results => {
+        setSearchResults(results);
+        setSearching(false);
+      });
+    } else {
+      setSearchResults([]);
+      setSearching(false);
+    }
+  }, [searchQuery]);
+
   const closeMenus = () => {
     setShowProducts(false);
     setShowServices(false);
@@ -176,8 +198,9 @@ export function Navbar() {
   };
 
   return (
-    <header
-      className={cn(
+    <>
+      <header
+        className={cn(
         "fixed top-0 inset-x-0 z-50 transition-all duration-500",
         scrolled ? "translate-y-0" : "translate-y-0",
       )}
@@ -389,6 +412,71 @@ export function Navbar() {
               <Linkedin size={16} />
             </a>
           </div>
+
+          <div className="relative hidden md:block">
+            {showProductSearch ? (
+              <div className="flex items-center">
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter" && searchResults[0]) { setSearchResults([]); navigate({ to: searchResults[0].link }); } }}
+                  onBlur={() => setTimeout(() => { if (!searchQuery) setShowProductSearch(false); }, 200)}
+                  placeholder="Search products..."
+                  className="w-48 bg-white/10 border border-white/20 rounded-full pl-8 pr-3 py-1.5 text-xs text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-500/50 transition-all"
+                  autoFocus
+                />
+                {searchQuery.length >= 1 && (searchResults.length > 0 || searching) && (
+                  <div className="absolute top-full right-0 mt-2 w-80 bg-white border border-gray-100 rounded-xl shadow-xl overflow-hidden z-50 max-h-[60vh] overflow-y-auto">
+                    {searching ? (
+                      <div className="p-4 text-center">
+                        <p className="text-xs text-gray-400 italic">Searching...</p>
+                      </div>
+                    ) : searchResults.length > 0 ? (
+                      searchResults.map((result: any) => (
+                        <Link
+                          key={result.id}
+                          to={result.link}
+                          onClick={() => { setShowProductSearch(false); setSearchResults([]); }}
+                          className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors group"
+                        >
+                          <div className="w-8 h-8 rounded bg-[#FBFBFC] border border-gray-100 flex items-center justify-center p-1 overflow-hidden shrink-0">
+                            <img src={result.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-[13px] font-semibold text-[#1A3263] truncate group-hover:text-[#FC3B1F] transition-colors">
+                              {result.title}
+                            </div>
+                            {result.matchedPartCodes?.length > 0 && (
+                              <div className="flex flex-wrap gap-1 mt-0.5">
+                                {result.matchedPartCodes.map((code: string, i: number) => (
+                                  <span key={i} className="text-[9px] bg-orange-100 text-orange-700 font-mono px-1.5 rounded">{code}</span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </Link>
+                      ))
+                    ) : (
+                      <div className="p-4 text-center">
+                        <p className="text-xs text-gray-400 italic">No products found for "{searchQuery}"</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={() => setShowProductSearch(true)}
+                className={cn("transition p-1.5 rounded-full hover:bg-white/10", iconClass)}
+                title="Search products"
+              >
+                <Search size={18} />
+              </button>
+            )}
+          </div>
+
           {user ? (
             <div className="flex items-center gap-3">
               <Link to={user.isAdmin ? "/admin" : "/my-account"} className="flex items-center gap-2 group">
@@ -530,10 +618,75 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile Toggle */}
-        <button onClick={() => setMobileOpen(!mobileOpen)} className={cn("lg:hidden p-2 rounded-full transition-colors", useDarkText ? "text-[#0A0F1A] hover:bg-[#0A0F1A]/10" : "text-white hover:bg-white/10")}>
-          {mobileOpen ? <X /> : <Menu />}
-        </button>
+        {/* Mobile Actions */}
+        <div className="lg:hidden flex items-center gap-1">
+          <div className="relative">
+            {showProductSearch ? (
+              <div className="flex items-center">
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter" && searchResults[0]) { setSearchResults([]); navigate({ to: searchResults[0].link }); } }}
+                  onBlur={() => setTimeout(() => { if (!searchQuery) setShowProductSearch(false); }, 200)}
+                  placeholder="Search products..."
+                  className="w-40 bg-white/10 border border-white/20 rounded-full pl-8 pr-3 py-1.5 text-xs text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-500/50 transition-all"
+                  autoFocus
+                />
+                {searchQuery.length >= 1 && (searchResults.length > 0 || searching) && (
+                  <div className="absolute top-full right-0 mt-2 w-72 bg-[#0A0F1A] border border-white/10 rounded-xl shadow-xl overflow-hidden z-50 max-h-[50vh] overflow-y-auto">
+                    {searching ? (
+                      <div className="p-4 text-center">
+                        <p className="text-xs text-white/40 italic">Searching...</p>
+                      </div>
+                    ) : searchResults.length > 0 ? (
+                      searchResults.map((result: any) => (
+                        <Link
+                          key={result.id}
+                          to={result.link}
+                          onClick={() => { setShowProductSearch(false); setSearchResults([]); setMobileOpen(false); }}
+                          className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/5 transition-colors group"
+                        >
+                          <div className="w-8 h-8 rounded bg-white/10 flex items-center justify-center p-1 overflow-hidden shrink-0">
+                            <img src={result.image} alt="" className="w-full h-full object-contain" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-[13px] font-semibold text-white truncate group-hover:text-red-400 transition-colors">
+                              {result.title}
+                            </div>
+                            {result.matchedPartCodes?.length > 0 && (
+                              <div className="flex flex-wrap gap-1 mt-0.5">
+                                {result.matchedPartCodes.map((code: string, i: number) => (
+                                  <span key={i} className="text-[9px] bg-orange-500/20 text-orange-300 font-mono px-1.5 rounded">{code}</span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </Link>
+                      ))
+                    ) : (
+                      <div className="p-4 text-center">
+                        <p className="text-xs text-white/40 italic">No products found</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={() => setShowProductSearch(true)}
+                className={cn("p-2 rounded-full transition-colors", useDarkText ? "text-[#0A0F1A] hover:bg-[#0A0F1A]/10" : "text-white hover:bg-white/10")}
+                title="Search products"
+              >
+                <Search size={18} />
+              </button>
+            )}
+          </div>
+          <button onClick={() => setMobileOpen(!mobileOpen)} className={cn("p-2 rounded-full transition-colors", useDarkText ? "text-[#0A0F1A] hover:bg-[#0A0F1A]/10" : "text-white hover:bg-white/10")}>
+            {mobileOpen ? <X /> : <Menu />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -604,6 +757,60 @@ export function Navbar() {
                     <ChevronRight size={16} className="text-white/40 group-hover:translate-x-1 transition-transform" />
                   </button>
                 )}
+              </div>
+
+              {/* Search */}
+              <div className="space-y-3">
+                <p className="text-white/40 font-bold uppercase tracking-wider text-[10px]">Search</p>
+                <div className="relative">
+                  <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter" && searchResults[0]) { setMobileOpen(false); setSearchResults([]); navigate({ to: searchResults[0].link }); } }}
+                    placeholder="Search products..."
+                    className="w-full bg-white/10 border border-white/20 rounded-full pl-9 pr-3 py-2.5 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-500/50 transition-all"
+                  />
+                  {searchQuery.length >= 1 && (searchResults.length > 0 || searching) && (
+                    <div className="mt-2 bg-white/5 border border-white/10 rounded-xl overflow-hidden max-h-[50vh] overflow-y-auto">
+                      {searching ? (
+                        <div className="p-4 text-center">
+                          <p className="text-xs text-white/40 italic">Searching...</p>
+                        </div>
+                      ) : searchResults.length > 0 ? (
+                        searchResults.map((result: any) => (
+                          <Link
+                            key={result.id}
+                            to={result.link}
+                            onClick={() => { setMobileOpen(false); setSearchResults([]); }}
+                            className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/5 transition-colors group"
+                          >
+                            <div className="w-8 h-8 rounded bg-white/10 flex items-center justify-center p-1 overflow-hidden shrink-0">
+                              <img src={result.image} alt="" className="w-full h-full object-contain" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-[13px] font-semibold text-white truncate group-hover:text-red-400 transition-colors">
+                                {result.title}
+                              </div>
+                              {result.matchedPartCodes?.length > 0 && (
+                                <div className="flex flex-wrap gap-1 mt-0.5">
+                                  {result.matchedPartCodes.map((code: string, i: number) => (
+                                    <span key={i} className="text-[9px] bg-orange-500/20 text-orange-300 font-mono px-1.5 rounded">{code}</span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </Link>
+                        ))
+                      ) : (
+                        <div className="p-4 text-center">
+                          <p className="text-xs text-white/40 italic">No products found</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Navigation Links */}
@@ -759,7 +966,8 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+      </header>
+    </>
   );
 }
 

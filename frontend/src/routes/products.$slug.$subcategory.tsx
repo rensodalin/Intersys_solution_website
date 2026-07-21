@@ -212,11 +212,11 @@ function SubcategoryProductsPage() {
                 </div>
               ) : mapped.length > 0 ? (
                 <>
-                  <ProductSort
-                    currentSort={currentSort}
-                    onSortChange={setCurrentSort}
-                    totalProducts={mapped.length}
-                  />
+                    <ProductSort
+                      currentSort={currentSort}
+                      onSortChange={setCurrentSort}
+                      totalProducts={mapped.length}
+                    />
                   <ProductCardGrid products={sortedProducts} />
                 </>
               ) : null}

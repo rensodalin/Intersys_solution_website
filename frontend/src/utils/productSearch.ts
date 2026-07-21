@@ -58,8 +58,9 @@ export async function initSearchIndex(): Promise<void> {
     return initPromise;
 }
 
-export const searchProducts = (query: string): SearchResult[] => {
+export async function searchProducts(query: string): Promise<SearchResult[]> {
     if (!query || query.length < 1) return [];
+    await initSearchIndex();
     const products = searchCache || [];
     const lowerQuery = query.toLowerCase();
 

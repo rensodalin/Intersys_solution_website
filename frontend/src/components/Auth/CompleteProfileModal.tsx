@@ -78,9 +78,17 @@ export function CompleteProfileModal() {
       const data = await res.json();
 
       if (data.success) {
+        const storedPdf = localStorage.getItem("pending_pdf_url");
+        if (storedPdf) {
+          localStorage.removeItem("pending_pdf_url");
+        }
         dispatch(loginSuccess(data.user));
         setOpen(false);
-        navigate({ to: "/my-account" });
+        if (storedPdf) {
+          window.open(storedPdf, "_blank");
+        } else {
+          navigate({ to: "/my-account" });
+        }
         toast.custom((t) => (
           <div className="bg-gray-900 border border-gray-800 rounded-xl shadow-2xl p-4 flex items-center gap-4 min-w-[320px]">
             <div className="bg-emerald-500/20 text-emerald-400 p-2 rounded-full flex-shrink-0">

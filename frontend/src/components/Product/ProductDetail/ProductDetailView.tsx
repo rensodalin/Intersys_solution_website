@@ -5,7 +5,6 @@ import { Container } from "@/components/Common/Container";
 import environment from "@/enviroment/enviroment";
 import {
   ShoppingCart,
-  ArrowLeft,
   Plus,
   Minus
 } from "lucide-react";
@@ -41,13 +40,8 @@ export interface ProductData {
   documents: { name: string; url: string }[];
 }
 
-// ─── MOCK DATA ───
-
-
-
 export function ProductDetailView({ product, returnPath }: { product: ProductData, returnPath?: string }) {
   const navigate = useNavigate();
-  // Initialize quantities from global inquiry context if items already exist
   const { addItems } = useInquiry();
   const [activeTab, setActiveTab] = useState<"description" | "documents">("description");
   const [selectedImage, setSelectedImage] = useState(0);
@@ -55,7 +49,6 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
     Object.fromEntries(product.options.map(o => [o.partCode, 0]))
   );
   const [showPopup, setShowPopup] = useState(false);
-
 
   const user = useSelector((state: RootState) => state.auth.user);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -77,10 +70,8 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
     }
   };
 
-  // Handle auto-opening PDF after successful login (local or OAuth)
   useEffect(() => {
     if (user) {
-      // 1. Check local state (for email/password login)
       if (pendingDocUrl) {
         window.open(pendingDocUrl, "_blank");
         trackPdfDownload(product.title + " - Document", pendingDocUrl);
@@ -89,12 +80,13 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
         return;
       }
 
-      // 2. Check localStorage (for Google OAuth redirect login)
-      const storedPdf = localStorage.getItem("pending_pdf_url");
-      if (storedPdf) {
-        window.open(storedPdf, "_blank");
-        trackPdfDownload(product.title + " - Document", storedPdf);
-        localStorage.removeItem("pending_pdf_url");
+      if (user.profileCompleted) {
+        const storedPdf = localStorage.getItem("pending_pdf_url");
+        if (storedPdf) {
+          window.open(storedPdf, "_blank");
+          trackPdfDownload(product.title + " - Document", storedPdf);
+          localStorage.removeItem("pending_pdf_url");
+        }
       }
     }
   }, [user, pendingDocUrl]);
@@ -145,7 +137,6 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
       .join(" ");
   };
 
-  // Build breadcrumbs from the returnPath (the category page URL the user came from)
   const buildBreadcrumbs = () => {
     const crumbs: { name: string; href: string }[] = [
       { name: "Home", href: "/" },
@@ -153,7 +144,6 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
     ];
 
     if (returnPath && returnPath.startsWith("/products/")) {
-      // Parse the full URL path to get each hierarchy level
       const path = returnPath.replace(/^\/products\//, "").split("?")[0];
       const segments = path.split("/").filter(Boolean);
       let accumulated = "/products";
@@ -163,7 +153,6 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
         crumbs.push({ name: slugToTitle(segments[i]), href: accumulated });
       }
     } else {
-      // Fallback when no returnPath: use flat product fields
       if (product.category === "Building Management") {
         crumbs.push({ name: "Building Management", href: "/products/building-management" });
       } else if (product.category === "Surveillance (CCTV)") {
@@ -253,7 +242,6 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
         {/* ─── MAIN PRODUCT SECTION ─── */}
         <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-16 mb-24 max-w-5xl mx-auto">
           {/* Gallery */}
-          {/* Gallery */}
           <div>
             <div className="w-[360px] aspect-square bg-[#FBFBFC] rounded-sm border border-gray-100 flex items-center justify-center p-6 mb-5">
               <img
@@ -263,13 +251,13 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
               />
             </div>
 
-            <div className="flex gap-2 justify-start w-[360px]">
+            <div className="flex flex-wrap gap-2 justify-start w-[360px]">
               {product.thumbnails.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedImage(idx)}
                   className={cn(
-                    "w-14 h-14 rounded-sm border transition-all p-1 bg-white",
+                    "w-14 h-14 shrink-0 rounded-sm border transition-all p-1 bg-white",
                     selectedImage === idx
                       ? "border-[#C3110C]"
                       : "border-gray-100 hover:border-gray-200"
@@ -281,7 +269,6 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
             </div>
           </div>
 
-          {/* Info Tabs */}
           {/* Info Tabs */}
           <div>
             <div className="flex gap-10 border-b border-gray-100 mb-8">
@@ -467,7 +454,6 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
             </div>
           </div>
         )}
-
 
       </Container>
       <AuthModal

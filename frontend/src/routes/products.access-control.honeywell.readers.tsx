@@ -107,9 +107,9 @@ function HoneywellReadersPage() {
             <section className="py-14 md:py-16 relative z-20 px-8">
                 <Container>
                     <ProductSort
-                        currentSort={currentSort}
-                        onSortChange={setCurrentSort}
-                        totalProducts={mapped.length}
+                      currentSort={currentSort}
+                      onSortChange={setCurrentSort}
+                      totalProducts={mapped.length}
                     />
                     <HoneywellGrid products={sortedProducts} />
                 </Container>
