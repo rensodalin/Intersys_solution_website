@@ -1,12 +1,8 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Download, ArrowUpRight, FileText } from "lucide-react";
+import { Search } from "lucide-react";
 import { Container } from "@/components/Common/Container";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
-import environment from "@/enviroment/enviroment";
 import companyImg from "@/assets/company.png";
-import { AuthModal } from "@/components/Auth/AuthModal";
 
 const categories = [
     "All",
@@ -66,40 +62,6 @@ const documents = [
 export function DocumentCenter() {
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [query, setQuery] = useState("");
-    const [showAuthModal, setShowAuthModal] = useState(false);
-    const [pendingUrl, setPendingUrl] = useState<string | null>(null);
-
-    const user = useSelector((state: RootState) => state.auth.user);
-    const baseUrl = environment;
-
-    const requireAuth = useCallback((url: string) => {
-        if (user) {
-            window.open(url, "_blank", "noopener,noreferrer");
-            return;
-        }
-        setPendingUrl(url);
-        setShowAuthModal(true);
-    }, [user]);
-
-    const handleAuthClose = useCallback(() => {
-        setShowAuthModal(false);
-        setPendingUrl(null);
-    }, []);
-
-    const trackPdfDownload = async (title: string, url: string) => {
-        if (!user || url === "#") return;
-        try {
-            await fetch(`${baseUrl}/auth/user/download`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ title, url }),
-                credentials: "include"
-            });
-        } catch (err) {
-            console.error("Failed to track download:", err);
-        }
-    };
-
     const filtered = documents.filter((d) => {
         const matchCat =
             selectedCategory === "All" || d.category === selectedCategory;
@@ -187,17 +149,7 @@ export function DocumentCenter() {
                             className="w-full h-48 sm:h-56 md:h-64 lg:h-full object-contain lg:object-cover"
                         />
 
-                        <button
-                            onClick={() => {
-                                const url = "/documents/project-references-bms.pdf";
-                                requireAuth(url);
-                                if (user) trackPdfDownload("Intersys Systems - Corporate Overview", url);
-                            }}
-                            className="mt-4 flex items-center justify-between bg-[#D62828] text-white text-[11px] font-bold px-5 py-3 hover:bg-[#111FA2] transition outline-none w-full max-w-xs mx-auto lg:mx-0"
-                        >
-                            Download
-                            <Download size={13} />
-                        </button>
+
 
                     </div>
 
@@ -248,7 +200,7 @@ export function DocumentCenter() {
                                     {doc.no}
                                 </div>
 
-                                <div className="col-span-9 lg:col-span-5">
+                                <div className="col-span-11 lg:col-span-6">
                                     <h3 className="text-sm font-bold text-[#0A0F1A] mb-1">
                                         {doc.title}
                                     </h3>
@@ -270,19 +222,6 @@ export function DocumentCenter() {
                                     {doc.size}
                                 </div>
 
-                                <div className="col-span-2 lg:col-span-1 flex justify-end items-start">
-                                    <button
-                                        onClick={() => {
-                                            if (doc.url === "#") return;
-                                            requireAuth(doc.url);
-                                            if (user) trackPdfDownload(doc.title, doc.url);
-                                        }}
-                                        className="w-8 h-8 border flex items-center justify-center hover:border-[#D62828] hover:text-[#D62828] transition-colors cursor-pointer"
-                                    >
-                                        <Download size={13} />
-                                    </button>
-                                </div>
-
                             </motion.div>
                         ))}
                     </AnimatePresence>
@@ -290,8 +229,6 @@ export function DocumentCenter() {
                 </div>
 
             </Container>
-
-            <AuthModal isOpen={showAuthModal} onClose={handleAuthClose} />
         </div>
     );
 }

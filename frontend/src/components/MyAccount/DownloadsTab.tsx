@@ -1,6 +1,5 @@
 import { Download } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { downloadFile } from "./api";
 
 interface DownloadsTabProps {
   downloadedPdfs?: Array<{ title: string; url: string; downloadedAt: string }>;
@@ -24,7 +23,11 @@ export function DownloadsTab({ downloadedPdfs }: DownloadsTabProps) {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {downloadedPdfs.map((pdf, idx) => (
-            <div key={idx} className="p-4 border border-gray-150 rounded-sm hover:border-[#1A3263] transition flex items-center justify-between bg-white group gap-4">
+            <div
+              key={idx}
+              onClick={() => window.open(pdf.url, "_blank", "noopener,noreferrer")}
+              className="p-4 border border-gray-150 rounded-sm hover:border-[#1A3263] transition flex items-center justify-between bg-white group gap-4 cursor-pointer"
+            >
               <div className="flex items-center gap-3.5 min-w-0">
                 <div className="w-10 h-10 text-red-600 rounded-sm flex items-center justify-center flex-shrink-0">
                   <span className="text-[10px]">PDF</span>
@@ -38,13 +41,6 @@ export function DownloadsTab({ downloadedPdfs }: DownloadsTabProps) {
                   </p>
                 </div>
               </div>
-              <button
-                onClick={() => downloadFile(pdf.url, pdf.title)}
-                className="p-2.5 rounded-full bg-gray-50 text-gray-500 hover:bg-red-50 hover:text-red-600 transition flex-shrink-0 cursor-pointer border-none"
-                title="Redownload File"
-              >
-                <Download size={16} />
-              </button>
             </div>
           ))}
         </div>
