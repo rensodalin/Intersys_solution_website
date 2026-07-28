@@ -64,6 +64,7 @@ export function Navbar() {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileClientOpen, setMobileClientOpen] = useState(false);
+  const [showCompactDropdown, setShowCompactDropdown] = useState(false);
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
@@ -225,7 +226,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden lg:flex flex-1 justify-center h-full">
+        <div className="hidden min-[1000px]:flex flex-1 justify-center h-full">
           <nav className="flex items-center gap-8 h-full">
 
             <Link to="/about" className={cn("relative h-full flex items-center text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center [&.active]:after:scale-x-100 [&.active]:text-red-500", navItemClass)}>
@@ -396,7 +397,7 @@ export function Navbar() {
         </div>
 
         {/* Actions */}
-        <div className="hidden lg:flex items-center gap-6">
+        <div className="hidden min-[1301px]:flex items-center gap-6">
           {/* Social Links */}
           <div className={cn("flex items-center gap-4 pr-6 border-r", borderClass)}>
 
@@ -618,8 +619,48 @@ export function Navbar() {
           </Link>
         </div>
 
+        {/* Compact Extras - 1000px to 1023px */}
+        <div className="hidden min-[1000px]:max-[1300px]:flex items-center gap-1">
+          <div className="relative">
+            <button
+              onClick={() => setShowProductSearch(true)}
+              className={cn("flex items-center justify-center min-w-[44px] min-h-[44px] rounded-full transition-colors", useDarkText ? "text-[#0A0F1A] hover:bg-[#0A0F1A]/10" : "text-white hover:bg-white/10")}
+              title="Search products"
+            >
+              <Search size={18} />
+            </button>
+          </div>
+          <div className="relative">
+            <button
+              onClick={() => setShowCompactDropdown(!showCompactDropdown)}
+              className={cn("flex items-center justify-center min-w-[44px] min-h-[44px] rounded-full transition-colors", useDarkText ? "text-[#0A0F1A] hover:bg-[#0A0F1A]/10" : "text-white hover:bg-white/10")}
+              aria-label="More actions"
+            >
+              {showCompactDropdown ? <X size={20} /> : <Menu size={20} />}
+            </button>
+            {showCompactDropdown && (
+              <>
+                <div className="fixed inset-0 z-30" onClick={() => setShowCompactDropdown(false)} />
+                <div className="absolute right-0 top-full mt-2 z-40 w-52 bg-[#1A3263] border border-white/10 shadow-2xl">
+                  <div className="p-4 border-b border-white/10">
+                    <p className="text-white/50 text-[10px] uppercase tracking-wider font-bold mb-3">Follow Us</p>
+                    <div className="flex items-center justify-center gap-5">
+                      <a href="https://www.facebook.com/IntersysSolutions" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors"><Facebook size={18} /></a>
+                      <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors">
+                        <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.539.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.285-.346-.094L7.469 14.28l-2.76-.86c-.6-.184-.593-.6.126-.882l10.82-4.172c.504-.191.95.105.81.855z" /></svg>
+                      </a>
+                      <a href="https://www.linkedin.com/company/intersys-solutions2015" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors"><Linkedin size={18} /></a>
+                    </div>
+                  </div>
+                  <Link to="/request-quote" onClick={() => setShowCompactDropdown(false)} className="flex items-center justify-center gap-2 px-5 py-3.5 text-sm font-medium text-white bg-[#C3110C] hover:bg-red-700 transition-colors">Request Quote</Link>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
         {/* Mobile Actions */}
-        <div className="lg:hidden flex items-center gap-1">
+        <div className="max-[999px]:flex hidden items-center gap-1">
           <div className="relative">
             {showProductSearch ? (
               <div className="flex items-center">
@@ -697,7 +738,7 @@ export function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="lg:hidden bg-[#0A0F1A]/95 backdrop-blur-2xl border-t border-white/10 max-h-[calc(100vh-80px)] overflow-y-auto w-full shadow-2xl"
+            className="max-[999px]:block hidden bg-[#0A0F1A]/95 backdrop-blur-2xl border-t border-white/10 max-h-[calc(100vh-80px)] overflow-y-auto w-full shadow-2xl"
           >
             <div className="p-6 space-y-6">
               {/* User Account Section */}

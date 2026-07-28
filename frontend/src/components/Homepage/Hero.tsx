@@ -81,12 +81,12 @@ export function Hero() {
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
 
       <Container className="relative z-20">
-        <div className="max-w-3xl mx-auto lg:mx-0">
+        <div className="max-w-3xl mx-auto min-[1301px]:mx-0">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-6 text-center lg:text-left"
+            className="space-y-6 text-center min-[1301px]:text-left"
           >
 
 
@@ -98,12 +98,12 @@ export function Hero() {
             </h1>
 
             {/* Smaller Subtitle Text */}
-            <p className="max-w-xl mx-auto lg:mx-0 text-sm md:text-base text-white/70 leading-relaxed font-normal min-h-[3em]">
+            <p className="max-w-xl mx-auto min-[1301px]:mx-0 text-sm md:text-base text-white/70 leading-relaxed font-normal min-h-[3em]">
               {typedText}
             </p>
 
             {/* Consistent Modern Buttons */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+            <div className="flex flex-wrap items-center justify-center min-[1301px]:justify-start gap-4 pt-4">
               <Link
                 to="/"
                 hash="solutions"
