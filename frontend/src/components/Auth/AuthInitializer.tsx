@@ -43,7 +43,7 @@ export function AuthInitializer({ children }: AuthInitializerProps) {
 
   if (isAuthChecking) {
     return (
-      <div className="fixed inset-0 z-[10000] bg-[#0A0F1A] flex items-center justify-center">
+      <div className="fixed inset-0 z-[10000] bg-[#0A0F1A] flex flex-col items-center justify-center gap-8">
         <img
           src={logo}
           alt="Company logo"
@@ -53,10 +53,23 @@ export function AuthInitializer({ children }: AuthInitializerProps) {
             animation: "logoGrow 0.8s ease-out forwards",
           }}
         />
+        <div className="w-48 h-1 bg-white/10 overflow-hidden rounded-full">
+          <div
+            className="h-full bg-[#C3110C] rounded-full"
+            style={{
+              animation: "loadingLine 1.2s ease-in-out infinite",
+            }}
+          />
+        </div>
         <style>{`
           @keyframes logoGrow {
             from { transform: scale(0.3); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
+          }
+          @keyframes loadingLine {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 100%; }
           }
         `}</style>
       </div>

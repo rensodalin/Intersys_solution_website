@@ -80,7 +80,7 @@ export function Insights() {
             className="max-w-2xl"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-[#0F172A] leading-[0.95] tracking-tight">
-              Project Latest <span className="text-[#C3110C]">Insights</span>
+              <span className="text-[#0F172A]">Case Study</span>
             </h2>
 
             <p className="mt-4 text-sm md:text-base text-slate-600 leading-relaxed">

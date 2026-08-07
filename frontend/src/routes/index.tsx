@@ -54,11 +54,13 @@ function Index() {
 
       <Clients />
 
-      <WhyChooseIntersys />
-      <Partnership />
       <Certificates />
 
-      <Insights />
+      <Partnership />
+
+      <WhyChooseIntersys />
+
+      {/* <Insights /> */}
 
       <PromotionOverlay isOpen={showPopup} onClose={handleClose} />
     </>

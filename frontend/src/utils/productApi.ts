@@ -18,11 +18,21 @@ export interface ApiProduct {
     documents?: { name: string; url: string }[];
 }
 
+const productsCache = new Map<string, ApiProduct[]>();
+
+export function clearProductsCache() {
+    productsCache.clear();
+}
+
 export async function fetchProducts(
     category?: string,
     brand?: string,
     brandSubCategory?: string
 ): Promise<ApiProduct[]> {
+    const key = JSON.stringify([category ?? "", brand ?? "", brandSubCategory ?? ""]);
+    const cached = productsCache.get(key);
+    if (cached) return cached;
+
     const params = new URLSearchParams();
     if (category) params.set("category", category);
     if (brand) params.set("brand", brand);
@@ -33,6 +43,7 @@ export async function fetchProducts(
     });
     const json = await res.json();
     if (!json.success) throw new Error(json.message || "Failed to fetch products");
+    productsCache.set(key, json.data as ApiProduct[]);
     return json.data as ApiProduct[];
 }
 

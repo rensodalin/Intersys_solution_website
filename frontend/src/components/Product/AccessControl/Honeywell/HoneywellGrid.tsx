@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { ProductShowMore } from "../../ProductShowMore";
 
 export interface HoneywellProduct {
     title: string;
@@ -12,10 +14,16 @@ interface HoneywellGridProps {
     products: HoneywellProduct[];
 }
 
+const PAGE_SIZE = 20;
+
 export function HoneywellGrid({ products }: HoneywellGridProps) {
+    const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+    const visibleProducts = products.slice(0, visibleCount);
+
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-8 md:gap-y-10">
-            {products.map((product, i) => {
+        <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-8 md:gap-y-10">
+            {visibleProducts.map((product, i) => {
                 // Slugify title for detail page if it's not a category link
                 const slug = product.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
 
@@ -83,6 +91,12 @@ export function HoneywellGrid({ products }: HoneywellGridProps) {
                     </motion.div>
                 );
             })}
-        </div>
+            </div>
+            <ProductShowMore
+                total={products.length}
+                visible={visibleCount}
+                onShowMore={() => setVisibleCount((c) => c + PAGE_SIZE)}
+            />
+        </>
     );
 }

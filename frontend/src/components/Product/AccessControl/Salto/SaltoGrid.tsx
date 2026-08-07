@@ -2,15 +2,23 @@ import { motion } from "framer-motion";
 import { SaltoProduct } from "./data";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { ProductShowMore } from "../../ProductShowMore";
 
 interface SaltoGridProps {
     products: SaltoProduct[];
 }
 
+const PAGE_SIZE = 20;
+
 export function SaltoGrid({ products }: SaltoGridProps) {
+    const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+    const visibleProducts = products.slice(0, visibleCount);
+
     return (
+        <>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-8 md:gap-y-10">
-            {products.map((product, i) => (
+            {visibleProducts.map((product, i) => (
                 <motion.div
                     key={product.id}
                     initial={{ opacity: 0, y: 30 }}
@@ -52,5 +60,11 @@ export function SaltoGrid({ products }: SaltoGridProps) {
                 </motion.div>
             ))}
         </div>
+        <ProductShowMore
+            total={products.length}
+            visible={visibleCount}
+            onShowMore={() => setVisibleCount((c) => c + PAGE_SIZE)}
+        />
+        </>
     );
 }

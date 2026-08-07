@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { Plus, Layers } from "lucide-react";
-import { fetchProducts, addProduct, updateProduct, deleteProduct } from "@/utils/productApi";
+import { fetchProducts, addProduct, updateProduct, deleteProduct, clearProductsCache } from "@/utils/productApi";
 import { fetchTaxonomy } from "@/utils/taxonomyApi";
 import type { TaxonomyCategory, TaxonomySubCategory } from "@/utils/taxonomyApi";
 import { toast } from "sonner";
@@ -204,6 +204,7 @@ export function ProductManagement() {
         setProducts(prev => [created, ...prev]);
         toast.success("Product created successfully!");
       }
+      clearProductsCache();
       closeForm();
     } catch (e: any) {
       toast.error(e.message || "Failed to save product");
@@ -220,6 +221,7 @@ export function ProductManagement() {
     try {
       await deleteProduct(deleteTarget.productId);
       setProducts(prev => prev.filter(p => p.productId !== deleteTarget.productId));
+      clearProductsCache();
       toast.success("Product deleted successfully!");
       setDeleteTarget(null);
     } catch (e: any) {
