@@ -4,6 +4,16 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @theme inline {
   --font-sans: "Manrope", system-ui, sans-serif;
   --font-display: "Manrope", system-ui, sans-serif;

@@ -57,9 +57,9 @@ export function Clients() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-2xl md:text-3xl  font-bold text-[#1A3263] tracking-tight"
+            className="text-3xl md:text-4xl  font-bold text-[#1A3263] tracking-tight"
           >
-            Our Valued Clients
+            Our Valued <span className="text-[#C00707]">Clients</span>
           </motion.h2>
           <div className="mt-5 mx-auto w-10 h-px bg-neutral-300" />
         </div>

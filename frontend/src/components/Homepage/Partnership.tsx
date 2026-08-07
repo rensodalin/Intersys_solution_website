@@ -41,7 +41,7 @@ export function Partnership() {
                         transition={{ delay: 0.05 }}
                         className="text-3xl md:text-4xl font-bold text-[#1A3263] "
                     >
-                        Partnerships we value
+                        Partnerships we <span className="text-[#C00707]">value</span>
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 15 }}
@@ -63,45 +63,13 @@ export function Partnership() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.06, duration: 0.5, ease: "easeOut" }}
-                            className="h-28 cursor-pointer"
-                            style={{ perspective: "1000px" }}
+                            className="h-28 cursor-pointer bg-white rounded-lg border border-gray-100 shadow-sm flex items-center justify-center p-5 hover:shadow-md transition-shadow"
                         >
-                            {/* Flip wrapper */}
-                            <div
-                                className="relative w-full h-full group"
-                                style={{ transformStyle: "preserve-3d" }}
-                            >
-                                {/* FRONT */}
-                                <div
-                                    className="absolute inset-0 bg-white rounded-lg border border-gray-100 shadow-sm flex items-center justify-center p-5 transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:[transform:rotateY(180deg)]"
-                                    style={{ backfaceVisibility: "hidden" }}
-                                >
-                                    <img
-                                        src={partner.src}
-                                        alt={partner.name}
-                                        className="max-h-10 w-auto object-contain"
-                                    />
-                                </div>
-
-                                {/* BACK */}
-                                <div
-                                    className="absolute inset-0 bg-[#1A3263] rounded-2xl flex flex-col items-center justify-center gap-2 p-4 [transform:rotateY(180deg)] transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:[transform:rotateY(360deg)]"
-                                    style={{ backfaceVisibility: "hidden" }}
-                                >
-                                    {/* Red accent line */}
-                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-0.5 bg-red-500 rounded-full" />
-
-                                    <img
-                                        src={partner.src}
-                                        alt={partner.name}
-                                        className="max-h-9 w-auto object-contain opacity-90"
-                                    />
-                                    <span className="text-white/60 text-[10px] font-semibold tracking-wide text-center leading-tight">
-                                        {partner.name}
-                                    </span>
-                                </div>
-
-                            </div>
+                            <img
+                                src={partner.src}
+                                alt={partner.name}
+                                className="w-32 h-16 object-contain"
+                            />
                         </motion.div>
                     ))}
                 </div>

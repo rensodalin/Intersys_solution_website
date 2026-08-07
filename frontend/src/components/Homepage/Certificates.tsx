@@ -20,20 +20,32 @@ export function Certificates() {
               className="relative z-10 w-full max-w-[300px] group"
             >
               {/* Glowing halo behind certificate */}
-              <div className="absolute -inset-10 bg-white/10 blur-[80px] rounded-full opacity-50" />
+              <motion.div
+                animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -inset-10 bg-white/10 blur-[80px] rounded-full"
+              />
 
-              <div className="relative bg-white p-2 rounded-sm shadow-2xl transform -rotate-1 group-hover:rotate-0 transition-transform duration-500">
-                <img
+              <motion.div
+                animate={{ y: [0, -12, 0], rotate: [-2, 2, -2] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="relative bg-white p-2 rounded-sm shadow-2xl group-hover:rotate-0 transition-transform duration-500"
+              >
+                <motion.img
                   src={certificate1}
                   alt="Intersys Official Certificate"
                   className="w-full h-auto rounded-sm"
+                  animate={{ scale: [1, 1.03, 1] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                 />
-              </div>
+              </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, rotate: 8 }}
                 whileInView={{ opacity: 1, rotate: 4 }}
                 viewport={{ once: true }}
+                animate={{ y: [0, 10, 0], rotate: [4, 7, 4] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute top-0 right-0 -z-10 bg-white/90 p-2 rounded-sm shadow-xl w-full translate-x-4 translate-y-4"
               >
                 <img

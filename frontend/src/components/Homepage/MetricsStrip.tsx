@@ -12,6 +12,7 @@ const metrics = [
     desc: "Successfully delivered high-tier ELV projects across Cambodia.",
     icon: "https://static.thenounproject.com/png/1598382-200.png",
     bg: "https://www.intersys-solutions.com/website_asset/Project.JPG",
+    color: "blue",
   },
   {
     prefix: "Over",
@@ -21,6 +22,7 @@ const metrics = [
     desc: "A decade of engineering excellence and system integration.",
     icon: "https://cdn-icons-png.flaticon.com/512/3442/3442327.png",
     bg: "https://www.intersys-solutions.com/website_asset/global.png",
+    color: "red",
   },
   {
     prefix: "Available",
@@ -29,7 +31,8 @@ const metrics = [
     label: "Expert Support",
     desc: "Round-the-clock technical assistance for all systems.",
     icon: "https://cdn-icons-png.flaticon.com/512/943/943941.png",
-    bg: "https://www.intersys-solutions.com/website_asset/support.jpg",
+    bg: "https://files.intersys-solutions.com.kh/RandomIMG/IMG_20260713_110007.jpg",
+    color: "blue",
   },
   {
     prefix: "Trusted by",
@@ -39,8 +42,14 @@ const metrics = [
     desc: "Trusted by international brands for high-quality engineering.",
     icon: "https://cdn-icons-png.flaticon.com/512/1322/1322246.png",
     bg: "https://www.intersys-solutions.com/website_asset/year_experice.jpg",
+    color: "red",
   },
 ];
+
+const blueFilter =
+  "brightness(0) saturate(100%) invert(20%) sepia(100%) saturate(5000%) hue-rotate(195deg)";
+const redFilter =
+  "brightness(0) saturate(100%) invert(15%) sepia(100%) saturate(6000%) hue-rotate(25deg)";
 
 export function MetricsStrip() {
   return (
@@ -98,7 +107,12 @@ export function MetricsStrip() {
               {/* Content */}
               <div className="relative z-20 w-full">
                 <div className="w-11 h-11 mb-6 transform group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500">
-                  <img src={m.icon} alt={m.label} className="w-full h-full object-contain grayscale group-hover:grayscale-0 group-hover:invert transition-all" />
+                  <img
+                    src={m.icon}
+                    alt={m.label}
+                    className="w-full h-full object-contain transition-all"
+                    style={{ filter: m.color === "blue" ? blueFilter : redFilter }}
+                  />
                 </div>
                 <div className="space-y-3">
                   <h4 className="text-[13px] font-semibold text-gray-900 group-hover:text-white transition-colors">{m.label}</h4>

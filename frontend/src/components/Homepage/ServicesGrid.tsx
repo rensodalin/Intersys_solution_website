@@ -151,7 +151,7 @@ export function ServicesGrid() {
               { label: "Auth Speed", value: "0.3s" },
               { label: "Encryption", value: "AES-256" },
             ]}
-            img={securityImg}
+            img="https://cdn.prod.website-files.com/606184adb7296d59f51c3323/67604016217ce3d128de1597_access-control-system-installation-101-the-essential-guide.webp"
             className="lg:col-span-4"
             isExpanded={expandedIds.includes("security")}
             onToggle={() => toggleExpand("security")}

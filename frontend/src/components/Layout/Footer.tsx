@@ -95,8 +95,8 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
 
                 <div className="flex gap-2 text-sm">
                   <span className="font-bold">Email:</span>
-                  <a href="mailto:rrensodalin@gmail.com" className="hover:underline">
-                    rrensodalin@gmail.com
+                  <a href="mailto:sochet@intersys-solutions.com" className="hover:underline">
+                    sochet@intersys-solutions.com
                   </a>
                 </div>
 

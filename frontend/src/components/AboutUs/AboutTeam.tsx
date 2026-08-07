@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
+import { useRef, useEffect, useState } from "react";
 
 import team1 from "@/assets/team/picture on QR cord/Frame 15.png";
 import team2 from "@/assets/team/picture on QR cord/Frame 3.png";
@@ -37,6 +38,23 @@ const teamData = [
 ];
 
 export function AboutTeam() {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [isHovering, setIsHovering] = useState(false);
+  const dragRef = useRef({ active: false, startX: 0, scrollLeft: 0 });
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el || isHovering) return;
+
+    const timer = setInterval(() => {
+      const half = el.scrollWidth / 2;
+      el.scrollLeft += 0.5;
+      if (el.scrollLeft >= half) el.scrollLeft -= half;
+    }, 16);
+
+    return () => clearInterval(timer);
+  }, [isHovering]);
+
   return (
     <section className="py-24 bg-[#F9F8F3] overflow-hidden text-sm">
       <Container>
@@ -66,46 +84,59 @@ export function AboutTeam() {
       </Container>
 
       {/* Infinite Animated Marquee */}
-      <div className="relative w-full overflow-hidden py-10 mt-4 flex">
+      <div className="relative w-full overflow-hidden py-10 mt-4">
         {/* Gradient overlays for smooth fading edges */}
         <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-[#F9F8F3] to-transparent z-10 pointer-events-none" />
         <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-[#F9F8F3] to-transparent z-10 pointer-events-none" />
 
-        <motion.div
-          className="flex space-x-8 w-max px-4"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            duration: 40,
-            ease: "linear",
-            repeat: Infinity,
+        <div
+          ref={scrollerRef}
+          className="flex overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing"
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => {
+            setIsHovering(false);
+            dragRef.current.active = false;
           }}
+          onMouseDown={(e) => {
+            dragRef.current.active = true;
+            dragRef.current.startX = e.pageX;
+            dragRef.current.scrollLeft = e.currentTarget.scrollLeft;
+          }}
+          onMouseMove={(e) => {
+            if (!dragRef.current.active) return;
+            const dx = e.pageX - dragRef.current.startX;
+            e.currentTarget.scrollLeft = dragRef.current.scrollLeft - dx;
+          }}
+          onMouseUp={() => (dragRef.current.active = false)}
         >
-          {[...teamData, ...teamData].map((member, i) => (
-            <div
-              key={`${member.name}-${i}`}
-              className="flex flex-col group w-[280px] shrink-0"
-            >
-              {/* Image Container */}
-              <div className="relative aspect-[1/1.1] bg-[#E8E7E2] overflow-hidden mb-6 rounded-md shadow-sm">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
+          <div className="flex space-x-8 w-max px-4">
+            {[...teamData, ...teamData].map((member, i) => (
+              <div
+                key={`${member.name}-${i}`}
+                className="flex flex-col group w-[280px] shrink-0"
+              >
+                {/* Image Container */}
+                <div className="relative aspect-[1/1.1] bg-[#E8E7E2] overflow-hidden mb-6 rounded-md shadow-sm">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
 
-              {/* Info Area */}
-              <div className="space-y-0.5 text-center">
-                <h3 className="text-base font-bold text-[#1A1A1A]">
-                  {member.name}
-                </h3>
-                <p className="text-xs text-gray-500 font-medium">
-                  {member.designation}
-                </p>
+                {/* Info Area */}
+                <div className="space-y-0.5 text-center">
+                  <h3 className="text-base font-bold text-[#1A1A1A]">
+                    {member.name}
+                  </h3>
+                  <p className="text-xs text-gray-500 font-medium">
+                    {member.designation}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
-        </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
