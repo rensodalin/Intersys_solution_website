@@ -96,8 +96,14 @@ function DeepSubcategoryPage() {
 
   useEffect(() => {
     setLoading(true);
+    const fullPath = `/products/${slug}/${splatPath}`.replace(/\/+$/, "");
     fetchProducts(categoryName, undefined, subcategoryName)
-      .then(data => setApiProducts(data))
+      .then(data => {
+        const filtered = data.filter(p =>
+          !p.brandSubCategoryLink || p.brandSubCategoryLink.startsWith(fullPath)
+        );
+        setApiProducts(filtered);
+      })
       .catch(() => setApiProducts([]))
       .finally(() => setLoading(false));
   }, [categoryName, brandSubCategoryPath]);

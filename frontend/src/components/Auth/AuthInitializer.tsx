@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { initializeAuth } from "@/store/authSlice";
 import environment from "@/enviroment/enviroment";
+import logo from "@/assets/logo.avif";
 
 interface AuthInitializerProps {
   children: React.ReactNode;
@@ -16,9 +17,12 @@ export function AuthInitializer({ children }: AuthInitializerProps) {
 
   useEffect(() => {
     const baseUrl = environment;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2500);
 
     fetch(`${baseUrl}/auth/user`, {
       credentials: "include",
+      signal: controller.signal,
     })
       .then((res) => res.json())
       .then((data) => {
@@ -31,17 +35,30 @@ export function AuthInitializer({ children }: AuthInitializerProps) {
       .catch((err) => {
         console.error("Auth session bootstrap failed:", err);
         dispatch(initializeAuth(null));
-      });
+      })
+      .finally(() => clearTimeout(timeout));
+
+    return () => clearTimeout(timeout);
   }, [dispatch]);
 
   if (isAuthChecking) {
     return (
-      <div className="fixed inset-0 z-[10000] bg-[#0A0F1A] flex flex-col items-center justify-center gap-6">
-        <div className="relative flex items-center justify-center">
-          <div className="absolute w-24 h-24 rounded-full border border-red-600/30 animate-ping duration-1000" />
-          <div className="w-16 h-16 rounded-full border-2 border-t-red-600 border-r-transparent border-b-transparent border-l-transparent animate-spin duration-700" />
-        </div>
-        <p className="text-neutral-300 text-sm ">Loading....</p>
+      <div className="fixed inset-0 z-[10000] bg-[#0A0F1A] flex items-center justify-center">
+        <img
+          src={logo}
+          alt="Company logo"
+          className="w-40 h-auto"
+          style={{
+            transformOrigin: "center",
+            animation: "logoGrow 0.8s ease-out forwards",
+          }}
+        />
+        <style>{`
+          @keyframes logoGrow {
+            from { transform: scale(0.3); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+          }
+        `}</style>
       </div>
     );
   }

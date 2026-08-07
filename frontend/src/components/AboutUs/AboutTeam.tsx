@@ -29,7 +29,7 @@ const teamData = [
   { name: "Soeun Sol", designation: "T&C ELV Engineer ", image: team7 },
   { name: "Phan Chitra", designation: "Junior Sale & Digital marketing ", image: team8 },
   { name: "Rin Seyha", designation: "BMS T&C Engineer ", image: team9 },
-  { name: "Kov Bunly", designation: "Engineer", image: team10 },
+  { name: "Khov Bunly", designation: "Engineer", image: team10 },
   { name: "Lim Theavan", designation: "BMS & ELV T&C Engineer", image: team11 },
   { name: "Chun Leapheng", designation: "BMS & ELV ENGINEER", image: team12 },
   { name: "Vy Vandy", designation: "T&C ELV Engineer ", image: team13 },
