@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useInquiry } from "@/context/InquiryContext";
+import { useProductsLayout } from "@/context/ProductsLayoutContext";
 import { useTaxonomy } from "@/hooks/useTaxonomy";
 import type { TaxonomySubCategory } from "@/utils/taxonomyApi";
 import { cn, toSlug } from "@/lib/utils";
@@ -140,8 +141,8 @@ function TreeViewNode({
                         transition={{ duration: 0.2, ease: "easeInOut" }}
                         className="overflow-hidden"
                     >
-                            <div className="ml-4 pl-4 border-l border-gray-200/60">
-                                <div className="space-y-1 pt-1 pb-2">
+                        <div className="ml-4 pl-4 border-l border-gray-200/60">
+                            <div className="space-y-1 pt-1 pb-2">
                                 {node.sub!.map((child, idx) => (
                                     <motion.div
                                         key={`${child.label}-${idx}`}
@@ -168,10 +169,10 @@ function TreeViewNode({
     );
 }
 
-export function CatalogSidebar({ 
+export function CatalogSidebar({
     activeCategory: propActiveCategory,
     isDesktopOpen = true,
-    setIsDesktopOpen = () => {}
+    setIsDesktopOpen = () => { }
 }: CatalogSidebarProps) {
     const location = useLocation();
     const navigate = useNavigate();
@@ -245,7 +246,7 @@ export function CatalogSidebar({
         return undefined;
     }, [location.pathname, activeFrom, propActiveCategory]);
 
-    const [expandedSections, setExpandedSections] = useState<string[]>(activeCategory ? [activeCategory] : []);
+    const { expandedSections, setExpandedSections } = useProductsLayout();
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -380,7 +381,7 @@ export function CatalogSidebar({
             {/* ── SEARCH RESULTS ── */}
             <AnimatePresence>
                 {searchQuery.length >= 1 && (searchResults.length > 0 || searching) && (
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
@@ -567,7 +568,7 @@ export function CatalogSidebar({
                             transition={{ type: "spring", damping: 28, stiffness: 200 }}
                             className="fixed inset-y-0 left-0 w-[85%] max-w-[320px] bg-[#F1F3F5] z-[80] flex flex-col lg:hidden overflow-hidden shadow-2xl"
                         >
-                                {sidebarContentJsx}
+                            {sidebarContentJsx}
                         </motion.aside>
                     </>
                 )}

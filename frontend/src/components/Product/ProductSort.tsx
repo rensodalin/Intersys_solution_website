@@ -36,7 +36,7 @@ export function ProductSort({
     const currentLabel = sortOptions.find(o => o.value === currentSort)?.label || "Newest";
 
     return (
-        <div className="bg-white border border-gray-200 rounded-xl p-3 md:p-4 mb-6 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        <div className="bg-white border border-gray-200 rounded-sm p-3 md:p-4 mb-6 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
             {/* Search Input Box */}
             <div className="relative flex-1 min-w-[240px]">
                 <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -45,7 +45,7 @@ export function ProductSort({
                     value={searchQuery}
                     onChange={(e) => onSearchChange?.(e.target.value)}
                     placeholder="Search product name..."
-                    className="w-full bg-[#F5F5F5] border border-transparent focus:border-gray-300 focus:bg-white rounded-lg pl-10 pr-8 py-2 text-sm text-gray-800 placeholder-gray-400 transition-all outline-none"
+                    className="w-full bg-[#F5F5F5] border border-transparent focus:border-gray-300 focus:bg-white rounded-sm pl-10 pr-8 py-2 text-sm text-gray-800 placeholder-gray-400 transition-all outline-none"
                 />
                 {searchQuery && (
                     <button
@@ -66,7 +66,7 @@ export function ProductSort({
                         className={cn(
                             "flex items-center gap-2 px-3.5 py-2 rounded-lg border text-xs font-semibold transition-all cursor-pointer",
                             isFilterOpen
-                                ? "bg-[#F5F5F5] border-gray-200 text-gray-800 hover:bg-gray-200/70"
+                                ? "bg-[#C3110C] border-[#C3110C] text-white hover:bg-[#1A3263] hover:border-[#1A3263]"
                                 : "bg-gray-900 border-gray-900 text-white hover:bg-black"
                         )}
                     >
@@ -85,12 +85,12 @@ export function ProductSort({
                     <div className="relative">
                         <button
                             onClick={() => setIsSortOpen(!isSortOpen)}
-                            className="flex items-center gap-2 px-3.5 py-2 bg-[#F5F5F5] border border-gray-200 rounded-lg text-xs font-medium text-gray-800 hover:border-gray-400 transition-all"
+                            className="flex items-center gap-2 px-3.5 py-2 bg-[#1A3263] border border-[#1A3263] rounded-lg text-xs font-medium text-white hover:bg-[#162E93] hover:border-[#162E93] transition-all"
                         >
                             <span>{currentLabel}</span>
                             <ChevronDown
                                 size={14}
-                                className={cn("text-gray-500 transition-transform duration-200", isSortOpen ? "rotate-180" : "")}
+                                className={cn("text-white/80 transition-transform duration-200", isSortOpen ? "rotate-180" : "")}
                             />
                         </button>
 

@@ -470,7 +470,7 @@ export function Navbar() {
             ) : (
               <button
                 onClick={() => setShowProductSearch(true)}
-                className={cn("transition p-1.5 rounded-full hover:bg-white/10", iconClass)}
+                className={cn("transition p-1.5 rounded-md hover:bg-white/10", iconClass)}
                 title="Search products"
               >
                 <Search size={18} />
@@ -624,7 +624,7 @@ export function Navbar() {
           <div className="relative">
             <button
               onClick={() => setShowProductSearch(true)}
-              className={cn("flex items-center justify-center min-w-[44px] min-h-[44px] rounded-full transition-colors", useDarkText ? "text-[#0A0F1A] hover:bg-[#0A0F1A]/10" : "text-white hover:bg-white/10")}
+              className={cn("flex items-center justify-center min-w-[44px] min-h-[44px] rounded-md transition-colors", useDarkText ? "text-[#0A0F1A] hover:bg-[#0A0F1A]/10" : "text-white hover:bg-white/10")}
               title="Search products"
             >
               <Search size={18} />
@@ -717,7 +717,7 @@ export function Navbar() {
             ) : (
               <button
                 onClick={() => setShowProductSearch(true)}
-                className={cn("p-2 rounded-full transition-colors", useDarkText ? "text-[#0A0F1A] hover:bg-[#0A0F1A]/10" : "text-white hover:bg-white/10")}
+                className={cn("p-2 rounded-md transition-colors", useDarkText ? "text-[#0A0F1A] hover:bg-[#0A0F1A]/10" : "text-white hover:bg-white/10")}
                 title="Search products"
               >
                 <Search size={18} />

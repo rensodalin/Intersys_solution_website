@@ -54,11 +54,20 @@ function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => vo
   );
 }
 
+let lastPathname = "";
+
 export const getRouter = () => {
   const router = createRouter({
     routeTree,
     context: {},
-    scrollRestoration: true,
+    scrollRestoration: ({ location }) => {
+      const isProductToProduct =
+        lastPathname.startsWith("/products") &&
+        location.pathname.startsWith("/products");
+      lastPathname = location.pathname;
+      // Preserve scroll position when navigating within the product catalog
+      return !isProductToProduct;
+    },
     defaultPreloadStaleTime: 0,
     defaultErrorComponent: DefaultErrorComponent,
   });

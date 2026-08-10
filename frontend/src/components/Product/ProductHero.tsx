@@ -30,11 +30,11 @@ export function ProductHero({
                 <div className="relative w-full overflow-hidden bg-white min-h-[300px] md:min-h-[380px]">
                     {/* Background image */}
                     <motion.img
-                        src="/catalog_hero_bg.png"
+                        src={imageproduct}
                         alt="Catalog Banner"
                         className="absolute inset-0 w-full h-full object-cover grayscale brightness-90 contrast-90"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-transparent z-[1]" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/40 to-transparent z-[1]" />
 
                     <motion.div
                         initial={{ opacity: 0, y: 14 }}

@@ -117,6 +117,16 @@ function CategoryProductsPage() {
           />
 
           <div className="flex-1 min-w-0">
+            <ProductSort
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              isFilterOpen={isSidebarOpen}
+              onToggleFilter={toggleSidebar}
+              currentSort={currentSort}
+              onSortChange={setCurrentSort}
+              totalProducts={sortedProducts.length}
+            />
+
             {subCategories.length > 0 && (
               <div className="mb-8 pb-8 border-b border-gray-100">
                 <h3 className="text-base font-bold text-gray-900 mb-4">Subcategories</h3>
@@ -150,19 +160,9 @@ function CategoryProductsPage() {
               </div>
             )}
 
-            <ProductSort
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              isFilterOpen={isSidebarOpen}
-              onToggleFilter={toggleSidebar}
-              currentSort={currentSort}
-              onSortChange={setCurrentSort}
-              totalProducts={sortedProducts.length}
-            />
-
-            {loading ? (
+            {subCategories.length > 0 ? null : loading ? (
               <div className="text-center py-20 text-gray-400 text-sm">Loading products...</div>
-            ) : mapped.length === 0 && subCategories.length === 0 ? (
+            ) : mapped.length === 0 ? (
               <div className="text-center py-20 text-gray-400 text-sm flex flex-col items-center gap-4">
                 <Package size={48} className="text-gray-200" />
                 <p>No products yet in this category.</p>
@@ -176,7 +176,7 @@ function CategoryProductsPage() {
                   <ProductCardGrid products={sortedProducts} />
                 ) : (
                   <div className="text-center py-20 text-gray-400 text-sm">
-                    {searchQuery ? `No products matching "${searchQuery}"` : "Browse subcategories above to find products."}
+                    {searchQuery ? `No products matching "${searchQuery}"` : "No products found."}
                   </div>
                 )}
               </>
