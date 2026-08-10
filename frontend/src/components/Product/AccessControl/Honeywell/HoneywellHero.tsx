@@ -1,7 +1,4 @@
-import { motion } from "framer-motion";
-import { Link } from "@tanstack/react-router";
-import { Container } from "@/components/Common/Container";
-import { cn } from "@/lib/utils";
+import { ProductHero } from "../../ProductHero";
 
 interface BreadcrumbItem {
     name: string;
@@ -12,15 +9,10 @@ interface HoneywellHeroProps {
     title?: string;
     subtitle?: string;
     breadcrumbs?: BreadcrumbItem[];
-    // Legacy props
     backLink?: string;
     backText?: string;
 }
 
-/**
- * Updated ProductHero/Header following a minimalist, clean design.
- * Features a light background, left-aligned typography, and integrated breadcrumbs.
- */
 export function HoneywellHero({
     title = "Honeywell Systems",
     subtitle = "Industrial-grade security architecture designed for mission-critical infrastructure.",
@@ -32,56 +24,11 @@ export function HoneywellHero({
     ],
 }: HoneywellHeroProps) {
     return (
-        <section className="bg-[#F8F9FA] pt-28 md:pt-32 pb-10 px-8 border-b border-gray-200/50">
-            <Container>
-                <div className="max-w-3xl">
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4 }}
-                    >
-                        {/* Breadcrumbs */}
-                        <nav className="flex items-center gap-2 mb-4 flex-wrap">
-                            {breadcrumbs.map((item, index) => (
-                                <div
-                                    key={item.name}
-                                    className="flex items-center gap-2"
-                                >
-                                    <Link
-                                        to={item.href}
-                                        className={cn(
-                                            "text-[11px] transition-colors",
-                                            index === breadcrumbs.length - 1
-                                                ? "text-gray-700"
-                                                : "text-gray-400 hover:text-[#C3110C]"
-                                        )}
-                                    >
-                                        {item.name}
-                                    </Link>
-
-                                    {index < breadcrumbs.length - 1 && (
-                                        <span className="text-gray-300 text-[10px]">
-                                            /
-                                        </span>
-                                    )}
-                                </div>
-                            ))}
-                        </nav>
-
-                        {/* Title */}
-                        <h1 className="text-lg md:text-xl font-bold text-[#1A3263] tracking-tight mb-3">
-                            {title}
-                        </h1>
-
-                        {/* Subtitle */}
-                        {subtitle && (
-                            <p className="text-gray-500 text-sm md:text-[15px] leading-relaxed max-w-2xl">
-                                {subtitle}
-                            </p>
-                        )}
-                    </motion.div>
-                </div>
-            </Container>
-        </section>
+        <ProductHero
+            title={title}
+            subtitle={subtitle}
+            categoryTag="HONEYWELL CATALOG"
+            breadcrumbs={breadcrumbs}
+        />
     );
-}
+}

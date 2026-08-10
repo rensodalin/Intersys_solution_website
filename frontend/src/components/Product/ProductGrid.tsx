@@ -14,7 +14,7 @@ export function ProductGrid({ categories }: ProductGridProps) {
                 {categories.length === 0 ? (
                     <div className="text-center py-20 text-gray-400 text-sm">No categories available.</div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 pb-30">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 pb-30">
                         {categories.map((cat, i) => (
                             <motion.div
                                 key={cat.title}
@@ -27,8 +27,8 @@ export function ProductGrid({ categories }: ProductGridProps) {
                                     to={cat.link || "#"}
                                     className="group flex flex-col h-full bg-white border border-gray-200 overflow-hidden hover:shadow-md hover:border-gray-300 transition-all duration-300"
                                 >
-                                    <div className="px-5 pt-5">
-                                        <div className="relative aspect-[16/9] overflow-hidden bg-gray-50 flex items-center justify-center">
+                                    <div className="px-7 pt-7">
+                                        <div className="relative aspect-[16/10] overflow-hidden bg-gray-50 flex items-center justify-center">
                                             {cat.image ? (
                                                 <img
                                                     src={cat.image}
@@ -41,11 +41,11 @@ export function ProductGrid({ categories }: ProductGridProps) {
                                         </div>
                                     </div>
 
-                                    <div className="p-5 flex flex-col flex-grow">
-                                        <h3 className="text-xs font-bold text-[#1A3263] leading-tight mb-2">
+                                    <div className="p-7 flex flex-col flex-grow">
+                                        <h3 className="text-base md:text-lg font-bold text-[#1A3263] leading-tight mb-2">
                                             {cat.title}
                                         </h3>
-                                        <p className="text-gray-500 text-[13px] leading-relaxed flex-grow">
+                                        <p className="text-gray-500 text-sm md:text-[15px] leading-relaxed flex-grow">
                                             {cat.desc}
                                         </p>
                                     </div>

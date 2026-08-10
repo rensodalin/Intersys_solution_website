@@ -5,6 +5,8 @@ import { fetchTaxonomy } from "@/utils/taxonomyApi";
 import { ProductHero } from "@/components/Product/ProductHero";
 import { ProductGrid } from "@/components/Product/ProductGrid";
 import { ProductCategory } from "@/components/Product/types";
+import { CatalogSidebar } from "@/components/Product/CatalogSidebar";
+import { useProductsLayout } from "@/context/ProductsLayoutContext";
 import { toSlug } from "@/lib/utils";
 
 export const Route = createFileRoute("/products/")({
@@ -38,6 +40,7 @@ function buildCategories(taxonomy: Awaited<ReturnType<typeof fetchTaxonomy>>): P
 function ProductsPage() {
   const [categories, setCategories] = useState<ProductCategory[]>([]);
   const [loading, setLoading] = useState(true);
+  const { isSidebarOpen, setIsSidebarOpen } = useProductsLayout();
 
   useEffect(() => {
     setLoading(true);
@@ -47,21 +50,29 @@ function ProductsPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return (
-      <>
-        <ProductHero />
-        <div className="flex justify-center py-20">
-          <div className="w-10 h-10 border-4 border-[#C3110C] border-t-transparent rounded-full animate-spin" />
-        </div>
-      </>
-    );
-  }
-
   return (
-    <>
-        <ProductHero />
-        <ProductGrid categories={categories} />
-    </>
+    <div className="bg-white min-h-screen">
+      <ProductHero />
+
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex gap-6 md:gap-8 items-start">
+          <CatalogSidebar
+            isDesktopOpen={isSidebarOpen}
+            setIsDesktopOpen={setIsSidebarOpen}
+          />
+
+          <div className="flex-1 min-w-0">
+            {loading ? (
+              <div className="flex justify-center py-20">
+                <div className="w-10 h-10 border-4 border-[#C3110C] border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : (
+              <ProductGrid categories={categories} />
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
+

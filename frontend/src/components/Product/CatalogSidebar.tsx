@@ -19,7 +19,8 @@ import {
     Search,
     FileText,
     ArrowRight,
-    Package
+    Package,
+    Filter
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useInquiry } from "@/context/InquiryContext";
@@ -343,10 +344,10 @@ export function CatalogSidebar({
 
             {/* ── HEADER ── */}
             <div className="px-5 py-4 border-b border-gray-200 bg-white flex items-center justify-between shrink-0">
-                <div className="flex items-center gap-3">
-
-                    <span className="text-sm font-bold text-[#1A3263] tracking-tight">
-                        {headerTitle}
+                <div className="flex items-center gap-2">
+                    <Filter size={18} className="text-[#C3110C]" />
+                    <span className="text-base font-bold text-gray-900 tracking-tight">
+                        Filters
                     </span>
                 </div>
                 <button
@@ -354,10 +355,10 @@ export function CatalogSidebar({
                         setIsDesktopOpen(false);
                         setIsMobileOpen(false);
                     }}
-                    className="w-8 h-8 bg-[#1A3263] text-white rounded-lg flex items-center justify-center shadow-md shadow-blue-900/20 hover:bg-[#FC3B1F] transition-colors cursor-pointer"
+                    className="p-1 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
                     title="Close Sidebar"
                 >
-                    <PanelLeftClose size={15} />
+                    <X size={18} />
                 </button>
             </div>
 
@@ -430,8 +431,8 @@ export function CatalogSidebar({
                 )}
             </AnimatePresence>
 
-            {/* ── SCROLLABLE LIST ── */}
-            <div className="flex-1 overflow-y-auto py-2 px-2 border-b border-gray-200 custom-scrollbar scroll-smooth min-h-0">
+            {/* ── LIST ── */}
+            <div className="flex-1 py-2 px-2 border-b border-gray-200">
                 {navData.map((item) => {
                     const isActive = isPathActive(item.link) || activeCategory === item.id;
                     const isExpanded = searchQuery ? true : expandedSections.includes(item.id);
@@ -576,41 +577,19 @@ export function CatalogSidebar({
             <motion.aside
                 initial={false}
                 animate={{
-                    width: isDesktopOpen ? 288 : 0,
+                    width: isDesktopOpen ? 270 : 0,
                     opacity: isDesktopOpen ? 1 : 0,
-                    borderRightWidth: isDesktopOpen ? 1 : 0
                 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="hidden lg:flex flex-col bg-[#F1F3F5] border-gray-200 overflow-hidden shrink-0 z-40"
-                style={{
-                    height: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
-                    position: "fixed",
-                    top: NAVBAR_HEIGHT,
-                    width: isDesktopOpen ? 288 : 0,
-                }}
+                className={cn(
+                    "hidden lg:flex flex-col bg-white border border-gray-200 rounded-sm overflow-hidden shrink-0 shadow-sm sticky top-28 self-start z-30",
+                    !isDesktopOpen && "pointer-events-none border-0"
+                )}
             >
-                <div className="w-72 h-full shrink-0">
+                <div className="w-[270px] flex flex-col shrink-0 overflow-hidden">
                     {sidebarContentJsx}
                 </div>
             </motion.aside>
-
-            {/* ── DESKTOP OPEN BUTTON ── */}
-            <AnimatePresence>
-                {!isDesktopOpen && (
-                    <motion.button
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                        transition={{ duration: 0.2 }}
-                        onClick={() => setIsDesktopOpen(true)}
-                        className="hidden lg:flex fixed left-0 z-[60] w-12 h-12 bg-white border border-gray-200 border-l-0 rounded-r-xl shadow-md items-center justify-center hover:bg-gray-50 transition-colors group cursor-pointer"
-                        style={{ top: NAVBAR_HEIGHT + 24 }}
-                        title="Open Sidebar"
-                    >
-                        <PanelLeftOpen size={18} className="text-gray-500 group-hover:text-[#FC3B1F] transition-colors" />
-                    </motion.button>
-                )}
-            </AnimatePresence>
         </>
     );
 }

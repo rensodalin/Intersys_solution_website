@@ -23,7 +23,7 @@ export function ProductCardGrid({ products }: ProductCardGridProps) {
 
     return (
         <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-8 md:gap-y-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 md:gap-x-7 gap-y-8 md:gap-y-10">
                 {visibleProducts.map((product, i) => (
                     <motion.div
                         key={product.id}
@@ -37,7 +37,7 @@ export function ProductCardGrid({ products }: ProductCardGridProps) {
                             search={{ from: window.location.pathname }}
                             className="block group"
                         >
-                            <div className="relative aspect-square md:aspect-[4/5] overflow-hidden bg-[#F6F6F6] flex items-center justify-center p-5 md:p-6 mb-3 group-hover:bg-[#F0F0F0] transition-colors duration-500 rounded-lg">
+                            <div className="relative aspect-square md:aspect-[4/5] overflow-hidden bg-[#F6F6F6] flex items-center justify-center p-5 md:p-7 mb-3 group-hover:bg-[#F0F0F0] transition-colors duration-500 rounded-lg">
                                 {product.image ? (
                                     <motion.img
                                         whileHover={{ scale: 1.05 }}
@@ -50,17 +50,17 @@ export function ProductCardGrid({ products }: ProductCardGridProps) {
                                 )}
 
                                 <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-400 ease-out pointer-events-none">
-                                    <div className="bg-[#1A3263] text-white px-5 py-1.5 rounded-full text-[13px] font-medium shadow-[0_8px_20px_rgba(26,50,99,0.2)]">
+                                    <div className="bg-[#1A3263] text-white px-6 py-2 rounded-full text-sm font-medium shadow-[0_8px_20px_rgba(26,50,99,0.2)]">
                                         View product
                                     </div>
                                 </div>
                             </div>
 
                             <div className="flex flex-col px-1">
-                                <h3 className="text-[13px] md:text-sm font-medium text-gray-900 group-hover:text-gray-500 transition-colors mb-1">
+                                <h3 className="text-sm md:text-base font-medium text-gray-900 group-hover:text-gray-500 transition-colors mb-1">
                                     {product.title}
                                 </h3>
-                                <p className="text-gray-500 text-[13px] md:text-sm leading-relaxed line-clamp-2 md:line-clamp-1">
+                                <p className="text-gray-500 text-sm md:text-[15px] leading-relaxed line-clamp-2 md:line-clamp-2">
                                     {product.description}
                                 </p>
                             </div>
