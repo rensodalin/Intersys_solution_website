@@ -246,8 +246,7 @@ export function CatalogSidebar({
         return undefined;
     }, [location.pathname, activeFrom, propActiveCategory]);
 
-    const { expandedSections, setExpandedSections } = useProductsLayout();
-    const [isMobileOpen, setIsMobileOpen] = useState(false);
+    const { expandedSections, setExpandedSections, isMobileSidebarOpen, setIsMobileSidebarOpen } = useProductsLayout();
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
     const [searching, setSearching] = useState(false);
@@ -354,7 +353,7 @@ export function CatalogSidebar({
                 <button
                     onClick={() => {
                         setIsDesktopOpen(false);
-                        setIsMobileOpen(false);
+                        setIsMobileSidebarOpen(false);
                     }}
                     className="p-1 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
                     title="Close Sidebar"
@@ -400,7 +399,7 @@ export function CatalogSidebar({
                                             key={result.id}
                                             to={result.link}
                                             onClick={() => {
-                                                setIsMobileOpen(false);
+                                                setIsMobileSidebarOpen(false);
                                             }}
                                             className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors group border border-transparent hover:border-gray-100"
                                         >
@@ -543,22 +542,23 @@ export function CatalogSidebar({
             {/* ── MOBILE TOGGLE ── */}
             <div className="lg:hidden fixed bottom-6 right-6 z-[60]">
                 <button
-                    onClick={() => setIsMobileOpen(true)}
-                    className="w-14 h-14 bg-gradient-to-tr from-[#FC3B1F] to-[#d62b14] text-white rounded-full shadow-lg shadow-red-500/40 flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-300 border-2 border-white/20"
+                    onClick={() => setIsMobileSidebarOpen(true)}
+                    className="flex items-center gap-2 px-4 py-3 bg-gradient-to-tr from-[#FC3B1F] to-[#d62b14] text-white rounded-full shadow-lg shadow-red-500/40 hover:scale-105 active:scale-95 transition-all duration-300 border-2 border-white/20"
                 >
-                    <Menu size={24} />
+                    <Menu size={20} />
+                    <span className="text-sm font-bold">Filters</span>
                 </button>
             </div>
 
             {/* ── MOBILE DRAWER ── */}
             <AnimatePresence>
-                {isMobileOpen && (
+                {isMobileSidebarOpen && (
                     <>
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            onClick={() => setIsMobileOpen(false)}
+                            onClick={() => setIsMobileSidebarOpen(false)}
                             className="fixed inset-0 bg-[#1A3263]/40 backdrop-blur-sm z-[70] lg:hidden"
                         />
                         <motion.aside

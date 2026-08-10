@@ -4,6 +4,9 @@ interface ProductsLayoutContextType {
     isSidebarOpen: boolean;
     setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
     toggleSidebar: () => void;
+    isMobileSidebarOpen: boolean;
+    setIsMobileSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    openMobileSidebar: () => void;
     expandedSections: string[];
     setExpandedSections: React.Dispatch<React.SetStateAction<string[]>>;
 }
@@ -14,12 +17,16 @@ const ProductsLayoutContext = createContext<ProductsLayoutContextType>({
     isSidebarOpen: true,
     setIsSidebarOpen: () => {},
     toggleSidebar: () => {},
+    isMobileSidebarOpen: false,
+    setIsMobileSidebarOpen: () => {},
+    openMobileSidebar: () => {},
     expandedSections: [],
     setExpandedSections: () => {},
 });
 
 export function ProductsLayoutProvider({ children }: { children: React.ReactNode }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
     const [expandedSections, setExpandedSections] = useState<string[]>(() => {
         try {
             return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || "[]");
@@ -40,8 +47,12 @@ export function ProductsLayoutProvider({ children }: { children: React.ReactNode
         setIsSidebarOpen(prev => !prev);
     };
 
+    const openMobileSidebar = () => {
+        setIsMobileSidebarOpen(true);
+    };
+
     return (
-        <ProductsLayoutContext.Provider value={{ isSidebarOpen, setIsSidebarOpen, toggleSidebar, expandedSections, setExpandedSections }}>
+        <ProductsLayoutContext.Provider value={{ isSidebarOpen, setIsSidebarOpen, toggleSidebar, isMobileSidebarOpen, setIsMobileSidebarOpen, openMobileSidebar, expandedSections, setExpandedSections }}>
             {children}
         </ProductsLayoutContext.Provider>
     );

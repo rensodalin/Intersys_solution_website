@@ -37,7 +37,15 @@ function CategoryProductsPage() {
   const categoryName = category?.category || slugToTitle(slug);
   const subCategories = category?.subCategories || [];
 
-  const { isSidebarOpen, setIsSidebarOpen, toggleSidebar } = useProductsLayout();
+  const { isSidebarOpen, setIsSidebarOpen, toggleSidebar, openMobileSidebar } = useProductsLayout();
+
+  const handleToggleFilter = () => {
+    if (window.innerWidth < 1024) {
+      openMobileSidebar();
+    } else {
+      toggleSidebar();
+    }
+  };
 
   const [searchQuery, setSearchQuery] = useState("");
   const [currentSort, setCurrentSort] = useState<SortOption>("name-asc");
@@ -121,7 +129,7 @@ function CategoryProductsPage() {
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
               isFilterOpen={isSidebarOpen}
-              onToggleFilter={toggleSidebar}
+              onToggleFilter={handleToggleFilter}
               currentSort={currentSort}
               onSortChange={setCurrentSort}
               totalProducts={sortedProducts.length}

@@ -59,7 +59,15 @@ function SubcategoryProductsPage() {
   const [loading, setLoading] = useState(true);
   const baseUrl = environment;
 
-  const { isSidebarOpen, setIsSidebarOpen, toggleSidebar } = useProductsLayout();
+  const { isSidebarOpen, setIsSidebarOpen, toggleSidebar, openMobileSidebar } = useProductsLayout();
+
+  const handleToggleFilter = () => {
+    if (window.innerWidth < 1024) {
+      openMobileSidebar();
+    } else {
+      toggleSidebar();
+    }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -134,7 +142,7 @@ function SubcategoryProductsPage() {
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
               isFilterOpen={isSidebarOpen}
-              onToggleFilter={toggleSidebar}
+              onToggleFilter={handleToggleFilter}
               currentSort={currentSort}
               onSortChange={setCurrentSort}
               totalProducts={sortedProducts.length}
