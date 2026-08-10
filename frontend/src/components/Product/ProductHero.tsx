@@ -25,12 +25,12 @@ export function ProductHero({
     categoryTag = "STORE CATALOG",
 }: ProductHeroProps) {
     return (
-        <section className="w-full bg-white pt-24 md:pt-28 pb-6">
+        <section className="w-full bg-white pb-6">
             <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="relative w-full overflow-hidden rounded-sm border border-gray-200 shadow-sm bg-white min-h-[220px] md:min-h-[280px]">
-                    {/* Background image fills the hero */}
-                    <img
-                        src={imageproduct}
+                <div className="relative w-full overflow-hidden bg-white min-h-[300px] md:min-h-[380px]">
+                    {/* Background image */}
+                    <motion.img
+                        src="/catalog_hero_bg.png"
                         alt="Catalog Banner"
                         className="absolute inset-0 w-full h-full object-cover grayscale brightness-90 contrast-90"
                     />
@@ -40,7 +40,7 @@ export function ProductHero({
                         initial={{ opacity: 0, y: 14 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4 }}
-                        className="absolute inset-0 z-10 max-w-2xl p-8 md:p-12 flex flex-col justify-center"
+                        className="absolute inset-0 z-10 max-w-2xl p-8 md:p-12 pt-24 md:pt-28 flex flex-col justify-center"
                     >
                         {/* Breadcrumbs */}
                         <nav className="flex items-center gap-2 mb-4 flex-wrap">
@@ -66,13 +66,13 @@ export function ProductHero({
                         </nav>
 
                         {/* Main Title */}
-                        <h1 className="text-2xl md:text-4xl font-bold font-display tracking-tight text-gray-900 mb-3">
+                        <h1 className="text-xl md:text-3xl font-bold font-display tracking-tight text-gray-900 mb-3">
                             {title}
                         </h1>
 
                         {/* Subtitle Description */}
                         {subtitle && (
-                            <p className="text-sm md:text-base text-gray-600 leading-relaxed font-normal max-w-xl">
+                            <p className="text-xs md:text-sm text-gray-600 leading-relaxed font-normal max-w-xl">
                                 {subtitle}
                             </p>
                         )}
