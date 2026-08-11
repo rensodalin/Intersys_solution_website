@@ -191,7 +191,7 @@ export function SystemTipsPage({ currentSlug, allTips, loading }: SystemTipsPage
                     <div className="py-3 flex items-center justify-between gap-4">
                         <Link
                             to="/technical-tips"
-                            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-600 hover:text-[#C3110C] transition-colors"
+                            className="inline-flex items-center gap-2 text-xs font-bold tracking-wider text-gray-600 hover:text-[#C3110C] transition-colors"
                         >
                             <ArrowLeft className="w-4 h-4" />
                             All Systems
@@ -231,10 +231,16 @@ export function SystemTipsPage({ currentSlug, allTips, loading }: SystemTipsPage
                 </Container>
             </div>
 
-            {/* SYSTEM HERO BANNER */}
-            <div className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white py-14 md:py-18 relative overflow-hidden">
+            {/* SYSTEM HERO BANNER WITH BACKGROUND IMAGE */}
+            <div className="relative w-full bg-slate-950 text-white py-14 md:py-20 overflow-hidden flex items-center">
+                <img
+                    src="https://plus.unsplash.com/premium_photo-1667238586553-e4ddb2b0cdbb?q=80&w=1062&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    alt={currentSystem.name}
+                    className="absolute inset-0 w-full h-full object-cover opacity-20"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/80" />
                 <div
-                    className="absolute -top-32 -right-32 w-96 h-96 rounded-full blur-3xl opacity-20 pointer-events-none"
+                    className="absolute -top-32 -right-32 w-96 h-96 rounded-full blur-3xl opacity-25 pointer-events-none"
                     style={{ backgroundColor: currentSystem.color }}
                 />
                 
@@ -242,7 +248,7 @@ export function SystemTipsPage({ currentSlug, allTips, loading }: SystemTipsPage
                     <div className="max-w-4xl">
                         <div className="inline-flex items-center gap-3 px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 mb-6">
                             <SystemIcon size={24} style={{ color: currentSystem.color }} />
-                            <span className="text-xs font-extrabold uppercase tracking-widest text-slate-200">
+                            <span className="text-xs font-extrabold tracking-widest text-slate-200">
                                 System Technical Documentation
                             </span>
                         </div>
@@ -310,12 +316,12 @@ export function SystemTipsPage({ currentSlug, allTips, loading }: SystemTipsPage
                                     <div className="p-6 md:p-8 space-y-4">
                                         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                                             <div className="flex items-start gap-4">
-                                                <div className="p-3.5 bg-red-50 text-[#C3110C] rounded-2xl shrink-0 border border-red-100">
+                                                <div className="p-3.5 text-[#C3110C] shrink-0">
                                                     <FileText size={28} strokeWidth={1.5} />
                                                 </div>
                                                 <div>
                                                     <div className="flex items-center gap-2 mb-1.5">
-                                                        <span className="text-[11px] font-extrabold uppercase tracking-wider bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-md border border-slate-200">
+                                                        <span className="text-[11px] font-extrabold tracking-wider bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-md border border-slate-200">
                                                             Doc #{index + 1}
                                                         </span>
                                                         <span className="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">

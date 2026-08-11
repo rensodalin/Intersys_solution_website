@@ -26,7 +26,7 @@ export function TechnicalTips() {
         fetch(`${baseUrl}/api/technical-tips`)
             .then(res => res.json())
             .then(json => { if (json.success) setTips(json.data); })
-            .catch(() => {})
+            .catch(() => { })
             .finally(() => setLoading(false));
     }, [baseUrl]);
 
@@ -41,23 +41,21 @@ export function TechnicalTips() {
     return (
         <div className="min-h-screen bg-slate-50/60 pb-20">
 
-            {/* HERO SECTION */}
-            <div className="relative w-full bg-slate-900 text-white overflow-hidden py-20 md:py-24">
-                {/* Ambient background glows */}
-                <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none" />
-                <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-cyan-600/15 rounded-full blur-3xl pointer-events-none" />
+            {/* HERO SECTION WITH BACKGROUND IMAGE */}
+            <div className="relative w-full h-[320px] md:h-[380px] overflow-hidden flex items-center justify-center">
+                <img
+                    src="https://plus.unsplash.com/premium_photo-1667238586553-e4ddb2b0cdbb?q=80&w=1062&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    alt="Technical Tips Background"
+                    className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/75 backdrop-blur-[2px]" />
 
                 <Container className="relative z-10 text-center max-w-4xl">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-extrabold uppercase tracking-widest text-slate-200 mb-6">
-                        <Sparkles size={14} className="text-[#C3110C]" />
-                        Technical Knowledge Base
-                    </div>
-
-                    <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-6">
+                    <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white mb-4 mt-10">
                         Technical Tips & System Manuals
                     </h1>
 
-                    <p className="text-slate-300 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
+                    <p className="text-slate-200 text-base md:text-md  max-w-2xl mx-auto ">
                         Explore verified technical guides, PDF manuals, and operational specifications categorized across our 6 core engineering systems.
                     </p>
                 </Container>
@@ -70,12 +68,12 @@ export function TechnicalTips() {
                         <h2 className="text-2xl font-black text-gray-900">
                             Select a System Category
                         </h2>
-                        <p className="text-xs text-gray-500 mt-1 font-medium">
+                        <p className="text-sm text-gray-500 mt-1 font-medium">
                             Choose one of the 6 systems below to view all corresponding PDF documentation and technical guides.
                         </p>
                     </div>
 
-                    <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-700 font-bold text-xs rounded-full border border-slate-200">
+                    <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1  text-slate-700 font-bold text-sm ">
                         <ShieldCheck size={14} className="text-emerald-600" />
                         6 Engineering Systems
                     </span>
@@ -97,7 +95,7 @@ export function TechnicalTips() {
                                     key={sys.slug}
                                     to="/technical-tips/system/$systemSlug"
                                     params={{ systemSlug: sys.slug }}
-                                    className="group bg-white rounded-3xl p-8 border border-gray-200/90 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between relative overflow-hidden"
+                                    className="group bg-white rounded-lg p-8 border border-gray-200/90 shadow-sm hover:shadow- hover:border-slate-300 transition-all duration-300 flex flex-col justify-between relative overflow-hidden"
                                 >
                                     {/* Ambient card top border gradient on hover */}
                                     <div
@@ -109,17 +107,16 @@ export function TechnicalTips() {
                                         {/* CARD TOP HEADER */}
                                         <div className="flex items-center justify-between gap-4 mb-6">
                                             <div
-                                                className="w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 shadow-sm"
-                                                style={{ backgroundColor: `${sys.color}15`, color: sys.color }}
+                                                className="w-14 h-14 rounded-sm flex items-center justify-center transition-transform group-hover:scale-110"
+                                                style={{ color: sys.color }}
                                             >
                                                 <IconComponent size={28} strokeWidth={1.75} />
                                             </div>
 
-                                            <span className={`text-xs font-bold px-3 py-1 rounded-full border ${
-                                                docCount > 0
-                                                    ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                                                    : "bg-slate-100 text-slate-500 border-slate-200"
-                                            }`}>
+                                            <span className={`text-xs font-bold px-3 py-1  ${docCount > 0
+                                                ? " text-emerald-700 "
+                                                : "text-slate-500 "
+                                                }`}>
                                                 {docCount} {docCount === 1 ? "PDF Guide" : "PDF Guides"}
                                             </span>
                                         </div>
@@ -137,7 +134,7 @@ export function TechnicalTips() {
                                         {/* RECENT TIPS PREVIEW PILLS */}
                                         {docCount > 0 && (
                                             <div className="space-y-2 mb-6 border-t border-gray-100 pt-4">
-                                                <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block mb-2">
+                                                <span className="text-[11px] text-gray-400 block mb-2">
                                                     Available Documents:
                                                 </span>
                                                 {catTips.slice(0, 3).map(tip => (
@@ -159,7 +156,7 @@ export function TechnicalTips() {
                                     </div>
 
                                     {/* CARD BUTTON ACTION */}
-                                    <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs font-extrabold uppercase tracking-wider text-slate-800 group-hover:text-[#C3110C]">
+                                    <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-slate-800 group-hover:text-[#C3110C]">
                                         <span>Explore System Tips</span>
                                         <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
                                     </div>

@@ -110,7 +110,7 @@ export function TechnicalTipDetail({ tip, relatedTips = [] }: TechnicalTipDetail
             </div>
 
             {/* HERO SECTION */}
-            <div className="relative bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden py-16 md:py-20 shadow-inner">
+            <div className="relative bg-gradient-to-b from-black via-neutral-900 to-black text-white overflow-hidden py-16 md:py-20 shadow-inner">
                 {/* Background ambient light */}
                 <div
                     className="absolute -top-24 -right-24 w-96 h-96 rounded-full blur-3xl opacity-20 pointer-events-none"
@@ -121,7 +121,7 @@ export function TechnicalTipDetail({ tip, relatedTips = [] }: TechnicalTipDetail
                 <Container className="relative z-10">
                     <div className="max-w-4xl">
                         {/* Category Badge */}
-                        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 backdrop-blur-md border border-white/20 text-white mb-6">
+                        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wider bg-white/10 backdrop-blur-md border border-white/20 text-white mb-6">
                             <IconComponent size={16} style={{ color: categoryMeta.color }} />
                             <span>{tip.category}</span>
                         </div>
@@ -178,7 +178,7 @@ export function TechnicalTipDetail({ tip, relatedTips = [] }: TechnicalTipDetail
 
                             {/* HIGHLIGHT BOX */}
                             <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-6 space-y-3">
-                                <h3 className="text-sm font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+                                <h3 className="text-sm font-bold tracking-wider text-slate-700 flex items-center gap-2">
                                     <ShieldCheck className="w-4 h-4 text-emerald-600" />
                                     What You Will Learn from This Tip
                                 </h3>
@@ -203,11 +203,11 @@ export function TechnicalTipDetail({ tip, relatedTips = [] }: TechnicalTipDetail
                         <div className="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-8 border-2 border-red-100 shadow-md space-y-6 relative overflow-hidden">
                             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                                 <div className="flex items-start gap-4">
-                                    <div className="p-4 bg-red-50 text-[#C3110C] rounded-2xl shrink-0 border border-red-100">
+                                    <div className="p-4 text-[#C3110C] shrink-0">
                                         <FileText size={36} strokeWidth={1.5} />
                                     </div>
                                     <div>
-                                        <span className="text-xs font-bold text-red-600 uppercase tracking-widest bg-red-50 px-2.5 py-1 rounded-md border border-red-100">
+                                        <span className="text-xs font-bold text-red-600 tracking-widest bg-red-50 px-2.5 py-1 rounded-md border border-red-100">
                                             PDF Resource
                                         </span>
                                         <h3 className="text-lg font-bold text-gray-900 mt-2">
@@ -329,7 +329,7 @@ export function TechnicalTipDetail({ tip, relatedTips = [] }: TechnicalTipDetail
 
                         {/* NEED CUSTOM GUIDE CARD */}
                         <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 text-white space-y-4 shadow-md">
-                            <span className="text-[11px] font-bold uppercase tracking-wider text-[#C3110C] bg-red-950/80 px-2.5 py-1 rounded-md border border-red-800/50">
+                            <span className="text-[11px] font-bold tracking-wider text-[#C3110C] bg-red-950/80 px-2.5 py-1 rounded-md border border-red-800/50">
                                 Engineering Support
                             </span>
                             <h4 className="text-lg font-bold">Need a Custom Technical Guide?</h4>
@@ -338,7 +338,7 @@ export function TechnicalTipDetail({ tip, relatedTips = [] }: TechnicalTipDetail
                             </p>
                             <Link
                                 to="/contact"
-                                className="block w-full text-center py-3 bg-[#C3110C] hover:bg-[#a80f0b] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-md"
+                                className="block w-full text-center py-3 bg-[#C3110C] hover:bg-[#a80f0b] text-white text-xs font-bold tracking-wider rounded-xl transition-all shadow-md"
                             >
                                 Contact Technical Team
                             </Link>
