@@ -36,7 +36,7 @@ export function ProductSort({
     const currentLabel = sortOptions.find(o => o.value === currentSort)?.label || "Newest";
 
     return (
-        <div className="bg-white border border-gray-200 rounded-sm p-3 md:p-4 mb-6 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        <div className="bg-white border border-gray-200 rounded-sm p-3 md:p-4 mb-6 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sticky top-20 z-30">
             {/* Search Input Box */}
             <div className="relative flex-1 min-w-[240px]">
                 <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />

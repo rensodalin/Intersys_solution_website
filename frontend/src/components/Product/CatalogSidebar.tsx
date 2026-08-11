@@ -583,7 +583,7 @@ export function CatalogSidebar({
                 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className={cn(
-                    "hidden lg:flex flex-col bg-white border border-gray-200 rounded-sm overflow-hidden shrink-0 shadow-sm sticky top-28 self-start z-30",
+                    "hidden lg:flex flex-col bg-white border border-gray-200 rounded-lg overflow-hidden shrink-0 shadow-sm sticky top-20 self-start z-30",
                     !isDesktopOpen && "pointer-events-none border-0"
                 )}
             >
