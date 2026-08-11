@@ -1,39 +1,23 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
 import {
-    FileText,
     Building2,
     Flame,
     Monitor,
     Key,
     Video,
     Layers,
+    FileText,
+    ArrowRight,
+    BookOpen,
+    ShieldCheck,
+    Sparkles
 } from "lucide-react";
 import { Container } from "@/components/Common/Container";
 import environment from "@/enviroment/enviroment";
-
-const categoryIcons: Record<string, { icon: any; color: string }> = {
-    "Building Management": { icon: Building2, color: "#0E7490" },
-    "Fire Alarm Systems": { icon: Flame, color: "#D62828" },
-    "Audio Visual (AV)": { icon: Monitor, color: "#6B21A8" },
-    "Access Control": { icon: Key, color: "#059669" },
-    "Surveillance System": { icon: Video, color: "#B45309" },
-    "Integrated Systems": { icon: Layers, color: "#1E40AF" },
-};
-
-interface Tip {
-    _id: string;
-    title: string;
-    pdfUrl: string;
-    category: string;
-    description: string;
-    order: number;
-}
+import { SYSTEM_CATEGORIES, getCategorySlug, Tip } from "./SystemTipsPage";
 
 export function TechnicalTips() {
-    const user = useSelector((state: RootState) => state.auth.user);
     const baseUrl = environment;
     const [tips, setTips] = useState<Tip[]>([]);
     const [loading, setLoading] = useState(true);
@@ -46,132 +30,156 @@ export function TechnicalTips() {
             .finally(() => setLoading(false));
     }, [baseUrl]);
 
-    const grouped = tips.reduce<Record<string, Tip[]>>((acc, tip) => {
-        if (!acc[tip.category]) acc[tip.category] = [];
-        acc[tip.category].push(tip);
+    // Group tips by system slug
+    const groupedTips = tips.reduce<Record<string, Tip[]>>((acc, tip) => {
+        const slug = getCategorySlug(tip.category);
+        if (!acc[slug]) acc[slug] = [];
+        acc[slug].push(tip);
         return acc;
     }, {});
 
-    const allCategories = Object.keys(categoryIcons);
-
-    const trackPdfDownload = async (title: string, url: string) => {
-        if (!user || url === "#") return;
-        try {
-            await fetch(`${baseUrl}/auth/user/download`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ title, url }),
-                credentials: "include"
-            });
-        } catch (err) {
-            console.error("Failed to track download:", err);
-        }
-    };
-
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-slate-50/60 pb-20">
 
-            {/* HERO (simplified) */}
-            <div className="relative w-full h-[300px] overflow-hidden">
-                <img
-                    src="https://plus.unsplash.com/premium_photo-1667238586553-e4ddb2b0cdbb?q=80&w=1062&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    alt="Technical"
-                    className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black/55" />
-            </div>
+            {/* HERO SECTION */}
+            <div className="relative w-full bg-slate-900 text-white overflow-hidden py-20 md:py-24">
+                {/* Ambient background glows */}
+                <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-cyan-600/15 rounded-full blur-3xl pointer-events-none" />
 
-            <Container className="py-16 md:py-24">
-                <div className="max-w-4xl mx-auto text-center mb-12 md:mb-20">
-                    {/* TITLE */}
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6 font-display tracking-tight">
-                        Technical Tips
+                <Container className="relative z-10 text-center max-w-4xl">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-extrabold uppercase tracking-widest text-slate-200 mb-6">
+                        <Sparkles size={14} className="text-[#C3110C]" />
+                        Technical Knowledge Base
+                    </div>
+
+                    <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-6">
+                        Technical Tips & System Manuals
                     </h1>
 
-                    <p className="text-gray-500 text-base md:text-lg leading-relaxed">
-                        Browse technical insights and practical solutions for different systems,
-                        from building management to integrated technologies.
+                    <p className="text-slate-300 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
+                        Explore verified technical guides, PDF manuals, and operational specifications categorized across our 6 core engineering systems.
                     </p>
+                </Container>
+            </div>
+
+            {/* MAIN CONTENT: 6 SYSTEM CARDS GRID */}
+            <Container className="py-16 md:py-24">
+                <div className="flex items-center justify-between border-b border-gray-200 pb-6 mb-12">
+                    <div>
+                        <h2 className="text-2xl font-black text-gray-900">
+                            Select a System Category
+                        </h2>
+                        <p className="text-xs text-gray-500 mt-1 font-medium">
+                            Choose one of the 6 systems below to view all corresponding PDF documentation and technical guides.
+                        </p>
+                    </div>
+
+                    <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-700 font-bold text-xs rounded-full border border-slate-200">
+                        <ShieldCheck size={14} className="text-emerald-600" />
+                        6 Engineering Systems
+                    </span>
                 </div>
 
-                {/* CONTENT */}
-                <div className="max-w-5xl mx-auto">
-                    {loading ? (
-                        <div className="flex justify-center py-20">
-                            <div className="animate-spin w-8 h-8 border-2 border-[#C3110C] border-t-transparent rounded-full" />
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-12 md:gap-y-16">
+                {loading ? (
+                    <div className="flex justify-center py-20">
+                        <div className="animate-spin w-10 h-10 border-3 border-[#C3110C] border-t-transparent rounded-full" />
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {Object.values(SYSTEM_CATEGORIES).map((sys) => {
+                            const IconComponent = sys.icon;
+                            const catTips = groupedTips[sys.slug] || [];
+                            const docCount = catTips.length;
 
-                            {allCategories.map((cat, idx) => {
-                                const catTips = grouped[cat] || [];
-                                const meta = categoryIcons[cat];
-                                const IconComponent = meta.icon;
+                            return (
+                                <Link
+                                    key={sys.slug}
+                                    to="/technical-tips/system/$systemSlug"
+                                    params={{ systemSlug: sys.slug }}
+                                    className="group bg-white rounded-3xl p-8 border border-gray-200/90 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between relative overflow-hidden"
+                                >
+                                    {/* Ambient card top border gradient on hover */}
+                                    <div
+                                        className="absolute top-0 left-0 right-0 h-1.5 transition-all opacity-80 group-hover:opacity-100"
+                                        style={{ backgroundColor: sys.color }}
+                                    />
 
-                                return (
-                                    <div key={idx} className="flex flex-col md:flex-row items-center md:items-start gap-5 text-center md:text-left">
+                                    <div>
+                                        {/* CARD TOP HEADER */}
+                                        <div className="flex items-center justify-between gap-4 mb-6">
+                                            <div
+                                                className="w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 shadow-sm"
+                                                style={{ backgroundColor: `${sys.color}15`, color: sys.color }}
+                                            >
+                                                <IconComponent size={28} strokeWidth={1.75} />
+                                            </div>
 
-                                        {/* ICON */}
-                                        <div className="pt-1">
-                                            <IconComponent
-                                                size={28}
-                                                strokeWidth={1.5}
-                                                style={{ color: meta.color }}
-                                            />
+                                            <span className={`text-xs font-bold px-3 py-1 rounded-full border ${
+                                                docCount > 0
+                                                    ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                                    : "bg-slate-100 text-slate-500 border-slate-200"
+                                            }`}>
+                                                {docCount} {docCount === 1 ? "PDF Guide" : "PDF Guides"}
+                                            </span>
                                         </div>
 
-                                        {/* TEXT */}
-                                        <div>
-                                            <h2 className="text-sm font-semibold text-gray-700 mb-3">
-                                                {cat}
-                                            </h2>
+                                        {/* SYSTEM TITLE */}
+                                        <h3 className="text-xl font-bold text-gray-900 group-hover:text-[#C3110C] transition-colors mb-3">
+                                            {sys.name}
+                                        </h3>
 
-                                            <div className="space-y-3">
-                                                {catTips.map((tip) => (
-                                                    <a
+                                        {/* DESCRIPTION */}
+                                        <p className="text-xs text-gray-500 leading-relaxed mb-6">
+                                            {sys.description}
+                                        </p>
+
+                                        {/* RECENT TIPS PREVIEW PILLS */}
+                                        {docCount > 0 && (
+                                            <div className="space-y-2 mb-6 border-t border-gray-100 pt-4">
+                                                <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block mb-2">
+                                                    Available Documents:
+                                                </span>
+                                                {catTips.slice(0, 3).map(tip => (
+                                                    <div
                                                         key={tip._id}
-                                                        href={tip.pdfUrl}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        onClick={() => trackPdfDownload(tip.title, tip.pdfUrl)}
-                                                        className="group flex items-center gap-2 text-[15px] text-[#4A4A4A] hover:text-[#D62828] transition-colors"
+                                                        className="flex items-center gap-2 text-xs text-gray-700 font-medium truncate"
                                                     >
-                                                        <img
-                                                            src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg"
-                                                            alt="PDF"
-                                                            className="w-5 h-5 shrink-0"
-                                                        />
-                                                        <span className="underline decoration-gray-400 group-hover:decoration-red-600 underline-offset-4">
-                                                            {tip.title}
-                                                        </span>
-                                                    </a>
+                                                        <FileText className="w-3.5 h-3.5 text-[#C3110C] shrink-0" />
+                                                        <span className="truncate">{tip.title}</span>
+                                                    </div>
                                                 ))}
-
-                                                {catTips.length === 0 && (
-                                                    <p className="text-xs text-gray-400 italic">
-                                                        Coming soon
-                                                    </p>
+                                                {docCount > 3 && (
+                                                    <span className="text-[11px] text-[#C3110C] font-semibold block pt-1">
+                                                        + {docCount - 3} more technical documents
+                                                    </span>
                                                 )}
                                             </div>
-                                        </div>
-
+                                        )}
                                     </div>
-                                );
-                            })}
-                        </div>
-                    )}
-                </div>
 
-                {/* FOOTER */}
-                <div className="mt-24 border-t border-gray-100 pt-10 text-center">
-                    <p className="text-sm text-gray-400 mb-4">
-                        Can't find what you're looking for?
+                                    {/* CARD BUTTON ACTION */}
+                                    <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs font-extrabold uppercase tracking-wider text-slate-800 group-hover:text-[#C3110C]">
+                                        <span>Explore System Tips</span>
+                                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                )}
+
+                {/* FOOTER CALLOUT */}
+                <div className="mt-20 border-t border-gray-200 pt-12 text-center">
+                    <p className="text-sm text-gray-500 mb-4">
+                        Can't find the technical manual or drawing you're looking for?
                     </p>
                     <Link
                         to="/contact"
-                        className="text-sm font-bold text-[#111FA2] hover:text-[#D62828] border-b-2 border-transparent hover:border-[#D62828] pb-1 transition-all inline-block"
+                        className="inline-flex items-center gap-2 text-sm font-bold text-[#111FA2] hover:text-[#D62828] border-b-2 border-[#111FA2] hover:border-[#D62828] pb-1 transition-all"
                     >
-                        Request a specialized technical guide
+                        <span>Request a specialized engineering guide</span>
+                        <ArrowRight className="w-4 h-4" />
                     </Link>
                 </div>
 

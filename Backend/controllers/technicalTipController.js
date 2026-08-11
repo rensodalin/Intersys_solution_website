@@ -10,6 +10,19 @@ export const getAll = async (req, res) => {
   }
 };
 
+export const getById = async (req, res) => {
+  try {
+    const tip = await TechnicalTip.findById(req.params.id);
+    if (!tip) {
+      return res.status(404).json({ success: false, message: "Technical tip not found" });
+    }
+    res.json({ success: true, data: tip });
+  } catch (error) {
+    console.error("Fetch Technical Tip By ID Error:", error);
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
+  }
+};
+
 export const create = async (req, res) => {
   try {
     const newTip = new TechnicalTip(req.body);

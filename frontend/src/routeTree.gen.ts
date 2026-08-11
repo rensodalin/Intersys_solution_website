@@ -29,6 +29,7 @@ import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as InsightsIndexRouteImport } from './routes/insights.index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
+import { Route as TechnicalTipsTipIdRouteImport } from './routes/technical-tips.$tipId'
 import { Route as ServicesVesdaRouteImport } from './routes/services_.vesda'
 import { Route as ServicesSurveillanceRouteImport } from './routes/services_.surveillance'
 import { Route as ServicesRoomControlRouteImport } from './routes/services_.room-control'
@@ -44,6 +45,7 @@ import { Route as ServicesAccessControlRouteImport } from './routes/services_.ac
 import { Route as SectorsSectorIdRouteImport } from './routes/sectors.$sectorId'
 import { Route as InsightsSlugRouteImport } from './routes/insights.$slug'
 import { Route as ProductsSlugIndexRouteImport } from './routes/products.$slug.index'
+import { Route as TechnicalTipsSystemSystemSlugRouteImport } from './routes/technical-tips.system.$systemSlug'
 import { Route as ProductsDetailProductIdRouteImport } from './routes/products.detail.$productId'
 import { Route as ProductsSlugSubcategoryRouteImport } from './routes/products.$slug.$subcategory'
 import { Route as ProductsSlugSplatRouteImport } from './routes/products.$slug.$'
@@ -158,6 +160,11 @@ const AboutIndexRoute = AboutIndexRouteImport.update({
   path: '/about/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TechnicalTipsTipIdRoute = TechnicalTipsTipIdRouteImport.update({
+  id: '/$tipId',
+  path: '/$tipId',
+  getParentRoute: () => TechnicalTipsRoute,
+} as any)
 const ServicesVesdaRoute = ServicesVesdaRouteImport.update({
   id: '/services_/vesda',
   path: '/services/vesda',
@@ -234,6 +241,12 @@ const ProductsSlugIndexRoute = ProductsSlugIndexRouteImport.update({
   path: '/$slug/',
   getParentRoute: () => ProductsRoute,
 } as any)
+const TechnicalTipsSystemSystemSlugRoute =
+  TechnicalTipsSystemSystemSlugRouteImport.update({
+    id: '/system/$systemSlug',
+    path: '/system/$systemSlug',
+    getParentRoute: () => TechnicalTipsRoute,
+  } as any)
 const ProductsDetailProductIdRoute = ProductsDetailProductIdRouteImport.update({
   id: '/detail/$productId',
   path: '/detail/$productId',
@@ -323,7 +336,7 @@ export interface FileRoutesByFullPath {
   '/sectors': typeof SectorsRouteWithChildren
   '/services': typeof ServicesRoute
   '/support': typeof SupportRoute
-  '/technical-tips': typeof TechnicalTipsRoute
+  '/technical-tips': typeof TechnicalTipsRouteWithChildren
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
   '/insights/$slug': typeof InsightsSlugRoute
@@ -340,6 +353,7 @@ export interface FileRoutesByFullPath {
   '/services/room-control': typeof ServicesRoomControlRoute
   '/services/surveillance': typeof ServicesSurveillanceRoute
   '/services/vesda': typeof ServicesVesdaRoute
+  '/technical-tips/$tipId': typeof TechnicalTipsTipIdRoute
   '/about/': typeof AboutIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/insights/': typeof InsightsIndexRoute
@@ -348,6 +362,7 @@ export interface FileRoutesByFullPath {
   '/products/$slug/$': typeof ProductsSlugSplatRoute
   '/products/$slug/$subcategory': typeof ProductsSlugSubcategoryRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
+  '/technical-tips/system/$systemSlug': typeof TechnicalTipsSystemSystemSlugRoute
   '/products/$slug/': typeof ProductsSlugIndexRoute
   '/products/access-control/honeywell/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
   '/products/access-control/honeywell/control-panel-kits': typeof ProductsAccessControlHoneywellControlPanelKitsRoute
@@ -371,7 +386,7 @@ export interface FileRoutesByTo {
   '/request-quote': typeof RequestQuoteRoute
   '/services': typeof ServicesRoute
   '/support': typeof SupportRoute
-  '/technical-tips': typeof TechnicalTipsRoute
+  '/technical-tips': typeof TechnicalTipsRouteWithChildren
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
   '/insights/$slug': typeof InsightsSlugRoute
@@ -388,6 +403,7 @@ export interface FileRoutesByTo {
   '/services/room-control': typeof ServicesRoomControlRoute
   '/services/surveillance': typeof ServicesSurveillanceRoute
   '/services/vesda': typeof ServicesVesdaRoute
+  '/technical-tips/$tipId': typeof TechnicalTipsTipIdRoute
   '/about': typeof AboutIndexRoute
   '/admin': typeof AdminIndexRoute
   '/insights': typeof InsightsIndexRoute
@@ -396,6 +412,7 @@ export interface FileRoutesByTo {
   '/products/$slug/$': typeof ProductsSlugSplatRoute
   '/products/$slug/$subcategory': typeof ProductsSlugSubcategoryRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
+  '/technical-tips/system/$systemSlug': typeof TechnicalTipsSystemSystemSlugRoute
   '/products/$slug': typeof ProductsSlugIndexRoute
   '/products/access-control/honeywell/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
   '/products/access-control/honeywell/control-panel-kits': typeof ProductsAccessControlHoneywellControlPanelKitsRoute
@@ -422,7 +439,7 @@ export interface FileRoutesById {
   '/sectors': typeof SectorsRouteWithChildren
   '/services': typeof ServicesRoute
   '/support': typeof SupportRoute
-  '/technical-tips': typeof TechnicalTipsRoute
+  '/technical-tips': typeof TechnicalTipsRouteWithChildren
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
   '/insights/$slug': typeof InsightsSlugRoute
@@ -439,6 +456,7 @@ export interface FileRoutesById {
   '/services_/room-control': typeof ServicesRoomControlRoute
   '/services_/surveillance': typeof ServicesSurveillanceRoute
   '/services_/vesda': typeof ServicesVesdaRoute
+  '/technical-tips/$tipId': typeof TechnicalTipsTipIdRoute
   '/about/': typeof AboutIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/insights/': typeof InsightsIndexRoute
@@ -447,6 +465,7 @@ export interface FileRoutesById {
   '/products/$slug/$': typeof ProductsSlugSplatRoute
   '/products/$slug/$subcategory': typeof ProductsSlugSubcategoryRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
+  '/technical-tips/system/$systemSlug': typeof TechnicalTipsSystemSystemSlugRoute
   '/products/$slug/': typeof ProductsSlugIndexRoute
   '/products/access-control/honeywell/accessories': typeof ProductsAccessControlHoneywellAccessoriesRoute
   '/products/access-control/honeywell/control-panel-kits': typeof ProductsAccessControlHoneywellControlPanelKitsRoute
@@ -491,6 +510,7 @@ export interface FileRouteTypes {
     | '/services/room-control'
     | '/services/surveillance'
     | '/services/vesda'
+    | '/technical-tips/$tipId'
     | '/about/'
     | '/admin/'
     | '/insights/'
@@ -499,6 +519,7 @@ export interface FileRouteTypes {
     | '/products/$slug/$'
     | '/products/$slug/$subcategory'
     | '/products/detail/$productId'
+    | '/technical-tips/system/$systemSlug'
     | '/products/$slug/'
     | '/products/access-control/honeywell/accessories'
     | '/products/access-control/honeywell/control-panel-kits'
@@ -539,6 +560,7 @@ export interface FileRouteTypes {
     | '/services/room-control'
     | '/services/surveillance'
     | '/services/vesda'
+    | '/technical-tips/$tipId'
     | '/about'
     | '/admin'
     | '/insights'
@@ -547,6 +569,7 @@ export interface FileRouteTypes {
     | '/products/$slug/$'
     | '/products/$slug/$subcategory'
     | '/products/detail/$productId'
+    | '/technical-tips/system/$systemSlug'
     | '/products/$slug'
     | '/products/access-control/honeywell/accessories'
     | '/products/access-control/honeywell/control-panel-kits'
@@ -589,6 +612,7 @@ export interface FileRouteTypes {
     | '/services_/room-control'
     | '/services_/surveillance'
     | '/services_/vesda'
+    | '/technical-tips/$tipId'
     | '/about/'
     | '/admin/'
     | '/insights/'
@@ -597,6 +621,7 @@ export interface FileRouteTypes {
     | '/products/$slug/$'
     | '/products/$slug/$subcategory'
     | '/products/detail/$productId'
+    | '/technical-tips/system/$systemSlug'
     | '/products/$slug/'
     | '/products/access-control/honeywell/accessories'
     | '/products/access-control/honeywell/control-panel-kits'
@@ -623,7 +648,7 @@ export interface RootRouteChildren {
   SectorsRoute: typeof SectorsRouteWithChildren
   ServicesRoute: typeof ServicesRoute
   SupportRoute: typeof SupportRoute
-  TechnicalTipsRoute: typeof TechnicalTipsRoute
+  TechnicalTipsRoute: typeof TechnicalTipsRouteWithChildren
   WarrantyRoute: typeof WarrantyRoute
   WhyChooseRoute: typeof WhyChooseRoute
   InsightsSlugRoute: typeof InsightsSlugRoute
@@ -786,6 +811,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/technical-tips/$tipId': {
+      id: '/technical-tips/$tipId'
+      path: '/$tipId'
+      fullPath: '/technical-tips/$tipId'
+      preLoaderRoute: typeof TechnicalTipsTipIdRouteImport
+      parentRoute: typeof TechnicalTipsRoute
+    }
     '/services_/vesda': {
       id: '/services_/vesda'
       path: '/services/vesda'
@@ -890,6 +922,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/products/$slug/'
       preLoaderRoute: typeof ProductsSlugIndexRouteImport
       parentRoute: typeof ProductsRoute
+    }
+    '/technical-tips/system/$systemSlug': {
+      id: '/technical-tips/system/$systemSlug'
+      path: '/system/$systemSlug'
+      fullPath: '/technical-tips/system/$systemSlug'
+      preLoaderRoute: typeof TechnicalTipsSystemSystemSlugRouteImport
+      parentRoute: typeof TechnicalTipsRoute
     }
     '/products/detail/$productId': {
       id: '/products/detail/$productId'
@@ -1048,6 +1087,20 @@ const SectorsRouteChildren: SectorsRouteChildren = {
 const SectorsRouteWithChildren =
   SectorsRoute._addFileChildren(SectorsRouteChildren)
 
+interface TechnicalTipsRouteChildren {
+  TechnicalTipsTipIdRoute: typeof TechnicalTipsTipIdRoute
+  TechnicalTipsSystemSystemSlugRoute: typeof TechnicalTipsSystemSystemSlugRoute
+}
+
+const TechnicalTipsRouteChildren: TechnicalTipsRouteChildren = {
+  TechnicalTipsTipIdRoute: TechnicalTipsTipIdRoute,
+  TechnicalTipsSystemSystemSlugRoute: TechnicalTipsSystemSystemSlugRoute,
+}
+
+const TechnicalTipsRouteWithChildren = TechnicalTipsRoute._addFileChildren(
+  TechnicalTipsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
@@ -1061,7 +1114,7 @@ const rootRouteChildren: RootRouteChildren = {
   SectorsRoute: SectorsRouteWithChildren,
   ServicesRoute: ServicesRoute,
   SupportRoute: SupportRoute,
-  TechnicalTipsRoute: TechnicalTipsRoute,
+  TechnicalTipsRoute: TechnicalTipsRouteWithChildren,
   WarrantyRoute: WarrantyRoute,
   WhyChooseRoute: WhyChooseRoute,
   InsightsSlugRoute: InsightsSlugRoute,

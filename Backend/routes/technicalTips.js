@@ -5,6 +5,7 @@ import * as technicalTipController from "../controllers/technicalTipController.j
 const router = express.Router();
 
 router.get("/", technicalTipController.getAll);
+router.get("/:id", technicalTipController.getById);
 router.post("/", isAdmin, technicalTipController.create);
 router.put("/:id", isAdmin, technicalTipController.update);
 router.delete("/:id", isAdmin, technicalTipController.remove);
