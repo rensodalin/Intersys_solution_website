@@ -60,7 +60,7 @@ function Index() {
 
       <WhyChooseIntersys />
 
-      {/* <Insights /> */}
+      <Insights />
 
       <PromotionOverlay isOpen={showPopup} onClose={handleClose} />
     </>
