@@ -97,7 +97,7 @@ export function InsightsDetail(props: InsightsDetailProps) {
 
         <Container className="relative h-full flex flex-col justify-between py-10">
           <Link
-            to="/insights"
+            to="/"
             className="flex items-center gap-2 text-white/70 hover:text-white transition-colors w-fit group text-xs font-semibold"
           >
             <MoveLeft size={16} />
@@ -110,9 +110,7 @@ export function InsightsDetail(props: InsightsDetailProps) {
               animate={{ opacity: 1, y: 0 }}
               className="flex items-center gap-3 mb-3"
             >
-              <span className="text-[#EED9B9] bg-[#EED9B9]/10 px-2.5 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider">
-                {category || "Case Study"}
-              </span>
+
               <span className="text-white/50 text-xs font-medium tracking-wide">
                 {date}
               </span>
@@ -121,7 +119,7 @@ export function InsightsDetail(props: InsightsDetailProps) {
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-3xl md:text-4xl font-semibold text-white leading-tight tracking-tight"
+              className="text-3xl md:text-4xl font-semibold text-white leading-tight tracking-tight mb-3"
             >
               {title}
             </motion.h1>
@@ -142,10 +140,8 @@ export function InsightsDetail(props: InsightsDetailProps) {
       <div className="bg-[#0A0F1A] text-white border-y border-slate-800 py-3.5 shadow-sm">
         <Container className="flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <FileText className="w-5 h-5 text-[#C3110C]" />
-            <span className="text-xs sm:text-sm font-bold">
-              View the case study in PDF format.
-            </span>
+
+
           </div>
 
           <a
@@ -259,78 +255,11 @@ export function InsightsDetail(props: InsightsDetailProps) {
             </div>
 
             <div
-              className="text-gray-600 text-sm md:text-base leading-relaxed space-y-4 mb-12"
+              className="text-gray-600 text-sm md:text-base leading-relaxed space-y-4 font-normal"
               dangerouslySetInnerHTML={{
                 __html: articleContent2 || "The project represents a mission-critical installation providing continuous monitoring, clear alarm indication, and accurate leak location identification."
               }}
             />
-
-            {/* PROJECT METADATA GRID (Original UI) */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-gray-100 text-center">
-              {/* Client */}
-              {client && (
-                <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
-                    <img
-                      src="https://icons.veryicon.com/png/o/miscellaneous/cloud-keeper/client-7.png"
-                      alt="Client Icon"
-                      className="w-5 h-5 object-contain"
-                    />
-                  </div>
-                  <h5 className="text-xs font-bold tracking-wider text-[#162E93] uppercase mb-1">
-                    Client
-                  </h5>
-                  <p className="text-xs text-gray-500 font-medium leading-relaxed max-w-[220px]">
-                    {client}
-                  </p>
-                </div>
-              )}
-
-              {/* Location */}
-              {location && (
-                <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
-                    <img
-                      src="https://www.freeiconspng.com/uploads/google-location-icon-16.png"
-                      alt="Location Icon"
-                      className="w-5 h-5 object-contain"
-                    />
-                  </div>
-                  <h5 className="text-xs font-bold tracking-wider text-[#162E93] uppercase mb-1">
-                    Location
-                  </h5>
-                  <p className="text-xs text-gray-500 font-medium leading-relaxed max-w-[220px]">
-                    {location}
-                  </p>
-                </div>
-              )}
-
-              {/* Technical Scope */}
-              {scope && scope.length > 0 && (
-                <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1835/1835948.png"
-                      alt="Technical Scope Icon"
-                      className="w-5 h-5 object-contain"
-                    />
-                  </div>
-                  <h5 className="text-xs font-bold tracking-wider text-[#162E93] uppercase mb-2">
-                    Technical Scope
-                  </h5>
-                  <div className="flex flex-wrap justify-center gap-1.5 max-w-[260px]">
-                    {scope.map((item, idx) => (
-                      <span
-                        key={idx}
-                        className="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2.5 py-0.5 rounded"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
         </Container>
       </section>
