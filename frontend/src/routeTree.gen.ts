@@ -24,6 +24,7 @@ import { Route as DocumentCenterRouteImport } from './routes/document-center'
 import { Route as CredentialsRouteImport } from './routes/credentials'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TechnicalTipsIndexRouteImport } from './routes/technical-tips.index'
 import { Route as SectorsIndexRouteImport } from './routes/sectors.index'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as InsightsIndexRouteImport } from './routes/insights.index'
@@ -134,6 +135,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const TechnicalTipsIndexRoute = TechnicalTipsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TechnicalTipsRoute,
 } as any)
 const SectorsIndexRoute = SectorsIndexRouteImport.update({
   id: '/',
@@ -359,6 +365,7 @@ export interface FileRoutesByFullPath {
   '/insights/': typeof InsightsIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/sectors/': typeof SectorsIndexRoute
+  '/technical-tips/': typeof TechnicalTipsIndexRoute
   '/products/$slug/$': typeof ProductsSlugSplatRoute
   '/products/$slug/$subcategory': typeof ProductsSlugSubcategoryRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
@@ -386,7 +393,6 @@ export interface FileRoutesByTo {
   '/request-quote': typeof RequestQuoteRoute
   '/services': typeof ServicesRoute
   '/support': typeof SupportRoute
-  '/technical-tips': typeof TechnicalTipsRouteWithChildren
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
   '/insights/$slug': typeof InsightsSlugRoute
@@ -409,6 +415,7 @@ export interface FileRoutesByTo {
   '/insights': typeof InsightsIndexRoute
   '/products': typeof ProductsIndexRoute
   '/sectors': typeof SectorsIndexRoute
+  '/technical-tips': typeof TechnicalTipsIndexRoute
   '/products/$slug/$': typeof ProductsSlugSplatRoute
   '/products/$slug/$subcategory': typeof ProductsSlugSubcategoryRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
@@ -462,6 +469,7 @@ export interface FileRoutesById {
   '/insights/': typeof InsightsIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/sectors/': typeof SectorsIndexRoute
+  '/technical-tips/': typeof TechnicalTipsIndexRoute
   '/products/$slug/$': typeof ProductsSlugSplatRoute
   '/products/$slug/$subcategory': typeof ProductsSlugSubcategoryRoute
   '/products/detail/$productId': typeof ProductsDetailProductIdRoute
@@ -516,6 +524,7 @@ export interface FileRouteTypes {
     | '/insights/'
     | '/products/'
     | '/sectors/'
+    | '/technical-tips/'
     | '/products/$slug/$'
     | '/products/$slug/$subcategory'
     | '/products/detail/$productId'
@@ -543,7 +552,6 @@ export interface FileRouteTypes {
     | '/request-quote'
     | '/services'
     | '/support'
-    | '/technical-tips'
     | '/warranty'
     | '/why-choose'
     | '/insights/$slug'
@@ -566,6 +574,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/products'
     | '/sectors'
+    | '/technical-tips'
     | '/products/$slug/$'
     | '/products/$slug/$subcategory'
     | '/products/detail/$productId'
@@ -618,6 +627,7 @@ export interface FileRouteTypes {
     | '/insights/'
     | '/products/'
     | '/sectors/'
+    | '/technical-tips/'
     | '/products/$slug/$'
     | '/products/$slug/$subcategory'
     | '/products/detail/$productId'
@@ -775,6 +785,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/technical-tips/': {
+      id: '/technical-tips/'
+      path: '/'
+      fullPath: '/technical-tips/'
+      preLoaderRoute: typeof TechnicalTipsIndexRouteImport
+      parentRoute: typeof TechnicalTipsRoute
     }
     '/sectors/': {
       id: '/sectors/'
@@ -1089,11 +1106,13 @@ const SectorsRouteWithChildren =
 
 interface TechnicalTipsRouteChildren {
   TechnicalTipsTipIdRoute: typeof TechnicalTipsTipIdRoute
+  TechnicalTipsIndexRoute: typeof TechnicalTipsIndexRoute
   TechnicalTipsSystemSystemSlugRoute: typeof TechnicalTipsSystemSystemSlugRoute
 }
 
 const TechnicalTipsRouteChildren: TechnicalTipsRouteChildren = {
   TechnicalTipsTipIdRoute: TechnicalTipsTipIdRoute,
+  TechnicalTipsIndexRoute: TechnicalTipsIndexRoute,
   TechnicalTipsSystemSystemSlugRoute: TechnicalTipsSystemSystemSlugRoute,
 }
 

@@ -42,7 +42,7 @@ export function TechnicalTips() {
         <div className="min-h-screen bg-slate-50/60 pb-20">
 
             {/* HERO SECTION WITH BACKGROUND IMAGE */}
-            <div className="relative w-full h-[320px] md:h-[380px] overflow-hidden flex items-center justify-center">
+            <div className="relative w-full min-h-[340px] md:min-h-[400px] overflow-hidden flex items-center justify-center pt-28 md:pt-36 pb-12">
                 <img
                     src="https://plus.unsplash.com/premium_photo-1667238586553-e4ddb2b0cdbb?q=80&w=1062&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Technical Tips Background"
