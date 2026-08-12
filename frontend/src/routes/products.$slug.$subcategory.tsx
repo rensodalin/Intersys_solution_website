@@ -106,7 +106,6 @@ function SubcategoryProductsPage() {
     switch (currentSort) {
       case "newest": return products.reverse();
       case "popular": return products
-        .filter(p => (popularity[p.title] || 0) > 0)
         .sort((a, b) => (popularity[b.title] || 0) - (popularity[a.title] || 0));
       case "name-asc": return products.sort((a, b) => a.title.localeCompare(b.title));
       case "name-desc": return products.sort((a, b) => b.title.localeCompare(a.title));
