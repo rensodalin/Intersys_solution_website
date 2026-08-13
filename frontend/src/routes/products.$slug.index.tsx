@@ -147,11 +147,11 @@ function CategoryProductsPage() {
                         className="group block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md hover:border-gray-300 transition-all"
                       >
                         {sub.image ? (
-                          <div className="h-36 md:h-44 flex items-center justify-center bg-gray-50">
+                          <div className="h-48 md:h-56 flex items-center justify-center bg-gray-50">
                             <img src={sub.image} alt={sub.title || sub.name} className="max-h-full max-w-full object-contain p-3 group-hover:scale-105 transition-transform duration-500" />
                           </div>
                         ) : (
-                          <div className="h-36 md:h-44 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                          <div className="h-48 md:h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
                             <Package size={40} className="text-gray-200" />
                           </div>
                         )}
