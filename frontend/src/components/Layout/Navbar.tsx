@@ -46,7 +46,7 @@ export function Navbar() {
   const navigate = useNavigate();
   const lightPages = ["/products", "/services/public-address"];
   const isLightPage = lightPages.some(path => location.pathname.startsWith(path));
-  const isDarkNavPage = ["/document-center", "/my-account"].some(path => location.pathname.startsWith(path));
+  const isDarkNavPage = ["/document-center", "/my-account", "/technical-tips/system"].some(path => location.pathname.startsWith(path));
   const [scrolled, setScrolled] = useState(false);
 
   const useDarkText = isDarkNavPage && !scrolled;
@@ -255,7 +255,7 @@ export function Navbar() {
                       key={item.name}
                       to={item.href}
                       onClick={closeMenus}
-                      className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors [&.active]:text-red-500 [&.active]:bg-white/5"
+                      className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors [&.active]:text-[#FC3B1F] [&.active]:font-semibold [&.active]:bg-white/10"
                     >
                       {item.name}
                     </Link>
@@ -289,7 +289,7 @@ export function Navbar() {
                         <Link
                           to={cat.link}
                           onClick={closeMenus}
-                          className="flex items-center justify-between px-5 py-3.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors border-b border-white/5 last:border-0"
+                          className="flex items-center justify-between px-5 py-3.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors border-b border-white/5 last:border-0 [&.active]:text-[#FC3B1F] [&.active]:font-semibold [&.active]:bg-white/10"
                         >
                           <span>{cat.label}</span>
                           {hasSub && <ChevronRight size={14} className="text-white/40" />}
@@ -355,7 +355,7 @@ export function Navbar() {
                       key={item.name}
                       to={item.href}
                       onClick={closeMenus}
-                      className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 [&.active]:text-red-500 [&.active]:bg-white/5"
+                      className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 [&.active]:text-[#FC3B1F] [&.active]:font-semibold [&.active]:bg-white/10"
                     >
                       {item.name}
                     </Link>
@@ -381,7 +381,7 @@ export function Navbar() {
                       key={item.name}
                       to={item.href}
                       onClick={closeMenus}
-                      className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 [&.active]:text-red-500 [&.active]:bg-white/5"
+                      className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 [&.active]:text-[#FC3B1F] [&.active]:font-semibold [&.active]:bg-white/10"
                     >
                       {item.name}
                     </Link>

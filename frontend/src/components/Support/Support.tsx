@@ -1,6 +1,6 @@
 import { Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
-import support from "../../assets/BMS/IMG_20260509_105536.jpg";
+const support = "https://images.unsplash.com/photo-1719559519240-d6093e4dcac2?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 interface SupportMember {
   name: string;

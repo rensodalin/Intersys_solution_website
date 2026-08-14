@@ -110,7 +110,7 @@ export function MetricsStrip() {
                   <img
                     src={m.icon}
                     alt={m.label}
-                    className="w-full h-full object-contain transition-all"
+                    className="w-full h-full object-contain transition-all duration-300 group-hover:[filter:brightness(0)]!"
                     style={{ filter: m.color === "blue" ? blueFilter : redFilter }}
                   />
                 </div>

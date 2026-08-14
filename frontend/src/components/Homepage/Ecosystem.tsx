@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/Common/Container";
-import blueprintBg from "@/assets/BMS/Intelligeinc.png";
-import siteBg from "@/assets/BMS/image1.png";
+import blueprintBg from "@/assets/BMS/Intelligeinc.webp";
+import siteBg from "@/assets/BMS/image1.webp";
 
 export function Ecosystem() {
   const [hovered, setHovered] = useState<"design" | "execution" | null>(null);

@@ -20,14 +20,28 @@ export function PosterCarousel() {
   const trackRef = useRef<HTMLDivElement>(null);
   const offsetRef = useRef(0);
   const baseUrl = environment;
+  const CACHE_KEY = "intersysPostersCache";
   useEffect(() => {
     const fetchPosters = async () => {
       try {
+        const cached = sessionStorage.getItem(CACHE_KEY);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed)) {
+            setPosters(parsed);
+            setLoading(false);
+          }
+        }
         const res = await fetch(`${baseUrl}/api/posters`);
 
         const data = await res.json();
         if (data.success) {
           setPosters(data.data);
+          try {
+            sessionStorage.setItem(CACHE_KEY, JSON.stringify(data.data));
+          } catch {
+            // storage full — ignore
+          }
         }
       } catch (err) {
         console.error("Failed to fetch posters:", err);
@@ -56,6 +70,15 @@ export function PosterCarousel() {
       setRefreshingIds(prev => { const next = new Set(prev); next.delete(postId); return next; });
     }
   };
+
+  useEffect(() => {
+    if (posters.length === 0) return;
+
+    posters.slice(0, 4).forEach((p) => {
+      const img = new Image();
+      img.src = p.image;
+    });
+  }, [posters]);
 
   useEffect(() => {
     if (posters.length === 0) return;
