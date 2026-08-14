@@ -18,7 +18,6 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-import aboutImage2 from "@/assets/Certificates & Licenses/Certificates & Licenses/new/image copy.png";
 import aboutImage3 from "@/assets/Certificates & Licenses/Certificates & Licenses/new/image.webp";
 
 const solutions = [
