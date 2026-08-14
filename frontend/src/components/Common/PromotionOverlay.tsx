@@ -2,17 +2,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import logoImg from "@/assets/logo.avif";
 import { Link } from "@tanstack/react-router";
-import heroImg from '@/assets/roomcontrol/pic.png';
+import heroImg from "@/assets/roomcontrol/pic.webp";
 
 interface PromotionOverlayProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export function PromotionOverlay({
-  isOpen,
-  onClose,
-}: PromotionOverlayProps) {
+export function PromotionOverlay({ isOpen, onClose }: PromotionOverlayProps) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -53,11 +50,7 @@ export function PromotionOverlay({
 
             {/* Logo at the very top */}
             <div className="px-8 pt-6 pb-2">
-              <img
-                src={logoImg}
-                alt="Intersys Solutions"
-                className="h-8 w-auto"
-              />
+              <img src={logoImg} alt="Intersys Solutions" className="h-8 w-auto" />
             </div>
 
             {/* Top section - Mockup Image with lime circle */}
@@ -65,7 +58,7 @@ export function PromotionOverlay({
               {/* Lime Circle */}
               <div
                 className="absolute w-[220px] h-[220px] bg-[#D4FF00] rounded-full top-[52%] left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse"
-                style={{ animationDuration: '8s' }}
+                style={{ animationDuration: "8s" }}
               />
 
               {/* Devices mockup */}
@@ -74,7 +67,6 @@ export function PromotionOverlay({
                 alt="Mockup devices"
                 className="relative z-10 w-[80%] h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-500 ease-out"
               />
-
             </div>
 
             {/* Bottom section - Content */}
@@ -92,7 +84,9 @@ export function PromotionOverlay({
 
               {/* Description */}
               <p className="text-gray-500 text-xs md:text-sm mt-3 leading-relaxed">
-                Ready to transform your building? Join hundreds of businesses optimizing their operations with Intersys Solutions. Our engineers are ready to design your custom roadmap.
+                Ready to transform your building? Join hundreds of businesses optimizing their
+                operations with Intersys Solutions. Our engineers are ready to design your custom
+                roadmap.
               </p>
 
               {/* CTA Button */}

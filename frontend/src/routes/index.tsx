@@ -13,6 +13,7 @@ import { Partnership } from "@/components/Homepage/Partnership";
 import { Insights } from "@/components/Homepage/Insights";
 import { PromotionOverlay } from "@/components/Common/PromotionOverlay";
 import { PosterCarousel } from "@/components/Homepage/PosterCarousel";
+import heroImg from "@/assets/roomcontrol/pic.webp";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -22,6 +23,10 @@ function Index() {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
+    // Preload the promotion overlay image while the page loads
+    const preload = new Image();
+    preload.src = heroImg;
+
     // Check if the user has already dismissed the promotion in this session
     const hasSeenPromotion = sessionStorage.getItem("hasSeenPromotion");
 

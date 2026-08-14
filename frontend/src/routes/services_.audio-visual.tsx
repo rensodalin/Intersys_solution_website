@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import cleanroom from "@/assets/hospital.jpg"
-import cleanroom1 from "@/assets/healthcare.jpg"
+import cleanroom from "@/assets/hospital.webp"
+import cleanroom1 from "@/assets/healthcare.webp"
 import { Container } from "@/components/Common/Container";
-import route from "@/assets/routing.jpg"
 import avHero from "@/assets/roomcontrol/1755959738voice_evacuationy-removebg-preview.png"
 import { CtaBand } from "@/components/Common/CtaBand";
 import {

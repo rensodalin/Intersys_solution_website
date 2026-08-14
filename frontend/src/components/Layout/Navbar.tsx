@@ -44,7 +44,7 @@ export function Navbar() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const lightPages = ["/products", "/services/public-address", "/technical-tips"];
+  const lightPages = ["/products", "/services/public-address"];
   const isLightPage = lightPages.some(path => location.pathname.startsWith(path));
   const isDarkNavPage = ["/document-center", "/my-account"].some(path => location.pathname.startsWith(path));
   const [scrolled, setScrolled] = useState(false);

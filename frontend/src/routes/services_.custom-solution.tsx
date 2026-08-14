@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import roomcontrol from "@/assets/roomcontrol/image.png"
+import roomcontrol from "@/assets/roomcontrol/image.webp"
 import { Container } from "@/components/Common/Container";
 import {
     Zap,

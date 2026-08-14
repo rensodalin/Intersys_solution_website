@@ -135,17 +135,17 @@ export function Support() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <h1 className="text-4xl md:text-x5l font-bold leading-tight tracking-tight mb-6">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight mb-4">
               <span className="text-white">
                 Technical Support
               </span>
               <br />
-              <span className="text-[#C3110C]">
+              <span className="text-[#FC3B1F]">
                 & Customer Service
               </span>
             </h1>
 
-            <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-gray-300 text-xs sm:text-sm md:text-base max-w-xl mx-auto leading-relaxed font-normal">
               Reliable technical support and responsive customer service to
               ensure smooth and efficient operations.
             </p>

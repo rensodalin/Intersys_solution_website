@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import img from "../assets/BMS/IMG_20260425_124911.jpg";
+import img from "../assets/access_control_hero.png";
 import img1 from "../assets/roomcontrol/01-LEFT VIEW.jpg"
 import img2 from "../assets/roomcontrol/IMG_20260609_112422.jpg"
 import { Container } from "@/components/Common/Container";
@@ -43,9 +43,9 @@ function AccessControlPage() {
                     <img
                         src={img}
                         alt="Access Control Hero"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover grayscale contrast-125 brightness-75"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 to-black/30" />
                 </div>
 
                 <Container className="relative z-10 text-white">
@@ -55,7 +55,7 @@ function AccessControlPage() {
                         transition={{ duration: 0.8 }}
                         className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left"
                     >
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-white font-display leading-[1.2] mb-6">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white font-display leading-[1.2] mb-4">
                             Access Control{" "}
                             <span className="hidden lg:inline"><br /></span>
                             <span className="text-red-500">Systems</span>
@@ -490,7 +490,7 @@ function AccessControlPage() {
                                 Security Architecture
                             </h2>
 
-                            <p className="text-red-600 font-semibold text-sm">
+                            <p className="text-red-800 font-semibold text-md">
                                 High-Performance Panel Communication Standards
                             </p>
 

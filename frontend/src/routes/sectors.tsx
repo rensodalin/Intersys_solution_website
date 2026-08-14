@@ -6,8 +6,8 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import datacenter from "@/assets/datacenter.png";
 import education from "@/assets/education.jpg";
-import healthcare from "@/assets/healthcare.jpg";
-import hospital from "@/assets/hospital.jpg";
+import healthcare from "@/assets/healthcare.webp";
+import hospital from "@/assets/hospital.webp";
 import commercial from "@/assets/commercial.jpg";
 
 export const Route = createFileRoute("/sectors")({

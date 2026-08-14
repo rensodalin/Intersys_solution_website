@@ -42,7 +42,7 @@ export function TechnicalTips() {
         <div className="min-h-screen bg-slate-50/60 pb-20">
 
             {/* HERO SECTION WITH BACKGROUND IMAGE */}
-            <div className="relative w-full min-h-[340px] md:min-h-[400px] overflow-hidden flex items-center justify-center pt-28 md:pt-36 pb-12">
+            <div className="relative w-full min-h-[360px] md:min-h-[420px] overflow-hidden flex items-center justify-center pt-28 pb-16">
                 <img
                     src="https://plus.unsplash.com/premium_photo-1667238586553-e4ddb2b0cdbb?q=80&w=1062&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Technical Tips Background"
@@ -50,12 +50,12 @@ export function TechnicalTips() {
                 />
                 <div className="absolute inset-0 bg-black/75 backdrop-blur-[2px]" />
 
-                <Container className="relative z-10 text-center max-w-4xl">
-                    <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white mb-4 mt-10">
-                        Technical Tips & System Manuals
+                <Container className="relative z-10 text-center max-w-3xl flex flex-col items-center justify-center">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mb-3 text-center">
+                        Technical Tips & <span className="text-[#FC3B1F]">System Manuals</span>
                     </h1>
 
-                    <p className="text-slate-200 text-base md:text-md  max-w-2xl mx-auto ">
+                    <p className="text-slate-200/90 text-xs sm:text-sm md:text-base max-w-xl mx-auto text-center leading-relaxed font-normal">
                         Explore verified technical guides, PDF manuals, and operational specifications categorized across our 6 core engineering systems.
                     </p>
                 </Container>

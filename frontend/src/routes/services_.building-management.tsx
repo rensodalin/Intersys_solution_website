@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { TypeAnimation } from "react-type-animation";
-import img from "../assets/BMS/IT KPS REVISE_6 - Photo.jpg";
+import img from "../assets/BMS/IT KPS REVISE_6 - Photo.webp";
 
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
@@ -62,13 +62,14 @@ function BMSPage() {
                         src={img}
                         alt="Modern Cityscape"
                         className="w-full h-full object-cover"
+                        fetchPriority="high"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-transparent" />
                 </div>
 
                 <Container className="relative z-10 text-white">
                     <div className="max-w-4xl mx-auto lg:mx-0 text-center lg:text-left">
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-white font-display leading-[1.2] mb-6">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white font-display leading-[1.2] mb-5">
                             Intelligent{" "}
                             <span className="hidden lg:inline"><br /></span>
                             <span className="text-red-500">
@@ -616,7 +617,7 @@ function BMSPage() {
                     {/* CARD 1 */}
                     <div className="h-[320px] rounded-md overflow-hidden relative group">
                         <img
-                            src="https://www.intersys-solutions.com/website_asset/support.jpg"
+                            src="https://files.intersys-solutions.com.kh/RandomIMG/IMG_20260713_110007.jpg"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -628,7 +629,7 @@ function BMSPage() {
                     {/* CARD 2 */}
                     <div className="h-[320px] rounded-md overflow-hidden relative group">
                         <img
-                            src="https://www.intersys-solutions.com/website_asset/BMS_image2.JPG"
+                            src="https://files.intersys-solutions.com.kh/RandomIMG/IMG_20260713_142815_1.jpg"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
