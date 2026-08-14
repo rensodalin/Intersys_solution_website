@@ -19,9 +19,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
 import engineerImg from "@/assets/enginner.png";
-import team1 from "@/assets/team/picture on QR cord/Frame 3.png";
-import team2 from "@/assets/team/picture on QR cord/Frame 4.png";
-import team3 from "@/assets/team/picture on QR cord/Frame 5.png";
+import team1 from "@/assets/team/picture on QR cord/Frame 3.webp";
+import team2 from "@/assets/team/picture on QR cord/Frame 4.webp";
+import team3 from "@/assets/team/picture on QR cord/Frame 5.webp";
 
 const people = [
     { img: team1, name: "Design Engineer", role: "System Planning" },

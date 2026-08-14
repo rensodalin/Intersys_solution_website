@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
-import ceoImg from "@/assets/team/picture on QR cord/Frame 16.png";
+import ceoImg from "@/assets/team/picture on QR cord/Frame 16.webp";
 
 export function AboutLeadership() {
   return (

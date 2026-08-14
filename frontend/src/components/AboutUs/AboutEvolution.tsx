@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CheckCircle2 } from "lucide-react";
-import aboutImage from "@/assets/Certificates & Licenses/Certificates & Licenses/new/evolution.png"
+import aboutImage from "@/assets/Certificates & Licenses/Certificates & Licenses/new/evolution.webp"
 
 
 const evolution = [

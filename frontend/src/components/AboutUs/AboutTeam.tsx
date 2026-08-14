@@ -2,21 +2,21 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { useRef, useEffect, useState } from "react";
 
-import team1 from "@/assets/team/picture on QR cord/Frame 15.png";
-import team2 from "@/assets/team/picture on QR cord/Frame 3.png";
-import team3 from "@/assets/team/picture on QR cord/Frame 4.png";
-import team4 from "@/assets/team/picture on QR cord/Frame 5.png";
-import team5 from "@/assets/team/picture on QR cord/Frame 6.png";
-import team6 from "@/assets/team/picture on QR cord/Frame 7.png";
-import team7 from "@/assets/team/picture on QR cord/Frame 8.png";
-import team8 from "@/assets/team/picture on QR cord/Frame 9.png";
-import team9 from "@/assets/team/picture on QR cord/Frame 10.png";
-import team10 from "@/assets/team/picture on QR cord/Frame 11.png";
-import team11 from "@/assets/team/picture on QR cord/Frame 12.png";
-import team12 from "@/assets/team/picture on QR cord/Frame 13.png";
-import team13 from "@/assets/team/picture on QR cord/Frame 14.png";
-import team14 from "@/assets/team/picture on QR cord/Frame 17.png";
-import team15 from "@/assets/team/picture on QR cord/Frame 16.png";
+import team1 from "@/assets/team/picture on QR cord/Frame 15.webp";
+import team2 from "@/assets/team/picture on QR cord/Frame 3.webp";
+import team3 from "@/assets/team/picture on QR cord/Frame 4.webp";
+import team4 from "@/assets/team/picture on QR cord/Frame 5.webp";
+import team5 from "@/assets/team/picture on QR cord/Frame 6.webp";
+import team6 from "@/assets/team/picture on QR cord/Frame 7.webp";
+import team7 from "@/assets/team/picture on QR cord/Frame 8.webp";
+import team8 from "@/assets/team/picture on QR cord/Frame 9.webp";
+import team9 from "@/assets/team/picture on QR cord/Frame 10.webp";
+import team10 from "@/assets/team/picture on QR cord/Frame 11.webp";
+import team11 from "@/assets/team/picture on QR cord/Frame 12.webp";
+import team12 from "@/assets/team/picture on QR cord/Frame 13.webp";
+import team13 from "@/assets/team/picture on QR cord/Frame 14.webp";
+import team14 from "@/assets/team/picture on QR cord/Frame 17.webp";
+import team15 from "@/assets/team/picture on QR cord/Frame 16.webp";
 
 
 const teamData = [
