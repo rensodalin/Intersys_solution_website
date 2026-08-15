@@ -38,7 +38,7 @@ export function AboutEvolution() {
       <div
         className="absolute inset-0 bg-cover bg-center z-0 md:bg-fixed"
         style={{
-          backgroundImage: `url(${aboutImage})`,
+          backgroundImage: `url('https://files.intersys-solutions.com.kh/RandomIMG/773272123_1747713022940544_4336736780995322005_n.jpg')`,
         }}
       >
         <div className="absolute inset-0 bg-[#05080F]/60" />

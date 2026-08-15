@@ -23,7 +23,7 @@ export function ProductCardGrid({ products }: ProductCardGridProps) {
 
     return (
         <>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-4 md:gap-x-7 gap-y-6 md:gap-y-10">
+            <div className="grid grid-cols-1 min-[700px]:grid-cols-2 min-[1000px]:grid-cols-3 gap-x-4 md:gap-x-7 gap-y-6 md:gap-y-10">
                 {visibleProducts.map((product, i) => (
                     <motion.div
                         key={product.id}

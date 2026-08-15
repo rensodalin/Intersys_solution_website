@@ -9,12 +9,11 @@ interface ProductGridProps {
 
 export function ProductGrid({ categories }: ProductGridProps) {
     return (
-        <section className="py-8">
-            <Container>
-                {categories.length === 0 ? (
-                    <div className="text-center py-20 text-gray-400 text-sm">No categories available.</div>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-6 pb-20">
+        <section className="py-2">
+            {categories.length === 0 ? (
+                <div className="text-center py-20 text-gray-400 text-sm">No categories available.</div>
+            ) : (
+                <div className="grid grid-cols-1 min-[700px]:grid-cols-2 min-[1000px]:grid-cols-3 gap-5 md:gap-6 pb-20">
                         {categories.map((cat, i) => (
                             <motion.div
                                 key={cat.title}
@@ -54,7 +53,6 @@ export function ProductGrid({ categories }: ProductGridProps) {
                         ))}
                     </div>
                 )}
-            </Container>
         </section>
     );
 }

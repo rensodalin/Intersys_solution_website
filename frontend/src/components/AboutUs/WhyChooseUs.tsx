@@ -170,7 +170,7 @@ export function WhyChooseUs() {
                 className="rounded-md overflow-hidden"
               >
                 <img
-                  src={aboutImage3}
+                  src="https://files.intersys-solutions.com.kh/RandomIMG/774517225_1747710826274097_7002261266327147878_n.jpg"
                   alt="Intersys Team"
                   className="w-full h-[460px] object-cover"
                 />
@@ -180,7 +180,7 @@ export function WhyChooseUs() {
 
 
               {/* Experience Card */}
-              <motion.div
+              {/* <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -199,7 +199,7 @@ export function WhyChooseUs() {
                 <p className="text-xs text-gray-500 mt-1 leading-5">
                   Years of engineering excellence
                 </p>
-              </motion.div>
+              </motion.div> */}
             </div>
           </div>
 

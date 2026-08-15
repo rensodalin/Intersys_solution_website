@@ -53,7 +53,7 @@ const redFilter =
 
 export function MetricsStrip() {
   return (
-    <div className="relative z-40 -mt-20 mb-14">
+    <div className="relative z-40 mt-8 md:mt-12 mb-14">
       <Container className="px-4 md:px-8 max-w-[1350px]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 shadow-2xl rounded-sm overflow-hidden bg-[#EEEEEE]">
 
@@ -110,7 +110,7 @@ export function MetricsStrip() {
                   <img
                     src={m.icon}
                     alt={m.label}
-                    className="w-full h-full object-contain transition-all duration-300 group-hover:[filter:brightness(0)]!"
+                    className="w-full h-full object-contain transition-all"
                     style={{ filter: m.color === "blue" ? blueFilter : redFilter }}
                   />
                 </div>
