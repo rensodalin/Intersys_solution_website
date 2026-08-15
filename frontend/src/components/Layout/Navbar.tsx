@@ -48,13 +48,23 @@ export function Navbar() {
   const isLightPage = lightPages.some(path => location.pathname.startsWith(path));
   const isDarkNavPage = ["/document-center", "/my-account"].some(path => location.pathname.startsWith(path));
   const [scrolled, setScrolled] = useState(false);
+  const [heroIsBanner, setHeroIsBanner] = useState(true);
 
-  const useDarkText = isDarkNavPage && !scrolled;
-  const navItemClass = useDarkText ? "text-[#0A0F1A]/80 hover:text-[#D62828]" : "text-white/70 hover:text-red-500";
-  const iconClass = useDarkText ? "text-[#0A0F1A]/60 hover:text-[#0A0F1A]" : "text-white/50 hover:text-white";
-  const btnClass = useDarkText ? "text-[#0A0F1A] hover:text-[#0A0F1A]/80" : "text-white hover:text-white/80";
-  const loginClass = useDarkText ? "text-[#0A0F1A]/80 hover:text-[#0A0F1A]" : "text-white/70 hover:text-white";
-  const borderClass = useDarkText ? "border-[#0A0F1A]/20" : "border-white/20";
+  useEffect(() => {
+    const handleHeroBannerChange = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      setHeroIsBanner(!!customEvent.detail?.isBanner);
+    };
+    window.addEventListener("heroBannerChange", handleHeroBannerChange);
+    return () => window.removeEventListener("heroBannerChange", handleHeroBannerChange);
+  }, []);
+
+  const useDarkText = (isDarkNavPage || location.pathname === "/") && !scrolled;
+  const navItemClass = useDarkText ? "text-[#0A0F1A] font-semibold hover:text-[#D62828]" : "text-white/70 hover:text-red-500";
+  const iconClass = useDarkText ? "text-gray-600 hover:text-[#DB1A1A]" : "text-white/50 hover:text-white";
+  const btnClass = useDarkText ? "text-[#0A0F1A] font-semibold hover:text-red-600" : "text-white hover:text-white/80";
+  const loginClass = useDarkText ? "text-[#0A0F1A] font-semibold hover:text-red-600" : "text-white/70 hover:text-white";
+  const borderClass = useDarkText ? "border-[#0A0F1A]/30" : "border-white/20";
   const logoFilter = "";
   const [showProducts, setShowProducts] = useState(false);
   const [showServices, setShowServices] = useState(false);
@@ -401,15 +411,35 @@ export function Navbar() {
             {/* Social Links */}
             <div className={cn("flex items-center gap-4 pr-6 border-r", borderClass)}>
 
-              <a href="https://www.facebook.com/IntersysSolutions" target="_blank" rel="noopener noreferrer" className={cn("transition", iconClass)}>
+              <a
+                href="https://www.facebook.com/IntersysSolutions"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn("transition hover:scale-110", iconClass)}
+                title="Facebook"
+              >
                 <Facebook size={16} />
               </a>
-              <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer" className={cn("transition", iconClass)}>
+
+              <a
+                href="https://t.me/chun_sochet"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn("transition hover:scale-110", iconClass)}
+                title="Telegram"
+              >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.539.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.285-.346-.094L7.469 14.28l-2.76-.86c-.6-.184-.593-.6.126-.882l10.82-4.172c.504-.191.95.105.81.855z" />
                 </svg>
               </a>
-              <a href="https://www.linkedin.com/company/intersys-solutions2015" target="_blank" rel="noopener noreferrer" className={cn("transition", iconClass)}>
+
+              <a
+                href="https://www.linkedin.com/company/intersys-solutions2015"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn("transition hover:scale-110", iconClass)}
+                title="LinkedIn"
+              >
                 <Linkedin size={16} />
               </a>
             </div>
@@ -645,11 +675,11 @@ export function Navbar() {
                     <div className="p-4 border-b border-white/10">
                       <p className="text-white/50 text-[10px] uppercase tracking-wider font-bold mb-3">Follow Us</p>
                       <div className="flex items-center justify-center gap-5">
-                        <a href="https://www.facebook.com/IntersysSolutions" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors"><Facebook size={18} /></a>
-                        <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors">
+                        <a href="https://www.facebook.com/IntersysSolutions" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" title="Facebook"><Facebook size={18} /></a>
+                        <a href="https://t.me/chun_sochet" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" title="Telegram">
                           <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.539.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.285-.346-.094L7.469 14.28l-2.76-.86c-.6-.184-.593-.6.126-.882l10.82-4.172c.504-.191.95.105.81.855z" /></svg>
                         </a>
-                        <a href="https://www.linkedin.com/company/intersys-solutions2015" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors"><Linkedin size={18} /></a>
+                        <a href="https://www.linkedin.com/company/intersys-solutions2015" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" title="LinkedIn"><Linkedin size={18} /></a>
                       </div>
                     </div>
                     <Link to="/request-quote" onClick={() => setShowCompactDropdown(false)} className="flex items-center justify-center gap-2 px-5 py-3.5 text-sm font-medium text-white bg-[#C3110C] hover:bg-red-700 transition-colors">Request Quote</Link>

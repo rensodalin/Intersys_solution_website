@@ -13,7 +13,7 @@ const slides = [
     type: "banner",
     image: heroFireAlarmBanner,
     badgeIcon: ShieldCheck,
-    title: "NOTIFIER BY HONEYWELL (NFS2-3030)",
+    title: "Notifier by Honeywell (NFS2-3030)",
     subtitle: "10 Loops / 3180 Addressable Devices Fire Safety Panel",
     link: "/services/fire-alarm",
     phone: "+855 77 602 334",
@@ -23,7 +23,7 @@ const slides = [
     type: "banner",
     image: heroHealthyBuildingBanner,
     badgeIcon: Building2,
-    title: "HEALTHY BUILDING SOLUTIONS",
+    title: "Healthy Building Solutions",
     subtitle: "Integrated BMS, Fire Safety, Security, CCTV, Access Control & RCU",
     link: "/services/building-management",
     phone: "+855 77 602 334",
@@ -67,70 +67,89 @@ export function Hero() {
     };
   }, [emblaApi, onSelect]);
 
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent("heroBannerChange", { detail: { isBanner: true } }));
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      window.dispatchEvent(new CustomEvent("heroBannerChange", { detail: { isBanner: false } }));
+    };
+  }, []);
+
   const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   return (
-    <section className="relative bg-[#05080F] min-h-[85vh] flex flex-col justify-center overflow-hidden">
+    <section className="relative min-h-0 md:min-h-[85vh] py-2 md:py-0 flex flex-col justify-center overflow-hidden bg-[#F5F5F5]">
+      {/* Global Architectural Grid Tile Pattern Background Overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-50 z-0"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.07) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.07) 1px, transparent 1px)`,
+          backgroundSize: '40px 40px'
+        }}
+      />
+
       {/* Carousel Container */}
-      <div className="w-full overflow-hidden" ref={emblaRef}>
+      <div className="w-full overflow-hidden z-10" ref={emblaRef}>
         <div className="flex w-full">
           {slides.map((slide, idx) => {
             const isSelected = selectedIndex === idx;
             return (
               <div
                 key={idx}
-                className="relative min-w-full flex-[0_0_100%] w-full overflow-hidden flex items-center justify-center min-h-[85vh]"
+                className="relative min-w-full flex-[0_0_100%] w-full overflow-hidden flex items-center justify-center min-h-0 md:min-h-[85vh] py-2 md:py-0"
               >
                 {slide.type === "banner" ? (
-                  /* Banner Slide (Padded below navbar to fit poster image with smooth float transition) */
-                  <div className="w-full relative pt-20 md:pt-24 pb-12 px-4 sm:px-6 lg:px-12 flex flex-col items-center justify-center overflow-hidden">
+                  /* Banner Slide (Padded below navbar to fit poster image on #F5F5F5 background) */
+                  <div className="w-full relative pt-16 sm:pt-20 md:pt-24 pb-6 sm:pb-12 px-3 sm:px-6 lg:px-12 flex flex-col items-center justify-center overflow-hidden bg-transparent">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.96, y: 15 }}
                       animate={isSelected ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.96, y: 15 }}
                       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                       className="max-w-6xl w-full mx-auto relative group"
                     >
-                      {/* Glowing effect behind banner */}
-                      <div className="absolute -inset-1 bg-gradient-to-r from-red-600/20 via-white/10 to-blue-600/20 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition duration-1000" />
+                      {/* Soft ambient glow behind banner */}
+                      <div className="absolute -inset-2 bg-gradient-to-r from-red-500/5 via-transparent to-red-500/5 rounded-lg blur-xl opacity-50 group-hover:opacity-80 transition duration-700" />
 
-                      {/* Fitted Banner Frame */}
-                      <div className="relative rounded-xl overflow-hidden shadow-2xl bg-white border border-white/10">
+                      {/* Fitted Banner Frame with clean subtle rounded corners */}
+                      <div className="relative rounded-lg overflow-hidden shadow-[0_10px_35px_-10px_rgba(0,0,0,0.12)] md:shadow-[0_15px_45px_-12px_rgba(0,0,0,0.15)] bg-white border border-gray-200/80 transition-shadow duration-500">
                         <Link to={slide.link || "/"} className="block w-full">
                           <img
                             src={slide.image}
                             alt={slide.title}
-                            className="w-full h-auto object-contain max-h-[68vh] md:max-h-[75vh] mx-auto transition-transform duration-700 hover:scale-[1.01]"
+                            className="w-full h-auto object-contain max-h-[55vh] sm:max-h-[68vh] md:max-h-[75vh] mx-auto transition-transform duration-700 hover:scale-[1.01]"
                           />
                         </Link>
                       </div>
 
-                      {/* Interactive Overlay CTA Bar under banner */}
+                      {/* Interactive Overlay CTA Bar under banner (Mobile Responsive) */}
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={isSelected ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                         transition={{ duration: 0.5, delay: 0.15 }}
-                        className="mt-4 flex flex-wrap items-center justify-between gap-3 bg-[#0A0F1A]/80 backdrop-blur-md border border-white/10 p-3 sm:p-4 rounded-lg text-white"
+                        className="mt-3 sm:mt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white border border-gray-200/90 p-3 sm:p-4 rounded-lg text-gray-900 shadow-md w-full"
                       >
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 text-left">
                           <div>
-                            <p className="text-xs sm:text-sm font-semibold text-white">{slide.title}</p>
-                            <p className="text-[11px] sm:text-xs text-white/60">{slide.subtitle}</p>
+                            <p className="text-xs sm:text-sm font-bold text-gray-900 leading-snug">{slide.title}</p>
+                            <p className="text-[11px] sm:text-xs text-gray-500 font-normal line-clamp-1 sm:line-clamp-none">{slide.subtitle}</p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end">
+                        <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-stretch sm:justify-end pt-1 sm:pt-0">
                           {slide.phone && (
                             <a
                               href={`tel:${slide.phone.replace(/\s+/g, "")}`}
-                              className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-white/90 hover:text-white bg-white/10 hover:bg-white/20 rounded-sm transition-all"
+                              className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-semibold text-gray-700 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-md transition-all border border-gray-200 shrink-0"
                             >
-                              <Phone size={13} className="text-red-500" />
+                              <Phone size={13} className="text-red-600" />
                               <span>{slide.phone}</span>
                             </a>
                           )}
                           <Link
                             to={slide.link || "/"}
-                            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded-sm transition-all shadow-md hover:shadow-red-600/30"
+                            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 text-[11px] sm:text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded-md transition-all shadow-sm hover:shadow-red-600/20 shrink-0"
                           >
                             <span>{slide.ctaText || "Explore"}</span>
                             <ArrowRight size={13} />
@@ -140,62 +159,68 @@ export function Hero() {
                     </motion.div>
                   </div>
                 ) : (
-                  /* Standard Content Hero Slide (Full bleed with strict overflow clipping) */
-                  <div className="relative w-full min-h-[85vh] flex items-center justify-start pt-24 md:pt-28 pb-16 overflow-hidden">
-                    {/* Background image covering top-to-bottom behind navbar strictly clipped inside slide container */}
-                    <motion.img
-                      initial={{ scale: 1.08, opacity: 0.6 }}
-                      animate={isSelected ? { scale: 1.0, opacity: 1 } : { scale: 1.08, opacity: 0.6 }}
-                      transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-                      src={slide.image}
-                      className="absolute inset-0 h-full w-full object-cover"
-                      alt={slide.title}
-                    />
+                  /* Light Theme Content Slide Card with Grid Tile Pattern Background */
+                  <div className="w-full relative pt-16 sm:pt-20 md:pt-24 pb-6 sm:pb-12 px-3 sm:px-6 lg:px-12 flex flex-col items-center justify-center overflow-hidden bg-transparent">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.96, y: 15 }}
+                      animate={isSelected ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.96, y: 15 }}
+                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                      className="max-w-6xl w-full mx-auto relative group z-10"
+                    >
+                      {/* Fitted Card Frame */}
+                      <div className="relative rounded-lg overflow-hidden shadow-md sm:shadow-[0_15px_45px_-12px_rgba(0,0,0,0.12)] bg-white border border-gray-200/80 flex flex-col md:flex-row items-stretch min-h-0 md:min-h-[460px] lg:min-h-[500px]">
+                        
+                        {/* Image Container: Top on mobile, Right on desktop */}
+                        <div className="w-full md:w-5/12 relative h-44 sm:h-60 md:h-auto md:min-h-full overflow-hidden bg-gray-100 shrink-0 md:order-last">
+                          <img
+                            src={slide.image}
+                            alt={slide.title}
+                            className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-[1.03]"
+                          />
+                          {/* Smooth Left-to-Right White Fade Gradient for Desktop */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-transparent w-full md:w-1/2 pointer-events-none hidden md:block" />
+                        </div>
 
-                    {/* Dark Gradients spanning to top edge */}
-                    <div className="absolute inset-0 bg-black/40 pointer-events-none" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent pointer-events-none" />
+                        {/* Content Text: Below image on mobile, Left on desktop */}
+                        <div className="w-full md:w-7/12 p-5 sm:p-10 lg:p-14 z-20 flex flex-col justify-center items-start text-left bg-white md:order-first">
+                          <motion.div
+                            initial={{ opacity: 0, y: 15 }}
+                            animate={isSelected ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                            className="space-y-3 sm:space-y-5 max-w-lg w-full"
+                          >
+                            <h2 className="text-xl sm:text-3xl lg:text-4xl xl:text-[2.5rem] font-bold text-gray-900 leading-tight tracking-tight">
+                              {slide.title}{" "}
+                              {slide.highlight && (
+                                <span className="block mt-0.5 sm:mt-1 text-[#DB1A1A]">{slide.highlight}</span>
+                              )}
+                            </h2>
 
-                    <Container className="relative z-20">
-                      <div className="max-w-3xl mx-auto min-[1301px]:mx-0">
-                        <motion.div
-                          initial={{ opacity: 0, y: 25 }}
-                          animate={isSelected ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
-                          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                          className="space-y-6 text-center min-[1301px]:text-left"
-                        >
-                          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.5rem] font-bold text-white leading-[1.2] tracking-tight">
-                            {slide.title}{" "}
-                            {slide.highlight && (
-                              <>
-                                <span className="hidden lg:inline"><br /></span>
-                                <span className="text-[#DB1A1A]">{slide.highlight}</span>
-                              </>
-                            )}
-                          </h1>
+                            <p className="text-xs sm:text-base text-gray-600 leading-relaxed font-normal">
+                              {slide.description}
+                            </p>
 
-                          <p className="max-w-xl mx-auto min-[1301px]:mx-0 text-sm md:text-base text-white/70 leading-relaxed font-normal">
-                            {slide.description}
-                          </p>
+                            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-4 w-full">
+                              <Link
+                                to="/services/building-management"
+                                className="inline-flex items-center justify-center gap-2 bg-[#DB1A1A] text-white px-5 sm:px-7 py-3 sm:py-3.5 rounded-md font-semibold text-xs sm:text-sm hover:bg-red-700 transition-all duration-300 shadow-md shadow-red-600/20 group/btn"
+                              >
+                                <span>Check it out</span>
+                                <ArrowRight size={15} className="transition-transform group-hover/btn:translate-x-1" />
+                              </Link>
 
-                          <div className="flex flex-wrap items-center justify-center min-[1301px]:justify-start gap-4 pt-4">
-                            <Link
-                              to="/services/building-management"
-                              className="bg-brand-red text-white px-8 py-3.5 rounded-sm font-semibold text-[13px] hover:bg-white hover:text-navy transition-all duration-300 shadow-lg"
-                            >
-                              Explore Solutions
-                            </Link>
+                              <Link
+                                to="/contact"
+                                className="inline-flex items-center justify-center bg-[#1A3263] text-white px-5 sm:px-7 py-3 sm:py-3.5 rounded-md font-semibold text-xs sm:text-sm hover:bg-[#122448] transition-all duration-300 shadow-md shadow-[#1A3263]/20"
+                              >
+                                Contact Us
+                              </Link>
+                            </div>
+                          </motion.div>
+                        </div>
 
-                            <Link
-                              to="/contact"
-                              className="border-[1.5px] border-white/20 text-white px-8 py-3.5 rounded-sm font-semibold text-[13px] hover:border-brand-red hover:bg-brand-red/5 transition-all duration-300"
-                            >
-                              Contact Us
-                            </Link>
-                          </div>
-                        </motion.div>
                       </div>
-                    </Container>
+                    </motion.div>
                   </div>
                 )}
               </div>
@@ -204,10 +229,10 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Navigation Arrows */}
+      {/* Navigation Arrows (Hidden on mobile phones to prevent blocking content; desktop hover enabled) */}
       <button
         onClick={scrollPrev}
-        className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/40 hover:bg-black/80 text-white/70 hover:text-white border border-white/10 hover:border-red-500/50 transition-all cursor-pointer backdrop-blur-sm hover:scale-110 active:scale-95"
+        className="hidden sm:flex absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full transition-all cursor-pointer backdrop-blur-md hover:scale-110 active:scale-95 bg-white/90 hover:bg-white text-gray-800 border border-gray-200 shadow-xl hover:border-red-500/50"
         aria-label="Previous Slide"
       >
         <ChevronLeft size={20} />
@@ -215,22 +240,23 @@ export function Hero() {
 
       <button
         onClick={scrollNext}
-        className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/40 hover:bg-black/80 text-white/70 hover:text-white border border-white/10 hover:border-red-500/50 transition-all cursor-pointer backdrop-blur-sm hover:scale-110 active:scale-95"
+        className="hidden sm:flex absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full transition-all cursor-pointer backdrop-blur-md hover:scale-110 active:scale-95 bg-white/90 hover:bg-white text-gray-800 border border-gray-200 shadow-xl hover:border-red-500/50"
         aria-label="Next Slide"
       >
         <ChevronRight size={20} />
       </button>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2">
+      <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1.5 sm:gap-2">
         {slides.map((_, i) => (
           <button
             key={i}
             onClick={() => emblaApi && emblaApi.scrollTo(i)}
-            className={`h-2 transition-all duration-500 rounded-full cursor-pointer ${selectedIndex === i
-                ? "w-8 bg-red-600 shadow-[0_0_12px_rgba(220,38,38,0.6)]"
-                : "w-2 bg-white/40 hover:bg-white/70"
-              }`}
+            className={`h-1.5 sm:h-2 transition-all duration-500 rounded-full cursor-pointer ${
+              selectedIndex === i
+                ? "w-6 sm:w-8 bg-red-600 shadow-[0_0_12px_rgba(220,38,38,0.6)]"
+                : "w-1.5 sm:w-2 bg-gray-300 hover:bg-gray-500"
+            }`}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}
