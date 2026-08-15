@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { Play, ArrowRight } from "lucide-react";
 import { AnimatedCounter } from "@/components/Common/AnimatedCounter";
+import constructionBlueprintImg from "@/assets/construction_blueprint.png";
 
 const metrics = [
   {
@@ -57,29 +58,36 @@ export function MetricsStrip() {
       <Container className="px-4 md:px-8 max-w-[1350px]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 shadow-2xl rounded-sm overflow-hidden bg-[#EEEEEE]">
 
-          {/* Box 1: Featured Blue Card */}
+          {/* Box 1: Featured Blue Card with Construction Blueprint Background */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="lg:col-span-1 bg-[#1A3263] p-7 flex flex-col justify-between min-h-[260px] relative overflow-hidden group"
           >
+            {/* Construction Blueprint Image Background */}
+            <div
+              className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700 opacity-40 group-hover:opacity-60 group-hover:scale-110"
+              style={{ backgroundImage: `url('${constructionBlueprintImg}')` }}
+            />
+            {/* Dark Blue Overlay for High Text Legibility */}
+            <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#1A3263] via-[#1A3263]/80 to-[#1A3263]/60 group-hover:opacity-85 transition-opacity duration-500" />
+
             <div className="relative z-20">
-              <div className="w-9 h-9 mb-5 text-white/40 group-hover:text-white transition-colors">
+              <div className="w-9 h-9 mb-5 text-white/60 group-hover:text-white transition-colors">
                 <Play fill="currentColor" size={28} />
               </div>
               <h3 className="text-xl font-bold text-white mb-3 leading-tight">Premium ELV Engineering</h3>
-              <p className="text-white/60 text-[13px] leading-relaxed mb-5">
+              <p className="text-white/80 text-[13px] leading-relaxed mb-5 font-medium">
                 Integrated solutions for safer building management and future-ready infrastructure.
               </p>
             </div>
-
 
             {/* Brush Effect */}
             <motion.div
               animate={{ x: ["-120%", "120%"] }}
               transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity, repeatType: "loop" }}
-              className="absolute inset-0 z-10 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-30 group-hover:opacity-0 transition-opacity duration-300"
+              className="absolute inset-0 z-20 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-30 group-hover:opacity-0 transition-opacity duration-300"
             />
           </motion.div>
 

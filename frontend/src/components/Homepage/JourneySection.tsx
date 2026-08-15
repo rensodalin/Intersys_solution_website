@@ -81,11 +81,11 @@ export function JourneySection() {
           {/* Left */}
           <div className="lg:w-1/2 text-center lg:text-left">
 
-            <div className="text-xs font-medium text-[#9B0F06] mb-3 tracking-wide">
+            <div className="text-sm font-medium text-[#9B0F06] mb-3 tracking-wide">
               Our footprint
             </div>
 
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#162E93] leading-snug mb-4">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-[#162E93] leading-snug mb-4">
               Success across integrated technology sectors
             </h3>
 

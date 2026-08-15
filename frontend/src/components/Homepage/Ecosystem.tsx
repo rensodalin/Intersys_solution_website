@@ -13,9 +13,9 @@ export function Ecosystem() {
 
   return (
     <section className="bg-white overflow-hidden pt-5">
-      {/* Section 1: Design & Engineering (Left Floating Box) */}
+      {/* Section 1: Design & Engineering (Left Floating Box + Right Cutout Image aligned with Section 1 Background) */}
       <div
-        className="relative min-h-[500px] flex items-center cursor-pointer"
+        className="relative min-h-[500px] flex items-center cursor-pointer overflow-hidden"
         onMouseEnter={() => setHovered("design")}
         onMouseLeave={() => setHovered(null)}
       >
@@ -42,7 +42,19 @@ export function Ecosystem() {
           />
         </div>
 
-        <Container className="relative z-10 py-16">
+        {/* Transparent Feature Cutout Image on the Right side of Container 1 background */}
+        <div className="absolute -top-3 sm:-top-5 md:-top-7 right-4 sm:right-10 md:right-16 lg:right-28 bottom-0 z-10 hidden sm:flex items-start pt-1 sm:pt-2 pointer-events-none">
+          <motion.img
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            src="https://files.intersys-solutions.com.kh/RandomIMG/Screenshot_2026-08-15_140607-removebg-preview.png"
+            alt="Engineering Feature Illustration"
+            className="h-[78%] sm:h-[83%] md:h-[88%] lg:h-[93%] max-h-[460px] w-auto object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.18)]"
+          />
+        </div>
+
+        <Container className="relative z-20 py-16">
+          {/* Original Container 1 Card */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
