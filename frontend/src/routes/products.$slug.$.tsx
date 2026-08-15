@@ -165,7 +165,7 @@ function DeepSubcategoryPage() {
   const breadcrumbs = buildBreadcrumbs(slug, categoryName, subSlugs, subData);
 
   return (
-    <div className="bg-white min-h-screen">
+    <div>
       <ProductHero
         title={subcategoryName}
         subtitle={subData?.description || `Browse high-performance ${subcategoryName.toLowerCase()} products.`}
@@ -173,82 +173,71 @@ function DeepSubcategoryPage() {
         breadcrumbs={breadcrumbs}
       />
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex gap-6 md:gap-8 items-start">
-          <CatalogSidebar
-            isDesktopOpen={isSidebarOpen}
-            setIsDesktopOpen={setIsSidebarOpen}
-          />
+      <ProductSort
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        isFilterOpen={isSidebarOpen}
+        onToggleFilter={handleToggleFilter}
+        currentSort={currentSort}
+        onSortChange={setCurrentSort}
+        totalProducts={sortedProducts.length}
+      />
 
-          <div className="flex-1 min-w-0">
-            <ProductSort
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              isFilterOpen={isSidebarOpen}
-              onToggleFilter={handleToggleFilter}
-              currentSort={currentSort}
-              onSortChange={setCurrentSort}
-              totalProducts={sortedProducts.length}
-            />
-
-            {childSubCategories.length > 0 && (
-              <div className="mb-8 pb-8 border-b border-gray-100">
-                <h3 className="text-base font-bold text-gray-900 mb-4">Subcategories</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                  {childSubCategories.map(child => {
-                    const childSlug = toSlug(child.name);
-                    const deeperPath = [...subSlugs, childSlug].join("/");
-                    const childLink = `/products/${slug}/${deeperPath}`;
-                    return (
-                      <Link key={child.name}
-                        to={childLink}
-                        className="group block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md hover:border-gray-300 transition-all"
-                      >
-                        {child.image ? (
-                          <div className="h-36 md:h-44 flex items-center justify-center bg-gray-50">
-                            <img src={child.image} alt={child.title || child.name} className="max-h-full max-w-full object-contain p-2 group-hover:scale-105 transition-transform duration-500" />
-                          </div>
-                        ) : (
-                          <div className="h-36 md:h-44 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                            <Package size={28} className="text-gray-200" />
-                          </div>
-                        )}
-                        <div className="p-3">
-                          <h4 className="text-xs font-bold text-gray-900 group-hover:text-[#C3110C] transition-colors truncate">
-                            {child.title || child.name}
-                          </h4>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            {childSubCategories.length > 0 ? null : loading ? (
-              <div className="text-center py-20 text-gray-400 text-sm">Loading products...</div>
-            ) : (
-              <>
-                {mapped.length === 0 ? (
-                  <div className="text-center py-20 text-gray-400 text-sm flex flex-col items-center gap-4">
-                    <Package size={48} className="text-gray-200" />
-                    <p>No {subcategoryName} products yet.</p>
-                    <Link to={`/products/${slug}`} className="text-[#C3110C] hover:underline text-xs font-bold">
-                      View all {categoryName} products
-                    </Link>
+      {childSubCategories.length > 0 && (
+        <div className="mb-8 pb-8 border-b border-gray-100">
+          <h3 className="text-base font-bold text-gray-900 mb-4">Subcategories</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {childSubCategories.map(child => {
+              const childSlug = toSlug(child.name);
+              const deeperPath = [...subSlugs, childSlug].join("/");
+              const childLink = `/products/${slug}/${deeperPath}`;
+              return (
+                <Link key={child.name}
+                  to={childLink}
+                  className="group block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md hover:border-gray-300 transition-all"
+                >
+                  {child.image ? (
+                    <div className="h-36 md:h-44 flex items-center justify-center bg-gray-50">
+                      <img src={child.image} alt={child.title || child.name} className="max-h-full max-w-full object-contain p-2 group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                  ) : (
+                    <div className="h-36 md:h-44 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                      <Package size={28} className="text-gray-200" />
+                    </div>
+                  )}
+                  <div className="p-3">
+                    <h4 className="text-xs font-bold text-gray-900 group-hover:text-[#C3110C] transition-colors truncate">
+                      {child.title || child.name}
+                    </h4>
                   </div>
-                ) : sortedProducts.length > 0 ? (
-                  <ProductCardGrid products={sortedProducts} />
-                ) : (
-                  <div className="text-center py-20 text-gray-400 text-sm">
-                    {searchQuery ? `No products matching "${searchQuery}"` : `No products found.`}
-                  </div>
-                )}
-              </>
-            )}
+                </Link>
+              );
+            })}
           </div>
         </div>
-      </div>
+      )}
+
+      {childSubCategories.length > 0 ? null : loading ? (
+        <div className="text-center py-20 text-gray-400 text-sm">Loading products...</div>
+      ) : (
+        <>
+          {mapped.length === 0 ? (
+            <div className="text-center py-20 text-gray-400 text-sm flex flex-col items-center gap-4">
+              <Package size={48} className="text-gray-200" />
+              <p>No {subcategoryName} products yet.</p>
+              <Link to={`/products/${slug}`} className="text-[#C3110C] hover:underline text-xs font-bold">
+                View all {categoryName} products
+              </Link>
+            </div>
+          ) : sortedProducts.length > 0 ? (
+            <ProductCardGrid products={sortedProducts} />
+          ) : (
+            <div className="text-center py-20 text-gray-400 text-sm">
+              {searchQuery ? `No products matching "${searchQuery}"` : `No products found.`}
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }

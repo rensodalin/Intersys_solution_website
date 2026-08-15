@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/Common/Container";
+import { CatalogSidebar } from "@/components/Product/CatalogSidebar";
+import { useProductsLayout } from "@/context/ProductsLayoutContext";
+import { ProductSort, SortOption } from "@/components/Product/ProductSort";
 import environment from "@/enviroment/enviroment";
 import {
   ShoppingCart,
@@ -15,6 +18,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { AuthModal } from "@/components/Auth/AuthModal";
 import { saltoProducts } from "@/components/Product/AccessControl/Salto/data";
+
+import { ProductHero } from "@/components/Product/ProductHero";
 
 // ─── TYPES ───
 export interface ProductOption {
@@ -43,18 +48,33 @@ export interface ProductData {
 export function ProductDetailView({ product, returnPath }: { product: ProductData, returnPath?: string }) {
   const navigate = useNavigate();
   const { addItems } = useInquiry();
+  const { isSidebarOpen, setIsSidebarOpen, openMobileSidebar, toggleSidebar } = useProductsLayout();
   const [activeTab, setActiveTab] = useState<"description" | "documents">("description");
   const [selectedImage, setSelectedImage] = useState(0);
+  const [currentSort, setCurrentSort] = useState<SortOption>("newest");
+  const [searchQuery, setSearchQuery] = useState("");
   const [quantities, setQuantities] = useState<Record<string, number>>(() =>
     Object.fromEntries(product.options.map(o => [o.partCode, 0]))
   );
   const [showPopup, setShowPopup] = useState(false);
+
+  const handleToggleFilter = () => {
+    if (window.innerWidth < 1024) {
+      openMobileSidebar();
+    } else {
+      toggleSidebar();
+    }
+  };
 
   const user = useSelector((state: RootState) => state.auth.user);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [pendingDocUrl, setPendingDocUrl] = useState<string | null>(null);
 
   const baseUrl = environment;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [product.id, product._id]);
 
   const trackPdfDownload = async (title: string, url: string) => {
     if (!user) return;
@@ -195,202 +215,215 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
 
   return (
     <div className="bg-white min-h-screen">
-      {/* ─── HERO SECTION (Matching Sub-pages) ─── */}
-      <section className="bg-[#F8F9FA] pt-28 md:pt-32 pb-10 px-8 border-b border-gray-200/50 mb-16">
-        <Container>
-          <div className="max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              {/* Breadcrumbs */}
-              <nav className="flex items-center gap-2 mb-4 flex-wrap">
-                {breadcrumbs.map((item, index) => (
-                  <div key={item.name} className="flex items-center gap-2">
-                    <Link
-                      to={item.href}
+      <ProductHero
+        title={product.title}
+        subtitle={product.description}
+        categoryTag="PRODUCT SPECIFICATIONS"
+        breadcrumbs={breadcrumbs}
+      />
+
+      <div>
+        <ProductSort
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          isFilterOpen={isSidebarOpen}
+          onToggleFilter={handleToggleFilter}
+          currentSort={currentSort}
+          onSortChange={setCurrentSort}
+          totalProducts={1}
+        />
+
+        {/* ─── MAIN PRODUCT SECTION ─── */}
+            <div className="grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-8 lg:gap-12 mb-16">
+              {/* Gallery */}
+              <div>
+                <div className="w-full max-w-[340px] aspect-square bg-[#FBFBFC] rounded-sm border border-gray-100 flex items-center justify-center p-6 mb-5 mx-auto xl:mx-0">
+                  <img
+                    src={product.thumbnails[selectedImage] || product.mainImage}
+                    alt="Product"
+                    className="max-w-[75%] max-h-[75%] object-contain mix-blend-multiply"
+                  />
+                </div>
+
+                <div className="flex flex-wrap gap-2 justify-center xl:justify-start w-full max-w-[340px] mx-auto xl:mx-0">
+                  {product.thumbnails.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedImage(idx)}
                       className={cn(
-                        "text-[11px] transition-colors font-medium",
-                        index === breadcrumbs.length - 1
-                          ? "text-gray-700"
-                          : "text-gray-400 hover:text-[#C3110C]"
+                        "w-14 h-14 shrink-0 rounded-sm border transition-all p-1 bg-white",
+                        selectedImage === idx
+                          ? "border-[#C3110C]"
+                          : "border-gray-100 hover:border-gray-200"
                       )}
                     >
-                      {item.name}
-                    </Link>
-                    {index < breadcrumbs.length - 1 && (
-                      <span className="text-gray-300 text-[10px]">/</span>
+                      <img src={img} className="w-full h-full object-contain" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Info Tabs */}
+              <div>
+                <div className="flex gap-10 border-b border-gray-100 mb-8">
+                  <button
+                    onClick={() => setActiveTab("description")}
+                    className={cn(
+                      "pb-4 text-[15px] font-bold transition-all relative",
+                      activeTab === "description" ? "text-[#C00707]" : "text-gray-400 hover:text-gray-600"
                     )}
-                  </div>
-                ))}
-              </nav>
-
-              <h1 className="text-lg font-bold text-[#1A3263] tracking-tight mb-4 font-display">
-                {product.title}
-              </h1>
-
-              <p className="text-gray-500 text-xs md:text-sm leading-snug max-w-xl font-light">
-                {product.description}
-              </p>
-            </motion.div>
-          </div>
-        </Container>
-      </section>
-
-      <Container>
-        {/* ─── MAIN PRODUCT SECTION ─── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-16 mb-24 max-w-5xl mx-auto">
-          {/* Gallery */}
-          <div>
-            <div className="w-[360px] aspect-square bg-[#FBFBFC] rounded-sm border border-gray-100 flex items-center justify-center p-6 mb-5">
-              <img
-                src={product.thumbnails[selectedImage] || product.mainImage}
-                alt="Product"
-                className="max-w-[72%] max-h-[72%] object-contain mix-blend-multiply"
-              />
-            </div>
-
-            <div className="flex flex-wrap gap-2 justify-start w-[360px]">
-              {product.thumbnails.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setSelectedImage(idx)}
-                  className={cn(
-                    "w-14 h-14 shrink-0 rounded-sm border transition-all p-1 bg-white",
-                    selectedImage === idx
-                      ? "border-[#C3110C]"
-                      : "border-gray-100 hover:border-gray-200"
-                  )}
-                >
-                  <img src={img} className="w-full h-full object-contain" />
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Info Tabs */}
-          <div>
-            <div className="flex gap-10 border-b border-gray-100 mb-8">
-              <button
-                onClick={() => setActiveTab("description")}
-                className={cn(
-                  "pb-4 text-[15px] font-bold transition-all relative",
-                  activeTab === "description" ? "text-[#C00707]" : "text-gray-400 hover:text-gray-600"
-                )}
-              >
-                Description
-                {activeTab === "description" && (
-                  <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C00707]" />
-                )}
-              </button>
-              <button
-                onClick={() => setActiveTab("documents")}
-                className={cn(
-                  "pb-4 text-[15px] font-bold transition-all relative",
-                  activeTab === "documents" ? "text-[#C00707]" : "text-gray-400 hover:text-gray-600"
-                )}
-              >
-                Documents
-                {activeTab === "documents" && (
-                  <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C00707]" />
-                )}
-              </button>
-            </div>
-
-            <div className="min-h-[250px]">
-              <AnimatePresence mode="wait">
-                {activeTab === "description" ? (
-                  <motion.div
-                    key="desc"
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -10 }}
-                    className="space-y-2"
                   >
-                    <div className="text-gray-500 text-[13px] font-light leading-6 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-1 [&_li]:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-700 [&_br]:mb-1"
-                      dangerouslySetInnerHTML={{ __html: (product.longDescription || "").replace(/\n/g, "<br>") }}
-                    />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="docs"
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -10 }}
-                    className="space-y-4 pt-4"
+                    Description
+                    {activeTab === "description" && (
+                      <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C00707]" />
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("documents")}
+                    className={cn(
+                      "pb-4 text-[15px] font-bold transition-all relative",
+                      activeTab === "documents" ? "text-[#C00707]" : "text-gray-400 hover:text-gray-600"
+                    )}
                   >
-                    {product.documents.map((doc, i) => (
-                      <a
-                        key={i}
-                        href={doc.url}
-                        onClick={(e) => {
-                          if (!user) {
-                            e.preventDefault();
-                            setPendingDocUrl(doc.url);
-                            localStorage.setItem("pending_pdf_url", doc.url);
-                            setIsAuthOpen(true);
-                          } else {
-                            trackPdfDownload(doc.name, doc.url);
-                          }
-                        }}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 group w-fit py-1 transition-all"
+                    Documents
+                    {activeTab === "documents" && (
+                      <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C00707]" />
+                    )}
+                  </button>
+                </div>
+
+                <div className="min-h-[250px]">
+                  <AnimatePresence mode="wait">
+                    {activeTab === "description" ? (
+                      <motion.div
+                        key="desc"
+                        initial={{ opacity: 0, x: 10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -10 }}
+                        className="space-y-2"
                       >
-                        <img
-                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1280px-PDF_file_icon.svg.png"
-                          alt="PDF"
-                          className="w-5 h-5 object-contain"
+                        <div className="text-gray-500 text-[13px] font-light leading-6 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-1 [&_li]:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-700 [&_br]:mb-1"
+                          dangerouslySetInnerHTML={{ __html: (product.longDescription || "").replace(/\n/g, "<br>") }}
                         />
-                        <span className="text-[14px] text-[#42526E] underline underline-offset-[2px] decoration-gray-400 hover:text-blue-700 hover:decoration-blue-700 transition-all font-display">
-                          {doc.name}
-                        </span>
-                      </a>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="docs"
+                        initial={{ opacity: 0, x: 10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -10 }}
+                        className="space-y-4 pt-4"
+                      >
+                        {product.documents.map((doc, i) => (
+                          <a
+                            key={i}
+                            href={doc.url}
+                            onClick={(e) => {
+                              if (!user) {
+                                e.preventDefault();
+                                setPendingDocUrl(doc.url);
+                                localStorage.setItem("pending_pdf_url", doc.url);
+                                setIsAuthOpen(true);
+                              } else {
+                                trackPdfDownload(doc.name, doc.url);
+                              }
+                            }}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1.5 group w-fit py-1 transition-all"
+                          >
+                            <img
+                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1280px-PDF_file_icon.svg.png"
+                              alt="PDF"
+                              className="w-5 h-5 object-contain"
+                            />
+                            <span className="text-[14px] text-[#42526E] underline underline-offset-[2px] decoration-gray-400 hover:text-blue-700 hover:decoration-blue-700 transition-all font-display">
+                              {doc.name}
+                            </span>
+                          </a>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* ─── PRODUCT OPTIONS TABLE ─── */}
-        {product.options.length > 0 && (
-          <div className="mb-8">
-            <div className="bg-[#1A3263] text-white px-4 md:px-8 py-4 md:py-5 rounded-t-sm font-semibold text-xs md:text-sm">
-              Product Options & Specifications
-            </div>
-            <div className="border-x border-b border-gray-100">
-              <table className="w-full text-left border-collapse">
-                <thead className="hidden md:table-header-group">
-                  <tr className="bg-[#F8F9FA] text-gray-500 text-[12px] font-bold tracking-tight border-b border-gray-100">
-                  <th className="px-8 py-5">Part Code</th>
-                  <th className="px-8 py-5">Detailed Specification</th>
-                  <th className="px-8 py-5 text-center">Qty</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {product.options.map((opt, i) => (
-                    <tr key={opt.partCode} className="block md:table-row border-b md:border-b-0 border-gray-100 p-4 md:p-0 group hover:bg-[#FBFBFC] transition-colors">
-                      <td className="block md:table-cell px-0 md:px-8 py-1 md:py-8 text-[13px] font-bold text-[#1A3263] md:border-b md:border-gray-100">
-                        <div className="md:inline">
-                          <div className="text-[13px] font-bold text-[#1A3263]">{opt.partCode}</div>
-                          <div className="md:hidden mt-2">
-                            <span className="flex items-center border border-gray-200 rounded-sm inline-flex">
+            {/* ─── PRODUCT OPTIONS TABLE ─── */}
+            {product.options.length > 0 && (
+              <div className="mb-8">
+                <div className="bg-[#1A3263] text-white px-4 md:px-8 py-4 md:py-5 rounded-t-sm font-semibold text-xs md:text-sm">
+                  Product Options & Specifications
+                </div>
+                <div className="border-x border-b border-gray-100">
+                  <table className="w-full text-left border-collapse">
+                    <thead className="hidden md:table-header-group">
+                      <tr className="bg-[#F8F9FA] text-gray-500 text-[12px] font-bold tracking-tight border-b border-gray-100">
+                        <th className="px-8 py-5">Part Code</th>
+                        <th className="px-8 py-5">Detailed Specification</th>
+                        <th className="px-8 py-5 text-center">Qty</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {product.options.map((opt, i) => (
+                        <tr key={opt.partCode} className="block md:table-row border-b md:border-b-0 border-gray-100 p-4 md:p-0 group hover:bg-[#FBFBFC] transition-colors">
+                          <td className="block md:table-cell px-0 md:px-8 py-1 md:py-8 text-[13px] font-bold text-[#1A3263] md:border-b md:border-gray-100">
+                            <div className="md:inline">
+                              <div className="text-[13px] font-bold text-[#1A3263]">{opt.partCode}</div>
+                              <div className="md:hidden mt-2">
+                                <span className="flex items-center border border-gray-200 rounded-sm inline-flex">
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      setQuantities(prev => ({
+                                        ...prev,
+                                        [opt.partCode]: Math.max(0, (prev[opt.partCode] || 0) - 1)
+                                      }))
+                                    }
+                                    className="px-1.5 py-1 text-gray-400 hover:text-[#C3110C] hover:bg-gray-50 transition-colors cursor-pointer"
+                                  >
+                                    <Minus size={12} />
+                                  </button>
+                                  <span className="px-2 py-1 text-[12px] font-bold text-[#1A3263] min-w-[24px] text-center tabular-nums">
+                                    {quantities[opt.partCode] || 0}
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setQuantities(prev => ({
+                                        ...prev,
+                                        [opt.partCode]: (prev[opt.partCode] || 0) + 1
+                                      }));
+                                      setShowPopup(true);
+                                    }}
+                                    className="px-1.5 py-1 text-gray-400 hover:text-[#C3110C] hover:bg-gray-50 transition-colors cursor-pointer"
+                                  >
+                                    <Plus size={12} />
+                                  </button>
+                                </span>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="block md:table-cell px-0 md:px-8 py-1 md:py-8 text-[13px] text-gray-500 font-light whitespace-pre-line leading-relaxed md:border-b md:border-gray-100">
+                            <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wide md:hidden">Specification: </span>
+                            {opt.specification}
+                          </td>
+
+                          <td className="hidden md:table-cell px-8 py-8 border-b border-gray-100 text-center">
+                            <div className="flex items-center justify-center border border-gray-200 rounded-sm inline-flex">
                               <button
                                 type="button"
                                 onClick={() =>
                                   setQuantities(prev => ({
                                     ...prev,
-                                      [opt.partCode]: Math.max(0, (prev[opt.partCode] || 0) - 1)
+                                    [opt.partCode]: Math.max(0, (prev[opt.partCode] || 0) - 1)
                                   }))
                                 }
-                                className="px-1.5 py-1 text-gray-400 hover:text-[#C3110C] hover:bg-gray-50 transition-colors cursor-pointer"
+                                className="px-2 py-1.5 text-gray-400 hover:text-[#C3110C] hover:bg-gray-50 transition-colors cursor-pointer"
                               >
-                                <Minus size={12} />
+                                <Minus size={14} />
                               </button>
-                              <span className="px-2 py-1 text-[12px] font-bold text-[#1A3263] min-w-[24px] text-center tabular-nums">
+                              <span className="px-3 py-1.5 text-[13px] font-bold text-[#1A3263] min-w-[28px] text-center tabular-nums">
                                 {quantities[opt.partCode] || 0}
                               </span>
                               <button
@@ -398,64 +431,24 @@ export function ProductDetailView({ product, returnPath }: { product: ProductDat
                                 onClick={() => {
                                   setQuantities(prev => ({
                                     ...prev,
-                                      [opt.partCode]: (prev[opt.partCode] || 0) + 1
+                                    [opt.partCode]: (prev[opt.partCode] || 0) + 1
                                   }));
                                   setShowPopup(true);
                                 }}
-                                className="px-1.5 py-1 text-gray-400 hover:text-[#C3110C] hover:bg-gray-50 transition-colors cursor-pointer"
+                                className="px-2 py-1.5 text-gray-400 hover:text-[#C3110C] hover:bg-gray-50 transition-colors cursor-pointer"
                               >
-                                <Plus size={12} />
+                                <Plus size={14} />
                               </button>
-                            </span>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="block md:table-cell px-0 md:px-8 py-1 md:py-8 text-[13px] text-gray-500 font-light whitespace-pre-line leading-relaxed md:border-b md:border-gray-100">
-                        <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wide md:hidden">Specification: </span>
-                        {opt.specification}
-                      </td>
-
-                      <td className="hidden md:table-cell px-8 py-8 border-b border-gray-100 text-center">
-                        <div className="flex items-center justify-center border border-gray-200 rounded-sm inline-flex">
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setQuantities(prev => ({
-                                ...prev,
-                                  [opt.partCode]: Math.max(0, (prev[opt.partCode] || 0) - 1)
-                              }))
-                            }
-                            className="px-2 py-1.5 text-gray-400 hover:text-[#C3110C] hover:bg-gray-50 transition-colors cursor-pointer"
-                          >
-                            <Minus size={14} />
-                          </button>
-                          <span className="px-3 py-1.5 text-[13px] font-bold text-[#1A3263] min-w-[28px] text-center tabular-nums">
-                            {quantities[opt.partCode] || 0}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setQuantities(prev => ({
-                                ...prev,
-                                  [opt.partCode]: (prev[opt.partCode] || 0) + 1
-                              }));
-                              setShowPopup(true);
-                            }}
-                            className="px-2 py-1.5 text-gray-400 hover:text-[#C3110C] hover:bg-gray-50 transition-colors cursor-pointer"
-                          >
-                            <Plus size={14} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
           </div>
-        )}
-
-      </Container>
       <AuthModal
         isOpen={isAuthOpen}
         onClose={() => {

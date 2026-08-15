@@ -85,6 +85,11 @@ function RootComponent() {
   const isProductsPage = location.pathname.startsWith("/products");
   const isAdminPage = location.pathname.startsWith("/admin");
 
+  // Scroll to top automatically on route/pathname change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname, location.search]);
+
   // Track page visits
   useEffect(() => {
     let sessionId = localStorage.getItem("visitorSessionId");

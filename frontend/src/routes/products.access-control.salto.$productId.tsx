@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ProductSort, SortOption } from "@/components/Product/ProductSort";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
@@ -28,6 +28,10 @@ function SaltoSubProductPage() {
   const { productId } = Route.useParams();
   const product = saltoProducts.find((p) => p.id === productId);
   const [currentSort, setCurrentSort] = useState<SortOption>("popular");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [productId]);
 
   const sortedProducts = useMemo(() => {
     if (!product?.subProducts) return [];

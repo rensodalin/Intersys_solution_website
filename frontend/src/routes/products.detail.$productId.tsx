@@ -47,6 +47,10 @@ function ProductDetailPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [productId]);
+
+  useEffect(() => {
     let isMounted = true;
     const fetchProduct = async () => {
       setLoading(true);

@@ -227,11 +227,10 @@ export function Hero() {
           <button
             key={i}
             onClick={() => emblaApi && emblaApi.scrollTo(i)}
-            className={`h-2 transition-all duration-500 rounded-full cursor-pointer ${
-              selectedIndex === i
+            className={`h-2 transition-all duration-500 rounded-full cursor-pointer ${selectedIndex === i
                 ? "w-8 bg-red-600 shadow-[0_0_12px_rgba(220,38,38,0.6)]"
                 : "w-2 bg-white/40 hover:bg-white/70"
-            }`}
+              }`}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}

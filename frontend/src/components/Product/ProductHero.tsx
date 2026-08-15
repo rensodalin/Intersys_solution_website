@@ -25,9 +25,8 @@ export function ProductHero({
     ],
 }: ProductHeroProps) {
     return (
-        <section className="w-full bg-white pt-24 md:pt-28 pb-4">
-            <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="relative w-full overflow-hidden bg-white min-h-[280px] md:min-h-[340px] rounded-lg shadow-sm">
+        <div className="w-full mb-6">
+            <div className="relative w-full overflow-hidden bg-white min-h-[220px] md:min-h-[260px] rounded-lg shadow-sm border border-gray-100">
                     {/* Background Static Image */}
                     <img
                         src={heroImg2}
@@ -81,7 +80,6 @@ export function ProductHero({
                         )}
                     </motion.div>
                 </div>
-            </div>
-        </section>
+        </div>
     );
 }
