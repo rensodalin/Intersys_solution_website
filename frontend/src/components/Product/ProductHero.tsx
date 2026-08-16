@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import { ChevronRight } from "lucide-react";
 
-import heroImg2 from "@/assets/engineering_hero2.png";
+import heroImg from "@/assets/imageproduct.png";
 
 interface BreadcrumbItem {
     name: string;
@@ -25,56 +26,59 @@ export function ProductHero({
     ],
 }: ProductHeroProps) {
     return (
-        <div className="w-full mt-2 sm:mt-4 md:mt-6 mb-6">
-            <div className="relative w-full overflow-hidden bg-white rounded-xl shadow-sm border border-gray-100 min-h-[180px] sm:min-h-[220px] md:min-h-[260px] flex items-center">
-                {/* Background Static Image */}
+        <div className="w-full mt-2 sm:mt-4 md:mt-6 mb-4 sm:mb-6">
+            <div className="relative w-full overflow-hidden bg-white rounded-xl shadow-sm border border-gray-200/80 min-h-[165px] sm:min-h-[200px] md:min-h-[240px] flex items-center">
+                {/* Background Image - imageproduct.png from assets */}
                 <img
-                    src={heroImg2}
+                    src={heroImg}
                     alt="Engineering Hero Banner"
-                    className="absolute inset-0 w-full h-full object-cover object-[20%_center] md:object-[30%_center] brightness-95 contrast-105"
+                    className="absolute inset-0 w-full h-full object-cover object-right sm:object-center brightness-100 contrast-105"
                 />
 
-                {/* Gradient Overlay for Readability (Stronger on Mobile) */}
-                <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 sm:via-white/55 via-40% to-transparent z-[1]" />
+                {/* Soft Gradient Overlay - Clean White Text Area on Left */}
+                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 via-40% sm:via-white/60 to-transparent z-[1]" />
+
+                {/* Left Subtle Red Line Accent */}
+                <div className="absolute left-0 top-0 bottom-0 w-1 sm:w-1.5 bg-[#C3110C] z-10" />
 
                 {/* Hero Text Content */}
                 <motion.div
-                    initial={{ opacity: 0, y: 12 }}
+                    initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="relative z-10 w-full max-w-2xl px-5 py-6 sm:p-8 md:p-10 md:pl-12 flex flex-col justify-center"
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="relative z-10 w-full max-w-2xl px-5 sm:px-8 md:px-12 py-5 sm:py-7 md:py-9 flex flex-col justify-center"
                 >
                     {/* Breadcrumbs */}
-                    <nav className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3 flex-wrap">
+                    <nav className="flex items-center gap-1 sm:gap-1.5 mb-2 sm:mb-3 flex-wrap">
                         {breadcrumbs.map((item, index) => (
-                            <div key={item.name} className="flex items-center gap-1.5 sm:gap-2">
+                            <div key={item.name} className="flex items-center gap-1 sm:gap-1.5">
                                 <Link
                                     to={item.href}
                                     className={cn(
-                                        "text-[11px] sm:text-xs transition-colors drop-shadow-[0_1px_1px_rgba(255,255,255,0.9)]",
+                                        "text-[11px] sm:text-xs font-semibold transition-colors leading-none",
                                         index === breadcrumbs.length - 1
                                             ? "text-[#C3110C] font-bold pointer-events-none"
-                                            : "text-gray-700 hover:text-[#C3110C] font-semibold"
+                                            : "text-gray-600 hover:text-[#C3110C]"
                                     )}
                                 >
                                     {item.name}
                                 </Link>
 
                                 {index < breadcrumbs.length - 1 && (
-                                    <span className="text-gray-400 text-[10px] sm:text-xs font-bold">/</span>
+                                    <ChevronRight className="w-3 h-3 text-gray-400 shrink-0" />
                                 )}
                             </div>
                         ))}
                     </nav>
 
                     {/* Main Title */}
-                    <h1 className="text-lg sm:text-2xl md:text-3xl font-extrabold font-display tracking-tight text-gray-900 mb-1.5 sm:mb-2.5 drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)] leading-snug">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight mb-1 sm:mb-2 leading-snug">
                         {title}
                     </h1>
 
                     {/* Subtitle Description */}
                     {subtitle && (
-                        <p className="text-[11px] sm:text-xs md:text-sm text-gray-700 leading-relaxed font-semibold max-w-xl drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)]">
+                        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-medium max-w-lg">
                             {subtitle}
                         </p>
                     )}
@@ -83,5 +87,6 @@ export function ProductHero({
         </div>
     );
 }
+
 
 
