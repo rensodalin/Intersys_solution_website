@@ -23,8 +23,8 @@ export function ContactHero() {
           transition={{ duration: 0.8 }}
           className="max-w-2xl"
         >
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 mt-25 font-display tracking-tight text-white leading-tight">
-            Contact Us
+          <h1 className="text-3xl md:text-5xl font-bold mb-4 font-display tracking-tight text-white leading-tight">
+            Contact <span className="text-[#DB1A1A]">Us</span>
           </h1>
 
           <p className="text-gray-300 text-sm md:text-base leading-relaxed opacity-80 max-w-lg">

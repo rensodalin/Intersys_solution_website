@@ -43,7 +43,7 @@ export function Ecosystem() {
         </div>
 
         {/* Transparent Feature Cutout Image on the Right side of Container 1 background */}
-        <div className="absolute -top-3 sm:-top-5 md:-top-7 right-4 sm:right-10 md:right-16 lg:right-28 bottom-0 z-10 hidden sm:flex items-start pt-1 sm:pt-2 pointer-events-none">
+        <div className="absolute -top-3 sm:-top-5 md:-top-7 right-4 sm:right-10 md:right-16 lg:right-28 bottom-0 z-10 hidden min-[1100px]:flex items-start pt-1 sm:pt-2 pointer-events-none">
           <motion.img
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}

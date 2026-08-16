@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { Play, ArrowRight } from "lucide-react";
@@ -53,6 +54,8 @@ const redFilter =
   "brightness(0) saturate(100%) invert(15%) sepia(100%) saturate(6000%) hue-rotate(25deg)";
 
 export function MetricsStrip() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <div className="relative z-40 mt-8 md:mt-12 mb-14">
       <Container className="px-4 md:px-8 max-w-[1350px]">
@@ -63,7 +66,7 @@ export function MetricsStrip() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-1 bg-[#1A3263] p-7 flex flex-col justify-between min-h-[260px] relative overflow-hidden group"
+            className="lg:col-span-1 bg-[#1A3263] p-7 flex flex-col justify-between min-h-[260px] relative overflow-hidden group cursor-pointer"
           >
             {/* Construction Blueprint Image Background */}
             <div
@@ -74,7 +77,7 @@ export function MetricsStrip() {
             <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#1A3263] via-[#1A3263]/80 to-[#1A3263]/60 group-hover:opacity-85 transition-opacity duration-500" />
 
             <div className="relative z-20">
-              <div className="w-9 h-9 mb-5 text-white/60 group-hover:text-white transition-colors">
+              <div className="w-9 h-9 mb-5 text-white/60 group-hover:text-black transition-colors duration-300">
                 <Play fill="currentColor" size={28} />
               </div>
               <h3 className="text-xl font-bold text-white mb-3 leading-tight">Premium ELV Engineering</h3>
@@ -99,7 +102,9 @@ export function MetricsStrip() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-[#EEEEEE] p-7 border-l border-gray-200 flex flex-col items-start min-h-[260px] group relative overflow-hidden transition-all duration-500"
+              onMouseEnter={() => setHoveredIndex(i)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              className="bg-[#EEEEEE] p-7 border-l border-gray-200 flex flex-col items-start min-h-[260px] group relative overflow-hidden transition-all duration-500 cursor-pointer"
             >
               {/* Background Image (Original Animation) */}
               <div
@@ -118,8 +123,10 @@ export function MetricsStrip() {
                   <img
                     src={m.icon}
                     alt={m.label}
-                    className="w-full h-full object-contain transition-all"
-                    style={{ filter: m.color === "blue" ? blueFilter : redFilter }}
+                    className="w-full h-full object-contain transition-all duration-300"
+                    style={{
+                      filter: hoveredIndex === i ? "brightness(0)" : (m.color === "blue" ? blueFilter : redFilter),
+                    }}
                   />
                 </div>
                 <div className="space-y-3">
