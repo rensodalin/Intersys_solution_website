@@ -74,6 +74,7 @@ export function Navbar() {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileClientOpen, setMobileClientOpen] = useState(false);
+  const [mobileContactOpen, setMobileContactOpen] = useState(false);
   const [showCompactDropdown, setShowCompactDropdown] = useState(false);
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -1012,14 +1013,40 @@ export function Navbar() {
                       <span>Projects</span>
                     </Link>
 
-                    {/* Contact Us */}
-                    <Link
-                      to="/contact"
-                      onClick={() => setMobileOpen(false)}
-                      className="flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium transition-all"
-                    >
-                      <span>Contact Us</span>
-                    </Link>
+                    {/* Collapsible Contact Us Accordion */}
+                    <div className="border-b border-white/5 last:border-0">
+                      <button
+                        onClick={() => setMobileContactOpen(!mobileContactOpen)}
+                        className="w-full flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium text-left transition-all"
+                      >
+                        <span>Contact Us</span>
+                        <ChevronDown
+                          size={16}
+                          className={cn("text-white/50 transition-transform duration-300", mobileContactOpen && "rotate-180")}
+                        />
+                      </button>
+                      <AnimatePresence>
+                        {mobileContactOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden pl-6 pr-4 bg-black/20 rounded-sm"
+                          >
+                            {CONTACT_DATA.map((item) => (
+                              <Link
+                                key={item.name}
+                                to={item.href}
+                                onClick={() => setMobileOpen(false)}
+                                className="block py-2.5 text-xs text-white/70 hover:text-white transition-colors"
+                              >
+                                {item.name}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   </div>
                 </div>
 
