@@ -158,7 +158,7 @@ export function WhyChooseUs() {
         <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-24 items-start">
 
           {/* LEFT SIDE */}
-          <div className="relative lg:sticky top-24">
+          <div className="relative lg:sticky top-24 mb-12 lg:mb-0">
             <div className="relative">
 
               {/* Main Image */}
@@ -204,7 +204,7 @@ export function WhyChooseUs() {
           </div>
 
           {/* RIGHT SIDE */}
-          <div>
+          <div className="pt-6 sm:pt-10 lg:pt-0">
 
             {/* Heading */}
             <div className="max-w-2xl">
