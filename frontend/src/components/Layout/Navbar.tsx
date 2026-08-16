@@ -227,7 +227,7 @@ export function Navbar() {
           "w-full px-6 md:px-20 flex items-center justify-between transition-all duration-500",
           scrolled
             ? "h-16 bg-[#081F3D]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.4)]"
-            : isLightPage ? "h-24 bg-[#0A0F1A]" : "h-24 bg-transparent",
+            : isLightPage ? "h-16 bg-[#081F3D]" : "h-24 bg-transparent",
         )}>
           <Link to="/" className="flex items-center transition-transform hover:scale-105 duration-300" onClick={handleLogoClick}>
             <img
@@ -235,7 +235,7 @@ export function Navbar() {
               alt="Intersys Logo"
               className={cn(
                 "transition-all duration-500 object-contain",
-                scrolled ? "h-12" : "h-16",
+                scrolled || isLightPage ? "h-12" : "h-16",
                 logoFilter
               )}
             />
