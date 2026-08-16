@@ -26,7 +26,7 @@ export function ProductHero({
     ],
 }: ProductHeroProps) {
     return (
-        <div className="w-full mt-2 sm:mt-4 md:mt-6 mb-4 sm:mb-6">
+        <div className="w-full mt-0 mb-4 sm:mb-6">
             <div className="relative w-full overflow-hidden bg-white rounded-xl shadow-sm border border-gray-200/80 min-h-[165px] sm:min-h-[200px] md:min-h-[240px] flex items-center">
                 {/* Background Image - imageproduct.png from assets */}
                 <img
