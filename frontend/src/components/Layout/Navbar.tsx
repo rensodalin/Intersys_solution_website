@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useRef } from "react";
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-import { Menu, X, User, ChevronRight, Phone, Mail, Facebook, Linkedin, ChevronDown, Package, Search } from "lucide-react";
+import { Menu, X, User, ChevronRight, Phone, Mail, Facebook, Linkedin, ChevronDown, Package, Search, Info, Wrench, FileText, Briefcase } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn, toSlug } from "@/lib/utils";
 import { useSelector, useDispatch } from "react-redux";
@@ -46,7 +46,12 @@ export function Navbar() {
   const navigate = useNavigate();
   const lightPages = ["/products", "/services/public-address"];
   const isLightPage = lightPages.some(path => location.pathname.startsWith(path));
-  const isDarkNavPage = ["/document-center", "/my-account"].some(path => location.pathname.startsWith(path));
+  const isDarkNavPage = [
+    "/document-center",
+    "/my-account",
+    "/technical-tips",
+    "/insights",
+  ].some(path => location.pathname.startsWith(path));
   const [scrolled, setScrolled] = useState(false);
   const [heroIsBanner, setHeroIsBanner] = useState(true);
 
@@ -831,84 +836,41 @@ export function Navbar() {
                   )}
                 </div>
 
-                {/* Search */}
-                <div className="space-y-3">
-                  <p className="text-white/40 font-bold uppercase tracking-wider text-[10px]">Search</p>
-                  <div className="relative">
-                    <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      onKeyDown={(e) => { if (e.key === "Enter" && searchResults[0]) { setMobileOpen(false); setSearchResults([]); navigate({ to: searchResults[0].link }); } }}
-                      placeholder="Search products..."
-                      className="w-full bg-white/10 border border-white/20 rounded-full pl-9 pr-3 py-2.5 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-500/50 transition-all"
-                    />
-                    {searchQuery.length >= 1 && (searchResults.length > 0 || searching) && (
-                      <div className="mt-2 bg-white/5 border border-white/10 rounded-xl overflow-hidden max-h-[50vh] overflow-y-auto">
-                        {searching ? (
-                          <div className="p-4 text-center">
-                            <p className="text-xs text-white/40 italic">Searching...</p>
-                          </div>
-                        ) : searchResults.length > 0 ? (
-                          searchResults.map((result: any) => (
-                            <Link
-                              key={result.id}
-                              to={result.link}
-                              onClick={() => { setMobileOpen(false); setSearchResults([]); }}
-                              className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/5 transition-colors group"
-                            >
-                              <div className="w-8 h-8 rounded bg-white/10 flex items-center justify-center p-1 overflow-hidden shrink-0">
-                                <img src={result.image} alt="" className="w-full h-full object-contain" />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="text-[13px] font-semibold text-white truncate group-hover:text-red-400 transition-colors">
-                                  {result.title}
-                                </div>
-                                {result.matchedPartCodes?.length > 0 && (
-                                  <div className="flex flex-wrap gap-1 mt-0.5">
-                                    {result.matchedPartCodes.map((code: string, i: number) => (
-                                      <span key={i} className="text-[9px] bg-orange-500/20 text-orange-300 font-mono px-1.5 rounded">{code}</span>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                            </Link>
-                          ))
-                        ) : (
-                          <div className="p-4 text-center">
-                            <p className="text-xs text-white/40 italic">No products found</p>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
+
 
                 {/* Navigation Links */}
                 <div className="space-y-3">
-                  <p className="text-white/40 font-bold uppercase tracking-wider text-[10px]">Navigation</p>
-                  <div className="flex flex-col gap-1 text-white">
+                  <div className="flex items-center justify-between">
+                    <p className="text-white/40 font-bold uppercase tracking-wider text-[10px]">Navigation</p>
+                  </div>
+
+                  <div className="flex flex-col gap-2.5 text-white">
 
                     {/* About Us */}
                     <Link
                       to="/about"
                       onClick={() => setMobileOpen(false)}
-                      className="flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium transition-all"
+                      className={cn(
+                        "flex items-center justify-between py-3 px-4 rounded-xl text-sm font-medium transition-all group border",
+                        location.pathname === "/about"
+                          ? "bg-white/15 border-white/20 text-white font-semibold shadow-sm"
+                          : "bg-white/[0.03] border-white/5 text-white/80 hover:text-white hover:bg-white/10 hover:border-white/10"
+                      )}
                     >
                       <span>About Us</span>
+                      <ChevronRight size={14} className={cn("transition-transform group-hover:translate-x-0.5", location.pathname === "/about" ? "text-white/80" : "text-white/30")} />
                     </Link>
 
                     {/* Collapsible Services Accordion */}
-                    <div className="border-b border-white/5 last:border-0">
+                    <div className={cn("rounded-xl border transition-all overflow-hidden", mobileServicesOpen ? "bg-white/[0.08] border-white/20" : "bg-white/[0.03] border-white/5")}>
                       <button
                         onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                        className="w-full flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium text-left transition-all"
+                        className="w-full flex items-center justify-between py-3 px-4 text-sm font-medium text-left transition-all"
                       >
-                        <span>Services</span>
+                        <span className={cn(location.pathname.startsWith("/services") && "font-semibold text-white")}>Services</span>
                         <ChevronDown
                           size={16}
-                          className={cn("text-white/50 transition-transform duration-300", mobileServicesOpen && "rotate-180")}
+                          className={cn("text-white/40 transition-transform duration-300", mobileServicesOpen && "rotate-180 text-white/90")}
                         />
                       </button>
                       <AnimatePresence>
@@ -917,33 +879,45 @@ export function Navbar() {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            className="overflow-hidden pl-6 pr-4 bg-black/20 rounded-sm"
+                            transition={{ duration: 0.25, ease: "easeInOut" }}
+                            className="overflow-hidden"
                           >
-                            {SERVICES_DATA.map((item) => (
-                              <Link
-                                key={item.name}
-                                to={item.href}
-                                onClick={() => setMobileOpen(false)}
-                                className="block py-2.5 text-xs text-white/70 hover:text-white transition-colors"
-                              >
-                                {item.name}
-                              </Link>
-                            ))}
+                            <div className="ml-4 pl-4 pr-3 py-2 border-l-2 border-white/20 space-y-1 my-1">
+                              {SERVICES_DATA.map((item) => {
+                                const isActive = location.pathname === item.href;
+                                return (
+                                  <Link
+                                    key={item.name}
+                                    to={item.href}
+                                    onClick={() => setMobileOpen(false)}
+                                    className={cn(
+                                      "flex items-center justify-between py-2.5 px-3 rounded-lg text-xs font-medium transition-all group/sub",
+                                      isActive
+                                        ? "text-white font-semibold bg-white/15 border border-white/20 shadow-sm"
+                                        : "text-white/70 hover:text-white hover:bg-white/10"
+                                    )}
+                                  >
+                                    <span>{item.name}</span>
+                                    <ChevronRight size={12} className={cn("transition-transform group-hover/sub:translate-x-0.5", isActive ? "text-white/80" : "text-white/20")} />
+                                  </Link>
+                                );
+                              })}
+                            </div>
                           </motion.div>
                         )}
                       </AnimatePresence>
                     </div>
 
                     {/* Collapsible Products Accordion */}
-                    <div className="border-b border-white/5 last:border-0">
+                    <div className={cn("rounded-xl border transition-all overflow-hidden", mobileProductsOpen ? "bg-white/[0.08] border-white/20" : "bg-white/[0.03] border-white/5")}>
                       <button
                         onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
-                        className="w-full flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium text-left transition-all"
+                        className="w-full flex items-center justify-between py-3 px-4 text-sm font-medium text-left transition-all"
                       >
-                        <span>Products</span>
+                        <span className={cn(location.pathname.startsWith("/products") && "font-semibold text-white")}>Products</span>
                         <ChevronDown
                           size={16}
-                          className={cn("text-white/50 transition-transform duration-300", mobileProductsOpen && "rotate-180")}
+                          className={cn("text-white/40 transition-transform duration-300", mobileProductsOpen && "rotate-180 text-white/90")}
                         />
                       </button>
                       <AnimatePresence>
@@ -952,33 +926,45 @@ export function Navbar() {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            className="overflow-hidden pl-6 pr-4 bg-black/20 rounded-sm"
+                            transition={{ duration: 0.25, ease: "easeInOut" }}
+                            className="overflow-hidden"
                           >
-                            {productsNavData.map((cat) => (
-                              <Link
-                                key={cat.id}
-                                to={cat.link}
-                                onClick={() => setMobileOpen(false)}
-                                className="block py-2.5 text-xs text-white/70 hover:text-white transition-colors"
-                              >
-                                {cat.label}
-                              </Link>
-                            ))}
+                            <div className="ml-4 pl-4 pr-3 py-2 border-l-2 border-white/20 space-y-1 my-1">
+                              {productsNavData.map((cat) => {
+                                const isActive = location.pathname.startsWith(cat.link);
+                                return (
+                                  <Link
+                                    key={cat.id}
+                                    to={cat.link}
+                                    onClick={() => setMobileOpen(false)}
+                                    className={cn(
+                                      "flex items-center justify-between py-2.5 px-3 rounded-lg text-xs font-medium transition-all group/sub",
+                                      isActive
+                                        ? "text-white font-semibold bg-white/15 border border-white/20 shadow-sm"
+                                        : "text-white/70 hover:text-white hover:bg-white/10"
+                                    )}
+                                  >
+                                    <span>{cat.label}</span>
+                                    <ChevronRight size={12} className={cn("transition-transform group-hover/sub:translate-x-0.5", isActive ? "text-white/80" : "text-white/20")} />
+                                  </Link>
+                                );
+                              })}
+                            </div>
                           </motion.div>
                         )}
                       </AnimatePresence>
                     </div>
 
                     {/* Collapsible Client Center Accordion */}
-                    <div className="border-b border-white/5 last:border-0">
+                    <div className={cn("rounded-xl border transition-all overflow-hidden", mobileClientOpen ? "bg-white/[0.08] border-white/20" : "bg-white/[0.03] border-white/5")}>
                       <button
                         onClick={() => setMobileClientOpen(!mobileClientOpen)}
-                        className="w-full flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium text-left transition-all"
+                        className="w-full flex items-center justify-between py-3 px-4 text-sm font-medium text-left transition-all"
                       >
-                        <span>Client Center</span>
+                        <span className={cn(CLIENT_CENTER_DATA.some(item => location.pathname === item.href) && "font-semibold text-white")}>Client Center</span>
                         <ChevronDown
                           size={16}
-                          className={cn("text-white/50 transition-transform duration-300", mobileClientOpen && "rotate-180")}
+                          className={cn("text-white/40 transition-transform duration-300", mobileClientOpen && "rotate-180 text-white/90")}
                         />
                       </button>
                       <AnimatePresence>
@@ -987,18 +973,30 @@ export function Navbar() {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            className="overflow-hidden pl-6 pr-4 bg-black/20 rounded-sm"
+                            transition={{ duration: 0.25, ease: "easeInOut" }}
+                            className="overflow-hidden"
                           >
-                            {CLIENT_CENTER_DATA.map((item) => (
-                              <Link
-                                key={item.name}
-                                to={item.href}
-                                onClick={() => setMobileOpen(false)}
-                                className="block py-2.5 text-xs text-white/70 hover:text-white transition-colors"
-                              >
-                                {item.name}
-                              </Link>
-                            ))}
+                            <div className="ml-4 pl-4 pr-3 py-2 border-l-2 border-white/20 space-y-1 my-1">
+                              {CLIENT_CENTER_DATA.map((item) => {
+                                const isActive = location.pathname === item.href;
+                                return (
+                                  <Link
+                                    key={item.name}
+                                    to={item.href}
+                                    onClick={() => setMobileOpen(false)}
+                                    className={cn(
+                                      "flex items-center justify-between py-2.5 px-3 rounded-lg text-xs font-medium transition-all group/sub",
+                                      isActive
+                                        ? "text-white font-semibold bg-white/15 border border-white/20 shadow-sm"
+                                        : "text-white/70 hover:text-white hover:bg-white/10"
+                                    )}
+                                  >
+                                    <span>{item.name}</span>
+                                    <ChevronRight size={12} className={cn("transition-transform group-hover/sub:translate-x-0.5", isActive ? "text-white/80" : "text-white/20")} />
+                                  </Link>
+                                );
+                              })}
+                            </div>
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -1008,21 +1006,27 @@ export function Navbar() {
                     <Link
                       to="/projects"
                       onClick={() => setMobileOpen(false)}
-                      className="flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium transition-all"
+                      className={cn(
+                        "flex items-center justify-between py-3 px-4 rounded-xl text-sm font-medium transition-all group border",
+                        location.pathname === "/projects"
+                          ? "bg-white/15 border-white/20 text-white font-semibold shadow-sm"
+                          : "bg-white/[0.03] border-white/5 text-white/80 hover:text-white hover:bg-white/10 hover:border-white/10"
+                      )}
                     >
                       <span>Projects</span>
+                      <ChevronRight size={14} className={cn("transition-transform group-hover:translate-x-0.5", location.pathname === "/projects" ? "text-white/80" : "text-white/30")} />
                     </Link>
 
                     {/* Collapsible Contact Us Accordion */}
-                    <div className="border-b border-white/5 last:border-0">
+                    <div className={cn("rounded-xl border transition-all overflow-hidden", mobileContactOpen ? "bg-white/[0.08] border-white/20" : "bg-white/[0.03] border-white/5")}>
                       <button
                         onClick={() => setMobileContactOpen(!mobileContactOpen)}
-                        className="w-full flex items-center justify-between py-3 px-4 rounded-sm hover:bg-white/5 text-sm font-medium text-left transition-all"
+                        className="w-full flex items-center justify-between py-3 px-4 text-sm font-medium text-left transition-all"
                       >
-                        <span>Contact Us</span>
+                        <span className={cn(CONTACT_DATA.some(item => location.pathname === item.href) && "font-semibold text-white")}>Contact Us</span>
                         <ChevronDown
                           size={16}
-                          className={cn("text-white/50 transition-transform duration-300", mobileContactOpen && "rotate-180")}
+                          className={cn("text-white/40 transition-transform duration-300", mobileContactOpen && "rotate-180 text-white/90")}
                         />
                       </button>
                       <AnimatePresence>
@@ -1031,22 +1035,35 @@ export function Navbar() {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            className="overflow-hidden pl-6 pr-4 bg-black/20 rounded-sm"
+                            transition={{ duration: 0.25, ease: "easeInOut" }}
+                            className="overflow-hidden"
                           >
-                            {CONTACT_DATA.map((item) => (
-                              <Link
-                                key={item.name}
-                                to={item.href}
-                                onClick={() => setMobileOpen(false)}
-                                className="block py-2.5 text-xs text-white/70 hover:text-white transition-colors"
-                              >
-                                {item.name}
-                              </Link>
-                            ))}
+                            <div className="ml-4 pl-4 pr-3 py-2 border-l-2 border-white/20 space-y-1 my-1">
+                              {CONTACT_DATA.map((item) => {
+                                const isActive = location.pathname === item.href;
+                                return (
+                                  <Link
+                                    key={item.name}
+                                    to={item.href}
+                                    onClick={() => setMobileOpen(false)}
+                                    className={cn(
+                                      "flex items-center justify-between py-2.5 px-3 rounded-lg text-xs font-medium transition-all group/sub",
+                                      isActive
+                                        ? "text-white font-semibold bg-white/15 border border-white/20 shadow-sm"
+                                        : "text-white/70 hover:text-white hover:bg-white/10"
+                                    )}
+                                  >
+                                    <span>{item.name}</span>
+                                    <ChevronRight size={12} className={cn("transition-transform group-hover/sub:translate-x-0.5", isActive ? "text-white/80" : "text-white/20")} />
+                                  </Link>
+                                );
+                              })}
+                            </div>
                           </motion.div>
                         )}
                       </AnimatePresence>
                     </div>
+
                   </div>
                 </div>
 

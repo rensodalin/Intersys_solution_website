@@ -112,7 +112,6 @@ function CategoryProductsPage() {
             ? `Browse our ${categoryName.toLowerCase()} solutions by category.`
             : `Explore our range of ${categoryName.toLowerCase()} solutions.`
         }
-        categoryTag="STORE CATALOG"
         breadcrumbs={breadcrumbs}
       />
 

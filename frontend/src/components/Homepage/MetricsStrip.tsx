@@ -52,6 +52,8 @@ const blueFilter =
   "brightness(0) saturate(100%) invert(20%) sepia(100%) saturate(5000%) hue-rotate(195deg)";
 const redFilter =
   "brightness(0) saturate(100%) invert(15%) sepia(100%) saturate(6000%) hue-rotate(25deg)";
+const grayFilter =
+  "brightness(0) invert(0.75)";
 
 export function MetricsStrip() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -77,7 +79,7 @@ export function MetricsStrip() {
             <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#1A3263] via-[#1A3263]/80 to-[#1A3263]/60 group-hover:opacity-85 transition-opacity duration-500" />
 
             <div className="relative z-20">
-              <div className="w-9 h-9 mb-5 text-white/60 group-hover:text-black transition-colors duration-300">
+              <div className="w-9 h-9 mb-5 text-white/60 group-hover:text-gray-300 transition-colors duration-300">
                 <Play fill="currentColor" size={28} />
               </div>
               <h3 className="text-xl font-bold text-white mb-3 leading-tight">Premium ELV Engineering</h3>
@@ -125,7 +127,7 @@ export function MetricsStrip() {
                     alt={m.label}
                     className="w-full h-full object-contain transition-all duration-300"
                     style={{
-                      filter: hoveredIndex === i ? "brightness(0)" : (m.color === "blue" ? blueFilter : redFilter),
+                      filter: hoveredIndex === i ? grayFilter : (m.color === "blue" ? blueFilter : redFilter),
                     }}
                   />
                 </div>

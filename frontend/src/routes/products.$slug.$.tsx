@@ -169,7 +169,6 @@ function DeepSubcategoryPage() {
       <ProductHero
         title={subcategoryName}
         subtitle={subData?.description || `Browse high-performance ${subcategoryName.toLowerCase()} products.`}
-        categoryTag={categoryName.toUpperCase()}
         breadcrumbs={breadcrumbs}
       />
 
