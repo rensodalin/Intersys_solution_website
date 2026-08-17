@@ -93,6 +93,20 @@ function ProjectsPage() {
             fetchData();
         }, []);
 
+    const availableCategories = useMemo(() => {
+        if (!projectsList || projectsList.length === 0) return ["All"];
+
+        const catSet = new Set<string>();
+        projectsList.forEach((p) => {
+            if (p.category && p.category.trim() !== "") {
+                catSet.add(p.category.trim());
+            }
+        });
+
+        const sortedCats = Array.from(catSet).sort();
+        return ["All", ...sortedCats];
+    }, [projectsList]);
+
     const filteredProjects = useMemo(() => {
         return activeTab === "All" ? projectsList : projectsList.filter((p) => p.category === activeTab);
     }, [activeTab, projectsList]);
@@ -106,6 +120,7 @@ function ProjectsPage() {
                 setActiveTab={setActiveTab}
                 viewMode={viewMode}
                 setViewMode={setViewMode}
+                categories={availableCategories}
             />
 
             {loading ? (

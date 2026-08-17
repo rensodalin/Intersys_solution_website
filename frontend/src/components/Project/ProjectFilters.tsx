@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { LayoutGrid, Maximize2 } from "lucide-react";
-import { categories } from "./types";
+import { categories as defaultCategories } from "./types";
 
 interface ProjectFiltersProps {
     activeTab: string;
     setActiveTab: (tab: string) => void;
     viewMode: "grid" | "full";
     setViewMode: (mode: "grid" | "full") => void;
+    categories?: string[];
 }
 
 export function ProjectFilters({
@@ -15,6 +16,7 @@ export function ProjectFilters({
     setActiveTab,
     viewMode,
     setViewMode,
+    categories = defaultCategories,
 }: ProjectFiltersProps) {
     return (
         <section className="pb-10 md:pb-14">

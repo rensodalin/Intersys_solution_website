@@ -9,7 +9,7 @@ const projects = [
         title: "Phnom Penh International Airport",
         desc: "Large-scale BMS integration for Cambodia's primary aviation gateway, ensuring optimal climate and energy control.",
         image: "https://www.vietnamairlines.com/content/dam/legacy-site-assets/SEO-images/2025%20SEO/Traffic%20TV/san-bay-quoc-te-phnom-penh/san-bay-quoc-te-phnom-penh-se-hoat-dong-den-het-ngay-08092025_result.jpg",
-        category: "Institutional",
+        category: "Airport",
         client: "Comin Khmer",
         location: "Phnom Penh, Cambodia",
         scope: ["HVAC System", "Plumbing System", "Electrical System", "Lighting System", "Ventilation System", "Power Meter"]
@@ -18,7 +18,7 @@ const projects = [
         title: "Novotel Phnom Penh",
         desc: "The purpose of the project Novotel Phnom penh is to used Building Management System.",
         image: "https://www.maa-design.com/wp-content/uploads/2025/12/NOVOTEL_01_rev1.jpg",
-        category: "Commercial",
+        category: "Hospitality",
         client: "Ecam Solution",
         location: "Street 51 Corner Street 294, Phnom Penh",
         scope: ["HVAC System", "Plumbing System", "Electrical System", "Lighting System", "Ventilation System", "Lift System", "Power Meter"]
@@ -45,7 +45,7 @@ const projects = [
         title: "Novotel Holiday Palace",
         desc: "Comprehensive building management system for coastal hospitality and luxury resort operations.",
         image: "https://www.novotelsihanoukville.com/wp-content/uploads/sites/78/2024/02/Parking.png",
-        category: "Office",
+        category: "Hospitality",
         client: "Lotus Grean Team",
         location: "2 Thnou St, Preah Sihanouk",
         scope: ["HVAC System", "Plumbing System", "Electrical System", "Lighting System", "Ventilation System", "Lift System", "Power Meter"]
@@ -54,7 +54,7 @@ const projects = [
         title: "PPM Pharma Product Manufacture",
         desc: "Controlled environment management system for high-standard pharmaceutical manufacturing.",
         image: "https://fhdev.info/uploads/677-photo_2024-04-08_11-04-27.jpg",
-        category: "Hospitality",
+        category: "Industrial",
         client: "Lotus Grean Team",
         location: "Russian Federation Blvd (110), Phnom Penh",
         scope: ["HVAC System", "Plumbing System", "Electrical System", "Power Meter"]
@@ -72,7 +72,7 @@ const projects = [
         title: "ABA Headquarters",
         desc: "Reliable BMS infrastructure for national banking headquarters, focusing on HVAC and electrical uptime.",
         image: "https://cdn.kiripost.com/static/images/fb32x.2e16d0ba.fill-960x540.jpg",
-        category: "Banking",
+        category: "Bank",
         client: "Krorvan I/O.",
         location: "Preah Sihanouk Blvd (274), Phnom Penh",
         scope: ["HVAC System", "Electrical System", "Lighting System"]
@@ -81,7 +81,7 @@ const projects = [
         title: "E‐Sun Tower",
         desc: "Intelligent office tower management featuring full HVAC, lift, and power metering integration.",
         image: "https://lotusgreenteam.com/wp-content/uploads/2022/02/E-Sun-Tower-for-web-2.jpg",
-        category: "Industrial",
+        category: "Commercial",
         client: "Lotus Green Team",
         location: "Preah Monivong Blvd, Phnom Penh",
         scope: ["HVAC System", "Plumbing System", "Electrical System", "Lighting System", "Ventilation System", "Lift System", "Power Meter"]
@@ -90,7 +90,7 @@ const projects = [
         title: "Sky Villa",
         desc: "Ultra-luxury residential BMS providing seamless control over common areas and building services.",
         image: "https://www.knightfrank.com.kh/resources/condos/sky-villa-3.jpg",
-        category: "Residential",
+        category: "Residentail",
         client: "TERRASYS S SOLUTION LTD",
         location: "Sangkat Veal Vong, Khan 7 Makara, Phnom Penh",
         scope: ["Plumbing System", "Electrical System", "Lighting System", "Ventilation System", "Lift System", "Power Meter"]
@@ -99,7 +99,7 @@ const projects = [
         title: "Data Center at Hatha Bank",
         desc: "Critical cooling and environmental control for secure data center operations.",
         image: "https://file.sunonglobal.com/wp-content/uploads/2025/07/1729668297-2.jpeg",
-        category: "Banking",
+        category: "Bank",
         client: "Lotus Grean Team",
         location: "No.606, Street 271, Phnom Penh",
         scope: ["Control Chiller For Data Center"]
@@ -135,7 +135,7 @@ const projects = [
         title: "Chip Mong 598 Mall",
         desc: "Retail center power management featuring integrated tenant billing and utility tracking.",
         image: "https://static.wixstatic.com/media/0a84f2_674cc3cd72384943908586bbd6edceb9~mv2.jpg/v1/fill/w_640,h_480,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/ImageNotAvailable400x300.jpg",
-        category: "Commercial",
+        category: "Retail",
         client: "DBD Engineering",
         location: "Street 598, Sangkat Chrang Chamres 1, Khan Russey Keo",
         scope: ["Power Meter", "Tenant Billing"]
@@ -162,7 +162,7 @@ const projects = [
         title: "Olympia Medical HUB",
         desc: "Integrated medical center AHU control for modern healthcare facilities.",
         image: "https://cambodiagaylife.com/wp-content/uploads/2021/06/The-Olympia-Medical-Hub-%E5%A5%A7%E6%9E%97%E5%8C%B9%E4%BA%9E%E9%86%AB%E7%99%82%E4%B8%AD%E5%BF%83-%E6%96%B0%E5%86%A0%E8%82%BA%E7%82%8E%E6%AA%A2%E6%B8%AC-%E6%9F%AC%E5%9F%94%E5%AF%A8%E9%87%91%E9%82%8A-Covid-19-%E9%86%AB%E9%99%A2-hospital-Cambodia-Phnom-Penhintercare-medical-center-2-1024x767.jpg",
-        category: "Commercial",
+        category: "Healthcare",
         client: "Krorvan I/O.",
         location: "C5 , 5th floor , Olympia City, Building C5, Street 161, Sangkat Veal Vong, Khan 7 Makara, Phnom Penh",
         scope: ["Control AHU System For Medical Center"]

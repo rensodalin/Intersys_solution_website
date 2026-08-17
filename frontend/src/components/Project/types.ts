@@ -12,13 +12,15 @@ export interface Project {
 
 export const categories = [
     "All",
-    "Hospitality",
+    "Airport",
+    "Bank",
     "Commercial",
-    "Residential",
-    "Institutional",
-    "Office",
-    "Industrial",
-    "Banking",
+    "Education",
     "Healthcare",
-    "Logistics"
+    "Hospitality",
+    "Industrial",
+    "Logistics",
+    "Residentail",
+    "Residential",
+    "Retail"
 ];
