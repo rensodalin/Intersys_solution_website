@@ -43,8 +43,8 @@ export function PromotionOverlay({ isOpen, onClose }: PromotionOverlayProps) {
 
             {/* Ribbon at very top */}
             <div className="absolute top-0 right-0 overflow-hidden w-28 h-28 pointer-events-none z-20">
-              <div className="bg-[#D4FF00] text-black text-[10px] font-black tracking-widest py-1.5 w-40 text-center absolute top-5 -right-9 rotate-45 uppercase shadow-sm">
-                SINCE 2015
+              <div className="bg-[#D4FF00] text-black text-[10px] font-black  py-1.5 w-40 text-center absolute top-5 -right-9 rotate-45  shadow-sm">
+                Since 2015
               </div>
             </div>
 

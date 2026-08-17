@@ -88,35 +88,34 @@ function LeakDetectionPage() {
         <div className="bg-[#FDFDFD] overflow-hidden scroll-smooth selection:bg-red-500 selection:text-white">
 
             {/* ─── HERO SECTION ─── */}
-            <section className="relative h-[60vh] min-h-[550px] flex items-center overflow-hidden bg-[#0A0F1A]">
+            <section className="relative min-h-[460px] sm:min-h-[540px] md:min-h-[550px] flex items-center pt-24 sm:pt-32 pb-12 overflow-hidden bg-[#0A0F1A]">
 
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                     <img
                         src="https://images.unsplash.com/photo-1669920282670-d2e1f59e7aff?q=80&w=1142&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Leak Detection"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover opacity-70"
                     />
 
-                    {/* Softer overlay (less artificial look) */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#0A0F1A] via-[#0A0F1A]/60 to-[#0A0F1A]/20" />
-                    <div className="absolute inset-0 bg-black/10" />
+                    {/* Softer overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#0A0F1A] via-[#0A0F1A]/80 to-[#0A0F1A]/40" />
                 </div>
 
                 {/* BACK BUTTON */}
                 <button
                     onClick={() => router.history.back()}
-                    className="absolute top-1 left-8 z-20 flex items-center gap-2 text-white/80 hover:text-white transition pt-37 px-15"
+                    className="absolute top-28 sm:top-32 md:top-36 left-4 sm:left-6 lg:left-8 z-30 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group cursor-pointer"
                 >
-                    <div className="w-9 h-9  flex items-center justify-center">
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/40 border border-white/20 flex items-center justify-center backdrop-blur-md group-hover:border-white/40 transition">
                         <ArrowLeft size={16} />
                     </div>
-                    <span className="text-sm font-medium">Back</span>
+                    <span className="text-xs sm:text-sm font-medium">Back</span>
                 </button>
 
                 {/* CONTENT */}
                 <Container className="relative z-10">
-                    <div className="max-w-2xl">
+                    <div className="max-w-2xl text-center sm:text-left">
 
                         <motion.div
                             initial={{ opacity: 0, y: 25 }}
@@ -124,13 +123,12 @@ function LeakDetectionPage() {
                             transition={{ duration: 0.8 }}
                         >
 
-
-                            <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight mt-18 mb-5">
+                            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4 sm:mb-5">
                                 Direct Liquid Cooling <br />
                                 <span className="text-red-500">Leak Detection</span>
                             </h1>
 
-                            <p className="text-white/70 text-base leading-relaxed">
+                            <p className="text-xs sm:text-sm md:text-base text-white/70 leading-relaxed px-2 sm:px-0">
                                 Detect leaks early with precise sensing technology for water, oil, and chemical systems.
                                 Built for data centers and industrial environments where reliability matters most.
                             </p>

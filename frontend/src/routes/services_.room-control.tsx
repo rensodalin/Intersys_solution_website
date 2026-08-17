@@ -33,29 +33,28 @@ function RoomControlPage() {
         <div className="bg-[#FDFDFD] overflow-hidden scroll-smooth selection:bg-red-500 selection:text-white">
 
             {/* ─── HERO SECTION ─── */}
-            <section className="relative h-[80vh] min-h-[550px] flex items-center pt-24 overflow-hidden bg-[#0A0F1A]">
+            <section className="relative min-h-[460px] sm:min-h-[540px] md:min-h-[550px] flex items-center pt-24 sm:pt-32 pb-12 overflow-hidden bg-[#0A0F1A]">
                 <div className="absolute inset-0 z-0">
                     <img
                         src="https://honeywell.scene7.com/is/image/honeywell/ba-hospitality-in-ems-tstat-hero-2880x1440-overlay:5-2-hero"
                         alt="Room Control Unit Hero"
                         className="w-full h-full object-cover opacity-40 scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#0A0F1A] via-[#0A0F1A]/30 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#0A0F1A] via-[#0A0F1A]/80 to-transparent" />
                 </div>
 
-                {/* ─── BACK BUTTON (FIXED) ─── */}
+                {/* ─── BACK BUTTON ─── */}
                 <button
                     onClick={() => router.history.back()}
-                    className="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group pt-37 px-15"
+                    className="absolute top-28 sm:top-32 md:top-36 left-4 sm:left-6 lg:left-8 z-30 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group cursor-pointer"
                 >
-                    <div className="w-9 h-9  flex items-center justify-center group-hover:border-white/40 transition">
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/40 border border-white/20 flex items-center justify-center backdrop-blur-md group-hover:border-white/40 transition">
                         <ArrowLeft
                             size={16}
                             className="group-hover:-translate-x-0.5 transition-transform duration-200"
                         />
                     </div>
-
-                    <span className="text-sm font-medium">Back</span>
+                    <span className="text-xs sm:text-sm font-medium">Back</span>
                 </button>
 
                 <Container className="relative z-10">
@@ -63,13 +62,13 @@ function RoomControlPage() {
                         initial={{ opacity: 0, x: -50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 1, ease: "easeOut" }}
-                        className="max-w-4xl"
+                        className="max-w-4xl text-center sm:text-left"
                     >
-                        <h1 className="text-4xl lg:text-5xl font-bold text-white font-display leading-[1.1] mb-6">
+                        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white font-display leading-[1.1] mb-4 sm:mb-6">
                             Intelligent <br />
                             <span className="text-red-600">Room Control Units</span>
                         </h1>
-                        <p className="text-base text-white/70 max-w-2xl leading-relaxed">
+                        <p className="text-xs sm:text-sm md:text-base text-white/70 max-w-2xl leading-relaxed px-2 sm:px-0">
                             Intelligent in-room control for lighting, HVAC, and access in hospitality and commercial environments.
                         </p>
                     </motion.div>

@@ -55,21 +55,23 @@ function BMSPage() {
         <div className="bg-white overflow-hidden scroll-smooth">
 
             {/* ─── HERO ─── */}
-            {/* ─── HERO ─── */}
-            <section className="relative h-[70vh] min-h-[500px] flex items-center pt-17 overflow-hidden">
+            <section className="relative min-h-[460px] sm:min-h-[520px] md:min-h-[580px] flex items-center pt-20 sm:pt-24 pb-12 sm:pb-16 overflow-hidden bg-slate-950">
+                {/* Background Image & Gradient Overlays */}
                 <div className="absolute inset-0 z-0">
                     <img
                         src={img}
-                        alt="Modern Cityscape"
-                        className="w-full h-full object-cover"
+                        alt="Building Management Systems Infrastructure"
+                        className="w-full h-full object-cover object-center opacity-70 sm:opacity-85"
                         fetchPriority="high"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-transparent" />
+                    {/* Responsive Mobile Overlay: Dark top-to-bottom on mobile, left-to-right on desktop */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/80 to-black/50 lg:bg-gradient-to-r lg:from-black/90 lg:via-black/60 lg:to-transparent" />
                 </div>
 
                 <Container className="relative z-10 text-white">
-                    <div className="max-w-4xl mx-auto lg:mx-0 text-center lg:text-left">
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white font-display leading-[1.2] mb-5">
+                    <div className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left space-y-4 sm:space-y-5">
+                        {/* Title - Fully Responsive */}
+                        <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white font-display leading-[1.2] tracking-tight">
                             Intelligent{" "}
                             <span className="hidden lg:inline"><br /></span>
                             <span className="text-red-500">
@@ -77,30 +79,30 @@ function BMSPage() {
                             </span>
                         </h1>
 
-                        <p className="text-base text-white/70 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                            Transform your facilities with advanced automation, safety, and efficiency
+                        {/* Subtitle - Fully Responsive */}
+                        <p className="text-xs sm:text-sm md:text-base text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal px-2 sm:px-0">
+                            Transform your facilities with advanced Honeywell automation, BACnet & Modbus integration, and 24/7 centralized energy management.
                         </p>
 
-                        <div className="pt-2">
-                        </div>
                     </div>
                 </Container>
             </section>
+
             {/* ─── WHAT IS BMS ─── */}
-            <section className="py-28 bg-white">
+            <section className="py-14 sm:py-20 lg:py-28 bg-white">
                 <Container>
-                    <div className="grid lg:grid-cols-2 gap-20 items-center">
+                    <div className="grid lg:grid-cols-2 gap-10 sm:gap-14 lg:gap-20 items-center">
 
                         {/* LEFT CONTENT */}
-                        <div className="space-y-10">
+                        <div className="space-y-6 sm:space-y-10">
 
-                            <div className="space-y-5">
-                                <h2 className="text-4xl font-bold text-[#1A3263] leading-tight">
+                            <div className="space-y-3 sm:space-y-5">
+                                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1A3263] leading-tight">
                                     What is a{" "}
                                     <span className="text-red-500">Building Management System?</span>
                                 </h2>
 
-                                <p className="text-gray-500 leading-relaxed text-lg">
+                                <p className="text-gray-500 leading-relaxed text-sm sm:text-base lg:text-lg">
                                     BMS is a computer-based control system installed in buildings that monitors and controls
                                     mechanical and electrical equipment such as HVAC systems, lighting, power systems, fire systems,
                                     and fire protection infrastructure.
@@ -108,7 +110,7 @@ function BMSPage() {
                             </div>
 
                             {/* CLEAN FEATURE PILLS (NO ICONS) */}
-                            <div className="flex flex-wrap gap-3">
+                            <div className="flex flex-wrap gap-2 sm:gap-3">
                                 {[
                                     "HVAC Systems",
                                     "Lighting Control",
@@ -119,7 +121,7 @@ function BMSPage() {
                                 ].map((item, i) => (
                                     <span
                                         key={i}
-                                        className="px-4 py-2 rounded-sm bg-gray-50 border border-gray-100 text-sm font-medium text-[#1A3263] hover:border-red-200 hover:bg-red-50/40 transition"
+                                        className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-sm bg-gray-50 border border-gray-100 text-xs sm:text-sm font-medium text-[#1A3263] hover:border-red-200 hover:bg-red-50/40 transition"
                                     >
                                         {item}
                                     </span>
@@ -127,7 +129,6 @@ function BMSPage() {
                             </div>
                         </div>
 
-                        {/* RIGHT IMAGE */}
                         {/* RIGHT IMAGE */}
                         <motion.div
                             initial={{ opacity: 0, rotateY: -90 }}
@@ -138,7 +139,7 @@ function BMSPage() {
                                 ease: [0.22, 1, 0.36, 1],
                             }}
                             style={{ transformStyle: "preserve-3d" }}
-                            className="relative perspective-[2000px]"
+                            className="relative perspective-[2000px] w-full max-w-lg lg:max-w-none mx-auto"
                         >
                             <img
                                 src="https://uploads.onecompiler.io/42e6qwqtt/4463hvbwt/Screenshot%202025-11-29%20141610.png"
@@ -156,21 +157,21 @@ function BMSPage() {
 
             {/* ─── SPLIT BOXES ─── */}
             <section className="grid md:grid-cols-2">
-                <div className="bg-red-600 text-white p-16 md:p-24 flex flex-col justify-center items-start space-y-8 relative overflow-hidden">
-                    <Layout className="absolute -right-10 -bottom-10 w-64 h-64 opacity-10" />
-                    <div className="text-6xl font-serif opacity-20 leading-none">"</div>
-                    <h3 className="text-4xl font-bold max-w-md leading-tight">Advanced Building Management Systems</h3>
-                    <p className="text-white/80 leading-relaxed max-w-lg">
+                <div className="bg-red-600 text-white p-8 sm:p-14 md:p-20 lg:p-24 flex flex-col justify-center items-start space-y-6 md:space-y-8 relative overflow-hidden">
+                    <Layout className="absolute -right-10 -bottom-10 w-40 h-40 sm:w-64 sm:h-64 opacity-10" />
+                    <div className="text-4xl sm:text-6xl font-serif opacity-20 leading-none">"</div>
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold max-w-md leading-tight">Advanced Building Management Systems</h3>
+                    <p className="text-white/80 text-sm sm:text-base leading-relaxed max-w-lg">
                         Intersys Solutions provides intelligent Building Management Systems that optimize comfort, safety,
                         and energy efficiency. With our expertise and Honeywell-authorized technology, we help building
                         owners take control of their facilities with ease and reliability.
                     </p>
                 </div>
-                <div className="bg-[#1A3263] text-white p-16 md:p-24 flex flex-col justify-center items-start space-y-8 relative overflow-hidden">
-                    <Database className="absolute -right-10 -bottom-10 w-64 h-64 opacity-10" />
-                    <div className="text-6xl font-serif opacity-20 leading-none">"</div>
-                    <h3 className="text-4xl font-bold max-w-md leading-tight">Comprehensive IT Infrastructure</h3>
-                    <p className="text-white/80 leading-relaxed max-w-lg">
+                <div className="bg-[#1A3263] text-white p-8 sm:p-14 md:p-20 lg:p-24 flex flex-col justify-center items-start space-y-6 md:space-y-8 relative overflow-hidden">
+                    <Database className="absolute -right-10 -bottom-10 w-40 h-40 sm:w-64 sm:h-64 opacity-10" />
+                    <div className="text-4xl sm:text-6xl font-serif opacity-20 leading-none">"</div>
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold max-w-md leading-tight">Comprehensive IT Infrastructure</h3>
+                    <p className="text-white/80 text-sm sm:text-base leading-relaxed max-w-lg">
                         Intersys Solutions Co., Ltd offers comprehensive IT infrastructure solutions tailored to the unique
                         needs of your business. From cloud computing and network infrastructure to cybersecurity and data
                         management, we deliver reliable solutions that empower your organization to thrive in the digital era.
@@ -179,40 +180,38 @@ function BMSPage() {
             </section>
 
             {/* ─── HONEYWELL DISTRIBUTOR ─── */}
-            <section className="py-24 bg-white">
+            <section className="py-14 sm:py-20 lg:py-24 bg-white">
                 <Container>
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-12 bg-gray-50 p-12 rounded-2xl border border-gray-100">
-                        <div className="space-y-6 max-w-2xl">
-
-                            <h2 className="text-4xl font-bold text-[#1A3263]">Honeywell Engineering System Distributor</h2>
-                            <p className="text-gray-500 leading-relaxed">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-10 md:gap-12 bg-gray-50 p-6 sm:p-10 md:p-12 rounded-2xl border border-gray-100">
+                        <div className="space-y-4 sm:space-y-6 max-w-2xl text-center md:text-left">
+                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1A3263]">Honeywell Engineering System Distributor</h2>
+                            <p className="text-xs sm:text-sm md:text-base text-gray-500 leading-relaxed">
                                 Intersys Solutions Co., Ltd delivers comprehensive IT and ELV infrastructure solutions
                                 tailored to the unique demands of modern businesses. As an official Engineering System
                                 Distributor for Honeywell, we integrate world-class technologies with local expertise to
                                 ensure the highest standards of automation, safety, and efficiency.
                             </p>
                         </div>
-                        <div className=" p-10 ">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Honeywell_logo.svg/1280px-Honeywell_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail" alt="Honeywell Logo" className="h-12 w-auto object-contain" />
+                        <div className="p-4 sm:p-8 shrink-0 flex items-center justify-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Honeywell_logo.svg/1280px-Honeywell_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail" alt="Honeywell Logo" className="h-8 sm:h-12 w-auto object-contain" />
                         </div>
                     </div>
                 </Container>
             </section>
 
             {/* ─── VALUE OF NIAGARA ─── */}
-            <section className="py-28 bg-[#0A0F1A] text-white relative overflow-hidden">
+            <section className="py-14 sm:py-20 lg:py-28 bg-[#0A0F1A] text-white relative overflow-hidden">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-red-600/5 blur-[120px] rounded-full -z-10" />
                 <Container>
-                    <div className="text-center mb-20 space-y-5">
-
-                        <h2 className="text-3xl md:text-4xl font-bold">The Value of Niagara</h2>
-                        <p className="text-white/50 max-w-2xl mx-auto text-md">
+                    <div className="text-center mb-10 sm:mb-16 lg:mb-20 space-y-3 sm:space-y-5">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">The Value of Niagara</h2>
+                        <p className="text-white/50 max-w-2xl mx-auto text-xs sm:text-sm md:text-base">
                             Make device connectivity and application development simple and efficient.
                         </p>
                     </div>
 
                     {/* Niagara feature cards */}
-                    <div className="grid md:grid-cols-2 gap-8 mb-16">
+                    <div className="grid md:grid-cols-2 gap-6 sm:gap-8 mb-10 sm:mb-16">
                         {[
                             {
                                 image: "https://static.thenounproject.com/png/165980-200.png",
@@ -227,7 +226,7 @@ function BMSPage() {
                         ].map((card, i) => (
                             <div
                                 key={i}
-                                className="p-8 bg-white/5 border border-white/10 rounded-xl space-y-4"
+                                className="p-6 sm:p-8 bg-white/5 border border-white/10 rounded-xl space-y-4"
                             >
                                 <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center p-2">
                                     <img
@@ -248,7 +247,7 @@ function BMSPage() {
                         ))}
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-8">
+                    <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
                         <motion.div
                             whileHover={{ scale: 1.02 }}
                             className="bg-white/5 border border-white/10 p-4 rounded-xl overflow-hidden shadow-2xl"
@@ -266,22 +265,22 @@ function BMSPage() {
             </section>
 
             {/* ─── BMS FIELD DEVICES ─── */}
-            <section className="py-20 bg-white">
+            <section className="py-12 sm:py-16 lg:py-20 bg-white">
                 <Container>
 
                     {/* HEADER */}
-                    <div className="max-w-xl mb-12 space-y-3">
-                        <h2 className="text-3xl font-bold text-[#1A3263]">
+                    <div className="max-w-xl mb-8 sm:mb-12 space-y-2 sm:space-y-3 text-center sm:text-left">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-[#1A3263]">
                             BMS Field Devices
                         </h2>
-                        <p className="text-gray-500 text-sm leading-relaxed">
+                        <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
                             Hardware engineered for accuracy. From damper solutions to hydronic balancing,
                             we provide the physical components that bring data to life.
                         </p>
                     </div>
 
                     {/* GRID */}
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
 
                         {[
                             {
@@ -348,7 +347,7 @@ function BMSPage() {
                                             <img
                                                 src={url}
                                                 alt={device.title}
-                                                className="h-12 md:h-14 object-contain transition-transform group-hover:scale-110"
+                                                className="h-10 sm:h-12 md:h-14 object-contain transition-transform group-hover:scale-110"
                                             />
                                         </div>
                                     ))}
@@ -361,21 +360,21 @@ function BMSPage() {
             </section>
 
             {/* ─── HVAC & ENERGY CONTROL ─── */}
-            <section className="py-28 bg-[#F2F2F2]">
+            <section className="py-14 sm:py-20 lg:py-28 bg-[#F2F2F2]">
                 <Container>
                     {/* Header row — title left, subtitle right */}
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-10">
-                        <h2 className="text-4xl font-bold text-[#1A3263] shrink-0">
+                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 md:gap-6 mb-8 md:mb-10">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1A3263] shrink-0">
                             HVAC & <span className="text-red-600">Energy Control</span>
                         </h2>
-                        <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
+                        <p className="text-gray-500 text-xs sm:text-sm leading-relaxed max-w-xs">
                             Intelligent automation for optimal comfort and efficiency.
                         </p>
                     </div>
 
                     {/* Top row — white | dark navy | white */}
-                    <div className="grid md:grid-cols-3 gap-4 mb-4">
-                        <div className="bg-white p-8 rounded-xl space-y-4 border border-gray-100">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div className="bg-white p-6 sm:p-8 rounded-xl space-y-4 border border-gray-100">
                             <div className="w-10 h-10 bg-red-50 text-red-500 rounded-sm flex items-center justify-center">
                                 <SlidersHorizontal size={18} />
                             </div>
@@ -386,7 +385,7 @@ function BMSPage() {
                             </p>
                         </div>
 
-                        <div className="bg-[#1A3263] p-8 rounded-xl space-y-4">
+                        <div className="bg-[#1A3263] p-6 sm:p-8 rounded-xl space-y-4">
                             <div className="w-10 h-10 bg-white/10 text-white rounded-sm flex items-center justify-center">
                                 <Activity size={18} />
                             </div>
@@ -397,7 +396,7 @@ function BMSPage() {
                             </p>
                         </div>
 
-                        <div className="bg-white p-8 rounded-xl space-y-4 border border-gray-100">
+                        <div className="bg-white p-6 sm:p-8 rounded-xl space-y-4 border border-gray-100">
                             <div className="w-10 h-10 bg-red-50 text-red-500 rounded-sm flex items-center justify-center">
                                 <Settings size={18} />
                             </div>
@@ -410,9 +409,9 @@ function BMSPage() {
                     </div>
 
                     {/* Bottom row — Expert Support (1/3) | Real-Time Intelligence (2/3) */}
-                    <div className="grid md:grid-cols-3 gap-6 items-stretch">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 items-stretch">
                         {/* LEFT (1 Col) */}
-                        <div className="group bg-white p-7 rounded-xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 space-y-4 h-full">
+                        <div className="group bg-white p-6 sm:p-7 rounded-xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 space-y-4 h-full">
                             <div className="w-11 h-11 bg-red-50 text-red-500 rounded-sm flex items-center justify-center">
                                 <Shield size={18} />
                             </div>
@@ -424,12 +423,12 @@ function BMSPage() {
                         </div>
 
                         {/* RIGHT (2 Cols - Takes remaining space) */}
-                        <div className="md:col-span-2 group bg-white p-7 rounded-xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full">
+                        <div className="md:col-span-2 group bg-white p-6 sm:p-7 rounded-xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full">
 
-                            <div className="flex gap-8 h-full">
+                            <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 h-full">
 
                                 {/* TEXT (FIXED WIDTH) */}
-                                <div className="w-[360px] space-y-5 flex flex-col justify-center">
+                                <div className="w-full sm:w-[320px] md:w-[360px] space-y-5 flex flex-col justify-center">
 
                                     <h4 className="text-xl font-bold text-[#1A3263]">
                                         Real-Time Intelligence
@@ -454,7 +453,7 @@ function BMSPage() {
                                 </div>
 
                                 {/* IMAGE (TAKES REMAINING SPACE) */}
-                                <div className="relative flex-1 rounded-xl overflow-hidden min-h-[260px]">
+                                <div className="relative flex-1 rounded-xl overflow-hidden min-h-[180px] sm:min-h-[260px]">
 
                                     <img
                                         src="https://static.wixstatic.com/media/3d5958_888336e6fc4e4b4eade3511d56bac693~mv2.png"
@@ -471,21 +470,21 @@ function BMSPage() {
                 </Container>
             </section>
             {/* ─── PRODUCT SOLUTIONS ─── */}
-            <section className="py-28 bg-white border-t border-gray-100">
+            <section className="py-14 sm:py-20 lg:py-28 bg-white border-t border-gray-100">
                 <Container>
-                    <div className="flex flex-col md:flex-row items-end justify-between gap-8 mb-16">
+                    <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-10 md:mb-16">
                         <div className="space-y-4 max-w-2xl">
-                            <h2 className="text-4xl font-bold text-[#1A3263]">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1A3263]">
                                 Enterprise <span className="text-red-600">Product Solutions</span>
                             </h2>
-                            <p className="text-gray-500 leading-relaxed">
+                            <p className="text-gray-500 text-xs sm:text-sm md:text-base leading-relaxed">
                                 Our comprehensive BMS portfolio features state-of-the-art Honeywell technologies designed for high-performance building automation and critical system management.
                             </p>
                         </div>
 
                         <Link
                             to="/products/building-management"
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-[#1A3263] text-white rounded-lg font-bold text-sm hover:bg-[#25417e] transition shadow-lg"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 bg-[#1A3263] text-white rounded-lg font-bold text-xs sm:text-sm hover:bg-[#25417e] transition shadow-lg"
                         >
                             View Full Catalog <ArrowRight className="w-4 h-4" />
                         </Link>
@@ -497,23 +496,23 @@ function BMSPage() {
 
 
             {/* ─── SEAMLESS BMS INTEGRATION ─── */}
-            <section className="py-28 bg-white">
+            <section className="py-14 sm:py-20 lg:py-28 bg-white">
                 <Container>
 
                     {/* HEADER */}
-                    <div className="text-center max-w-3xl mx-auto mb-20 space-y-5">
-                        <h2 className="text-4xl font-bold text-[#1A3263]">
+                    <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 lg:mb-20 space-y-3 sm:space-y-5">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1A3263]">
                             Seamless BMS Integration
                         </h2>
 
-                        <p className="text-gray-500 text-lg leading-relaxed">
+                        <p className="text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed">
                             Create a comfortable and safe environment for your building by centrally controlling and
                             monitoring all vital systems.
                         </p>
                     </div>
 
                     {/* GRID */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5">
 
                         {[
                             {
@@ -559,7 +558,7 @@ function BMSPage() {
                         ].map((item, i) => (
                             <div
                                 key={i}
-                                className="group bg-gray-50 p-7 rounded-xl border border-gray-100 flex flex-col items-center text-center space-y-3 hover:border-red-500 hover:bg-red-50/30 transition-all duration-300"
+                                className="group bg-gray-50 p-5 sm:p-7 rounded-xl border border-gray-100 flex flex-col items-center text-center space-y-3 hover:border-red-500 hover:bg-red-50/30 transition-all duration-300"
                             >
 
                                 {/* ICON */}
@@ -589,16 +588,16 @@ function BMSPage() {
             </section>
 
             {/* ─── PORTFOLIO GALLERY ─── */}
-            <section className="py-10 px-6">
-                <div className="grid md:grid-cols-4 gap-4">
+            <section className="py-8 sm:py-10 px-4 sm:px-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
 
                     {/* MAIN CARD */}
-                    <div className="md:col-span-2 bg-[#1A3263] p-8 rounded-md text-white flex flex-col justify-between min-h-[320px]">
+                    <div className="sm:col-span-2 md:col-span-2 bg-[#1A3263] p-6 sm:p-8 rounded-md text-white flex flex-col justify-between min-h-[250px] sm:min-h-[320px]">
 
                         <div className="space-y-3">
 
 
-                            <h3 className="text-2xl font-bold leading-snug">
+                            <h3 className="text-xl sm:text-2xl font-bold leading-snug">
                                 Basic development platform to connect, operate and manage different protocols, networks, devices.
                             </h3>
                         </div>
@@ -615,7 +614,7 @@ function BMSPage() {
                     </div>
 
                     {/* CARD 1 */}
-                    <div className="h-[320px] rounded-md overflow-hidden relative group">
+                    <div className="h-[220px] sm:h-[320px] rounded-md overflow-hidden relative group">
                         <img
                             src="https://files.intersys-solutions.com.kh/RandomIMG/IMG_20260713_110007.jpg"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
@@ -627,7 +626,7 @@ function BMSPage() {
                     </div>
 
                     {/* CARD 2 */}
-                    <div className="h-[320px] rounded-md overflow-hidden relative group">
+                    <div className="h-[220px] sm:h-[320px] rounded-md overflow-hidden relative group">
                         <img
                             src="https://files.intersys-solutions.com.kh/RandomIMG/IMG_20260713_142815_1.jpg"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
@@ -639,7 +638,7 @@ function BMSPage() {
                     </div>
 
                     {/* CARD 3 */}
-                    <div className="md:col-span-2 h-[320px] rounded-md overflow-hidden relative group">
+                    <div className="sm:col-span-2 md:col-span-2 h-[220px] sm:h-[320px] rounded-md overflow-hidden relative group">
                         <img
                             src="https://www.intersys-solutions.com/website_asset/room.jpg"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
@@ -651,7 +650,7 @@ function BMSPage() {
                     </div>
 
                     {/* CARD 4 */}
-                    <div className="md:col-span-2 h-[320px] rounded-md overflow-hidden relative group">
+                    <div className="sm:col-span-2 md:col-span-2 h-[220px] sm:h-[320px] rounded-md overflow-hidden relative group">
                         <img
                             src="https://www.intersys-solutions.com/website_asset/office.jpg"
                             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
@@ -664,16 +663,17 @@ function BMSPage() {
 
                 </div>
             </section>
-            {/* ─── ADVANCED MONITORING PLATFORMS ─── */}
-            <section className="py-28 bg-white">
-                <Container>
-                    <div className="text-center mb-20 space-y-4">
 
-                        <h2 className="text-4xl font-bold text-[#1A3263]">Advanced Monitoring Platforms</h2>
+            {/* ─── ADVANCED MONITORING PLATFORMS ─── */}
+            <section className="py-14 sm:py-20 lg:py-28 bg-white">
+                <Container>
+                    <div className="text-center mb-10 sm:mb-16 lg:mb-20 space-y-4">
+
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1A3263]">Advanced Monitoring Platforms</h2>
                         <div className="w-20 h-1 bg-red-600 mx-auto" />
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                         {[
                             {
                                 title: "Central Monitoring",
@@ -706,13 +706,13 @@ function BMSPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className={`p-10 rounded-md space-y-6 ${card.dark ? "bg-[#1A3263] text-white" : "bg-gray-50 border border-gray-100"}`}
+                                className={`p-6 sm:p-10 rounded-md space-y-6 ${card.dark ? "bg-[#1A3263] text-white" : "bg-gray-50 border border-gray-100"}`}
                             >
                                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${card.dark ? "bg-white/10" : "bg-white border border-gray-100 shadow-sm"}`}>
                                     <card.icon size={22} className="text-red-600" />
                                 </div>
-                                <h4 className={`text-2xl font-bold ${card.dark ? "text-white" : "text-[#1A3263]"}`}>{card.title}</h4>
-                                <p className={`leading-relaxed text-sm ${card.dark ? "text-white/60" : "text-gray-500"}`}>{card.desc}</p>
+                                <h4 className={`text-xl sm:text-2xl font-bold ${card.dark ? "text-white" : "text-[#1A3263]"}`}>{card.title}</h4>
+                                <p className={`leading-relaxed text-xs sm:text-sm ${card.dark ? "text-white/60" : "text-gray-500"}`}>{card.desc}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -720,15 +720,15 @@ function BMSPage() {
             </section>
 
             {/* ─── BMS DASHBOARD ─── */}
-            <section className="py-28 bg-[#F8F9FA] overflow-hidden">
+            <section className="py-14 sm:py-20 lg:py-28 bg-[#F8F9FA] overflow-hidden">
                 <Container>
-                    <div className="mb-20">
-                        <h2 className="text-4xl md:text-5xl font-bold text-[#1A3263] text-left">
+                    <div className="mb-8 sm:mb-14 lg:mb-20">
+                        <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#1A3263] text-left">
                             BMS Dashboard
                         </h2>
                     </div>
 
-                    <div className="relative h-[400px] md:h-[600px] w-full max-w-6xl mx-auto">
+                    <div className="relative h-[260px] sm:h-[420px] md:h-[600px] w-full max-w-6xl mx-auto">
 
                         {/* BACK IMAGE (Large Dashboard - Right) */}
                         <motion.div

@@ -12,6 +12,7 @@ import { Clients } from "@/components/Homepage/Clients";
 import { Partnership } from "@/components/Homepage/Partnership";
 import { Insights } from "@/components/Homepage/Insights";
 import { PromotionOverlay } from "@/components/Common/PromotionOverlay";
+import { EventPopup } from "@/components/Common/EventPopup";
 import { PosterCarousel } from "@/components/Homepage/PosterCarousel";
 import heroImg from "@/assets/roomcontrol/pic.webp";
 
@@ -21,28 +22,33 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [showPopup, setShowPopup] = useState(false);
+  const [showEventPopup, setShowEventPopup] = useState(false);
 
   useEffect(() => {
-    // Preload the promotion overlay image while the page loads
+    // Preload promotion image
     const preload = new Image();
     preload.src = heroImg;
 
-    // Check if the user has already dismissed the promotion in this session
-    const hasSeenPromotion = sessionStorage.getItem("hasSeenPromotion");
+    // Automatically trigger Promotion Overlay 1 second after landing on website
+    const timer = setTimeout(() => {
+      setShowPopup(true);
+    }, 1000);
 
-    if (!hasSeenPromotion) {
-      // Show the promotion popup 1.5 seconds after the site opens
-      const timer = setTimeout(() => {
-        setShowPopup(true);
-      }, 1500);
-
-      return () => clearTimeout(timer);
-    }
+    return () => clearTimeout(timer);
   }, []);
 
-  const handleClose = () => {
+  const handleClosePromotion = () => {
+    // Hide Promotion Overlay
     setShowPopup(false);
-    sessionStorage.setItem("hasSeenPromotion", "true");
+
+    // AUTOMATICALLY open Event Popup moving from bottom straight up to center of website!
+    setTimeout(() => {
+      setShowEventPopup(true);
+    }, 250);
+  };
+
+  const handleCloseEvent = () => {
+    setShowEventPopup(false);
   };
 
   return (
@@ -64,10 +70,12 @@ function Index() {
       <Partnership />
 
       <WhyChooseIntersys />
-      {/* 
-      <Insights /> */}
 
-      <PromotionOverlay isOpen={showPopup} onClose={handleClose} />
+      {/* 1. Promotion Overlay - Opens automatically on site load */}
+      <PromotionOverlay isOpen={showPopup} onClose={handleClosePromotion} />
+
+      {/* 2. Company Event Rectangular Popup - AUTOMATICALLY pops up from bottom edge to center when Promotion Overlay is closed */}
+      <EventPopup isOpen={showEventPopup} onClose={handleCloseEvent} />
     </>
   );
 }

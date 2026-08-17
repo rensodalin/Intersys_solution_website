@@ -129,7 +129,7 @@ export function Hero() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={isSelected ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                         transition={{ duration: 0.5, delay: 0.15 }}
-                        className="mt-3 sm:mt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white border border-gray-200/90 p-3 sm:p-4 rounded-lg text-gray-900 shadow-md w-full"
+                        className="mt-3 sm:mt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white border border-gray-200/90 p-3 sm:p-4 rounded-lg text-gray-900 shadow-md w-full relative z-30 pointer-events-auto"
                       >
                         <div className="flex items-center gap-3 text-left">
                           <div>
@@ -137,11 +137,11 @@ export function Hero() {
                             <p className="text-[11px] sm:text-xs text-gray-500 font-normal line-clamp-1 sm:line-clamp-none">{slide.subtitle}</p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-stretch sm:justify-end pt-1 sm:pt-0">
+                        <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-stretch sm:justify-end pt-1 sm:pt-0 relative z-30">
                           {slide.phone && (
                             <a
                               href={`tel:${slide.phone.replace(/\s+/g, "")}`}
-                              className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-semibold text-gray-700 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-md transition-all border border-gray-200 shrink-0"
+                              className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-semibold text-gray-700 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-md transition-all border border-gray-200 shrink-0 cursor-pointer relative z-30"
                             >
                               <Phone size={13} className="text-red-600" />
                               <span>{slide.phone}</span>
@@ -149,7 +149,7 @@ export function Hero() {
                           )}
                           <Link
                             to={slide.link || "/"}
-                            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 text-[11px] sm:text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded-md transition-all shadow-sm hover:shadow-red-600/20 shrink-0"
+                            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 text-[11px] sm:text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded-md transition-all shadow-sm hover:shadow-red-600/20 shrink-0 cursor-pointer relative z-30"
                           >
                             <span>{slide.ctaText || "Explore"}</span>
                             <ArrowRight size={13} />
@@ -202,10 +202,10 @@ export function Hero() {
 
                             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-4 w-full">
                               <Link
-                                to="/services/building-management"
+                                to="/about"
                                 className="inline-flex items-center justify-center gap-2 bg-[#DB1A1A] text-white px-5 sm:px-7 py-3 sm:py-3.5 rounded-md font-semibold text-xs sm:text-sm hover:bg-red-700 transition-all duration-300 shadow-md shadow-red-600/20 group/btn"
                               >
-                                <span>Check it out</span>
+                                <span>Explore Us</span>
                                 <ArrowRight size={15} className="transition-transform group-hover/btn:translate-x-1" />
                               </Link>
 

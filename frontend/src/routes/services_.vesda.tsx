@@ -28,7 +28,7 @@ function VesdaPage() {
 
             {/* ───────────────── HERO ───────────────── */}
             {/* ───────────────── HERO ───────────────── */}
-            <section className="relative min-h-[540px] flex items-center bg-[#0F1720]">
+            <section className="relative min-h-[460px] sm:min-h-[540px] md:min-h-[550px] flex items-center pt-24 sm:pt-32 pb-12 bg-[#0F1720]">
 
                 {/* Background */}
                 <div className="absolute inset-0">
@@ -45,32 +45,27 @@ function VesdaPage() {
 
                 <button
                     onClick={() => router.history.back()}
-                    className="absolute top-1 left-6 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group pt-37 px-15"
+                    className="absolute top-28 sm:top-32 md:top-36 left-4 sm:left-6 lg:left-8 z-30 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-200 group cursor-pointer"
                 >
-                    <div className="w-9 h-9 flex items-center justify-center group-hover:border-white/40 transition">
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/40 border border-white/20 flex items-center justify-center backdrop-blur-md group-hover:border-white/40 transition">
                         <ArrowLeft
                             size={16}
                             className="group-hover:-translate-x-0.5 transition-transform duration-200"
                         />
                     </div>
 
-                    <span className="text-sm font-medium">Back</span>
+                    <span className="text-xs sm:text-sm font-medium">Back</span>
                 </button>
                 {/* Content */}
-                <Container className="relative z-10 pt-28 pb-20">
+                <Container className="relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7 }}
-                        className="max-w-3xl"
+                        className="max-w-3xl text-center sm:text-left"
                     >
 
-                        {/* removed uppercase */}
-                        <div className="mb-5">
-
-                        </div>
-
-                        <h1 className="text-4xl md:text-5xl font-bold text-white leading-[1.1] tracking-tight pt-10">
+                        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white leading-[1.1] tracking-tight mb-4">
                             <span className="text-red-600">
                                 VESDA
                             </span>
@@ -78,7 +73,7 @@ function VesdaPage() {
                             Smoke Detection
                         </h1>
 
-                        <p className="mt-7 text-white/80 text-[16px] leading-7 max-w-2xl">
+                        <p className="mt-4 sm:mt-7 text-xs sm:text-sm md:text-base text-white/80 leading-relaxed max-w-2xl px-2 sm:px-0">
                             VESDA (Very Early Smoke Detection Apparatus) continuously
                             samples air through a network of pipes and analyzes it
                             using laser-based detection technology. This enables smoke

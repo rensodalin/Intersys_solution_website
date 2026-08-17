@@ -5,7 +5,7 @@ import { CtaBand } from "@/components/Common/CtaBand";
 import {
     Shield, Bell, Zap, Cpu, Activity, Globe, CheckCircle2,
     Wifi, Smartphone, LayoutDashboard, Users, Radio,
-    Flame, Droplets, Power, Network, ChevronRight
+    Flame, Droplets, Power, Network, ChevronRight, ShieldCheck, Sliders
 } from "lucide-react";
 
 export const Route = createFileRoute("/services_/fire-alarm")({
@@ -84,12 +84,12 @@ function FireAlarmPage() {
             </section>
 
             {/* ─── SECTOR OPTIMIZATION ─── */}
-            <section className="py-28 bg-white">
+            <section className="py-14 sm:py-20 lg:py-28 bg-white">
                 <Container>
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                        <div className="max-w-2xl space-y-4 text-center lg:text-left mx-auto lg:mx-0">
-                            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A3263]">Optimized for Diverse Sectors</h2>
-                            <p className="text-gray-500 text-md leading-relaxed">
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-10 sm:mb-16 gap-6">
+                        <div className="max-w-2xl space-y-3 sm:space-y-4 text-center lg:text-left mx-auto lg:mx-0">
+                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1A3263]">Optimized for Diverse Sectors</h2>
+                            <p className="text-gray-500 text-xs sm:text-sm md:text-base leading-relaxed">
                                 Every environment has a unique risk profile. Our fire alarm solutions are custom-engineered to
                                 meet international safety standards for every architectural scale — providing fast response
                                 times, real-time monitoring, and long-term peace of mind.
@@ -98,7 +98,7 @@ function FireAlarmPage() {
                         <span className="text-9xl font-bold text-gray-50 leading-none select-none hidden lg:block">02</span>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
                         {[
                             {
                                 title: "Commercial",
@@ -122,16 +122,21 @@ function FireAlarmPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className="group space-y-6"
+                                className="group space-y-4"
                             >
-                                <div className="h-64 overflow-hidden rounded-md relative">
-                                    <img src={sector.img} alt={sector.title} className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110" />
-                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
-
+                                <div className="h-56 sm:h-64 overflow-hidden rounded-xl relative shadow-sm border border-gray-100">
+                                    <img
+                                        src={sector.img}
+                                        alt={sector.title}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
+                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
                                 </div>
-                                <div className="space-y-3">
-                                    <h3 className="text-xl font-bold text-[#1A3263]">{sector.title}</h3>
-                                    <p className="text-gray-500 text-sm leading-relaxed">{sector.desc}</p>
+                                <div className="space-y-2">
+                                    <h3 className="text-lg sm:text-xl font-bold text-[#1A3263]">{sector.title}</h3>
+                                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{sector.desc}</p>
                                 </div>
                             </motion.div>
                         ))}
@@ -140,32 +145,32 @@ function FireAlarmPage() {
             </section>
 
             {/* ─── UNIFIED SYSTEMS INTEGRATION ─── */}
-            <section className="py-24 bg-[#0A0F1A] text-white overflow-hidden">
+            <section className="py-14 sm:py-20 lg:py-24 bg-[#0A0F1A] text-white overflow-hidden">
                 <Container>
-                    <div className="grid lg:grid-cols-2 gap-20 items-center">
+                    <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 lg:gap-20 items-center">
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="space-y-8 text-center lg:text-left"
+                            className="space-y-6 sm:space-y-8 text-center lg:text-left"
                         >
                             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">Unified Systems Integration</h2>
-                            <p className="text-white/60 text-md leading-relaxed font-light mx-auto lg:mx-0 max-w-2xl">
+                            <p className="text-white/60 text-xs sm:text-sm md:text-base leading-relaxed font-light mx-auto lg:mx-0 max-w-2xl">
                                 We integrate Honeywell's world-class fire safety technologies — NOTIFIER, ESSER, and
                                 System Sensor — to deliver reliable protection fully compliant with international standards.
                                 Our integrated approach connects fire detection with building management and security
                                 ecosystems for holistic safety management.
                             </p>
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 {[
                                     { label: "BMS", title: "BMS Integration", desc: "Seamless BACnet & Modbus integration with your existing Building Management Systems." },
                                     { label: "Security", title: "Security Mesh", desc: "Unified intrusion & access control for comprehensive protection and real-time alerts." },
                                     { label: "Response", title: "Emergency Response", desc: "Coordinates with emergency response networks for rapid action during critical situations." },
                                     { label: "Control", title: "Intelligent Control", desc: "Programmable logic for multi-zone coordination and automated emergency response." },
                                 ].map((item, i) => (
-                                    <div key={i} className="p-6 bg-white/5 rounded-md border border-white/10">
-                                        <h4 className="text-red-500 font-bold mb-2">{item.title}</h4>
-                                        <p className="text-white/40 text-xs">{item.desc}</p>
+                                    <div key={i} className="p-5 sm:p-6 bg-white/5 rounded-xl border border-white/10">
+                                        <h4 className="text-red-500 font-bold mb-1.5 text-sm sm:text-base">{item.title}</h4>
+                                        <p className="text-white/40 text-xs leading-relaxed">{item.desc}</p>
                                     </div>
                                 ))}
                             </div>
@@ -181,6 +186,8 @@ function FireAlarmPage() {
                                 src="https://static.wixstatic.com/media/3d5958_fb21055f1af54a9d80929c991e66f329~mv2.png/v1/fill/w_634,h_316,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
                                 alt="Systems Integration"
                                 className="w-full h-auto rounded-2xl shadow-2xl"
+                                loading="lazy"
+                                decoding="async"
                             />
                             <div className="absolute inset-0 bg-red-600/10 blur-[100px] -z-10 rounded-full" />
                         </motion.div>
@@ -189,15 +196,15 @@ function FireAlarmPage() {
             </section>
 
             {/* ─── CORE STRENGTHS (images) ─── */}
-            <section className="py-24 bg-white">
+            <section className="py-14 sm:py-20 lg:py-24 bg-white">
                 <Container>
-                    <div className="text-center mb-16 space-y-4">
+                    <div className="text-center mb-10 sm:mb-16 space-y-3">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1A3263]">Fire Alarm Systems</h2>
-                        <p className="text-gray-500 max-w-2xl mx-auto">
+                        <p className="text-gray-500 text-xs sm:text-sm md:text-base max-w-2xl mx-auto">
                             Advanced protection for your safety — engineered to detect, respond, and integrate seamlessly.
                         </p>
                     </div>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                         {[
                             {
                                 icon: Bell,
@@ -215,18 +222,29 @@ function FireAlarmPage() {
                                 img: "https://static.wixstatic.com/media/3d5958_cf1a4343d91447778f385a7eff7beb60~mv2.png/v1/fill/w_650,h_294,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
                             },
                             {
-                                icon: Cpu,
-                                title: "BMS",
+                                icon: Network,
+                                title: "BMS Integration",
                                 img: "https://static.wixstatic.com/media/3d5958_fb21055f1af54a9d80929c991e66f329~mv2.png/v1/fill/w_634,h_316,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/image_edited.png"
                             }
                         ].map((strength, i) => (
-                            <div key={i} className="space-y-4">
-                                <div className="flex items-center justify-center sm:justify-start gap-3">
-                                    <strength.icon className="text-red-600 shrink-0" size={24} />
-                                    <h3 className="text-xl font-bold text-[#1A3263]">{strength.title}</h3>
+                            <div
+                                key={i}
+                                className="group bg-white p-5 rounded-lg border border-gray-100 shadow-sm hover:shadow-md hover:border-red-100 transition-all duration-300 flex flex-col justify-between"
+                            >
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="w-10 h-10 rounded-md bg-red-50 text-red-600 flex items-center justify-center shrink-0">
+                                        <strength.icon size={20} />
+                                    </div>
+                                    <h3 className="text-base font-bold text-[#1A3263]">{strength.title}</h3>
                                 </div>
-                                <div className="h-48 sm:h-56 rounded-lg overflow-hidden shadow-lg">
-                                    <img src={strength.img} alt={strength.title} className="w-full h-full object-cover" />
+                                <div className="relative w-full h-64 sm:h-72 md:h-80 lg:h-84 bg-gray-50/80 rounded-md overflow-hidden border border-gray-100 p-2 flex items-center justify-center">
+                                    <img
+                                        src={strength.img}
+                                        alt={strength.title}
+                                        className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
                                 </div>
                             </div>
                         ))}
@@ -254,32 +272,32 @@ function FireAlarmPage() {
 
                         {[
                             {
-                                icon: "https://cdn-icons-png.flaticon.com/512/2431/2431670.png",
+                                Icon: Flame,
                                 title: "Early Detection & Rapid Response",
                                 desc: "Detects smoke, heat, and gases at the earliest stage of a fire using advanced sensors and intelligent algorithms — enabling quick alerts and minimizing damage or disruption."
                             },
                             {
-                                icon: "https://cdn-icons-png.flaticon.com/512/7655/7655614.png",
+                                Icon: Network,
                                 title: "Systems Integration",
                                 desc: "Works seamlessly with your BMS, security, and emergency systems. Supports BACnet & Modbus protocols for holistic, unified building safety management."
                             },
                             {
-                                icon: "https://cdn-icons-png.flaticon.com/512/2857/2857314.png",
+                                Icon: Sliders,
                                 title: "Flexible Architecture",
                                 desc: "Scalable for all buildings — from small offices to industrial zones and high-rise towers — with support for conventional, addressable, and hybrid network architectures."
                             },
                             {
-                                icon: "https://cdn-icons-png.flaticon.com/512/1600/1600232.png",
+                                Icon: ShieldCheck,
                                 title: "High Reliability",
                                 desc: "Meets NFPA, EN54, and local regulations. Certified components from trusted brands with redundancy and fail-safe features for consistent detection and response."
                             },
                             {
-                                icon: "https://cdn-icons-png.flaticon.com/512/2099/2099058.png",
+                                Icon: Activity,
                                 title: "Smart Monitoring",
                                 desc: "Remote monitoring, mobile alerts, and web/app control interfaces. 99.9% uptime with sub-1-second alert latency and 256-bit encrypted cloud access."
                             },
                             {
-                                icon: "https://cdn-icons-png.flaticon.com/512/2889/2889676.png",
+                                Icon: Cpu,
                                 title: "Intelligent Control Panels",
                                 desc: "Programmable logic for multi-zone coordination. VESDA (Very Early Smoke Detection Apparatus) for high-risk environments with pinpoint addressable accuracy."
                             }
@@ -290,16 +308,12 @@ function FireAlarmPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.08 }}
-                                className="bg-white p-8 rounded-md border border-gray-100 shadow-sm space-y-4 hover:shadow-md transition-all duration-300"
+                                className="bg-white p-6 sm:p-8 rounded-xl border border-gray-100 shadow-sm space-y-4 hover:shadow-md transition-all duration-300"
                             >
 
                                 {/* ICON */}
-                                <div className="w-14 h-14  rounded-md flex items-center justify-center">
-                                    <img
-                                        src={cap.icon}
-                                        alt={cap.title}
-                                        className="w-8 h-8 object-contain"
-                                    />
+                                <div className="w-12 h-12 rounded-xl bg-red-50 text-red-600 border border-red-100 flex items-center justify-center">
+                                    <cap.Icon size={22} />
                                 </div>
 
                                 {/* TITLE */}
