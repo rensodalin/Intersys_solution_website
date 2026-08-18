@@ -96,11 +96,12 @@ export function EventSidebar({
   className,
   maxHeightClass = "max-h-[calc(100vh-220px)]",
 }: EventSidebarProps) {
-  const [events, setEvents] = useState<CompanyEvent[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [events, setEvents] = useState<CompanyEvent[]>(DEFAULT_EVENTS);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchActiveEvents = async () => {
+      setLoading(true);
       try {
         const backendUrl = environment;
         const res = await fetch(`${backendUrl}/api/events/active`);
@@ -115,7 +116,6 @@ export function EventSidebar({
       } catch (err) {
         console.warn("Using fallback event data due to network error:", err);
       }
-      setEvents(DEFAULT_EVENTS);
       setLoading(false);
     };
 
