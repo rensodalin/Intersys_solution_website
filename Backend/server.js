@@ -24,6 +24,7 @@ import activityRoutes from "./routes/activity.js";
 import chatRoutes from "./routes/chat.js";
 import taxonomyRoutes from "./routes/taxonomy.js";
 import technicalTipRoutes from "./routes/technicalTips.js";
+import eventRoutes from "./routes/events.js";
 import { submitContact, getContacts, deleteContact, markContactRead } from "./controllers/contactController.js";
 import { isAdmin } from "./middleware/auth.js";
 import User from "./model/user.js";
@@ -92,6 +93,7 @@ app.use("/api/activity", activityRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/taxonomy", taxonomyRoutes);
 app.use("/api/technical-tips", technicalTipRoutes);
+app.use("/api/events", eventRoutes);
 
 app.post("/api/contact", submitContact);
 app.get("/api/contacts", isAdmin, getContacts);
