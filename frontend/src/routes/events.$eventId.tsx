@@ -239,13 +239,13 @@ function EventDetailRoute() {
               {eventData.location && (
                 <>
                   <span>|</span>
-                  <span className="text-gray-600">📍 {eventData.location}</span>
+                  <span className="text-gray-600">{eventData.location}</span>
                 </>
               )}
               {eventData.time && (
                 <>
                   <span>|</span>
-                  <span className="text-gray-600">⏰ {eventData.time}</span>
+                  <span className="text-gray-600">{eventData.time}</span>
                 </>
               )}
             </div>
@@ -254,20 +254,6 @@ function EventDetailRoute() {
             {eventData.description && (
               <div className="text-sm md:text-base text-gray-700 leading-relaxed mb-8 whitespace-pre-line font-normal">
                 {eventData.description}
-              </div>
-            )}
-
-            {/* Highlights list if provided */}
-            {eventData.highlights && eventData.highlights.length > 0 && (
-              <div className="mb-8 p-5 bg-slate-50 border-l-4 border-[#0F2B5B] rounded-r-md">
-                <h3 className="text-sm font-bold text-[#0F172A] uppercase tracking-wider mb-3">
-                  Key Highlights
-                </h3>
-                <ul className="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-gray-700 font-medium">
-                  {eventData.highlights.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
               </div>
             )}
 

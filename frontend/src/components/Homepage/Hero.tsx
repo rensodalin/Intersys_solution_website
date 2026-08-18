@@ -5,8 +5,8 @@ import { ChevronLeft, ChevronRight, ShieldCheck, ArrowRight, Phone, Building2 } 
 import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/Common/Container";
-import heroFireAlarmBanner from "@/assets/hero_fire_alarm_banner.png";
-import heroHealthyBuildingBanner from "@/assets/hero_healthy_building_banner.png";
+import heroFireAlarmBanner from "@/assets/hero_fire_alarm_banner.webp";
+import heroHealthyBuildingBanner from "@/assets/hero_healthy_building_banner.webp";
 
 const slides = [
   {
@@ -105,9 +105,9 @@ export function Hero() {
                   /* Banner Slide (Padded below navbar to fit poster image on #F5F5F5 background) */
                   <div className="w-full relative pt-16 sm:pt-20 md:pt-24 pb-6 sm:pb-12 px-3 sm:px-6 lg:px-12 flex flex-col items-center justify-center overflow-hidden bg-transparent">
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.96, y: 15 }}
+                      initial={false}
                       animate={isSelected ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.96, y: 15 }}
-                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                       className="max-w-6xl w-full mx-auto relative group"
                     >
                       {/* Soft ambient glow behind banner */}
@@ -119,6 +119,8 @@ export function Hero() {
                           <img
                             src={slide.image}
                             alt={slide.title}
+                            loading="eager"
+                            fetchPriority="high"
                             className="w-full h-auto object-contain max-h-[55vh] sm:max-h-[68vh] md:max-h-[75vh] mx-auto transition-transform duration-700 hover:scale-[1.01]"
                           />
                         </Link>
@@ -126,9 +128,9 @@ export function Hero() {
 
                       {/* Interactive Overlay CTA Bar under banner (Mobile Responsive) */}
                       <motion.div
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={false}
                         animate={isSelected ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                        transition={{ duration: 0.5, delay: 0.15 }}
+                        transition={{ duration: 0.35, delay: 0.05 }}
                         className="mt-3 sm:mt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white border border-gray-200/90 p-3 sm:p-4 rounded-lg text-gray-900 shadow-md w-full relative z-30 pointer-events-auto"
                       >
                         <div className="flex items-center gap-3 text-left">
@@ -162,9 +164,9 @@ export function Hero() {
                   /* Light Theme Content Slide Card with Grid Tile Pattern Background */
                   <div className="w-full relative pt-16 sm:pt-20 md:pt-24 pb-6 sm:pb-12 px-3 sm:px-6 lg:px-12 flex flex-col items-center justify-center overflow-hidden bg-transparent">
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.96, y: 15 }}
+                      initial={false}
                       animate={isSelected ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.96, y: 15 }}
-                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                       className="max-w-6xl w-full mx-auto relative group z-10"
                     >
                       {/* Fitted Card Frame */}
@@ -175,6 +177,8 @@ export function Hero() {
                           <img
                             src={slide.image}
                             alt={slide.title}
+                            loading="eager"
+                            fetchPriority="high"
                             className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-[1.03]"
                           />
                           {/* Smooth Left-to-Right White Fade Gradient for Desktop */}
@@ -184,9 +188,9 @@ export function Hero() {
                         {/* Content Text: Below image on mobile, Left on desktop */}
                         <div className="w-full md:w-7/12 p-5 sm:p-10 lg:p-14 z-20 flex flex-col justify-center items-start text-left bg-white md:order-first">
                           <motion.div
-                            initial={{ opacity: 0, y: 15 }}
+                            initial={false}
                             animate={isSelected ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-                            transition={{ duration: 0.6, delay: 0.1 }}
+                            transition={{ duration: 0.45, delay: 0.05 }}
                             className="space-y-3 sm:space-y-5 max-w-lg w-full"
                           >
                             <h2 className="text-xl sm:text-3xl lg:text-4xl xl:text-[2.5rem] font-bold text-gray-900 leading-tight tracking-tight">
