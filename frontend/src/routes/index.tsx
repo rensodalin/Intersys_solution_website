@@ -25,13 +25,20 @@ function Index() {
   const [showEventPopup, setShowEventPopup] = useState(false);
 
   useEffect(() => {
+    // Check if user has already seen the initial popups in this browser session
+    const hasSeen = sessionStorage.getItem("hasSeenInitialPopups");
+    if (hasSeen) {
+      return;
+    }
+
     // Preload promotion image
     const preload = new Image();
     preload.src = heroImg;
 
-    // Automatically trigger Promotion Overlay 1 second after landing on website
+    // Automatically trigger Promotion Overlay 1 second after first landing on website
     const timer = setTimeout(() => {
       setShowPopup(true);
+      sessionStorage.setItem("hasSeenInitialPopups", "true");
     }, 1000);
 
     return () => clearTimeout(timer);
@@ -41,7 +48,7 @@ function Index() {
     // Hide Promotion Overlay
     setShowPopup(false);
 
-    // AUTOMATICALLY open Event Popup moving from bottom straight up to center of website!
+    // AUTOMATICALLY open Event Popup after closing Promotion Overlay
     setTimeout(() => {
       setShowEventPopup(true);
     }, 250);
