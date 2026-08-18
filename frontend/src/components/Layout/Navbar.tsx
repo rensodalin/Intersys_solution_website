@@ -51,6 +51,7 @@ export function Navbar() {
     "/my-account",
     "/technical-tips",
     "/insights",
+    "/events",
   ].some(path => location.pathname.startsWith(path));
   const [scrolled, setScrolled] = useState(false);
   const [heroIsBanner, setHeroIsBanner] = useState(true);

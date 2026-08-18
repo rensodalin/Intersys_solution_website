@@ -45,9 +45,9 @@ function InsightsPage() {
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0 bg-gradient-to-b from-blue-500/20 to-transparent" />
         </div>
-        
+
         <div className="container mx-auto px-6 relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="max-w-3xl"
@@ -86,7 +86,7 @@ function InsightsPage() {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {insights.map((item, index) => (
-              <motion.article 
+              <motion.article
                 key={item.slug}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -95,8 +95,8 @@ function InsightsPage() {
                 className="group cursor-pointer"
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-gray-100 rounded-sm mb-6">
-                  <img 
-                    src={item.image && item.image[0]} 
+                  <img
+                    src={item.image && item.image[0]}
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
@@ -125,7 +125,7 @@ function InsightsPage() {
                     {item.desc}
                   </p>
 
-                  <Link 
+                  <Link
                     to={`/insights/${item.slug}`}
                     className="inline-flex items-center gap-2 text-sm font-bold text-black group-hover:gap-3 transition-all"
                   >

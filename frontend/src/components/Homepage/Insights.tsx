@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import environment from "@/enviroment/enviroment";
@@ -60,7 +60,7 @@ export function Insights() {
   }, [emblaApi, onSelect]);
 
   if (loading || dynamicInsights.length === 0) {
-    return null; // Or a skeleton loader
+    return null;
   }
 
   return (
@@ -71,7 +71,6 @@ export function Insights() {
       {/* Header */}
       <div className="relative z-20 max-w-[1400px] mx-auto px-6 md:px-10 mb-15 mt-10 pb-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -88,21 +87,10 @@ export function Insights() {
               and insights that highlight ongoing achievements and improvements.
             </p>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-            {/* Right-side content */}
-          </motion.div>
-
         </div>
       </div>
       {/* Carousel */}
       <div className="relative">
-        {/* Side Fades */}
         <div className="absolute left-0 top-0 bottom-0 z-20 w-20 md:w-48 bg-gradient-to-r from-[#F8FAFC] via-[#F8FAFC]/70 to-transparent pointer-events-none"></div>
         <div className="absolute right-0 top-0 bottom-0 z-20 w-20 md:w-48 bg-gradient-to-l from-[#F8FAFC] via-[#F8FAFC]/70 to-transparent pointer-events-none"></div>
 
@@ -150,10 +138,8 @@ export function Insights() {
                         overflow-hidden
                         rounded-[2px]
                         bg-[#0A1628]
-                        overflow-hidden
                       "
                     >
-                      {/* Image */}
                       <img
                         src={item.image && item.image[0]}
                         alt={item.title}
@@ -163,9 +149,6 @@ export function Insights() {
                           h-full
                           w-full
                           object-cover
-                          brightness-100
-                          contrast-100
-                          saturate-100
                           transition-transform
                           duration-[4000ms]
                           ease-out
@@ -173,25 +156,11 @@ export function Insights() {
                         "
                       />
 
-                      {/* Overlay - Localized at bottom for legibility */}
                       <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
 
-                      {/* Top Light */}
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.15),transparent_45%)]"></div>
-
-                      {/* Content */}
                       <div className="relative z-10 flex h-full flex-col justify-end p-6 md:p-8">
                         <div className="mb-2">
-                          <span
-                            className="
-                              inline-flex
-                              items-center
-                              text-[11px]
-                              font-bold
-                            
-                              text-[#EED9B9]
-                            "
-                          >
+                          <span className="inline-flex items-center text-[11px] font-bold text-[#EED9B9]">
                             {item.category}
                           </span>
                         </div>
@@ -212,29 +181,12 @@ export function Insights() {
                         </div>
                       </div>
 
-                      {/* Border Glow */}
                       <div className="absolute inset-0 rounded-[5px] ring-1 ring-inset ring-black/5"></div>
                     </motion.div>
                   </Link>
                 </div>
               );
             })}
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="relative z-30 max-w-[1400px] mx-auto px-6 md:px-10 mt-6 flex items-center justify-between">
-          {/* Progress */}
-          <div className="hidden md:flex items-center gap-2">
-            {dynamicInsights.map((_, i) => (
-              <div
-                key={i}
-                className={`h-[2px] rounded-full transition-all duration-500 ${selectedIndex % dynamicInsights.length === i
-                  ? "w-12 bg-[#FF6B00]"
-                  : "w-5 bg-white/10"
-                  }`}
-              />
-            ))}
           </div>
         </div>
       </div>

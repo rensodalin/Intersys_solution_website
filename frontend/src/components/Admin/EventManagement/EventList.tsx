@@ -10,6 +10,30 @@ interface EventListProps {
   onAddNew: () => void;
 }
 
+function parseDateBadge(dateStr?: string) {
+  if (!dateStr) {
+    return { day: "01", month: "EVENT" };
+  }
+  const d = new Date(dateStr);
+  if (!isNaN(d.getTime())) {
+    const day = d.getDate().toString().padStart(2, "0");
+    const month = d.toLocaleString("en-US", { month: "short" }).toUpperCase();
+    return { day, month };
+  }
+
+  const dayMatch = dateStr.match(/\b\d{1,2}\b/);
+  const monthMatch = dateStr.match(
+    /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\b/i
+  );
+
+  const day = dayMatch ? dayMatch[0].padStart(2, "0") : "01";
+  const month = monthMatch
+    ? monthMatch[0].substring(0, 3).toUpperCase()
+    : "EVENT";
+
+  return { day, month };
+}
+
 export function EventList({
   events,
   loading,
@@ -48,119 +72,123 @@ export function EventList({
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {events.map((evt) => (
-        <div
-          key={evt._id}
-          className="bg-white rounded-2xl border border-gray-150 shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col justify-between"
-        >
-          {/* Header / Banner Preview */}
-          <div className="relative h-44 bg-slate-900 overflow-hidden">
-            {evt.image ? (
-              <img
-                src={evt.image}
-                alt={evt.title}
-                className="w-full h-full object-cover opacity-85"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-r from-[#1A3263] to-[#0d1a33]">
-                <Calendar className="w-12 h-12 text-white/30" />
-              </div>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {events.map((evt) => {
+        const { day, month } = parseDateBadge(evt.date);
+        return (
+          <div
+            key={evt._id}
+            className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col justify-between group"
+          >
+            {/* Top Image Box with Bottom-Left Date Overlay */}
+            <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
+              {evt.image ? (
+                <img
+                  src={evt.image}
+                  alt={evt.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-r from-[#0F2B5B] to-[#081F3D]">
+                  <Calendar className="w-12 h-12 text-white/30" />
+                </div>
+              )}
 
-            {/* Badges */}
-            <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-              <span className="text-white text-xs font-bold drop-shadow-md">
-                {evt.category || "Past Event Showcase"}
-              </span>
+              {/* Status Badges Overlay Header */}
+              <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
+                <span className="bg-black/60 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-1 rounded-sm shadow-xs">
+                  {evt.category || "Past Event Showcase"}
+                </span>
 
-              <div className="flex items-center gap-3">
-                {evt.isFeatured && (
-                  <span className="flex items-center gap-1 text-[#D4FF00] text-xs font-bold drop-shadow-md">
-                    <Star className="w-3.5 h-3.5 fill-[#D4FF00] text-[#D4FF00]" /> Featured
-                  </span>
-                )}
-                <button
-                  onClick={() => onToggleActive(evt._id)}
-                  className={`flex items-center gap-1 text-xs font-bold drop-shadow-md transition-colors ${
-                    evt.isActive
-                      ? "text-white hover:text-gray-200"
-                      : "text-gray-400 hover:text-gray-200"
-                  }`}
-                  title="Click to toggle visibility on website"
-                >
-                  {evt.isActive ? (
-                    <>
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Active
-                    </>
-                  ) : (
-                    <>
-                      <XCircle className="w-3.5 h-3.5" /> Hidden
-                    </>
+                <div className="flex items-center gap-2">
+                  {evt.isFeatured && (
+                    <span className="flex items-center gap-1 bg-[#D4FF00] text-black text-[10px] font-black px-2 py-0.5 rounded-sm shadow-xs">
+                      <Star className="w-3 h-3 fill-black" /> Featured
+                    </span>
                   )}
-                </button>
+                  <button
+                    onClick={() => onToggleActive(evt._id)}
+                    className={`flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-sm shadow-xs transition-colors cursor-pointer ${
+                      evt.isActive
+                        ? "bg-emerald-600 text-white"
+                        : "bg-gray-800 text-gray-300"
+                    }`}
+                    title="Toggle active status"
+                  >
+                    {evt.isActive ? (
+                      <>
+                        <CheckCircle2 className="w-3 h-3" /> Active
+                      </>
+                    ) : (
+                      <>
+                        <XCircle className="w-3 h-3" /> Hidden
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Date Box overlapping bottom-left corner */}
+              <div className="absolute bottom-0 left-0 bg-[#0F2B5B] text-white px-4 py-2.5 min-w-[72px] text-center shadow-md z-10">
+                <div className="text-2xl md:text-3xl font-black leading-none tracking-tight">
+                  {day}
+                </div>
+                <div className="text-[10px] md:text-[11px] font-bold uppercase tracking-wider text-slate-200 mt-1">
+                  {month}
+                </div>
               </div>
             </div>
 
-            {/* Title */}
-            <div className="absolute bottom-3 left-3 right-3 text-white">
-              <h3 className="text-base font-extrabold leading-snug line-clamp-1">
+            {/* Event Title & Info Below Image */}
+            <div className="p-5 flex-1 space-y-2">
+              <h3 className="text-base md:text-lg font-extrabold text-[#0F172A] leading-snug line-clamp-2 group-hover:text-[#3B49DF] transition-colors">
                 {evt.title}
               </h3>
+
               {evt.tagline && (
-                <p className="text-xs text-gray-300 font-medium line-clamp-1 mt-0.5">
+                <p className="text-xs font-semibold text-gray-500 line-clamp-1">
                   {evt.tagline}
                 </p>
               )}
-            </div>
-          </div>
 
-          {/* Details */}
-          <div className="p-5 space-y-3 flex-1 text-xs text-gray-600">
-            {evt.description && (
-              <p className="line-clamp-2 leading-relaxed">{evt.description}</p>
-            )}
-
-            <div className="space-y-1.5 pt-1 text-gray-700 font-medium">
-              {evt.date && (
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-3.5 h-3.5 text-[#1A3263]" />
-                  <span>{evt.date} {evt.time ? `(${evt.time})` : ""}</span>
-                </div>
+              {evt.description && (
+                <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
+                  {evt.description}
+                </p>
               )}
+
               {evt.location && (
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-3.5 h-3.5 text-[#C3110C]" />
+                <div className="flex items-center gap-1.5 text-xs font-medium text-gray-500 pt-1">
+                  <MapPin className="w-3.5 h-3.5 text-[#C3110C] shrink-0" />
                   <span className="truncate">{evt.location}</span>
                 </div>
               )}
             </div>
-          </div>
 
-          {/* Card Footer Actions */}
-          <div className="p-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
-            <span className="text-[11px] font-bold text-gray-400">Order: {evt.order}</span>
+            {/* Footer Actions */}
+            <div className="px-5 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between text-xs">
+              <span className="font-bold text-gray-400">Order: {evt.order}</span>
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => onEdit(evt)}
-                className="p-2 rounded-lg text-gray-600 hover:text-[#1A3263] hover:bg-gray-200/60 transition-colors"
-                title="Edit Event"
-              >
-                <Edit2 size={16} />
-              </button>
-              <button
-                onClick={() => onDelete(evt)}
-                className="p-2 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
-                title="Delete Event"
-              >
-                <Trash2 size={16} />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => onEdit(evt)}
+                  className="p-1.5 rounded-md text-gray-600 hover:text-[#0F2B5B] hover:bg-gray-200 transition-colors cursor-pointer"
+                  title="Edit Event"
+                >
+                  <Edit2 size={16} />
+                </button>
+                <button
+                  onClick={() => onDelete(evt)}
+                  className="p-1.5 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+                  title="Delete Event"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

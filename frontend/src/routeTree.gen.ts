@@ -45,6 +45,7 @@ import { Route as ServicesAudioVisualRouteImport } from './routes/services_.audi
 import { Route as ServicesAccessControlRouteImport } from './routes/services_.access-control'
 import { Route as SectorsSectorIdRouteImport } from './routes/sectors.$sectorId'
 import { Route as InsightsSlugRouteImport } from './routes/insights.$slug'
+import { Route as EventsEventIdRouteImport } from './routes/events.$eventId'
 import { Route as ProductsSlugIndexRouteImport } from './routes/products.$slug.index'
 import { Route as TechnicalTipsSystemSystemSlugRouteImport } from './routes/technical-tips.system.$systemSlug'
 import { Route as ProductsDetailProductIdRouteImport } from './routes/products.detail.$productId'
@@ -242,6 +243,11 @@ const InsightsSlugRoute = InsightsSlugRouteImport.update({
   path: '/insights/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventsEventIdRoute = EventsEventIdRouteImport.update({
+  id: '/events/$eventId',
+  path: '/events/$eventId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductsSlugIndexRoute = ProductsSlugIndexRouteImport.update({
   id: '/$slug/',
   path: '/$slug/',
@@ -345,6 +351,7 @@ export interface FileRoutesByFullPath {
   '/technical-tips': typeof TechnicalTipsRouteWithChildren
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/events/$eventId': typeof EventsEventIdRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/services/access-control': typeof ServicesAccessControlRoute
@@ -395,6 +402,7 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/events/$eventId': typeof EventsEventIdRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/services/access-control': typeof ServicesAccessControlRoute
@@ -449,6 +457,7 @@ export interface FileRoutesById {
   '/technical-tips': typeof TechnicalTipsRouteWithChildren
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/events/$eventId': typeof EventsEventIdRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
   '/services_/access-control': typeof ServicesAccessControlRoute
@@ -504,6 +513,7 @@ export interface FileRouteTypes {
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
+    | '/events/$eventId'
     | '/insights/$slug'
     | '/sectors/$sectorId'
     | '/services/access-control'
@@ -554,6 +564,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/warranty'
     | '/why-choose'
+    | '/events/$eventId'
     | '/insights/$slug'
     | '/sectors/$sectorId'
     | '/services/access-control'
@@ -607,6 +618,7 @@ export interface FileRouteTypes {
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
+    | '/events/$eventId'
     | '/insights/$slug'
     | '/sectors/$sectorId'
     | '/services_/access-control'
@@ -661,6 +673,7 @@ export interface RootRouteChildren {
   TechnicalTipsRoute: typeof TechnicalTipsRouteWithChildren
   WarrantyRoute: typeof WarrantyRoute
   WhyChooseRoute: typeof WhyChooseRoute
+  EventsEventIdRoute: typeof EventsEventIdRoute
   InsightsSlugRoute: typeof InsightsSlugRoute
   ServicesAccessControlRoute: typeof ServicesAccessControlRoute
   ServicesAudioVisualRoute: typeof ServicesAudioVisualRoute
@@ -933,6 +946,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InsightsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/events/$eventId': {
+      id: '/events/$eventId'
+      path: '/events/$eventId'
+      fullPath: '/events/$eventId'
+      preLoaderRoute: typeof EventsEventIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products/$slug/': {
       id: '/products/$slug/'
       path: '/$slug'
@@ -1136,6 +1156,7 @@ const rootRouteChildren: RootRouteChildren = {
   TechnicalTipsRoute: TechnicalTipsRouteWithChildren,
   WarrantyRoute: WarrantyRoute,
   WhyChooseRoute: WhyChooseRoute,
+  EventsEventIdRoute: EventsEventIdRoute,
   InsightsSlugRoute: InsightsSlugRoute,
   ServicesAccessControlRoute: ServicesAccessControlRoute,
   ServicesAudioVisualRoute: ServicesAudioVisualRoute,
