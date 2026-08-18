@@ -1,3 +1,5 @@
+import environment from "@/enviroment/enviroment";
+
 export interface EventItem {
   _id: string;
   title: string;
@@ -18,4 +20,4 @@ export interface EventItem {
   updatedAt?: string;
 }
 
-export const BASE_URL = import.meta.env.VITE_BACKEND_URL || "";
+export const BASE_URL = environment;

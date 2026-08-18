@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import environment from "@/enviroment/enviroment";
 
 export interface CompanyEvent {
   _id?: string;
@@ -100,7 +101,7 @@ export function EventSidebar({
   useEffect(() => {
     const fetchActiveEvents = async () => {
       try {
-        const backendUrl = import.meta.env.VITE_BACKEND_URL || "";
+        const backendUrl = environment;
         const res = await fetch(`${backendUrl}/api/events/active`);
         if (res.ok) {
           const json = await res.json();

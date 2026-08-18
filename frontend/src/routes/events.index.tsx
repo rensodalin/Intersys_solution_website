@@ -1,10 +1,11 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import environment from "@/enviroment/enviroment";
 
 export const Route = createFileRoute("/events/")({
   beforeLoad: async () => {
     let firstEventId = "default-1";
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || "";
+      const backendUrl = environment;
       const res = await fetch(`${backendUrl}/api/events/active`);
       if (res.ok) {
         const json = await res.json();

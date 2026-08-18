@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Loader2, ArrowLeft } from "lucide-react";
 import { Container } from "@/components/Common/Container";
 import { EventSidebar } from "@/components/Common/EventSidebar";
+import environment from "@/enviroment/enviroment";
 
 export const Route = createFileRoute("/events/$eventId")({
   component: EventDetailRoute,
@@ -90,7 +91,7 @@ function EventDetailRoute() {
   useEffect(() => {
     const fetchEventDetail = async () => {
       try {
-        const backendUrl = import.meta.env.VITE_BACKEND_URL || "";
+        const backendUrl = environment;
         const res = await fetch(`${backendUrl}/api/events/${eventId}`);
         if (res.ok) {
           const json = await res.json();
