@@ -104,6 +104,8 @@ function EventDetailRoute() {
 
   useEffect(() => {
     const fetchEventDetail = async () => {
+      setLoading(true);
+
       if (eventId.startsWith("default-") && FALLBACK_EVENTS[eventId]) {
         setEventData(FALLBACK_EVENTS[eventId]);
         setLoading(false);
@@ -112,6 +114,8 @@ function EventDetailRoute() {
 
       try {
         const backendUrl = environment;
+
+        // 1. Try single event fetch
         const res = await fetch(`${backendUrl}/api/events/${eventId}`);
         if (res.ok) {
           const json = await res.json();
@@ -119,6 +123,22 @@ function EventDetailRoute() {
             setEventData(json.data);
             setLoading(false);
             return;
+          }
+        }
+
+        // 2. Fallback: try active events list if single event fetch didn't return data
+        const activeRes = await fetch(`${backendUrl}/api/events/active`);
+        if (activeRes.ok) {
+          const activeJson = await activeRes.json();
+          if (activeJson.success && Array.isArray(activeJson.data)) {
+            const matched = activeJson.data.find(
+              (item: EventData) => item._id === eventId
+            );
+            if (matched) {
+              setEventData(matched);
+              setLoading(false);
+              return;
+            }
           }
         }
       } catch (err) {

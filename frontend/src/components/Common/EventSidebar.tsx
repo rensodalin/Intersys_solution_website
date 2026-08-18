@@ -96,7 +96,8 @@ export function EventSidebar({
   className,
   maxHeightClass = "max-h-[calc(100vh-220px)]",
 }: EventSidebarProps) {
-  const [events, setEvents] = useState<CompanyEvent[]>(DEFAULT_EVENTS);
+  const [events, setEvents] = useState<CompanyEvent[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchActiveEvents = async () => {
@@ -107,11 +108,15 @@ export function EventSidebar({
           const json = await res.json();
           if (json.success && json.data && json.data.length > 0) {
             setEvents(json.data);
+            setLoading(false);
+            return;
           }
         }
       } catch (err) {
         console.warn("Using fallback event data due to network error:", err);
       }
+      setEvents(DEFAULT_EVENTS);
+      setLoading(false);
     };
 
     fetchActiveEvents();
@@ -147,7 +152,18 @@ export function EventSidebar({
         )}
         style={{ WebkitOverflowScrolling: "touch" }}
       >
-        {events.map((evt, idx) => {
+        {loading ? (
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="animate-pulse flex flex-col gap-2 p-2">
+                <div className="w-full aspect-[16/10] bg-slate-100 rounded-xs" />
+                <div className="h-4 bg-slate-100 rounded w-3/4" />
+                <div className="h-3 bg-slate-100 rounded w-1/2" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          events.map((evt, idx) => {
           const eventId = evt._id || `default-${idx + 1}`;
           const isSelected = activeEventId === eventId;
           const { day, month } = parseDateBadge(evt.date);
@@ -212,7 +228,8 @@ export function EventSidebar({
               </h3>
             </Link>
           );
-        })}
+        })
+        )}
       </div>
     </div>
   );
