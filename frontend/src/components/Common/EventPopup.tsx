@@ -160,7 +160,10 @@ export function EventPopup({ isOpen, onClose }: EventPopupProps) {
             </div>
 
             {/* Event Cards Scrollable Content Area */}
-            <div className="overflow-y-auto pr-1 flex-1 space-y-6">
+            <div
+              className="overflow-y-auto scroll-smooth overscroll-contain flex-1 space-y-6 pr-2.5 [scrollbar-width:thin] [scrollbar-color:#CBD5E1_transparent]"
+              style={{ WebkitOverflowScrolling: "touch" }}
+            >
               {events.map((evt, idx) => {
                 const { day, month } = parseDateBadge(evt.date);
                 const imageSrc =
