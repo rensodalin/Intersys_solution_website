@@ -28,6 +28,7 @@ import { Route as TechnicalTipsIndexRouteImport } from './routes/technical-tips.
 import { Route as SectorsIndexRouteImport } from './routes/sectors.index'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as InsightsIndexRouteImport } from './routes/insights.index'
+import { Route as EventsIndexRouteImport } from './routes/events.index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as TechnicalTipsTipIdRouteImport } from './routes/technical-tips.$tipId'
@@ -155,6 +156,11 @@ const ProductsIndexRoute = ProductsIndexRouteImport.update({
 const InsightsIndexRoute = InsightsIndexRouteImport.update({
   id: '/insights/',
   path: '/insights/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsIndexRoute = EventsIndexRouteImport.update({
+  id: '/events/',
+  path: '/events/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -369,6 +375,7 @@ export interface FileRoutesByFullPath {
   '/technical-tips/$tipId': typeof TechnicalTipsTipIdRoute
   '/about/': typeof AboutIndexRoute
   '/admin/': typeof AdminIndexRoute
+  '/events/': typeof EventsIndexRoute
   '/insights/': typeof InsightsIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/sectors/': typeof SectorsIndexRoute
@@ -420,6 +427,7 @@ export interface FileRoutesByTo {
   '/technical-tips/$tipId': typeof TechnicalTipsTipIdRoute
   '/about': typeof AboutIndexRoute
   '/admin': typeof AdminIndexRoute
+  '/events': typeof EventsIndexRoute
   '/insights': typeof InsightsIndexRoute
   '/products': typeof ProductsIndexRoute
   '/sectors': typeof SectorsIndexRoute
@@ -475,6 +483,7 @@ export interface FileRoutesById {
   '/technical-tips/$tipId': typeof TechnicalTipsTipIdRoute
   '/about/': typeof AboutIndexRoute
   '/admin/': typeof AdminIndexRoute
+  '/events/': typeof EventsIndexRoute
   '/insights/': typeof InsightsIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/sectors/': typeof SectorsIndexRoute
@@ -531,6 +540,7 @@ export interface FileRouteTypes {
     | '/technical-tips/$tipId'
     | '/about/'
     | '/admin/'
+    | '/events/'
     | '/insights/'
     | '/products/'
     | '/sectors/'
@@ -582,6 +592,7 @@ export interface FileRouteTypes {
     | '/technical-tips/$tipId'
     | '/about'
     | '/admin'
+    | '/events'
     | '/insights'
     | '/products'
     | '/sectors'
@@ -636,6 +647,7 @@ export interface FileRouteTypes {
     | '/technical-tips/$tipId'
     | '/about/'
     | '/admin/'
+    | '/events/'
     | '/insights/'
     | '/products/'
     | '/sectors/'
@@ -689,6 +701,7 @@ export interface RootRouteChildren {
   ServicesVesdaRoute: typeof ServicesVesdaRoute
   AboutIndexRoute: typeof AboutIndexRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  EventsIndexRoute: typeof EventsIndexRoute
   InsightsIndexRoute: typeof InsightsIndexRoute
 }
 
@@ -825,6 +838,13 @@ declare module '@tanstack/react-router' {
       path: '/insights'
       fullPath: '/insights/'
       preLoaderRoute: typeof InsightsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events/': {
+      id: '/events/'
+      path: '/events'
+      fullPath: '/events/'
+      preLoaderRoute: typeof EventsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -1172,6 +1192,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesVesdaRoute: ServicesVesdaRoute,
   AboutIndexRoute: AboutIndexRoute,
   AdminIndexRoute: AdminIndexRoute,
+  EventsIndexRoute: EventsIndexRoute,
   InsightsIndexRoute: InsightsIndexRoute,
 }
 export const routeTree = rootRouteImport

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Loader2, ArrowLeft } from "lucide-react";
 import { Container } from "@/components/Common/Container";
+import { EventSidebar } from "@/components/Common/EventSidebar";
 
 export const Route = createFileRoute("/events/$eventId")({
   component: EventDetailRoute,
@@ -152,51 +153,63 @@ function EventDetailRoute() {
 
   return (
     <div className="min-h-screen bg-white pt-28 md:pt-36 pb-24">
-      <Container className="max-w-4xl px-6 md:px-8">
-        {/* Back Link */}
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-xs font-bold text-gray-500 hover:text-[#0F2B5B] transition-colors mb-8"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to Home
-        </Link>
+      <Container className="max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          {/* Left Column: Event Popup UI Sidebar */}
+          <div className="lg:col-span-4 xl:col-span-4 lg:sticky lg:top-28">
+            <EventSidebar activeEventId={eventId} />
+          </div>
 
-        {/* 1. Large Bold Title at Top */}
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0F172A] leading-snug tracking-tight mb-4 font-display">
-          {eventData.title}
-        </h1>
-
-        {/* 2. Sub-header Meta Line matching requested UI */}
-        <div className="flex items-center gap-2.5 text-xs sm:text-sm font-bold text-gray-500 mb-8 border-b border-gray-100 pb-4">
-          <div className="w-1 h-4 bg-[#0F2B5B] rounded-xs shrink-0" />
-          <span>{eventData.date || "13 Feb 2026"}</span>
-          <span>|</span>
-          <span className="text-[#0F2B5B]">{eventData.category || "News & Events"}</span>
-        </div>
-
-        {/* 3. Main Description Paragraph */}
-        {eventData.description && (
-          <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-10 font-normal">
-            {eventData.description}
-          </p>
-        )}
-
-        {/* 4. Stacked Full-Width Images matching requested UI */}
-        <div className="space-y-6 md:space-y-8">
-          {allImages.map((imgUrl, idx) => (
-            <div
-              key={idx}
-              className="relative w-full overflow-hidden rounded-lg shadow-sm border border-gray-100 bg-gray-50"
+          {/* Right Column: Event Detail Content (No rounded corners, no borders, no shadow) */}
+          <div className="lg:col-span-8 xl:col-span-8 bg-white p-0 sm:p-2">
+            {/* Back Link */}
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-xs font-bold text-gray-500 hover:text-[#0F2B5B] transition-colors mb-8"
             >
-              <img
-                src={imgUrl}
-                alt={`${eventData.title} photo ${idx + 1}`}
-                className="w-full h-auto object-cover max-h-[600px]"
-              />
+              <ArrowLeft className="w-4 h-4" /> Back to Home
+            </Link>
+
+            {/* 1. Large Bold Title at Top */}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0F172A] leading-snug tracking-tight mb-4 font-display">
+              {eventData.title}
+            </h1>
+
+            {/* 2. Sub-header Meta Line */}
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm font-bold text-gray-500 mb-8 border-b border-gray-100 pb-4">
+              <div className="w-1 h-4 bg-[#0F2B5B] shrink-0" />
+              <span>{eventData.date || "13 Feb 2026"}</span>
+              <span>|</span>
+              <span className="text-[#0F2B5B]">{eventData.category || "News & Events"}</span>
             </div>
-          ))}
+
+            {/* 3. Main Description Paragraph */}
+            {eventData.description && (
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-10 font-normal">
+                {eventData.description}
+              </p>
+            )}
+
+            {/* 4. Stacked Full-Width Images (No rounded corners, no borders, no shadow) */}
+            <div className="space-y-6 md:space-y-8">
+              {allImages.map((imgUrl, idx) => (
+                <div
+                  key={idx}
+                  className="relative w-full overflow-hidden bg-gray-50"
+                >
+                  <img
+                    src={imgUrl}
+                    alt={`${eventData.title} photo ${idx + 1}`}
+                    className="w-full h-auto object-cover max-h-[600px]"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </Container>
     </div>
   );
 }
+
+

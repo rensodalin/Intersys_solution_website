@@ -24,6 +24,7 @@ const CLIENT_CENTER_DATA = [
   { name: "Document Center", href: "/document-center" },
   { name: "Request a Quote", href: "/request-quote" },
   { name: "Technical Tips", href: "/technical-tips" },
+  { name: "News & Events", href: "/events/default-1" },
   { name: "Warranty", href: "/warranty" }
 ];
 const CONTACT_DATA = [
