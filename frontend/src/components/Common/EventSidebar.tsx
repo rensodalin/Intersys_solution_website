@@ -151,9 +151,15 @@ export function EventSidebar({
           const eventId = evt._id || `default-${idx + 1}`;
           const isSelected = activeEventId === eventId;
           const { day, month } = parseDateBadge(evt.date);
-          const imageSrc =
+          const rawImage =
             evt.image ||
             "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1200&auto=format&fit=crop";
+          const imageSrc =
+            rawImage.startsWith("http://") ||
+            rawImage.startsWith("https://") ||
+            rawImage.startsWith("data:")
+              ? rawImage
+              : `${environment}${rawImage.startsWith("/") ? rawImage : `/${rawImage}`}`;
 
           return (
             <Link

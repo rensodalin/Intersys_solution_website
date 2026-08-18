@@ -19,6 +19,7 @@ interface EventData {
   time?: string;
   location?: string;
   image?: string;
+  registrationUrl?: string;
   galleryImages?: string[];
   highlights?: string[];
 }
@@ -83,6 +84,19 @@ const FALLBACK_EVENTS: Record<string, EventData> = {
   },
 };
 
+const resolveImageUrl = (url?: string) => {
+  if (!url) return "";
+  if (
+    url.startsWith("http://") ||
+    url.startsWith("https://") ||
+    url.startsWith("data:")
+  ) {
+    return url;
+  }
+  const cleanPath = url.startsWith("/") ? url : `/${url}`;
+  return `${environment}${cleanPath}`;
+};
+
 function EventDetailRoute() {
   const { eventId } = Route.useParams();
   const [eventData, setEventData] = useState<EventData | null>(null);
@@ -90,6 +104,12 @@ function EventDetailRoute() {
 
   useEffect(() => {
     const fetchEventDetail = async () => {
+      if (eventId.startsWith("default-") && FALLBACK_EVENTS[eventId]) {
+        setEventData(FALLBACK_EVENTS[eventId]);
+        setLoading(false);
+        return;
+      }
+
       try {
         const backendUrl = environment;
         const res = await fetch(`${backendUrl}/api/events/${eventId}`);
@@ -111,7 +131,11 @@ function EventDetailRoute() {
         setEventData({
           title: "Intersys Corporate Event Showcase",
           category: "News & Events",
-          date: "13 Feb 2026",
+          date: new Date().toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          }),
           description:
             "Intersys organized an engineering showcase displaying smart building management systems, access control, and integrated fire alarm infrastructure.",
           image:
@@ -147,10 +171,11 @@ function EventDetailRoute() {
     );
   }
 
-  const allImages = [
+  const rawImages = [
     ...(eventData.image ? [eventData.image] : []),
     ...(eventData.galleryImages || []),
   ];
+  const allImages = rawImages.map((img) => resolveImageUrl(img)).filter(Boolean);
 
   return (
     <div className="min-h-screen bg-white pt-28 md:pt-36 pb-24">
@@ -161,7 +186,7 @@ function EventDetailRoute() {
             <EventSidebar activeEventId={eventId} />
           </div>
 
-          {/* Right Column: Event Detail Content (No rounded corners, no borders, no shadow) */}
+          {/* Right Column: Event Detail Content */}
           <div className="lg:col-span-8 xl:col-span-8 bg-white p-0 sm:p-2">
             {/* Back Link */}
             <Link
@@ -172,31 +197,80 @@ function EventDetailRoute() {
             </Link>
 
             {/* 1. Large Bold Title at Top */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0F172A] leading-snug tracking-tight mb-4 font-display">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0F172A] leading-snug tracking-tight mb-3 font-display">
               {eventData.title}
             </h1>
 
+            {/* Sub-Tagline if available */}
+            {eventData.tagline && (
+              <p className="text-base sm:text-lg font-semibold text-[#3B49DF] mb-4">
+                {eventData.tagline}
+              </p>
+            )}
+
             {/* 2. Sub-header Meta Line */}
-            <div className="flex items-center gap-2.5 text-xs sm:text-sm font-bold text-gray-500 mb-8 border-b border-gray-100 pb-4">
+            <div className="flex flex-wrap items-center gap-2.5 text-xs sm:text-sm font-bold text-gray-500 mb-8 border-b border-gray-100 pb-4">
               <div className="w-1 h-4 bg-[#0F2B5B] shrink-0" />
-              <span>{eventData.date || "13 Feb 2026"}</span>
-              <span>|</span>
-              <span className="text-[#0F2B5B]">{eventData.category || "News & Events"}</span>
+              {eventData.date && <span>{eventData.date}</span>}
+              {eventData.date && eventData.category && <span>|</span>}
+              {eventData.category && (
+                <span className="text-[#0F2B5B]">{eventData.category}</span>
+              )}
+              {eventData.location && (
+                <>
+                  <span>|</span>
+                  <span className="text-gray-600">📍 {eventData.location}</span>
+                </>
+              )}
+              {eventData.time && (
+                <>
+                  <span>|</span>
+                  <span className="text-gray-600">⏰ {eventData.time}</span>
+                </>
+              )}
             </div>
 
             {/* 3. Main Description Paragraph */}
             {eventData.description && (
-              <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-10 font-normal">
+              <div className="text-sm md:text-base text-gray-700 leading-relaxed mb-8 whitespace-pre-line font-normal">
                 {eventData.description}
-              </p>
+              </div>
             )}
 
-            {/* 4. Stacked Full-Width Images (No rounded corners, no borders, no shadow) */}
+            {/* Highlights list if provided */}
+            {eventData.highlights && eventData.highlights.length > 0 && (
+              <div className="mb-8 p-5 bg-slate-50 border-l-4 border-[#0F2B5B] rounded-r-md">
+                <h3 className="text-sm font-bold text-[#0F172A] uppercase tracking-wider mb-3">
+                  Key Highlights
+                </h3>
+                <ul className="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-gray-700 font-medium">
+                  {eventData.highlights.map((item, idx) => (
+                    <li key={idx}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Registration URL button if provided */}
+            {eventData.registrationUrl && (
+              <div className="mb-8">
+                <a
+                  href={eventData.registrationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-6 py-3 bg-[#0F2B5B] text-white text-xs sm:text-sm font-bold rounded-md hover:bg-[#3B49DF] transition-colors shadow-sm"
+                >
+                  Register for Event
+                </a>
+              </div>
+            )}
+
+            {/* 4. Stacked Full-Width Images */}
             <div className="space-y-6 md:space-y-8">
               {allImages.map((imgUrl, idx) => (
                 <div
                   key={idx}
-                  className="relative w-full overflow-hidden bg-gray-50"
+                  className="relative w-full overflow-hidden bg-gray-50 rounded-xs"
                 >
                   <img
                     src={imgUrl}

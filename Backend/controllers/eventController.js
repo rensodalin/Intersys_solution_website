@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Event from "../model/event.js";
 
 // Public: Get all active events for visitors
@@ -23,6 +24,9 @@ export const getAll = async (req, res) => {
 // Admin: Get single event by ID
 export const getById = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(404).json({ success: false, message: "Event not found" });
+    }
     const event = await Event.findById(req.params.id);
     if (!event) {
       return res.status(404).json({ success: false, message: "Event not found" });
