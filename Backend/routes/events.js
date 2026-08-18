@@ -6,10 +6,10 @@ const router = express.Router();
 
 // Public routes
 router.get("/active", eventController.getActive);
+router.get("/:id", eventController.getById);
 
 // Admin routes
 router.get("/", isAdmin, eventController.getAll);
-router.get("/:id", isAdmin, eventController.getById);
 router.post("/", isAdmin, eventController.create);
 router.put("/:id", isAdmin, eventController.update);
 router.patch("/:id/active", isAdmin, eventController.toggleActive);
