@@ -38,6 +38,14 @@ const whyChooseItems = [
     },
     {
         id: 5,
+        tag: "Engineering Expertise",
+        title: "70+ Certified Engineers",
+        description: "Over 70 certified Engineers specialized in BMS, Fire Safety, and ELV systems, providing unmatched technical integration and field supervision.",
+        image: "https://files.intersys-solutions.com.kh/RandomIMG/772773636_1747714452940401_3216883704336750666_n.jpg",
+        detail: "Certified International Standards",
+    },
+    {
+        id: 5,
         tag: "Technical Advisory",
         title: "Local Support & Training",
         description: "Dedicated Intersys technical response team providing immediate on-site support, operator training, and system performance audits.",
