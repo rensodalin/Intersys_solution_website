@@ -154,7 +154,7 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
         <div
           className="w-full lg:w-1/2 relative overflow-hidden flex items-center justify-center px-8 py-10"
           style={{
-            backgroundImage: `linear-gradient(rgba(8,31,61,0.88), rgba(8,31,61,0.88)), url(${foot})`,
+            backgroundImage: "linear-gradient(rgba(8,31,61,0.88), rgba(8,31,61,0.88)), url('https://files.intersys-solutions.com.kh/RandomIMG/Screenshot%202026-08-20%20150600.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
