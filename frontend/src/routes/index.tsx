@@ -13,6 +13,7 @@ import { Partnership } from "@/components/Homepage/Partnership";
 import { Insights } from "@/components/Homepage/Insights";
 import { PromotionOverlay } from "@/components/Common/PromotionOverlay";
 import { EventPopup } from "@/components/Common/EventPopup";
+import { prefetchEvents } from "@/components/Common/EventSidebar";
 import { PosterCarousel } from "@/components/Homepage/PosterCarousel";
 import heroImg from "@/assets/roomcontrol/pic.webp";
 
@@ -25,6 +26,9 @@ function Index() {
   const [showEventPopup, setShowEventPopup] = useState(false);
 
   useEffect(() => {
+    // Immediately prefetch events and preload images in background
+    prefetchEvents();
+
     // Check if user has already seen the initial popups in this browser session
     const hasSeen = sessionStorage.getItem("hasSeenInitialPopups");
     if (hasSeen) {
@@ -35,11 +39,11 @@ function Index() {
     const preload = new Image();
     preload.src = heroImg;
 
-    // Automatically trigger Promotion Overlay 1 second after first landing on website
+    // Trigger Promotion Overlay 400ms after landing on website
     const timer = setTimeout(() => {
       setShowPopup(true);
       sessionStorage.setItem("hasSeenInitialPopups", "true");
-    }, 1000);
+    }, 400);
 
     return () => clearTimeout(timer);
   }, []);
