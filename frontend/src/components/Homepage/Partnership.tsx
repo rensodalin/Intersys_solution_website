@@ -48,7 +48,7 @@ export function Partnership() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-gray-400 max-w-md mx-auto text-sm leading-relaxed"
+                        className="text-gray-500 max-w-md mx-auto text-md font-semibold"
                     >
                         Trusted by industry leaders worldwide
                     </motion.p>
