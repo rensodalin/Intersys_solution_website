@@ -52,7 +52,7 @@ export function TechnicalTips() {
 
                 <Container className="relative z-10 text-center max-w-3xl flex flex-col items-center justify-center">
                     <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mb-3 text-center">
-                        Technical Tips & <span className="text-[#FC3B1F]">System Manuals</span>
+                        Technical Tips & <span className="text-red-500">System Manuals</span>
                     </h1>
 
                     <p className="text-slate-200/90 text-xs sm:text-sm md:text-base max-w-xl mx-auto text-center leading-relaxed font-normal">

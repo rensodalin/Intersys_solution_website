@@ -166,6 +166,7 @@ function EventDetailRoute() {
     };
 
     fetchEventDetail();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [eventId]);
 
   if (loading) {
@@ -201,13 +202,8 @@ function EventDetailRoute() {
     <div className="min-h-screen bg-white pt-28 md:pt-36 pb-24">
       <Container className="max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Left Column: Event Popup UI Sidebar */}
-          <div className="lg:col-span-4 xl:col-span-4 lg:sticky lg:top-28">
-            <EventSidebar activeEventId={eventId} />
-          </div>
-
-          {/* Right Column: Event Detail Content */}
-          <div className="lg:col-span-8 xl:col-span-8 bg-white p-0 sm:p-2">
+          {/* Main Event Detail Content (First on mobile, right column on desktop) */}
+          <div className="order-1 lg:order-2 lg:col-span-8 xl:col-span-8 bg-white p-0 sm:p-2">
             {/* Back Link */}
             <Link
               to="/"
@@ -286,6 +282,14 @@ function EventDetailRoute() {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Left Column: Event Popup UI Sidebar (Second on mobile, left column on desktop) */}
+          <div className="order-2 lg:order-1 lg:col-span-4 xl:col-span-4 lg:sticky lg:top-28">
+            <EventSidebar
+              activeEventId={eventId}
+              onSelectEvent={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            />
           </div>
         </div>
       </Container>

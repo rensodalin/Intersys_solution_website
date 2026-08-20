@@ -26,8 +26,32 @@ export function ProductHero({
     ],
 }: ProductHeroProps) {
     return (
-        <div className="w-full mt-0 mb-4 sm:mb-6">
-            <div className="relative w-full overflow-hidden bg-white rounded-xl shadow-sm border border-gray-200/80 min-h-[165px] sm:min-h-[200px] md:min-h-[240px] flex items-center">
+        <div className="w-full mt-0 mb-3 md:mb-6">
+            {/* Mobile Standalone Breadcrumbs - Visible ONLY on Phone (< md) */}
+            <nav className="flex md:hidden items-center gap-1.5 py-2 px-1 flex-wrap border-b border-gray-200/60 mb-2">
+                {breadcrumbs.map((item, index) => (
+                    <div key={item.name} className="flex items-center gap-1.5">
+                        <Link
+                            to={item.href}
+                            className={cn(
+                                "text-xs font-semibold transition-colors leading-none",
+                                index === breadcrumbs.length - 1
+                                    ? "text-[#C3110C] font-bold pointer-events-none"
+                                    : "text-gray-600 hover:text-[#C3110C]"
+                            )}
+                        >
+                            {item.name}
+                        </Link>
+
+                        {index < breadcrumbs.length - 1 && (
+                            <ChevronRight className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                        )}
+                    </div>
+                ))}
+            </nav>
+
+            {/* Desktop Banner - Visible ONLY on Desktop (md+) */}
+            <div className="hidden md:flex relative w-full overflow-hidden bg-white rounded-md shadow-sm border border-gray-200/80 min-h-[165px] sm:min-h-[200px] md:min-h-[240px] items-center">
                 {/* Background Image - imageproduct.png from assets */}
                 <img
                     src={heroImg}

@@ -2,6 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Container } from "@/components/Common/Container";
 import { CtaBand } from "@/components/Common/CtaBand";
+import fireAlarmImg from "@/assets/firealarm.png";
+import sectorCommercialImg from "@/assets/sector_commercial.jpg";
+import sectorResidentialImg from "@/assets/sector_residential.jpg";
+import sectorIndustrialImg from "@/assets/sector_industrial.jpg";
 import {
     Shield, Bell, Zap, Cpu, Activity, Globe, CheckCircle2,
     Wifi, Smartphone, LayoutDashboard, Users, Radio,
@@ -74,9 +78,10 @@ function FireAlarmPage() {
                             className="flex justify-center"
                         >
                             <img
-                                src="https://files.intersys-solutions.com.kh/RandomIMG/firealarm.png"
+                                src={fireAlarmImg}
                                 alt="Fire Safety Diagram"
                                 className="w-full max-w-md md:max-w-2xl object-contain"
+                                fetchPriority="high"
                             />
                         </motion.div>
                     </div>
@@ -102,17 +107,17 @@ function FireAlarmPage() {
                         {[
                             {
                                 title: "Commercial",
-                                img: "https://www.intersys-solutions.com/website_asset/Commercial_building.jpg",
+                                img: "https://ddec.com.vn/wp-content/uploads/2020/03/Ban-dem-2.jpg",
                                 desc: "Advanced fire safety systems for office buildings, retail spaces, and business complexes — integrated with BMS, PA systems, and access control."
                             },
                             {
                                 title: "Residential",
-                                img: "https://www.intersys-solutions.com/website_asset/commercail.jpg",
+                                img: "https://images.realestate.com.kh/blog/Sky%20Villa%203.jpg",
                                 desc: "Reliable protection for apartments, condominiums, and residential developments with aesthetically discreet detectors and guest-room integration."
                             },
                             {
                                 title: "Industrial",
-                                img: "https://www.intersys-solutions.com/website_asset/fire.jpg",
+                                img: "https://cominasia.com/wp-content/uploads/2022/12/IMG_7636_1200x600-1.jpg",
                                 desc: "Heavy-duty fire detection and suppression for factories and industrial facilities — high-sensitivity smoke detection, gas monitoring, and explosion-proof devices."
                             }
                         ].map((sector, i) => (

@@ -29,20 +29,20 @@ const slides = [
     phone: "+855 77 602 334",
     ctaText: "Explore Solutions",
   },
-  {
-    type: "content",
-    image: "https://images.unsplash.com/photo-1615406020658-6c4b805f1f30?q=80&w=1170&auto=format&fit=crop",
-    title: "Smart Building Solutions",
-    highlight: "with Safer Future.",
-    description: "Pioneering the next generation of architectural intelligence through integrated BMS, security, and fire safety systems.",
-  },
-  {
-    type: "content",
-    image: "https://images.unsplash.com/photo-1581094017399-34c4fb48c65b?q=80&w=1170&auto=format&fit=crop",
-    title: "Intelligent Security & BMS",
-    highlight: "Integrated Systems.",
-    description: "Empowering modern facilities with enterprise-grade access control, surveillance, and automated building management.",
-  },
+  // {
+  //   type: "content",
+  //   image: "https://images.unsplash.com/photo-1615406020658-6c4b805f1f30?q=80&w=1170&auto=format&fit=crop",
+  //   title: "Smart Building Solutions",
+  //   highlight: "with Safer Future.",
+  //   description: "Pioneering the next generation of architectural intelligence through integrated BMS, security, and fire safety systems.",
+  // },
+  // {
+  //   type: "content",
+  //   image: "https://images.unsplash.com/photo-1581094017399-34c4fb48c65b?q=80&w=1170&auto=format&fit=crop",
+  //   title: "Intelligent Security & BMS",
+  //   highlight: "Integrated Systems.",
+  //   description: "Empowering modern facilities with enterprise-grade access control, surveillance, and automated building management.",
+  // },
 ];
 
 export function Hero() {
@@ -83,7 +83,7 @@ export function Hero() {
   return (
     <section className="relative min-h-0 md:min-h-[85vh] py-2 md:py-0 flex flex-col justify-center overflow-hidden bg-[#F5F5F5]">
       {/* Global Architectural Grid Tile Pattern Background Overlay */}
-      <div 
+      <div
         className="absolute inset-0 pointer-events-none opacity-50 z-0"
         style={{
           backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.07) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.07) 1px, transparent 1px)`,
@@ -171,7 +171,7 @@ export function Hero() {
                     >
                       {/* Fitted Card Frame */}
                       <div className="relative rounded-lg overflow-hidden shadow-md sm:shadow-[0_15px_45px_-12px_rgba(0,0,0,0.12)] bg-white border border-gray-200/80 flex flex-col md:flex-row items-stretch min-h-0 md:min-h-[460px] lg:min-h-[500px]">
-                        
+
                         {/* Image Container: Top on mobile, Right on desktop */}
                         <div className="w-full md:w-5/12 relative h-44 sm:h-60 md:h-auto md:min-h-full overflow-hidden bg-gray-100 shrink-0 md:order-last">
                           <img
@@ -193,7 +193,7 @@ export function Hero() {
                             transition={{ duration: 0.45, delay: 0.05 }}
                             className="space-y-3 sm:space-y-5 max-w-lg w-full"
                           >
-                            <h2 className="text-xl sm:text-3xl lg:text-4xl xl:text-[2.5rem] font-bold text-gray-900 leading-tight tracking-tight">
+                            {/* <h2 className="text-xl sm:text-3xl lg:text-4xl xl:text-[2.5rem] font-bold text-gray-900 leading-tight tracking-tight">
                               {slide.title}{" "}
                               {slide.highlight && (
                                 <span className="block mt-0.5 sm:mt-1 text-[#DB1A1A]">{slide.highlight}</span>
@@ -202,7 +202,7 @@ export function Hero() {
 
                             <p className="text-xs sm:text-base text-gray-600 leading-relaxed font-normal">
                               {slide.description}
-                            </p>
+                            </p> */}
 
                             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-4 w-full">
                               <Link
@@ -256,11 +256,10 @@ export function Hero() {
           <button
             key={i}
             onClick={() => emblaApi && emblaApi.scrollTo(i)}
-            className={`h-1.5 sm:h-2 transition-all duration-500 rounded-full cursor-pointer ${
-              selectedIndex === i
+            className={`h-1.5 sm:h-2 transition-all duration-500 rounded-full cursor-pointer ${selectedIndex === i
                 ? "w-6 sm:w-8 bg-red-600 shadow-[0_0_12px_rgba(220,38,38,0.6)]"
                 : "w-1.5 sm:w-2 bg-gray-300 hover:bg-gray-500"
-            }`}
+              }`}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}

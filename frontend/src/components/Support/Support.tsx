@@ -173,7 +173,7 @@ export function Support() {
                 Technical Support
               </span>
               <br className="hidden sm:inline" />{" "}
-              <span className="text-[#FC3B1F]">
+              <span className="text-red-500">
                 & Customer Service
               </span>
             </h1>
@@ -204,4 +204,4 @@ export function Support() {
       </section>
     </div>
   );
-}
+}

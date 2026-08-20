@@ -16,19 +16,19 @@ export function ContactHero() {
         <div className="absolute inset-0 bg-black/75" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-20 relative z-10 text-white w-full">
+      <div className="max-w-7xl mx-auto px-6 md:px-20 relative z-10 text-white w-full flex flex-col items-center md:items-start text-center md:text-left">
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="max-w-2xl"
         >
-          <h1 className="text-3xl md:text-5xl font-bold mb-4 font-display tracking-tight text-white leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 font-display tracking-tight text-white leading-tight">
             Contact <span className="text-[#DB1A1A]">Us</span>
           </h1>
 
-          <p className="text-gray-300 text-sm md:text-base leading-relaxed opacity-80 max-w-lg">
-            Have a Project in mind or need expert advice ? Reach out to our team and let's build something exceptional together.
+          <p className="text-gray-300 text-xs sm:text-sm md:text-base leading-relaxed opacity-90 max-w-lg mx-auto md:mx-0">
+            Have a project in mind or need expert advice? Reach out to our team and let's build something exceptional together.
           </p>
         </motion.div>
       </div>

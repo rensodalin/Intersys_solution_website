@@ -66,6 +66,7 @@ export function PromotionOverlay({ isOpen, onClose }: PromotionOverlayProps) {
                 src={heroImg}
                 alt="Mockup devices"
                 className="relative z-10 w-[80%] h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-500 ease-out"
+                fetchPriority="high"
               />
             </div>
 

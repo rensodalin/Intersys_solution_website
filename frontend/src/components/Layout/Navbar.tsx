@@ -50,9 +50,9 @@ export function Navbar() {
   const isDarkNavPage = [
     "/document-center",
     "/my-account",
-    "/technical-tips",
     "/insights",
     "/events",
+    "/technical-tips/system",
   ].some(path => location.pathname.startsWith(path));
   const [scrolled, setScrolled] = useState(false);
   const [heroIsBanner, setHeroIsBanner] = useState(true);
@@ -912,16 +912,25 @@ export function Navbar() {
 
                     {/* Collapsible Products Accordion */}
                     <div className={cn("rounded-xl border transition-all overflow-hidden", mobileProductsOpen ? "bg-white/[0.08] border-white/20" : "bg-white/[0.03] border-white/5")}>
-                      <button
-                        onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
-                        className="w-full flex items-center justify-between py-3 px-4 text-sm font-medium text-left transition-all"
-                      >
-                        <span className={cn(location.pathname.startsWith("/products") && "font-semibold text-white")}>Products</span>
-                        <ChevronDown
-                          size={16}
-                          className={cn("text-white/40 transition-transform duration-300", mobileProductsOpen && "rotate-180 text-white/90")}
-                        />
-                      </button>
+                      <div className="w-full flex items-center justify-between py-3 px-4 text-sm font-medium text-left transition-all">
+                        <Link
+                          to="/products"
+                          onClick={() => setMobileOpen(false)}
+                          className={cn("flex-1 text-white hover:text-red-400 transition-colors", location.pathname.startsWith("/products") && "font-semibold text-white")}
+                        >
+                          Products
+                        </Link>
+                        <button
+                          onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
+                          className="p-1 -mr-1 text-white/50 hover:text-white transition-colors"
+                          aria-label="Toggle Products Menu"
+                        >
+                          <ChevronDown
+                            size={16}
+                            className={cn("transition-transform duration-300", mobileProductsOpen && "rotate-180 text-white/90")}
+                          />
+                        </button>
+                      </div>
                       <AnimatePresence>
                         {mobileProductsOpen && (
                           <motion.div

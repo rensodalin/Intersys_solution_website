@@ -132,7 +132,7 @@ export function DocumentCenter() {
                 {/* PINNED / FEATURED SECTION */}
                 <div className="border-b border-gray-300 grid grid-cols-12">
                     <div className="col-span-12 lg:col-span-2 border-b lg:border-b-0 lg:border-r border-gray-300 py-6 lg:py-8 px-6 lg:pr-6 flex flex-col justify-between items-center lg:items-start">
-                        <span className="text-[11px] text-[#D62828] font-bold">
+                        <span className="text-[11px] text-[#D62828] font-bold uppercase tracking-wider">
                             Featured
                         </span>
                     </div>
@@ -152,11 +152,11 @@ export function DocumentCenter() {
                             </p>
                         </div>
 
-                        {/* View PDF (Grey) & Download PDF (Red) Buttons */}
+                        {/* View PDF (Grey #EEEEEE) & Download PDF (Red) Buttons */}
                         <div className="flex flex-wrap gap-3 mt-6 justify-center lg:justify-start">
                             <button
                                 onClick={() => setPreviewDoc(STATIC_DOCUMENTS[4] || STATIC_DOCUMENTS[0])}
-                                className="inline-flex items-center gap-1.5 bg-gray-600 text-white px-4 py-2 rounded text-xs font-bold shadow hover:bg-[#1A3263] transition-colors cursor-pointer"
+                                className="inline-flex items-center gap-1.5 bg-[#EEEEEE] text-[#0A0F1A] border border-gray-300 px-4 py-2 rounded text-xs font-bold shadow-xs hover:bg-[#1A3263] hover:text-white hover:border-[#1A3263] transition-all cursor-pointer"
                             >
                                 <Eye size={14} />
                                 <span>View PDF</span>
@@ -185,7 +185,7 @@ export function DocumentCenter() {
 
                 {/* FILTER */}
                 <div className="border-b border-gray-300 py-5 flex flex-col md:flex-row justify-between gap-4">
-                    <div className="flex overflow-x-auto mx-auto md:mx-0">
+                    <div className="flex overflow-x-auto no-scrollbar max-w-full mx-auto md:mx-0 pb-1">
                         {categories.map((cat) => (
                             <button
                                 key={cat}
@@ -211,21 +211,21 @@ export function DocumentCenter() {
                     </div>
                 </div>
 
-                {/* DOCUMENT LIST WITH GREY VIEW BUTTONS */}
+                {/* DOCUMENT LIST WITH GREY VIEW & NAVY DOWNLOAD BUTTONS */}
                 <div className="divide-y divide-gray-200 mb-24">
                     <AnimatePresence>
                         {filtered.map((doc) => (
                             <motion.div
                                 key={doc.id}
                                 layout
-                                className="grid grid-cols-12 gap-4 py-6 hover:bg-white transition items-center group"
+                                className="grid grid-cols-12 gap-3 sm:gap-4 py-5 sm:py-6 transition items-center group"
                             >
-                                <div className="col-span-1 text-[11px] font-medium text-gray-400 text-center">
+                                <div className="col-span-2 sm:col-span-1 text-[11px] font-medium text-gray-400 text-center">
                                     {doc.no}
                                 </div>
 
-                                <div className="col-span-11 md:col-span-5 lg:col-span-4">
-                                    <h3 className="text-sm font-bold text-[#0A0F1A] mb-1 group-hover:text-[#D62828] transition-colors">
+                                <div className="col-span-10 sm:col-span-11 md:col-span-5 lg:col-span-4 pr-2 sm:pr-0">
+                                    <h3 className="text-sm font-bold text-[#0A0F1A] mb-1 group-hover:text-[#D62828] transition-colors leading-snug">
                                         {doc.title}
                                     </h3>
 
@@ -246,11 +246,11 @@ export function DocumentCenter() {
                                     {doc.size}
                                 </div>
 
-                                {/* Grey View & Red Download Action Buttons */}
-                                <div className="col-span-12 md:col-span-6 lg:col-span-2 flex items-center justify-end gap-2 pt-2 md:pt-0">
+                                {/* Grey View & Navy Download Action Buttons */}
+                                <div className="col-span-12 md:col-span-6 lg:col-span-2 flex items-center justify-start sm:justify-end gap-2 pt-2 md:pt-0 pl-10 sm:pl-0">
                                     <button
                                         onClick={() => setPreviewDoc(doc)}
-                                        className="inline-flex items-center gap-1 bg-gray-500 text-white px-3 py-1.5 rounded text-xs font-bold shadow-sm hover:bg-[#1A3263] transition-colors cursor-pointer"
+                                        className="inline-flex items-center gap-1 bg-[#EEEEEE] text-[#0A0F1A] border border-gray-300 px-3 py-1.5 rounded text-xs font-bold shadow-xs hover:bg-[#1A3263] hover:text-white hover:border-[#1A3263] transition-all cursor-pointer"
                                     >
                                         <Eye size={12} />
                                         <span>View</span>
@@ -260,7 +260,7 @@ export function DocumentCenter() {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={() => trackDownload(doc.title, doc.url)}
-                                        className="inline-flex items-center gap-1 bg-[#D62828] text-white px-3 py-1.5 rounded text-xs font-bold shadow-sm hover:bg-[#1A3263] transition-colors cursor-pointer"
+                                        className="inline-flex items-center gap-1 bg-[#1A3263] text-white px-3 py-1.5 rounded text-xs font-bold shadow-sm hover:bg-[#D62828] transition-colors cursor-pointer"
                                     >
                                         <Download size={12} />
                                         <span>Download</span>
@@ -274,27 +274,27 @@ export function DocumentCenter() {
 
             {/* DOCUMENT INLINE PREVIEW MODAL */}
             {previewDoc && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm">
                     <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
                         {/* Modal Header */}
-                        <div className="p-5 border-b border-gray-200 flex items-center justify-between bg-[#0A0F1A] text-white">
+                        <div className="p-4 sm:p-5 border-b border-gray-200 flex items-center justify-between bg-[#0A0F1A] text-white">
                             <div className="flex items-center gap-3 pr-4 min-w-0">
                                 <FileText size={20} className="text-[#D62828] shrink-0" />
                                 <div className="min-w-0">
-                                    <h3 className="text-sm font-bold truncate">{previewDoc.title}</h3>
-                                    <span className="text-[11px] text-gray-300 font-medium">{previewDoc.category}</span>
+                                    <h3 className="text-xs sm:text-sm font-bold truncate">{previewDoc.title}</h3>
+                                    <span className="text-[10px] sm:text-[11px] text-gray-300 font-medium">{previewDoc.category}</span>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 shrink-0">
                                 <a
                                     href={previewDoc.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     onClick={() => trackDownload(previewDoc.title, previewDoc.url)}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#D62828] text-white rounded text-xs font-bold hover:bg-white hover:text-[#0A0F1A] transition-colors"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#D62828] text-white rounded text-xs font-bold hover:bg-[#1A3263] transition-colors"
                                 >
                                     <Download size={13} />
-                                    <span>Download</span>
+                                    <span className="hidden sm:inline">Download</span>
                                 </a>
                                 <button
                                     onClick={() => setPreviewDoc(null)}
@@ -306,8 +306,8 @@ export function DocumentCenter() {
                         </div>
 
                         {/* Modal Content - PDF Viewer */}
-                        <div className="flex-1 p-6 overflow-y-auto space-y-4 bg-slate-50">
-                            <p className="text-xs text-gray-600 leading-relaxed bg-white p-4 rounded-lg border border-gray-200">
+                        <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 bg-slate-50">
+                            <p className="text-xs text-gray-600 leading-relaxed bg-white p-3 sm:p-4 rounded-lg border border-gray-200">
                                 {previewDoc.description}
                             </p>
 
@@ -315,7 +315,7 @@ export function DocumentCenter() {
                                 <iframe
                                     src={previewDoc.url}
                                     title={previewDoc.title}
-                                    className="w-full h-[550px] rounded-xl border border-gray-300 bg-white shadow-inner"
+                                    className="w-full h-[380px] sm:h-[500px] md:h-[550px] rounded-xl border border-gray-300 bg-white shadow-inner"
                                 />
                             ) : (
                                 <div className="py-20 text-center text-gray-400 bg-white rounded-xl border border-gray-200">

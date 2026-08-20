@@ -283,18 +283,18 @@ export function QuoteForm() {
                     <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1A]/80 via-[#0A0F1A]/60 to-[#0A0F1A]" />
                 </div>
 
-                <div className="max-w-7xl mx-auto px-4 md:px-6 pt-28 md:pt-35 pb-32 md:pb-48 relative z-10">
+                <div className="max-w-7xl mx-auto px-4 md:px-6 pt-28 md:pt-35 pb-32 md:pb-48 relative z-10 flex flex-col items-center md:items-start text-center md:text-left">
                     <motion.div
                         initial={{ opacity: 0, y: 24 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         className="max-w-3xl"
                     >
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4 md:mb-6 font-display">
-                            Request a<br />
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3 md:mb-6 font-display">
+                            Request a<br className="hidden sm:inline" />{" "}
                             <span className="text-red-600">Custom Quote</span>
                         </h1>
-                        <p className="text-gray-300 text-sm md:text-lg leading-relaxed max-w-xl">
+                        <p className="text-gray-300 text-xs sm:text-sm md:text-lg leading-relaxed max-w-xl mx-auto md:mx-0">
                             Tell us your requirements and our engineering team will design a
                             tailored solution with accurate costing and technical expertise.
                         </p>

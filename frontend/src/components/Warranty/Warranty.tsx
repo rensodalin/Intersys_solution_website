@@ -14,25 +14,25 @@ export function Warranty() {
                         alt="Warranty Commitment"
                         className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/55" />
+                    <div className="absolute inset-0 bg-black/75" />
                 </div>
 
                 <Container className="relative z-10">
                     <div className="flex flex-col lg:flex-row items-stretch shadow-lg rounded-md overflow-hidden border border-black/5">
 
                         {/* warranty statement */}
-                        <div className="flex-1 bg-[#F3F3F3] p-10 lg:p-14">
-                            <div className="flex justify-between items-start mb-8">
-                                <h1 className="text-3xl lg:text-4xl font-bold text-[#0A0F1A] tracking-tight">
+                        <div className="flex-1 bg-[#F3F3F3] p-6 sm:p-8 lg:p-14">
+                            <div className="flex justify-between items-start mb-6 sm:mb-8">
+                                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A0F1A] tracking-tight">
                                     Warranty statement
                                 </h1>
 
-                                <div className="text-red-600">
-                                    <ShieldCheck size={30} strokeWidth={1.5} />
+                                <div className="text-red-600 shrink-0">
+                                    <ShieldCheck size={28} strokeWidth={1.5} />
                                 </div>
                             </div>
 
-                            <div className="space-y-6 text-gray-700 leading-relaxed text-sm lg:text-base">
+                            <div className="space-y-4 sm:space-y-6 text-gray-700 leading-relaxed text-xs sm:text-sm lg:text-base">
                                 <p>
                                     Intersys Solutions Co., Ltd , as a system integrator and authorized distributor of global brands, believes that all technical information, specifications, and recommendations provided are accurate to the best of its knowledge.
                                 </p>
@@ -44,22 +44,22 @@ export function Warranty() {
                         </div>
 
                         {/* claim section */}
-                        <div className="lg:w-[420px] bg-[#B91C1C] p-10 lg:p-14 text-white flex flex-col justify-between border-l border-white/10">
-                            <div className="space-y-6">
-                                <h2 className="text-3xl font-bold leading-tight">
+                        <div className="lg:w-[420px] bg-[#B91C1C] p-6 sm:p-8 lg:p-14 text-white flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-white/10">
+                            <div className="space-y-4 sm:space-y-6">
+                                <h2 className="text-2xl sm:text-3xl font-bold leading-tight">
                                     Submit a warranty claim
                                 </h2>
 
-                                <p className="text-white/75 text-sm leading-relaxed">
+                                <p className="text-white/75 text-xs sm:text-sm leading-relaxed">
                                     Our technical response team is ready to process your claim immediately. Have your system ID and purchase documentation ready.
                                 </p>
                             </div>
 
-                            <div className="border-t border-white/20 pt-6 mt-6">
+                            <div className="border-t border-white/20 pt-5 sm:pt-6 mt-6">
                                 <p className="text-xs text-white/60 font-medium">
                                     Authorized by
                                 </p>
-                                <p className="text-lg font-bold text-white mt-1">
+                                <p className="text-base sm:text-lg font-bold text-white mt-0.5">
                                     Honeywell
                                 </p>
                             </div>
@@ -70,50 +70,50 @@ export function Warranty() {
 
 
             {/* terms */}
-            <section className="py-24 bg-[#F1F1F1] border-t border-black/5">
+            <section className="py-12 sm:py-16 md:py-24 bg-[#F1F1F1] border-t border-black/5">
                 <Container>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-20">
 
-                        <div className="space-y-10">
-                            <h2 className="text-5xl font-bold leading-none tracking-tight text-[#0A0F1A]">
-                                Terms of <br />
+                        <div className="space-y-4 sm:space-y-6 lg:space-y-10">
+                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-[#0A0F1A]">
+                                Terms of <br className="hidden sm:inline" />{" "}
                                 <span className="text-red-600">assurance.</span>
                             </h2>
 
-                            <p className="text-gray-600 text-base leading-relaxed max-w-sm">
+                            <p className="text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed max-w-sm">
                                 Intersys Solutions maintains a rigorous standard of accountability. Our warranty framework is designed to provide transparency and rapid resolution.
                             </p>
                         </div>
 
-                        <div className="space-y-16">
+                        <div className="space-y-8 sm:space-y-12 lg:space-y-16">
 
-                            <div className="flex gap-8 group border-b border-black/5 pb-10">
-                                <span className="text-5xl font-bold text-gray-300">
+                            <div className="flex gap-4 sm:gap-8 group border-b border-black/5 pb-6 sm:pb-10">
+                                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-300 shrink-0">
                                     01
                                 </span>
 
-                                <div className="space-y-3">
-                                    <h4 className="text-xl font-bold text-gray-900">
+                                <div className="space-y-2 sm:space-y-3">
+                                    <h4 className="text-lg sm:text-xl font-bold text-gray-900">
                                         Warranty period
                                     </h4>
 
-                                    <p className="text-sm text-gray-600 leading-relaxed max-w-md">
+                                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed max-w-md">
                                         The one-year warranty takes effect from the date of system installation and handover, covering defects in materials and workmanship.
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="flex gap-8 group border-b border-black/5 pb-10">
-                                <span className="text-5xl font-bold text-gray-300">
+                            <div className="flex gap-4 sm:gap-8 group border-b border-black/5 pb-6 sm:pb-10">
+                                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-300 shrink-0">
                                     02
                                 </span>
 
-                                <div className="space-y-3">
-                                    <h4 className="text-xl font-bold text-gray-900">
+                                <div className="space-y-2 sm:space-y-3">
+                                    <h4 className="text-lg sm:text-xl font-bold text-gray-900">
                                         Certified installation
                                     </h4>
 
-                                    <p className="text-sm text-gray-600 leading-relaxed max-w-md">
+                                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed max-w-md">
                                         Warranty coverage is limited to systems installed by Intersys-certified technicians or authorized Honeywell partners.
                                     </p>
                                 </div>
