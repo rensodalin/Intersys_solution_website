@@ -30,6 +30,17 @@ const slides = [
     ctaText: "Explore Solutions",
   },
   // {
+  //   type: "banner",
+  //   image: "https://files.intersys-solutions.com.kh/RandomIMG/BMS.png",
+  //   badgeIcon: Building2,
+  //   title: "Healthy Building Solutions",
+  //   subtitle: "Integrated BMS, Fire Safety, Security, CCTV, Access Control & RCU",
+  //   link: "/services/building-management",
+  //   phone: "+855 77 602 334",
+  //   ctaText: "Explore Solutions",
+  // },
+
+  // {
   //   type: "content",
   //   image: "https://images.unsplash.com/photo-1615406020658-6c4b805f1f30?q=80&w=1170&auto=format&fit=crop",
   //   title: "Smart Building Solutions",
@@ -257,8 +268,8 @@ export function Hero() {
             key={i}
             onClick={() => emblaApi && emblaApi.scrollTo(i)}
             className={`h-1.5 sm:h-2 transition-all duration-500 rounded-full cursor-pointer ${selectedIndex === i
-                ? "w-6 sm:w-8 bg-red-600 shadow-[0_0_12px_rgba(220,38,38,0.6)]"
-                : "w-1.5 sm:w-2 bg-gray-300 hover:bg-gray-500"
+              ? "w-6 sm:w-8 bg-red-600 shadow-[0_0_12px_rgba(220,38,38,0.6)]"
+              : "w-1.5 sm:w-2 bg-gray-300 hover:bg-gray-500"
               }`}
             aria-label={`Go to slide ${i + 1}`}
           />
