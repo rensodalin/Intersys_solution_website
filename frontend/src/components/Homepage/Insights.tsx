@@ -6,8 +6,35 @@ import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import environment from "@/enviroment/enviroment";
 
+const DEFAULT_INSIGHTS = [
+  {
+    _id: "default-1",
+    slug: "smart-building-bms-integration",
+    title: "Smart Building BMS & ELV Integration for Commercial Towers",
+    category: "Case Study",
+    desc: "Deploying automated building management, energy optimization, thermal mapping, and Honeywell Pro-Watch security integration across Phnom Penh high-rises.",
+    image: ["https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?q=80&w=1000&auto=format&fit=crop"],
+  },
+  {
+    _id: "default-2",
+    slug: "salto-wireless-access-control",
+    title: "Advanced Access Control & Smart Lock Solutions",
+    category: "Technology",
+    desc: "Integrating Salto wireless locksets and centralized keycard credential management for high-capacity corporate headquarters.",
+    image: ["https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=1000&auto=format&fit=crop"],
+  },
+  {
+    _id: "default-3",
+    slug: "data-center-environmental-monitoring",
+    title: "Data Center Environmental & Water Leak Protection",
+    category: "Infrastructure",
+    desc: "Precision thermal sensor mapping, automated liquid leak detection, and clean agent fire suppression for mission-critical IT infrastructure.",
+    image: ["https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1000&auto=format&fit=crop"],
+  },
+];
+
 export function Insights() {
-  const [dynamicInsights, setDynamicInsights] = useState<any[]>([]);
+  const [dynamicInsights, setDynamicInsights] = useState<any[]>(DEFAULT_INSIGHTS);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,7 +43,7 @@ export function Insights() {
         const baseUrl = environment;
         const res = await fetch(`${baseUrl}/api/insights`);
         const data = await res.json();
-        if (data.success) {
+        if (data.success && data.data && data.data.length > 0) {
           setDynamicInsights(data.data);
         }
       } catch (err) {
@@ -59,9 +86,7 @@ export function Insights() {
     emblaApi.on("reInit", onSelect);
   }, [emblaApi, onSelect]);
 
-  if (loading || dynamicInsights.length === 0) {
-    return null;
-  }
+  const displayInsights = dynamicInsights.length > 0 ? dynamicInsights : DEFAULT_INSIGHTS;
 
   return (
     <section className="relative overflow-hidden bg-[#F8FAFC] py-10 md:py-14">
@@ -96,7 +121,7 @@ export function Insights() {
 
         <div className="overflow-visible" ref={emblaRef}>
           <div className="flex">
-            {[...dynamicInsights, ...dynamicInsights, ...dynamicInsights].map((item, idx) => {
+            {[...displayInsights, ...displayInsights, ...displayInsights].map((item, idx) => {
               const isSelected = idx === selectedIndex;
 
               return (
