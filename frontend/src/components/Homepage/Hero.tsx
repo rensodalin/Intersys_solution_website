@@ -18,6 +18,7 @@ const slides = [
     link: "/services/fire-alarm",
     phone: "+855 77 602 334",
     ctaText: "Explore System",
+    hideTopRightLogo: true,
   },
   {
     type: "banner",
@@ -28,6 +29,7 @@ const slides = [
     link: "/services/building-management",
     phone: "+855 77 602 334",
     ctaText: "Explore Solutions",
+    hideTopLeftLogo: true,
   },
   // {
   //   type: "banner",
@@ -126,7 +128,7 @@ export function Hero() {
 
                       {/* Fitted Banner Frame with clean subtle rounded corners */}
                       <div className="relative rounded-lg overflow-hidden shadow-[0_10px_35px_-10px_rgba(0,0,0,0.12)] md:shadow-[0_15px_45px_-12px_rgba(0,0,0,0.15)] bg-white border border-gray-200/80 transition-shadow duration-500">
-                        <Link to={slide.link || "/"} className="block w-full">
+                        <Link to={slide.link || "/"} className="block w-full relative">
                           <img
                             src={slide.image}
                             alt={slide.title}
@@ -134,6 +136,12 @@ export function Hero() {
                             fetchPriority="high"
                             className="w-full h-auto object-contain max-h-[55vh] sm:max-h-[68vh] md:max-h-[75vh] mx-auto transition-transform duration-700 hover:scale-[1.01]"
                           />
+                          {(slide.hideTopLeftLogo || idx === 1) && (
+                            <div className="absolute top-0 left-0 w-[17%] h-[18%] bg-white z-10 pointer-events-none" />
+                          )}
+                          {(slide.hideTopRightLogo || idx === 0) && (
+                            <div className="absolute top-0 right-0 w-[14%] h-[16%] bg-white z-10 pointer-events-none" />
+                          )}
                         </Link>
                       </div>
 
