@@ -21,14 +21,15 @@ const avatarUrl = (url?: string, updatedAt?: string) => {
 };
 
 const CLIENT_CENTER_DATA = [
-  { name: "Document Center", href: "/document-center" },
-  { name: "Request a Quote", href: "/request-quote" },
+  { name: "Case Study", href: "/insights" },
   { name: "Technical Tips", href: "/technical-tips" },
-  { name: "News & Events", href: "/events" },
-  { name: "Warranty", href: "/warranty" }
+  { name: "News & Events", href: "/events" }
 ];
 const CONTACT_DATA = [
   { name: "Technical Support / Customer Service", href: "/support" },
+  { name: "Request a Quote", href: "/request-quote" },
+  { name: "Document Center", href: "/document-center" },
+  { name: "Warranty", href: "/warranty" },
   { name: "Contact Us", href: "/contact" }
 ];
 
@@ -50,10 +51,9 @@ export function Navbar() {
   const isDarkNavPage = [
     "/document-center",
     "/my-account",
-    "/insights",
     "/events",
     "/technical-tips/system",
-  ].some(path => location.pathname.startsWith(path));
+  ].some(path => location.pathname.startsWith(path)) || location.pathname === "/insights";
   const [scrolled, setScrolled] = useState(false);
   const [heroIsBanner, setHeroIsBanner] = useState(true);
 
@@ -273,7 +273,7 @@ export function Navbar() {
                         key={item.name}
                         to={item.href}
                         onClick={closeMenus}
-                        className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors [&.active]:text-red-500 [&.active]:bg-white/5"
+                        className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors [&.active]:text-[#BFC6C4] [&.active]:font-bold [&.active]:bg-white/10"
                       >
                         {item.name}
                       </Link>
@@ -361,7 +361,7 @@ export function Navbar() {
                 <button
                   className={cn(
                     "relative h-full flex items-center text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center",
-                    CLIENT_CENTER_DATA.some(item => location.pathname === item.href || (item.href === "/events" && location.pathname.startsWith("/events"))) ? "text-red-500 after:scale-x-100" : navItemClass
+                    CLIENT_CENTER_DATA.some(item => location.pathname === item.href || ((item.href === "/events" || item.href === "/insights") && location.pathname.startsWith(item.href))) ? "text-red-500 after:scale-x-100" : navItemClass
                   )}
                 >
                   Client Center
@@ -373,7 +373,7 @@ export function Navbar() {
                         key={item.name}
                         to={item.href}
                         onClick={closeMenus}
-                        className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 [&.active]:text-red-500 [&.active]:bg-white/5"
+                        className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 [&.active]:text-[#BFC6C4] [&.active]:font-bold [&.active]:bg-white/10"
                       >
                         {item.name}
                       </Link>
@@ -399,7 +399,7 @@ export function Navbar() {
                         key={item.name}
                         to={item.href}
                         onClick={closeMenus}
-                        className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 [&.active]:text-red-500 [&.active]:bg-white/5"
+                        className="block px-5 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 [&.active]:text-[#BFC6C4] [&.active]:font-bold [&.active]:bg-white/10"
                       >
                         {item.name}
                       </Link>
@@ -972,7 +972,7 @@ export function Navbar() {
                         onClick={() => setMobileClientOpen(!mobileClientOpen)}
                         className="w-full flex items-center justify-between py-3 px-4 text-sm font-medium text-left transition-all"
                       >
-                        <span className={cn(CLIENT_CENTER_DATA.some(item => location.pathname === item.href || (item.href === "/events" && location.pathname.startsWith("/events"))) && "font-semibold text-white")}>Client Center</span>
+                        <span className={cn(CLIENT_CENTER_DATA.some(item => location.pathname === item.href || ((item.href === "/events" || item.href === "/insights") && location.pathname.startsWith(item.href))) && "font-semibold text-white")}>Client Center</span>
                         <ChevronDown
                           size={16}
                           className={cn("text-white/40 transition-transform duration-300", mobileClientOpen && "rotate-180 text-white/90")}

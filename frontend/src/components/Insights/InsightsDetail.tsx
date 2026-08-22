@@ -92,17 +92,17 @@ export function InsightsDetail(props: InsightsDetailProps) {
           className="absolute inset-0 w-full h-full object-cover"
         />
 
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80" />
+        {/* Dark overlay for navbar contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/75 to-black/90" />
 
         <Container className="relative h-full flex flex-col justify-between py-10">
-          <Link
+          {/* <Link
             to="/"
             className="flex items-center gap-2 text-white/70 hover:text-white transition-colors w-fit group text-xs font-semibold"
           >
             <MoveLeft size={16} />
             <span>Back to Insights</span>
-          </Link>
+          </Link> */}
 
           <div className="max-w-2xl">
             <motion.div

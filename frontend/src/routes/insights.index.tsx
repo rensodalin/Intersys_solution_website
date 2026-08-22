@@ -1,15 +1,44 @@
 import environment from "@/enviroment/enviroment";
 import { useEffect, useState } from "react";
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { ArrowUpRight, Calendar, User, Tag, Loader2 } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute('/insights/')({
+export const Route = createFileRoute("/insights/")({
   component: InsightsPage,
-})
+});
+
+const DEFAULT_CASE_STUDIES = [
+  {
+    _id: "cs-1",
+    slug: "smart-building-bms-integration",
+    title: "TTK Project Case Study: TTK at TSMC, Taiwan",
+    subtitle: "TSMC - Taiwan Semiconductor Manufacturing Company, Taiwan",
+    category: "Semiconductor & High-Tech",
+    desc: "At TSMC's fab in Taiwan, TTK's addressable water leak detection system protects over 50,000 m² of cleanroom space, pinpointing Process Cooling Water and chemical piping leaks before they can reach sensitive back-end assembly and test equipment.",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop",
+  },
+  {
+    _id: "cs-2",
+    slug: "data-center-environmental-monitoring",
+    title: "TTK Project Case Study: TTK in a Leading Data Center in Milan, Italy",
+    subtitle: "Leading Data Center in Milan, Italy",
+    category: "Data Center Infrastructure",
+    desc: "See how we protect two purpose-built data center buildings across a 16-acre campus with a combined critical IT power capacity of 40 MW, safeguarding the cooling infrastructure behind high-density, AI-ready compute.",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1000&auto=format&fit=crop",
+  },
+  {
+    _id: "cs-3",
+    slug: "salto-wireless-access-control",
+    title: "Intersys Project Case Study: Integrated Smart Building & Access Control",
+    subtitle: "Commercial & Corporate Headquarters, Cambodia",
+    category: "Building Management",
+    desc: "Deploying integrated BMS controls, Salto wireless locksets, and Honeywell Pro-Watch security integration across Phnom Penh high-rises, providing 24/7 automated monitoring and instant leak/hazard response.",
+    image: "https://files.intersys-solutions.com.kh/RandomIMG/772726245_1747029863008860_976472377558814630_n.jpg",
+  },
+];
 
 function InsightsPage() {
-  const [insights, setInsights] = useState<any[]>([]);
+  const [insights, setInsights] = useState<any[]>(DEFAULT_CASE_STUDIES);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,7 +47,7 @@ function InsightsPage() {
         const baseUrl = environment;
         const res = await fetch(`${baseUrl}/api/insights`);
         const data = await res.json();
-        if (data.success) {
+        if (data.success && data.data && data.data.length > 0) {
           setInsights(data.data);
         }
       } catch (err) {
@@ -30,118 +59,90 @@ function InsightsPage() {
     fetchInsights();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="w-10 h-10 animate-spin text-blue-600" />
-      </div>
-    );
-  }
+  const displayItems = insights.length > 0 ? insights : DEFAULT_CASE_STUDIES;
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 bg-[#0A0A0A] overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-500/20 to-transparent" />
+    <div className="min-h-screen bg-white pt-28 md:pt-36 pb-24">
+      <div className="max-w-[1140px] mx-auto px-6 md:px-10">
+        
+        {/* Header */}
+        <div className="border-b border-gray-200 pb-3 mb-10 sm:mb-14">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight uppercase">
+            <span className="text-[#1A3263]">Case</span> <span className="text-[#D62828]">Studies</span>
+          </h1>
         </div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
-            <span className="inline-block px-4 py-1.5 bg-blue-600 text-white text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-6">
-              Our Perspective
-            </span>
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 leading-[1.1]">
-              Insights & <span className="text-blue-500">Innovation</span>
-            </h1>
-            <p className="text-xl text-gray-400 leading-relaxed">
-              Explore our latest case studies, technical breakthroughs, and industry trends in security and automation.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+        {/* Alternating Row Grid matching reference UI */}
+        <div className="space-y-16 sm:space-y-20 md:space-y-24">
+          {displayItems.map((item, idx) => {
+            const isEven = idx % 2 === 1;
+            const imgSrc = Array.isArray(item.image)
+              ? item.image[0]
+              : item.image || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop";
 
-      {/* Filter/Tabs (Simplified) */}
-      <section className="border-b border-gray-100">
-        <div className="container mx-auto px-6 py-6">
-          <div className="flex gap-8 overflow-x-auto no-scrollbar">
-            {["All", "Commercial", "Retail", "Security", "Automation"].map((cat, i) => (
-              <button key={cat} className={cn(
-                "text-sm font-semibold whitespace-nowrap transition-colors",
-                i === 0 ? "text-blue-600" : "text-gray-400 hover:text-black"
-              )}>
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Insights Grid */}
-      <section className="py-24">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {insights.map((item, index) => (
-              <motion.article
-                key={item.slug}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="group cursor-pointer"
+            return (
+              <div
+                key={item.slug || item._id || idx}
+                className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center"
               >
-                <div className="relative aspect-[16/10] overflow-hidden bg-gray-100 rounded-sm mb-6">
-                  <img
-                    src={item.image && item.image[0]}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-wider rounded-sm">
-                      {item.category}
-                    </span>
-                  </div>
+                {/* Image Box */}
+                <div className={cn("md:col-span-6", isEven && "md:order-2")}>
+                  <Link
+                    to="/insights/$slug"
+                    params={{ slug: item.slug || `insight-${idx + 1}` }}
+                    className="block group"
+                  >
+                    <div className="relative aspect-[16/10] overflow-hidden bg-gray-100 border border-gray-100 shadow-sm">
+                      <img
+                        src={imgSrc}
+                        alt={item.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  </Link>
                 </div>
 
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4 text-[11px] text-gray-500 font-medium uppercase tracking-widest">
-                    <span className="flex items-center gap-1.5">
-                      <Calendar size={12} /> {item.date}
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <User size={12} /> {item.author || "Intersys Team"}
-                    </span>
-                  </div>
+                {/* Text Content */}
+                <div className={cn("md:col-span-6 flex flex-col justify-center", isEven && "md:order-1")}>
+                  <h2 className="text-xl sm:text-2xl font-bold text-[#0F172A] leading-snug mb-1.5">
+                    <Link
+                      to="/insights/$slug"
+                      params={{ slug: item.slug || `insight-${idx + 1}` }}
+                      className="hover:text-[#D62828] transition-colors"
+                    >
+                      {item.title}
+                    </Link>
+                  </h2>
 
-                  <h3 className="text-2xl font-bold leading-tight group-hover:text-blue-600 transition-colors">
-                    {item.title}
-                  </h3>
+                  {item.subtitle ? (
+                    <p className="text-sm font-medium text-gray-500 mb-3">
+                      {item.subtitle}
+                    </p>
+                  ) : item.category ? (
+                    <p className="text-sm font-medium text-gray-500 mb-3">
+                      {item.category}
+                    </p>
+                  ) : null}
 
-                  <p className="text-gray-600 leading-relaxed line-clamp-3">
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed font-normal mb-5">
                     {item.desc}
                   </p>
 
                   <Link
-                    to={`/insights/${item.slug}`}
-                    className="inline-flex items-center gap-2 text-sm font-bold text-black group-hover:gap-3 transition-all"
+                    to="/insights/$slug"
+                    params={{ slug: item.slug || `insight-${idx + 1}` }}
+                    className="inline-flex items-center gap-1.5 text-sm font-bold text-[#1A3263] hover:text-[#D62828] transition-colors self-start group cursor-pointer"
                   >
-                    Read Full Story <ArrowUpRight size={16} />
+                    <span className="text-xs transition-transform group-hover:translate-x-1 text-[#D62828]">►</span>
+                    <span>Read more</span>
                   </Link>
                 </div>
-              </motion.article>
-            ))}
-          </div>
+              </div>
+            );
+          })}
         </div>
-      </section>
+
+      </div>
     </div>
   );
-}
-
-// Utility for classes
-function cn(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
 }

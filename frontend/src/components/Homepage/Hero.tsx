@@ -11,7 +11,7 @@ import heroHealthyBuildingBanner from "@/assets/hero_healthy_building_banner.web
 const slides = [
   {
     type: "banner",
-    image: heroFireAlarmBanner,
+    image: "https://files.intersys-solutions.com.kh/RandomIMG/536002327_1454480008930515_6599622678057847601_n.png",
     badgeIcon: ShieldCheck,
     title: "Notifier by Honeywell (NFS2-3030)",
     subtitle: "10 Loops / 3180 Addressable Devices Fire Safety Panel",
@@ -21,7 +21,7 @@ const slides = [
   },
   {
     type: "banner",
-    image: heroHealthyBuildingBanner,
+    image: "https://files.intersys-solutions.com.kh/RandomIMG/473388230_1582596672425914_4930701967420063595_n.jpg",
     badgeIcon: Building2,
     title: "Healthy Building Solutions",
     subtitle: "Integrated BMS, Fire Safety, Security, CCTV, Access Control & RCU",
@@ -153,7 +153,9 @@ export function Hero() {
                         <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-stretch sm:justify-end pt-1 sm:pt-0 relative z-30">
                           {slide.phone && (
                             <a
-                              href={`tel:${slide.phone.replace(/\s+/g, "")}`}
+                              href="https://t.me/chun_sochet"
+                              target="_blank"
+                              rel="noopener noreferrer"
                               className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 text-[11px] sm:text-xs font-semibold text-gray-700 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-md transition-all border border-gray-200 shrink-0 cursor-pointer relative z-30"
                             >
                               <Phone size={13} className="text-red-600" />
