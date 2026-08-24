@@ -116,7 +116,7 @@ export function Hero() {
               >
                 {slide.type === "banner" ? (
                   /* Banner Slide (Padded below navbar to fit poster image on #F5F5F5 background) */
-                  <div className="w-full relative pt-16 sm:pt-20 md:pt-24 pb-6 sm:pb-12 px-3 sm:px-6 lg:px-12 flex flex-col items-center justify-center overflow-hidden bg-transparent">
+                  <div className="w-full relative pt-22 sm:pt-24 md:pt-28 pb-6 sm:pb-12 px-3 sm:px-6 lg:px-12 flex flex-col items-center justify-center overflow-hidden bg-transparent">
                     <motion.div
                       initial={false}
                       animate={isSelected ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.96, y: 15 }}
@@ -183,7 +183,7 @@ export function Hero() {
                   </div>
                 ) : (
                   /* Light Theme Content Slide Card with Grid Tile Pattern Background */
-                  <div className="w-full relative pt-16 sm:pt-20 md:pt-24 pb-6 sm:pb-12 px-3 sm:px-6 lg:px-12 flex flex-col items-center justify-center overflow-hidden bg-transparent">
+                  <div className="w-full relative pt-22 sm:pt-24 md:pt-28 pb-6 sm:pb-12 px-3 sm:px-6 lg:px-12 flex flex-col items-center justify-center overflow-hidden bg-transparent">
                     <motion.div
                       initial={false}
                       animate={isSelected ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.96, y: 15 }}

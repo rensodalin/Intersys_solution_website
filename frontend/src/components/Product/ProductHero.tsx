@@ -50,8 +50,8 @@ export function ProductHero({
                 ))}
             </nav>
 
-            {/* Desktop Banner - Visible ONLY on Desktop (md+) */}
-            <div className="hidden md:flex relative w-full overflow-hidden bg-white rounded-md shadow-sm border border-gray-200/80 min-h-[165px] sm:min-h-[200px] md:min-h-[240px] items-center">
+            {/* Product Hero Banner */}
+            <div className="flex relative w-full overflow-hidden bg-white rounded-md shadow-sm border border-gray-200/80 min-h-[160px] sm:min-h-[200px] md:min-h-[240px] items-center">
                 {/* Background Image - imageproduct.png from assets */}
                 <img
                     src={heroImg}
@@ -59,8 +59,8 @@ export function ProductHero({
                     className="absolute inset-0 w-full h-full object-cover object-right sm:object-center brightness-100 contrast-105"
                 />
 
-                {/* Soft Gradient Overlay - Clean White Text Area on Left */}
-                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 via-40% sm:via-white/60 to-transparent z-[1]" />
+                {/* Soft Gradient Overlay - Clean White Scale Area on Left */}
+                <div className="absolute inset-0 bg-gradient-to-r from-white via-white via-60% sm:via-white/90 sm:via-78% to-transparent z-[1]" />
 
                 {/* Left Subtle Red Line Accent */}
                 <div className="absolute left-0 top-0 bottom-0 w-1 sm:w-1.5 bg-[#C3110C] z-10" />

@@ -242,18 +242,18 @@ function ServiceCard({
             alt={title}
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1A]/90 via-[#0A0F1A]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1A]/95 via-[#0A0F1A]/75 to-[#0A0F1A]/35" />
           <div className="relative z-10 p-8 mt-auto">
             <div className="w-9 h-9 rounded-sm bg-white/10 flex items-center justify-center mb-4">
               <Icon className="w-4 h-4 text-white" />
             </div>
             <h3 className="text-xl font-bold text-white mb-2 tracking-tight">{title}</h3>
-            <p className="text-white/50 text-sm leading-relaxed mb-6">{desc}</p>
+            <p className="text-white/85 text-sm leading-relaxed mb-6 font-normal">{desc}</p>
             <button
               onClick={() => href && router.navigate({ to: href })}
-              className="inline-flex items-center gap-2 text-xs font-bold text-white/70 hover:text-white transition-colors group/btn"
+              className="inline-flex items-center gap-2 text-xs font-bold text-white hover:text-red-400 transition-colors group/btn"
             >
-              View details
+              {btnText || "View details"}
               <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
             </button>
           </div>
