@@ -29,6 +29,7 @@ import { Route as SectorsIndexRouteImport } from './routes/sectors.index'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as InsightsIndexRouteImport } from './routes/insights.index'
 import { Route as EventsIndexRouteImport } from './routes/events.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as TechnicalTipsTipIdRouteImport } from './routes/technical-tips.$tipId'
@@ -47,6 +48,7 @@ import { Route as ServicesAccessControlRouteImport } from './routes/services_.ac
 import { Route as SectorsSectorIdRouteImport } from './routes/sectors.$sectorId'
 import { Route as InsightsSlugRouteImport } from './routes/insights.$slug'
 import { Route as EventsEventIdRouteImport } from './routes/events.$eventId'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ProductsSlugIndexRouteImport } from './routes/products.$slug.index'
 import { Route as TechnicalTipsSystemSystemSlugRouteImport } from './routes/technical-tips.system.$systemSlug'
 import { Route as ProductsDetailProductIdRouteImport } from './routes/products.detail.$productId'
@@ -163,6 +165,11 @@ const EventsIndexRoute = EventsIndexRouteImport.update({
   path: '/events/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
@@ -252,6 +259,11 @@ const InsightsSlugRoute = InsightsSlugRouteImport.update({
 const EventsEventIdRoute = EventsEventIdRouteImport.update({
   id: '/events/$eventId',
   path: '/events/$eventId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsSlugIndexRoute = ProductsSlugIndexRouteImport.update({
@@ -357,6 +369,7 @@ export interface FileRoutesByFullPath {
   '/technical-tips': typeof TechnicalTipsRouteWithChildren
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/events/$eventId': typeof EventsEventIdRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
@@ -375,6 +388,7 @@ export interface FileRoutesByFullPath {
   '/technical-tips/$tipId': typeof TechnicalTipsTipIdRoute
   '/about/': typeof AboutIndexRoute
   '/admin/': typeof AdminIndexRoute
+  '/blog/': typeof BlogIndexRoute
   '/events/': typeof EventsIndexRoute
   '/insights/': typeof InsightsIndexRoute
   '/products/': typeof ProductsIndexRoute
@@ -409,6 +423,7 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/events/$eventId': typeof EventsEventIdRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
@@ -427,6 +442,7 @@ export interface FileRoutesByTo {
   '/technical-tips/$tipId': typeof TechnicalTipsTipIdRoute
   '/about': typeof AboutIndexRoute
   '/admin': typeof AdminIndexRoute
+  '/blog': typeof BlogIndexRoute
   '/events': typeof EventsIndexRoute
   '/insights': typeof InsightsIndexRoute
   '/products': typeof ProductsIndexRoute
@@ -465,6 +481,7 @@ export interface FileRoutesById {
   '/technical-tips': typeof TechnicalTipsRouteWithChildren
   '/warranty': typeof WarrantyRoute
   '/why-choose': typeof WhyChooseRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/events/$eventId': typeof EventsEventIdRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/sectors/$sectorId': typeof SectorsSectorIdRoute
@@ -483,6 +500,7 @@ export interface FileRoutesById {
   '/technical-tips/$tipId': typeof TechnicalTipsTipIdRoute
   '/about/': typeof AboutIndexRoute
   '/admin/': typeof AdminIndexRoute
+  '/blog/': typeof BlogIndexRoute
   '/events/': typeof EventsIndexRoute
   '/insights/': typeof InsightsIndexRoute
   '/products/': typeof ProductsIndexRoute
@@ -522,6 +540,7 @@ export interface FileRouteTypes {
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
+    | '/blog/$slug'
     | '/events/$eventId'
     | '/insights/$slug'
     | '/sectors/$sectorId'
@@ -540,6 +559,7 @@ export interface FileRouteTypes {
     | '/technical-tips/$tipId'
     | '/about/'
     | '/admin/'
+    | '/blog/'
     | '/events/'
     | '/insights/'
     | '/products/'
@@ -574,6 +594,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/warranty'
     | '/why-choose'
+    | '/blog/$slug'
     | '/events/$eventId'
     | '/insights/$slug'
     | '/sectors/$sectorId'
@@ -592,6 +613,7 @@ export interface FileRouteTypes {
     | '/technical-tips/$tipId'
     | '/about'
     | '/admin'
+    | '/blog'
     | '/events'
     | '/insights'
     | '/products'
@@ -629,6 +651,7 @@ export interface FileRouteTypes {
     | '/technical-tips'
     | '/warranty'
     | '/why-choose'
+    | '/blog/$slug'
     | '/events/$eventId'
     | '/insights/$slug'
     | '/sectors/$sectorId'
@@ -647,6 +670,7 @@ export interface FileRouteTypes {
     | '/technical-tips/$tipId'
     | '/about/'
     | '/admin/'
+    | '/blog/'
     | '/events/'
     | '/insights/'
     | '/products/'
@@ -685,6 +709,7 @@ export interface RootRouteChildren {
   TechnicalTipsRoute: typeof TechnicalTipsRouteWithChildren
   WarrantyRoute: typeof WarrantyRoute
   WhyChooseRoute: typeof WhyChooseRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   EventsEventIdRoute: typeof EventsEventIdRoute
   InsightsSlugRoute: typeof InsightsSlugRoute
   ServicesAccessControlRoute: typeof ServicesAccessControlRoute
@@ -701,6 +726,7 @@ export interface RootRouteChildren {
   ServicesVesdaRoute: typeof ServicesVesdaRoute
   AboutIndexRoute: typeof AboutIndexRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   EventsIndexRoute: typeof EventsIndexRoute
   InsightsIndexRoute: typeof InsightsIndexRoute
 }
@@ -847,6 +873,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/': {
       id: '/admin/'
       path: '/admin'
@@ -971,6 +1004,13 @@ declare module '@tanstack/react-router' {
       path: '/events/$eventId'
       fullPath: '/events/$eventId'
       preLoaderRoute: typeof EventsEventIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products/$slug/': {
@@ -1176,6 +1216,7 @@ const rootRouteChildren: RootRouteChildren = {
   TechnicalTipsRoute: TechnicalTipsRouteWithChildren,
   WarrantyRoute: WarrantyRoute,
   WhyChooseRoute: WhyChooseRoute,
+  BlogSlugRoute: BlogSlugRoute,
   EventsEventIdRoute: EventsEventIdRoute,
   InsightsSlugRoute: InsightsSlugRoute,
   ServicesAccessControlRoute: ServicesAccessControlRoute,
@@ -1192,6 +1233,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesVesdaRoute: ServicesVesdaRoute,
   AboutIndexRoute: AboutIndexRoute,
   AdminIndexRoute: AdminIndexRoute,
+  BlogIndexRoute: BlogIndexRoute,
   EventsIndexRoute: EventsIndexRoute,
   InsightsIndexRoute: InsightsIndexRoute,
 }

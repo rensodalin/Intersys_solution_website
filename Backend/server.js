@@ -25,9 +25,11 @@ import chatRoutes from "./routes/chat.js";
 import taxonomyRoutes from "./routes/taxonomy.js";
 import technicalTipRoutes from "./routes/technicalTips.js";
 import eventRoutes from "./routes/events.js";
+import blogRoutes from "./routes/blogs.js";
 import { submitContact, getContacts, deleteContact, markContactRead } from "./controllers/contactController.js";
 import { isAdmin } from "./middleware/auth.js";
 import User from "./model/user.js";
+import { seedBlogs } from "./seedBlogs.js";
 
 dotenv.config();
 
@@ -36,7 +38,9 @@ const app = express();
 // Trust the reverse proxy (Render, Heroku, etc.) to allow secure session cookies
 app.set("trust proxy", true);
 
-connectDB();
+connectDB().then(() => {
+  seedBlogs();
+});
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -94,6 +98,7 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/taxonomy", taxonomyRoutes);
 app.use("/api/technical-tips", technicalTipRoutes);
 app.use("/api/events", eventRoutes);
+app.use("/api/blogs", blogRoutes);
 
 app.post("/api/contact", submitContact);
 app.get("/api/contacts", isAdmin, getContacts);

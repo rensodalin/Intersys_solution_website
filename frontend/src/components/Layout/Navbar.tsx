@@ -21,6 +21,7 @@ const avatarUrl = (url?: string, updatedAt?: string) => {
 };
 
 const CLIENT_CENTER_DATA = [
+  { name: "Blog", href: "/blog" },
   { name: "Case Study", href: "/insights" },
   { name: "Technical Tips", href: "/technical-tips" },
   { name: "News & Events", href: "/events" }
@@ -53,6 +54,7 @@ export function Navbar() {
     "/my-account",
     "/events",
     "/technical-tips/system",
+    "/blog",
   ].some(path => location.pathname.startsWith(path)) || location.pathname === "/insights";
   const [scrolled, setScrolled] = useState(false);
   const [heroIsBanner, setHeroIsBanner] = useState(true);
@@ -361,7 +363,7 @@ export function Navbar() {
                 <button
                   className={cn(
                     "relative h-full flex items-center text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-red-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center",
-                    CLIENT_CENTER_DATA.some(item => location.pathname === item.href || ((item.href === "/events" || item.href === "/insights") && location.pathname.startsWith(item.href))) ? "text-red-500 after:scale-x-100" : navItemClass
+                    CLIENT_CENTER_DATA.some(item => location.pathname === item.href || ((item.href === "/events" || item.href === "/insights" || item.href === "/blog") && location.pathname.startsWith(item.href))) ? "text-red-500 after:scale-x-100" : navItemClass
                   )}
                 >
                   Client Center
@@ -972,7 +974,7 @@ export function Navbar() {
                         onClick={() => setMobileClientOpen(!mobileClientOpen)}
                         className="w-full flex items-center justify-between py-3 px-4 text-sm font-medium text-left transition-all"
                       >
-                        <span className={cn(CLIENT_CENTER_DATA.some(item => location.pathname === item.href || ((item.href === "/events" || item.href === "/insights") && location.pathname.startsWith(item.href))) && "font-semibold text-white")}>Client Center</span>
+                        <span className={cn(CLIENT_CENTER_DATA.some(item => location.pathname === item.href || ((item.href === "/events" || item.href === "/insights" || item.href === "/blog") && location.pathname.startsWith(item.href))) && "font-semibold text-white")}>Client Center</span>
                         <ChevronDown
                           size={16}
                           className={cn("text-white/40 transition-transform duration-300", mobileClientOpen && "rotate-180 text-white/90")}

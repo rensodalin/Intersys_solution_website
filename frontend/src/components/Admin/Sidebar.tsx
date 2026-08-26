@@ -30,7 +30,7 @@ function getAvatarColor(name: string) {
   return avatarColors[Math.abs(hash) % avatarColors.length];
 }
 
-type AdminSection = "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "technicaltips" | "events" | "chat" | "contacts" | "reports" | "settings";
+type AdminSection = "dashboard" | "quotes" | "analytics" | "customers" | "products" | "posters" | "insights" | "technicaltips" | "blogs" | "events" | "chat" | "contacts" | "reports" | "settings";
 
 interface SidebarProps {
   userName: string;
@@ -115,6 +115,14 @@ export function Sidebar({ userName, activeSection, onSectionChange }: SidebarPro
           >
             <Calendar size={18} />
             <span>Company Events</span>
+          </button>
+
+          <button
+            onClick={() => onSectionChange("blogs")}
+            className={getButtonClass("blogs")}
+          >
+            <Newspaper size={18} />
+            <span>Blog Articles</span>
           </button>
 
           <button
