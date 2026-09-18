@@ -5,8 +5,9 @@ import { ChevronLeft, ChevronRight, ShieldCheck, ArrowRight, Phone, Building2 } 
 import { Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/Common/Container";
-import heroFireAlarmBanner from "@/assets/hero_fire_alarm_banner.webp";
-import heroHealthyBuildingBanner from "@/assets/hero_healthy_building_banner.webp";
+import artboard1 from "@/assets/Artboard 1@3x.png";
+import artboard2 from "@/assets/Artboard 2@3x.png";
+import artboard3 from "@/assets/Artboard 3@3x.png";
 
 const slides = [
   {
@@ -31,16 +32,36 @@ const slides = [
     ctaText: "Explore Solutions",
     hideTopLeftLogo: true,
   },
-  // {
-  //   type: "banner",
-  //   image: "https://files.intersys-solutions.com.kh/RandomIMG/BMS.png",
-  //   badgeIcon: Building2,
-  //   title: "Healthy Building Solutions",
-  //   subtitle: "Integrated BMS, Fire Safety, Security, CCTV, Access Control & RCU",
-  //   link: "/services/building-management",
-  //   phone: "+855 77 602 334",
-  //   ctaText: "Explore Solutions",
-  // },
+  {
+    type: "banner",
+    image: artboard1,
+    badgeIcon: ShieldCheck,
+    title: "Fire Safety, Security & Automation Solutions",
+    subtitle: "Cambodia's premier authorized Honeywell partner delivering international-standard building systems",
+    link: "/services",
+    phone: "+855 77 602 334",
+    ctaText: "Explore Solutions",
+  },
+  {
+    type: "banner",
+    image: artboard2,
+    badgeIcon: Building2,
+    title: "Integrated Engineering & ELV Solutions",
+    subtitle: "Specialized integrated solutions designed to make buildings smarter and safer",
+    link: "/services",
+    phone: "+855 77 602 334",
+    ctaText: "View Services",
+  },
+  {
+    type: "banner",
+    image: artboard3,
+    badgeIcon: Building2,
+    title: "Strategic Milestones & Market Leadership",
+    subtitle: "Over a decade of leadership in BMS, fire safety, security, and smart buildings",
+    link: "/about",
+    phone: "+855 77 602 334",
+    ctaText: "Our Journey",
+  },
 
   // {
   //   type: "content",
@@ -136,10 +157,10 @@ export function Hero() {
                             fetchPriority="high"
                             className="w-full h-auto object-contain max-h-[55vh] sm:max-h-[68vh] md:max-h-[75vh] mx-auto transition-transform duration-700 hover:scale-[1.01]"
                           />
-                          {(slide.hideTopLeftLogo || idx === 1) && (
+                          {slide.hideTopLeftLogo && (
                             <div className="absolute top-0 left-0 w-[17%] h-[18%] bg-white z-10 pointer-events-none" />
                           )}
-                          {(slide.hideTopRightLogo || idx === 0) && (
+                          {slide.hideTopRightLogo && (
                             <div className="absolute top-0 right-0 w-[14%] h-[16%] bg-white z-10 pointer-events-none" />
                           )}
                         </Link>
