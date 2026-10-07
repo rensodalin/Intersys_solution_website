@@ -84,7 +84,7 @@ function Index() {
 
 
       <WhyChooseIntersys />
-      <Insights />
+      {/* <Insights /> */}
 
       {/* 1. Promotion Overlay - Opens automatically on site load */}
       <PromotionOverlay isOpen={showPopup} onClose={handleClosePromotion} />
