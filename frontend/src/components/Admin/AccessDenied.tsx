@@ -21,12 +21,12 @@ export function AccessDenied({ isAuthOpen, onAuthOpen, onAuthClose }: AccessDeni
           account to view the quote request dashboard.
         </p>
         <div className="space-y-4">
-          <button
-            onClick={onAuthOpen}
-            className="w-full bg-[#C3110C] text-white py-3 rounded-sm font-bold text-sm hover:bg-red-700 transition shadow-lg shadow-red-600/10 cursor-pointer"
+          <Link
+            to="/login"
+            className="block w-full bg-[#C3110C] text-white py-3 rounded-sm font-bold text-sm hover:bg-red-700 transition shadow-lg shadow-red-600/10 text-center"
           >
             Sign In as Administrator
-          </button>
+          </Link>
           <Link
             to="/"
             className="block w-full text-center text-xs text-gray-500 hover:text-black font-semibold transition"
@@ -34,7 +34,6 @@ export function AccessDenied({ isAuthOpen, onAuthOpen, onAuthClose }: AccessDeni
             Back to Homepage
           </Link>
         </div>
-        <AuthModal isOpen={isAuthOpen} onClose={onAuthClose} />
       </div>
     </div>
   );

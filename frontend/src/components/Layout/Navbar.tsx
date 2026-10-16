@@ -824,13 +824,9 @@ export function Navbar() {
                       </button>
                     </div>
                   ) : (
-                    <button
-                      onClick={() => {
-                        setMobileOpen(false);
-                        const baseUrl = environment;
-                        const currentUrl = window.location.href;
-                        window.location.href = `${baseUrl}/auth/google?redirect=${encodeURIComponent(currentUrl)}`;
-                      }}
+                    <Link
+                      to="/login"
+                      onClick={() => setMobileOpen(false)}
                       className="w-full flex items-center justify-between bg-white/5 hover:bg-white/10 p-4 rounded-sm border border-white/5 group transition-all"
                     >
                       <div className="flex items-center gap-3">
@@ -838,7 +834,7 @@ export function Navbar() {
                         <span className="text-sm font-semibold text-white">Login / Register</span>
                       </div>
                       <ChevronRight size={16} className="text-white/40 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    </Link>
                   )}
                 </div>
 

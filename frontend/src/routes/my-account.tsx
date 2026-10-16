@@ -129,17 +129,16 @@ function MyAccountPage() {
             Please log in or create an account to view your personalized dashboard, track quote requests, and access technical documents.
           </p>
           <div className="space-y-4">
-            <button
-              onClick={() => setIsAuthOpen(true)}
-              className="w-full bg-[#C3110C] text-white py-3 rounded-sm font-bold text-sm hover:bg-red-700 transition shadow-lg shadow-red-600/10 cursor-pointer"
+            <Link
+              to="/login"
+              className="block w-full bg-[#C3110C] text-white py-3 rounded-sm font-bold text-sm hover:bg-red-700 transition shadow-lg shadow-red-600/10 text-center"
             >
               Sign In / Register
-            </button>
+            </Link>
             <Link to="/" className="block w-full text-center text-xs text-gray-500 hover:text-black font-semibold transition">
               Back to Homepage
             </Link>
           </div>
-          <AuthModal isOpen={isAuthOpen} onClose={() => { setIsAuthOpen(false); loadProfile(); }} />
         </Container>
       </div>
     );
