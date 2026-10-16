@@ -119,7 +119,7 @@ export const googleAuth = (req, res, next) => {
 };
 
 const getFrontendUrl = () => {
-  const url = process.env.FRONTEND_URL || "http://localhost:5173";
+  const url = process.env.FRONTEND_URL || (process.env.NODE_ENV === "production" ? "https://www.intersys-solutions.com.kh" : "http://localhost:5173");
   return url.endsWith("/") ? url : url + "/";
 };
 
@@ -141,7 +141,12 @@ export const googleCallback = (req, res, next) => {
         console.error("Session Login Error:", err);
         return res.redirect(`${baseUrl}?error=session_error`);
       }
-      res.redirect(redirectTo);
+      const userObj = user.toObject ? user.toObject() : user;
+      const { password, __v, ...safeUser } = userObj;
+      safeUser.isAdmin = user.email === ADMIN_EMAIL;
+      const safeData = encodeURIComponent(JSON.stringify({ ...safeUser, id: user._id }));
+      const separator = redirectTo.includes("?") ? "&" : "?";
+      res.redirect(`${redirectTo}${separator}auth_success=true&auth_data=${safeData}`);
     });
   })(req, res, next);
 };

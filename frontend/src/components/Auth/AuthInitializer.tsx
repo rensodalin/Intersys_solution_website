@@ -19,6 +19,26 @@ export function AuthInitializer({ children }: AuthInitializerProps) {
   userRef.current = currentUser;
 
   useEffect(() => {
+    // Check if redirected back with auth_data from Google OAuth
+    if (typeof window !== "undefined") {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const authDataParam = params.get("auth_data");
+        if (authDataParam) {
+          const userObj = JSON.parse(decodeURIComponent(authDataParam));
+          if (userObj && (userObj.id || userObj._id)) {
+            dispatch(initializeAuth(userObj));
+            params.delete("auth_data");
+            params.delete("auth_success");
+            const newSearch = params.toString() ? `?${params.toString()}` : "";
+            window.history.replaceState({}, document.title, window.location.pathname + newSearch);
+          }
+        }
+      } catch (e) {
+        console.error("Failed to parse auth_data parameter:", e);
+      }
+    }
+
     const baseUrl = environment;
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);

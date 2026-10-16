@@ -644,6 +644,15 @@ export function Navbar() {
                                 </svg>
                                 <span>Continue with Google</span>
                               </button>
+                              <div className="pt-2 text-center border-t border-gray-100 mt-2">
+                                <Link
+                                  to="/login"
+                                  onClick={() => setShowLoginDropdown(false)}
+                                  className="text-[11px] text-gray-500 hover:text-[#C3110C] font-semibold transition inline-block"
+                                >
+                                  Go to full login page →
+                                </Link>
+                              </div>
                             </>
                           )}
                         </form>
