@@ -129,12 +129,16 @@ function MyAccountPage() {
             Please log in or create an account to view your personalized dashboard, track quote requests, and access technical documents.
           </p>
           <div className="space-y-4">
-            <Link
-              to="/login"
-              className="block w-full bg-[#C3110C] text-white py-3 rounded-sm font-bold text-sm hover:bg-red-700 transition shadow-lg shadow-red-600/10 text-center"
+            <button
+              onClick={() => {
+                const baseUrl = environment;
+                const currentUrl = window.location.href;
+                window.location.href = `${baseUrl}/auth/google?redirect=${encodeURIComponent(currentUrl)}`;
+              }}
+              className="w-full bg-[#C3110C] text-white py-3 rounded-sm font-bold text-sm hover:bg-red-700 transition shadow-lg shadow-red-600/10 text-center cursor-pointer"
             >
-              Sign In / Register
-            </Link>
+              Sign In with Google
+            </button>
             <Link to="/" className="block w-full text-center text-xs text-gray-500 hover:text-black font-semibold transition">
               Back to Homepage
             </Link>

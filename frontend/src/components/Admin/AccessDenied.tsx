@@ -1,14 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import { Lock } from "lucide-react";
-import { AuthModal } from "@/components/Auth/AuthModal";
+import environment from "@/enviroment/enviroment";
 
 interface AccessDeniedProps {
-  isAuthOpen: boolean;
-  onAuthOpen: () => void;
-  onAuthClose: () => void;
+  isAuthOpen?: boolean;
+  onAuthOpen?: () => void;
+  onAuthClose?: () => void;
 }
 
 export function AccessDenied({ isAuthOpen, onAuthOpen, onAuthClose }: AccessDeniedProps) {
+  const handleGoogleLogin = () => {
+    const baseUrl = environment;
+    const currentUrl = window.location.href;
+    window.location.href = `${baseUrl}/auth/google?redirect=${encodeURIComponent(currentUrl)}`;
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#081F3D]/5 pt-20 px-6">
       <div className="max-w-md bg-white p-10 rounded-sm shadow-2xl border border-gray-100 text-center">
@@ -21,11 +27,17 @@ export function AccessDenied({ isAuthOpen, onAuthOpen, onAuthClose }: AccessDeni
           account to view the quote request dashboard.
         </p>
         <div className="space-y-4">
+          <button
+            onClick={handleGoogleLogin}
+            className="block w-full bg-[#C3110C] text-white py-3 rounded-sm font-bold text-sm hover:bg-red-700 transition shadow-lg shadow-red-600/10 text-center cursor-pointer"
+          >
+            Sign In with Google
+          </button>
           <Link
             to="/login"
-            className="block w-full bg-[#C3110C] text-white py-3 rounded-sm font-bold text-sm hover:bg-red-700 transition shadow-lg shadow-red-600/10 text-center"
+            className="block w-full text-center text-xs text-gray-500 hover:text-black font-semibold transition"
           >
-            Sign In as Administrator
+            Sign In with Email & Password
           </Link>
           <Link
             to="/"
