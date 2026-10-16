@@ -156,7 +156,7 @@ export const logout = (req, res) => {
       if (destroyErr) {
         console.error("Session destroy error during logout:", destroyErr);
       }
-      const isSecure = process.env.NODE_ENV === "production";
+      const isSecure = process.env.NODE_ENV === "production" || process.env.RENDER === "true";
       res.clearCookie("connect.sid", {
         path: "/", httpOnly: true, secure: isSecure, sameSite: isSecure ? "none" : "lax"
       });

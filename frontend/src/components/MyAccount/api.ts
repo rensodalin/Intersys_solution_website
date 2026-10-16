@@ -32,6 +32,7 @@ export async function logoutUser(dispatch: Dispatch, navigate: (opts: { to: stri
   } catch {
     // ignore server errors
   }
+  dispatch(logoutSuccess());
   window.location.href = "/";
 }
 

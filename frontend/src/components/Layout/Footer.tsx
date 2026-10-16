@@ -204,11 +204,24 @@ export function Footer({ isCompact }: { isCompact?: boolean }) {
               <img src={logoImg} alt="Intersys" className="h-10 w-auto opacity-100" />
             </div>
 
-            {/* Center: Copyright */}
-            <div className="flex-1 flex justify-center">
-              <p className="text-[12px] text-white/60  font-medium">
+            {/* Center: Copyright & Quick Links */}
+            <div className="flex-1 flex flex-col items-center justify-center gap-1.5 text-center">
+              <p className="text-[12px] text-white/60 font-medium">
                 © {new Date().getFullYear()} Intersys Solutions Co., Ltd. All Rights Reserved
               </p>
+              <div className="flex items-center gap-3 text-[11px] text-white/50">
+                <Link to="/partners" className="hover:text-white transition-colors">
+                  Technology Partners
+                </Link>
+                <span>•</span>
+                <Link to="/document-center" className="hover:text-white transition-colors">
+                  Document Center
+                </Link>
+                <span>•</span>
+                <Link to="/credentials" className="hover:text-white transition-colors">
+                  Certificates
+                </Link>
+              </div>
             </div>
 
             {/* Right: Social Icons */}

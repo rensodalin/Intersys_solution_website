@@ -19,6 +19,7 @@ import { Route as RequestQuoteRouteImport } from './routes/request-quote'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as MyAccountRouteImport } from './routes/my-account'
 import { Route as DocumentCenterRouteImport } from './routes/document-center'
 import { Route as CredentialsRouteImport } from './routes/credentials'
@@ -113,6 +114,11 @@ const ProductsRoute = ProductsRouteImport.update({
 const PortfolioRoute = PortfolioRouteImport.update({
   id: '/portfolio',
   path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnersRoute = PartnersRouteImport.update({
+  id: '/partners',
+  path: '/partners',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyAccountRoute = MyAccountRouteImport.update({
@@ -359,6 +365,7 @@ export interface FileRoutesByFullPath {
   '/credentials': typeof CredentialsRoute
   '/document-center': typeof DocumentCenterRoute
   '/my-account': typeof MyAccountRoute
+  '/partners': typeof PartnersRoute
   '/portfolio': typeof PortfolioRoute
   '/products': typeof ProductsRouteWithChildren
   '/projects': typeof ProjectsRoute
@@ -416,6 +423,7 @@ export interface FileRoutesByTo {
   '/credentials': typeof CredentialsRoute
   '/document-center': typeof DocumentCenterRoute
   '/my-account': typeof MyAccountRoute
+  '/partners': typeof PartnersRoute
   '/portfolio': typeof PortfolioRoute
   '/projects': typeof ProjectsRoute
   '/request-quote': typeof RequestQuoteRoute
@@ -471,6 +479,7 @@ export interface FileRoutesById {
   '/credentials': typeof CredentialsRoute
   '/document-center': typeof DocumentCenterRoute
   '/my-account': typeof MyAccountRoute
+  '/partners': typeof PartnersRoute
   '/portfolio': typeof PortfolioRoute
   '/products': typeof ProductsRouteWithChildren
   '/projects': typeof ProjectsRoute
@@ -530,6 +539,7 @@ export interface FileRouteTypes {
     | '/credentials'
     | '/document-center'
     | '/my-account'
+    | '/partners'
     | '/portfolio'
     | '/products'
     | '/projects'
@@ -587,6 +597,7 @@ export interface FileRouteTypes {
     | '/credentials'
     | '/document-center'
     | '/my-account'
+    | '/partners'
     | '/portfolio'
     | '/projects'
     | '/request-quote'
@@ -641,6 +652,7 @@ export interface FileRouteTypes {
     | '/credentials'
     | '/document-center'
     | '/my-account'
+    | '/partners'
     | '/portfolio'
     | '/products'
     | '/projects'
@@ -699,6 +711,7 @@ export interface RootRouteChildren {
   CredentialsRoute: typeof CredentialsRoute
   DocumentCenterRoute: typeof DocumentCenterRoute
   MyAccountRoute: typeof MyAccountRoute
+  PartnersRoute: typeof PartnersRoute
   PortfolioRoute: typeof PortfolioRoute
   ProductsRoute: typeof ProductsRouteWithChildren
   ProjectsRoute: typeof ProjectsRoute
@@ -801,6 +814,13 @@ declare module '@tanstack/react-router' {
       path: '/portfolio'
       fullPath: '/portfolio'
       preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partners': {
+      id: '/partners'
+      path: '/partners'
+      fullPath: '/partners'
+      preLoaderRoute: typeof PartnersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/my-account': {
@@ -1206,6 +1226,7 @@ const rootRouteChildren: RootRouteChildren = {
   CredentialsRoute: CredentialsRoute,
   DocumentCenterRoute: DocumentCenterRoute,
   MyAccountRoute: MyAccountRoute,
+  PartnersRoute: PartnersRoute,
   PortfolioRoute: PortfolioRoute,
   ProductsRoute: ProductsRouteWithChildren,
   ProjectsRoute: ProjectsRoute,

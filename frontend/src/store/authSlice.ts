@@ -31,11 +31,25 @@ interface AuthState {
   isAuthChecking: boolean;
 }
 
+const STORAGE_KEY = "intersys_user";
+
+const loadStoredUser = (): UserState | null => {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+};
+
+const cachedUser = loadStoredUser();
+
 const initialState: AuthState = {
-  user: null,
+  user: cachedUser,
   loading: false,
   error: null,
-  isAuthChecking: true,
+  isAuthChecking: !cachedUser,
 };
 
 const authSlice = createSlice({
@@ -50,6 +64,11 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.isAuthChecking = false;
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(action.payload));
+      } catch (err) {
+        console.error("Failed to store user session locally:", err);
+      }
     },
     loginFailure(state, action: PayloadAction<string>) {
       state.error = action.payload;
@@ -59,9 +78,27 @@ const authSlice = createSlice({
       state.user = null;
       state.loading = false;
       state.error = null;
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (err) {
+        console.error("Failed to clear local user session:", err);
+      }
     },
     initializeAuth(state, action: PayloadAction<UserState | null>) {
       state.user = action.payload;
+      state.isAuthChecking = false;
+      state.loading = false;
+      try {
+        if (action.payload) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(action.payload));
+        } else {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      } catch (err) {
+        console.error("Failed to sync local user session:", err);
+      }
+    },
+    finishAuthCheck(state) {
       state.isAuthChecking = false;
       state.loading = false;
     },
@@ -77,6 +114,7 @@ export const {
   loginFailure,
   logoutSuccess,
   initializeAuth,
+  finishAuthCheck,
   setError,
 } = authSlice.actions;
 

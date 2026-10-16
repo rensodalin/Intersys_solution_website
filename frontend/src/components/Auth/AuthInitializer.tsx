@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
-import { initializeAuth } from "@/store/authSlice";
+import { initializeAuth, finishAuthCheck } from "@/store/authSlice";
 import environment from "@/enviroment/enviroment";
 import logo from "@/assets/logo.avif";
 
@@ -14,27 +14,43 @@ export function AuthInitializer({ children }: AuthInitializerProps) {
   const isAuthChecking = useSelector(
     (state: RootState) => state.auth.isAuthChecking
   );
+  const currentUser = useSelector((state: RootState) => state.auth.user);
+  const userRef = useRef(currentUser);
+  userRef.current = currentUser;
 
   useEffect(() => {
     const baseUrl = environment;
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 2500);
+    const timeout = setTimeout(() => controller.abort(), 8000);
 
     fetch(`${baseUrl}/auth/user`, {
       credentials: "include",
       signal: controller.signal,
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok && res.status === 401) {
+          dispatch(initializeAuth(null));
+          return null;
+        }
+        return res.json();
+      })
       .then((data) => {
+        if (!data) return;
         if (data.success && data.user) {
           dispatch(initializeAuth(data.user));
-        } else {
+        } else if (data.success === false) {
           dispatch(initializeAuth(null));
+        } else {
+          dispatch(finishAuthCheck());
         }
       })
       .catch((err) => {
-        console.error("Auth session bootstrap failed:", err);
-        dispatch(initializeAuth(null));
+        console.warn("Auth session bootstrap warning:", err);
+        if (userRef.current) {
+          dispatch(finishAuthCheck());
+        } else {
+          dispatch(initializeAuth(null));
+        }
       })
       .finally(() => clearTimeout(timeout));
 

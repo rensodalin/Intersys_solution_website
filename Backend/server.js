@@ -70,13 +70,15 @@ app.use(session({
   secret: process.env.SESSION_SECRET || "intersys_super_secret",
   resave: false,
   saveUninitialized: false,
+  rolling: true,
   store: MongoStore.create({
     mongoUrl: process.env.URI,
     collectionName: "sessions",
-    ttl: 24 * 60 * 60,
+    ttl: 30 * 24 * 60 * 60, // 30 days
+    touchAfter: 24 * 3600,
   }),
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24,
+    maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
     httpOnly: true,
     secure: process.env.NODE_ENV === "production" || process.env.RENDER === "true",
     sameSite: process.env.NODE_ENV === "production" || process.env.RENDER === "true" ? "none" : "lax",

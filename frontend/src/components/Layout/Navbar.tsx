@@ -24,7 +24,8 @@ const CLIENT_CENTER_DATA = [
   { name: "Blog", href: "/blog" },
   { name: "Case Study", href: "/insights" },
   { name: "Technical Tips", href: "/technical-tips" },
-  { name: "News & Events", href: "/events" }
+  { name: "News & Events", href: "/events" },
+  { name: "Technology Partners", href: "/partners" }
 ];
 const CONTACT_DATA = [
   { name: "Technical Support / Customer Service", href: "/support" },
@@ -136,6 +137,7 @@ export function Navbar() {
     } catch (err) {
       console.error("Logout failed:", err);
     }
+    dispatch(logoutSuccess());
     window.location.href = "/";
   };
 
