@@ -12,6 +12,7 @@ import { DownloadsTab } from "@/components/MyAccount/DownloadsTab";
 import { AccountDetailsTab } from "@/components/MyAccount/AccountDetailsTab";
 import { fetchProfile, fetchQuotes, logoutUser, saveProfile } from "@/components/MyAccount/api";
 import type { TabType, QuoteItem, DetailsForm } from "@/components/MyAccount/types";
+import environment from "@/enviroment/enviroment";
 
 export const Route = createFileRoute("/my-account")({
   head: () => ({
@@ -47,26 +48,41 @@ function MyAccountPage() {
 
   const loadProfile = async () => {
     setLoadingProfile(true);
-    const u = await fetchProfile(dispatch);
-    if (u) {
-      setDetailsForm({
-        firstName: u.firstName || "", lastName: u.lastName || "",
-        gender: u.gender || "", phone: u.phone || "", country: u.country || "Cambodia",
-        role: u.role || "", newsletter: u.newsletter || false,
-        receiveUpdates: u.receiveUpdates || false,
-        currentPassword: "", password: "", confirmPassword: "",
-      });
-    } else if (user) {
-      setDetailsForm({
-        firstName: user.firstName || "", lastName: user.lastName || "",
-        gender: user.gender || "", phone: user.phone || "",
-        country: user.country || "Cambodia",
-        role: user.role || "", newsletter: user.newsletter || false,
-        receiveUpdates: user.receiveUpdates || false,
-        currentPassword: "", password: "", confirmPassword: "",
-      });
+    try {
+      const u = await fetchProfile(dispatch);
+      if (u) {
+        setDetailsForm({
+          firstName: u.firstName || "", lastName: u.lastName || "",
+          gender: u.gender || "", phone: u.phone || "", country: u.country || "Cambodia",
+          role: u.role || "", newsletter: u.newsletter || false,
+          receiveUpdates: u.receiveUpdates || false,
+          currentPassword: "", password: "", confirmPassword: "",
+        });
+      } else if (user) {
+        setDetailsForm({
+          firstName: user.firstName || "", lastName: user.lastName || "",
+          gender: user.gender || "", phone: user.phone || "",
+          country: user.country || "Cambodia",
+          role: user.role || "", newsletter: user.newsletter || false,
+          receiveUpdates: user.receiveUpdates || false,
+          currentPassword: "", password: "", confirmPassword: "",
+        });
+      }
+    } catch (err) {
+      console.warn("Failed to load profile:", err);
+      if (user) {
+        setDetailsForm({
+          firstName: user.firstName || "", lastName: user.lastName || "",
+          gender: user.gender || "", phone: user.phone || "",
+          country: user.country || "Cambodia",
+          role: user.role || "", newsletter: user.newsletter || false,
+          receiveUpdates: user.receiveUpdates || false,
+          currentPassword: "", password: "", confirmPassword: "",
+        });
+      }
+    } finally {
+      setLoadingProfile(false);
     }
-    setLoadingProfile(false);
   };
 
   const loadQuotes = async () => {

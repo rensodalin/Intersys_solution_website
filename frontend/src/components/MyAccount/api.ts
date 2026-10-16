@@ -7,19 +7,29 @@ import environment from "@/enviroment/enviroment";
 const baseUrl = environment;
 
 export async function fetchProfile(dispatch: Dispatch) {
-  const response = await fetch(`${baseUrl}/auth/user`, { credentials: "include" });
-  const data = await response.json();
-  if (data.success && data.user) {
-    dispatch(loginSuccess(data.user));
-    return data.user;
+  try {
+    const response = await fetch(`${baseUrl}/auth/user`, { credentials: "include" });
+    if (!response.ok) return null;
+    const data = await response.json();
+    if (data.success && data.user) {
+      dispatch(loginSuccess(data.user));
+      return data.user;
+    }
+  } catch (err) {
+    console.warn("fetchProfile network error", err);
   }
   return null;
 }
 
 export async function fetchQuotes() {
-  const response = await fetch(`${baseUrl}/api/quotes`, { credentials: "include" });
-  const data = await response.json();
-  if (data.success) return data.data || [];
+  try {
+    const response = await fetch(`${baseUrl}/api/quotes`, { credentials: "include" });
+    if (!response.ok) return [];
+    const data = await response.json();
+    if (data.success) return data.data || [];
+  } catch (err) {
+    console.warn("fetchQuotes network error", err);
+  }
   return [];
 }
 
