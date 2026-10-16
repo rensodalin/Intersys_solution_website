@@ -83,7 +83,7 @@ function Index() {
       <Partnership />
 
 
-      <WhyChooseIntersys />
+      {/* <WhyChooseIntersys /> */}
       {/* <Insights /> */}
 
       {/* 1. Promotion Overlay - Opens automatically on site load */}
