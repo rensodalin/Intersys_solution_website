@@ -223,19 +223,30 @@ export function ChatWidget() {
             transition={{ duration: 0.2 }}
             className="absolute bottom-16 left-0 w-[340px] bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-100 flex flex-col"
           >
-            <div className="bg-[#081F3D] text-white p-4 flex justify-between items-center">
-              <div className="flex items-center gap-2 min-w-0">
+            <div className="bg-[#081F3D] text-white p-3.5 flex justify-between items-center">
+              <div className="flex items-center gap-2.5 min-w-0">
                 {view === "conversation" && (
                   <button onClick={handleBack} className="text-gray-400 hover:text-white transition-colors cursor-pointer flex-shrink-0">
                     <ChevronLeft size={18} />
                   </button>
                 )}
+                <div className="relative flex-shrink-0">
+                  <div className="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center border border-white/20 shadow-xs">
+                    <img
+                      src="/favicon.png"
+                      alt="Intersys Solution"
+                      className="w-full h-full object-cover"
+                      style={{ transform: "scale(1.12)" }}
+                    />
+                  </div>
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-[#081F3D]" />
+                </div>
                 <div className="min-w-0">
                   <h3 className="font-bold text-sm truncate">
-                    {view === "conversation" ? conversationName : "Contact Support"}
+                    Intersys Solution Co., Ltd.
                   </h3>
                   <p className="text-xs text-gray-400 mt-0.5 truncate">
-                    {view === "conversation" ? conversationEmail : "Leave us a message"}
+                    {view === "conversation" ? "Admin" : "Leave us a message"}
                   </p>
                 </div>
               </div>
@@ -317,13 +328,22 @@ export function ChatWidget() {
                     <div className="text-center py-8 text-xs text-gray-400">No messages yet</div>
                   ) : (
                     messages.map((msg) => (
-                      <div key={msg.id} className={`flex ${msg.isFromAdmin ? "justify-start" : "justify-end"}`}>
+                      <div key={msg.id} className={`flex ${msg.isFromAdmin ? "justify-start" : "justify-end"} items-end gap-1.5`}>
+                        {msg.isFromAdmin && (
+                          <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center border border-gray-200 shadow-xs flex-shrink-0 mb-1">
+                            <img
+                              src="/favicon.png"
+                              alt="Admin"
+                              className="w-full h-full object-cover"
+                              style={{ transform: "scale(1.12)" }}
+                            />
+                          </div>
+                        )}
                         <div
-                          className={`max-w-[85%] rounded-lg px-3 py-2 text-xs ${
-                            msg.isFromAdmin
+                          className={`max-w-[80%] rounded-lg px-3 py-2 text-xs ${msg.isFromAdmin
                               ? "bg-gray-200 text-gray-800 rounded-bl-none"
                               : "bg-[#C3110C] text-white rounded-br-none"
-                          }`}
+                            }`}
                         >
                           <p className="whitespace-pre-wrap leading-relaxed">
                             {msg.content}

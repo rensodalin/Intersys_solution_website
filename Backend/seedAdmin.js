@@ -12,7 +12,7 @@ import mongoose from "mongoose";
 import User from "./model/user.js";
 
 const MONGO_URI = process.env.URI;
-const ADMIN_EMAIL    = process.env.ADMIN_EMAIL    || "admin@intersys.com";
+const ADMIN_EMAIL    = process.env.ADMIN_EMAIL    || "solutionintersys@gmail.com";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "Admin@Intersys2025!";
 const ADMIN_NAME     = "Intersys Admin";
 
@@ -33,6 +33,8 @@ async function seed() {
             existing.isAdmin = true;
             existing.name    = existing.name || ADMIN_NAME;
             existing.password = ADMIN_PASSWORD;          // will be re-hashed by pre-save hook
+            existing.isVerified = true;
+            existing.profileCompleted = true;
             await existing.save();
             console.log(`♻️   Admin account updated for: ${ADMIN_EMAIL}`);
         } else {
@@ -44,6 +46,8 @@ async function seed() {
                 email     : ADMIN_EMAIL,
                 password  : ADMIN_PASSWORD,
                 isAdmin   : true,
+                isVerified: true,
+                profileCompleted: true,
                 gender    : "other",
                 country   : "Cambodia",
             });

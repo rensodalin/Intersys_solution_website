@@ -4,7 +4,19 @@ import User from "../model/user.js";
 import DownloadedPdf from "../model/downloadedPdf.js";
 import { uploadToHostinger } from "../utils/uploadToHostinger.js";
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@intersys.com";
+const ADMIN_EMAILS = [
+  (process.env.ADMIN_EMAIL || "").toLowerCase().trim(),
+  "solutionintersys@gmail.com",
+  "admin@intersys.com"
+].filter(Boolean);
+
+export const isUserAdmin = (user) => {
+  if (!user) return false;
+  if (user.isAdmin === true) return true;
+  const email = (user.email || "").toLowerCase().trim();
+  return ADMIN_EMAILS.includes(email);
+};
+
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
 
 const VALID_COUNTRIES = [
@@ -59,7 +71,7 @@ export const completeProfile = async (req, res) => {
     await user.save();
 
     const updatedUser = user.toObject ? user.toObject() : user;
-    updatedUser.isAdmin = user.email === ADMIN_EMAIL;
+    updatedUser.isAdmin = isUserAdmin(user);
 
     req.login(user, (err) => {
       if (err) {
@@ -104,7 +116,7 @@ export const login = (req, res, next) => {
         }
         const userObj = user.toObject ? user.toObject() : user;
         const { password, __v, ...safeUser } = userObj;
-        safeUser.isAdmin = user.email === ADMIN_EMAIL;
+        safeUser.isAdmin = isUserAdmin(user);
         res.json({ success: true, message: "Login successful", user: safeUser });
       });
     });
@@ -143,10 +155,17 @@ export const googleCallback = (req, res, next) => {
       }
       const userObj = user.toObject ? user.toObject() : user;
       const { password, __v, ...safeUser } = userObj;
-      safeUser.isAdmin = user.email === ADMIN_EMAIL;
+      const isAdmin = isUserAdmin(user);
+      safeUser.isAdmin = isAdmin;
+
+      let targetUrl = redirectTo;
+      if (isAdmin && (redirectTo.endsWith("/my-account") || redirectTo.endsWith("/my-account/"))) {
+        targetUrl = baseUrl.replace(/\/$/, "") + "/admin";
+      }
+
       const safeData = encodeURIComponent(JSON.stringify({ ...safeUser, id: user._id }));
-      const separator = redirectTo.includes("?") ? "&" : "?";
-      res.redirect(`${redirectTo}${separator}auth_success=true&auth_data=${safeData}`);
+      const separator = targetUrl.includes("?") ? "&" : "?";
+      res.redirect(`${targetUrl}${separator}auth_success=true&auth_data=${safeData}`);
     });
   })(req, res, next);
 };
@@ -174,7 +193,7 @@ export const getUser = async (req, res) => {
   if (req.user) {
     const user = req.user.toObject ? req.user.toObject() : req.user;
     const { password, __v, ...safeUser } = user;
-    safeUser.isAdmin = user.email === ADMIN_EMAIL;
+    safeUser.isAdmin = isUserAdmin(req.user);
     const downloadedPdfs = await DownloadedPdf.find({ userId: user._id })
       .sort({ downloadedAt: -1 }).lean();
     res.json({ success: true, user: { ...safeUser, id: user._id, profileCompleted: user.profileCompleted, company: user.company, downloadedPdfs } });
@@ -227,7 +246,7 @@ export const updateUser = async (req, res) => {
     await user.save();
 
     const updatedUser = user.toObject ? user.toObject() : user;
-    updatedUser.isAdmin = user.email === ADMIN_EMAIL;
+    updatedUser.isAdmin = isUserAdmin(user);
 
     req.login(user, (err) => {
       if (err) {
@@ -302,7 +321,7 @@ export const uploadAvatar = async (req, res) => {
     console.log("[uploadAvatar] User saved. New updatedAt timestamp:", user.updatedAt);
 
     const userObj = user.toObject ? user.toObject() : user;
-    userObj.isAdmin = user.email === ADMIN_EMAIL;
+    userObj.isAdmin = isUserAdmin(user);
 
     req.login(user, (err) => {
       if (err) {

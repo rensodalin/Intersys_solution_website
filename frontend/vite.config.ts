@@ -45,6 +45,7 @@ export default defineConfig({
         ]
       },
       workbox: {
+        navigateFallbackDenylist: [/^\/auth/, /^\/api/, /^\/uploads/, /^\/socket\.io/],
         maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
         globPatterns: ["**/*.{js,css,html,ico,png,svg,webp,jpg,jpeg,woff,woff2}"],
         runtimeCaching: [

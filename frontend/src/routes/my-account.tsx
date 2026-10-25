@@ -98,6 +98,11 @@ function MyAccountPage() {
 
   useEffect(() => { loadProfile(); }, []);
   useEffect(() => { if (user) loadQuotes(); }, [user]);
+  useEffect(() => {
+    if (user?.isAdmin) {
+      navigate({ to: "/admin" });
+    }
+  }, [user, navigate]);
 
   const handleLogout = () => logoutUser(dispatch, navigate);
 

@@ -32,6 +32,9 @@ export function AuthInitializer({ children }: AuthInitializerProps) {
             params.delete("auth_success");
             const newSearch = params.toString() ? `?${params.toString()}` : "";
             window.history.replaceState({}, document.title, window.location.pathname + newSearch);
+            if (userObj.isAdmin && (window.location.pathname === "/login" || window.location.pathname === "/my-account")) {
+              window.location.href = "/admin";
+            }
           }
         }
       } catch (e) {

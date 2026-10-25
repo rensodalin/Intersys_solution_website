@@ -6,7 +6,16 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@intersys.com";
+const ADMIN_EMAILS = [
+  (process.env.ADMIN_EMAIL || "").toLowerCase().trim(),
+  "solutionintersys@gmail.com",
+  "admin@intersys.com"
+].filter(Boolean);
+
+const isEmailAdmin = (email, dbIsAdmin) => {
+  if (dbIsAdmin === true) return true;
+  return ADMIN_EMAILS.includes((email || "").toLowerCase().trim());
+};
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -42,8 +51,11 @@ passport.use(
 
         if (user) {
           user.lastLogin = new Date();
+          if (isEmailAdmin(email, user.isAdmin)) {
+            user.isAdmin = true;
+          }
           await user.save();
-          user.isAdmin = user.email === ADMIN_EMAIL;
+          user.isAdmin = isEmailAdmin(email, user.isAdmin);
           done(null, user);
         } else {
           user = await User.findOne({ email });
@@ -57,8 +69,12 @@ passport.use(
             user.lastName = profile.name?.familyName || profile.displayName.split(" ").slice(1).join(" ") || "";
             user.avatar = profile.photos?.[0]?.value || user.avatar;
             user.lastLogin = new Date();
+            if (isEmailAdmin(email, user.isAdmin)) {
+              user.isAdmin = true;
+            }
             await user.save();
           } else {
+            const isAdmin = isEmailAdmin(email);
             user = await User.create({
               googleId: profile.id,
               authProvider: "google",
@@ -70,9 +86,10 @@ passport.use(
               email,
               avatar: profile.photos?.[0]?.value || "",
               lastLogin: new Date(),
+              isAdmin,
             });
           }
-          user.isAdmin = user.email === ADMIN_EMAIL;
+          user.isAdmin = isEmailAdmin(email, user.isAdmin);
           done(null, user);
         }
       } catch (error) {
@@ -101,7 +118,7 @@ passport.use(
         }
         user.lastLogin = new Date();
         await user.save();
-        user.isAdmin = user.email === ADMIN_EMAIL;
+        user.isAdmin = isEmailAdmin(user.email, user.isAdmin);
         return done(null, user);
       } catch (error) {
         console.error("Local Auth Error:", error);

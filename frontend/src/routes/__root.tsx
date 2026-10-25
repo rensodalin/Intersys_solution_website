@@ -12,6 +12,21 @@ import { CompleteProfileModal } from "@/components/Auth/CompleteProfileModal";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.pathname.startsWith("/auth")) {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          for (const reg of registrations) {
+            reg.unregister();
+          }
+          if (registrations.length > 0) {
+            window.location.reload();
+          }
+        });
+      }
+    }
+  }, []);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-navy-deep text-white px-4">
       <div className="max-w-md text-center">
@@ -103,7 +118,15 @@ function RootComponent() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ sessionId, page: location.pathname }),
     }).catch(() => {});
-  }, [location.pathname]);
+
+    // Track Google Analytics SPA route changes
+    if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
+      (window as any).gtag("config", "G-BS04WLM7GQ", {
+        page_path: location.pathname + (location.search || ""),
+        page_title: document.title,
+      });
+    }
+  }, [location.pathname, location.search]);
 
   if (isAdminPage) {
     return (
