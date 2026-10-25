@@ -103,7 +103,7 @@ function RootComponent() {
   // Scroll to top automatically on route/pathname change
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [location.pathname, location.search]);
+  }, [location.pathname]);
 
   // Track page visits
   useEffect(() => {
@@ -122,11 +122,11 @@ function RootComponent() {
     // Track Google Analytics SPA route changes
     if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
       (window as any).gtag("config", "G-BS04WLM7GQ", {
-        page_path: location.pathname + (location.search || ""),
+        page_path: window.location.pathname + window.location.search,
         page_title: document.title,
       });
     }
-  }, [location.pathname, location.search]);
+  }, [location.pathname]);
 
   if (isAdminPage) {
     return (
